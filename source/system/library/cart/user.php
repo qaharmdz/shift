@@ -88,6 +88,14 @@ class User {
 		return $this->username;
 	}
 
+    public function getFirstName() {
+        return $this->username;
+    }
+
+    public function getLastName() {
+        return $this->username;
+    }
+
 	public function getGroupId() {
 		return $this->user_group_id;
 	}

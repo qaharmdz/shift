@@ -3,7 +3,7 @@ class ControllerAccountPassword extends Controller {
 	private $error = array();
 
 	public function index() {
-		if (!$this->customer->isLogged()) {
+		if (!$this->user->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/password', '', true);
 
 			$this->response->redirect($this->url->link('account/login', '', true));
@@ -16,7 +16,7 @@ class ControllerAccountPassword extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('account/customer');
 
-			$this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);
+			$this->model_account_customer->editPassword($this->user->getEmail(), $this->request->post['password']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -25,8 +25,8 @@ class ControllerAccountPassword extends Controller {
 				$this->load->model('account/activity');
 
 				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					'customer_id' => $this->user->getId(),
+					'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
 				);
 
 				$this->model_account_activity->addActivity('password', $activity_data);

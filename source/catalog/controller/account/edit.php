@@ -3,7 +3,7 @@ class ControllerAccountEdit extends Controller {
 	private $error = array();
 
 	public function index() {
-		if (!$this->customer->isLogged()) {
+		if (!$this->user->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/edit', '', true);
 
 			$this->response->redirect($this->url->link('account/login', '', true));
@@ -29,8 +29,8 @@ class ControllerAccountEdit extends Controller {
 				$this->load->model('account/activity');
 
 				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					'customer_id' => $this->user->getId(),
+					'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
 				);
 
 				$this->model_account_activity->addActivity('edit', $activity_data);
@@ -112,7 +112,7 @@ class ControllerAccountEdit extends Controller {
 		$data['action'] = $this->url->link('account/edit', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
-			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+			$customer_info = $this->model_account_customer->getCustomer($this->user->getId());
 		}
 
 		if (isset($this->request->post['firstname'])) {
@@ -193,7 +193,7 @@ class ControllerAccountEdit extends Controller {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if (($this->customer->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+		if (($this->user->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
 

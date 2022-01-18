@@ -22,7 +22,7 @@ class ControllerExtensionModuleAccount extends Controller {
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
 
-		$data['logged'] = $this->customer->isLogged();
+		$data['logged'] = $this->user->isLogged();
 		$data['register'] = $this->url->link('account/register', '', true);
 		$data['login'] = $this->url->link('account/login', '', true);
 		$data['logout'] = $this->url->link('account/logout', '', true);

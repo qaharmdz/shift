@@ -7,7 +7,7 @@ class ControllerAccountLogin extends Controller {
 
 		// Login override for admin users
 		if (!empty($this->request->get['token'])) {
-			$this->customer->logout();
+			$this->user->logout();
 			$this->cart->clear();
 
 			unset($this->session->data['order_id']);
@@ -25,23 +25,23 @@ class ControllerAccountLogin extends Controller {
 
 			$customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
 
-			if ($customer_info && $this->customer->login($customer_info['email'], '', true)) {
+			if ($customer_info && $this->user->login($customer_info['email'], '', true)) {
 				// Default Addresses
 				$this->load->model('account/address');
 
 				if ($this->config->get('config_tax_customer') == 'payment') {
-					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
 				}
 
 				if ($this->config->get('config_tax_customer') == 'shipping') {
-					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
 				}
 
 				$this->response->redirect($this->url->link('account/account', '', true));
 			}
 		}
 
-		if ($this->customer->isLogged()) {
+		if ($this->user->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
@@ -57,11 +57,11 @@ class ControllerAccountLogin extends Controller {
 			$this->load->model('account/address');
 
 			if ($this->config->get('config_tax_customer') == 'payment') {
-				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
 			}
 
 			if ($this->config->get('config_tax_customer') == 'shipping') {
-				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
 			}
 
 			// Wishlist
@@ -80,8 +80,8 @@ class ControllerAccountLogin extends Controller {
 				$this->load->model('account/activity');
 
 				$activity_data = array(
-					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					'customer_id' => $this->user->getId(),
+					'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
 				);
 
 				$this->model_account_activity->addActivity('login', $activity_data);
@@ -198,7 +198,7 @@ class ControllerAccountLogin extends Controller {
 		}
 
 		if (!$this->error) {
-			if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
+			if (!$this->user->login($this->request->post['email'], $this->request->post['password'])) {
 				$this->error['warning'] = $this->language->get('error_login');
 
 				$this->model_account_customer->addLoginAttempt($this->request->post['email']);

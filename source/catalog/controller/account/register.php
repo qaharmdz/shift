@@ -3,7 +3,7 @@ class ControllerAccountRegister extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->customer->isLogged()) {
+		if ($this->user->isLogged()) {
 			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
@@ -23,7 +23,7 @@ class ControllerAccountRegister extends Controller {
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
-			$this->customer->login($this->request->post['email'], $this->request->post['password']);
+			$this->user->login($this->request->post['email'], $this->request->post['password']);
 
 			unset($this->session->data['guest']);
 

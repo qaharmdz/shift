@@ -1,7 +1,7 @@
 <?php
 class ControllerAccountAccount extends Controller {
 	public function index() {
-		if (!$this->customer->isLogged()) {
+		if (!$this->user->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
 
 			$this->response->redirect($this->url->link('account/login', '', true));

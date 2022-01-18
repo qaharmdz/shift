@@ -126,13 +126,13 @@ class ControllerInformationContact extends Controller {
 		if (isset($this->request->post['name'])) {
 			$data['name'] = $this->request->post['name'];
 		} else {
-			$data['name'] = $this->customer->getFirstName();
+			$data['name'] = $this->user->getFirstName();
 		}
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];
 		} else {
-			$data['email'] = $this->customer->getEmail();
+			$data['email'] = $this->user->getEmail();
 		}
 
 		if (isset($this->request->post['enquiry'])) {
