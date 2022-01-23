@@ -1,108 +1,114 @@
 <?php
-class ControllerCommonForgotten extends Controller {
-	private $error = array();
 
-	public function index() {
-		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', '', true));
-		}
+declare(strict_types=1);
 
-		if (!$this->config->get('config_password')) {
-			$this->response->redirect($this->url->link('common/login', '', true));
-		}
+class ControllerCommonForgotten extends Controller
+{
+    private $error = array();
 
-		$this->load->language('common/forgotten');
+    public function index()
+    {
+        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
+            $this->response->redirect($this->url->link('common/dashboard', '', true));
+        }
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        if (!$this->config->get('config_password')) {
+            $this->response->redirect($this->url->link('common/login', '', true));
+        }
 
-		$this->load->model('user/user');
+        $this->load->language('common/forgotten');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->language('mail/forgotten');
+        $this->document->setTitle($this->language->get('heading_title'));
 
-			$code = token(40);
+        $this->load->model('user/user');
 
-			$this->model_user_user->editCode($this->request->post['email'], $code);
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            $this->load->language('mail/forgotten');
 
-			$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $code = token(40);
 
-			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
-			$message .= $this->language->get('text_change') . "\n\n";
-			$message .= $this->url->link('common/reset', 'code=' . $code, true) . "\n\n";
-			$message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
+            $this->model_user_user->editCode($this->request->post['email'], $code);
 
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
-			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-			$mail->setTo($this->request->post['email']);
-			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
-			$mail->send();
+            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+            $message .= $this->language->get('text_change') . "\n\n";
+            $message .= $this->url->link('common/reset', 'code=' . $code, true) . "\n\n";
+            $message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
 
-			$this->session->data['success'] = $this->language->get('text_success');
+            $mail = new Mail();
+            $mail->protocol = $this->config->get('config_mail_protocol');
+            $mail->parameter = $this->config->get('config_mail_parameter');
+            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
-			$this->response->redirect($this->url->link('common/login', '', true));
-		}
+            $mail->setTo($this->request->post['email']);
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+            $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+            $mail->send();
 
-		$data['heading_title'] = $this->language->get('heading_title');
+            $this->session->data['success'] = $this->language->get('text_success');
 
-		$data['text_your_email'] = $this->language->get('text_your_email');
-		$data['text_email'] = $this->language->get('text_email');
+            $this->response->redirect($this->url->link('common/login', '', true));
+        }
 
-		$data['entry_email'] = $this->language->get('entry_email');
+        $data['heading_title'] = $this->language->get('heading_title');
 
-		$data['button_reset'] = $this->language->get('button_reset');
-		$data['button_cancel'] = $this->language->get('button_cancel');
+        $data['text_your_email'] = $this->language->get('text_your_email');
+        $data['text_email'] = $this->language->get('text_email');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+        $data['entry_email'] = $this->language->get('entry_email');
 
-		$data['breadcrumbs'] = array();
+        $data['button_reset'] = $this->language->get('button_reset');
+        $data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', '', true)
-		);
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten', 'token=' . '', true)
-		);
+        $data['breadcrumbs'] = array();
 
-		$data['action'] = $this->url->link('common/forgotten', '', true);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/dashboard', '', true)
+        );
 
-		$data['cancel'] = $this->url->link('common/login', '', true);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('common/forgotten', 'token=' . '', true)
+        );
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} else {
-			$data['email'] = '';
-		}
+        $data['action'] = $this->url->link('common/forgotten', '', true);
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['cancel'] = $this->url->link('common/login', '', true);
 
-		$this->response->setOutput($this->load->view('common/forgotten', $data));
-	}
+        if (isset($this->request->post['email'])) {
+            $data['email'] = $this->request->post['email'];
+        } else {
+            $data['email'] = '';
+        }
 
-	protected function validate() {
-		if (!isset($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_email');
-		} elseif (!$this->model_user_user->getTotalUsersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_email');
-		}
+        $data['header'] = $this->load->controller('common/header');
+        $data['footer'] = $this->load->controller('common/footer');
 
-		return !$this->error;
-	}
+        $this->response->setOutput($this->load->view('common/forgotten', $data));
+    }
+
+    protected function validate()
+    {
+        if (!isset($this->request->post['email'])) {
+            $this->error['warning'] = $this->language->get('error_email');
+        } elseif (!$this->model_user_user->getTotalUsersByEmail($this->request->post['email'])) {
+            $this->error['warning'] = $this->language->get('error_email');
+        }
+
+        return !$this->error;
+    }
 }

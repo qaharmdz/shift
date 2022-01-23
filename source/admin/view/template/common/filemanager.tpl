@@ -48,193 +48,193 @@
 <script type="text/javascript"><!--
 <?php if ($target) { ?>
 $('a.thumbnail').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	<?php if ($thumb) { ?>
-	$('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
-	<?php } ?>
+    <?php if ($thumb) { ?>
+    $('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
+    <?php } ?>
 
-	$('#<?php echo $target; ?>').val($(this).parent().find('input').val());
+    $('#<?php echo $target; ?>').val($(this).parent().find('input').val());
 
-	$('#modal-image').modal('hide');
+    $('#modal-image').modal('hide');
 });
 <?php } ?>
 
 $('a.directory').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+    $('#modal-image').load($(this).attr('href'));
 });
 
 $('.pagination a').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+    $('#modal-image').load($(this).attr('href'));
 });
 
 $('#button-parent').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+    $('#modal-image').load($(this).attr('href'));
 });
 
 $('#button-refresh').on('click', function(e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	$('#modal-image').load($(this).attr('href'));
+    $('#modal-image').load($(this).attr('href'));
 });
 
 $('input[name=\'search\']').on('keydown', function(e) {
-	if (e.which == 13) {
-		$('#button-search').trigger('click');
-	}
+    if (e.which == 13) {
+        $('#button-search').trigger('click');
+    }
 });
 
 $('#button-search').on('click', function(e) {
-	var url = 'index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>';
+    var url = 'index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>';
 
-	var filter_name = $('input[name=\'search\']').val();
+    var filter_name = $('input[name=\'search\']').val();
 
-	if (filter_name) {
-		url += '&filter_name=' + encodeURIComponent(filter_name);
-	}
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
 
-	<?php if ($thumb) { ?>
-	url += '&thumb=' + '<?php echo $thumb; ?>';
-	<?php } ?>
+    <?php if ($thumb) { ?>
+    url += '&thumb=' + '<?php echo $thumb; ?>';
+    <?php } ?>
 
-	<?php if ($target) { ?>
-	url += '&target=' + '<?php echo $target; ?>';
-	<?php } ?>
+    <?php if ($target) { ?>
+    url += '&target=' + '<?php echo $target; ?>';
+    <?php } ?>
 
-	$('#modal-image').load(url);
+    $('#modal-image').load(url);
 });
 //--></script>
 <script type="text/javascript"><!--
 $('#button-upload').on('click', function() {
-	$('#form-upload').remove();
+    $('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple="multiple" /></form>');
 
-	$('#form-upload input[name=\'file[]\']').trigger('click');
+    $('#form-upload input[name=\'file[]\']').trigger('click');
 
-	if (typeof timer != 'undefined') {
-    	clearInterval(timer);
-	}
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
 
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file[]\']').val() != '') {
-			clearInterval(timer);
+    timer = setInterval(function() {
+        if ($('#form-upload input[name=\'file[]\']').val() != '') {
+            clearInterval(timer);
 
-			$.ajax({
-				url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-					$('#button-upload').prop('disabled', true);
-				},
-				complete: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
-					$('#button-upload').prop('disabled', false);
-				},
-				success: function(json) {
-					if (json['error']) {
-						alert(json['error']);
-					}
+            $.ajax({
+                url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+                    $('#button-upload').prop('disabled', true);
+                },
+                complete: function() {
+                    $('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+                    $('#button-upload').prop('disabled', false);
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        alert(json['error']);
+                    }
 
-					if (json['success']) {
-						alert(json['success']);
+                    if (json['success']) {
+                        alert(json['success']);
 
-						$('#button-refresh').trigger('click');
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
-		}
-	}, 500);
+                        $('#button-refresh').trigger('click');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
 });
 
 $('#button-folder').popover({
-	html: true,
-	placement: 'bottom',
-	trigger: 'click',
-	title: '<?php echo $entry_folder; ?>',
-	content: function() {
-		html  = '<div class="input-group">';
-		html += '  <input type="text" name="folder" value="" placeholder="<?php echo $entry_folder; ?>" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="<?php echo $button_folder; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
-		html += '</div>';
+    html: true,
+    placement: 'bottom',
+    trigger: 'click',
+    title: '<?php echo $entry_folder; ?>',
+    content: function() {
+        html  = '<div class="input-group">';
+        html += '  <input type="text" name="folder" value="" placeholder="<?php echo $entry_folder; ?>" class="form-control">';
+        html += '  <span class="input-group-btn"><button type="button" title="<?php echo $button_folder; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+        html += '</div>';
 
-		return html;
-	}
+        return html;
+    }
 });
 
 $('#button-folder').on('shown.bs.popover', function() {
-	$('#button-create').on('click', function() {
-		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
-			type: 'post',
-			dataType: 'json',
-			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
-			beforeSend: function() {
-				$('#button-create').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-create').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['error']) {
-					alert(json['error']);
-				}
+    $('#button-create').on('click', function() {
+        $.ajax({
+            url: 'index.php?route=common/filemanager/folder&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+            type: 'post',
+            dataType: 'json',
+            data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
+            beforeSend: function() {
+                $('#button-create').prop('disabled', true);
+            },
+            complete: function() {
+                $('#button-create').prop('disabled', false);
+            },
+            success: function(json) {
+                if (json['error']) {
+                    alert(json['error']);
+                }
 
-				if (json['success']) {
-					alert(json['success']);
+                if (json['success']) {
+                    alert(json['success']);
 
-					$('#button-refresh').trigger('click');
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
+                    $('#button-refresh').trigger('click');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
 });
 
 $('#modal-image #button-delete').on('click', function(e) {
-	if (confirm('<?php echo $text_confirm; ?>')) {
-		$.ajax({
-			url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
-			type: 'post',
-			dataType: 'json',
-			data: $('input[name^=\'path\']:checked'),
-			beforeSend: function() {
-				$('#button-delete').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-delete').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['error']) {
-					alert(json['error']);
-				}
+    if (confirm('<?php echo $text_confirm; ?>')) {
+        $.ajax({
+            url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
+            type: 'post',
+            dataType: 'json',
+            data: $('input[name^=\'path\']:checked'),
+            beforeSend: function() {
+                $('#button-delete').prop('disabled', true);
+            },
+            complete: function() {
+                $('#button-delete').prop('disabled', false);
+            },
+            success: function(json) {
+                if (json['error']) {
+                    alert(json['error']);
+                }
 
-				if (json['success']) {
-					alert(json['success']);
+                if (json['success']) {
+                    alert(json['success']);
 
-					$('#button-refresh').trigger('click');
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
+                    $('#button-refresh').trigger('click');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
 });
 //--></script>

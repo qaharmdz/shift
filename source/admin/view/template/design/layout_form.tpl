@@ -356,65 +356,65 @@
 var route_row = <?php echo $route_row; ?>;
 
 function addRoute() {
-	html  = '<tr id="route-row' + route_row + '">';
-	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
-	html += '  <option value="0"><?php echo $text_default; ?></option>';
-	<?php foreach ($stores as $store) { ?>
-	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
-	<?php } ?>   
-	html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';
-	
-	$('#route tbody').append(html);
-	
-	route_row++;
+    html  = '<tr id="route-row' + route_row + '">';
+    html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
+    html += '  <option value="0"><?php echo $text_default; ?></option>';
+    <?php foreach ($stores as $store) { ?>
+    html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+    <?php } ?>
+    html += '  </select></td>';
+    html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';
+    html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+
+    $('#route tbody').append(html);
+
+    route_row++;
 }
 
 var module_row = <?php echo $module_row; ?>;
 
 function addModule(type) {
-	html  = '<tr id="module-row' + module_row + '">';
+    html  = '<tr id="module-row' + module_row + '">';
     html += '  <td class="text-left"><div class="input-group"><select name="layout_module[' + module_row + '][code]" class="form-control input-sm">';
-	<?php foreach ($extensions as $extension) { ?>
-	html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
-	<?php if (!$extension['module']) { ?>
-	html += '      <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
-	<?php } else { ?>
-	<?php foreach ($extension['module'] as $module) { ?>
-	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
-	<?php } ?>
-	<?php } ?>
-	html += '    </optgroup>';
-	<?php } ?>
-	html += '  </select>';
+    <?php foreach ($extensions as $extension) { ?>
+    html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
+    <?php if (!$extension['module']) { ?>
+    html += '      <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
+    <?php } else { ?>
+    <?php foreach ($extension['module'] as $module) { ?>
+    html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
+    <?php } ?>
+    <?php } ?>
+    html += '    </optgroup>';
+    <?php } ?>
+    html += '  </select>';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][position]" value="' + type.replace('-', '_') + '" />';
     html += '  <input type="hidden" name="layout_module[' + module_row + '][sort_order]" value="" />';
-	html += '  <div class="input-group-btn"><a href="" target="_blank" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button></div></div></td>';
-	html += '</tr>';
-	
-	$('#module-' + type + ' tbody').append(html);
-	
-	$('#module-' + type + ' tbody select[name=\'layout_module[' + module_row + '][code]\']').val($('#module-' + type + ' tfoot select').val());
-	
-	$('#module-' + type + ' select[name*=\'code\']').trigger('change');
-		
-	$('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function(i, element) {
-		$(element).val(i);
-	});
-	
-	module_row++;
+    html += '  <div class="input-group-btn"><a href="" target="_blank" type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa fa-minus-circle"></i></button></div></div></td>';
+    html += '</tr>';
+
+    $('#module-' + type + ' tbody').append(html);
+
+    $('#module-' + type + ' tbody select[name=\'layout_module[' + module_row + '][code]\']').val($('#module-' + type + ' tfoot select').val());
+
+    $('#module-' + type + ' select[name*=\'code\']').trigger('change');
+
+    $('#module-' + type + ' tbody input[name*=\'sort_order\']').each(function(i, element) {
+        $(element).val(i);
+    });
+
+    module_row++;
 }
 
 $('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').delegate('select[name*=\'code\']', 'change', function() {
-	var part = this.value.split('.');
-	
-	if (!part[1]) {
-		$(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&token=<?php echo $token; ?>');
-	} else {
-		$(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&token=<?php echo $token; ?>&module_id=' + part[1]);
-	}
+    var part = this.value.split('.');
+
+    if (!part[1]) {
+        $(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&token=<?php echo $token; ?>');
+    } else {
+        $(this).parent().find('a').attr('href', 'index.php?route=extension/module/' + part[0] + '&token=<?php echo $token; ?>&module_id=' + part[1]);
+    }
 });
 
 $('#module-column-left, #module-column-right, #module-content-top, #module-content-bottom').trigger('change');

@@ -1,10 +1,15 @@
 <?php
-class ControllerCommonLogout extends Controller {
-	public function index() {
-		$this->user->logout();
 
-		unset($this->session->data['token']);
+declare(strict_types=1);
 
-		$this->response->redirect($this->url->link('common/login', '', true));
-	}
+class ControllerCommonLogout extends Controller
+{
+    public function index()
+    {
+        $this->user->logout();
+
+        unset($this->session->data['token']);
+
+        $this->response->redirect($this->url->link('common/login', '', true));
+    }
 }

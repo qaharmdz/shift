@@ -1,76 +1,81 @@
 <?php
-class ControllerCommonHeader extends Controller {
-	public function index() {
-		$data['title'] = $this->document->getTitle();
 
-		if ($this->request->server['HTTPS']) {
-			$data['base'] = HTTPS_SERVER;
-		} else {
-			$data['base'] = HTTP_SERVER;
-		}
+declare(strict_types=1);
 
-		$data['description'] = $this->document->getDescription();
-		$data['keywords'] = $this->document->getKeywords();
-		$data['links'] = $this->document->getLinks();
-		$data['styles'] = $this->document->getStyles();
-		$data['scripts'] = $this->document->getScripts();
-		$data['lang'] = $this->language->get('code');
-		$data['direction'] = $this->language->get('direction');
+class ControllerCommonHeader extends Controller
+{
+    public function index()
+    {
+        $data['title'] = $this->document->getTitle();
 
-		$this->load->language('common/header');
+        if ($this->request->server['HTTPS']) {
+            $data['base'] = HTTPS_SERVER;
+        } else {
+            $data['base'] = HTTP_SERVER;
+        }
 
-		$data['heading_title'] = $this->language->get('heading_title');
+        $data['description'] = $this->document->getDescription();
+        $data['keywords'] = $this->document->getKeywords();
+        $data['links'] = $this->document->getLinks();
+        $data['styles'] = $this->document->getStyles();
+        $data['scripts'] = $this->document->getScripts();
+        $data['lang'] = $this->language->get('code');
+        $data['direction'] = $this->language->get('direction');
 
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_processing_status'] = $this->language->get('text_processing_status');
-		$data['text_complete_status'] = $this->language->get('text_complete_status');
-		$data['text_return'] = $this->language->get('text_return');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_online'] = $this->language->get('text_online');
-		$data['text_approval'] = $this->language->get('text_approval');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_stock'] = $this->language->get('text_stock');
-		$data['text_review'] = $this->language->get('text_review');
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_store'] = $this->language->get('text_store');
-		$data['text_front'] = $this->language->get('text_front');
-		$data['text_help'] = $this->language->get('text_help');
-		$data['text_homepage'] = $this->language->get('text_homepage');
-		$data['text_documentation'] = $this->language->get('text_documentation');
-		$data['text_support'] = $this->language->get('text_support');
-		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-		$data['text_logout'] = $this->language->get('text_logout');
+        $this->load->language('common/header');
 
-		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-			$data['logged'] = '';
+        $data['heading_title'] = $this->language->get('heading_title');
 
-			$data['home'] = $this->url->link('common/dashboard', '', true);
-		} else {
-			$data['logged'] = true;
+        $data['text_order'] = $this->language->get('text_order');
+        $data['text_processing_status'] = $this->language->get('text_processing_status');
+        $data['text_complete_status'] = $this->language->get('text_complete_status');
+        $data['text_return'] = $this->language->get('text_return');
+        $data['text_customer'] = $this->language->get('text_customer');
+        $data['text_online'] = $this->language->get('text_online');
+        $data['text_approval'] = $this->language->get('text_approval');
+        $data['text_product'] = $this->language->get('text_product');
+        $data['text_stock'] = $this->language->get('text_stock');
+        $data['text_review'] = $this->language->get('text_review');
+        $data['text_affiliate'] = $this->language->get('text_affiliate');
+        $data['text_store'] = $this->language->get('text_store');
+        $data['text_front'] = $this->language->get('text_front');
+        $data['text_help'] = $this->language->get('text_help');
+        $data['text_homepage'] = $this->language->get('text_homepage');
+        $data['text_documentation'] = $this->language->get('text_documentation');
+        $data['text_support'] = $this->language->get('text_support');
+        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
+        $data['text_logout'] = $this->language->get('text_logout');
 
-			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true);
-			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], true);
+        if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+            $data['logged'] = '';
 
-			// Online Stores
-			$data['stores'] = array();
+            $data['home'] = $this->url->link('common/dashboard', '', true);
+        } else {
+            $data['logged'] = true;
 
-			$data['stores'][] = array(
-				'name' => $this->config->get('config_name'),
-				'href' => HTTP_CATALOG
-			);
+            $data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true);
+            $data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], true);
 
-			$this->load->model('setting/store');
+            // Online Stores
+            $data['stores'] = array();
 
-			$results = $this->model_setting_store->getStores();
+            $data['stores'][] = array(
+                'name' => $this->config->get('config_name'),
+                'href' => HTTP_CATALOG
+            );
 
-			foreach ($results as $result) {
-				$data['stores'][] = array(
-					'name' => $result['name'],
-					'href' => $result['url']
-				);
-			}
-		}
+            $this->load->model('setting/store');
 
-		return $this->load->view('common/header', $data);
-	}
+            $results = $this->model_setting_store->getStores();
+
+            foreach ($results as $result) {
+                $data['stores'][] = array(
+                    'name' => $result['name'],
+                    'href' => $result['url']
+                );
+            }
+        }
+
+        return $this->load->view('common/header', $data);
+    }
 }

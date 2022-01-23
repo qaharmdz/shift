@@ -40,75 +40,75 @@
   <?php if ($categories) { ?>
   <script type="text/javascript"><!--
 $('select[name="type"]').on('change', function() {
-	$.ajax({
-		url: $('select[name="type"]').val(),
-		dataType: 'html',
-		beforeSend: function() {
-			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
-			$('.fa-filter').removeClass('fa-filter');
-		},
-		complete: function() {
-			$('.fa-circle-o-notch').addClass('fa-filter');
-			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
-			
-		},
-		success: function(html) {
-			$('#extension').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    $.ajax({
+        url: $('select[name="type"]').val(),
+        dataType: 'html',
+        beforeSend: function() {
+            $('.fa-filter').addClass('fa-circle-o-notch fa-spin');
+            $('.fa-filter').removeClass('fa-filter');
+        },
+        complete: function() {
+            $('.fa-circle-o-notch').addClass('fa-filter');
+            $('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
+
+        },
+        success: function(html) {
+            $('#extension').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 $('select[name="type"]').trigger('change');
 
 $('#extension').on('click', '.btn-success', function(e) {
-	e.preventDefault();
-	
-	var node = this;
+    e.preventDefault();
 
-	$.ajax({
-		url: $(node).attr('href'),
-		dataType: 'html',
-		beforeSend: function() {
-			$(node).button('loading');
-		},
-		complete: function() {
-			$(node).button('reset');
-		},
-		success: function(html) {
-			$('#extension').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    var node = this;
+
+    $.ajax({
+        url: $(node).attr('href'),
+        dataType: 'html',
+        beforeSend: function() {
+            $(node).button('loading');
+        },
+        complete: function() {
+            $(node).button('reset');
+        },
+        success: function(html) {
+            $('#extension').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
-	e.preventDefault();
-	
-	if (confirm('<?php echo $text_confirm; ?>')) {
-		var node = this;
-	
-		$.ajax({
-			url: $(node).attr('href'),
-			dataType: 'html',
-			beforeSend: function() {
-				$(node).button('loading');
-			},
-			complete: function() {
-				$(node).button('reset');
-			},
-			success: function(html) {
-				$('#extension').html(html);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	}
+    e.preventDefault();
+
+    if (confirm('<?php echo $text_confirm; ?>')) {
+        var node = this;
+
+        $.ajax({
+            url: $(node).attr('href'),
+            dataType: 'html',
+            beforeSend: function() {
+                $(node).button('loading');
+            },
+            complete: function() {
+                $(node).button('reset');
+            },
+            success: function(html) {
+                $('#extension').html(html);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
 });
 //--></script>
   <?php } ?>

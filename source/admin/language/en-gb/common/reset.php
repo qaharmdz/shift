@@ -1,4 +1,5 @@
 <?php
+
 // header
 $_['heading_title']  = 'Reset your password';
 

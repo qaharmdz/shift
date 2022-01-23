@@ -1,319 +1,319 @@
 function getURLVar(key) {
-	var value = [];
+    var value = [];
 
-	var query = String(document.location).split('?');
+    var query = String(document.location).split('?');
 
-	if (query[1]) {
-		var part = query[1].split('&');
+    if (query[1]) {
+        var part = query[1].split('&');
 
-		for (i = 0; i < part.length; i++) {
-			var data = part[i].split('=');
+        for (i = 0; i < part.length; i++) {
+            var data = part[i].split('=');
 
-			if (data[0] && data[1]) {
-				value[data[0]] = data[1];
-			}
-		}
+            if (data[0] && data[1]) {
+                value[data[0]] = data[1];
+            }
+        }
 
-		if (value[key]) {
-			return value[key];
-		} else {
-			return '';
-		}
-	}
+        if (value[key]) {
+            return value[key];
+        } else {
+            return '';
+        }
+    }
 }
 
 $(document).ready(function() {
-	//Form Submit for IE Browser
-	$('button[type=\'submit\']').on('click', function() {
-		$("form[id*='form-']").submit();
-	});
+    //Form Submit for IE Browser
+    $('button[type=\'submit\']').on('click', function() {
+        $("form[id*='form-']").submit();
+    });
 
-	// Highlight any found errors
-	$('.text-danger').each(function() {
-		var element = $(this).parent().parent();
+    // Highlight any found errors
+    $('.text-danger').each(function() {
+        var element = $(this).parent().parent();
 
-		if (element.hasClass('form-group')) {
-			element.addClass('has-error');
-		}
-	});
+        if (element.hasClass('form-group')) {
+            element.addClass('has-error');
+        }
+    });
 
-	// Set last page opened on the menu
-	$('#menu a[href]').on('click', function() {
-		sessionStorage.setItem('menu', $(this).attr('href'));
-	});
+    // Set last page opened on the menu
+    $('#menu a[href]').on('click', function() {
+        sessionStorage.setItem('menu', $(this).attr('href'));
+    });
 
-	if (!sessionStorage.getItem('menu')) {
-		$('#menu #dashboard').addClass('active');
-	} else {
-		// Sets active and open to selected page in the left column menu.
-		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active open');
-	}
+    if (!sessionStorage.getItem('menu')) {
+        $('#menu #dashboard').addClass('active');
+    } else {
+        // Sets active and open to selected page in the left column menu.
+        $('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active open');
+    }
 
-	if (localStorage.getItem('column-left') == 'active') {
-		$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
+    if (localStorage.getItem('column-left') == 'active') {
+        $('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
 
-		$('#column-left').addClass('active');
+        $('#column-left').addClass('active');
 
-		// Slide Down Menu
-		$('#menu li.active').has('ul').children('ul').addClass('collapse in');
-		$('#menu li').not('.active').has('ul').children('ul').addClass('collapse');
-	} else {
-		$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
+        // Slide Down Menu
+        $('#menu li.active').has('ul').children('ul').addClass('collapse in');
+        $('#menu li').not('.active').has('ul').children('ul').addClass('collapse');
+    } else {
+        $('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
 
-		$('#menu li li.active').has('ul').children('ul').addClass('collapse in');
-		$('#menu li li').not('.active').has('ul').children('ul').addClass('collapse');
-	}
+        $('#menu li li.active').has('ul').children('ul').addClass('collapse in');
+        $('#menu li li').not('.active').has('ul').children('ul').addClass('collapse');
+    }
 
-	// Menu button
-	$('#button-menu').on('click', function() {
-		// Checks if the left column is active or not.
-		if ($('#column-left').hasClass('active')) {
-			localStorage.setItem('column-left', '');
+    // Menu button
+    $('#button-menu').on('click', function() {
+        // Checks if the left column is active or not.
+        if ($('#column-left').hasClass('active')) {
+            localStorage.setItem('column-left', '');
 
-			$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
+            $('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
 
-			$('#column-left').removeClass('active');
+            $('#column-left').removeClass('active');
 
-			$('#menu > li > ul').removeClass('in collapse');
-			$('#menu > li > ul').removeAttr('style');
-		} else {
-			localStorage.setItem('column-left', 'active');
+            $('#menu > li > ul').removeClass('in collapse');
+            $('#menu > li > ul').removeAttr('style');
+        } else {
+            localStorage.setItem('column-left', 'active');
 
-			$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
+            $('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
 
-			$('#column-left').addClass('active');
+            $('#column-left').addClass('active');
 
-			// Add the slide down to open menu items
-			$('#menu li.open').has('ul').children('ul').addClass('collapse in');
-			$('#menu li').not('.open').has('ul').children('ul').addClass('collapse');
-		}
-	});
+            // Add the slide down to open menu items
+            $('#menu li.open').has('ul').children('ul').addClass('collapse in');
+            $('#menu li').not('.open').has('ul').children('ul').addClass('collapse');
+        }
+    });
 
-	// Menu
-	$('#menu').find('li').has('ul').children('a').on('click', function() {
-		if ($('#column-left').hasClass('active')) {
-			$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
-			$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
-		} else if (!$(this).parent().parent().is('#menu')) {
-			$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
-			$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
-		}
-	});
+    // Menu
+    $('#menu').find('li').has('ul').children('a').on('click', function() {
+        if ($('#column-left').hasClass('active')) {
+            $(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
+            $(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
+        } else if (!$(this).parent().parent().is('#menu')) {
+            $(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
+            $(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
+        }
+    });
 
-	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
-		$('body > .tooltip').remove();
-	});
+    // Tooltip remove fixed
+    $(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
+        $('body > .tooltip').remove();
+    });
 
-	// Image Manager
-	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
-		var $element = $(this);
-		var $popover = $element.data('bs.popover'); // element has bs popover?
-		
-		e.preventDefault();
+    // Image Manager
+    $(document).on('click', 'a[data-toggle=\'image\']', function(e) {
+        var $element = $(this);
+        var $popover = $element.data('bs.popover'); // element has bs popover?
 
-		// destroy all image popovers
-		$('a[data-toggle="image"]').popover('destroy');
+        e.preventDefault();
 
-		// remove flickering (do not re-add popover when clicking for removal)
-		if ($popover) {
-			return;
-		}
+        // destroy all image popovers
+        $('a[data-toggle="image"]').popover('destroy');
 
-		$element.popover({
-			html: true,
-			placement: 'right',
-			trigger: 'manual',
-			content: function() {
-				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
-			}
-		});
+        // remove flickering (do not re-add popover when clicking for removal)
+        if ($popover) {
+            return;
+        }
 
-		$element.popover('show');
+        $element.popover({
+            html: true,
+            placement: 'right',
+            trigger: 'manual',
+            content: function() {
+                return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
+            }
+        });
 
-		$('#button-image').on('click', function() {
-			var $button = $(this);
-			var $icon   = $button.find('> i');
-			
-			$('#modal-image').remove();
+        $element.popover('show');
 
-			$.ajax({
-				url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
-				dataType: 'html',
-				beforeSend: function() {
-					$button.prop('disabled', true);
-					if ($icon.length) {
-						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
-					}
-				},
-				complete: function() {
-					$button.prop('disabled', false);
-					if ($icon.length) {
-						$icon.attr('class', 'fa fa-pencil');
-					}
-				},
-				success: function(html) {
-					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+        $('#button-image').on('click', function() {
+            var $button = $(this);
+            var $icon   = $button.find('> i');
 
-					$('#modal-image').modal('show');
-				}
-			});
+            $('#modal-image').remove();
 
-			$element.popover('destroy');
-		});
+            $.ajax({
+                url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $element.parent().find('input').attr('id') + '&thumb=' + $element.attr('id'),
+                dataType: 'html',
+                beforeSend: function() {
+                    $button.prop('disabled', true);
+                    if ($icon.length) {
+                        $icon.attr('class', 'fa fa-circle-o-notch fa-spin');
+                    }
+                },
+                complete: function() {
+                    $button.prop('disabled', false);
+                    if ($icon.length) {
+                        $icon.attr('class', 'fa fa-pencil');
+                    }
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 
-		$('#button-clear').on('click', function() {
-			$element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
+                    $('#modal-image').modal('show');
+                }
+            });
 
-			$element.parent().find('input').val('');
+            $element.popover('destroy');
+        });
 
-			$element.popover('destroy');
-		});
-	});
+        $('#button-clear').on('click', function() {
+            $element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
 
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+            $element.parent().find('input').val('');
 
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-	});
+            $element.popover('destroy');
+        });
+    });
 
-	// https://github.com/opencart/opencart/issues/2595
-	$.event.special.remove = {
-		remove: function(o) {
-			if (o.handler) {
-				o.handler.apply(this, arguments);
-			}
-		}
-	}
+    // tooltips on hover
+    $('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
-	$('[data-toggle=\'tooltip\']').on('remove', function() {
-		$(this).tooltip('destroy');
-	});
+    // Makes tooltips work on ajax generated content
+    $(document).ajaxStop(function() {
+        $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+    });
+
+    // https://github.com/opencart/opencart/issues/2595
+    $.event.special.remove = {
+        remove: function(o) {
+            if (o.handler) {
+                o.handler.apply(this, arguments);
+            }
+        }
+    }
+
+    $('[data-toggle=\'tooltip\']').on('remove', function() {
+        $(this).tooltip('destroy');
+    });
 });
 
 // Autocomplete */
 (function($) {
-	$.fn.autocomplete = function(option) {
-		return this.each(function() {
-			var $this = $(this);
-			var $dropdown = $('<ul class="dropdown-menu" />');
-			
-			this.timer = null;
-			this.items = [];
+    $.fn.autocomplete = function(option) {
+        return this.each(function() {
+            var $this = $(this);
+            var $dropdown = $('<ul class="dropdown-menu" />');
 
-			$.extend(this, option);
+            this.timer = null;
+            this.items = [];
 
-			$this.attr('autocomplete', 'off');
+            $.extend(this, option);
 
-			// Focus
-			$this.on('focus', function() {
-				this.request();
-			});
+            $this.attr('autocomplete', 'off');
 
-			// Blur
-			$this.on('blur', function() {
-				setTimeout(function(object) {
-					object.hide();
-				}, 200, this);
-			});
+            // Focus
+            $this.on('focus', function() {
+                this.request();
+            });
 
-			// Keydown
-			$this.on('keydown', function(event) {
-				switch(event.keyCode) {
-					case 27: // escape
-						this.hide();
-						break;
-					default:
-						this.request();
-						break;
-				}
-			});
+            // Blur
+            $this.on('blur', function() {
+                setTimeout(function(object) {
+                    object.hide();
+                }, 200, this);
+            });
 
-			// Click
-			this.click = function(event) {
-				event.preventDefault();
+            // Keydown
+            $this.on('keydown', function(event) {
+                switch(event.keyCode) {
+                    case 27: // escape
+                        this.hide();
+                        break;
+                    default:
+                        this.request();
+                        break;
+                }
+            });
 
-				var value = $(event.target).parent().attr('data-value');
+            // Click
+            this.click = function(event) {
+                event.preventDefault();
 
-				if (value && this.items[value]) {
-					this.select(this.items[value]);
-				}
-			}
+                var value = $(event.target).parent().attr('data-value');
 
-			// Show
-			this.show = function() {
-				var pos = $this.position();
+                if (value && this.items[value]) {
+                    this.select(this.items[value]);
+                }
+            }
 
-				$dropdown.css({
-					top: pos.top + $this.outerHeight(),
-					left: pos.left
-				});
+            // Show
+            this.show = function() {
+                var pos = $this.position();
 
-				$dropdown.show();
-			}
+                $dropdown.css({
+                    top: pos.top + $this.outerHeight(),
+                    left: pos.left
+                });
 
-			// Hide
-			this.hide = function() {
-				$dropdown.hide();
-			}
+                $dropdown.show();
+            }
 
-			// Request
-			this.request = function() {
-				clearTimeout(this.timer);
+            // Hide
+            this.hide = function() {
+                $dropdown.hide();
+            }
 
-				this.timer = setTimeout(function(object) {
-					object.source($(object).val(), $.proxy(object.response, object));
-				}, 200, this);
-			}
+            // Request
+            this.request = function() {
+                clearTimeout(this.timer);
 
-			// Response
-			this.response = function(json) {
-				var html = '';
-				var category = {};
-				var name;
-				var i = 0, j = 0;
+                this.timer = setTimeout(function(object) {
+                    object.source($(object).val(), $.proxy(object.response, object));
+                }, 200, this);
+            }
 
-				if (json.length) {
-					for (i = 0; i < json.length; i++) {
-						// update element items
-						this.items[json[i]['value']] = json[i];
+            // Response
+            this.response = function(json) {
+                var html = '';
+                var category = {};
+                var name;
+                var i = 0, j = 0;
 
-						if (!json[i]['category']) {
-							// ungrouped items
-							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
-						} else {
-							// grouped items
-							name = json[i]['category'];
-							if (!category[name]) {
-								category[name] = [];
-							}
+                if (json.length) {
+                    for (i = 0; i < json.length; i++) {
+                        // update element items
+                        this.items[json[i]['value']] = json[i];
 
-							category[name].push(json[i]);
-						}
-					}
+                        if (!json[i]['category']) {
+                            // ungrouped items
+                            html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
+                        } else {
+                            // grouped items
+                            name = json[i]['category'];
+                            if (!category[name]) {
+                                category[name] = [];
+                            }
 
-					for (name in category) {
-						html += '<li class="dropdown-header">' + name + '</li>';
+                            category[name].push(json[i]);
+                        }
+                    }
 
-						for (j = 0; j < category[name].length; j++) {
-							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
-						}
-					}
-				}
+                    for (name in category) {
+                        html += '<li class="dropdown-header">' + name + '</li>';
 
-				if (html) {
-					this.show();
-				} else {
-					this.hide();
-				}
+                        for (j = 0; j < category[name].length; j++) {
+                            html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
+                        }
+                    }
+                }
 
-				$dropdown.html(html);
-			}
+                if (html) {
+                    this.show();
+                } else {
+                    this.hide();
+                }
 
-			$dropdown.on('click', '> li > a', $.proxy(this.click, this));
-			$this.after($dropdown);
-		});
-	}
+                $dropdown.html(html);
+            }
+
+            $dropdown.on('click', '> li > a', $.proxy(this.click, this));
+            $this.after($dropdown);
+        });
+    }
 })(window.jQuery);

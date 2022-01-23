@@ -567,59 +567,59 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'config_theme\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/theme&token=<?php echo $token; ?>&theme=' + this.value,
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(html) {
-			$('#theme').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+    $.ajax({
+        url: 'index.php?route=setting/setting/theme&token=<?php echo $token; ?>&theme=' + this.value,
+        dataType: 'html',
+        beforeSend: function() {
+            $('select[name=\'config_theme\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+        },
+        complete: function() {
+            $('.fa-spin').remove();
+        },
+        success: function(html) {
+            $('#theme').attr('src', html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 $('select[name=\'config_theme\']').trigger('change');
 //--></script>   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			html = '<option value=""><?php echo $text_select; ?></option>';
+    $.ajax({
+        url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
+        dataType: 'json',
+        beforeSend: function() {
+            $('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+        },
+        complete: function() {
+            $('.fa-spin').remove();
+        },
+        success: function(json) {
+            html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+            if (json['zone'] && json['zone'] != '') {
+                for (i = 0; i < json['zone'].length; i++) {
+                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-						html += ' selected="selected"';
-					}
+                    if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
+                        html += ' selected="selected"';
+                    }
 
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-			}
+                    html += '>' + json['zone'][i]['name'] + '</option>';
+                }
+            } else {
+                html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+            }
 
-			$('select[name=\'config_zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+            $('select[name=\'config_zone_id\']').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
 });
 
 $('select[name=\'config_country_id\']').trigger('change');

@@ -1,0 +1,51 @@
+<IfModule mod_autoindex.c>
+    Options -Indexes
+    ErrorDocument 403 "Restricted access"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    Options +FollowSymlinks
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^.*\.(ico|gif|jpg|jpeg|png|js|css|map)$ [NC]
+
+    RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]
+</IfModule>
+
+# Block access to files that can expose sensitive information.
+<FilesMatch "(^#.*#|\.(ini|txt|twig|json|xml|log)|~)$">
+    # Apache < 2.3
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+        Satisfy All
+    </IfModule>
+
+    # Apache ≥ 2.3
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+
+<filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|svg|js|css|swf|woff|woff2)$">
+    Header set Cache-Control "max-age=15768000, public"
+</filesMatch>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access 1 year"
+    ExpiresByType image/jpeg "access 1 year"
+    ExpiresByType image/gif "access 1 year"
+    ExpiresByType image/png "access 1 year"
+    ExpiresByType image/svg "access 1 year"
+    ExpiresByType text/css "access 1 month"
+    ExpiresByType application/pdf "access 1 month"
+    ExpiresByType application/javascript "access 1 month"
+    ExpiresByType application/x-javascript "access 1 month"
+    ExpiresByType application/x-shockwave-flash "access 1 month"
+    ExpiresByType image/x-icon "access 1 year"
+    ExpiresDefault "access 3 days"
+</IfModule>
