@@ -1,114 +1,119 @@
 <?php
-class ControllerAccountPassword extends Controller {
-	private $error = array();
 
-	public function index() {
-		if (!$this->user->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/password', '', true);
+declare(strict_types=1);
 
-			$this->response->redirect($this->url->link('account/login', '', true));
-		}
+class ControllerAccountPassword extends Controller
+{
+    private $error = array();
 
-		$this->load->language('account/password');
+    public function index()
+    {
+        if (!$this->user->isLogged()) {
+            $this->session->data['redirect'] = $this->url->link('account/password', '', true);
 
-		$this->document->setTitle($this->language->get('heading_title'));
+            $this->response->redirect($this->url->link('account/login', '', true));
+        }
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->model('account/customer');
+        $this->load->language('account/password');
 
-			$this->model_account_customer->editPassword($this->user->getEmail(), $this->request->post['password']);
+        $this->document->setTitle($this->language->get('heading_title'));
 
-			$this->session->data['success'] = $this->language->get('text_success');
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            $this->load->model('account/customer');
 
-			// Add to activity log
-			if ($this->config->get('config_customer_activity')) {
-				$this->load->model('account/activity');
+            $this->model_account_customer->editPassword($this->user->getEmail(), $this->request->post['password']);
 
-				$activity_data = array(
-					'customer_id' => $this->user->getId(),
-					'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
-				);
+            $this->session->data['success'] = $this->language->get('text_success');
 
-				$this->model_account_activity->addActivity('password', $activity_data);
-			}
+            // Add to activity log
+            if ($this->config->get('config_customer_activity')) {
+                $this->load->model('account/activity');
 
-			$this->response->redirect($this->url->link('account/account', '', true));
-		}
+                $activity_data = array(
+                    'customer_id' => $this->user->getId(),
+                    'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
+                );
 
-		$data['breadcrumbs'] = array();
+                $this->model_account_activity->addActivity('password', $activity_data);
+            }
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
+            $this->response->redirect($this->url->link('account/account', '', true));
+        }
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', true)
-		);
+        $data['breadcrumbs'] = array();
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/password', '', true)
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
 
-		$data['heading_title'] = $this->language->get('heading_title');
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_account'),
+            'href' => $this->url->link('account/account', '', true)
+        );
 
-		$data['text_password'] = $this->language->get('text_password');
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('account/password', '', true)
+        );
 
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
+        $data['heading_title'] = $this->language->get('heading_title');
 
-		$data['button_continue'] = $this->language->get('button_continue');
-		$data['button_back'] = $this->language->get('button_back');
+        $data['text_password'] = $this->language->get('text_password');
 
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
+        $data['entry_password'] = $this->language->get('entry_password');
+        $data['entry_confirm'] = $this->language->get('entry_confirm');
 
-		if (isset($this->error['confirm'])) {
-			$data['error_confirm'] = $this->error['confirm'];
-		} else {
-			$data['error_confirm'] = '';
-		}
+        $data['button_continue'] = $this->language->get('button_continue');
+        $data['button_back'] = $this->language->get('button_back');
 
-		$data['action'] = $this->url->link('account/password', '', true);
+        if (isset($this->error['password'])) {
+            $data['error_password'] = $this->error['password'];
+        } else {
+            $data['error_password'] = '';
+        }
 
-		if (isset($this->request->post['password'])) {
-			$data['password'] = $this->request->post['password'];
-		} else {
-			$data['password'] = '';
-		}
+        if (isset($this->error['confirm'])) {
+            $data['error_confirm'] = $this->error['confirm'];
+        } else {
+            $data['error_confirm'] = '';
+        }
 
-		if (isset($this->request->post['confirm'])) {
-			$data['confirm'] = $this->request->post['confirm'];
-		} else {
-			$data['confirm'] = '';
-		}
+        $data['action'] = $this->url->link('account/password', '', true);
 
-		$data['back'] = $this->url->link('account/account', '', true);
+        if (isset($this->request->post['password'])) {
+            $data['password'] = $this->request->post['password'];
+        } else {
+            $data['password'] = '';
+        }
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
+        if (isset($this->request->post['confirm'])) {
+            $data['confirm'] = $this->request->post['confirm'];
+        } else {
+            $data['confirm'] = '';
+        }
 
-		$this->response->setOutput($this->load->view('account/password', $data));
-	}
+        $data['back'] = $this->url->link('account/account', '', true);
 
-	protected function validate() {
-		if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
-			$this->error['password'] = $this->language->get('error_password');
-		}
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['column_right'] = $this->load->controller('common/column_right');
+        $data['content_top'] = $this->load->controller('common/content_top');
+        $data['content_bottom'] = $this->load->controller('common/content_bottom');
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
 
-		if ($this->request->post['confirm'] != $this->request->post['password']) {
-			$this->error['confirm'] = $this->language->get('error_confirm');
-		}
+        $this->response->setOutput($this->load->view('account/password', $data));
+    }
 
-		return !$this->error;
-	}
+    protected function validate() {
+        if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
+            $this->error['password'] = $this->language->get('error_password');
+        }
+
+        if ($this->request->post['confirm'] != $this->request->post['password']) {
+            $this->error['confirm'] = $this->language->get('error_confirm');
+        }
+
+        return !$this->error;
+    }
 }

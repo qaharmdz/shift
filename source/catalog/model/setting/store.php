@@ -1,16 +1,21 @@
 <?php
-class ModelSettingStore extends Model {
-	public function getStores($data = array()) {
-		$store_data = $this->cache->get('store');
 
-		if (!$store_data) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store ORDER BY url");
+declare(strict_types=1);
 
-			$store_data = $query->rows;
+class ModelSettingStore extends Model
+{
+    public function getStores($data = array())
+    {
+        $store_data = $this->cache->get('store');
 
-			$this->cache->set('store', $store_data);
-		}
+        if (!$store_data) {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store ORDER BY url");
 
-		return $store_data;
-	}
+            $store_data = $query->rows;
+
+            $this->cache->set('store', $store_data);
+        }
+
+        return $store_data;
+    }
 }

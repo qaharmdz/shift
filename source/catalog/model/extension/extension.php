@@ -1,8 +1,13 @@
 <?php
-class ModelExtensionExtension extends Model {
-	function getExtensions($type) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "'");
 
-		return $query->rows;
-	}
+declare(strict_types=1);
+
+class ModelExtensionExtension extends Model
+{
+    function getExtensions($type)
+    {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "'");
+
+        return $query->rows;
+    }
 }

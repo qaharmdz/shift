@@ -1,4 +1,5 @@
 <?php
+
 // Text
 $_['text_upload']    = 'Your file was successfully uploaded!';
 

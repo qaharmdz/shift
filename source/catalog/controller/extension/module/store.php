@@ -1,44 +1,49 @@
 <?php
-class ControllerExtensionModuleStore extends Controller {
-	public function index() {
-		$status = true;
 
-		if ($this->config->get('store_admin')) {
-			$this->user = new Cart\User($this->registry);
+declare(strict_types=1);
 
-			$status = $this->user->isLogged();
-		}
+class ControllerExtensionModuleStore extends Controller
+{
+    public function index()
+    {
+        $status = true;
 
-		if ($status) {
-			$this->load->language('extension/module/store');
+        if ($this->config->get('store_admin')) {
+            $this->user = new Cart\User($this->registry);
 
-			$data['heading_title'] = $this->language->get('heading_title');
+            $status = $this->user->isLogged();
+        }
 
-			$data['text_store'] = $this->language->get('text_store');
+        if ($status) {
+            $this->load->language('extension/module/store');
 
-			$data['store_id'] = $this->config->get('config_store_id');
+            $data['heading_title'] = $this->language->get('heading_title');
 
-			$data['stores'] = array();
+            $data['text_store'] = $this->language->get('text_store');
 
-			$data['stores'][] = array(
-				'store_id' => 0,
-				'name'     => $this->language->get('text_default'),
-				'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
-			);
+            $data['store_id'] = $this->config->get('config_store_id');
 
-			$this->load->model('setting/store');
+            $data['stores'] = array();
 
-			$results = $this->model_setting_store->getStores();
+            $data['stores'][] = array(
+                'store_id' => 0,
+                'name'     => $this->language->get('text_default'),
+                'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
+            );
 
-			foreach ($results as $result) {
-				$data['stores'][] = array(
-					'store_id' => $result['store_id'],
-					'name'     => $result['name'],
-					'url'      => $result['url'] . 'index.php?route=common/home&session_id=' . $this->session->getId()
-				);
-			}
+            $this->load->model('setting/store');
 
-			return $this->load->view('extension/module/store', $data);
-		}
-	}
+            $results = $this->model_setting_store->getStores();
+
+            foreach ($results as $result) {
+                $data['stores'][] = array(
+                    'store_id' => $result['store_id'],
+                    'name'     => $result['name'],
+                    'url'      => $result['url'] . 'index.php?route=common/home&session_id=' . $this->session->getId()
+                );
+            }
+
+            return $this->load->view('extension/module/store', $data);
+        }
+    }
 }

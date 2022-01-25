@@ -1,4 +1,5 @@
 <?php
+
 // Text
 $_['text_home']          = 'Home';
 $_['text_wishlist']      = 'Wish List (%s)';

@@ -1,4 +1,5 @@
 <?php
+
 // Text
 $_['text_information']  = 'Information';
 $_['text_service']      = 'Customer Service';

@@ -1,4 +1,5 @@
 <?php
+
 // Heading
 $_['heading_title'] = 'Your Account Has Been Created!';
 

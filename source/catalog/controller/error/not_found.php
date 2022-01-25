@@ -1,55 +1,60 @@
 <?php
-class ControllerErrorNotFound extends Controller {
-	public function index() {
-		$this->load->language('error/not_found');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+declare(strict_types=1);
 
-		$data['breadcrumbs'] = array();
+class ControllerErrorNotFound extends Controller
+{
+    public function index()
+    {
+        $this->load->language('error/not_found');
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
+        $this->document->setTitle($this->language->get('heading_title'));
 
-		if (isset($this->request->get['route'])) {
-			$url_data = $this->request->get;
+        $data['breadcrumbs'] = array();
 
-			unset($url_data['_route_']);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/home')
+        );
 
-			$route = $url_data['route'];
+        if (isset($this->request->get['route'])) {
+            $url_data = $this->request->get;
 
-			unset($url_data['route']);
+            unset($url_data['_route_']);
 
-			$url = '';
+            $route = $url_data['route'];
 
-			if ($url_data) {
-				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
-			}
+            unset($url_data['route']);
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link($route, $url, $this->request->server['HTTPS'])
-			);
-		}
+            $url = '';
 
-		$data['heading_title'] = $this->language->get('heading_title');
+            if ($url_data) {
+                $url = '&' . urldecode(http_build_query($url_data, '', '&'));
+            }
 
-		$data['text_error'] = $this->language->get('text_error');
+            $data['breadcrumbs'][] = array(
+                'text' => $this->language->get('heading_title'),
+                'href' => $this->url->link($route, $url, $this->request->server['HTTPS'])
+            );
+        }
 
-		$data['button_continue'] = $this->language->get('button_continue');
+        $data['heading_title'] = $this->language->get('heading_title');
 
-		$data['continue'] = $this->url->link('common/home');
+        $data['text_error'] = $this->language->get('text_error');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
+        $data['button_continue'] = $this->language->get('button_continue');
 
-		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+        $data['continue'] = $this->url->link('common/home');
 
-		$this->response->setOutput($this->load->view('error/not_found', $data));
-	}
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['column_right'] = $this->load->controller('common/column_right');
+        $data['content_top'] = $this->load->controller('common/content_top');
+        $data['content_bottom'] = $this->load->controller('common/content_bottom');
+        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+
+        $this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+
+        $this->response->setOutput($this->load->view('error/not_found', $data));
+    }
 }
