@@ -1,22 +1,29 @@
 <?php
-class Template {
-	private $adaptor;
 
-  	public function __construct($adaptor) {
-	    $class = 'Template\\' . $adaptor;
+declare(strict_types=1);
 
-		if (class_exists($class)) {
-			$this->adaptor = new $class();
-		} else {
-			throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
-		}
-	}
+class Template
+{
+    private $adaptor;
 
-	public function set($key, $value) {
-		$this->adaptor->set($key, $value);
-	}
+    public function __construct($adaptor)
+    {
+        $class = 'Template\\' . $adaptor;
 
-	public function render($template) {
-		return $this->adaptor->render($template);
-	}
+        if (class_exists($class)) {
+            $this->adaptor = new $class();
+        } else {
+            throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
+        }
+    }
+
+    public function set($key, $value)
+    {
+        $this->adaptor->set($key, $value);
+    }
+
+    public function render($template)
+    {
+        return $this->adaptor->render($template);
+    }
 }

@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-// Version
-define('VERSION', '0.1.0');
-
 // Configuration
 if (is_file('config.php')) {
     require_once('config.php');
