@@ -5,11 +5,11 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 date_default_timezone_set('UTC');
 
-// Version
+// TODO: SHIFT_VERSION
 define('VERSION', '0.1.0-alpha');
 
-// Check Version
-if (version_compare(phpversion(), '7.4.0', '<') == true) {
+// TODO: PHP 8.1+
+if (version_compare(PHP_VERSION, '7.4.0', '<')) {
     exit('PHP 7.4+ Required');
 }
 
