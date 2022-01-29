@@ -350,12 +350,6 @@ class ControllerSettingSetting extends Controller
             $data['error_limit_admin'] = '';
         }
 
-        if (isset($this->error['encryption'])) {
-            $data['error_encryption'] = $this->error['encryption'];
-        } else {
-            $data['error_encryption'] = '';
-        }
-
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -460,12 +454,6 @@ class ControllerSettingSetting extends Controller
             $data['config_address'] = $this->config->get('config_address');
         }
 
-        if (isset($this->request->post['config_geocode'])) {
-            $data['config_geocode'] = $this->request->post['config_geocode'];
-        } else {
-            $data['config_geocode'] = $this->config->get('config_geocode');
-        }
-
         if (isset($this->request->post['config_email'])) {
             $data['config_email'] = $this->request->post['config_email'];
         } else {
@@ -502,43 +490,15 @@ class ControllerSettingSetting extends Controller
 
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
-        if (isset($this->request->post['config_open'])) {
-            $data['config_open'] = $this->request->post['config_open'];
-        } else {
-            $data['config_open'] = $this->config->get('config_open');
-        }
-
-        if (isset($this->request->post['config_comment'])) {
-            $data['config_comment'] = $this->request->post['config_comment'];
-        } else {
-            $data['config_comment'] = $this->config->get('config_comment');
-        }
-
-        $data['locations'] = [];
-
-        if (isset($this->request->post['config_location'])) {
-            $data['config_location'] = $this->request->post['config_location'];
-        } elseif ($this->config->get('config_location')) {
-            $data['config_location'] = $this->config->get('config_location');
-        } else {
-            $data['config_location'] = array();
-        }
-
         if (isset($this->request->post['config_country_id'])) {
             $data['config_country_id'] = $this->request->post['config_country_id'];
         } else {
             $data['config_country_id'] = $this->config->get('config_country_id');
         }
 
-        $this->load->model('localisation/country');
+        $this->load->model('localisation/language');
 
-        $data['countries'] = $this->model_localisation_country->getCountries();
-
-        if (isset($this->request->post['config_zone_id'])) {
-            $data['config_zone_id'] = $this->request->post['config_zone_id'];
-        } else {
-            $data['config_zone_id'] = $this->config->get('config_zone_id');
-        }
+        $data['languages'] = $this->model_localisation_language->getLanguages();
 
         if (isset($this->request->post['config_language'])) {
             $data['config_language'] = $this->request->post['config_language'];
@@ -546,51 +506,11 @@ class ControllerSettingSetting extends Controller
             $data['config_language'] = $this->config->get('config_language');
         }
 
-        $this->load->model('localisation/language');
-
-        $data['languages'] = $this->model_localisation_language->getLanguages();
-
         if (isset($this->request->post['config_admin_language'])) {
             $data['config_admin_language'] = $this->request->post['config_admin_language'];
         } else {
             $data['config_admin_language'] = $this->config->get('config_admin_language');
         }
-
-        if (isset($this->request->post['config_currency'])) {
-            $data['config_currency'] = $this->request->post['config_currency'];
-        } else {
-            $data['config_currency'] = $this->config->get('config_currency');
-        }
-
-        if (isset($this->request->post['config_currency_auto'])) {
-            $data['config_currency_auto'] = $this->request->post['config_currency_auto'];
-        } else {
-            $data['config_currency_auto'] = $this->config->get('config_currency_auto');
-        }
-
-        $this->load->model('localisation/currency');
-
-        $data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
-        if (isset($this->request->post['config_length_class_id'])) {
-            $data['config_length_class_id'] = $this->request->post['config_length_class_id'];
-        } else {
-            $data['config_length_class_id'] = $this->config->get('config_length_class_id');
-        }
-
-        $this->load->model('localisation/length_class');
-
-        $data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
-
-        if (isset($this->request->post['config_weight_class_id'])) {
-            $data['config_weight_class_id'] = $this->request->post['config_weight_class_id'];
-        } else {
-            $data['config_weight_class_id'] = $this->config->get('config_weight_class_id');
-        }
-
-        $this->load->model('localisation/weight_class');
-
-        $data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 
         if (isset($this->request->post['config_limit_admin'])) {
             $data['config_limit_admin'] = $this->request->post['config_limit_admin'];
@@ -598,302 +518,8 @@ class ControllerSettingSetting extends Controller
             $data['config_limit_admin'] = $this->config->get('config_limit_admin');
         }
 
-        if (isset($this->request->post['config_product_count'])) {
-            $data['config_product_count'] = $this->request->post['config_product_count'];
-        } else {
-            $data['config_product_count'] = $this->config->get('config_product_count');
-        }
-
-        if (isset($this->request->post['config_review_status'])) {
-            $data['config_review_status'] = $this->request->post['config_review_status'];
-        } else {
-            $data['config_review_status'] = $this->config->get('config_review_status');
-        }
-
-        if (isset($this->request->post['config_review_guest'])) {
-            $data['config_review_guest'] = $this->request->post['config_review_guest'];
-        } else {
-            $data['config_review_guest'] = $this->config->get('config_review_guest');
-        }
-
-        if (isset($this->request->post['config_voucher_min'])) {
-            $data['config_voucher_min'] = $this->request->post['config_voucher_min'];
-        } else {
-            $data['config_voucher_min'] = $this->config->get('config_voucher_min');
-        }
-
-        if (isset($this->request->post['config_voucher_max'])) {
-            $data['config_voucher_max'] = $this->request->post['config_voucher_max'];
-        } else {
-            $data['config_voucher_max'] = $this->config->get('config_voucher_max');
-        }
-
-        if (isset($this->request->post['config_tax'])) {
-            $data['config_tax'] = $this->request->post['config_tax'];
-        } else {
-            $data['config_tax'] = $this->config->get('config_tax');
-        }
-
-        if (isset($this->request->post['config_tax_default'])) {
-            $data['config_tax_default'] = $this->request->post['config_tax_default'];
-        } else {
-            $data['config_tax_default'] = $this->config->get('config_tax_default');
-        }
-
-        if (isset($this->request->post['config_tax_customer'])) {
-            $data['config_tax_customer'] = $this->request->post['config_tax_customer'];
-        } else {
-            $data['config_tax_customer'] = $this->config->get('config_tax_customer');
-        }
-
-        if (isset($this->request->post['config_customer_online'])) {
-            $data['config_customer_online'] = $this->request->post['config_customer_online'];
-        } else {
-            $data['config_customer_online'] = $this->config->get('config_customer_online');
-        }
-
-        if (isset($this->request->post['config_customer_activity'])) {
-            $data['config_customer_activity'] = $this->request->post['config_customer_activity'];
-        } else {
-            $data['config_customer_activity'] = $this->config->get('config_customer_activity');
-        }
-
-        if (isset($this->request->post['config_customer_search'])) {
-            $data['config_customer_search'] = $this->request->post['config_customer_search'];
-        } else {
-            $data['config_customer_search'] = $this->config->get('config_customer_search');
-        }
-
-        if (isset($this->request->post['config_customer_group_id'])) {
-            $data['config_customer_group_id'] = $this->request->post['config_customer_group_id'];
-        } else {
-            $data['config_customer_group_id'] = $this->config->get('config_customer_group_id');
-        }
-
-        $data['customer_groups'] = array();
-
-        if (isset($this->request->post['config_customer_group_display'])) {
-            $data['config_customer_group_display'] = $this->request->post['config_customer_group_display'];
-        } elseif ($this->config->get('config_customer_group_display')) {
-            $data['config_customer_group_display'] = $this->config->get('config_customer_group_display');
-        } else {
-            $data['config_customer_group_display'] = array();
-        }
-
-        if (isset($this->request->post['config_customer_price'])) {
-            $data['config_customer_price'] = $this->request->post['config_customer_price'];
-        } else {
-            $data['config_customer_price'] = $this->config->get('config_customer_price');
-        }
-
-        if (isset($this->request->post['config_login_attempts'])) {
-            $data['config_login_attempts'] = $this->request->post['config_login_attempts'];
-        } elseif ($this->config->has('config_login_attempts')) {
-            $data['config_login_attempts'] = $this->config->get('config_login_attempts');
-        } else {
-            $data['config_login_attempts'] = 5;
-        }
-
-        if (isset($this->request->post['config_account_id'])) {
-            $data['config_account_id'] = $this->request->post['config_account_id'];
-        } else {
-            $data['config_account_id'] = $this->config->get('config_account_id');
-        }
-
         $this->load->model('catalog/information');
-
         $data['informations'] = $this->model_catalog_information->getInformations();
-
-        if (isset($this->request->post['config_cart_weight'])) {
-            $data['config_cart_weight'] = $this->request->post['config_cart_weight'];
-        } else {
-            $data['config_cart_weight'] = $this->config->get('config_cart_weight');
-        }
-
-        if (isset($this->request->post['config_checkout_guest'])) {
-            $data['config_checkout_guest'] = $this->request->post['config_checkout_guest'];
-        } else {
-            $data['config_checkout_guest'] = $this->config->get('config_checkout_guest');
-        }
-
-        if (isset($this->request->post['config_checkout_id'])) {
-            $data['config_checkout_id'] = $this->request->post['config_checkout_id'];
-        } else {
-            $data['config_checkout_id'] = $this->config->get('config_checkout_id');
-        }
-
-        if (isset($this->request->post['config_invoice_prefix'])) {
-            $data['config_invoice_prefix'] = $this->request->post['config_invoice_prefix'];
-        } elseif ($this->config->get('config_invoice_prefix')) {
-            $data['config_invoice_prefix'] = $this->config->get('config_invoice_prefix');
-        } else {
-            $data['config_invoice_prefix'] = 'INV-' . date('Y') . '-00';
-        }
-
-        if (isset($this->request->post['config_order_status_id'])) {
-            $data['config_order_status_id'] = $this->request->post['config_order_status_id'];
-        } else {
-            $data['config_order_status_id'] = $this->config->get('config_order_status_id');
-        }
-
-        if (isset($this->request->post['config_processing_status'])) {
-            $data['config_processing_status'] = $this->request->post['config_processing_status'];
-        } elseif ($this->config->get('config_processing_status')) {
-            $data['config_processing_status'] = $this->config->get('config_processing_status');
-        } else {
-            $data['config_processing_status'] = array();
-        }
-
-        if (isset($this->request->post['config_complete_status'])) {
-            $data['config_complete_status'] = $this->request->post['config_complete_status'];
-        } elseif ($this->config->get('config_complete_status')) {
-            $data['config_complete_status'] = $this->config->get('config_complete_status');
-        } else {
-            $data['config_complete_status'] = array();
-        }
-
-        if (isset($this->request->post['config_fraud_status_id'])) {
-            $data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
-        } else {
-            $data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
-        }
-
-        $this->load->model('localisation/order_status');
-
-        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-        if (isset($this->request->post['config_api_id'])) {
-            $data['config_api_id'] = $this->request->post['config_api_id'];
-        } else {
-            $data['config_api_id'] = $this->config->get('config_api_id');
-        }
-
-        $this->load->model('user/api');
-
-        $data['apis'] = $this->model_user_api->getApis();
-
-        if (isset($this->request->post['config_stock_display'])) {
-            $data['config_stock_display'] = $this->request->post['config_stock_display'];
-        } else {
-            $data['config_stock_display'] = $this->config->get('config_stock_display');
-        }
-
-        if (isset($this->request->post['config_stock_warning'])) {
-            $data['config_stock_warning'] = $this->request->post['config_stock_warning'];
-        } else {
-            $data['config_stock_warning'] = $this->config->get('config_stock_warning');
-        }
-
-        if (isset($this->request->post['config_stock_checkout'])) {
-            $data['config_stock_checkout'] = $this->request->post['config_stock_checkout'];
-        } else {
-            $data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
-        }
-
-        if (isset($this->request->post['config_affiliate_auto'])) {
-            $data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];
-        } elseif ($this->config->has('config_affiliate_commission')) {
-            $data['config_affiliate_approval'] = $this->config->get('config_affiliate_approval');
-        } else {
-            $data['config_affiliate_approval'] = '';
-        }
-
-        if (isset($this->request->post['config_affiliate_auto'])) {
-            $data['config_affiliate_auto'] = $this->request->post['config_affiliate_auto'];
-        } elseif ($this->config->has('config_affiliate_auto')) {
-            $data['config_affiliate_auto'] = $this->config->get('config_affiliate_auto');
-        } else {
-            $data['config_affiliate_auto'] = '';
-        }
-
-        if (isset($this->request->post['config_affiliate_commission'])) {
-            $data['config_affiliate_commission'] = $this->request->post['config_affiliate_commission'];
-        } elseif ($this->config->has('config_affiliate_commission')) {
-            $data['config_affiliate_commission'] = $this->config->get('config_affiliate_commission');
-        } else {
-            $data['config_affiliate_commission'] = '5.00';
-        }
-
-        if (isset($this->request->post['config_affiliate_id'])) {
-            $data['config_affiliate_id'] = $this->request->post['config_affiliate_id'];
-        } else {
-            $data['config_affiliate_id'] = $this->config->get('config_affiliate_id');
-        }
-
-        if (isset($this->request->post['config_return_id'])) {
-            $data['config_return_id'] = $this->request->post['config_return_id'];
-        } else {
-            $data['config_return_id'] = $this->config->get('config_return_id');
-        }
-
-        if (isset($this->request->post['config_return_status_id'])) {
-            $data['config_return_status_id'] = $this->request->post['config_return_status_id'];
-        } else {
-            $data['config_return_status_id'] = $this->config->get('config_return_status_id');
-        }
-
-        $this->load->model('localisation/return_status');
-
-        $data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
-
-        if (isset($this->request->post['config_captcha'])) {
-            $data['config_captcha'] = $this->request->post['config_captcha'];
-        } else {
-            $data['config_captcha'] = $this->config->get('config_captcha');
-        }
-
-        $this->load->model('extension/extension');
-
-        $data['captchas'] = array();
-
-        // Get a list of installed captchas
-        $extensions = $this->model_extension_extension->getInstalled('captcha');
-
-        foreach ($extensions as $code) {
-            $this->load->language('extension/captcha/' . $code);
-
-            if ($this->config->get($code . '_status')) {
-                $data['captchas'][] = array(
-                    'text'  => $this->language->get('heading_title'),
-                    'value' => $code
-                );
-            }
-        }
-
-        if (isset($this->request->post['config_captcha_page'])) {
-            $data['config_captcha_page'] = $this->request->post['config_captcha_page'];
-        } elseif ($this->config->has('config_captcha_page')) {
-            $data['config_captcha_page'] = $this->config->get('config_captcha_page');
-        } else {
-            $data['config_captcha_page'] = array();
-        }
-
-        $data['captcha_pages'] = array();
-
-        $data['captcha_pages'][] = array(
-            'text'  => $this->language->get('text_register'),
-            'value' => 'register'
-        );
-
-        $data['captcha_pages'][] = array(
-            'text'  => $this->language->get('text_guest'),
-            'value' => 'guest'
-        );
-
-        $data['captcha_pages'][] = array(
-            'text'  => $this->language->get('text_review'),
-            'value' => 'review'
-        );
-
-        $data['captcha_pages'][] = array(
-            'text'  => $this->language->get('text_return'),
-            'value' => 'return'
-        );
-
-        $data['captcha_pages'][] = array(
-            'text'  => $this->language->get('text_contact'),
-            'value' => 'contact'
-        );
 
         if (isset($this->request->post['config_logo'])) {
             $data['config_logo'] = $this->request->post['config_logo'];
@@ -921,46 +547,6 @@ class ControllerSettingSetting extends Controller
             $data['icon'] = $this->model_tool_image->resize($this->config->get('config_icon'), 100, 100);
         } else {
             $data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-        }
-
-        if (isset($this->request->post['config_ftp_hostname'])) {
-            $data['config_ftp_hostname'] = $this->request->post['config_ftp_hostname'];
-        } elseif ($this->config->get('config_ftp_hostname')) {
-            $data['config_ftp_hostname'] = $this->config->get('config_ftp_hostname');
-        } else {
-            $data['config_ftp_hostname'] = str_replace('www.', '', $this->request->server['HTTP_HOST']);
-        }
-
-        if (isset($this->request->post['config_ftp_port'])) {
-            $data['config_ftp_port'] = $this->request->post['config_ftp_port'];
-        } elseif ($this->config->get('config_ftp_port')) {
-            $data['config_ftp_port'] = $this->config->get('config_ftp_port');
-        } else {
-            $data['config_ftp_port'] = 21;
-        }
-
-        if (isset($this->request->post['config_ftp_username'])) {
-            $data['config_ftp_username'] = $this->request->post['config_ftp_username'];
-        } else {
-            $data['config_ftp_username'] = $this->config->get('config_ftp_username');
-        }
-
-        if (isset($this->request->post['config_ftp_password'])) {
-            $data['config_ftp_password'] = $this->request->post['config_ftp_password'];
-        } else {
-            $data['config_ftp_password'] = $this->config->get('config_ftp_password');
-        }
-
-        if (isset($this->request->post['config_ftp_root'])) {
-            $data['config_ftp_root'] = $this->request->post['config_ftp_root'];
-        } else {
-            $data['config_ftp_root'] = $this->config->get('config_ftp_root');
-        }
-
-        if (isset($this->request->post['config_ftp_status'])) {
-            $data['config_ftp_status'] = $this->request->post['config_ftp_status'];
-        } else {
-            $data['config_ftp_status'] = $this->config->get('config_ftp_status');
         }
 
         if (isset($this->request->post['config_mail_protocol'])) {
@@ -1018,25 +604,9 @@ class ControllerSettingSetting extends Controller
         }
 
         $data['mail_alerts'] = array();
-
         $data['mail_alerts'][] = array(
             'text'  => $this->language->get('text_mail_account'),
             'value' => 'account'
-        );
-
-        $data['mail_alerts'][] = array(
-            'text'  => $this->language->get('text_mail_affiliate'),
-            'value' => 'affiliate'
-        );
-
-        $data['mail_alerts'][] = array(
-            'text'  => $this->language->get('text_mail_order'),
-            'value' => 'order'
-        );
-
-        $data['mail_alerts'][] = array(
-            'text'  => $this->language->get('text_mail_review'),
-            'value' => 'review'
         );
 
         if (isset($this->request->post['config_alert_email'])) {
@@ -1176,54 +746,12 @@ class ControllerSettingSetting extends Controller
             $this->error['limit_admin'] = $this->language->get('error_limit');
         }
 
-        if ($this->request->post['config_login_attempts'] < 1) {
-            $this->error['login_attempts'] = $this->language->get('error_login_attempts');
-        }
-
-        if (!$this->request->post['config_voucher_min']) {
-            $this->error['voucher_min'] = $this->language->get('error_voucher_min');
-        }
-
-        if (!$this->request->post['config_voucher_max']) {
-            $this->error['voucher_max'] = $this->language->get('error_voucher_max');
-        }
-
-        if (!isset($this->request->post['config_processing_status'])) {
-            $this->error['processing_status'] = $this->language->get('error_processing_status');
-        }
-
-        if (!isset($this->request->post['config_complete_status'])) {
-            $this->error['complete_status'] = $this->language->get('error_complete_status');
-        }
-
-        if ($this->request->post['config_ftp_status']) {
-            if (!$this->request->post['config_ftp_hostname']) {
-                $this->error['ftp_hostname'] = $this->language->get('error_ftp_hostname');
-            }
-
-            if (!$this->request->post['config_ftp_port']) {
-                $this->error['ftp_port'] = $this->language->get('error_ftp_port');
-            }
-
-            if (!$this->request->post['config_ftp_username']) {
-                $this->error['ftp_username'] = $this->language->get('error_ftp_username');
-            }
-
-            if (!$this->request->post['config_ftp_password']) {
-                $this->error['ftp_password'] = $this->language->get('error_ftp_password');
-            }
-        }
-
         if (!$this->request->post['config_error_filename']) {
             $this->error['error_filename'] = $this->language->get('error_error_filename');
         } else {
             if (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
                 $this->error['error_filename'] = $this->language->get('error_malformed_filename');
             }
-        }
-
-        if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
-            $this->error['encryption'] = $this->language->get('error_encryption');
         }
 
         if ($this->error && !isset($this->error['warning'])) {
