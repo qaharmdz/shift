@@ -22,24 +22,8 @@ class ControllerAccountEdit extends Controller
         $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
         $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-        $this->load->model('account/customer');
-
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_account_customer->editCustomer($this->request->post);
-
             $this->session->data['success'] = $this->language->get('text_success');
-
-            // Add to activity log
-            if ($this->config->get('config_customer_activity')) {
-                $this->load->model('account/activity');
-
-                $activity_data = array(
-                    'customer_id' => $this->user->getId(),
-                    'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
-                );
-
-                $this->model_account_activity->addActivity('edit', $activity_data);
-            }
 
             $this->response->redirect($this->url->link('account/account', '', true));
         }
@@ -116,10 +100,6 @@ class ControllerAccountEdit extends Controller
 
         $data['action'] = $this->url->link('account/edit', '', true);
 
-        if ($this->request->server['REQUEST_METHOD'] != 'POST') {
-            $customer_info = $this->model_account_customer->getCustomer($this->user->getId());
-        }
-
         if (isset($this->request->post['firstname'])) {
             $data['firstname'] = $this->request->post['firstname'];
         } elseif (!empty($customer_info)) {
@@ -158,19 +138,6 @@ class ControllerAccountEdit extends Controller
             $data['fax'] = $customer_info['fax'];
         } else {
             $data['fax'] = '';
-        }
-
-        // Custom Fields
-        $this->load->model('account/custom_field');
-
-        $data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
-
-        if (isset($this->request->post['custom_field'])) {
-            $data['account_custom_field'] = $this->request->post['custom_field'];
-        } elseif (isset($customer_info)) {
-            $data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
-        } else {
-            $data['account_custom_field'] = array();
         }
 
         $data['back'] = $this->url->link('account/account', '', true);

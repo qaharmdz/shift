@@ -82,7 +82,7 @@ class ControllerToolLog extends Controller
 
                 $data['error_warning'] = sprintf($this->language->get('error_warning'), basename($file), round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
             } else {
-                $data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+                $data['log'] = file_get_contents($file);
             }
         }
 
@@ -107,7 +107,7 @@ class ControllerToolLog extends Controller
             $this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
             $this->response->addheader('Content-Transfer-Encoding: binary');
 
-            $this->response->setOutput(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
+            $this->response->setOutput(file_get_contents($file));
         } else {
             $this->session->data['error'] = sprintf($this->language->get('error_warning'), basename($file), '0B');
 

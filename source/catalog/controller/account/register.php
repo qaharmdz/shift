@@ -20,29 +20,12 @@ class ControllerAccountRegister extends Controller
         $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
         $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-        $this->load->model('account/customer');
-
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $customer_id = $this->model_account_customer->addCustomer($this->request->post);
-
-            // Clear any previous login attempts for unregistered accounts.
-            $this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+            // $customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
             $this->user->login($this->request->post['email'], $this->request->post['password']);
 
             unset($this->session->data['guest']);
-
-            // Add to activity log
-            if ($this->config->get('config_customer_activity')) {
-                $this->load->model('account/activity');
-
-                $activity_data = array(
-                    'customer_id' => $customer_id,
-                    'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
-                );
-
-                $this->model_account_activity->addActivity('register', $activity_data);
-            }
 
             $this->response->redirect($this->url->link('account/success'));
         }
@@ -177,20 +160,6 @@ class ControllerAccountRegister extends Controller
 
         $data['action'] = $this->url->link('account/register', '', true);
 
-        $data['customer_groups'] = array();
-
-        if (is_array($this->config->get('config_customer_group_display'))) {
-            $this->load->model('account/customer_group');
-
-            $customer_groups = $this->model_account_customer_group->getCustomerGroups();
-
-            foreach ($customer_groups as $customer_group) {
-                if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-                    $data['customer_groups'][] = $customer_group;
-                }
-            }
-        }
-
         if (isset($this->request->post['customer_group_id'])) {
             $data['customer_group_id'] = $this->request->post['customer_group_id'];
         } else {
@@ -275,33 +244,6 @@ class ControllerAccountRegister extends Controller
             $data['zone_id'] = '';
         }
 
-        $this->load->model('localisation/country');
-
-        $data['countries'] = $this->model_localisation_country->getCountries();
-
-        // Custom Fields
-        $this->load->model('account/custom_field');
-
-        $data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
-
-        if (isset($this->request->post['custom_field'])) {
-            if (isset($this->request->post['custom_field']['account'])) {
-                $account_custom_field = $this->request->post['custom_field']['account'];
-            } else {
-                $account_custom_field = array();
-            }
-
-            if (isset($this->request->post['custom_field']['address'])) {
-                $address_custom_field = $this->request->post['custom_field']['address'];
-            } else {
-                $address_custom_field = array();
-            }
-
-            $data['register_custom_field'] = $account_custom_field + $address_custom_field;
-        } else {
-            $data['register_custom_field'] = array();
-        }
-
         if (isset($this->request->post['password'])) {
             $data['password'] = $this->request->post['password'];
         } else {
@@ -371,9 +313,9 @@ class ControllerAccountRegister extends Controller
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-            $this->error['warning'] = $this->language->get('error_exists');
-        }
+        // if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+        //     $this->error['warning'] = $this->language->get('error_exists');
+        // }
 
         if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
             $this->error['telephone'] = $this->language->get('error_telephone');
@@ -385,22 +327,6 @@ class ControllerAccountRegister extends Controller
 
         if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
             $this->error['city'] = $this->language->get('error_city');
-        }
-
-        $this->load->model('localisation/country');
-
-        $country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
-
-        if ($country_info && $country_info['postcode_required'] && (utf8_strlen(trim($this->request->post['postcode'])) < 2 || utf8_strlen(trim($this->request->post['postcode'])) > 10)) {
-            $this->error['postcode'] = $this->language->get('error_postcode');
-        }
-
-        if ($this->request->post['country_id'] == '') {
-            $this->error['country'] = $this->language->get('error_country');
-        }
-
-        if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
-            $this->error['zone'] = $this->language->get('error_zone');
         }
 
         // Customer Group
