@@ -91,10 +91,16 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
     float: left;
 }
 }
+.navbar-brand {
+    padding: 0;
+}
+.navbar-brand > img {
+    height: 44px;
+}
 #header #button-menu + .navbar-brand {
-    padding: 10px 10px 10px 10px;
+    padding: 0;
     margin-right: 10px;
-    height: auto;
+    height: 44px;
 }
 #header .nav > li > a {
     padding: 3px 16px;
@@ -118,34 +124,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
     cursor: pointer;
     color: #6D6D6D;
     border-right: 1px solid #E1E1E1;
-}
-#profile {
-    display: none;
-}
-#column-left.active #profile {
-    display: block;
-    padding: 10px 15px 10px 15px;
-    overflow: auto;
-    border-bottom: 1px solid #585858;
-}
-#profile div {
-    float: left;
-    color: #C4C4C4;
-}
-#profile div i {
-    font-size: 42px;
-    color: #2ca5d3;
-}
-#profile div + div {
-    margin-left: 15px;
-}
-#profile h4 {
-    margin-top: 6px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    color: #FFF;
-    margin-bottom: 0;
 }
 #column-left {
     width: 50px;

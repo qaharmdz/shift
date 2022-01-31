@@ -179,15 +179,6 @@ $(document).ready(function() {
         $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
     });
 
-    // https://github.com/opencart/opencart/issues/2595
-    $.event.special.remove = {
-        remove: function(o) {
-            if (o.handler) {
-                o.handler.apply(this, arguments);
-            }
-        }
-    }
-
     $('[data-toggle=\'tooltip\']').on('remove', function() {
         $(this).tooltip('destroy');
     });
