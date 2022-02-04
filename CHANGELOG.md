@@ -17,12 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Reorganize folder structure: separate Shift and public files.
 
 ## [v0.1.0] - 2022-02-01
-Based on OpenCArt v2.3.0.2 with the following change:
+Based on OpenCart v2.3.0.2 with the following change:
 
 ### Changed
-- Indention use 4 space
+- Indention use 4 space.
 
 ### Removed
 - Ecommerce features (catalog, cart, order, customer etc).

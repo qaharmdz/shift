@@ -9,11 +9,11 @@ _dev/
 *.cache
 .phpunit.result.cache
 
-source/config.php
-source/admin/config.php
+shift/config.php
+shift/admin/config.php
 
-source/image/cache/*
-source/system/storage/*
+shift/system/storage/*
+public/image/cache/*
 
 
 #--------------------------------------------------
