@@ -8,7 +8,7 @@
           <small><?php echo $text_step_4; ?></small></h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="Shift" title="Shift" /></div>
+        <div id="logo" class="pull-right hidden-xs"><img src="asset/image/logo.png" alt="Shift" title="Shift" /></div>
       </div>
     </div>
   </header>

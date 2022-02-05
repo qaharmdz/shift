@@ -24,15 +24,15 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// DIR' . "\n";
-            $output .= 'define(\'DIR_APPLICATION\', \'' . DIR_SHIFT . 'catalog/\');' . "\n";
-            $output .= 'define(\'DIR_SYSTEM\', \'' . DIR_SHIFT . 'system/\');' . "\n";
-            $output .= 'define(\'DIR_IMAGE\', \'' . DIR_SHIFT . 'image/\');' . "\n";
-            $output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_SHIFT . 'catalog/language/\');' . "\n";
-            $output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_SHIFT . 'catalog/view/theme/\');' . "\n";
-            $output .= 'define(\'DIR_CONFIG\', \'' . DIR_SHIFT . 'system/config/\');' . "\n";
-            $output .= 'define(\'DIR_CACHE\', \'' . DIR_SHIFT . 'system/storage/cache/\');' . "\n";
-            $output .= 'define(\'DIR_LOGS\', \'' . DIR_SHIFT . 'system/storage/logs/\');' . "\n";
-            $output .= 'define(\'DIR_UPLOAD\', \'' . DIR_SHIFT . 'system/storage/upload/\');' . "\n\n";
+            $output .= 'define(\'DIR_APPLICATION\', \'' . PATH_SHIFT . 'catalog/\');' . "\n";
+            $output .= 'define(\'DIR_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
+            $output .= 'define(\'DIR_IMAGE\', \'' . PATH_SHIFT . 'image/\');' . "\n";
+            $output .= 'define(\'DIR_LANGUAGE\', \'' . PATH_SHIFT . 'catalog/language/\');' . "\n";
+            $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'catalog/view/theme/\');' . "\n";
+            $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
+            $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
+            $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
+            $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
             $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
@@ -43,7 +43,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
             $output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
 
-            $file = fopen(DIR_SHIFT . 'config.php', 'w');
+            $file = fopen(PATH_SHIFT . 'config.php', 'w');
 
             fwrite($file, $output);
 
@@ -60,16 +60,16 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'HTTPS_CATALOG\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// DIR' . "\n";
-            $output .= 'define(\'DIR_APPLICATION\', \'' . DIR_SHIFT . 'admin/\');' . "\n";
-            $output .= 'define(\'DIR_SYSTEM\', \'' . DIR_SHIFT . 'system/\');' . "\n";
-            $output .= 'define(\'DIR_IMAGE\', \'' . DIR_SHIFT . 'image/\');' . "\n";
-            $output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_SHIFT . 'admin/language/\');' . "\n";
-            $output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_SHIFT . 'admin/view/template/\');' . "\n";
-            $output .= 'define(\'DIR_CONFIG\', \'' . DIR_SHIFT . 'system/config/\');' . "\n";
-            $output .= 'define(\'DIR_CACHE\', \'' . DIR_SHIFT . 'system/storage/cache/\');' . "\n";
-            $output .= 'define(\'DIR_LOGS\', \'' . DIR_SHIFT . 'system/storage/logs/\');' . "\n";
-            $output .= 'define(\'DIR_UPLOAD\', \'' . DIR_SHIFT . 'system/storage/upload/\');' . "\n";
-            $output .= 'define(\'DIR_CATALOG\', \'' . DIR_SHIFT . 'catalog/\');' . "\n\n";
+            $output .= 'define(\'DIR_APPLICATION\', \'' . PATH_SHIFT . 'admin/\');' . "\n";
+            $output .= 'define(\'DIR_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
+            $output .= 'define(\'DIR_IMAGE\', \'' . PATH_SHIFT . 'image/\');' . "\n";
+            $output .= 'define(\'DIR_LANGUAGE\', \'' . PATH_SHIFT . 'admin/language/\');' . "\n";
+            $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'admin/view/template/\');' . "\n";
+            $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
+            $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
+            $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
+            $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n";
+            $output .= 'define(\'DIR_CATALOG\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
             $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
@@ -80,7 +80,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
             $output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
 
-            $file = fopen(DIR_SHIFT . 'admin/config.php', 'w');
+            $file = fopen(PATH_SHIFT . 'admin/config.php', 'w');
 
             fwrite($file, $output);
 
@@ -294,12 +294,12 @@ class ControllerInstallStep3 extends Controller
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if (!is_writable(DIR_SHIFT . 'config.php')) {
-            $this->error['warning'] = $this->language->get('error_config') . DIR_SHIFT . 'config.php!';
+        if (!is_writable(PATH_SHIFT . 'config.php')) {
+            $this->error['warning'] = $this->language->get('error_config') . PATH_SHIFT . 'config.php!';
         }
 
-        if (!is_writable(DIR_SHIFT . 'admin/config.php')) {
-            $this->error['warning'] = $this->language->get('error_config') . DIR_SHIFT . 'admin/config.php!';
+        if (!is_writable(PATH_SHIFT . 'admin/config.php')) {
+            $this->error['warning'] = $this->language->get('error_config') . PATH_SHIFT . 'admin/config.php!';
         }
 
         return !$this->error;

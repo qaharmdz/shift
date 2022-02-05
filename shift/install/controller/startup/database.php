@@ -6,8 +6,8 @@ class ControllerStartupDatabase extends Controller
 {
     public function index()
     {
-        if (is_file(DIR_SHIFT . 'config.php') && filesize(DIR_SHIFT . 'config.php') > 0) {
-            $lines = file(DIR_SHIFT . 'config.php');
+        if (is_file(PATH_SHIFT . 'config.php') && filesize(PATH_SHIFT . 'config.php') > 0) {
+            $lines = file(PATH_SHIFT . 'config.php');
 
             foreach ($lines as $line) {
                 if (strpos(strtoupper($line), 'DB_') !== false) {

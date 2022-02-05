@@ -171,11 +171,9 @@ CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}layout_module` (
 
 INSERT INTO `{{ DB_PREFIX }}layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
 	(20, 5, '0', 'column_left', 2),
-	(69, 10, 'affiliate', 'column_right', 1),
 	(68, 6, 'account', 'column_right', 1),
 	(67, 1, 'carousel.29', 'content_top', 3),
 	(66, 1, 'slideshow.27', 'content_top', 1),
-	(65, 1, 'featured.28', 'content_top', 2),
 	(73, 3, 'banner.30', 'column_left', 2);
 
 DROP TABLE IF EXISTS `{{ DB_PREFIX }}layout_route`;

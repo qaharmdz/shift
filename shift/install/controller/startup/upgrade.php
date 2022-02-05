@@ -8,7 +8,7 @@ class ControllerStartupUpgrade extends Controller
     {
         $upgrade = false;
 
-        if (is_file(DIR_SHIFT . 'config.php') && filesize(DIR_SHIFT . 'config.php') > 0) {
+        if (is_file(PATH_SHIFT . 'config.php') && filesize(PATH_SHIFT . 'config.php') > 0) {
             $upgrade = true;
         }
 

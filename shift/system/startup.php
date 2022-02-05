@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-error_reporting(E_ALL);
+mb_internal_encoding('UTF-8');
 date_default_timezone_set('UTC');
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 // TODO: SHIFT_VERSION
 define('VERSION', '0.1.0-alpha');

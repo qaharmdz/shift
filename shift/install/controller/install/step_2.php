@@ -97,12 +97,12 @@ class ControllerInstallStep2 extends Controller
         $data['iconv'] = function_exists('iconv');
         $data['mbstring'] = extension_loaded('mbstring');
 
-        $data['config_catalog'] = DIR_SHIFT . 'config.php';
-        $data['config_admin'] = DIR_SHIFT . 'admin/config.php';
+        $data['config_catalog'] = PATH_SHIFT . 'config.php';
+        $data['config_admin'] = PATH_SHIFT . 'admin/config.php';
 
-        $data['image'] = DIR_SHIFT . 'image';
-        $data['image_cache'] = DIR_SHIFT . 'image/cache';
-        $data['image_catalog'] = DIR_SHIFT . 'image/catalog';
+        $data['image'] = PATH_SHIFT . 'image';
+        $data['image_cache'] = PATH_SHIFT . 'image/cache';
+        $data['image_catalog'] = PATH_SHIFT . 'image/catalog';
         $data['cache'] = DIR_SYSTEM . 'storage/cache';
         $data['logs'] = DIR_SYSTEM . 'storage/logs';
         $data['download'] = DIR_SYSTEM . 'storage/download';
@@ -164,27 +164,27 @@ class ControllerInstallStep2 extends Controller
             $this->error['warning'] = $this->language->get('error_mbstring');
         }
 
-        if (!file_exists(DIR_SHIFT . 'config.php')) {
+        if (!file_exists(PATH_SHIFT . 'config.php')) {
             $this->error['warning'] = $this->language->get('error_catalog_exist');
-        } elseif (!is_writable(DIR_SHIFT . 'config.php')) {
+        } elseif (!is_writable(PATH_SHIFT . 'config.php')) {
             $this->error['warning'] = $this->language->get('error_catalog_writable');
         }
 
-        if (!file_exists(DIR_SHIFT . 'admin/config.php')) {
+        if (!file_exists(PATH_SHIFT . 'admin/config.php')) {
             $this->error['warning'] = $this->language->get('error_admin_exist');
-        } elseif (!is_writable(DIR_SHIFT . 'admin/config.php')) {
+        } elseif (!is_writable(PATH_SHIFT . 'admin/config.php')) {
             $this->error['warning'] = $this->language->get('error_admin_writable');
         }
 
-        if (!is_writable(DIR_SHIFT . 'image')) {
+        if (!is_writable(PATH_SHIFT . 'image')) {
             $this->error['warning'] = $this->language->get('error_image');
         }
 
-        if (!is_writable(DIR_SHIFT . 'image/cache')) {
+        if (!is_writable(PATH_SHIFT . 'image/cache')) {
             $this->error['warning'] = $this->language->get('error_image_cache');
         }
 
-        if (!is_writable(DIR_SHIFT . 'image/catalog')) {
+        if (!is_writable(PATH_SHIFT . 'image/catalog')) {
             $this->error['warning'] = $this->language->get('error_image_catalog');
         }
 
