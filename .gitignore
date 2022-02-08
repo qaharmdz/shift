@@ -1,7 +1,6 @@
 _dev/
 
 !README
-!.htaccess
 !.keep
 !index.html
 
@@ -11,9 +10,11 @@ _dev/
 shift/config.php
 shift/admin/config.php
 
-shift/storage/*
-public/image/cache/*
+shift/storage/*/*
+!shift/storage/*/index.html
 
+public/image/cache/*
+!public/image/cache/index.html
 
 #--------------------------------------------------
 # https://github.com/github/gitignore
