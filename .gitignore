@@ -7,12 +7,11 @@ _dev/
 
 *.log
 *.cache
-.phpunit.result.cache
 
 shift/config.php
 shift/admin/config.php
 
-shift/system/storage/*
+shift/storage/*
 public/image/cache/*
 
 

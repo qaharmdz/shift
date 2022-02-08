@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 require_once realpath(__DIR__ . './') . '/path.php';
 
-// Configuration
-if (is_file(PATH_SHIFT . 'config.php')) {
-    require_once PATH_SHIFT . 'config.php';
-}
+define('APP_FOLDER', 'catalog'); // TODO: front
+define('APP_URL_PATH', '');
 
-// Install
-if (!defined('DIR_APPLICATION')) {
+if (!is_file(PATH_SHIFT . 'config.php')) {
     header('Location: install/');
     exit;
 }
 
-// Startup
-require_once(DIR_SYSTEM . 'startup.php');
+$root_config = require_once PATH_SHIFT . 'config.php';
 
-start('catalog');
+require_once PATH_SHIFT . 'system/startup.php';
+
+// var_dump(get_defined_constants(true)['user']);
+
+start(APP_FOLDER);

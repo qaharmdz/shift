@@ -8,7 +8,7 @@ $registry = new Registry();
 // Config
 $config = new Config();
 $config->load('default');
-$config->load($application_config);
+$config->load('app' . DS . $app_config);
 $registry->set('config', $config);
 
 // Event

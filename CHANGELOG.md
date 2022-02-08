@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Reorganize folder structure: separate Shift and public files.
+- Refactor front controller.
 
 ## [v0.1.0] - 2022-02-01
 Based on OpenCart v2.3.0.2 with the following change:

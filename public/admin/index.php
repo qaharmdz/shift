@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 require_once realpath(__DIR__ . './../') . '/path.php';
 
-// Configuration
-if (is_file(PATH_SHIFT . 'admin/config.php')) {
-    require_once PATH_SHIFT . 'admin/config.php';
-}
+define('APP_FOLDER', 'admin');
+define('APP_URL_PATH', 'admin/');
 
-// Install
-if (!defined('DIR_APPLICATION')) {
+if (!is_file(PATH_SHIFT . 'config.php')) {
     header('Location: install/');
     exit;
 }
 
-// Startup
-require_once(DIR_SYSTEM . 'startup.php');
+$root_config = require_once PATH_SHIFT . 'config.php';
 
-start('admin');
+require_once PATH_SHIFT . 'system/startup.php';
+
+start(APP_FOLDER);
