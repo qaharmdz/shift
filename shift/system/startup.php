@@ -39,7 +39,6 @@ $_SERVER['PROTOCOL']    = $secure ? 'https://' : 'http://';
 $_SERVER['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 
 //=== Define
-
 if ($root_config) {
     // TODO: merge the HTTP/ HTTPS
     if (APP_FOLDER == 'catalog') {
@@ -51,13 +50,12 @@ if ($root_config) {
 
         define('HTTP_CATALOG', $_SERVER['PROTOCOL'] . $root_config['url_base']);
         define('HTTPS_CATALOG', $_SERVER['PROTOCOL'] . $root_config['url_base']);
-
-        define('DIR_CATALOG', PATH_SHIFT . 'catalog/');
     }
 }
 
 // DIR
 define('DIR_APPLICATION', PATH_SHIFT . APP_FOLDER . DS);
+define('DIR_CATALOG', PATH_SHIFT . 'catalog/'); // TODO: DIR_SITE
 define('DIR_LANGUAGE', PATH_SHIFT . APP_FOLDER . DS . 'language' . DS);
 
 // TODO: $this->view->setTemplatePath()
@@ -95,7 +93,6 @@ function library($class)
 
     if (is_file($file)) {
         include_once($file);
-
         return true;
     } else {
         return false;
