@@ -6,22 +6,22 @@ namespace Session;
 
 class File extends \SessionHandler
 {
-    public function create_sid()
+    public function create_sid(): string
     {
         return parent::create_sid();
     }
 
-    public function open($path, $name)
+    public function open($path, $name): bool
     {
         return true;
     }
 
-    public function close()
+    public function close(): bool
     {
         return true;
     }
 
-    public function read($session_id)
+    public function read(string $session_id): string|false
     {
         $file = session_save_path() . '/sess_' . $session_id;
 
@@ -42,7 +42,7 @@ class File extends \SessionHandler
         return null;
     }
 
-    public function write($session_id, $data)
+    public function write(string $session_id, string $data): bool
     {
         $file = session_save_path() . '/sess_' . $session_id;
 
@@ -61,7 +61,7 @@ class File extends \SessionHandler
         return true;
     }
 
-    public function destroy($session_id)
+    public function destroy(string $session_id): bool
     {
         $file = session_save_path() . '/sess_' . $session_id;
 
@@ -70,7 +70,7 @@ class File extends \SessionHandler
         }
     }
 
-    public function gc($maxlifetime)
+    public function gc(int $maxlifetime): int|false
     {
         return parent::gc($maxlifetime);
     }

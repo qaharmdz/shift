@@ -26,7 +26,7 @@ final class DB
         $this->expire = ini_get('session.gc_maxlifetime');
     }
 
-    public function open()
+    public function open(): bool
     {
         if ($this->db){
             return true;
@@ -35,12 +35,12 @@ final class DB
         }
     }
 
-    public function close()
+    public function close(): bool
     {
         return true;
     }
 
-    public function read($session_id)
+    public function read($session_id): string|false
     {
         $query = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > " . (int)time());
 
@@ -51,21 +51,21 @@ final class DB
         }
     }
 
-    public function write($session_id, $data)
+    public function write(string $session_id, string $data): bool
     {
         $this->db->query("REPLACE INTO SET `data` = '" . $this->db->escape($data) . "', expire = '" . $this->db->escape(date('Y-m-d H:i:s', time() + $this->expire)) . "' FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > " . (int)time());
 
         return true;
     }
 
-    public function destroy($session_id)
+    public function destroy(string $session_id): bool
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "'");
 
         return true;
     }
 
-    public function gc($expire)
+    public function gc(int $maxlifetime): int|false
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "session` WHERE expire < " . ((int)time() + $expire));
 
