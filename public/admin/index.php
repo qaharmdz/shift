@@ -12,8 +12,9 @@ if (!is_file(PATH_SHIFT . 'config.php')) {
     exit;
 }
 
-$root_config = require_once PATH_SHIFT . 'config.php';
+$rootConfig = require_once PATH_SHIFT . 'config.php';
 
 require_once PATH_SHIFT . 'system/startup.php';
 
-start(APP_FOLDER);
+$shift = new Framework();
+echo $shift->init(APP_FOLDER)->run();

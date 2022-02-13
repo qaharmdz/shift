@@ -23,13 +23,14 @@ if (
 
 define('HTTP_SHIFT', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
-$root_config = [];
+$rootConfig = [];
 if (is_file(PATH_SHIFT . 'config.php')) {
-    $root_config = require_once PATH_SHIFT . 'config.php';
+    $rootConfig = require_once PATH_SHIFT . 'config.php';
 } else {
     define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
 }
 
 require_once PATH_SHIFT . 'system/startup.php';
 
-start(APP_FOLDER);
+$shift = new Framework();
+echo $shift->init(APP_FOLDER)->run();

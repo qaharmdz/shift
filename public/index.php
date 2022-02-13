@@ -12,10 +12,11 @@ if (!is_file(PATH_SHIFT . 'config.php')) {
     exit;
 }
 
-$root_config = require_once PATH_SHIFT . 'config.php';
+$rootConfig = require_once PATH_SHIFT . 'config.php';
 
 require_once PATH_SHIFT . 'system/startup.php';
 
 // var_dump(get_defined_constants(true)['user']);
 
-start(APP_FOLDER);
+$shift = new Framework(); // TODO Shift\System\Kernel
+echo $shift->init(APP_FOLDER)->run();
