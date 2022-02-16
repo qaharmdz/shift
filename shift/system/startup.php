@@ -10,8 +10,8 @@ define('VERSION', '1.0.0-a.1');
 list($major, $minor, $patch, $pre) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 
-if (version_compare(phpversion(), '7.4.0', '<') == true) {
-    exit('PHP v7.4 or greater version required!');
+if (version_compare(phpversion(), '8.1.0', '<') == true) {
+    exit('PHP v8.1 or greater version required!');
 }
 
 mb_internal_encoding('UTF-8');
