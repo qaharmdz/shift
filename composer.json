@@ -1,0 +1,37 @@
+{
+    "name": "mdz/shift",
+    "type": "project",
+    "description": "Shift - Pragmatic Content Management",
+    "keywords": ["php-cms"],
+    "homepage": "https://github.com/qaharmdz/shift",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Mudzakkir",
+            "email": "hello@qaharmdz.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-mbstring": "*"
+    },
+    "autoload": {
+        "classmap": ["shift/", "tests/"],
+        "files": [
+            "shift/system/helper/general.php",
+            "shift/system/helper/utf8.php"
+        ]
+    },
+    "config": {
+        "vendor-dir": "shift/vendor/",
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Shift\\System\\Framework\\Autoload\\Psr4Lower::classMap"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -87,6 +87,8 @@ if ($rootConfig) {
 }
 
 //=== Autoloader
+$loader = require PATH_SHIFT . 'vendor/autoload.php';
+
 function autoload($class)
 {
     $file  = str_replace('\\', DS, strtolower($class)) . '.php';
