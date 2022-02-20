@@ -8,7 +8,7 @@ class Template
 
     public function __construct($adaptor)
     {
-        $class = 'Template\\' . $adaptor;
+        $class = '\Template\PHP';
 
         if (class_exists($class)) {
             $this->adaptor = new $class();

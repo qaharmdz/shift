@@ -7,13 +7,7 @@ class DB {
 
     public function __construct($adaptor, $hostname, $username, $password, $database, $port = NULL)
     {
-        $class = 'DB\\' . $adaptor;
-
-        if (class_exists($class)) {
-            $this->adaptor = new $class($hostname, $username, $password, $database, $port);
-        } else {
-            throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
-        }
+        $this->adaptor = new \DB\MySQLi($hostname, $username, $password, $database, $port);
     }
 
     public function query($sql, $params = array())

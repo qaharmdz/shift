@@ -9,7 +9,7 @@ class Session
 
     public function __construct($adaptor = 'native')
     {
-        $class = 'Session\\' . $adaptor;
+        $class = '\Session\\' . ucwords($adaptor);
 
         if (class_exists($class)) {
             $this->adaptor = new $class($this);

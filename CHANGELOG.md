@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- PSR-4 lowercase path.
+
+### Changed
 - Reorganize folder structure: separate Shift and public files.
 - Refactor front controller.
 - Refactor system framework.

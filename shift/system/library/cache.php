@@ -8,7 +8,7 @@ class Cache
 
     public function __construct($adaptor, $expire = 3600)
     {
-        $class = 'Cache\\' . $adaptor;
+        $class = '\Cache\\' . ucwords($adaptor);
 
         if (class_exists($class)) {
             $this->adaptor = new $class($expire);

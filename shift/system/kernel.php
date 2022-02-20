@@ -1,14 +1,29 @@
 <?php
 
+/**
+ * This file is part of Shift CMS.
+ *
+ * (c) Mudzakkir <https://github.com/qaharmdz>
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License <https://www.gnu.org/licenses/gpl-3.0.txt> for more details.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
-class Framework
+namespace Shift\System;
+
+class Kernel
 {
     private $registry;
 
     public function __construct()
     {
-        $this->registry = new Registry();
+        $this->registry = new \Registry();
     }
 
     public function get(string $key): object
@@ -21,10 +36,10 @@ class Framework
         return $this->registry->set($key, $library);
     }
 
-    public function init(string $appFolder): Framework
+    public function init(string $appFolder): Kernel
     {
         // Config
-        $config = new Config();
+        $config = new \Config();
         $config->load('default');
         $config->load('app' . DS . $appFolder);
         $this->set('config', $config);
@@ -33,31 +48,31 @@ class Framework
         //========================================
 
         // Event
-        $event = new Event($this->registry);
+        $event = new \Event($this->registry);
         $this->set('event', $event);
 
         // Event Register
         if ($config->has('action_event')) {
             foreach ($config->get('action_event') as $key => $value) {
-                $event->register($key, new Action($value));
+                $event->register($key, new \Action($value));
             }
         }
 
         // Loader
-        $loader = new Loader($this->registry);
+        $loader = new \Loader($this->registry);
         $this->set('load', $loader);
 
         // Request
-        $this->set('request', new Request());
+        $this->set('request', new \Request());
 
         // Response
-        $response = new Response();
+        $response = new \Response();
         $response->addHeader('Content-Type: text/html; charset=utf-8');
         $this->set('response', $response);
 
         // Database
         if ($config->get('db_autostart')) {
-            $this->set('db', new DB(
+            $this->set('db', new \DB(
                 $config->get('db_type'),
                 $config->get('db_hostname'),
                 $config->get('db_username'),
@@ -68,7 +83,7 @@ class Framework
         }
 
         // Session
-        $session = new Session();
+        $session = new \Session();
 
         if ($config->get('session_autostart')) {
             $session->start();
@@ -77,20 +92,20 @@ class Framework
         $this->set('session', $session);
 
         // Cache
-        $this->set('cache', new Cache($config->get('cache_type'), $config->get('cache_expire')));
+        $this->set('cache', new \Cache($config->get('cache_type'), $config->get('cache_expire')));
 
         // Url
         if ($config->get('url_autostart')) {
-            $this->set('url', new Url($config->get('site_base'), $config->get('site_ssl')));
+            $this->set('url', new \Url($config->get('site_base'), $config->get('site_ssl')));
         }
 
         // Language
-        $language = new Language($config->get('language_default'));
+        $language = new \Language($config->get('language_default'));
         $language->load($config->get('language_default'));
         $this->set('language', $language);
 
         // Document
-        $this->set('document', new Document());
+        $this->set('document', new \Document());
 
         // Config Autoload
         if ($config->has('config_autoload')) {
@@ -129,17 +144,17 @@ class Framework
         $response = $this->get('response');
 
         // Front Controller
-        $controller = new Front($this->registry);
+        $controller = new \Front($this->registry);
 
         // Pre Actions
         if ($config->has('action_pre_action')) {
             foreach ($config->get('action_pre_action') as $value) {
-                $controller->addPreAction(new Action($value));
+                $controller->addPreAction(new \Action($value));
             }
         }
 
         // Dispatch
-        $controller->dispatch(new Action($config->get('action_router')), new Action($config->get('action_error')));
+        $controller->dispatch(new \Action($config->get('action_router')), new \Action($config->get('action_error')));
 
         // Output
         $response->setCompression($config->get('config_compression'));
