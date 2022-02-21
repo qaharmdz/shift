@@ -23,7 +23,7 @@ class Framework
 
     public function __construct()
     {
-        $this->registry = new \Registry();
+        $this->registry = Core\Registry::init();
     }
 
     public function get(string $key): object
@@ -39,21 +39,42 @@ class Framework
     public function init(string $appFolder, array $rootConfig = []): Framework
     {
         /**
-         * Config prefix:
-         * - root: Setting from the config file and system/config folder
+         * TODO: config prefix:
+         * v root: Setting from the config file and system/config folder
          * - env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
          * - system: Setting from database
          */
         $config = new Core\Config();
         $config->set('root.version', VERSION);
         $config->set('root.version_id', VERSION_ID);
+
         $config->load('default', 'root');
         $config->load('app/' . $appFolder, 'root');
         $config->replaceRecursive(['root' => $rootConfig]);
 
+        $config->set('env.app', APP_FOLDER);
+        // $config->set('env.url_app', URL_APP);
+        // $config->set('env.url_site', URL_SITE);
+        // $config->set('env.url_media', URL_SITE . 'media/');
+
         $this->set('config', $config);
 
-        //========================================
+        $this->core();
+        $this->library();
+
+        return $this;
+    }
+
+    protected function core(): Framework
+    {
+        $config = $this->get('config');
+
+        return $this;
+    }
+
+    protected function library(): Framework
+    {
+        $config = $this->get('config');
 
         // Event
         $event = new \Event($this->registry);
