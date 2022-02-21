@@ -38,18 +38,22 @@ class Framework
 
     public function init(string $appFolder, array $rootConfig = []): Framework
     {
+        /**
+         * Config prefix:
+         * - root: Setting from the config file and system/config folder
+         * - env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
+         * - system: Setting from database
+         */
         $config = new Core\Config();
         $config->set('root.version', VERSION);
         $config->set('root.version_id', VERSION_ID);
-
         $config->load('default', 'root');
         $config->load('app/' . $appFolder, 'root');
         $config->replaceRecursive(['root' => $rootConfig]);
 
-        var_dump($config->all());
-
         $this->set('config', $config);
 
+        d($config->all());
 
         //========================================
 
