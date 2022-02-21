@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Framework\Autoload;
+namespace Shift\System\Core\Autoload;
 
 class ClassLoader
 {

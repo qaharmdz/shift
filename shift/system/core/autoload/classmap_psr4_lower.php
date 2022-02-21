@@ -7,8 +7,8 @@ $baseDir = dirname(dirname(__DIR__));
 
 return [
     'psr4lower' => [
-        'shift\\system\\framework\\autoload\\classloader' => $baseDir . '/framework/autoload/classloader.php',
-        'shift\\system\\framework\\autoload\\psr4lower' => $baseDir . '/framework/autoload/psr4lower.php',
+        'shift\\system\\core\\autoload\\classloader' => $baseDir . '/core/autoload/classloader.php',
+        'shift\\system\\core\\autoload\\psr4lower' => $baseDir . '/core/autoload/psr4lower.php',
         'shift\\system\\kernel' => $baseDir . '/kernel.php',
     ],
 ];
