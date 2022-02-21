@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
+    'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Adbar\\' => array($vendorDir . '/adbario/php-dot-notation/src'),
 );
