@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Shift\System;
 
-class Kernel
+class Framework
 {
     private $registry;
 
@@ -36,7 +36,7 @@ class Kernel
         return $this->registry->set($key, $library);
     }
 
-    public function init(string $appFolder, array $rootConfig = []): Kernel
+    public function init(string $appFolder, array $rootConfig = []): Framework
     {
         $config = new Core\Config();
         $config->set('root.version', VERSION);

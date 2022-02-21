@@ -9,6 +9,8 @@ return [
     'psr4lower' => [
         'shift\\system\\core\\autoload\\classloader' => $baseDir . '/core/autoload/classloader.php',
         'shift\\system\\core\\autoload\\psr4lower' => $baseDir . '/core/autoload/psr4lower.php',
-        'shift\\system\\kernel' => $baseDir . '/kernel.php',
+        'shift\\system\\core\\bags' => $baseDir . '/core/bags.php',
+        'shift\\system\\framework' => $baseDir . '/kernel.php',
+        'shift\\system\\core\\config' => $baseDir . '/core/config.php',
     ],
 ];
