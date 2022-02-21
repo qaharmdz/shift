@@ -7,6 +7,7 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Action' => $baseDir . '/shift/system/engine/action.php',
+    'Adbar\\Dot' => $vendorDir . '/adbario/php-dot-notation/src/Dot.php',
     'Cache' => $baseDir . '/shift/system/library/cache.php',
     'Cache\\APC' => $baseDir . '/shift/system/library/cache/apc.php',
     'Cache\\File' => $baseDir . '/shift/system/library/cache/file.php',
@@ -134,8 +135,8 @@ return array(
     'Session\\DB' => $baseDir . '/shift/system/library/session/db.php',
     'Session\\File' => $baseDir . '/shift/system/library/session/file.php',
     'Session\\Native' => $baseDir . '/shift/system/library/session/native.php',
-    'Shift\\System\\Framework\\Autoload\\ClassLoader' => $baseDir . '/shift/system/framework/autoload/classloader.php',
-    'Shift\\System\\Framework\\Autoload\\Psr4Lower' => $baseDir . '/shift/system/framework/autoload/psr4lower.php',
+    'Shift\\System\\Core\\Autoload\\ClassLoader' => $baseDir . '/shift/system/core/autoload/classloader.php',
+    'Shift\\System\\Core\\Autoload\\Psr4Lower' => $baseDir . '/shift/system/core/autoload/psr4lower.php',
     'Shift\\System\\Kernel' => $baseDir . '/shift/system/kernel.php',
     'Template' => $baseDir . '/shift/system/library/template.php',
     'Template\\PHP' => $baseDir . '/shift/system/library/template/php.php',

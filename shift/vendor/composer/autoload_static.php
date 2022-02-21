@@ -7,12 +7,28 @@ namespace Composer\Autoload;
 class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
 {
     public static $files = array (
+        'd767e4fc2dc52fe66584ab8c6684783e' => __DIR__ . '/..' . '/adbario/php-dot-notation/src/helpers.php',
         '5dedf103d98752dd5c995cc0a98a887c' => __DIR__ . '/../../..' . '/shift/system/helper/general.php',
         '6e58ef87048f90f0d9c15812842a6df3' => __DIR__ . '/../../..' . '/shift/system/helper/utf8.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'A' => 
+        array (
+            'Adbar\\' => 6,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Adbar\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adbario/php-dot-notation/src',
+        ),
+    );
+
     public static $classMap = array (
         'Action' => __DIR__ . '/../../..' . '/shift/system/engine/action.php',
+        'Adbar\\Dot' => __DIR__ . '/..' . '/adbario/php-dot-notation/src/Dot.php',
         'Cache' => __DIR__ . '/../../..' . '/shift/system/library/cache.php',
         'Cache\\APC' => __DIR__ . '/../../..' . '/shift/system/library/cache/apc.php',
         'Cache\\File' => __DIR__ . '/../../..' . '/shift/system/library/cache/file.php',
@@ -140,8 +156,8 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Session\\DB' => __DIR__ . '/../../..' . '/shift/system/library/session/db.php',
         'Session\\File' => __DIR__ . '/../../..' . '/shift/system/library/session/file.php',
         'Session\\Native' => __DIR__ . '/../../..' . '/shift/system/library/session/native.php',
-        'Shift\\System\\Framework\\Autoload\\ClassLoader' => __DIR__ . '/../../..' . '/shift/system/framework/autoload/classloader.php',
-        'Shift\\System\\Framework\\Autoload\\Psr4Lower' => __DIR__ . '/../../..' . '/shift/system/framework/autoload/psr4lower.php',
+        'Shift\\System\\Core\\Autoload\\ClassLoader' => __DIR__ . '/../../..' . '/shift/system/core/autoload/classloader.php',
+        'Shift\\System\\Core\\Autoload\\Psr4Lower' => __DIR__ . '/../../..' . '/shift/system/core/autoload/psr4lower.php',
         'Shift\\System\\Kernel' => __DIR__ . '/../../..' . '/shift/system/kernel.php',
         'Template' => __DIR__ . '/../../..' . '/shift/system/library/template.php',
         'Template\\PHP' => __DIR__ . '/../../..' . '/shift/system/library/template/php.php',
@@ -151,6 +167,8 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$classMap;
 
         }, null, ClassLoader::class);

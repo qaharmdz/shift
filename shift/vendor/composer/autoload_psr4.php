@@ -6,4 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
+    'Adbar\\' => array($vendorDir . '/adbario/php-dot-notation/src'),
 );

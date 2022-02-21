@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "adbario/php-dot-notation": "^2.2"
     },
     "autoload": {
         "classmap": ["shift/", "tests/"],
@@ -29,7 +30,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "Shift\\System\\Framework\\Autoload\\Psr4Lower::classMap"
+            "Shift\\System\\Core\\Autoload\\Psr4Lower::classMap"
         ]
     },
     "minimum-stability": "stable",
