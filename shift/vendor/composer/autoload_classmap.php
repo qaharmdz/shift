@@ -220,7 +220,7 @@ return array(
     'Shift\\System\\Core\\Autoload\\ClassLoader' => $baseDir . '/shift/system/core/autoload/classloader.php',
     'Shift\\System\\Core\\Autoload\\Psr4Lower' => $baseDir . '/shift/system/core/autoload/psr4lower.php',
     'Shift\\System\\Core\\Bags' => $baseDir . '/shift/system/core/bags.php',
-    'Shift\\System\\Framework' => $baseDir . '/shift/system/kernel.php',
+    'Shift\\System\\Framework' => $baseDir . '/shift/system/framework.php',
     'Shift\\System\\core\\Config' => $baseDir . '/shift/system/core/config.php',
     'Template' => $baseDir . '/shift/system/library/template.php',
     'Template\\PHP' => $baseDir . '/shift/system/library/template/php.php',

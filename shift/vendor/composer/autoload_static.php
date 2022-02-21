@@ -250,7 +250,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Core\\Autoload\\ClassLoader' => __DIR__ . '/../../..' . '/shift/system/core/autoload/classloader.php',
         'Shift\\System\\Core\\Autoload\\Psr4Lower' => __DIR__ . '/../../..' . '/shift/system/core/autoload/psr4lower.php',
         'Shift\\System\\Core\\Bags' => __DIR__ . '/../../..' . '/shift/system/core/bags.php',
-        'Shift\\System\\Framework' => __DIR__ . '/../../..' . '/shift/system/kernel.php',
+        'Shift\\System\\Framework' => __DIR__ . '/../../..' . '/shift/system/framework.php',
         'Shift\\System\\core\\Config' => __DIR__ . '/../../..' . '/shift/system/core/config.php',
         'Template' => __DIR__ . '/../../..' . '/shift/system/library/template.php',
         'Template\\PHP' => __DIR__ . '/../../..' . '/shift/system/library/template/php.php',

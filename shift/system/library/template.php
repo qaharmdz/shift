@@ -6,15 +6,9 @@ class Template
 {
     private $adaptor;
 
-    public function __construct($adaptor)
+    public function __construct()
     {
-        $class = '\Template\PHP';
-
-        if (class_exists($class)) {
-            $this->adaptor = new $class();
-        } else {
-            throw new \Exception('Error: Could not load template adaptor ' . $adaptor . '!');
-        }
+        $this->adaptor = new \Template\PHP();
     }
 
     public function set($key, $value)

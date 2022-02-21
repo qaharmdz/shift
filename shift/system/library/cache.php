@@ -6,15 +6,9 @@ class Cache
 {
     private $adaptor;
 
-    public function __construct($adaptor, $expire = 3600)
+    public function __construct($expire = 3600)
     {
-        $class = '\Cache\\' . ucwords($adaptor);
-
-        if (class_exists($class)) {
-            $this->adaptor = new $class($expire);
-        } else {
-            throw new \Exception('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
-        }
+        $this->adaptor = new \Cache\File($expire);
     }
 
     public function get($key)

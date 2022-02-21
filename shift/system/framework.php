@@ -53,8 +53,6 @@ class Framework
 
         $this->set('config', $config);
 
-        d($config->all());
-
         //========================================
 
         // Event
@@ -62,8 +60,8 @@ class Framework
         $this->set('event', $event);
 
         // Event Register
-        if ($config->has('action_event')) {
-            foreach ($config->get('action_event') as $key => $value) {
+        if ($config->has('root.action_event')) {
+            foreach ($config->get('root.action_event') as $key => $value) {
                 $event->register($key, new \Action($value));
             }
         }
@@ -81,69 +79,34 @@ class Framework
         $this->set('response', $response);
 
         // Database
-        if ($config->get('db_autostart')) {
-            $this->set('db', new \DB(
-                $config->get('db_type'),
-                $config->get('db_hostname'),
-                $config->get('db_username'),
-                $config->get('db_password'),
-                $config->get('db_database'),
-                (int)$config->get('db_port')
-            ));
-        }
+        $this->set('db', new \DB(
+            'mysqli',
+            $config->get('root.database.config.host'),
+            $config->get('root.database.config.username'),
+            $config->get('root.database.config.password'),
+            $config->get('root.database.config.database'),
+            $config->getInt('root.database.config.port'),
+        ));
 
         // Session
         $session = new \Session();
-
-        if ($config->get('session_autostart')) {
-            $session->start();
-        }
+        $session->start();
 
         $this->set('session', $session);
 
         // Cache
-        $this->set('cache', new \Cache($config->get('root.cache_type'), $config->get('root.cache_expire')));
+        $this->set('cache', new \Cache());
 
         // Url
-        if ($config->get('url_autostart')) {
-            $this->set('url', new \Url($config->get('site_base'), $config->get('site_ssl')));
-        }
+        $this->set('url', new \Url($config->get('root.site_base'), $config->get('root.site_ssl')));
 
         // Language
-        $language = new \Language($config->get('language_default'));
-        $language->load($config->get('language_default'));
+        $language = new \Language($config->get('root.locale'));
+        $language->load($config->get('root.locale'));
         $this->set('language', $language);
 
         // Document
         $this->set('document', new \Document());
-
-        // Config Autoload
-        if ($config->has('config_autoload')) {
-            foreach ($config->get('config_autoload') as $value) {
-                $loader->config($value);
-            }
-        }
-
-        // Language Autoload
-        if ($config->has('language_autoload')) {
-            foreach ($config->get('language_autoload') as $value) {
-                $loader->language($value);
-            }
-        }
-
-        // Library Autoload
-        if ($config->has('library_autoload')) {
-            foreach ($config->get('library_autoload') as $value) {
-                $loader->library($value);
-            }
-        }
-
-        // Model Autoload
-        if ($config->has('model_autoload')) {
-            foreach ($config->get('model_autoload') as $value) {
-                $loader->model($value);
-            }
-        }
 
         return $this;
     }
@@ -157,17 +120,17 @@ class Framework
         $controller = new \Front($this->registry);
 
         // Pre Actions
-        if ($config->has('action_pre_action')) {
-            foreach ($config->get('action_pre_action') as $value) {
+        if ($config->has('root.action_pre_action')) {
+            foreach ($config->get('root.action_pre_action') as $value) {
                 $controller->addPreAction(new \Action($value));
             }
         }
 
         // Dispatch
-        $controller->dispatch(new \Action($config->get('action_router')), new \Action($config->get('action_error')));
+        $controller->dispatch(new \Action($config->get('root.action_router')), new \Action($config->get('root.action_error')));
 
         // Output
-        $response->setCompression($config->get('config_compression'));
+        $response->setCompression(0); // TODO: config compression
         $response->output();
     }
 }

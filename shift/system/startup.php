@@ -77,12 +77,12 @@ define('DIR_IMAGE', PATH_PUBLIC . 'image' . DS);
 
 // DB
 if ($rootConfig) {
-    define('DB_DRIVER', 'mysqli');
-    define('DB_HOSTNAME', $rootConfig['database']['config']['host']);
-    define('DB_USERNAME', $rootConfig['database']['config']['username']);
-    define('DB_PASSWORD', $rootConfig['database']['config']['password']);
-    define('DB_DATABASE', $rootConfig['database']['config']['database']);
-    define('DB_PORT', (int)$rootConfig['database']['config']['port']);
+//     define('DB_DRIVER', 'mysqli');
+//     define('DB_HOSTNAME', $rootConfig['database']['config']['host']);
+//     define('DB_USERNAME', $rootConfig['database']['config']['username']);
+//     define('DB_PASSWORD', $rootConfig['database']['config']['password']);
+//     define('DB_DATABASE', $rootConfig['database']['config']['database']);
+//     define('DB_PORT', (int)$rootConfig['database']['config']['port']);
     define('DB_PREFIX', $rootConfig['database']['table']['prefix']);
 }
 
