@@ -19,4 +19,4 @@ require_once PATH_SHIFT . 'system/startup.php';
 // var_dump(get_defined_constants(true)['user']);
 
 $kernel = new Shift\System\Kernel();
-echo $kernel->init(APP_FOLDER)->run();
+echo $kernel->init(APP_FOLDER, $rootConfig)->run();

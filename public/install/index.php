@@ -33,4 +33,4 @@ if (is_file(PATH_SHIFT . 'config.php')) {
 require_once PATH_SHIFT . 'system/startup.php';
 
 $kernel = new Shift\System\Kernel();
-echo $kernel->init(APP_FOLDER)->run();
+echo $kernel->init(APP_FOLDER, $rootConfig)->run();

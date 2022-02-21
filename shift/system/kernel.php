@@ -36,12 +36,18 @@ class Kernel
         return $this->registry->set($key, $library);
     }
 
-    public function init(string $appFolder): Kernel
+    public function init(string $appFolder, array $rootConfig = []): Kernel
     {
-        // Config
-        $config = new \Config();
-        $config->load('default');
-        $config->load('app' . DS . $appFolder);
+        $config = new Core\Config();
+        $config->set('root.version', VERSION);
+        $config->set('root.version_id', VERSION_ID);
+
+        $config->load('default', 'root');
+        $config->load('app/' . $appFolder, 'root');
+        $config->replaceRecursive(['root' => $rootConfig]);
+
+        var_dump($config->all());
+
         $this->set('config', $config);
 
 
@@ -92,7 +98,7 @@ class Kernel
         $this->set('session', $session);
 
         // Cache
-        $this->set('cache', new \Cache($config->get('cache_type'), $config->get('cache_expire')));
+        $this->set('cache', new \Cache($config->get('root.cache_type'), $config->get('root.cache_expire')));
 
         // Url
         if ($config->get('url_autostart')) {

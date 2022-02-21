@@ -29,7 +29,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_IMAGE\', \'' . PATH_SHIFT . 'image/\');' . "\n";
             $output .= 'define(\'DIR_LANGUAGE\', \'' . PATH_SHIFT . 'catalog/language/\');' . "\n";
             $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'catalog/view/theme/\');' . "\n";
-            $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
+            // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
             $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
             $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
             $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n\n";
@@ -65,7 +65,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_IMAGE\', \'' . PATH_SHIFT . 'image/\');' . "\n";
             $output .= 'define(\'DIR_LANGUAGE\', \'' . PATH_SHIFT . 'admin/language/\');' . "\n";
             $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'admin/view/template/\');' . "\n";
-            $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
+            // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
             $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
             $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
             $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n";

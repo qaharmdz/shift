@@ -66,7 +66,7 @@ if (APP_FOLDER == 'catalog') {
 }
 
 define('DIR_SYSTEM', PATH_SHIFT . 'system' . DS);
-define('DIR_CONFIG', DIR_SYSTEM . 'config' . DS);
+// define('DIR_CONFIG', DIR_SYSTEM . 'config' . DS);
 
 define('DIR_STORAGE', PATH_SHIFT . 'storage' . DS);
 define('DIR_CACHE', DIR_STORAGE . 'cache' . DS);
