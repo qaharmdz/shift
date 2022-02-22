@@ -31,7 +31,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'catalog/view/theme/\');' . "\n";
             // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
             $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
-            $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
+            // $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
             $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
@@ -67,7 +67,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'admin/view/template/\');' . "\n";
             // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
             $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
-            $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
+            // $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
             $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n";
             $output .= 'define(\'DIR_CATALOG\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
 

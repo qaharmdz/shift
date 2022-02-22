@@ -70,7 +70,7 @@ define('DIR_SYSTEM', PATH_SHIFT . 'system' . DS);
 
 define('DIR_STORAGE', PATH_SHIFT . 'storage' . DS);
 define('DIR_CACHE', DIR_STORAGE . 'cache' . DS);
-define('DIR_LOGS', DIR_STORAGE . 'logs' . DS);
+// define('DIR_LOGS', DIR_STORAGE . 'logs' . DS);
 define('DIR_UPLOAD', DIR_STORAGE . 'upload' . DS);
 
 define('DIR_IMAGE', PATH_PUBLIC . 'image' . DS);

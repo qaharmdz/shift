@@ -55,7 +55,7 @@ class ControllerToolLog extends Controller
 
         $data['log'] = '';
 
-        $file = DIR_LOGS . $this->config->get('config_error_filename');
+        $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
 
         if (file_exists($file)) {
             $size = filesize($file);
@@ -97,7 +97,7 @@ class ControllerToolLog extends Controller
     {
         $this->load->language('tool/log');
 
-        $file = DIR_LOGS . $this->config->get('config_error_filename');
+        $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
 
         if (file_exists($file) && filesize($file) > 0) {
             $this->response->addheader('Pragma: public');
@@ -122,7 +122,7 @@ class ControllerToolLog extends Controller
         if (!$this->user->hasPermission('modify', 'tool/log')) {
             $this->session->data['error'] = $this->language->get('error_permission');
         } else {
-            $file = DIR_LOGS . $this->config->get('config_error_filename');
+            $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
 
             $handle = fopen($file, 'w+');
 
