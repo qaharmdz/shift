@@ -76,6 +76,15 @@ class Framework
         register_shutdown_function([$logger, 'shutdownHandler']);
         $this->set('logger', $logger);
 
+        // Database
+        $db = new Core\Database(...$config->get('root.database.config'));
+        $db->raw('
+            SET time_zone="+00:00",
+                session group_concat_max_len = 102400,
+                SESSION sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+        ');
+        $this->set('db', $db);
+
         return $this;
     }
 
@@ -105,16 +114,6 @@ class Framework
         $response = new \Response();
         $response->addHeader('Content-Type: text/html; charset=utf-8');
         $this->set('response', $response);
-
-        // Database
-        $this->set('db', new \DB(
-            'mysqli',
-            $config->get('root.database.config.host'),
-            $config->get('root.database.config.username'),
-            $config->get('root.database.config.password'),
-            $config->get('root.database.config.database'),
-            $config->getInt('root.database.config.port'),
-        ));
 
         // Session
         $session = new \Session();
