@@ -37,28 +37,28 @@ class ModelUserUser extends Model
 
     public function getUser($user_id)
     {
-        $query = $this->db->query("SELECT *, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group FROM `" . DB_PREFIX . "user` u WHERE u.user_id = '" . (int)$user_id . "'");
+        $query = $this->db->get("SELECT *, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group FROM `" . DB_PREFIX . "user` u WHERE u.user_id = '" . (int)$user_id . "'");
 
         return $query->row;
     }
 
     public function getUserByUsername($username)
     {
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE username = '" . $this->db->escape($username) . "'");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user` WHERE username = '" . $this->db->escape($username) . "'");
 
         return $query->row;
     }
 
     public function getUserByEmail($email)
     {
-        $query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+        $query = $this->db->get("SELECT DISTINCT * FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
         return $query->row;
     }
 
     public function getUserByCode($code)
     {
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . $this->db->escape($code) . "' AND code != ''");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . $this->db->escape($code) . "' AND code != ''");
 
         return $query->row;
     }
@@ -97,28 +97,28 @@ class ModelUserUser extends Model
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
 
-        $query = $this->db->query($sql);
+        $query = $this->db->get($sql);
 
         return $query->rows;
     }
 
     public function getTotalUsers()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`");
 
         return $query->row['total'];
     }
 
     public function getTotalUsersByGroupId($user_group_id)
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE user_group_id = '" . (int)$user_group_id . "'");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE user_group_id = '" . (int)$user_group_id . "'");
 
         return $query->row['total'];
     }
 
     public function getTotalUsersByEmail($email)
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
         return $query->row['total'];
     }

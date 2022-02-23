@@ -22,7 +22,7 @@ class ModelExtensionModule extends Model
 
     public function getModule($module_id)
     {
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
 
         if ($query->row) {
             return json_decode($query->row['setting'], true);
@@ -33,14 +33,14 @@ class ModelExtensionModule extends Model
 
     public function getModules()
     {
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `code`");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `code`");
 
         return $query->rows;
     }
 
     public function getModulesByCode($code)
     {
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");
 
         return $query->rows;
     }

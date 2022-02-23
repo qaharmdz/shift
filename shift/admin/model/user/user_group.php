@@ -23,7 +23,7 @@ class ModelUserUserGroup extends Model
 
     public function getUserGroup($user_group_id)
     {
-        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
+        $query = $this->db->get("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
         $user_group = array(
             'name'       => $query->row['name'],
@@ -57,21 +57,21 @@ class ModelUserUserGroup extends Model
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
 
-        $query = $this->db->query($sql);
+        $query = $this->db->get($sql);
 
         return $query->rows;
     }
 
     public function getTotalUserGroups()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "user_group");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "user_group");
 
         return $query->row['total'];
     }
 
     public function addPermission($user_group_id, $type, $route)
     {
-        $user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
+        $user_group_query = $this->db->get("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
         if ($user_group_query->num_rows) {
             $data = json_decode($user_group_query->row['permission'], true);
@@ -84,7 +84,7 @@ class ModelUserUserGroup extends Model
 
     public function removePermission($user_group_id, $type, $route)
     {
-        $user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
+        $user_group_query = $this->db->get("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
         if ($user_group_query->num_rows) {
             $data = json_decode($user_group_query->row['permission'], true);

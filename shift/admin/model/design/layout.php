@@ -56,7 +56,7 @@ class ModelDesignLayout extends Model
 
     public function getLayout($layout_id)
     {
-        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "layout WHERE layout_id = '" . (int)$layout_id . "'");
+        $query = $this->db->get("SELECT DISTINCT * FROM " . DB_PREFIX . "layout WHERE layout_id = '" . (int)$layout_id . "'");
 
         return $query->row;
     }
@@ -91,28 +91,28 @@ class ModelDesignLayout extends Model
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
 
-        $query = $this->db->query($sql);
+        $query = $this->db->get($sql);
 
         return $query->rows;
     }
 
     public function getLayoutRoutes($layout_id)
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
 
         return $query->rows;
     }
 
     public function getLayoutModules($layout_id)
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "' ORDER BY position ASC, sort_order ASC");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "' ORDER BY position ASC, sort_order ASC");
 
         return $query->rows;
     }
 
     public function getTotalLayouts()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "layout");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "layout");
 
         return $query->row['total'];
     }

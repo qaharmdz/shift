@@ -20,14 +20,14 @@ class ModelToolUpload extends Model
 
     public function getUpload($upload_id)
     {
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE upload_id = '" . (int)$upload_id . "'");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "upload` WHERE upload_id = '" . (int)$upload_id . "'");
 
         return $query->row;
     }
 
     public function getUploadByCode($code)
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "upload WHERE code = '" . $this->db->escape($code) . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "upload WHERE code = '" . $this->db->escape($code) . "'");
 
         return $query->row;
     }
@@ -84,7 +84,7 @@ class ModelToolUpload extends Model
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
 
-        $query = $this->db->query($sql);
+        $query = $this->db->get($sql);
 
         return $query->rows;
     }
@@ -111,7 +111,7 @@ class ModelToolUpload extends Model
             $sql .= " WHERE " . implode(" AND ", $implode);
         }
 
-        $query = $this->db->query($sql);
+        $query = $this->db->get($sql);
 
         return $query->row['total'];
     }

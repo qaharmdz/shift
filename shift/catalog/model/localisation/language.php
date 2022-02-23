@@ -6,7 +6,7 @@ class ModelLocalisationLanguage extends Model
 {
     public function getLanguage($language_id)
     {
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 
         return $query->row;
     }
@@ -18,7 +18,7 @@ class ModelLocalisationLanguage extends Model
         if (!$language_data) {
             $language_data = array();
 
-            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
+            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
 
             foreach ($query->rows as $result) {
                 $language_data[$result['code']] = array(

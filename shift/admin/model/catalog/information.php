@@ -83,7 +83,7 @@ class ModelCatalogInformation extends Model
 
     public function getInformation($information_id)
     {
-        $query = $this->db->query("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "') AS keyword FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
+        $query = $this->db->get("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "') AS keyword FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 
         return $query->row;
     }
@@ -122,14 +122,14 @@ class ModelCatalogInformation extends Model
                 $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
             }
 
-            $query = $this->db->query($sql);
+            $query = $this->db->get($sql);
 
             return $query->rows;
         } else {
             $information_data = $this->cache->get('information.' . (int)$this->config->get('config_language_id'));
 
             if (!$information_data) {
-                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY id.title");
+                $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY id.title");
 
                 $information_data = $query->rows;
 
@@ -144,7 +144,7 @@ class ModelCatalogInformation extends Model
     {
         $information_description_data = array();
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
 
         foreach ($query->rows as $result) {
             $information_description_data[$result['language_id']] = array(
@@ -163,7 +163,7 @@ class ModelCatalogInformation extends Model
     {
         $information_store_data = array();
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
 
         foreach ($query->rows as $result) {
             $information_store_data[] = $result['store_id'];
@@ -176,7 +176,7 @@ class ModelCatalogInformation extends Model
     {
         $information_layout_data = array();
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "'");
 
         foreach ($query->rows as $result) {
             $information_layout_data[$result['store_id']] = $result['layout_id'];
@@ -187,14 +187,14 @@ class ModelCatalogInformation extends Model
 
     public function getTotalInformations()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "information");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "information");
 
         return $query->row['total'];
     }
 
     public function getTotalInformationsByLayoutId($layout_id)
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "information_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "information_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 
         return $query->row['total'];
     }

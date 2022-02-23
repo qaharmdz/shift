@@ -42,7 +42,7 @@ final class DB
 
     public function read($session_id): string|false
     {
-        $query = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > " . (int)time());
+        $query = $this->db->get("SELECT `data` FROM `" . DB_PREFIX . "session` WHERE session_id = '" . $this->db->escape($session_id) . "' AND expire > " . (int)time());
 
         if ($query->num_rows) {
             return $query->row['data'];

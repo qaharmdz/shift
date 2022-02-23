@@ -18,7 +18,7 @@ class ModelExtensionEvent extends Model
 
     public function getEvent($code, $trigger, $action)
     {
-        $event = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' AND `trigger` = '" . $this->db->escape($trigger) . "' AND `action` = '" . $this->db->escape($action) . "'");
+        $event = $this->db->get("SELECT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' AND `trigger` = '" . $this->db->escape($trigger) . "' AND `action` = '" . $this->db->escape($action) . "'");
 
         return $event->rows;
     }
@@ -75,16 +75,15 @@ class ModelExtensionEvent extends Model
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
 
-        $query = $this->db->query($sql);
+        $query = $this->db->get($sql);
 
         return $query->rows;
     }
 
     public function getTotalEvents()
     {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "event");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "event");
 
         return $query->row['total'];
     }
-
 }
