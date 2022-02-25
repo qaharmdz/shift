@@ -44,7 +44,7 @@ class ControllerCatalogInformation extends Controller
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true));
         }
 
         $this->getForm();
@@ -77,7 +77,7 @@ class ControllerCatalogInformation extends Controller
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true));
         }
 
         $this->getForm();
@@ -112,7 +112,7 @@ class ControllerCatalogInformation extends Controller
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true));
         }
 
         $this->getList();
@@ -156,16 +156,16 @@ class ControllerCatalogInformation extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, true)
+            'href' => $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true)
         );
 
-        $data['add'] = $this->url->link('catalog/information/add', 'token=' . $this->session->data['token'] . $url, true);
-        $data['delete'] = $this->url->link('catalog/information/delete', 'token=' . $this->session->data['token'] . $url, true);
+        $data['add'] = $this->url->link('catalog/information/add', 'token=' . $this->session->get('token') . $url, true);
+        $data['delete'] = $this->url->link('catalog/information/delete', 'token=' . $this->session->get('token') . $url, true);
 
         $data['informations'] = array();
 
@@ -185,7 +185,7 @@ class ControllerCatalogInformation extends Controller
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
                 'sort_order'     => $result['sort_order'],
-                'edit'           => $this->url->link('catalog/information/edit', 'token=' . $this->session->data['token'] . '&information_id=' . $result['information_id'] . $url, true)
+                'edit'           => $this->url->link('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $result['information_id'] . $url, true)
             );
         }
 
@@ -235,8 +235,8 @@ class ControllerCatalogInformation extends Controller
             $url .= '&page=' . $this->request->get['page'];
         }
 
-        $data['sort_title'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . '&sort=id.title' . $url, true);
-        $data['sort_sort_order'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . '&sort=i.sort_order' . $url, true);
+        $data['sort_title'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . '&sort=id.title' . $url, true);
+        $data['sort_sort_order'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . '&sort=i.sort_order' . $url, true);
 
         $url = '';
 
@@ -252,7 +252,7 @@ class ControllerCatalogInformation extends Controller
         $pagination->total = $information_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+        $pagination->url = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
 
         $data['pagination'] = $pagination->render();
 
@@ -347,27 +347,27 @@ class ControllerCatalogInformation extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, true)
+            'href' => $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true)
         );
 
         if (!isset($this->request->get['information_id'])) {
-            $data['action'] = $this->url->link('catalog/information/add', 'token=' . $this->session->data['token'] . $url, true);
+            $data['action'] = $this->url->link('catalog/information/add', 'token=' . $this->session->get('token') . $url, true);
         } else {
-            $data['action'] = $this->url->link('catalog/information/edit', 'token=' . $this->session->data['token'] . '&information_id=' . $this->request->get['information_id'] . $url, true);
+            $data['action'] = $this->url->link('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $this->request->get['information_id'] . $url, true);
         }
 
-        $data['cancel'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, true);
+        $data['cancel'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true);
 
         if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
             $information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
         }
 
-        $data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->get('token');
 
         $this->load->model('localisation/language');
 

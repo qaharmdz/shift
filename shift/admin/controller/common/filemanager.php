@@ -85,7 +85,7 @@ class ControllerCommonFileManager extends Controller
                     'name'  => implode(' ', $name),
                     'type'  => 'directory',
                     'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-                    'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, true)
+                    'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, true)
                 );
             } elseif (is_file($image)) {
                 $data['images'][] = array(
@@ -113,7 +113,7 @@ class ControllerCommonFileManager extends Controller
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_search'] = $this->language->get('button_search');
 
-        $data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->get('token');
 
         if (isset($this->request->get['directory'])) {
             $data['directory'] = urlencode($this->request->get['directory']);
@@ -160,7 +160,7 @@ class ControllerCommonFileManager extends Controller
             $url .= '&thumb=' . $this->request->get['thumb'];
         }
 
-        $data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, true);
+        $data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url, true);
 
         // Refresh
         $url = '';
@@ -177,7 +177,7 @@ class ControllerCommonFileManager extends Controller
             $url .= '&thumb=' . $this->request->get['thumb'];
         }
 
-        $data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, true);
+        $data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url, true);
 
         $url = '';
 
@@ -201,7 +201,7 @@ class ControllerCommonFileManager extends Controller
         $pagination->total = $image_total;
         $pagination->page = $page;
         $pagination->limit = 16;
-        $pagination->url = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+        $pagination->url = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
 
         $data['pagination'] = $pagination->render();
 

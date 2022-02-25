@@ -19,7 +19,7 @@ class ControllerExtensionDashboardMap extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true));
+            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -45,22 +45,22 @@ class ControllerExtensionDashboardMap extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true)
+            'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/dashboard/map', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('extension/dashboard/map', 'token=' . $this->session->get('token'), true)
         );
 
-        $data['action'] = $this->url->link('extension/dashboard/map', 'token=' . $this->session->data['token'], true);
+        $data['action'] = $this->url->link('extension/dashboard/map', 'token=' . $this->session->get('token'), true);
 
-        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=dashboard', true);
+        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true);
 
         if (isset($this->request->post['dashboard_map_width'])) {
             $data['dashboard_map_width'] = $this->request->post['dashboard_map_width'];
@@ -111,7 +111,7 @@ class ControllerExtensionDashboardMap extends Controller
         $data['text_order'] = $this->language->get('text_order');
         $data['text_sale'] = $this->language->get('text_sale');
 
-        $data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->get('token');
 
         return $this->load->view('extension/dashboard/map_info', $data);
     }

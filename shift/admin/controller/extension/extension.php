@@ -16,12 +16,12 @@ class ControllerExtensionExtension extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token'), true)
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -32,7 +32,7 @@ class ControllerExtensionExtension extends Controller
         $data['text_loading'] = $this->language->get('text_loading');
         $data['text_confirm'] = $this->language->get('text_confirm');
 
-        $data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->get('token');
 
         if (isset($this->request->get['type'])) {
             $data['type'] = $this->request->get['type'];
@@ -56,7 +56,7 @@ class ControllerExtensionExtension extends Controller
                 $data['categories'][] = array(
                     'code' => $extension,
                     'text' => $this->language->get('heading_title') . ' (' . count($files) .')',
-                    'href' => $this->url->link('extension/extension/' . $extension, 'token=' . $this->session->data['token'], true)
+                    'href' => $this->url->link('extension/extension/' . $extension, 'token=' . $this->session->get('token'), true)
                 );
             }
         }

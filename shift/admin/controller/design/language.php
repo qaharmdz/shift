@@ -16,12 +16,12 @@ class ControllerDesignLanguage extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('design/theme', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('design/theme', 'token=' . $this->session->get('token'), true)
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -32,7 +32,7 @@ class ControllerDesignLanguage extends Controller
         $data['text_translation'] = $this->language->get('text_translation');
         $data['text_default'] = $this->language->get('text_default');
 
-        $data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->get('token');
 
         $data['stores'] = array();
 

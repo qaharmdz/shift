@@ -44,7 +44,7 @@ class ControllerExtensionEvent extends Controller
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $this->response->redirect($this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('extension/event', 'token=' . $this->session->get('token') . $url, true));
         }
 
         $this->getList();
@@ -77,7 +77,7 @@ class ControllerExtensionEvent extends Controller
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $this->response->redirect($this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url, true));
+            $this->response->redirect($this->url->link('extension/event', 'token=' . $this->session->get('token') . $url, true));
         }
 
         $this->getList();
@@ -121,12 +121,12 @@ class ControllerExtensionEvent extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url, true)
+            'href' => $this->url->link('extension/event', 'token=' . $this->session->get('token') . $url, true)
         );
 
         $data['events'] = array();
@@ -150,8 +150,8 @@ class ControllerExtensionEvent extends Controller
                 'action'     => $result['action'],
                 'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-                'enable'     => $this->url->link('extension/event/enable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
-                'disable'    => $this->url->link('extension/event/disable', 'token=' . $this->session->data['token'] . '&event_id=' . $result['event_id'], true),
+                'enable'     => $this->url->link('extension/event/enable', 'token=' . $this->session->get('token') . '&event_id=' . $result['event_id'], true),
+                'disable'    => $this->url->link('extension/event/disable', 'token=' . $this->session->get('token') . '&event_id=' . $result['event_id'], true),
                 'enabled'    => $result['status']
             );
         }
@@ -204,11 +204,11 @@ class ControllerExtensionEvent extends Controller
             $url .= '&page=' . $this->request->get['page'];
         }
 
-        $data['sort_code'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
-        $data['sort_trigger'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=trigger' . $url, true);
-        $data['sort_action'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=action' . $url, true);
-        $data['sort_status'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
-        $data['sort_date_added'] = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+        $data['sort_code'] = $this->url->link('extension/event', 'token=' . $this->session->get('token') . '&sort=code' . $url, true);
+        $data['sort_trigger'] = $this->url->link('extension/event', 'token=' . $this->session->get('token') . '&sort=trigger' . $url, true);
+        $data['sort_action'] = $this->url->link('extension/event', 'token=' . $this->session->get('token') . '&sort=action' . $url, true);
+        $data['sort_status'] = $this->url->link('extension/event', 'token=' . $this->session->get('token') . '&sort=status' . $url, true);
+        $data['sort_date_added'] = $this->url->link('extension/event', 'token=' . $this->session->get('token') . '&sort=date_added' . $url, true);
 
         $url = '';
 
@@ -224,7 +224,7 @@ class ControllerExtensionEvent extends Controller
         $pagination->total = $event_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('extension/event', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+        $pagination->url = $this->url->link('extension/event', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
 
         $data['pagination'] = $pagination->render();
 

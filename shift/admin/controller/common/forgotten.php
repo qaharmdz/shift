@@ -8,7 +8,7 @@ class ControllerCommonForgotten extends Controller
 
     public function index()
     {
-        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
+        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->get('token'))) {
             $this->response->redirect($this->url->link('common/dashboard', '', true));
         }
 

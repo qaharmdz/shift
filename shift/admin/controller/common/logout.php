@@ -8,7 +8,7 @@ class ControllerCommonLogout extends Controller
     {
         $this->user->logout();
 
-        unset($this->session->data['token']);
+        unset($this->session->get('token'));
 
         $this->response->redirect($this->url->link('common/login', '', true));
     }

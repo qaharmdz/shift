@@ -6,7 +6,7 @@ class ControllerCommonColumnLeft extends Controller
 {
     public function index()
     {
-        if (isset($this->request->get['token']) && isset($this->session->data['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
+        if ($this->session->isEmpty('token') || empty($this->request->get['token']) || ($this->request->get['token'] != $this->session->get('token', 'x'))) {
             $this->load->language('common/column_left');
 
             $this->load->model('user/user');
@@ -41,14 +41,14 @@ class ControllerCommonColumnLeft extends Controller
                 'id'       => 'menu-dashboard',
                 'icon'     => 'fa-dashboard',
                 'name'     => $this->language->get('text_dashboard'),
-                'href'     => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+                'href'     => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true),
                 'children' => array()
             );
 
             if ($this->user->hasPermission('access', 'catalog/information')) {
                 $catalog[] = array(
                     'name'     => $this->language->get('text_information'),
-                    'href'     => $this->url->link('catalog/information', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('catalog/information', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -70,7 +70,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'extension/installer')) {
                 $extension[] = array(
                     'name'     => $this->language->get('text_installer'),
-                    'href'     => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('extension/installer', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -78,7 +78,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'extension/extension')) {
                 $extension[] = array(
                     'name'     => $this->language->get('text_extension'),
-                    'href'     => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('extension/extension', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -86,7 +86,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'extension/event')) {
                 $extension[] = array(
                     'name'     => $this->language->get('text_event'),
-                    'href'     => $this->url->link('extension/event', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('extension/event', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -107,14 +107,14 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'design/layout')) {
                 $design[] = array(
                     'name'     => $this->language->get('text_layout'),
-                    'href'     => $this->url->link('design/layout', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('design/layout', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
             if ($this->user->hasPermission('access', 'design/banner')) {
                 $design[] = array(
                     'name'     => $this->language->get('text_banner'),
-                    'href'     => $this->url->link('design/banner', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('design/banner', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -135,7 +135,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'setting/setting')) {
                 $system[] = array(
                     'name'     => $this->language->get('text_setting'),
-                    'href'     => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('setting/store', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -146,7 +146,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'user/user')) {
                 $user[] = array(
                     'name'     => $this->language->get('text_users'),
-                    'href'     => $this->url->link('user/user', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('user/user', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -154,7 +154,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'user/user_permission')) {
                 $user[] = array(
                     'name'     => $this->language->get('text_user_group'),
-                    'href'     => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('user/user_permission', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -173,7 +173,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'localisation/language')) {
                 $localisation[] = array(
                     'name'     => $this->language->get('text_language'),
-                    'href'     => $this->url->link('localisation/language', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('localisation/language', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -192,7 +192,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'tool/upload')) {
                 $tool[] = array(
                     'name'     => $this->language->get('text_upload'),
-                    'href'     => $this->url->link('tool/upload', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('tool/upload', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -200,7 +200,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'tool/backup')) {
                 $tool[] = array(
                     'name'     => $this->language->get('text_backup'),
-                    'href'     => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('tool/backup', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }
@@ -208,7 +208,7 @@ class ControllerCommonColumnLeft extends Controller
             if ($this->user->hasPermission('access', 'tool/log')) {
                 $tool[] = array(
                     'name'     => $this->language->get('text_log'),
-                    'href'     => $this->url->link('tool/log', 'token=' . $this->session->data['token'], true),
+                    'href'     => $this->url->link('tool/log', 'token=' . $this->session->get('token'), true),
                     'children' => array()
                 );
             }

@@ -46,15 +46,15 @@ class ControllerCommonHeader extends Controller
         $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
         $data['text_logout'] = $this->language->get('text_logout');
 
-        if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+        if ($this->session->isEmpty('token') || empty($this->request->get['token']) || ($this->request->get['token'] != $this->session->get('token', 'x'))) {
             $data['logged'] = '';
 
             $data['home'] = $this->url->link('common/dashboard', '', true);
         } else {
             $data['logged'] = true;
 
-            $data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true);
-            $data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], true);
+            $data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true);
+            $data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->get('token'), true);
 
             // Online Stores
             $data['stores'] = array();
