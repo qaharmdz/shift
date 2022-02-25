@@ -58,17 +58,17 @@
         },
         {
             "name": "kint-php/kint",
-            "version": "4.1.1",
-            "version_normalized": "4.1.1.0",
+            "version": "4.1.2",
+            "version_normalized": "4.1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kint-php/kint.git",
-                "reference": "e64b939f9ceb9620abd982e2a66a3289fcf4e837"
+                "reference": "fa53c4333cda79dc9cb002cfa029abe994d0ae00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kint-php/kint/zipball/e64b939f9ceb9620abd982e2a66a3289fcf4e837",
-                "reference": "e64b939f9ceb9620abd982e2a66a3289fcf4e837",
+                "url": "https://api.github.com/repos/kint-php/kint/zipball/fa53c4333cda79dc9cb002cfa029abe994d0ae00",
+                "reference": "fa53c4333cda79dc9cb002cfa029abe994d0ae00",
                 "shasum": ""
             },
             "require": {
@@ -83,9 +83,10 @@
                 "vimeo/psalm": "^4.0"
             },
             "suggest": {
+                "kint-php/kint-helpers": "Provides extra helper functions",
                 "kint-php/kint-twig": "Provides d() and s() functions in twig templates"
             },
-            "time": "2022-01-02T10:30:48+00:00",
+            "time": "2022-02-22T20:32:24+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -119,7 +120,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kint-php/kint/issues",
-                "source": "https://github.com/kint-php/kint/tree/4.1.1"
+                "source": "https://github.com/kint-php/kint/tree/4.1.2"
             },
             "install-path": "../kint-php/kint"
         }
