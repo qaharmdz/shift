@@ -17,13 +17,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add system/core/bags.
+- Add system/core/config.
+- Add system/core/database.
+- Add system/core/session.
+
 ### Changed
 - PSR-4 lowercase path.
 
 ### Changed
 - Reorganize folder structure: separate Shift and public files.
 - Refactor front controller.
-- Refactor system framework.
+- Refactor system/framework.
 
 ## [v0.1.0] - 2022-02-01
 Based on OpenCart v2.3.0.2 with the following change:

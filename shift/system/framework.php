@@ -85,6 +85,9 @@ class Framework
         ');
         $this->set('db', $db);
 
+        // Session
+        $this->set('session', new Core\Session($config->get('root.session')));
+
         return $this;
     }
 
@@ -114,12 +117,6 @@ class Framework
         $response = new \Response();
         $response->addHeader('Content-Type: text/html; charset=utf-8');
         $this->set('response', $response);
-
-        // Session
-        $session = new \Session();
-        $session->start();
-
-        $this->set('session', $session);
 
         // Cache
         $this->set('cache', new \Cache());

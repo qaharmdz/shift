@@ -8,7 +8,6 @@ $_['site_ssl']         = HTTPS_SERVER;
 
 // Actions
 $_['action_pre_action'] = array(
-    'startup/session',
     'startup/startup',
     'startup/event',
     'startup/maintenance',
