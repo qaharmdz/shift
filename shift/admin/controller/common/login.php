@@ -12,17 +12,17 @@ class ControllerCommonLogin extends Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-            $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->get('token'))) {
+            $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true));
         }
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->session->data['token'] = token(32);
+            $this->session->set('token', token(32));
 
             if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0)) {
-                $this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
+                $this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->get('token'));
             } else {
-                $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true));
+                $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true));
             }
         }
 
@@ -36,7 +36,7 @@ class ControllerCommonLogin extends Controller
 
         $data['button_login'] = $this->language->get('button_login');
 
-        if ((isset($this->session->data['token']) && !isset($this->request->get['token'])) || ((isset($this->request->get['token']) && (isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token']))))) {
+        if ($this->session->isEmpty('token') || empty($this->request->get['token']) || ($this->request->get['token'] != $this->session->get('token', 'x'))) {
             $this->error['warning'] = $this->language->get('error_token');
         }
 
@@ -46,13 +46,7 @@ class ControllerCommonLogin extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $data['action'] = $this->url->link('common/login', '', true);
 
