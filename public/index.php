@@ -18,5 +18,5 @@ require_once PATH_SHIFT . 'system/startup.php';
 
 // var_dump(get_defined_constants(true)['user']);
 
-$framework = new Shift\System\Framework();
-echo $framework->init(APP_FOLDER, $rootConfig)->run();
+$shift = new Shift\System\Framework();
+echo $shift->kernel(APP_FOLDER, $rootConfig)->run();

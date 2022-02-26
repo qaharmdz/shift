@@ -36,6 +36,15 @@ class Framework
         return $this->registry->set($key, $library);
     }
 
+    public function kernel(string $appFolder, array $rootConfig = []): Framework
+    {
+        $this->init($appFolder, $rootConfig);
+        $this->core();
+        $this->library();
+
+        return $this;
+    }
+
     public function init(string $appFolder, array $rootConfig = []): Framework
     {
         /**
@@ -44,6 +53,7 @@ class Framework
          * - env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
          * - system: Setting from database
          */
+        // Config
         $config = new Core\Config();
         $config->set('root.version', VERSION);
         $config->set('root.version_id', VERSION_ID);
@@ -58,16 +68,6 @@ class Framework
         // $config->set('env.url_media', URL_SITE . 'media/');
 
         $this->set('config', $config);
-
-        $this->core();
-        $this->library();
-
-        return $this;
-    }
-
-    protected function core(): Framework
-    {
-        $config = $this->get('config');
 
         // Logger
         $logger = new Core\Logger(['display' => true]); // TODO: setting
@@ -87,6 +87,14 @@ class Framework
 
         // Session
         $this->set('session', new Core\Session($config->get('root.session')));
+
+        return $this;
+    }
+
+    protected function core(): Framework
+    {
+        $config = $this->get('config');
+
 
         return $this;
     }

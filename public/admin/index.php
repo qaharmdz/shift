@@ -16,5 +16,5 @@ $rootConfig = require_once PATH_SHIFT . 'config.php';
 
 require_once PATH_SHIFT . 'system/startup.php';
 
-$framework = new Shift\System\Framework();
-echo $framework->init(APP_FOLDER, $rootConfig)->run();
+$shift = new Shift\System\Framework();
+echo $shift->kernel(APP_FOLDER, $rootConfig)->run();
