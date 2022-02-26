@@ -41,10 +41,7 @@ class Session extends Bags
         session_start();
 
         $this->setReference($_SESSION);
-
-        if (!$this->has('flash')) {
-            $this->items['flash'] = [];
-        }
+        $this->add('flash', []);
     }
 
     public function getId()

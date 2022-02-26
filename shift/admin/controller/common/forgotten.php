@@ -52,7 +52,7 @@ class ControllerCommonForgotten extends Controller
             $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
             $mail->send();
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('common/login', '', true));
         }

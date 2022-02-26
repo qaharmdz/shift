@@ -36,9 +36,9 @@ class ControllerExtensionExtensionModule extends Controller
             // Call install method if it exsits
             $this->load->controller('extension/module/' . $this->request->get['extension'] . '/install');
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         } else {
-            $this->session->data['error'] = $this->error['warning'];
+            $this->session->set('flash.error', $this->error['warning']);
         }
 
         $this->getList();
@@ -60,7 +60,7 @@ class ControllerExtensionExtensionModule extends Controller
             // Call uninstall method if it exsits
             $this->load->controller('extension/module/' . $this->request->get['extension'] . '/uninstall');
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
         $this->getList();
@@ -79,7 +79,7 @@ class ControllerExtensionExtensionModule extends Controller
 
             $this->model_extension_module->addModule($this->request->get['extension'], $this->language->get('heading_title'));
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
         $this->getList();
@@ -96,7 +96,7 @@ class ControllerExtensionExtensionModule extends Controller
         if (isset($this->request->get['module_id']) && $this->validate()) {
             $this->model_extension_module->deleteModule($this->request->get['module_id']);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
         $this->getList();
@@ -125,13 +125,7 @@ class ControllerExtensionExtensionModule extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $extensions = $this->model_extension_extension->getInstalled('module');
 

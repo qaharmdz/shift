@@ -32,7 +32,7 @@ class ControllerExtensionExtensionTheme extends Controller
             // Call install method if it exsits
             $this->load->controller('extension/theme/' . $this->request->get['extension'] . '/install');
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
         $this->getList();
@@ -50,7 +50,7 @@ class ControllerExtensionExtensionTheme extends Controller
             // Call uninstall method if it exsits
             $this->load->controller('extension/theme/' . $this->request->get['extension'] . '/uninstall');
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
         $this->getList();
@@ -76,13 +76,7 @@ class ControllerExtensionExtensionTheme extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $extensions = $this->model_extension_extension->getInstalled('theme');
 

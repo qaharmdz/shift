@@ -7,7 +7,7 @@ class ControllerAccountAccount extends Controller
     public function index()
     {
         if (!$this->user->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('account/account', '', true);
+            $this->session->set('flash.redirect', $this->url->link('account/account', '', true));
 
             $this->response->redirect($this->url->link('account/login', '', true));
         }
@@ -28,13 +28,7 @@ class ControllerAccountAccount extends Controller
             'href' => $this->url->link('account/account', '', true)
         );
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $data['heading_title'] = $this->language->get('heading_title');
 

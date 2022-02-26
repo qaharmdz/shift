@@ -9,7 +9,7 @@ class ControllerAccountPassword extends Controller
     public function index()
     {
         if (!$this->user->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('account/password', '', true);
+            $this->session->set('flash.redirect', $this->url->link('account/password', '', true));
 
             $this->response->redirect($this->url->link('account/login', '', true));
         }
@@ -23,7 +23,7 @@ class ControllerAccountPassword extends Controller
 
             $this->model_account_customer->editPassword($this->user->getEmail(), $this->request->post['password']);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             // Add to activity log
             if ($this->config->get('config_customer_activity')) {

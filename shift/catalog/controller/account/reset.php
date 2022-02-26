@@ -41,7 +41,7 @@ class ControllerAccountReset extends Controller
                     $this->model_account_activity->addActivity('reset', $activity_data);
                 }
 
-                $this->session->data['success'] = $this->language->get('text_success');
+                $this->session->set('flash.success', $this->language->get('text_success'));
 
                 $this->response->redirect($this->url->link('account/login', '', true));
             }
@@ -112,7 +112,7 @@ class ControllerAccountReset extends Controller
         } else {
             $this->load->language('account/reset');
 
-            $this->session->data['error'] = $this->language->get('error_code');
+            $this->session->set('flash.error', $this->language->get('error_code'));
 
             return new Action('account/login');
         }

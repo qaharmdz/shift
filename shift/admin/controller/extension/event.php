@@ -28,7 +28,7 @@ class ControllerExtensionEvent extends Controller
         if (isset($this->request->get['event_id']) && $this->validate()) {
             $this->model_extension_event->enableEvent($this->request->get['event_id']);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
@@ -61,7 +61,7 @@ class ControllerExtensionEvent extends Controller
         if (isset($this->request->get['event_id']) && $this->validate()) {
             $this->model_extension_event->disableEvent($this->request->get['event_id']);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
@@ -178,13 +178,7 @@ class ControllerExtensionEvent extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         if (isset($this->request->post['selected'])) {
             $data['selected'] = (array)$this->request->post['selected'];

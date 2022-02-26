@@ -28,7 +28,7 @@ class ControllerUserUserPermission extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_user_user_group->addUserGroup($this->request->post);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
@@ -61,7 +61,7 @@ class ControllerUserUserPermission extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
@@ -96,7 +96,7 @@ class ControllerUserUserPermission extends Controller
                 $this->model_user_user_group->deleteUserGroup($user_group_id);
             }
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
@@ -207,13 +207,7 @@ class ControllerUserUserPermission extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         if (isset($this->request->post['selected'])) {
             $data['selected'] = (array)$this->request->post['selected'];

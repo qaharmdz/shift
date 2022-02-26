@@ -20,23 +20,11 @@ class ControllerToolLog extends Controller
         $data['button_download'] = $this->language->get('button_download');
         $data['button_clear'] = $this->language->get('button_clear');
 
-        if (isset($this->session->data['error'])) {
-            $data['error_warning'] = $this->session->data['error'];
-
-            unset($this->session->data['error']);
-        } elseif (isset($this->error['warning'])) {
+        if (!$data['error_warning'] = $this->session->pull('flash.error') && isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $data['breadcrumbs'] = array();
 
@@ -109,7 +97,7 @@ class ControllerToolLog extends Controller
 
             $this->response->setOutput(file_get_contents($file));
         } else {
-            $this->session->data['error'] = sprintf($this->language->get('error_warning'), basename($file), '0B');
+            $this->session->set('flash.error', sprintf($this->language->get('error_warning'), basename($file), '0B'));
 
             $this->response->redirect($this->url->link('tool/log', 'token=' . $this->session->get('token'), true));
         }
@@ -120,7 +108,7 @@ class ControllerToolLog extends Controller
         $this->load->language('tool/log');
 
         if (!$this->user->hasPermission('modify', 'tool/log')) {
-            $this->session->data['error'] = $this->language->get('error_permission');
+            $this->session->set('flash.error', $this->language->get('error_permission'));
         } else {
             $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
 
@@ -128,7 +116,7 @@ class ControllerToolLog extends Controller
 
             fclose($handle);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
         $this->response->redirect($this->url->link('tool/log', 'token=' . $this->session->get('token'), true));

@@ -17,7 +17,7 @@ class ControllerExtensionThemeThemeDefault extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('theme_default', $this->request->post, $this->request->get['store_id']);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=theme', true));
         }

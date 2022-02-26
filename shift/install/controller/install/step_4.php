@@ -40,14 +40,7 @@ class ControllerInstallStep4 extends Controller
         $data['button_setup'] = $this->language->get('button_setup');
 
         $data['error_warning'] = $this->language->get('error_warning');
-
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $data['maxmind'] = $this->url->link('3rd_party/maxmind');
         $data['openbay'] = $this->url->link('3rd_party/openbay');

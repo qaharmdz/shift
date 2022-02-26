@@ -17,7 +17,7 @@ class ControllerSettingSetting extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('config', $this->request->post);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
         }
@@ -365,13 +365,7 @@ class ControllerSettingSetting extends Controller
             'href' => $this->url->link('setting/setting', 'token=' . $this->session->get('token'), true)
         );
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->get('token'), true);
 

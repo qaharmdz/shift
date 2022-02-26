@@ -9,7 +9,7 @@ class ControllerAccountEdit extends Controller
     public function index()
     {
         if (!$this->user->isLogged()) {
-            $this->session->data['redirect'] = $this->url->link('account/edit', '', true);
+            $this->session->set('flash.redirect', $this->url->link('account/edit', '', true));
 
             $this->response->redirect($this->url->link('account/login', '', true));
         }
@@ -23,7 +23,7 @@ class ControllerAccountEdit extends Controller
         $this->document->addStyle('asset/script/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('account/account', '', true));
         }

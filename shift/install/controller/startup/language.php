@@ -26,13 +26,13 @@ class ControllerStartupLanguage extends Controller
             }
         }
 
-        if (!isset($this->session->data['language']) || !is_dir(DIR_LANGUAGE . basename($this->session->data['language']))) {
-            $this->session->data['language'] = $code;
+        if ($this->session->empty('language') || !is_dir(DIR_LANGUAGE . basename($this->session->get('language')))) {
+            $this->session->set('language', $code);
         }
 
         // Language
-        $language = new Language($this->session->data['language']);
-        $language->load($this->session->data['language']);
+        $language = new Language($this->session->get('language'));
+        $language->load($this->session->get('language'));
         $this->registry->set('language', $language);
     }
 }

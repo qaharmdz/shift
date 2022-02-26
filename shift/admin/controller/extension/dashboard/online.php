@@ -17,7 +17,7 @@ class ControllerExtensionDashboardOnline extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('dashboard_online', $this->request->post);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true));
         }

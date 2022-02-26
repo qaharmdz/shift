@@ -10,42 +10,6 @@ class ControllerAccountLogin extends Controller
     {
         $this->load->model('account/customer');
 
-        // Login override for admin users
-        if (!empty($this->request->get['token'])) {
-            $this->user->logout();
-            $this->cart->clear();
-
-            unset($this->session->data['order_id']);
-            unset($this->session->data['payment_address']);
-            unset($this->session->data['payment_method']);
-            unset($this->session->data['payment_methods']);
-            unset($this->session->data['shipping_address']);
-            unset($this->session->data['shipping_method']);
-            unset($this->session->data['shipping_methods']);
-            unset($this->session->data['comment']);
-            unset($this->session->data['coupon']);
-            unset($this->session->data['reward']);
-            unset($this->session->data['voucher']);
-            unset($this->session->data['vouchers']);
-
-            $customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
-
-            if ($customer_info && $this->user->login($customer_info['email'], '', true)) {
-                // Default Addresses
-                $this->load->model('account/address');
-
-                if ($this->config->get('config_tax_customer') == 'payment') {
-                    $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
-                }
-
-                if ($this->config->get('config_tax_customer') == 'shipping') {
-                    $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
-                }
-
-                $this->response->redirect($this->url->link('account/account', '', true));
-            }
-        }
-
         if ($this->user->isLogged()) {
             $this->response->redirect($this->url->link('account/account', '', true));
         }
@@ -55,31 +19,6 @@ class ControllerAccountLogin extends Controller
         $this->document->setTitle($this->language->get('heading_title'));
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            // Unset guest
-            unset($this->session->data['guest']);
-
-            // Default Shipping Address
-            $this->load->model('account/address');
-
-            if ($this->config->get('config_tax_customer') == 'payment') {
-                $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
-            }
-
-            if ($this->config->get('config_tax_customer') == 'shipping') {
-                $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->user->getAddressId());
-            }
-
-            // Wishlist
-            if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
-                $this->load->model('account/wishlist');
-
-                foreach ($this->session->data['wishlist'] as $key => $product_id) {
-                    $this->model_account_wishlist->addWishlist($product_id);
-
-                    unset($this->session->data['wishlist'][$key]);
-                }
-            }
-
             // Add to activity log
             if ($this->config->get('config_customer_activity')) {
                 $this->load->model('account/activity');
@@ -127,33 +66,16 @@ class ControllerAccountLogin extends Controller
         $data['button_continue'] = $this->language->get('button_continue');
         $data['button_login'] = $this->language->get('button_login');
 
-        if (isset($this->session->data['error'])) {
-            $data['error_warning'] = $this->session->data['error'];
-
-            unset($this->session->data['error']);
-        } elseif (isset($this->error['warning'])) {
+        if (!$data['error_warning'] = $this->session->pull('flash.error') && isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
         }
 
         $data['action'] = $this->url->link('account/login', '', true);
         $data['register'] = $this->url->link('account/register', '', true);
         $data['forgotten'] = $this->url->link('account/forgotten', '', true);
 
-        if (isset($this->session->data['redirect'])) {
-            $data['redirect'] = $this->session->data['redirect'];
-            unset($this->session->data['redirect']);
-        } else {
-            $data['redirect'] = '';
-        }
-
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['redirect'] = $this->session->pull('flash.redirect');
+        $data['success'] = $this->session->pull('flash.success');
 
         if (isset($this->request->post['email'])) {
             $data['email'] = $this->request->post['email'];

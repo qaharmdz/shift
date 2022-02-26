@@ -41,15 +41,10 @@ class ControllerStartupStartup extends Controller
         $this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 
         // Language
-        $code = '';
-
         $this->load->model('localisation/language');
 
         $languages = $this->model_localisation_language->getLanguages();
-
-        if (isset($this->session->data['language'])) {
-            $code = $this->session->data['language'];
-        }
+        $code = $this->session->get('language');
 
         if (isset($this->request->cookie['language']) && !array_key_exists($code, $languages)) {
             $code = $this->request->cookie['language'];
@@ -93,8 +88,8 @@ class ControllerStartupStartup extends Controller
             $code = $this->config->get('config_language');
         }
 
-        if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
-            $this->session->data['language'] = $code;
+        if ($this->session->empty('language') || $this->session->get('language') != $code) {
+            $this->session->set('language', $code);
         }
 
         if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {

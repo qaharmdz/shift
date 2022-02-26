@@ -34,7 +34,7 @@ class ControllerSettingStore extends Controller
 
             $this->model_setting_setting->editSetting('config', $this->request->post, $store_id);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
         }
@@ -57,7 +57,7 @@ class ControllerSettingStore extends Controller
 
             $this->model_setting_setting->editSetting('config', $this->request->post, $this->request->get['store_id']);
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get['store_id'], true));
         }
@@ -82,7 +82,7 @@ class ControllerSettingStore extends Controller
                 $this->model_setting_setting->deleteSetting('config', $store_id);
             }
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
         }
@@ -155,13 +155,7 @@ class ControllerSettingStore extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         if (isset($this->request->post['selected'])) {
             $data['selected'] = (array)$this->request->post['selected'];
@@ -341,13 +335,7 @@ class ControllerSettingStore extends Controller
             );
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         if (!isset($this->request->get['store_id'])) {
             $data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->get('token'), true);

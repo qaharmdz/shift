@@ -21,7 +21,7 @@ class ControllerExtensionModuleSlideshow extends Controller
                 $this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
             }
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true));
         }

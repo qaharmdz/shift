@@ -37,7 +37,7 @@ class ControllerToolUpload extends Controller
                 $this->model_tool_upload->deleteUpload($upload_id);
             }
 
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
@@ -186,13 +186,7 @@ class ControllerToolUpload extends Controller
             $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         if (isset($this->request->post['selected'])) {
             $data['selected'] = (array)$this->request->post['selected'];

@@ -24,7 +24,7 @@ class ControllerToolBackup extends Controller
             if ($content) {
                 $this->model_tool_backup->restore($content);
 
-                $this->session->data['success'] = $this->language->get('text_success');
+                $this->session->set('flash.success', $this->language->get('text_success'));
 
                 $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
             } else {
@@ -43,23 +43,11 @@ class ControllerToolBackup extends Controller
         $data['button_export'] = $this->language->get('button_export');
         $data['button_import'] = $this->language->get('button_import');
 
-        if (isset($this->session->data['error'])) {
-            $data['error_warning'] = $this->session->data['error'];
-
-            unset($this->session->data['error']);
-        } elseif (isset($this->error['warning'])) {
+        if (!$data['error_warning'] = $this->session->pull('flash.error') && isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
         }
 
-        if (isset($this->session->data['success'])) {
-            $data['success'] = $this->session->data['success'];
-
-            unset($this->session->data['success']);
-        } else {
-            $data['success'] = '';
-        }
+        $data['success'] = $this->session->pull('flash.success');
 
         $data['breadcrumbs'] = array();
 
@@ -91,7 +79,7 @@ class ControllerToolBackup extends Controller
         $this->load->language('tool/backup');
 
         if (!isset($this->request->post['backup'])) {
-            $this->session->data['error'] = $this->language->get('error_export');
+            $this->session->set('flash.error', $this->language->get('error_export'));
 
             $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
         } elseif ($this->user->hasPermission('modify', 'tool/backup')) {
@@ -106,7 +94,7 @@ class ControllerToolBackup extends Controller
 
             $this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
         } else {
-            $this->session->data['error'] = $this->language->get('error_permission');
+            $this->session->set('flash.error', $this->language->get('error_permission'));
 
             $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
         }
