@@ -6,7 +6,7 @@ class ControllerStartupStartup extends Controller
 {
     public function index()
     {
-        // Store
+        //=== Multi sites
         if ($this->request->server['HTTPS']) {
             $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
         } else {
@@ -26,7 +26,7 @@ class ControllerStartupStartup extends Controller
             $this->config->set('config_ssl', HTTPS_SERVER);
         }
 
-        // Settings
+        //=== Settings
         $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY store_id ASC");
 
         foreach ($query->rows as $result) {
@@ -37,10 +37,15 @@ class ControllerStartupStartup extends Controller
             }
         }
 
-        // Url
+        // Apply DB setting
+        $this->logger->setConfig([
+            'display' => $this->config->getBool('config_error_display', false)
+        ]);
+
+        //=== Url
         $this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 
-        // Language
+        //=== Language
         $this->load->model('localisation/language');
 
         $languages = $this->model_localisation_language->getLanguages();
@@ -105,7 +110,7 @@ class ControllerStartupStartup extends Controller
         // Set the config language_id
         $this->config->set('config_language_id', $languages[$code]['language_id']);
 
-        // User
+        //=== User
         $this->registry->set('user', new Cart\User($this->registry));
     }
 }

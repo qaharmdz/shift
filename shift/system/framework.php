@@ -53,7 +53,7 @@ class Framework
          * - env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
          * - system: Setting from database
          */
-        // Config
+        //=== Config
         $config = new Core\Config();
         $config->set('root.version', VERSION);
         $config->set('root.version_id', VERSION_ID);
@@ -69,14 +69,14 @@ class Framework
 
         $this->set('config', $config);
 
-        // Logger
-        $logger = new Core\Logger(['display' => true]); // TODO: setting
+        //=== Logger
+        $logger = new Core\Logger();
         set_error_handler([$logger, 'errorHandler']);
         set_exception_handler([$logger, 'exceptionHandler']);
         register_shutdown_function([$logger, 'shutdownHandler']);
         $this->set('logger', $logger);
 
-        // Database
+        //=== Database
         $db = new Core\Database(...$config->get('root.database.config'));
         $db->raw('
             SET time_zone="+00:00",
@@ -85,7 +85,7 @@ class Framework
         ');
         $this->set('db', $db);
 
-        // Session
+        //=== Session
         $this->set('session', new Core\Session($config->get('root.session')));
 
         return $this;
