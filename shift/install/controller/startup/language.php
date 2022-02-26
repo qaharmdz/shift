@@ -26,7 +26,7 @@ class ControllerStartupLanguage extends Controller
             }
         }
 
-        if ($this->session->empty('language') || !is_dir(DIR_LANGUAGE . basename($this->session->get('language')))) {
+        if ($this->session->isEmpty('language') || !is_dir(DIR_LANGUAGE . basename($this->session->get('language')))) {
             $this->session->set('language', $code);
         }
 

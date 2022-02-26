@@ -88,7 +88,7 @@ class ControllerStartupStartup extends Controller
             $code = $this->config->get('config_language');
         }
 
-        if ($this->session->empty('language') || $this->session->get('language') != $code) {
+        if ($this->session->isEmpty('language') || $this->session->get('language') != $code) {
             $this->session->set('language', $code);
         }
 
