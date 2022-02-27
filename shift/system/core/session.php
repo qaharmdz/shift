@@ -44,7 +44,7 @@ class Session extends Bags
         $this->add('flash', []);
     }
 
-    public function getId()
+    public function getId(): string
     {
         return session_id();
     }
@@ -54,7 +54,7 @@ class Session extends Bags
      *
      * @param  bool   $delete   Delete old session
      */
-    public function regenerateId(bool $delete = false)
+    public function regenerateId(bool $delete = false): string
     {
         if (session_status() === \PHP_SESSION_ACTIVE) {
             session_regenerate_id($delete);
@@ -64,7 +64,7 @@ class Session extends Bags
     /**
      * Deleting the whole session.
      */
-    public function destroy(bool $restart = true)
+    public function destroy(bool $restart = true): void
     {
         $data = session_get_cookie_params();
 
