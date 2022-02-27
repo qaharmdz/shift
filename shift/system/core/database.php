@@ -88,7 +88,7 @@ class Database
      *
      * @return \mysqli_result|\mysqli_stmt|bool
      */
-    public function query(string $query, array $params = [], string $types = '')
+    public function query(string $query, array $params = [], string $types = ''): \mysqli_result|\mysqli_stmt|bool
     {
         if ($params === [] && $this->getConfig('query_fallback')) {
             return $this->raw($query);
@@ -107,15 +107,26 @@ class Database
             return false;
         }
 
-        $statement = $this->mysqli->prepare($query);
-        $statement->bind_param($types, ...$params);
-        $statement->execute();
+        try {
+            $statement = $this->mysqli->prepare($query);
+            $statement->bind_param($types, ...$params);
+            $statement->execute();
 
-        if ($statement->result_metadata() instanceof \mysqli_result) {
-            return $statement->get_result();
+            if ($statement->result_metadata() instanceof \mysqli_result) {
+                return $statement->get_result();
+            }
+
+            return $statement;
+        } catch (\Mysqli_sql_exception $e) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '<ul><li><b>\Mysqli_sql_exception</b>: %s</li><li>Error processing query: <i>%s</i></li></ul>',
+                    $e->getMessage(),
+                    $query
+                ),
+                $e->getCode()
+            );
         }
-
-        return $statement;
     }
 
     /**
@@ -216,7 +227,9 @@ class Database
             return false;
         }
         if (count(array_unique($tokenParam)) !== count(array_intersect_key(array_flip($tokenParam), $params))) {
-            throw new \InvalidArgumentException(sprintf('The number of given parameters not match named-parameter for query "' . $query . '".'));
+            throw new \InvalidArgumentException(
+                sprintf('The number of given parameters not match named-parameter for query: <i>%s</i>', $query)
+            );
         }
 
         $types  = '';

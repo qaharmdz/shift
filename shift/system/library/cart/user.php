@@ -24,9 +24,12 @@ class User
                 $this->username = $user_query->row['username'];
                 $this->user_group_id = $user_query->row['user_group_id'];
 
-                $this->db->query("UPDATE " . DB_PREFIX . "user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$user_id . "'");
+                $this->db->query(
+                    "UPDATE " . DB_PREFIX . "user SET ip = ?s WHERE user_id = ?i",
+                    [$this->request->getIp(), $user_id]
+                );
 
-                $user_group_query = $this->db->get("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+                $user_group_query = $this->db->get("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = ?i", [$user_query->row['user_group_id']]);
 
                 $permissions = json_decode($user_group_query->row['permission'], true);
 
@@ -52,7 +55,7 @@ class User
             $this->username = $user_query->row['username'];
             $this->user_group_id = $user_query->row['user_group_id'];
 
-            $user_group_query = $this->db->get("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+            $user_group_query = $this->db->get("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = ?i", [$user_query->row['user_group_id']]);
 
             $permissions = json_decode($user_group_query->row['permission'], true);
 
