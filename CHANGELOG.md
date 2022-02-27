@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add system/core/config.
 - Add system/core/database.
 - Add system/core/session.
+- Add system/core/http/request.
 
 ### Changed
 - PSR-4 lowercase path.

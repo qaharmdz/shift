@@ -70,7 +70,7 @@ class Framework
         $this->set('config', $config);
 
         //=== Logger
-        $logger = new Core\Logger();
+        $logger = new Core\Logger(['display' => true]);
         set_error_handler([$logger, 'errorHandler']);
         set_exception_handler([$logger, 'exceptionHandler']);
         register_shutdown_function([$logger, 'shutdownHandler']);
@@ -95,6 +95,9 @@ class Framework
     {
         $config = $this->get('config');
 
+        // Request
+        $this->set('request', new Core\Http\Request());
+
 
         return $this;
     }
@@ -118,8 +121,6 @@ class Framework
         $loader = new \Loader($this->registry);
         $this->set('load', $loader);
 
-        // Request
-        $this->set('request', new \Request());
 
         // Response
         $response = new \Response();
