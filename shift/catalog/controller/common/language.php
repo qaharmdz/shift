@@ -10,7 +10,7 @@ class ControllerCommonLanguage extends Controller
 
         $data['text_language'] = $this->language->get('text_language');
 
-        $data['action'] = $this->url->link('common/language/language', '', $this->request->server['HTTPS']);
+        $data['action'] = $this->url->link('common/language/language', '', $this->request->getBool('server.SECURE'));
 
         $data['code'] = $this->session->get('language');
 
@@ -29,10 +29,10 @@ class ControllerCommonLanguage extends Controller
             }
         }
 
-        if (!isset($this->request->get['route'])) {
+        if (!$this->request->has('query.route')) {
             $data['redirect'] = $this->url->link('common/home');
         } else {
-            $url_data = $this->request->get;
+            $url_data = $this->request->get('query');
 
             $route = $url_data['route'];
 
@@ -44,7 +44,7 @@ class ControllerCommonLanguage extends Controller
                 $url = '&' . urldecode(http_build_query($url_data, '', '&'));
             }
 
-            $data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
+            $data['redirect'] = $this->url->link($route, $url, $this->request->getBool('server.SECURE'));
         }
 
         return $this->load->view('common/language', $data);

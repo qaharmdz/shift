@@ -25,10 +25,17 @@ class Request extends Core\Bags
 
     public function method(): string
     {
-        return strtoupper($this->get('server.REQUEST_METHOD'));
+        return strtoupper($this->getString('server.REQUEST_METHOD'));
     }
 
-    public function is($type): bool
+    /**
+     * Check request method
+     *
+     * @param  string|array  $type
+     *
+     * @return bool
+     */
+    public function is(string|array $type): bool
     {
         if (is_array($type)) {
             $valid = true;
@@ -42,21 +49,23 @@ class Request extends Core\Bags
             return $valid;
         }
 
+        $method = $this->method();
+
         switch (strtolower($type)) {
             case 'post':
-                return $this->method() == 'POST' ? true : false;
+                return $method == 'POST' ? true : false;
 
             case 'get':
-                return $this->method() == 'GET' ? true : false;
+                return $method == 'GET' ? true : false;
 
             case 'put':
-                return $this->method() == 'PUT' ? true : false;
+                return $method == 'PUT' ? true : false;
 
             case 'delete':
-                return $this->method() == 'DELETE' ? true : false;
+                return $method == 'DELETE' ? true : false;
 
             case 'secure': // SSL
-                return $this->get('server.SECURE', 0) ? true : false;
+                return $this->getBool('server.SECURE', false);
 
             case 'ajax':
                 return strtolower($this->get('server.HTTP_X_REQUESTED_WITH', '')) === 'xmlhttprequest' ? true : false;

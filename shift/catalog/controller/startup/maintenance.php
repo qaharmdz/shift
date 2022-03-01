@@ -7,10 +7,8 @@ class ControllerStartupMaintenance extends Controller
     public function index()
     {
         if ($this->config->get('config_maintenance')) {
-            // Route
-            if (isset($this->request->get['route']) && $this->request->get['route'] != 'startup/router') {
-                $route = $this->request->get['route'];
-            } else {
+            $route = $this->request->get('query.route');
+            if (str_starts_with($route, 'startup/')) {
                 $route = $this->config->get('root.action_default');
             }
 
@@ -22,7 +20,7 @@ class ControllerStartupMaintenance extends Controller
             // Show site if logged in as admin
             $this->user = new Cart\User($this->registry);
 
-            if ((substr($route, 0, 7) != 'payment' && substr($route, 0, 3) != 'api') && !in_array($route, $ignore) && !$this->user->isLogged()) {
+            if (!in_array($route, $ignore) && !$this->user->isLogged()) {
                 return new Action('common/maintenance');
             }
         }

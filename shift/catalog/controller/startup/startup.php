@@ -7,19 +7,17 @@ class ControllerStartupStartup extends Controller
     public function index()
     {
         //=== Multi sites
-        if ($this->request->server['HTTPS']) {
+        if ($this->request->getBool('server.SECURE')) {
             $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
         } else {
             $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
         }
 
-        if (isset($this->request->get['store_id'])) {
-            $this->config->set('config_store_id', (int)$this->request->get['store_id']);
-        } else if ($query->num_rows) {
-            $this->config->set('config_store_id', $query->row['store_id']);
-        } else {
-            $this->config->set('config_store_id', 0);
+        $store_id = $this->request->get('query.store_id', 0);
+        if ($query->num_rows) {
+            $store_id = $query->row['store_id'];
         }
+        $this->config->set('config_store_id', $store_id);
 
         if (!$query->num_rows) {
             $this->config->set('config_url', HTTP_SERVER);
@@ -51,15 +49,15 @@ class ControllerStartupStartup extends Controller
         $languages = $this->model_localisation_language->getLanguages();
         $code = $this->session->get('language');
 
-        if (isset($this->request->cookie['language']) && !array_key_exists($code, $languages)) {
-            $code = $this->request->cookie['language'];
+        if ($this->request->has('cookie.language') && !array_key_exists($code, $languages)) {
+            $code = $this->request->get('cookie.language');
         }
 
         // Language Detection
-        if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $languages)) {
+        if (!$this->request->isEmpty('server.HTTP_ACCEPT_LANGUAGE') && !array_key_exists($code, $languages)) {
             $detect = '';
 
-            $browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
+            $browser_languages = explode(',', $this->request->get('server.HTTP_ACCEPT_LANGUAGE'));
 
             // Try using local to detect the language
             foreach ($browser_languages as $browser_language) {
@@ -97,8 +95,8 @@ class ControllerStartupStartup extends Controller
             $this->session->set('language', $code);
         }
 
-        if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-            setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+        if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
+            setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->get('server.HTTP_HOST'));
         }
 
         // Overwrite the default language object

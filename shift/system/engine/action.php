@@ -5,7 +5,7 @@ declare(strict_types=1);
 class Action
 {
     private $id;
-    private $route;
+    private $route = '';
     private $method = 'index';
 
     public function __construct($route)

@@ -8,32 +8,12 @@ class ControllerCommonColumnRight extends Controller
     {
         $this->load->model('design/layout');
 
-        if (isset($this->request->get['route'])) {
-            $route = (string)$this->request->get['route'];
-        } else {
-            $route = 'common/home';
-        }
-
         $layout_id = 0;
+        $route     = $this->request->getString('query.route', 'common/home');
 
-        if ($route == 'product/category' && isset($this->request->get['path'])) {
-            $this->load->model('catalog/category');
-
-            $path = explode('_', (string)$this->request->get['path']);
-
-            $layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
-        }
-
-        if ($route == 'product/product' && isset($this->request->get['product_id'])) {
-            $this->load->model('catalog/product');
-
-            $layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
-        }
-
-        if ($route == 'information/information' && isset($this->request->get['information_id'])) {
+        if ($route == 'information/information' && $this->request->has('query.information_id')) {
             $this->load->model('catalog/information');
-
-            $layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get['information_id']);
+            $layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get('query.information_id'));
         }
 
         if (!$layout_id) {

@@ -6,7 +6,7 @@ class ControllerCommonHeader extends Controller
 {
     public function index()
     {
-        if ($this->request->server['HTTPS']) {
+        if ($this->request->getBool('server.SECURE')) {
             $server = $this->config->get('config_ssl');
         } else {
             $server = $this->config->get('config_url');
@@ -76,23 +76,17 @@ class ControllerCommonHeader extends Controller
         $data['search'] = $this->load->controller('common/search');
 
         // For page specific css
-        if (isset($this->request->get['route'])) {
-            if (isset($this->request->get['product_id'])) {
-                $class = '-' . $this->request->get['product_id'];
-            } elseif (isset($this->request->get['path'])) {
-                $class = '-' . $this->request->get['path'];
-            } elseif (isset($this->request->get['manufacturer_id'])) {
-                $class = '-' . $this->request->get['manufacturer_id'];
-            } elseif (isset($this->request->get['information_id'])) {
-                $class = '-' . $this->request->get['information_id'];
-            } else {
-                $class = '';
+        $data['class'] = 'common-home';
+        if ($this->request->has('query.route')) {
+            $class = '';
+
+            if ($this->request->has('query.information_id')) {
+                $class = '-' . $this->request->get('query.information_id');
             }
 
-            $data['class'] = str_replace('/', '-', $this->request->get['route']) . $class;
-        } else {
-            $data['class'] = 'common-home';
+            $data['class'] = str_replace('/', '-', $this->request->get('query.route') . $class);
         }
+
 
         return $this->load->view('common/header', $data);
     }
