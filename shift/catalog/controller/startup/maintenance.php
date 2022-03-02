@@ -6,23 +6,29 @@ class ControllerStartupMaintenance extends Controller
 {
     public function index()
     {
-        if ($this->config->get('config_maintenance')) {
-            $route = $this->request->get('query.route');
-            if (str_starts_with($route, 'startup/')) {
-                $route = $this->config->get('root.action_default');
-            }
+        if (!$this->config->get('config_maintenance')) {
+            return;
+        }
 
-            $ignore = array(
-                'common/language/language',
-                'common/currency/currency'
-            );
+        $route = $this->request->getString(
+            'query.route',
+            $this->config->get('root.action_default')
+        );
 
-            // Show site if logged in as admin
-            $this->user = new Cart\User($this->registry);
+        if (str_starts_with($route, 'startup/')) {
+            $route = $this->config->get('root.action_error');
+        }
 
-            if (!in_array($route, $ignore) && !$this->user->isLogged()) {
-                return new Action('common/maintenance');
-            }
+        $ignore = array(
+            'common/language/language',
+            'common/currency/currency'
+        );
+
+        // Show site if logged in as admin
+        $this->user = new Cart\User($this->registry);
+
+        if (!in_array($route, $ignore) && !$this->user->isLogged()) {
+            return new Action('common/maintenance');
         }
     }
 }
