@@ -10,7 +10,7 @@ class ControllerCommonMaintenance extends Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if ($this->request->server['SERVER_PROTOCOL'] == 'HTTP/1.1') {
+        if ($this->request->get('server.SERVER_PROTOCOL') == 'HTTP/1.1') {
             $this->response->addHeader('HTTP/1.1 503 Service Unavailable');
         } else {
             $this->response->addHeader('HTTP/1.0 503 Service Unavailable');

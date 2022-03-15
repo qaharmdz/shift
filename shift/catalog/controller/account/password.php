@@ -18,10 +18,10 @@ class ControllerAccountPassword extends Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('post') && $this->validate()) {
             $this->load->model('account/customer');
 
-            $this->model_account_customer->editPassword($this->user->getEmail(), $this->request->post['password']);
+            $this->model_account_customer->editPassword($this->user->getEmail(), $this->request->get('post.password'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -81,17 +81,8 @@ class ControllerAccountPassword extends Controller
 
         $data['action'] = $this->url->link('account/password', '', true);
 
-        if (isset($this->request->post['password'])) {
-            $data['password'] = $this->request->post['password'];
-        } else {
-            $data['password'] = '';
-        }
-
-        if (isset($this->request->post['confirm'])) {
-            $data['confirm'] = $this->request->post['confirm'];
-        } else {
-            $data['confirm'] = '';
-        }
+        $data['password'] = $this->request->getString('post.password');
+        $data['confirm']  = $this->request->getString('post.confirm');
 
         $data['back'] = $this->url->link('account/account', '', true);
 
@@ -106,11 +97,11 @@ class ControllerAccountPassword extends Controller
     }
 
     protected function validate() {
-        if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
+        if ((utf8_strlen($this->request->get('post.password')) < 4) || (utf8_strlen($this->request->get('post.password')) > 20)) {
             $this->error['password'] = $this->language->get('error_password');
         }
 
-        if ($this->request->post['confirm'] != $this->request->post['password']) {
+        if ($this->request->get('post.confirm') != $this->request->get('post.password')) {
             $this->error['confirm'] = $this->language->get('error_confirm');
         }
 

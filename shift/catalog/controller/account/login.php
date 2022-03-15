@@ -18,7 +18,7 @@ class ControllerAccountLogin extends Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('post') && $this->validate()) {
             // Add to activity log
             if ($this->config->get('config_customer_activity')) {
                 $this->load->model('account/activity');
@@ -77,17 +77,8 @@ class ControllerAccountLogin extends Controller
         $data['redirect'] = $this->session->pull('flash.redirect');
         $data['success'] = $this->session->pull('flash.success');
 
-        if (isset($this->request->post['email'])) {
-            $data['email'] = $this->request->post['email'];
-        } else {
-            $data['email'] = '';
-        }
-
-        if (isset($this->request->post['password'])) {
-            $data['password'] = $this->request->post['password'];
-        } else {
-            $data['password'] = '';
-        }
+        $data['email']    = $this->request->getString('post.email');
+        $data['password'] = $this->request->getString('post.password');
 
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['column_right'] = $this->load->controller('common/column_right');
@@ -101,27 +92,30 @@ class ControllerAccountLogin extends Controller
 
     protected function validate()
     {
+        $email    = $this->request->getString('post.email');
+        $password = $this->request->getString('post.password');
+
         // Check how many login attempts have been made.
-        $login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
+        $login_info = $this->model_account_customer->getLoginAttempts($email);
 
         if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
             $this->error['warning'] = $this->language->get('error_attempts');
         }
 
         // Check if customer has been approved.
-        $customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+        $customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
         if ($customer_info && !$customer_info['approved']) {
             $this->error['warning'] = $this->language->get('error_approved');
         }
 
         if (!$this->error) {
-            if (!$this->user->login($this->request->post['email'], $this->request->post['password'])) {
+            if (!$this->user->login($email, $password)) {
                 $this->error['warning'] = $this->language->get('error_login');
 
-                $this->model_account_customer->addLoginAttempt($this->request->post['email']);
+                $this->model_account_customer->addLoginAttempt($email);
             } else {
-                $this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+                $this->model_account_customer->deleteLoginAttempts($email);
             }
         }
 

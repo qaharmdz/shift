@@ -17,12 +17,7 @@ class ControllerInformationInformation extends Controller
             'href' => $this->url->link('common/home')
         );
 
-        if (isset($this->request->get['information_id'])) {
-            $information_id = (int)$this->request->get['information_id'];
-        } else {
-            $information_id = 0;
-        }
-
+        $information_id   = $this->request->getInt('query.information_id', 0);
         $information_info = $this->model_catalog_information->getInformation($information_id);
 
         if ($information_info) {
@@ -67,7 +62,7 @@ class ControllerInformationInformation extends Controller
 
             $data['continue'] = $this->url->link('common/home');
 
-            $this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+            $this->response->addHeader($this->request->get('server.SERVER_PROTOCOL') . ' 404 Not Found');
 
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['column_right'] = $this->load->controller('common/column_right');
@@ -84,16 +79,11 @@ class ControllerInformationInformation extends Controller
     {
         $this->load->model('catalog/information');
 
-        if (isset($this->request->get['information_id'])) {
-            $information_id = (int)$this->request->get['information_id'];
-        } else {
-            $information_id = 0;
-        }
 
-        $output = '';
-
+        $information_id   = $this->request->getInt('query.information_id', 0);
         $information_info = $this->model_catalog_information->getInformation($information_id);
 
+        $output = '';
         if ($information_info) {
             $output .= html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . "\n";
         }

@@ -12,11 +12,7 @@ class ControllerAccountReset extends Controller
             $this->response->redirect($this->url->link('account/account', '', true));
         }
 
-        if (isset($this->request->get['code'])) {
-            $code = $this->request->get['code'];
-        } else {
-            $code = '';
-        }
+        $code = $this->request->getString('query.code', '');
 
         $this->load->model('account/customer');
 
@@ -27,8 +23,8 @@ class ControllerAccountReset extends Controller
 
             $this->document->setTitle($this->language->get('heading_title'));
 
-            if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-                $this->model_account_customer->editPassword($customer_info['email'], $this->request->post['password']);
+            if ($this->request->is('post') && $this->validate()) {
+                $this->model_account_customer->editPassword($customer_info['email'], $this->request->getString('post.password'));
 
                 if ($this->config->get('config_customer_activity')) {
                     $this->load->model('account/activity');
@@ -85,21 +81,10 @@ class ControllerAccountReset extends Controller
                 $data['error_confirm'] = '';
             }
 
-            $data['action'] = $this->url->link('account/reset', 'code=' . $code, true);
-
-            $data['back'] = $this->url->link('account/login', '', true);
-
-            if (isset($this->request->post['password'])) {
-                $data['password'] = $this->request->post['password'];
-            } else {
-                $data['password'] = '';
-            }
-
-            if (isset($this->request->post['confirm'])) {
-                $data['confirm'] = $this->request->post['confirm'];
-            } else {
-                $data['confirm'] = '';
-            }
+            $data['action']   = $this->url->link('account/reset', 'code=' . $code, true);
+            $data['back']     = $this->url->link('account/login', '', true);
+            $data['password'] = $this->request->getString('post.password');
+            $data['confirm']  = $this->request->getString('post.confirm');
 
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['column_right'] = $this->load->controller('common/column_right');
@@ -120,11 +105,11 @@ class ControllerAccountReset extends Controller
 
     protected function validate()
     {
-        if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
+        if ((utf8_strlen($this->request->get('post.password')) < 4) || (utf8_strlen($this->request->get('post.password')) > 20)) {
             $this->error['password'] = $this->language->get('error_password');
         }
 
-        if ($this->request->post['confirm'] != $this->request->post['password']) {
+        if ($this->request->get('post.confirm') != $this->request->get('post.password')) {
             $this->error['confirm'] = $this->language->get('error_confirm');
         }
 

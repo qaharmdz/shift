@@ -22,7 +22,7 @@ class ControllerAccountEdit extends Controller
         $this->document->addScript('asset/script/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
         $this->document->addStyle('asset/script/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('post') && $this->validate()) {
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect($this->url->link('account/account', '', true));
@@ -100,44 +100,19 @@ class ControllerAccountEdit extends Controller
 
         $data['action'] = $this->url->link('account/edit', '', true);
 
-        if (isset($this->request->post['firstname'])) {
-            $data['firstname'] = $this->request->post['firstname'];
-        } elseif (!empty($customer_info)) {
+        $data['firstname'] = $this->request->getString('post.firstname');
+        if (isset($customer_info['firstname'])) {
             $data['firstname'] = $customer_info['firstname'];
-        } else {
-            $data['firstname'] = '';
         }
 
-        if (isset($this->request->post['lastname'])) {
-            $data['lastname'] = $this->request->post['lastname'];
-        } elseif (!empty($customer_info)) {
+        $data['lastname'] = $this->request->getString('post.lastname');
+        if (isset($customer_info['lastname'])) {
             $data['lastname'] = $customer_info['lastname'];
-        } else {
-            $data['lastname'] = '';
         }
 
-        if (isset($this->request->post['email'])) {
-            $data['email'] = $this->request->post['email'];
-        } elseif (!empty($customer_info)) {
+        $data['email'] = $this->request->getString('post.email');
+        if (isset($customer_info['email'])) {
             $data['email'] = $customer_info['email'];
-        } else {
-            $data['email'] = '';
-        }
-
-        if (isset($this->request->post['telephone'])) {
-            $data['telephone'] = $this->request->post['telephone'];
-        } elseif (!empty($customer_info)) {
-            $data['telephone'] = $customer_info['telephone'];
-        } else {
-            $data['telephone'] = '';
-        }
-
-        if (isset($this->request->post['fax'])) {
-            $data['fax'] = $this->request->post['fax'];
-        } elseif (!empty($customer_info)) {
-            $data['fax'] = $customer_info['fax'];
-        } else {
-            $data['fax'] = '';
         }
 
         $data['back'] = $this->url->link('account/account', '', true);
@@ -154,35 +129,32 @@ class ControllerAccountEdit extends Controller
 
     protected function validate()
     {
-        if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+        if ((utf8_strlen(trim($this->request->get('post.firstname'))) < 1) || (utf8_strlen(trim($this->request->get('post.firstname'))) > 32)) {
             $this->error['firstname'] = $this->language->get('error_firstname');
         }
 
-        if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+        if ((utf8_strlen(trim($this->request->get('post.lastname'))) < 1) || (utf8_strlen(trim($this->request->get('post.lastname'))) > 32)) {
             $this->error['lastname'] = $this->language->get('error_lastname');
         }
 
-        if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+        if ((utf8_strlen($this->request->get('post.email')) > 96) || !filter_var($this->request->get('post.email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if (($this->user->getEmail() != $this->request->post['email']) && $this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
+        if (($this->user->getEmail() != $this->request->get('post.email')) && $this->model_account_customer->getTotalCustomersByEmail($this->request->get('post.email'))) {
             $this->error['warning'] = $this->language->get('error_exists');
-        }
-
-        if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-            $this->error['telephone'] = $this->language->get('error_telephone');
         }
 
         // Custom field validation
         $this->load->model('account/custom_field');
 
         $custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+        $post_fields   = $this->request->getArray('post.custom_field');
 
         foreach ($custom_fields as $custom_field) {
-            if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+            if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($post_fields[$custom_field['custom_field_id']])) {
                 $this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
-            } elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
+            } elseif (($custom_field['location'] == 'account') && ($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($post_fields[$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {
                 $this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
             }
         }

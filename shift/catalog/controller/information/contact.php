@@ -12,7 +12,7 @@ class ControllerInformationContact extends Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('post') && $this->validate()) {
             $mail = new Mail();
             $mail->protocol = $this->config->get('config_mail_protocol');
             $mail->parameter = $this->config->get('config_mail_parameter');
@@ -23,10 +23,10 @@ class ControllerInformationContact extends Controller
             $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
             $mail->setTo($this->config->get('config_email'));
-            $mail->setFrom($this->request->post['email']);
-            $mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
-            $mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->post['name']), ENT_QUOTES, 'UTF-8'));
-            $mail->setText($this->request->post['enquiry']);
+            $mail->setFrom($this->request->get('post.email'));
+            $mail->setSender(html_entity_decode($this->request->get('post.name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->get('post.name')), ENT_QUOTES, 'UTF-8'));
+            $mail->setText($this->request->get('post.enquiry'));
             $mail->send();
 
             $this->response->redirect($this->url->link('information/contact/success'));
@@ -103,29 +103,14 @@ class ControllerInformationContact extends Controller
         $data['locations'] = array();
 
 
-        if (isset($this->request->post['name'])) {
-            $data['name'] = $this->request->post['name'];
-        } else {
-            $data['name'] = $this->user->getFirstName();
-        }
-
-        if (isset($this->request->post['email'])) {
-            $data['email'] = $this->request->post['email'];
-        } else {
-            $data['email'] = $this->user->getEmail();
-        }
-
-        if (isset($this->request->post['enquiry'])) {
-            $data['enquiry'] = $this->request->post['enquiry'];
-        } else {
-            $data['enquiry'] = '';
-        }
+        $data['name']    = $this->request->get('post.name', $this->user->getFirstName());
+        $data['email']   = $this->request->get('post.email', $this->user->getEmail());
+        $data['enquiry'] = $this->request->getString('post.enquiry');
 
         // Captcha
+        $data['captcha'] = '';
         if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('contact', (array)$this->config->get('config_captcha_page'))) {
             $data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'), $this->error);
-        } else {
-            $data['captcha'] = '';
         }
 
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -140,15 +125,15 @@ class ControllerInformationContact extends Controller
 
     protected function validate()
     {
-        if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+        if ((utf8_strlen($this->request->get('post.name')) < 3) || (utf8_strlen($this->request->get('post.name')) > 32)) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->request->get('post.email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
+        if ((utf8_strlen($this->request->get('post.enquiry')) < 10) || (utf8_strlen($this->request->get('post.enquiry')) > 3000)) {
             $this->error['enquiry'] = $this->language->get('error_enquiry');
         }
 
