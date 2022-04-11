@@ -20,6 +20,7 @@ class ControllerStartupStartup extends Controller
         $this->config->set('config_store_id', $store_id);
 
         if (!$query->num_rows) {
+            // TODO: replace env.url_app, env.url_site, env.url_asset, env.url_media
             $this->config->set('config_url', HTTP_SERVER);
             $this->config->set('config_ssl', HTTPS_SERVER);
         }

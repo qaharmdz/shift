@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once realpath(__DIR__ . './') . '/path.php';
 
-define('APP_FOLDER', 'catalog'); // TODO: front
+define('APP_FOLDER', 'catalog'); // TODO: site
 define('APP_URL_PATH', '');
 
 if (!is_file(PATH_SHIFT . 'config.php')) {

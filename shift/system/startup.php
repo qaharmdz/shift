@@ -51,6 +51,9 @@ if ($rootConfig) {
         define('HTTP_CATALOG', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
         define('HTTPS_CATALOG', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
     }
+
+    define('URL_APP', $_SERVER['PROTOCOL'] . $rootConfig['url_base'] . APP_URL_PATH);
+    define('URL_SITE', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
 }
 
 // DIR

@@ -63,9 +63,10 @@ class Framework
         $config->replaceRecursive(['root' => $rootConfig]);
 
         $config->set('env.app', APP_FOLDER);
-        // $config->set('env.url_app', URL_APP);
-        // $config->set('env.url_site', URL_SITE);
-        // $config->set('env.url_media', URL_SITE . 'media/');
+        $config->set('env.url_app', URL_APP);
+        $config->set('env.url_site', URL_SITE);
+        $config->set('env.url_asset', URL_SITE . 'asset/');
+        $config->set('env.url_media', URL_SITE . 'media/');
 
         $this->set('config', $config);
 
