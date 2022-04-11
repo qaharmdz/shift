@@ -36,7 +36,7 @@ class ControllerStartupStartup extends Controller
         }
 
         // Apply DB setting
-        $this->logger->setConfig([
+        $this->log->setConfig([
             'display' => $this->config->getBool('config_error_display', false)
         ]);
 

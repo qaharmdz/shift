@@ -18,7 +18,7 @@ class Logger
         $this->config = array_replace_recursive(
             [
                 'path'    => DIR_STORAGE . 'logs/',
-                'logfile' => 'logger-' . date('Y-m') . '.log',
+                'logfile' => 'log-' . date('Y-m') . '.log',
                 'display' => false
             ],
             $this->config,

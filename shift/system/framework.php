@@ -74,7 +74,7 @@ class Framework
         set_error_handler([$logger, 'errorHandler']);
         set_exception_handler([$logger, 'exceptionHandler']);
         register_shutdown_function([$logger, 'shutdownHandler']);
-        $this->set('logger', $logger);
+        $this->set('log', $logger);
 
         //=== Database
         $db = new Core\Database(...$config->get('root.database.config'));
