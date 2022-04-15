@@ -20,11 +20,8 @@ class ControllerToolLog extends Controller
         $data['button_download'] = $this->language->get('button_download');
         $data['button_clear'] = $this->language->get('button_clear');
 
-        if (!$data['error_warning'] = $this->session->pull('flash.error') && isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        }
-
         $data['success'] = $this->session->pull('flash.success');
+        $data['error_warning'] = $this->error['warning'] ?? $this->session->pull('flash.error');
 
         $data['breadcrumbs'] = array();
 
@@ -43,7 +40,7 @@ class ControllerToolLog extends Controller
 
         $data['log'] = '';
 
-        $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
+        $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
         if (file_exists($file)) {
             $size = filesize($file);
@@ -85,7 +82,7 @@ class ControllerToolLog extends Controller
     {
         $this->load->language('tool/log');
 
-        $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
+        $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
         if (file_exists($file) && filesize($file) > 0) {
             $this->response->addheader('Pragma: public');
@@ -110,7 +107,7 @@ class ControllerToolLog extends Controller
         if (!$this->user->hasPermission('modify', 'tool/log')) {
             $this->session->set('flash.error', $this->language->get('error_permission'));
         } else {
-            $file = DIR_STORAGE . 'logs/' . $this->config->get('config_error_filename');
+            $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
             $handle = fopen($file, 'w+');
 

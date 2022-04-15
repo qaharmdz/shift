@@ -43,11 +43,8 @@ class ControllerToolBackup extends Controller
         $data['button_export'] = $this->language->get('button_export');
         $data['button_import'] = $this->language->get('button_import');
 
-        if (!$data['error_warning'] = $this->session->pull('flash.error') && isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        }
-
         $data['success'] = $this->session->pull('flash.success');
+        $data['error_warning'] = $this->error['warning'] ?? $this->session->pull('flash.error');
 
         $data['breadcrumbs'] = array();
 
