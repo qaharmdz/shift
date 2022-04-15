@@ -36,4 +36,8 @@
     <p><?php echo $powered; ?></p>
   </div>
 </footer>
+<script>
+    var config = <?php echo $config; ?>;
+    console.log(config);
+</script>
 </body></html>

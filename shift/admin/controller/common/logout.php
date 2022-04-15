@@ -7,8 +7,7 @@ class ControllerCommonLogout extends Controller
     public function index()
     {
         $this->user->logout();
-
-        unset($this->session->get('token'));
+        $this->session->delete('token');
 
         $this->response->redirect($this->url->link('common/login', '', true));
     }

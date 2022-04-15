@@ -15,6 +15,8 @@ class ControllerStartupRouter extends Controller
             $route = $this->config->get('root.action_error');
         }
 
+        $data = array();
+
         // Sanitize the call
         $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 

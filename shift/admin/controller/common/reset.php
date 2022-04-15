@@ -8,7 +8,7 @@ class ControllerCommonReset extends Controller
 
     public function index()
     {
-        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->get('token'))) {
+        if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
             $this->response->redirect($this->url->link('common/dashboard', '', true));
         }
 
@@ -16,11 +16,7 @@ class ControllerCommonReset extends Controller
             $this->response->redirect($this->url->link('common/login', '', true));
         }
 
-        if (isset($this->request->get['code'])) {
-            $code = $this->request->get['code'];
-        } else {
-            $code = '';
-        }
+        $code = $this->request->get('query.code', '');
 
         $this->load->model('user/user');
 
@@ -31,8 +27,8 @@ class ControllerCommonReset extends Controller
 
             $this->document->setTitle($this->language->get('heading_title'));
 
-            if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-                $this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
+            if ($this->request->is('POST') && $this->validate()) {
+                $this->model_user_user->editPassword($user_info['user_id'], $this->request->get('post.password'));
 
                 $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -40,7 +36,6 @@ class ControllerCommonReset extends Controller
             }
 
             $data['heading_title'] = $this->language->get('heading_title');
-
             $data['text_password'] = $this->language->get('text_password');
 
             $data['entry_password'] = $this->language->get('entry_password');
@@ -50,44 +45,30 @@ class ControllerCommonReset extends Controller
             $data['button_cancel'] = $this->language->get('button_cancel');
 
             $data['breadcrumbs'] = array();
-
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_home'),
                 'href' => $this->url->link('common/dashboard', '', true)
             );
-
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
                 'href' => $this->url->link('common/reset', '', true)
             );
 
+            $data['error_password'] = '';
             if (isset($this->error['password'])) {
                 $data['error_password'] = $this->error['password'];
-            } else {
-                $data['error_password'] = '';
             }
 
+            $data['error_confirm'] = '';
             if (isset($this->error['confirm'])) {
                 $data['error_confirm'] = $this->error['confirm'];
-            } else {
-                $data['error_confirm'] = '';
             }
 
             $data['action'] = $this->url->link('common/reset', 'code=' . $code, true);
-
             $data['cancel'] = $this->url->link('common/login', '', true);
 
-            if (isset($this->request->post['password'])) {
-                $data['password'] = $this->request->post['password'];
-            } else {
-                $data['password'] = '';
-            }
-
-            if (isset($this->request->post['confirm'])) {
-                $data['confirm'] = $this->request->post['confirm'];
-            } else {
-                $data['confirm'] = '';
-            }
+            $data['password'] = $this->request->get('post.password', '');
+            $data['confirm']  = $this->request->get('post.confirm', '');
 
             $data['header'] = $this->load->controller('common/header');
             $data['footer'] = $this->load->controller('common/footer');
@@ -104,11 +85,14 @@ class ControllerCommonReset extends Controller
 
     protected function validate()
     {
-        if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
+        $password = $this->request->get('post.password', '');
+        $confirm  = $this->request->get('post.confirm', '');
+
+        if ((utf8_strlen($password) < 4) || (utf8_strlen($password) > 20)) {
             $this->error['password'] = $this->language->get('error_password');
         }
 
-        if ($this->request->post['confirm'] != $this->request->post['password']) {
+        if ($confirm != $password) {
             $this->error['confirm'] = $this->language->get('error_confirm');
         }
 

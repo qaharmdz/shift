@@ -6,13 +6,8 @@ class ControllerCommonHeader extends Controller
 {
     public function index()
     {
+        $data['base'] = $this->config->get('env.url_app');
         $data['title'] = $this->document->getTitle();
-
-        if ($this->request->server['HTTPS']) {
-            $data['base'] = HTTPS_SERVER;
-        } else {
-            $data['base'] = HTTP_SERVER;
-        }
 
         $data['description'] = $this->document->getDescription();
         $data['keywords'] = $this->document->getKeywords();
@@ -46,14 +41,12 @@ class ControllerCommonHeader extends Controller
         $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
         $data['text_logout'] = $this->language->get('text_logout');
 
-        if ($this->session->isEmpty('token') || empty($this->request->get['token']) || ($this->request->get['token'] != $this->session->get('token', 'x'))) {
-            $data['logged'] = '';
-
-            $data['home'] = $this->url->link('common/dashboard', '', true);
+        if ($this->request->get('query.token', time()) != $this->session->get('token')) {
+            $data['logged'] = false;
+            $data['home']   = $this->url->link('common/dashboard', '', true);
         } else {
             $data['logged'] = true;
-
-            $data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true);
+            $data['home']   = $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true);
             $data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->get('token'), true);
 
             // Online Stores

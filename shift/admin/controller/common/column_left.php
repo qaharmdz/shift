@@ -6,7 +6,7 @@ class ControllerCommonColumnLeft extends Controller
 {
     public function index()
     {
-        if (isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->get('token', 'x'))) {
+        if ($this->request->get('query.token', time()) == $this->session->get('token')) {
             $this->load->language('common/column_left');
 
             $this->load->model('user/user');

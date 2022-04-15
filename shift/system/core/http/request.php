@@ -68,13 +68,13 @@ class Request extends Core\Bags
                 return $this->getBool('server.SECURE', false);
 
             case 'ajax':
-                return strtolower($this->get('server.HTTP_X_REQUESTED_WITH', '')) === 'xmlhttprequest' ? true : false;
+                return strtolower($this->getString('server.HTTP_X_REQUESTED_WITH')) === 'xmlhttprequest' ? true : false;
 
             case 'json':
-                return str_contains($this->get('server.HTTP_ACCEPT', ''), 'application/json');
+                return str_contains($this->getString('server.HTTP_ACCEPT'), 'application/json');
 
             case 'html':
-                return str_contains($this->get('server.HTTP_ACCEPT', ''), 'text/html');
+                return str_contains($this->getString('server.HTTP_ACCEPT'), 'text/html');
 
             case 'cli':
                 return (PHP_SAPI === 'cli' || defined('STDIN'));

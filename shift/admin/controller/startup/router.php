@@ -6,11 +6,13 @@ class ControllerStartupRouter extends Controller
 {
     public function index()
     {
-        // Route
-        if (isset($this->request->get['route']) && $this->request->get['route'] != 'startup/router') {
-            $route = $this->request->get['route'];
-        } else {
-            $route = $this->config->get('root.action_default');
+        $route = $this->request->getString(
+            'query.route',
+            $this->config->get('root.action_default')
+        );
+
+        if (str_starts_with($route, 'startup/')) {
+            $route = $this->config->get('root.action_error');
         }
 
         $data = array();

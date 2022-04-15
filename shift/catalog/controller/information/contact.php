@@ -103,8 +103,8 @@ class ControllerInformationContact extends Controller
         $data['locations'] = array();
 
 
-        $data['name']    = $this->request->get('post.name', $this->user->getFirstName());
-        $data['email']   = $this->request->get('post.email', $this->user->getEmail());
+        $data['name']    = $this->request->getString('post.name', $this->user->getFirstName());
+        $data['email']   = $this->request->getString('post.email', $this->user->getEmail());
         $data['enquiry'] = $this->request->getString('post.enquiry');
 
         // Captcha

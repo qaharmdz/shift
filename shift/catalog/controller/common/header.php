@@ -6,33 +6,26 @@ class ControllerCommonHeader extends Controller
 {
     public function index()
     {
-        if ($this->request->getBool('server.SECURE')) {
-            $server = $this->config->get('config_ssl');
-        } else {
-            $server = $this->config->get('config_url');
-        }
+        $data['base']        = $this->config->get('env.url_app');
+        $data['title']       = $this->document->getTitle();
 
-        if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');
-        }
-
-        $data['title'] = $this->document->getTitle();
-
-        $data['base'] = $server;
         $data['description'] = $this->document->getDescription();
-        $data['keywords'] = $this->document->getKeywords();
-        $data['links'] = $this->document->getLinks();
-        $data['styles'] = $this->document->getStyles();
-        $data['scripts'] = $this->document->getScripts();
-        $data['lang'] = $this->language->get('code');
-        $data['direction'] = $this->language->get('direction');
+        $data['keywords']    = $this->document->getKeywords();
+        $data['links']       = $this->document->getLinks();
+        $data['styles']      = $this->document->getStyles();
+        $data['scripts']     = $this->document->getScripts();
+        $data['lang']        = $this->language->get('code');
+        $data['direction']   = $this->language->get('direction');
 
         $data['name'] = $this->config->get('config_name');
 
+        if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+            $this->document->addLink($data['base'] . 'image/' . $this->config->get('config_icon'), 'icon');
+        }
+
+        $data['logo'] = '';
         if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-            $data['logo'] = $server . 'image/' . $this->config->get('config_logo');
-        } else {
-            $data['logo'] = '';
+            $data['logo'] = $data['base'] . 'image/' . $this->config->get('config_logo');
         }
 
         $this->load->language('common/header');

@@ -51,6 +51,7 @@ class ControllerCommonFooter extends Controller
         $data['newsletter'] = $this->url->link('account/newsletter', '', true);
 
         $data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+        $data['config'] = json_encode($this->config->all());
 
         return $this->load->view('common/footer', $data);
     }

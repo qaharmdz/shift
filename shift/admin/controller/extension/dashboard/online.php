@@ -112,8 +112,6 @@ class ControllerExtensionDashboardOnline extends Controller
 
         $data['token'] = $this->session->get('token');
 
-        // Total Orders
-
         // Customers Online
         $data['total'] = 101;
         $data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->get('token'), true);

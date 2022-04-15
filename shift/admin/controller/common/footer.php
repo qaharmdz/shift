@@ -11,7 +11,7 @@ class ControllerCommonFooter extends Controller
         $data['text_footer'] = $this->language->get('text_footer');
 
         $data['text_version'] = '';
-        if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->get('token'))) {
+        if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
             $data['text_version'] = sprintf($this->language->get('text_version'), VERSION);
         }
 

@@ -33,7 +33,7 @@ class Logger
 
     public function write($message, string $level = 'Debug', array $context = [], string $logfile = '')
     {
-        $message = sprintf('%s | %s | %s %s', date('Y-m-d H:i:s e'), $level, print_r($message, true), json_encode($context)) . PHP_EOL;
+        $message = sprintf('%s | %s | %s | %s', date('Y-m-d H:i:s e'), $level, print_r($message, true), json_encode($context)) . PHP_EOL;
         $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
 
         $handle = fopen($output, 'a');

@@ -25,8 +25,8 @@ class ControllerCatalogInformation extends Controller
 
         $this->load->model('catalog/information');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $this->model_catalog_information->addInformation($this->request->post);
+        if ($this->request->is('POST') && $this->validateForm()) {
+            $this->model_catalog_information->addInformation($this->request->getArray('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
