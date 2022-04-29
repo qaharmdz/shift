@@ -25,7 +25,7 @@ class ControllerUserUserPermission extends Controller
 
         $this->load->model('user/user_group');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_user_user_group->addUserGroup($this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -58,7 +58,7 @@ class ControllerUserUserPermission extends Controller
 
         $this->load->model('user/user_group');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -320,7 +320,7 @@ class ControllerUserUserPermission extends Controller
 
         $data['cancel'] = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['user_group_id']) && $this->request->server['REQUEST_METHOD'] != 'POST') {
+        if (isset($this->request->get['user_group_id']) && !$this->request->is('POST')) {
             $user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
         }
 

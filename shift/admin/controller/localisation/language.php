@@ -25,7 +25,7 @@ class ControllerLocalisationLanguage extends Controller
 
         $this->load->model('localisation/language');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_localisation_language->addLanguage($this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -58,7 +58,7 @@ class ControllerLocalisationLanguage extends Controller
 
         $this->load->model('localisation/language');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -341,7 +341,7 @@ class ControllerLocalisationLanguage extends Controller
 
         $data['cancel'] = $this->url->link('localisation/language', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['language_id']) && !$this->request->is('POST')) {
             $language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
         }
 

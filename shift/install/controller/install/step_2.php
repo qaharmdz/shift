@@ -10,7 +10,7 @@ class ControllerInstallStep2 extends Controller
     {
         $this->language->load('install/step_2');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('POST') && $this->validate()) {
             $this->response->redirect($this->url->link('install/step_3'));
         }
 

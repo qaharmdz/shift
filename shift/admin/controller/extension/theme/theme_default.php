@@ -14,7 +14,7 @@ class ControllerExtensionThemeThemeDefault extends Controller
 
         $this->load->model('setting/setting');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('theme_default', $this->request->post, $this->request->get['store_id']);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -154,7 +154,7 @@ class ControllerExtensionThemeThemeDefault extends Controller
 
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=theme', true);
 
-        if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['store_id']) && !$this->request->is('POST')) {
             $setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get['store_id']);
         }
 

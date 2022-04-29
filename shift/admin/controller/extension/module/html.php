@@ -14,7 +14,7 @@ class ControllerExtensionModuleHTML extends Controller
 
         $this->load->model('extension/module');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('POST') && $this->validate()) {
             if (!isset($this->request->get['module_id'])) {
                 $this->model_extension_module->addModule('html', $this->request->post);
             } else {
@@ -84,7 +84,7 @@ class ControllerExtensionModuleHTML extends Controller
 
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true);
 
-        if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['module_id']) && !$this->request->is('POST')) {
             $module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
         }
 

@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 // Site
-$_['site_base']            = '';
-$_['site_ssl']             = false;
+$_['site_base']         = '';
+$_['site_ssl']          = false;
 
-$_['url_base']        = '';
-$_['locale']          = 'en';
+$_['url_base']          = '';
+$_['locale']            = 'en-gb';
 
 // Actions
-$_['action_default']       = 'common/home';
-$_['action_router']        = 'startup/router';
-$_['action_error']         = 'error/not_found';
-$_['action_pre_action']    = array();
-$_['action_event']         = array();
+$_['action_default']    = 'common/home';
+$_['action_router']     = 'startup/router';
+$_['action_error']      = 'error/not_found';
+$_['action_pre_action'] = array();
+$_['action_event']      = array();
 
 $_['database'] = [
     'config' => [

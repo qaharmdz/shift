@@ -30,21 +30,13 @@ class ControllerCatalogInformation extends Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $url = '';
-
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect(
+                $this->url->link(
+                    'catalog/information',
+                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page']),
+                    true
+                )
+            );
         }
 
         $this->getForm();
@@ -58,26 +50,18 @@ class ControllerCatalogInformation extends Controller
 
         $this->load->model('catalog/information');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
+        if ($this->request->is('POST') && $this->validateForm()) {
+            $this->model_catalog_information->editInformation($this->request->getInt('query.information_id'), $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $url = '';
-
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect(
+                $this->url->link(
+                    'catalog/information',
+                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page']),
+                    true
+                )
+            );
         }
 
         $this->getForm();
@@ -91,28 +75,20 @@ class ControllerCatalogInformation extends Controller
 
         $this->load->model('catalog/information');
 
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
-            foreach ($this->request->post['selected'] as $information_id) {
-                $this->model_catalog_information->deleteInformation($information_id);
+        if ($this->request->has('post.selected') && $this->validateDelete()) {
+            foreach ($this->request->get('post.selected') as $information_id) {
+                $this->model_catalog_information->deleteInformation((int)$information_id);
             }
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $url = '';
-
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
-            }
-
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
-            }
-
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
-            }
-
-            $this->response->redirect($this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect(
+                $this->url->link(
+                    'catalog/information',
+                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page']),
+                    true
+                )
+            );
         }
 
         $this->getList();
@@ -120,45 +96,17 @@ class ControllerCatalogInformation extends Controller
 
     protected function getList()
     {
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
-        } else {
-            $sort = 'id.title';
-        }
+        $sort  = $this->request->get('query.sort', 'id.title');
+        $order = $this->request->get('query.order', 'ASC');
+        $page  = $this->request->get('query.page', 1);
 
-        if (isset($this->request->get['order'])) {
-            $order = $this->request->get['order'];
-        } else {
-            $order = 'ASC';
-        }
-
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
-        } else {
-            $page = 1;
-        }
-
-        $url = '';
-
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
-        }
-
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
-        }
-
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
-        }
+        $url = $this->urlQueryList(['sort', 'order', 'page']);
 
         $data['breadcrumbs'] = array();
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true)
@@ -210,37 +158,14 @@ class ControllerCatalogInformation extends Controller
         }
 
         $data['success'] = $this->session->pull('flash.success');
+        $data['selected'] = $this->request->getArray('post.selected', []);
 
-        if (isset($this->request->post['selected'])) {
-            $data['selected'] = (array)$this->request->post['selected'];
-        } else {
-            $data['selected'] = array();
-        }
-
-        $url = '';
-
-        if ($order == 'ASC') {
-            $url .= '&order=DESC';
-        } else {
-            $url .= '&order=ASC';
-        }
-
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
-        }
+        $url = $this->urlQueryList(['page']) . '&order=' . ($order == 'ASC' ? 'DESC' : 'ASC');
 
         $data['sort_title'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . '&sort=id.title' . $url, true);
         $data['sort_sort_order'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . '&sort=i.sort_order' . $url, true);
 
-        $url = '';
-
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
-        }
-
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
-        }
+        $url = $this->urlQueryList(['sort', 'order']);
 
         $pagination = new Pagination();
         $pagination->total = $information_total;
@@ -266,7 +191,7 @@ class ControllerCatalogInformation extends Controller
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_form'] = !isset($this->request->get['information_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_form'] = !$this->request->has('query.information_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_default'] = $this->language->get('text_default');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -323,42 +248,28 @@ class ControllerCatalogInformation extends Controller
             $data['error_keyword'] = '';
         }
 
-        $url = '';
-
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
-        }
-
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
-        }
-
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
-        }
+        $url = $this->urlQueryList(['sort', 'order', 'page']);
 
         $data['breadcrumbs'] = array();
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true)
         );
 
-        if (!isset($this->request->get['information_id'])) {
+        if (!$this->request->has('query.information_id')) {
             $data['action'] = $this->url->link('catalog/information/add', 'token=' . $this->session->get('token') . $url, true);
         } else {
-            $data['action'] = $this->url->link('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $this->request->get['information_id'] . $url, true);
+            $data['action'] = $this->url->link('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $this->request->get('query.information_id', 0) . $url, true);
         }
 
         $data['cancel'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-            $information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
+        if ($this->request->has('query.information_id') && !$this->request->is('POST')) {
+            $information_info = $this->model_catalog_information->getInformation($this->request->getInt('query.information_id'));
         }
 
         $data['token'] = $this->session->get('token');
@@ -367,64 +278,53 @@ class ControllerCatalogInformation extends Controller
 
         $data['languages'] = $this->model_localisation_language->getLanguages();
 
-        if (isset($this->request->post['information_description'])) {
-            $data['information_description'] = $this->request->post['information_description'];
-        } elseif (isset($this->request->get['information_id'])) {
-            $data['information_description'] = $this->model_catalog_information->getInformationDescriptions($this->request->get['information_id']);
-        } else {
-            $data['information_description'] = array();
+        $data['information_description'] = $this->request->getArray('post.information_description', []);
+        if ($this->request->has('query.information_id')) {
+            $data['information_description'] = $this->model_catalog_information->getInformationDescriptions($this->request->getInt('query.information_id'));
         }
 
         $this->load->model('setting/store');
 
         $data['stores'] = $this->model_setting_store->getStores();
 
-        if (isset($this->request->post['information_store'])) {
-            $data['information_store'] = $this->request->post['information_store'];
-        } elseif (isset($this->request->get['information_id'])) {
-            $data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
-        } else {
-            $data['information_store'] = array(0);
+        $data['information_store'] = $this->request->getArray('post.information_store', [0]);
+        if ($this->request->has('query.information_id')) {
+            $data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->getInt('query.information_id'));
         }
 
-        if (isset($this->request->post['keyword'])) {
-            $data['keyword'] = $this->request->post['keyword'];
+        $data['keyword'] = '';
+        if ($this->request->has('post.keyword')) {
+            $data['keyword'] = $this->request->getString('post.keyword');
         } elseif (!empty($information_info)) {
             $data['keyword'] = $information_info['keyword'];
-        } else {
-            $data['keyword'] = '';
         }
 
-        if (isset($this->request->post['bottom'])) {
-            $data['bottom'] = $this->request->post['bottom'];
+        $data['bottom'] = 0;
+        if ($this->request->has('post.bottom')) {
+            $data['bottom'] = $this->request->getInt('post.bottom');
         } elseif (!empty($information_info)) {
-            $data['bottom'] = $information_info['bottom'];
-        } else {
-            $data['bottom'] = 0;
+            $data['bottom'] = (int)$information_info['bottom'];
         }
 
-        if (isset($this->request->post['status'])) {
-            $data['status'] = $this->request->post['status'];
+        $data['status'] = true;
+        if ($this->request->has('post.status')) {
+            $data['status'] = $this->request->getBool('post.status');
         } elseif (!empty($information_info)) {
-            $data['status'] = $information_info['status'];
-        } else {
-            $data['status'] = true;
+            $data['status'] = (bool)$information_info['status'];
         }
 
-        if (isset($this->request->post['sort_order'])) {
-            $data['sort_order'] = $this->request->post['sort_order'];
+        $data['sort_order'] = '';
+        if ($this->request->has('post.sort_order')) {
+            $data['sort_order'] = $this->request->getString('post.sort_order');
         } elseif (!empty($information_info)) {
             $data['sort_order'] = $information_info['sort_order'];
-        } else {
-            $data['sort_order'] = '';
         }
 
-        if (isset($this->request->post['information_layout'])) {
-            $data['information_layout'] = $this->request->post['information_layout'];
-        } elseif (isset($this->request->get['information_id'])) {
-            $data['information_layout'] = $this->model_catalog_information->getInformationLayouts($this->request->get['information_id']);
-        } else {
-            $data['information_layout'] = array();
+        $data['information_layout'] = [];
+        if ($this->request->has('post.information_layout')) {
+            $data['information_layout'] = $this->request->getArray('post.information_layout');
+        } elseif ($this->request->has('query.information_id')) {
+            $data['information_layout'] = $this->model_catalog_information->getInformationLayouts($this->request->getInt('query.information_id'));
         }
 
         $this->load->model('design/layout');
@@ -444,7 +344,7 @@ class ControllerCatalogInformation extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        foreach ($this->request->post['information_description'] as $language_id => $value) {
+        foreach ($this->request->getArray('post.information_description') as $language_id => $value) {
             if ((utf8_strlen($value['title']) < 3) || (utf8_strlen($value['title']) > 64)) {
                 $this->error['title'][$language_id] = $this->language->get('error_title');
             }
@@ -458,16 +358,16 @@ class ControllerCatalogInformation extends Controller
             }
         }
 
-        if (utf8_strlen($this->request->post['keyword']) > 0) {
+        if (utf8_strlen($this->request->getString('post.keyword')) > 0) {
             $this->load->model('catalog/url_alias');
 
-            $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
+            $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->getString('post.keyword'));
 
-            if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['information_id']) {
+            if ($url_alias_info && $this->request->has('query.information_id') && $url_alias_info['query'] != 'information_id=' . $this->request->get('query.information_id')) {
                 $this->error['keyword'] = sprintf($this->language->get('error_keyword'));
             }
 
-            if ($url_alias_info && !isset($this->request->get['information_id'])) {
+            if ($url_alias_info && !$this->request->has('query.information_id')) {
                 $this->error['keyword'] = sprintf($this->language->get('error_keyword'));
             }
         }
@@ -487,7 +387,7 @@ class ControllerCatalogInformation extends Controller
 
         $this->load->model('setting/store');
 
-        foreach ($this->request->post['selected'] as $information_id) {
+        foreach ($this->request->get('post.selected', []) as $information_id) {
             if ($this->config->get('config_account_id') == $information_id) {
                 $this->error['warning'] = $this->language->get('error_account');
             }
@@ -512,5 +412,24 @@ class ControllerCatalogInformation extends Controller
         }
 
         return !$this->error;
+    }
+
+    protected function urlQueryList(array $params = array())
+    {
+        $url = '';
+
+        if (in_array('sort', $params) && $this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
+        }
+
+        if (in_array('order', $params) && $this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
+        }
+
+        if (in_array('page', $params) && $this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
+        }
+
+        return $url;
     }
 }

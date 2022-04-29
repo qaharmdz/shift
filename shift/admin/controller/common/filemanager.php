@@ -327,7 +327,7 @@ class ControllerCommonFileManager extends Controller
             $json['error'] = $this->language->get('error_directory');
         }
 
-        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+        if ($this->request->is('POST')) {
             // Sanitize the folder name
             $folder = basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8'));
 

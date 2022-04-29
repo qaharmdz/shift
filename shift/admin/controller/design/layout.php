@@ -25,7 +25,7 @@ class ControllerDesignLayout extends Controller
 
         $this->load->model('design/layout');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_design_layout->addLayout($this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -58,7 +58,7 @@ class ControllerDesignLayout extends Controller
 
         $this->load->model('design/layout');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -334,7 +334,7 @@ class ControllerDesignLayout extends Controller
 
         $data['token'] = $this->session->get('token');
 
-        if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['layout_id']) && !$this->request->is('POST')) {
             $layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
         }
 

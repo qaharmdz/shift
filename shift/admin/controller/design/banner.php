@@ -25,7 +25,7 @@ class ControllerDesignBanner extends Controller
 
         $this->load->model('design/banner');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_design_banner->addBanner($this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -58,7 +58,7 @@ class ControllerDesignBanner extends Controller
 
         $this->load->model('design/banner');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_design_banner->editBanner($this->request->get['banner_id'], $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -335,7 +335,7 @@ class ControllerDesignBanner extends Controller
 
         $data['cancel'] = $this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['banner_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['banner_id']) && !$this->request->is('POST')) {
             $banner_info = $this->model_design_banner->getBanner($this->request->get['banner_id']);
         }
 

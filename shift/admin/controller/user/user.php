@@ -25,7 +25,7 @@ class ControllerUserUser extends Controller
 
         $this->load->model('user/user');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_user_user->addUser($this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -58,7 +58,7 @@ class ControllerUserUser extends Controller
 
         $this->load->model('user/user');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -362,7 +362,7 @@ class ControllerUserUser extends Controller
 
         $data['cancel'] = $this->url->link('user/user', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['user_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['user_id']) && !$this->request->is('POST')) {
             $user_info = $this->model_user_user->getUser($this->request->get['user_id']);
         }
 

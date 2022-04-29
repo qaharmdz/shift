@@ -14,7 +14,7 @@ class ControllerExtensionDashboardOnline extends Controller
 
         $this->load->model('setting/setting');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        if ($this->request->is('POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('dashboard_online', $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));

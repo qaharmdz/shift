@@ -27,7 +27,7 @@ class ControllerSettingStore extends Controller
 
         $this->load->model('setting/store');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $store_id = $this->model_setting_store->addStore($this->request->post);
 
             $this->load->model('setting/setting');
@@ -50,7 +50,7 @@ class ControllerSettingStore extends Controller
 
         $this->load->model('setting/store');
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if ($this->request->is('POST') && $this->validateForm()) {
             $this->model_setting_store->editStore($this->request->get['store_id'], $this->request->post);
 
             $this->load->model('setting/setting');
@@ -345,7 +345,7 @@ class ControllerSettingStore extends Controller
 
         $data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->get('token'), true);
 
-        if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+        if (isset($this->request->get['store_id']) && !$this->request->is('POST')) {
             $this->load->model('setting/setting');
 
             $store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
