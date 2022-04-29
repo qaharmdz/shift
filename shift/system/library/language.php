@@ -5,12 +5,12 @@ declare(strict_types=1);
 class Language
 {
     private $default = 'en-gb';
-    private $directory;
-    private $data = array();
+    private $locale;
+    private $data = [];
 
-    public function __construct($directory = '')
+    public function __construct($locale = '')
     {
-        $this->directory = $directory;
+        $this->locale = $locale;
     }
 
     public function get($key)
@@ -23,57 +23,32 @@ class Language
         $this->data[$key] = $value;
     }
 
-    // Please dont use the below function i'm thinking getting rid of it.
     public function all()
     {
         return $this->data;
     }
 
-    // Please dont use the below function i'm thinking getting rid of it.
-    public function merge(&$data)
+    public function merge($data)
     {
-        array_merge($this->data, $data);
+        $this->data = array_merge($this->data, $data);
     }
 
-    public function load($filename, &$data = array())
+    public function load($filename)
     {
-        $_ = array();
+        $_ = [];
+        $directories = array_unique([
+            $this->default,
+            $this->locale,
+        ]);
 
-        $file = DIR_LANGUAGE . 'english/' . $filename . '.php';
+        foreach ($directories as $locale) {
+            $file = DIR_LANGUAGE . $locale . '/' . $filename . '.php';
 
-        // Compatibility code for old extension folders
-        $old_file = DIR_LANGUAGE . 'english/' . str_replace('extension/', '', $filename) . '.php';
-
-        if (is_file($file)) {
-            require($file);
-        } elseif (is_file($old_file)) {
-            require($old_file);
+            if (is_file($file)) {
+                require($file);
+            }
         }
 
-        $file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
-
-        // Compatibility code for old extension folders
-        $old_file = DIR_LANGUAGE . $this->default . '/' . str_replace('extension/', '', $filename) . '.php';
-
-        if (is_file($file)) {
-            require($file);
-        } elseif (is_file($old_file)) {
-            require($old_file);
-        }
-
-        $file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
-
-        // Compatibility code for old extension folders
-        $old_file = DIR_LANGUAGE . $this->directory . '/' . str_replace('extension/', '', $filename) . '.php';
-
-        if (is_file($file)) {
-            require($file);
-        } elseif (is_file($old_file)) {
-            require($old_file);
-        }
-
-        $this->data = array_merge($this->data, $_);
-
-        return $this->data;
+        $this->merge($_);
     }
 }
