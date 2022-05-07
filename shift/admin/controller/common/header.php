@@ -6,16 +6,16 @@ class ControllerCommonHeader extends Controller
 {
     public function index()
     {
-        $data['base'] = $this->config->get('env.url_app');
-        $data['title'] = $this->document->getTitle();
+        $data['base']        = $this->config->get('env.url_app');
+        $data['title']       = $this->document->getTitle();
 
         $data['description'] = $this->document->getDescription();
-        $data['keywords'] = $this->document->getKeywords();
-        $data['links'] = $this->document->getLinks();
-        $data['styles'] = $this->document->getStyles();
-        $data['scripts'] = $this->document->getScripts();
-        $data['lang'] = $this->language->get('code');
-        $data['direction'] = $this->language->get('direction');
+        $data['keywords']    = $this->document->getKeywords();
+        $data['links']       = $this->document->getLinks();
+        $data['styles']      = $this->document->getStyles();
+        $data['scripts']     = $this->document->getScripts();
+        $data['lang']        = $this->language->get('code');
+        $data['direction']   = $this->language->get('direction');
 
         $this->load->language('common/header');
 

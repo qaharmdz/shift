@@ -15,7 +15,7 @@ class ControllerSettingSetting extends Controller
         $this->load->model('setting/setting');
 
         if ($this->request->is('POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('config', $this->request->post);
+            $this->model_setting_setting->editSetting('config', $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -453,22 +453,22 @@ class ControllerSettingSetting extends Controller
             'value' => 'account'
         );
 
-        $data['config_alert_email'] = $this->request->get('post.config_alert_email', $this->config->get('config_alert_email'));
-        $data['config_secure']      = $this->request->get('post.config_secure', $this->config->get('config_secure'));
-        $data['config_shared']      = $this->request->get('post.config_shared', $this->config->get('config_shared'));
-        $data['config_robots']      = $this->request->get('post.config_robots', $this->config->get('config_robots'));
-        $data['config_seo_url']     = $this->request->get('post.config_seo_url', $this->config->get('config_seo_url'));
+        $data['config_alert_email']       = $this->request->get('post.config_alert_email', $this->config->get('config_alert_email'));
+        $data['config_secure']            = $this->request->get('post.config_secure', $this->config->get('config_secure'));
+        $data['config_shared']            = $this->request->get('post.config_shared', $this->config->get('config_shared'));
+        $data['config_robots']            = $this->request->get('post.config_robots', $this->config->get('config_robots'));
+        $data['config_seo_url']           = $this->request->get('post.config_seo_url', $this->config->get('config_seo_url'));
 
         $data['config_file_max_size']     = $this->request->get('post.config_file_max_size', $this->config->get('config_file_max_size', 300000));
         $data['config_file_ext_allowed']  = $this->request->get('post.config_file_ext_allowed', $this->config->get('config_file_ext_allowed'));
         $data['config_file_mime_allowed'] = $this->request->get('post.config_file_mime_allowed', $this->config->get('config_file_mime_allowed'));
 
-        $data['config_maintenance']    = $this->request->get('post.config_maintenance', $this->config->get('config_maintenance'));
-        $data['config_password']       = $this->request->get('post.config_password', $this->config->get('config_password'));
-        $data['config_compression']    = $this->request->get('post.config_compression', $this->config->get('config_compression'));
-        $data['config_error_display']  = $this->request->get('post.config_error_display', $this->config->get('config_error_display'));
-        $data['config_error_log']      = $this->request->get('post.config_error_log', $this->config->get('config_error_log'));
-        $data['config_error_filename'] = $this->request->get('post.config_error_filename', $this->config->get('config_error_filename'));
+        $data['config_maintenance']       = $this->request->get('post.config_maintenance', $this->config->get('config_maintenance'));
+        $data['config_password']          = $this->request->get('post.config_password', $this->config->get('config_password'));
+        $data['config_compression']       = $this->request->get('post.config_compression', $this->config->get('config_compression'));
+        $data['config_error_display']     = $this->request->get('post.config_error_display', $this->config->get('config_error_display'));
+        $data['config_error_log']         = $this->request->get('post.config_error_log', $this->config->get('config_error_log'));
+        $data['config_error_filename']    = $this->request->get('post.config_error_filename', $this->config->get('config_error_filename'));
 
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -483,42 +483,42 @@ class ControllerSettingSetting extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!$this->request->post['config_meta_title']) {
+        if (!$this->request->get('post.config_meta_title')) {
             $this->error['meta_title'] = $this->language->get('error_meta_title');
         }
 
-        if (!$this->request->post['config_name']) {
+        if (!$this->request->get('post.config_name')) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
+        if ((utf8_strlen($this->request->get('post.config_owner')) < 3) || (utf8_strlen($this->request->get('post.config_owner')) > 64)) {
             $this->error['owner'] = $this->language->get('error_owner');
         }
 
-        if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
+        if ((utf8_strlen($this->request->get('post.config_address')) < 3) || (utf8_strlen($this->request->get('post.config_address')) > 256)) {
             $this->error['address'] = $this->language->get('error_address');
         }
 
-        if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+        if ((utf8_strlen($this->request->get('post.config_email')) > 96) || !filter_var($this->request->get('post.config_email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
+        if ((utf8_strlen($this->request->get('post.config_telephone')) < 3) || (utf8_strlen($this->request->get('post.config_telephone')) > 32)) {
             $this->error['telephone'] = $this->language->get('error_telephone');
         }
 
-        if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
+        if (!empty($this->request->get('post.config_customer_group_display')) && !in_array($this->request->get('post.config_customer_group_id'), $this->request->get('post.config_customer_group_display'))) {
             $this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
         }
 
-        if (!$this->request->post['config_limit_admin']) {
+        if (!$this->request->get('post.config_limit_admin')) {
             $this->error['limit_admin'] = $this->language->get('error_limit');
         }
 
-        if (!$this->request->post['config_error_filename']) {
+        if (!$this->request->get('post.config_error_filename')) {
             $this->error['error_filename'] = $this->language->get('error_error_filename');
         } else {
-            if (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
+            if (preg_match('/\.\.[\/\\\]?/', $this->request->get('post.config_error_filename'))) {
                 $this->error['error_filename'] = $this->language->get('error_malformed_filename');
             }
         }
@@ -532,23 +532,19 @@ class ControllerSettingSetting extends Controller
 
     public function theme()
     {
-        if ($this->request->server['HTTPS']) {
-            $server = HTTPS_CATALOG;
-        } else {
-            $server = HTTP_CATALOG;
-        }
+        $url_site = $this->config->get('env.url_site');
 
         // This is only here for compatibility with old themes.
-        if ($this->request->get['theme'] == 'theme_default') {
+        if ($this->request->get('query.theme') == 'theme_default') {
             $theme = $this->config->get('theme_default_directory');
         } else {
-            $theme = basename($this->request->get['theme']);
+            $theme = basename($this->request->get('query.theme', ''));
         }
 
-        if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/image/' . $theme . '.png')) {
-            $this->response->setOutput($server . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
+        if (is_file(DIR_IMAGE . 'theme/' . $theme . '.png')) {
+            $this->response->setOutput($url_site . 'image/theme/' . $theme . '.png');
         } else {
-            $this->response->setOutput($server . 'image/no-image.png');
+            $this->response->setOutput($url_site . 'image/no-image.png');
         }
     }
 }
