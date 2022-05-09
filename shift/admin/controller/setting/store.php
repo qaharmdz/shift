@@ -6,7 +6,7 @@ use Shift\System\Helper\Arr;
 
 class ControllerSettingStore extends Controller
 {
-    private $error = array();
+    private $error = [];
 
     public function index()
     {
@@ -253,67 +253,21 @@ class ControllerSettingStore extends Controller
         $data['tab_image'] = $this->language->get('tab_image');
         $data['tab_server'] = $this->language->get('tab_server');
 
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
-        }
-
-        if (isset($this->error['url'])) {
-            $data['error_url'] = $this->error['url'];
-        } else {
-            $data['error_url'] = '';
-        }
-
-        if (isset($this->error['meta_title'])) {
-            $data['error_meta_title'] = $this->error['meta_title'];
-        } else {
-            $data['error_meta_title'] = '';
-        }
-
-        if (isset($this->error['name'])) {
-            $data['error_name'] = $this->error['name'];
-        } else {
-            $data['error_name'] = '';
-        }
-
-        if (isset($this->error['owner'])) {
-            $data['error_owner'] = $this->error['owner'];
-        } else {
-            $data['error_owner'] = '';
-        }
-
-        if (isset($this->error['address'])) {
-            $data['error_address'] = $this->error['address'];
-        } else {
-            $data['error_address'] = '';
-        }
-
-        if (isset($this->error['email'])) {
-            $data['error_email'] = $this->error['email'];
-        } else {
-            $data['error_email'] = '';
-        }
-
-        if (isset($this->error['telephone'])) {
-            $data['error_telephone'] = $this->error['telephone'];
-        } else {
-            $data['error_telephone'] = '';
-        }
-
-        if (isset($this->error['customer_group_display'])) {
-            $data['error_customer_group_display'] = $this->error['customer_group_display'];
-        } else {
-            $data['error_customer_group_display'] = '';
-        }
+        $data['error_warning']    = Arr::get($this->error, 'warning', '');
+        $data['error_url']        = Arr::get($this->error, 'url', '');
+        $data['error_meta_title'] = Arr::get($this->error, 'meta_title', '');
+        $data['error_name']       = Arr::get($this->error, 'name', '');
+        $data['error_owner']      = Arr::get($this->error, 'owner', '');
+        $data['error_address']    = Arr::get($this->error, 'address', '');
+        $data['error_email']      = Arr::get($this->error, 'email', '');
+        $data['error_telephone']  = Arr::get($this->error, 'telephone', '');
+        $data['error_customer_group_display'] = Arr::get($this->error, 'customer_group_display', '');
 
         $data['breadcrumbs'] = array();
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
         );
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('setting/store', 'token=' . $this->session->get('token'), true)
@@ -344,19 +298,19 @@ class ControllerSettingStore extends Controller
         if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
             $this->load->model('setting/setting');
 
-            $store_info = $this->model_setting_setting->getSetting('config', $this->request->get['store_id']);
+            $store_info = $this->model_setting_setting->getSetting('config', $this->request->get('query.store_id'));
         }
 
         $data['token'] = $this->session->get('token');
 
-        $data['config_url']  = $this->request->get('post.config_url', $this->config->get('config_url', ''));
-        $data['config_ssl']  = $this->request->get('post.config_ssl', $this->config->get('config_ssl', ''));
+        $data['config_url']  = $this->request->get('post.config_url', Arr::get($store_info, 'config_url', ''));
+        $data['config_ssl']  = $this->request->get('post.config_ssl', Arr::get($store_info, 'config_ssl', ''));
 
-        $data['config_meta_title']       = $this->request->get('post.config_meta_title', $this->config->get('config_meta_title', ''));
-        $data['config_meta_description'] = $this->request->get('post.config_meta_description', $this->config->get('config_meta_description', ''));
-        $data['config_meta_keyword']     = $this->request->get('post.config_meta_keyword', $this->config->get('config_meta_keyword', ''));
+        $data['config_meta_title']       = $this->request->get('post.config_meta_title', Arr::get($store_info, 'config_meta_title', ''));
+        $data['config_meta_description'] = $this->request->get('post.config_meta_description', Arr::get($store_info, 'config_meta_description', ''));
+        $data['config_meta_keyword']     = $this->request->get('post.config_meta_keyword', Arr::get($store_info, 'config_meta_keyword', ''));
 
-        $data['config_theme']  = $this->request->get('post.config_theme', $this->config->get('config_theme', ''));
+        $data['config_theme']  = $this->request->get('post.config_theme', Arr::get($store_info, 'config_theme', ''));
 
         $data['themes'] = array();
 
@@ -376,15 +330,15 @@ class ControllerSettingStore extends Controller
         $this->load->model('design/layout');
 
         $data['layouts'] = $this->model_design_layout->getLayouts();
-        $data['config_layout_id'] = $this->request->get('post.config_layout_id', $this->config->get('config_layout_id', ''));
-        $data['config_name']      = $this->request->get('post.config_name', $this->config->get('config_name', ''));
-        $data['config_owner']     = $this->request->get('post.config_owner', $this->config->get('config_owner', ''));
-        $data['config_address']   = $this->request->get('post.config_address', $this->config->get('config_address', ''));
-        $data['config_geocode']   = $this->request->get('post.config_geocode', $this->config->get('config_geocode', ''));
-        $data['config_email']     = $this->request->get('post.config_email', $this->config->get('config_email', ''));
-        $data['config_telephone'] = $this->request->get('post.config_telephone', $this->config->get('config_telephone', ''));
-        $data['config_fax']       = $this->request->get('post.config_fax', $this->config->get('config_fax', ''));
-        $data['config_image']     = $this->request->get('post.config_image', $this->config->get('config_image', ''));
+        $data['config_layout_id'] = $this->request->get('post.config_layout_id', Arr::get($store_info, 'config_layout_id', ''));
+        $data['config_name']      = $this->request->get('post.config_name', Arr::get($store_info, 'config_name', ''));
+        $data['config_owner']     = $this->request->get('post.config_owner', Arr::get($store_info, 'config_owner', ''));
+        $data['config_address']   = $this->request->get('post.config_address', Arr::get($store_info, 'config_address', ''));
+        $data['config_geocode']   = $this->request->get('post.config_geocode', Arr::get($store_info, 'config_geocode', ''));
+        $data['config_email']     = $this->request->get('post.config_email', Arr::get($store_info, 'config_email', ''));
+        $data['config_telephone'] = $this->request->get('post.config_telephone', Arr::get($store_info, 'config_telephone', ''));
+        $data['config_fax']       = $this->request->get('post.config_fax', Arr::get($store_info, 'config_fax', ''));
+        $data['config_image']     = $this->request->get('post.config_image', Arr::get($store_info, 'config_image', ''));
 
         $this->load->model('tool/image');
 
@@ -393,17 +347,13 @@ class ControllerSettingStore extends Controller
 
         if ($this->request->has('post.config_image') && is_file(DIR_IMAGE . $this->request->get('post.config_image'))) {
             $data['thumb'] = $this->model_tool_image->resize($this->request->get('post.config_image'), 100, 100);
-        } elseif (isset($store_info['config_image']) && is_file(DIR_IMAGE . $store_info['config_image'])) {
-            $data['thumb'] = $this->model_tool_image->resize($store_info['config_image'], 100, 100);
+        } elseif (Arr::has($store_info, 'config_image') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_image'))) {
+            $data['thumb'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_image'), 100, 100);
         }
 
-        if ($config_language = $this->request->get('post.config_language')) {
-            $data['config_language'] = $config_language;
-        } elseif (isset($store_info['config_language'])) {
-            $data['config_language'] = $store_info['config_language'];
-        } else {
-            $data['config_language'] = $this->config->get('config_language');
-        }
+        $data['config_language'] = $this->request->get('post.config_logoconfig_language', Arr::get($store_info, 'config_language', $this->config->get('config_language')));
+        $data['config_logo']     = $this->request->get('post.config_logo', Arr::get($store_info, 'config_logo', ''));
+        $data['config_icon']     = $this->request->get('post.config_icon', Arr::get($store_info, 'config_icon', ''));
 
         $this->load->model('localisation/language');
         $data['languages'] = $this->model_localisation_language->getLanguages();
@@ -411,34 +361,18 @@ class ControllerSettingStore extends Controller
         $this->load->model('catalog/information');
         $data['informations'] = $this->model_catalog_information->getInformations();
 
-        if (isset($this->request->post['config_logo'])) {
-            $data['config_logo'] = $this->request->post['config_logo'];
-        } elseif (isset($store_info['config_logo'])) {
-            $data['config_logo'] = $store_info['config_logo'];
-        } else {
-            $data['config_logo'] = '';
-        }
-
         $data['logo'] = $no_image_thumb;
         if (isset($this->request->post['config_logo']) && is_file(DIR_IMAGE . $this->request->post['config_logo'])) {
             $data['logo'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
-        } elseif (isset($store_info['config_logo']) && is_file(DIR_IMAGE . $store_info['config_logo'])) {
-            $data['logo'] = $this->model_tool_image->resize($store_info['config_logo'], 100, 100);
-        }
-
-        if (isset($this->request->post['config_icon'])) {
-            $data['config_icon'] = $this->request->post['config_icon'];
-        } elseif (isset($store_info['config_icon'])) {
-            $data['config_icon'] = $store_info['config_icon'];
-        } else {
-            $data['config_icon'] = '';
+        } elseif (Arr::has($store_info, 'config_logo') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_logo'))) {
+            $data['logo'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_logo'), 100, 100);
         }
 
         $data['icon'] = $no_image_thumb;
         if (isset($this->request->post['config_icon']) && is_file(DIR_IMAGE . $this->request->post['config_icon'])) {
             $data['icon'] = $this->model_tool_image->resize($this->request->post['config_icon'], 100, 100);
-        } elseif (isset($store_info['config_icon']) && is_file(DIR_IMAGE . $store_info['config_icon'])) {
-            $data['icon'] = $this->model_tool_image->resize($store_info['config_icon'], 100, 100);
+        } elseif (Arr::has($store_info, 'config_icon') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_icon'))) {
+            $data['icon'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_icon'), 100, 100);
         }
 
         $data['header'] = $this->load->controller('common/header');

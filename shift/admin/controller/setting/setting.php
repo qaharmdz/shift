@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class ControllerSettingSetting extends Controller
 {
-    private $error = array();
+    private $error = [];
 
     public function index()
     {
