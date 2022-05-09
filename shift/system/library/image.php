@@ -71,7 +71,7 @@ class Image
 
         $extension = strtolower($info['extension']);
 
-        if (is_resource($this->image)) {
+        if ($this->image instanceof \GdImage) {
             if ($extension == 'jpeg' || $extension == 'jpg') {
                 imagejpeg($this->image, $file, $quality);
             } elseif ($extension == 'png') {
