@@ -26,19 +26,14 @@ class ControllerExtensionExtension extends Controller
 
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_list'] = $this->language->get('text_list');
-        $data['text_type'] = $this->language->get('text_type');
-        $data['text_filter'] = $this->language->get('text_filter');
+        $data['text_list']    = $this->language->get('text_list');
+        $data['text_type']    = $this->language->get('text_type');
+        $data['text_filter']  = $this->language->get('text_filter');
         $data['text_loading'] = $this->language->get('text_loading');
         $data['text_confirm'] = $this->language->get('text_confirm');
 
-        $data['token'] = $this->session->get('token');
-
-        if (isset($this->request->get['type'])) {
-            $data['type'] = $this->request->get['type'];
-        } else {
-            $data['type'] = '';
-        }
+        $data['token']        = $this->session->get('token');
+        $data['type']         = $this->request->get('query.type', '');
 
         $data['categories'] = array();
 
@@ -47,7 +42,6 @@ class ControllerExtensionExtension extends Controller
         foreach ($files as $file) {
             $extension = basename($file, '.php');
 
-            // Compatibility code for old extension folders
             $this->load->language('extension/extension/' . $extension);
 
             if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
@@ -55,7 +49,7 @@ class ControllerExtensionExtension extends Controller
 
                 $data['categories'][] = array(
                     'code' => $extension,
-                    'text' => $this->language->get('heading_title') . ' (' . count($files) .')',
+                    'text' => $this->language->get('heading_title') . ' (' . count($files) . ')',
                     'href' => $this->url->link('extension/extension/' . $extension, 'token=' . $this->session->get('token'), true)
                 );
             }

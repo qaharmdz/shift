@@ -151,11 +151,7 @@ class ControllerSettingStore extends Controller
         $data['button_edit'] = $this->language->get('button_edit');
         $data['button_delete'] = $this->language->get('button_delete');
 
-        $data['error_warning'] = '';
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        }
-
+        $data['error_warning'] = Arr::get($this->error, 'warning', '');
         $data['success']  = $this->session->pull('flash.success');
         $data['selected'] = $this->request->get('post.selected', []);
 
@@ -192,7 +188,6 @@ class ControllerSettingStore extends Controller
         $data['entry_name'] = $this->language->get('entry_name');
         $data['entry_owner'] = $this->language->get('entry_owner');
         $data['entry_address'] = $this->language->get('entry_address');
-        $data['entry_geocode'] = $this->language->get('entry_geocode');
         $data['entry_email'] = $this->language->get('entry_email');
         $data['entry_telephone'] = $this->language->get('entry_telephone');
         $data['entry_fax'] = $this->language->get('entry_fax');
@@ -224,7 +219,6 @@ class ControllerSettingStore extends Controller
 
         $data['help_url'] = $this->language->get('help_url');
         $data['help_ssl'] = $this->language->get('help_ssl');
-        $data['help_geocode'] = $this->language->get('help_geocode');
         $data['help_open'] = $this->language->get('help_open');
         $data['help_comment'] = $this->language->get('help_comment');
         $data['help_location'] = $this->language->get('help_location');
@@ -334,7 +328,6 @@ class ControllerSettingStore extends Controller
         $data['config_name']      = $this->request->get('post.config_name', Arr::get($store_info, 'config_name', ''));
         $data['config_owner']     = $this->request->get('post.config_owner', Arr::get($store_info, 'config_owner', ''));
         $data['config_address']   = $this->request->get('post.config_address', Arr::get($store_info, 'config_address', ''));
-        $data['config_geocode']   = $this->request->get('post.config_geocode', Arr::get($store_info, 'config_geocode', ''));
         $data['config_email']     = $this->request->get('post.config_email', Arr::get($store_info, 'config_email', ''));
         $data['config_telephone'] = $this->request->get('post.config_telephone', Arr::get($store_info, 'config_telephone', ''));
         $data['config_fax']       = $this->request->get('post.config_fax', Arr::get($store_info, 'config_fax', ''));
@@ -362,15 +355,15 @@ class ControllerSettingStore extends Controller
         $data['informations'] = $this->model_catalog_information->getInformations();
 
         $data['logo'] = $no_image_thumb;
-        if (isset($this->request->post['config_logo']) && is_file(DIR_IMAGE . $this->request->post['config_logo'])) {
-            $data['logo'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
+        if ($this->request->has('post.config_logo') && is_file(DIR_IMAGE . $this->request->get('post.config_logo'))) {
+            $data['logo'] = $this->model_tool_image->resize($this->request->get('post.config_logo'), 100, 100);
         } elseif (Arr::has($store_info, 'config_logo') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_logo'))) {
             $data['logo'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_logo'), 100, 100);
         }
 
         $data['icon'] = $no_image_thumb;
-        if (isset($this->request->post['config_icon']) && is_file(DIR_IMAGE . $this->request->post['config_icon'])) {
-            $data['icon'] = $this->model_tool_image->resize($this->request->post['config_icon'], 100, 100);
+        if ($this->request->has('post.config_icon') && is_file(DIR_IMAGE . $this->request->get('post.config_icon'))) {
+            $data['icon'] = $this->model_tool_image->resize($this->request->get('post.config_icon'), 100, 100);
         } elseif (Arr::has($store_info, 'config_icon') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_icon'))) {
             $data['icon'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_icon'), 100, 100);
         }
@@ -388,35 +381,38 @@ class ControllerSettingStore extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!$this->request->post['config_url']) {
+        if (!$this->request->get('post.config_url')) {
             $this->error['url'] = $this->language->get('error_url');
         }
 
-        if (!$this->request->post['config_meta_title']) {
+        if (!$this->request->get('post.config_meta_title')) {
             $this->error['meta_title'] = $this->language->get('error_meta_title');
         }
 
-        if (!$this->request->post['config_name']) {
+        if (!$this->request->get('post.config_name')) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if ((utf8_strlen($this->request->post['config_owner']) < 3) || (utf8_strlen($this->request->post['config_owner']) > 64)) {
+        if ((utf8_strlen($this->request->get('post.config_owner')) < 3) || (utf8_strlen($this->request->get('post.config_owner')) > 64)) {
             $this->error['owner'] = $this->language->get('error_owner');
         }
 
-        if ((utf8_strlen($this->request->post['config_address']) < 3) || (utf8_strlen($this->request->post['config_address']) > 256)) {
+        if ((utf8_strlen($this->request->get('post.config_address')) < 3) || (utf8_strlen($this->request->get('post.config_address')) > 256)) {
             $this->error['address'] = $this->language->get('error_address');
         }
 
-        if ((utf8_strlen($this->request->post['config_email']) > 96) || !filter_var($this->request->post['config_email'], FILTER_VALIDATE_EMAIL)) {
+        if ((utf8_strlen($this->request->get('post.config_email')) > 96) || !filter_var($this->request->get('post.config_email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
+        if ((utf8_strlen($this->request->get('post.config_telephone')) < 3) || (utf8_strlen($this->request->get('post.config_telephone')) > 32)) {
             $this->error['telephone'] = $this->language->get('error_telephone');
         }
 
-        if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
+        if (
+            !empty($this->request->get('post.config_customer_group_display'))
+            && !in_array($this->request->get('post.config_customer_group_id'), $this->request->getArray('post.config_customer_group_display'))
+        ) {
             $this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
         }
 
@@ -435,7 +431,7 @@ class ControllerSettingStore extends Controller
 
         $this->load->model('sale/order');
 
-        foreach ($this->request->post['selected'] as $store_id) {
+        foreach ($this->request->get('post.selected', []) as $store_id) {
             if (!$store_id) {
                 $this->error['warning'] = $this->language->get('error_default');
             }

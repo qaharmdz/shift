@@ -75,7 +75,7 @@
                 <td class="text-left"><?php echo $event['trigger']; ?></td>
                 <td class="text-left"><?php echo $event['action']; ?></td>
                 <td class="text-left"><?php echo $event['status']; ?></td>
-                <td class="text-left"><?php echo $event['date_added']; ?></td>
+                <td class="text-left"><?php echo $event['created']; ?></td>
                 <td class="text-right"><?php if (!$event['enabled']) { ?>
                   <a href="<?php echo $event['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                   <?php } else { ?>

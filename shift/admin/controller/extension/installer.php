@@ -231,7 +231,7 @@ class ControllerExtensionInstaller extends Controller
         }
 
         // Sanitize the filename
-        $file = DIR_UPLOAD . $this->request->post['path'] . '/upload.zip';
+        $file = DIR_UPLOAD . $this->request->get('post.path', '') . '/upload.zip';
 
         if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
             $json['error'] = $this->language->get('error_file');
@@ -242,7 +242,7 @@ class ControllerExtensionInstaller extends Controller
             $zip = new ZipArchive();
 
             if ($zip->open($file)) {
-                $zip->extractTo(DIR_UPLOAD . $this->request->post['path']);
+                $zip->extractTo(DIR_UPLOAD . $this->request->get('post.path', ''));
                 $zip->close();
             } else {
                 $json['error'] = $this->language->get('error_unzip');
@@ -271,7 +271,7 @@ class ControllerExtensionInstaller extends Controller
             $json['error'] = $this->language->get('error_ftp_status');
         }
 
-        $directory = DIR_UPLOAD . $this->request->post['path'] . '/upload/';
+        $directory = DIR_UPLOAD . $this->request->get('post.path', '') . '/upload/';
 
         if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
             $json['error'] = $this->language->get('error_directory');
@@ -381,7 +381,7 @@ class ControllerExtensionInstaller extends Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $file = DIR_UPLOAD . $this->request->post['path'] . '/install.sql';
+        $file = DIR_UPLOAD . $this->request->get('post.path', '') . '/install.sql';
 
         if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
             $json['error'] = $this->language->get('error_file');
@@ -441,7 +441,7 @@ class ControllerExtensionInstaller extends Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $file = DIR_UPLOAD . $this->request->post['path'] . '/install.php';
+        $file = DIR_UPLOAD . $this->request->get('post.path', '') . '/install.php';
 
         if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
             $json['error'] = $this->language->get('error_file');
@@ -469,7 +469,7 @@ class ControllerExtensionInstaller extends Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $directory = DIR_UPLOAD . $this->request->post['path'];
+        $directory = DIR_UPLOAD . $this->request->get('post.path', '');
 
         if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
             $json['error'] = $this->language->get('error_directory');
