@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Shift\System\Helper\Arr;
+
 class ControllerSettingSetting extends Controller
 {
     private $error = [];
@@ -222,41 +224,13 @@ class ControllerSettingSetting extends Controller
         $data['tab_mail'] = $this->language->get('tab_mail');
         $data['tab_server'] = $this->language->get('tab_server');
 
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
-        }
-
-        if (isset($this->error['name'])) {
-            $data['error_name'] = $this->error['name'];
-        } else {
-            $data['error_name'] = '';
-        }
-
-        if (isset($this->error['owner'])) {
-            $data['error_owner'] = $this->error['owner'];
-        } else {
-            $data['error_owner'] = '';
-        }
-
-        if (isset($this->error['address'])) {
-            $data['error_address'] = $this->error['address'];
-        } else {
-            $data['error_address'] = '';
-        }
-
-        if (isset($this->error['email'])) {
-            $data['error_email'] = $this->error['email'];
-        } else {
-            $data['error_email'] = '';
-        }
-
-        if (isset($this->error['telephone'])) {
-            $data['error_telephone'] = $this->error['telephone'];
-        } else {
-            $data['error_telephone'] = '';
-        }
+        $data['error_warning']    = Arr::get($this->error, 'warning', '');
+        $data['error_name']       = Arr::get($this->error, 'name', '');
+        $data['error_owner']      = Arr::get($this->error, 'owner', '');
+        $data['error_address']    = Arr::get($this->error, 'address', '');
+        $data['error_email']      = Arr::get($this->error, 'email', '');
+        $data['error_telephone']  = Arr::get($this->error, 'telephone', '');
+        $data['error_meta_title'] = Arr::get($this->error, 'meta_title', '');
 
         if (isset($this->error['meta_title'])) {
             $data['error_meta_title'] = $this->error['meta_title'];
