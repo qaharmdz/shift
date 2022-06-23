@@ -32,16 +32,16 @@ class ControllerLocalisationLanguage extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->get('token') . $url, true));
@@ -59,22 +59,22 @@ class ControllerLocalisationLanguage extends Controller
         $this->load->model('localisation/language');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
+            $this->model_localisation_language->editLanguage($this->request->get('query.language_id'), $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->get('token') . $url, true));
@@ -91,8 +91,8 @@ class ControllerLocalisationLanguage extends Controller
 
         $this->load->model('localisation/language');
 
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
-            foreach ($this->request->post['selected'] as $language_id) {
+        if ($this->request->has('post.selected') && $this->validateDelete()) {
+            foreach ($this->request->get('post.selected') as $language_id) {
                 $this->model_localisation_language->deleteLanguage($language_id);
             }
 
@@ -100,16 +100,16 @@ class ControllerLocalisationLanguage extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->get('token') . $url, true));
@@ -120,36 +120,36 @@ class ControllerLocalisationLanguage extends Controller
 
     protected function getList()
     {
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $sort = $this->request->get('query.sort');
         } else {
             $sort = 'name';
         }
 
-        if (isset($this->request->get['order'])) {
-            $order = $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $order = $this->request->get('query.order');
         } else {
             $order = 'ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $page = $this->request->get('query.page');
         } else {
             $page = 1;
         }
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -213,8 +213,8 @@ class ControllerLocalisationLanguage extends Controller
 
         $data['success'] = $this->session->pull('flash.success');
 
-        if (isset($this->request->post['selected'])) {
-            $data['selected'] = (array)$this->request->post['selected'];
+        if ($this->request->has('post.selected')) {
+            $data['selected'] = (array)$this->request->get('post.selected');
         } else {
             $data['selected'] = array();
         }
@@ -227,8 +227,8 @@ class ControllerLocalisationLanguage extends Controller
             $url .= '&order=ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['sort_name'] = $this->url->link('localisation/language', 'token=' . $this->session->get('token') . '&sort=name' . $url, true);
@@ -237,12 +237,12 @@ class ControllerLocalisationLanguage extends Controller
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
         $pagination = new Pagination();
@@ -267,7 +267,7 @@ class ControllerLocalisationLanguage extends Controller
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_form'] = !$this->request->has('query.language_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -309,16 +309,16 @@ class ControllerLocalisationLanguage extends Controller
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -333,28 +333,28 @@ class ControllerLocalisationLanguage extends Controller
             'href' => $this->url->link('localisation/language', 'token=' . $this->session->get('token') . $url, true)
         );
 
-        if (!isset($this->request->get['language_id'])) {
+        if (!$this->request->has('query.language_id')) {
             $data['action'] = $this->url->link('localisation/language/add', 'token=' . $this->session->get('token') . $url, true);
         } else {
-            $data['action'] = $this->url->link('localisation/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $this->request->get['language_id'] . $url, true);
+            $data['action'] = $this->url->link('localisation/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $this->request->get('query.language_id') . $url, true);
         }
 
         $data['cancel'] = $this->url->link('localisation/language', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['language_id']) && !$this->request->is('POST')) {
-            $language_info = $this->model_localisation_language->getLanguage($this->request->get['language_id']);
+        if ($this->request->has('query.language_id') && !$this->request->is('POST')) {
+            $language_info = $this->model_localisation_language->getLanguage($this->request->get('query.language_id'));
         }
 
-        if (isset($this->request->post['name'])) {
-            $data['name'] = $this->request->post['name'];
+        if ($this->request->has('post.name')) {
+            $data['name'] = $this->request->get('post.name');
         } elseif (!empty($language_info)) {
             $data['name'] = $language_info['name'];
         } else {
             $data['name'] = '';
         }
 
-        if (isset($this->request->post['code'])) {
-            $data['code'] = $this->request->post['code'];
+        if ($this->request->has('post.code')) {
+            $data['code'] = $this->request->get('post.code');
         } elseif (!empty($language_info)) {
             $data['code'] = $language_info['code'];
         } else {
@@ -369,24 +369,24 @@ class ControllerLocalisationLanguage extends Controller
             $data['languages'][] = basename($folder);
         }
 
-        if (isset($this->request->post['locale'])) {
-            $data['locale'] = $this->request->post['locale'];
+        if ($this->request->has('post.locale')) {
+            $data['locale'] = $this->request->get('post.locale');
         } elseif (!empty($language_info)) {
             $data['locale'] = $language_info['locale'];
         } else {
             $data['locale'] = '';
         }
 
-        if (isset($this->request->post['sort_order'])) {
-            $data['sort_order'] = $this->request->post['sort_order'];
+        if ($this->request->has('post.sort_order')) {
+            $data['sort_order'] = $this->request->get('post.sort_order');
         } elseif (!empty($language_info)) {
             $data['sort_order'] = $language_info['sort_order'];
         } else {
             $data['sort_order'] = 1;
         }
 
-        if (isset($this->request->post['status'])) {
-            $data['status'] = $this->request->post['status'];
+        if ($this->request->has('post.status')) {
+            $data['status'] = $this->request->get('post.status');
         } elseif (!empty($language_info)) {
             $data['status'] = $language_info['status'];
         } else {
@@ -406,26 +406,26 @@ class ControllerLocalisationLanguage extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+        if ((utf8_strlen($this->request->get('post.name')) < 3) || (utf8_strlen($this->request->get('post.name')) > 32)) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if (utf8_strlen($this->request->post['code']) < 2) {
+        if (utf8_strlen($this->request->get('post.code')) < 2) {
             $this->error['code'] = $this->language->get('error_code');
         }
 
-        if (!$this->request->post['locale']) {
+        if (!$this->request->get('post.locale')) {
             $this->error['locale'] = $this->language->get('error_locale');
         }
 
-        $language_info = $this->model_localisation_language->getLanguageByCode($this->request->post['code']);
+        $language_info = $this->model_localisation_language->getLanguageByCode($this->request->get('post.code'));
 
-        if (!isset($this->request->get['language_id'])) {
+        if (!$this->request->has('query.language_id')) {
             if ($language_info) {
                 $this->error['warning'] = $this->language->get('error_exists');
             }
         } else {
-            if ($language_info && ($this->request->get['language_id'] != $language_info['language_id'])) {
+            if ($language_info && ($this->request->get('query.language_id') != $language_info['language_id'])) {
                 $this->error['warning'] = $this->language->get('error_exists');
             }
         }
@@ -442,7 +442,7 @@ class ControllerLocalisationLanguage extends Controller
         $this->load->model('setting/store');
         $this->load->model('sale/order');
 
-        foreach ($this->request->post['selected'] as $language_id) {
+        foreach ($this->request->get('post.selected') as $language_id) {
             $language_info = $this->model_localisation_language->getLanguage($language_id);
 
             if ($language_info) {

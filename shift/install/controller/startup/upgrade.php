@@ -12,8 +12,8 @@ class ControllerStartupUpgrade extends Controller
             $upgrade = true;
         }
 
-        if (isset($this->request->get['route'])) {
-            if (($this->request->get['route'] == 'install/step_4') || (substr($this->request->get['route'], 0, 8) == 'upgrade/') || (substr($this->request->get['route'], 0, 10) == '3rd_party/')) {
+        if ($this->request->has('query.route')) {
+            if (($this->request->get('query.route') == 'install/step_4') || (substr($this->request->get('query.route'), 0, 8) == 'upgrade/') || (substr($this->request->get('route'), 0, 10) == '3rd_party/')) {
                 $upgrade = false;
             }
         }

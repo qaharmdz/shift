@@ -63,14 +63,14 @@ class ControllerExtensionModuleStore extends Controller
 
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true);
 
-        if (isset($this->request->post['store_admin'])) {
-            $data['store_admin'] = $this->request->post['store_admin'];
+        if ($this->request->has('post.store_admin')) {
+            $data['store_admin'] = $this->request->get('post.store_admin');
         } else {
             $data['store_admin'] = $this->config->get('store_admin');
         }
 
-        if (isset($this->request->post['store_status'])) {
-            $data['store_status'] = $this->request->post['store_status'];
+        if ($this->request->has('post.store_status')) {
+            $data['store_status'] = $this->request->get('post.store_status');
         } else {
             $data['store_status'] = $this->config->get('store_status');
         }

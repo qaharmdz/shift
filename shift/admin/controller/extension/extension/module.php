@@ -26,15 +26,15 @@ class ControllerExtensionExtensionModule extends Controller
         $this->load->model('extension/module');
 
         if ($this->validate()) {
-            $this->model_extension_extension->install('module', $this->request->get['extension']);
+            $this->model_extension_extension->install('module', $this->request->get('query.extension'));
 
             $this->load->model('user/user_group');
 
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/' . $this->request->get['extension']);
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get['extension']);
+            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/' . $this->request->get('query.extension'));
+            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get('query.extension'));
 
             // Call install method if it exsits
-            $this->load->controller('extension/module/' . $this->request->get['extension'] . '/install');
+            $this->load->controller('extension/module/' . $this->request->get('query.extension') . '/install');
 
             $this->session->set('flash.success', $this->language->get('text_success'));
         } else {
@@ -53,12 +53,12 @@ class ControllerExtensionExtensionModule extends Controller
         $this->load->model('extension/module');
 
         if ($this->validate()) {
-            $this->model_extension_extension->uninstall('module', $this->request->get['extension']);
+            $this->model_extension_extension->uninstall('module', $this->request->get('query.extension'));
 
-            $this->model_extension_module->deleteModulesByCode($this->request->get['extension']);
+            $this->model_extension_module->deleteModulesByCode($this->request->get('query.extension'));
 
             // Call uninstall method if it exsits
-            $this->load->controller('extension/module/' . $this->request->get['extension'] . '/uninstall');
+            $this->load->controller('extension/module/' . $this->request->get('query.extension') . '/uninstall');
 
             $this->session->set('flash.success', $this->language->get('text_success'));
         }
@@ -75,9 +75,9 @@ class ControllerExtensionExtensionModule extends Controller
         $this->load->model('extension/module');
 
         if ($this->validate()) {
-            $this->load->language('module' . '/' . $this->request->get['extension']);
+            $this->load->language('module' . '/' . $this->request->get('query.extension'));
 
-            $this->model_extension_module->addModule($this->request->get['extension'], $this->language->get('heading_title'));
+            $this->model_extension_module->addModule($this->request->get('query.extension'), $this->language->get('heading_title'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
         }
@@ -93,8 +93,8 @@ class ControllerExtensionExtensionModule extends Controller
 
         $this->load->model('extension/module');
 
-        if (isset($this->request->get['module_id']) && $this->validate()) {
-            $this->model_extension_module->deleteModule($this->request->get['module_id']);
+        if ($this->request->has('query.module_id') && $this->validate()) {
+            $this->model_extension_module->deleteModule($this->request->get('query.module_id'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
         }

@@ -35,13 +35,13 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
-            $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
-            $output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
-            $output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
-            $output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
-            $output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
-            $output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-            $output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
+            $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->get('post.db_driver')) . '\');' . "\n";
+            $output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->get('post.db_hostname')) . '\');' . "\n";
+            $output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->get('post.db_username')) . '\');' . "\n";
+            $output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->get('post.db_password'), ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
+            $output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->get('post.db_database')) . '\');' . "\n";
+            $output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->get('post.db_port')) . '\');' . "\n";
+            $output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->get('post.db_prefix')) . '\');' . "\n";
 
             $file = fopen(PATH_SHIFT . 'config.php', 'w');
 
@@ -72,13 +72,13 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_CATALOG\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
-            $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
-            $output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
-            $output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
-            $output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
-            $output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_database']) . '\');' . "\n";
-            $output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->post['db_port']) . '\');' . "\n";
-            $output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
+            $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->get('post.db_driver')) . '\');' . "\n";
+            $output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->get('post.db_hostname')) . '\');' . "\n";
+            $output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->get('post.db_username')) . '\');' . "\n";
+            $output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->get('post.db_password'), ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
+            $output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->get('post.db_database')) . '\');' . "\n";
+            $output .= 'define(\'DB_PORT\', \'' . addslashes($this->request->get('post.db_port')) . '\');' . "\n";
+            $output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->get('post.db_prefix')) . '\');' . "\n";
 
             $file = fopen(PATH_SHIFT . 'admin/config.php', 'w');
 
@@ -170,62 +170,62 @@ class ControllerInstallStep3 extends Controller
 
         $data['action'] = $this->url->link('install/step_3');
 
-        if (isset($this->request->post['db_driver'])) {
-            $data['db_driver'] = $this->request->post['db_driver'];
+        if ($this->request->has('post.db_driver')) {
+            $data['db_driver'] = $this->request->get('post.db_driver');
         } else {
             $data['db_driver'] = '';
         }
 
-        if (isset($this->request->post['db_hostname'])) {
-            $data['db_hostname'] = $this->request->post['db_hostname'];
+        if ($this->request->has('post.db_hostname')) {
+            $data['db_hostname'] = $this->request->get('post.db_hostname');
         } else {
             $data['db_hostname'] = 'localhost';
         }
 
-        if (isset($this->request->post['db_username'])) {
-            $data['db_username'] = $this->request->post['db_username'];
+        if ($this->request->has('post.db_username')) {
+            $data['db_username'] = $this->request->get('post.db_username');
         } else {
             $data['db_username'] = 'root';
         }
 
-        if (isset($this->request->post['db_password'])) {
-            $data['db_password'] = $this->request->post['db_password'];
+        if ($this->request->has('post.db_password')) {
+            $data['db_password'] = $this->request->get('post.db_password');
         } else {
             $data['db_password'] = '';
         }
 
-        if (isset($this->request->post['db_database'])) {
-            $data['db_database'] = $this->request->post['db_database'];
+        if ($this->request->has('post.db_database')) {
+            $data['db_database'] = $this->request->get('post.db_database');
         } else {
             $data['db_database'] = '';
         }
 
-        if (isset($this->request->post['db_port'])) {
-            $data['db_port'] = $this->request->post['db_port'];
+        if ($this->request->has('post.db_port')) {
+            $data['db_port'] = $this->request->get('post.db_port');
         } else {
             $data['db_port'] = 3306;
         }
 
-        if (isset($this->request->post['db_prefix'])) {
-            $data['db_prefix'] = $this->request->post['db_prefix'];
+        if ($this->request->has('post.db_prefix')) {
+            $data['db_prefix'] = $this->request->get('post.db_prefix');
         } else {
             $data['db_prefix'] = 'oc_';
         }
 
-        if (isset($this->request->post['username'])) {
-            $data['username'] = $this->request->post['username'];
+        if ($this->request->has('post.username')) {
+            $data['username'] = $this->request->get('post.username');
         } else {
             $data['username'] = 'admin';
         }
 
-        if (isset($this->request->post['password'])) {
-            $data['password'] = $this->request->post['password'];
+        if ($this->request->has('post.password')) {
+            $data['password'] = $this->request->get('post.password');
         } else {
             $data['password'] = '';
         }
 
-        if (isset($this->request->post['email'])) {
-            $data['email'] = $this->request->post['email'];
+        if ($this->request->has('post.email')) {
+            $data['email'] = $this->request->get('post.email');
         } else {
             $data['email'] = '';
         }
@@ -246,51 +246,63 @@ class ControllerInstallStep3 extends Controller
 
     private function validate()
     {
-        if (!$this->request->post['db_hostname']) {
+        if (!$this->request->get('post.db_hostname')) {
             $this->error['db_hostname'] = $this->language->get('error_db_hostname');
         }
 
-        if (!$this->request->post['db_username']) {
+        if (!$this->request->get('post.db_username')) {
             $this->error['db_username'] = $this->language->get('error_db_username');
         }
 
-        if (!$this->request->post['db_database']) {
+        if (!$this->request->get('post.db_database')) {
             $this->error['db_database'] = $this->language->get('error_db_database');
         }
 
-        if (!$this->request->post['db_port']) {
+        if (!$this->request->get('post.db_port')) {
             $this->error['db_port'] = $this->language->get('error_db_port');
         }
 
-        if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
+        if (preg_match('/[^a-z0-9_]/', $this->request->get('post.db_prefix', ''))) {
             $this->error['db_prefix'] = $this->language->get('error_db_prefix');
         }
 
-        if ($this->request->post['db_driver'] == 'mysqli') {
-            $mysql = @new MySQLi($this->request->post['db_hostname'], $this->request->post['db_username'], html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_database'], (int)$this->request->post['db_port']);
+        if ($this->request->get('post.db_driver') == 'mysqli') {
+            $mysql = @new MySQLi(
+                $this->request->get('post.db_hostname'),
+                $this->request->get('post.db_username'),
+                html_entity_decode($this->request->get('post.db_password'), ENT_QUOTES, 'UTF-8'),
+                $this->request->get('post.db_database'),
+                $this->request->getInt('post.db_port')
+            );
 
             if ($mysql->connect_error) {
                 $this->error['warning'] = $mysql->connect_error;
             } else {
                 $mysql->close();
             }
-        } elseif ($this->request->post['db_driver'] == 'mpdo') {
+        } elseif ($this->request->get('post.db_driver') == 'mpdo') {
             try {
-                new \DB\mPDO($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database'], $this->request->post['db_port']);
-            } catch(Exception $e) {
+                new \DB\mPDO(
+                    $this->request->get('post.db_hostname'),
+                    $this->request->get('post.db_username'),
+                    $this->request->get('post.db_password'),
+                    $this->request->get('post.db_database'),
+                    $this->request->getInt('post.db_port')
+                );
+            } catch (Exception $e) {
                 $this->error['warning'] = $e->getMessage();
             }
         }
 
-        if (!$this->request->post['username']) {
+        if (!$this->request->get('post.username')) {
             $this->error['username'] = $this->language->get('error_username');
         }
 
-        if (!$this->request->post['password']) {
+        if (!$this->request->get('post.password')) {
             $this->error['password'] = $this->language->get('error_password');
         }
 
-        if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+        if ((utf8_strlen($this->request->get('post.email')) > 96) || !filter_var($this->request->get('post.email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 

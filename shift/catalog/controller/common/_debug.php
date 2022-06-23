@@ -9,6 +9,19 @@ class ControllerCommonDebug extends Controller
     public function index()
     {
         d(
+            [
+                'URL_APP'         => URL_APP,
+                'URL_SITE'        => URL_SITE,
+                'DIR_APPLICATION' => DIR_APPLICATION,
+                'DIR_CATALOG'     => DIR_CATALOG,
+                'DIR_LANGUAGE'    => DIR_LANGUAGE,
+                'DIR_TEMPLATE'    => DIR_TEMPLATE,
+                'DIR_SYSTEM'      => DIR_SYSTEM,
+                'DIR_STORAGE'     => DIR_STORAGE,
+                'DIR_CACHE'       => DIR_CACHE,
+                'DIR_UPLOAD'      => DIR_UPLOAD,
+                'DIR_IMAGE'       => DIR_IMAGE,
+            ],
             $this->config->all()
         );
 

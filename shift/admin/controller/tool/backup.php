@@ -15,10 +15,9 @@ class ControllerToolBackup extends Controller
         $this->load->model('tool/backup');
 
         if ($this->request->is('POST') && $this->user->hasPermission('modify', 'tool/backup')) {
-            if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
-                $content = file_get_contents($this->request->files['import']['tmp_name']);
-            } else {
-                $content = false;
+            $content = false;
+            if (is_uploaded_file($this->request->get('files.import.tmp_name'))) {
+                $content = file_get_contents($this->request->get('files.import.tmp_name'));
             }
 
             if ($content) {
@@ -75,7 +74,7 @@ class ControllerToolBackup extends Controller
     {
         $this->load->language('tool/backup');
 
-        if (!isset($this->request->post['backup'])) {
+        if (!$this->request->has('post.backup')) {
             $this->session->set('flash.error', $this->language->get('error_export'));
 
             $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
@@ -89,7 +88,7 @@ class ControllerToolBackup extends Controller
 
             $this->load->model('tool/backup');
 
-            $this->response->setOutput($this->model_tool_backup->backup($this->request->post['backup']));
+            $this->response->setOutput($this->model_tool_backup->backup($this->request->get('post.backup')));
         } else {
             $this->session->set('flash.error', $this->language->get('error_permission'));
 

@@ -16,13 +16,13 @@ class ControllerCommonColumnLeft extends Controller
         $data['text_finished'] = $this->language->get('text_finished');
         $data['text_language'] = $this->language->get('text_language');
 
-        if (isset($this->request->get['route'])) {
-            $data['route'] = $this->request->get['route'];
+        if ($this->request->has('query.route')) {
+            $data['route'] = $this->request->get('query.route');
         } else {
             $data['route'] = 'install/step_1';
         }
 
-        if (!isset($this->request->get['route'])) {
+        if (!$this->request->has('query.route')) {
             $data['redirect'] = $this->url->link('install/step_1');
         } else {
             $url_data = $this->request->get;
@@ -37,7 +37,7 @@ class ControllerCommonColumnLeft extends Controller
                 $url = '&' . urldecode(http_build_query($url_data, '', '&'));
             }
 
-            $data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
+            $data['redirect'] = $this->url->link($route, $url, $this->request->get('server.HTTPS'));
         }
 
         return $this->load->view('common/column_left', $data);
@@ -45,12 +45,12 @@ class ControllerCommonColumnLeft extends Controller
 
     public function language()
     {
-        if (isset($this->request->post['code']) && is_dir(DIR_LANGUAGE . basename($this->request->post['code']))) {
-            $this->session->set('language', $this->request->post['code']);
+        if ($this->request->has('post.code') && is_dir(DIR_LANGUAGE . basename($this->request->get('post.code')))) {
+            $this->session->set('language', $this->request->get('post.code'));
         }
 
-        if (isset($this->request->post['redirect'])) {
-            $this->response->redirect($this->request->post['redirect']);
+        if ($this->request->has('post.redirect')) {
+            $this->response->redirect($this->request->get('post.redirect'));
         } else {
             $this->response->redirect($this->url->link('install/step_1'));
         }

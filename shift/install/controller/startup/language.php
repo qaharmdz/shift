@@ -15,8 +15,8 @@ class ControllerStartupLanguage extends Controller
             $languages[] = basename($language);
         }
 
-        if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
-            $browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
+        if ($this->request->has('server.HTTP_ACCEPT_LANGUAGE')) {
+            $browser_languages = explode(',', $this->request->get('server.HTTP_ACCEPT_LANGUAGE', ''));
 
             foreach ($browser_languages as $browser_language) {
                 if (in_array($browser_language, $languages)) {

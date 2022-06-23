@@ -40,8 +40,8 @@ class ControllerUpgradeUpgrade extends Controller
 
         $json = array();
 
-        if (isset($this->request->get['step'])) {
-            $step = $this->request->get['step'];
+        if ($this->request->has('query.step')) {
+            $step = $this->request->get('query.step');
         } else {
             $step = 1;
         }

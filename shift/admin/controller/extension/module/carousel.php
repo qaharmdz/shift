@@ -15,10 +15,10 @@ class ControllerExtensionModuleCarousel extends Controller
         $this->load->model('extension/module');
 
         if ($this->request->is('POST') && $this->validate()) {
-            if (!isset($this->request->get['module_id'])) {
+            if (!$this->request->has('query.module_id')) {
                 $this->model_extension_module->addModule('carousel', $this->request->post);
             } else {
-                $this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
+                $this->model_extension_module->editModule($this->request->get('query.module_id'), $this->request->post);
             }
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -77,7 +77,7 @@ class ControllerExtensionModuleCarousel extends Controller
             'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true)
         );
 
-        if (!isset($this->request->get['module_id'])) {
+        if (!$this->request->has('query.module_id')) {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
                 'href' => $this->url->link('extension/module/carousel', 'token=' . $this->session->get('token'), true)
@@ -85,32 +85,32 @@ class ControllerExtensionModuleCarousel extends Controller
         } else {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('extension/module/carousel', 'token=' . $this->session->get('token') . '&module_id=' . $this->request->get['module_id'], true)
+                'href' => $this->url->link('extension/module/carousel', 'token=' . $this->session->get('token') . '&module_id=' . $this->request->get('query.module_id'), true)
             );
         }
 
-        if (!isset($this->request->get['module_id'])) {
+        if (!$this->request->has('query.module_id')) {
             $data['action'] = $this->url->link('extension/module/carousel', 'token=' . $this->session->get('token'), true);
         } else {
-            $data['action'] = $this->url->link('extension/module/carousel', 'token=' . $this->session->get('token') . '&module_id=' . $this->request->get['module_id'], true);
+            $data['action'] = $this->url->link('extension/module/carousel', 'token=' . $this->session->get('token') . '&module_id=' . $this->request->get('query.module_id'), true);
         }
 
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true);
 
-        if (isset($this->request->get['module_id']) && !$this->request->is('POST')) {
-            $module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
+        if ($this->request->has('query.module_id') && !$this->request->is('POST')) {
+            $module_info = $this->model_extension_module->getModule($this->request->get('query.module_id'));
         }
 
-        if (isset($this->request->post['name'])) {
-            $data['name'] = $this->request->post['name'];
+        if ($this->request->has('post.name')) {
+            $data['name'] = $this->request->get('post.name');
         } elseif (!empty($module_info)) {
             $data['name'] = $module_info['name'];
         } else {
             $data['name'] = '';
         }
 
-        if (isset($this->request->post['banner_id'])) {
-            $data['banner_id'] = $this->request->post['banner_id'];
+        if ($this->request->has('post.banner_id')) {
+            $data['banner_id'] = $this->request->get('post.banner_id');
         } elseif (!empty($module_info)) {
             $data['banner_id'] = $module_info['banner_id'];
         } else {
@@ -121,24 +121,24 @@ class ControllerExtensionModuleCarousel extends Controller
 
         $data['banners'] = $this->model_design_banner->getBanners();
 
-        if (isset($this->request->post['width'])) {
-            $data['width'] = $this->request->post['width'];
+        if ($this->request->has('post.width')) {
+            $data['width'] = $this->request->get('post.width');
         } elseif (!empty($module_info)) {
             $data['width'] = $module_info['width'];
         } else {
             $data['width'] = 130;
         }
 
-        if (isset($this->request->post['height'])) {
-            $data['height'] = $this->request->post['height'];
+        if ($this->request->has('post.height')) {
+            $data['height'] = $this->request->get('post.height');
         } elseif (!empty($module_info)) {
             $data['height'] = $module_info['height'];
         } else {
             $data['height'] = 100;
         }
 
-        if (isset($this->request->post['status'])) {
-            $data['status'] = $this->request->post['status'];
+        if ($this->request->has('post.status')) {
+            $data['status'] = $this->request->get('post.status');
         } elseif (!empty($module_info)) {
             $data['status'] = $module_info['status'];
         } else {
@@ -162,15 +162,15 @@ class ControllerExtensionModuleCarousel extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+        if ((utf8_strlen($this->request->get('post.name')) < 3) || (utf8_strlen($this->request->get('post.name')) > 64)) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if (!$this->request->post['width']) {
+        if (!$this->request->get('post.width')) {
             $this->error['width'] = $this->language->get('error_width');
         }
 
-        if (!$this->request->post['height']) {
+        if (!$this->request->get('post.height')) {
             $this->error['height'] = $this->language->get('error_height');
         }
 

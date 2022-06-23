@@ -363,7 +363,7 @@ class ControllerCatalogInformation extends Controller
 
             $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->getString('post.keyword'));
 
-            if ($url_alias_info && $this->request->has('query.information_id') && $url_alias_info['query'] != 'information_id=' . $this->request->get('query.information_id')) {
+            if ($url_alias_info && $url_alias_info['query'] != 'information_id=' . $this->request->get('query.information_id', 'x')) {
                 $this->error['keyword'] = sprintf($this->language->get('error_keyword'));
             }
 

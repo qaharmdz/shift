@@ -289,10 +289,15 @@ class ControllerSettingStore extends Controller
 
         $data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->get('token'), true);
 
+        $store_info = [];
         if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
             $this->load->model('setting/setting');
 
             $store_info = $this->model_setting_setting->getSetting('config', $this->request->get('query.store_id'));
+        }
+
+        if (!$store_info) {
+            $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
         }
 
         $data['token'] = $this->session->get('token');

@@ -26,22 +26,22 @@ class ControllerDesignLayout extends Controller
         $this->load->model('design/layout');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_design_layout->addLayout($this->request->post);
+            $this->model_design_layout->addLayout($this->request->get('post', []));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('design/layout', 'token=' . $this->session->get('token') . $url, true));
@@ -59,22 +59,22 @@ class ControllerDesignLayout extends Controller
         $this->load->model('design/layout');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_design_layout->editLayout($this->request->get['layout_id'], $this->request->post);
+            $this->model_design_layout->editLayout($this->request->get('query.layout_id'), $this->request->get('post', []));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('design/layout', 'token=' . $this->session->get('token') . $url, true));
@@ -91,8 +91,8 @@ class ControllerDesignLayout extends Controller
 
         $this->load->model('design/layout');
 
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
-            foreach ($this->request->post['selected'] as $layout_id) {
+        if ($this->request->has('post.selected') && $this->validateDelete()) {
+            foreach ($this->request->get('post.selected') as $layout_id) {
                 $this->model_design_layout->deleteLayout($layout_id);
             }
 
@@ -100,16 +100,16 @@ class ControllerDesignLayout extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('design/layout', 'token=' . $this->session->get('token') . $url, true));
@@ -120,36 +120,36 @@ class ControllerDesignLayout extends Controller
 
     protected function getList()
     {
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $sort = $this->request->get('query.sort');
         } else {
             $sort = 'name';
         }
 
-        if (isset($this->request->get['order'])) {
-            $order = $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $order = $this->request->get('query.order');
         } else {
             $order = 'ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $page = $this->request->get('query.page');
         } else {
             $page = 1;
         }
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -209,8 +209,8 @@ class ControllerDesignLayout extends Controller
 
         $data['success'] = $this->session->pull('flash.success');
 
-        if (isset($this->request->post['selected'])) {
-            $data['selected'] = (array)$this->request->post['selected'];
+        if ($this->request->has('post.selected')) {
+            $data['selected'] = (array)$this->request->get('post.selected');
         } else {
             $data['selected'] = array();
         }
@@ -223,20 +223,20 @@ class ControllerDesignLayout extends Controller
             $url .= '&order=ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['sort_name'] = $this->url->link('design/layout', 'token=' . $this->session->get('token') . '&sort=name' . $url, true);
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
         $pagination = new Pagination();
@@ -263,7 +263,7 @@ class ControllerDesignLayout extends Controller
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_form'] = !$this->request->has('query.layout_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_route'] = $this->language->get('text_route');
         $data['text_module'] = $this->language->get('text_module');
         $data['text_default'] = $this->language->get('text_default');
@@ -300,16 +300,16 @@ class ControllerDesignLayout extends Controller
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -324,22 +324,22 @@ class ControllerDesignLayout extends Controller
             'href' => $this->url->link('design/layout', 'token=' . $this->session->get('token') . $url, true)
         );
 
-        if (!isset($this->request->get['layout_id'])) {
+        if (!$this->request->has('query.layout_id')) {
             $data['action'] = $this->url->link('design/layout/add', 'token=' . $this->session->get('token') . $url, true);
         } else {
-            $data['action'] = $this->url->link('design/layout/edit', 'token=' . $this->session->get('token') . '&layout_id=' . $this->request->get['layout_id'] . $url, true);
+            $data['action'] = $this->url->link('design/layout/edit', 'token=' . $this->session->get('token') . '&layout_id=' . $this->request->get('query.layout_id') . $url, true);
         }
 
         $data['cancel'] = $this->url->link('design/layout', 'token=' . $this->session->get('token') . $url, true);
 
         $data['token'] = $this->session->get('token');
 
-        if (isset($this->request->get['layout_id']) && !$this->request->is('POST')) {
-            $layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
+        if ($this->request->has('query.layout_id') && !$this->request->is('POST')) {
+            $layout_info = $this->model_design_layout->getLayout($this->request->get('query.layout_id'));
         }
 
-        if (isset($this->request->post['name'])) {
-            $data['name'] = $this->request->post['name'];
+        if ($this->request->has('post.name')) {
+            $data['name'] = $this->request->get('post.name');
         } elseif (!empty($layout_info)) {
             $data['name'] = $layout_info['name'];
         } else {
@@ -350,10 +350,10 @@ class ControllerDesignLayout extends Controller
 
         $data['stores'] = $this->model_setting_store->getStores();
 
-        if (isset($this->request->post['layout_route'])) {
-            $data['layout_routes'] = $this->request->post['layout_route'];
-        } elseif (isset($this->request->get['layout_id'])) {
-            $data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get['layout_id']);
+        if ($this->request->has('post.layout_route')) {
+            $data['layout_routes'] = $this->request->get('post.layout_route');
+        } elseif ($this->request->has('query.layout_id')) {
+            $data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get('query.layout_id'));
         } else {
             $data['layout_routes'] = array();
         }
@@ -392,10 +392,10 @@ class ControllerDesignLayout extends Controller
         }
 
         // Modules layout
-        if (isset($this->request->post['layout_module'])) {
-            $layout_modules = $this->request->post['layout_module'];
-        } elseif (isset($this->request->get['layout_id'])) {
-            $layout_modules = $this->model_design_layout->getLayoutModules($this->request->get['layout_id']);
+        if ($this->request->has('post.layout_module')) {
+            $layout_modules = $this->request->get('post.layout_module');
+        } elseif ($this->request->has('query.layout_id')) {
+            $layout_modules = $this->model_design_layout->getLayoutModules($this->request->get('query.layout_id'));
         } else {
             $layout_modules = array();
         }
@@ -444,7 +444,7 @@ class ControllerDesignLayout extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+        if ((utf8_strlen($this->request->get('post.name')) < 3) || (utf8_strlen($this->request->get('post.name')) > 64)) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
@@ -462,7 +462,7 @@ class ControllerDesignLayout extends Controller
         $this->load->model('catalog/category');
         $this->load->model('catalog/information');
 
-        foreach ($this->request->post['selected'] as $layout_id) {
+        foreach ($this->request->get('post.selected') as $layout_id) {
             if ($this->config->get('config_layout_id') == $layout_id) {
                 $this->error['warning'] = $this->language->get('error_default');
             }

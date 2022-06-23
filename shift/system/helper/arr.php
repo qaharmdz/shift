@@ -6,6 +6,10 @@ namespace Shift\System\Helper;
 
 /**
  * Provides a dot notation access and helper functions for working with arrays.
+ *
+ * @link https://github.com/adbario/php-dot-notation/blob/3.x/src/Dot.php
+ * @link https://github.com/laravel/framework/blob/7.x/src/Illuminate/Support/Arr.php
+ * @link https://github.com/bayfrontmedia/php-array-helpers/blob/master/src/Arr.php
  */
 class Arr
 {

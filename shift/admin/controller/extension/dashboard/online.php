@@ -62,8 +62,8 @@ class ControllerExtensionDashboardOnline extends Controller
 
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true);
 
-        if (isset($this->request->post['dashboard_online_width'])) {
-            $data['dashboard_online_width'] = $this->request->post['dashboard_online_width'];
+        if ($this->request->has('post.dashboard_online_width')) {
+            $data['dashboard_online_width'] = $this->request->get('post.dashboard_online_width');
         } else {
             $data['dashboard_online_width'] = $this->config->get('dashboard_online_width');
         }
@@ -74,14 +74,14 @@ class ControllerExtensionDashboardOnline extends Controller
             $data['columns'][] = $i;
         }
 
-        if (isset($this->request->post['dashboard_online_status'])) {
-            $data['dashboard_online_status'] = $this->request->post['dashboard_online_status'];
+        if ($this->request->has('post.dashboard_online_status')) {
+            $data['dashboard_online_status'] = $this->request->get('post.dashboard_online_status');
         } else {
             $data['dashboard_online_status'] = $this->config->get('dashboard_online_status');
         }
 
-        if (isset($this->request->post['dashboard_online_sort_order'])) {
-            $data['dashboard_online_sort_order'] = $this->request->post['dashboard_online_sort_order'];
+        if ($this->request->has('post.dashboard_online_sort_order')) {
+            $data['dashboard_online_sort_order'] = $this->request->get('post.dashboard_online_sort_order');
         } else {
             $data['dashboard_online_sort_order'] = $this->config->get('dashboard_online_sort_order');
         }

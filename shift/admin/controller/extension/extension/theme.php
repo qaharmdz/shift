@@ -22,15 +22,15 @@ class ControllerExtensionExtensionTheme extends Controller
         $this->load->model('extension/extension');
 
         if ($this->validate()) {
-            $this->model_extension_extension->install('theme', $this->request->get['extension']);
+            $this->model_extension_extension->install('theme', $this->request->get('query.extension'));
 
             $this->load->model('user/user_group');
 
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/theme/' . $this->request->get['extension']);
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/theme/' . $this->request->get['extension']);
+            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/theme/' . $this->request->get('query.extension'));
+            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/theme/' . $this->request->get('query.extension'));
 
             // Call install method if it exsits
-            $this->load->controller('extension/theme/' . $this->request->get['extension'] . '/install');
+            $this->load->controller('extension/theme/' . $this->request->get('query.extension') . '/install');
 
             $this->session->set('flash.success', $this->language->get('text_success'));
         }
@@ -45,10 +45,10 @@ class ControllerExtensionExtensionTheme extends Controller
         $this->load->model('extension/extension');
 
         if ($this->validate()) {
-            $this->model_extension_extension->uninstall('theme', $this->request->get['extension']);
+            $this->model_extension_extension->uninstall('theme', $this->request->get('query.extension'));
 
             // Call uninstall method if it exsits
-            $this->load->controller('extension/theme/' . $this->request->get['extension'] . '/uninstall');
+            $this->load->controller('extension/theme/' . $this->request->get('query.extension') . '/uninstall');
 
             $this->session->set('flash.success', $this->language->get('text_success'));
         }

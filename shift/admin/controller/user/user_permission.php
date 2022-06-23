@@ -32,16 +32,16 @@ class ControllerUserUserPermission extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true));
@@ -59,22 +59,22 @@ class ControllerUserUserPermission extends Controller
         $this->load->model('user/user_group');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user_group->editUserGroup($this->request->get['user_group_id'], $this->request->post);
+            $this->model_user_user_group->editUserGroup($this->request->get('query.user_group_id'), $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true));
@@ -91,8 +91,8 @@ class ControllerUserUserPermission extends Controller
 
         $this->load->model('user/user_group');
 
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
-            foreach ($this->request->post['selected'] as $user_group_id) {
+        if ($this->request->has('post.selected') && $this->validateDelete()) {
+            foreach ($this->request->get('post.selected') as $user_group_id) {
                 $this->model_user_user_group->deleteUserGroup($user_group_id);
             }
 
@@ -100,16 +100,16 @@ class ControllerUserUserPermission extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true));
@@ -120,36 +120,36 @@ class ControllerUserUserPermission extends Controller
 
     protected function getList()
     {
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $sort = $this->request->get('query.sort');
         } else {
             $sort = 'name';
         }
 
-        if (isset($this->request->get['order'])) {
-            $order = $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $order = $this->request->get('query.order');
         } else {
             $order = 'ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $page = $this->request->get('query.page');
         } else {
             $page = 1;
         }
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -209,8 +209,8 @@ class ControllerUserUserPermission extends Controller
 
         $data['success'] = $this->session->pull('flash.success');
 
-        if (isset($this->request->post['selected'])) {
-            $data['selected'] = (array)$this->request->post['selected'];
+        if ($this->request->has('post.selected')) {
+            $data['selected'] = (array)$this->request->get('post.selected');
         } else {
             $data['selected'] = array();
         }
@@ -223,20 +223,20 @@ class ControllerUserUserPermission extends Controller
             $url .= '&order=ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['sort_name'] = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . '&sort=name' . $url, true);
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
         $pagination = new Pagination();
@@ -263,7 +263,7 @@ class ControllerUserUserPermission extends Controller
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_form'] = !$this->request->has('query.user_group_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_select_all'] = $this->language->get('text_select_all');
         $data['text_unselect_all'] = $this->language->get('text_unselect_all');
 
@@ -288,16 +288,16 @@ class ControllerUserUserPermission extends Controller
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -312,20 +312,20 @@ class ControllerUserUserPermission extends Controller
             'href' => $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true)
         );
 
-        if (!isset($this->request->get['user_group_id'])) {
+        if (!$this->request->has('query.user_group_id')) {
             $data['action'] = $this->url->link('user/user_permission/add', 'token=' . $this->session->get('token') . $url, true);
         } else {
-            $data['action'] = $this->url->link('user/user_permission/edit', 'token=' . $this->session->get('token') . '&user_group_id=' . $this->request->get['user_group_id'] . $url, true);
+            $data['action'] = $this->url->link('user/user_permission/edit', 'token=' . $this->session->get('token') . '&user_group_id=' . $this->request->get('query.user_group_id') . $url, true);
         }
 
         $data['cancel'] = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['user_group_id']) && !$this->request->is('POST')) {
-            $user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
+        if ($this->request->has('query.user_group_id') && !$this->request->is('POST')) {
+            $user_group_info = $this->model_user_user_group->getUserGroup($this->request->get('query.user_group_id'));
         }
 
-        if (isset($this->request->post['name'])) {
-            $data['name'] = $this->request->post['name'];
+        if ($this->request->has('post.name')) {
+            $data['name'] = $this->request->get('post.name');
         } elseif (!empty($user_group_info)) {
             $data['name'] = $user_group_info['name'];
         } else {
@@ -382,16 +382,16 @@ class ControllerUserUserPermission extends Controller
             }
         }
 
-        if (isset($this->request->post['permission']['access'])) {
-            $data['access'] = $this->request->post['permission']['access'];
+        if ($this->request->has('post.permission.access')) {
+            $data['access'] = $this->request->get('post.permission.access');
         } elseif (isset($user_group_info['permission']['access'])) {
             $data['access'] = $user_group_info['permission']['access'];
         } else {
             $data['access'] = array();
         }
 
-        if (isset($this->request->post['permission']['modify'])) {
-            $data['modify'] = $this->request->post['permission']['modify'];
+        if ($this->request->has('post.permission.modify')) {
+            $data['modify'] = $this->request->get('post.permission.modify');
         } elseif (isset($user_group_info['permission']['modify'])) {
             $data['modify'] = $user_group_info['permission']['modify'];
         } else {
@@ -411,7 +411,7 @@ class ControllerUserUserPermission extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
+        if ((utf8_strlen($this->request->get('post.name')) < 3) || (utf8_strlen($this->request->get('post.name')) > 64)) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
@@ -426,7 +426,7 @@ class ControllerUserUserPermission extends Controller
 
         $this->load->model('user/user');
 
-        foreach ($this->request->post['selected'] as $user_group_id) {
+        foreach ($this->request->get('post.selected') as $user_group_id) {
             $user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
 
             if ($user_total) {

@@ -60,8 +60,8 @@ class ControllerExtensionModuleInformation extends Controller
 
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true);
 
-        if (isset($this->request->post['information_status'])) {
-            $data['information_status'] = $this->request->post['information_status'];
+        if ($this->request->has('post.information_status')) {
+            $data['information_status'] = $this->request->get('post.information_status');
         } else {
             $data['information_status'] = $this->config->get('information_status');
         }

@@ -8,28 +8,19 @@ class ControllerCommonFileManager extends Controller
     {
         $this->load->language('common/filemanager');
 
-        // Find which protocol to use to pass the full image link back
-        if ($this->request->server['HTTPS']) {
-            $server = HTTPS_CATALOG;
-        } else {
-            $server = HTTP_CATALOG;
-        }
-
-        if (isset($this->request->get['filter_name'])) {
-            $filter_name = rtrim(str_replace('*', '', $this->request->get['filter_name']), '/');
-        } else {
-            $filter_name = null;
+        $filter_name = null;
+        if ($this->request->has('query.filter_name')) {
+            $filter_name = rtrim(str_replace('*', '', $this->request->get('query.filter_name')), '/');
         }
 
         // Make sure we have the correct directory
-        if (isset($this->request->get['directory'])) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace('*', '', $this->request->get['directory']), '/');
-        } else {
-            $directory = DIR_IMAGE . 'catalog';
+        $directory = DIR_IMAGE . 'catalog';
+        if ($this->request->has('query.directory')) {
+            $directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace('*', '', $this->request->get('query.directory')), '/');
         }
 
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $page = $this->request->get('query.page');
         } else {
             $page = 1;
         }
@@ -72,12 +63,12 @@ class ControllerCommonFileManager extends Controller
             if (is_dir($image)) {
                 $url = '';
 
-                if (isset($this->request->get['target'])) {
-                    $url .= '&target=' . $this->request->get['target'];
+                if ($this->request->has('query.target')) {
+                    $url .= '&target=' . $this->request->get('query.target');
                 }
 
-                if (isset($this->request->get['thumb'])) {
-                    $url .= '&thumb=' . $this->request->get['thumb'];
+                if ($this->request->has('query.thumb')) {
+                    $url .= '&thumb=' . $this->request->get('query.thumb');
                 }
 
                 $data['images'][] = array(
@@ -93,7 +84,7 @@ class ControllerCommonFileManager extends Controller
                     'name'  => implode(' ', $name),
                     'type'  => 'image',
                     'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-                    'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
+                    'href'  => $this->config->get('env.url_site') . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
                 );
             }
         }
@@ -115,28 +106,28 @@ class ControllerCommonFileManager extends Controller
 
         $data['token'] = $this->session->get('token');
 
-        if (isset($this->request->get['directory'])) {
-            $data['directory'] = urlencode($this->request->get['directory']);
+        if ($this->request->has('query.directory')) {
+            $data['directory'] = urlencode($this->request->get('query.directory'));
         } else {
             $data['directory'] = '';
         }
 
-        if (isset($this->request->get['filter_name'])) {
-            $data['filter_name'] = $this->request->get['filter_name'];
+        if ($this->request->has('query.filter_name')) {
+            $data['filter_name'] = $this->request->get('query.filter_name');
         } else {
             $data['filter_name'] = '';
         }
 
         // Return the target ID for the file manager to set the value
-        if (isset($this->request->get['target'])) {
-            $data['target'] = $this->request->get['target'];
+        if ($this->request->has('query.target')) {
+            $data['target'] = $this->request->get('query.target');
         } else {
             $data['target'] = '';
         }
 
         // Return the thumbnail for the file manager to show a thumbnail
-        if (isset($this->request->get['thumb'])) {
-            $data['thumb'] = $this->request->get['thumb'];
+        if ($this->request->has('query.thumb')) {
+            $data['thumb'] = $this->request->get('query.thumb');
         } else {
             $data['thumb'] = '';
         }
@@ -144,20 +135,20 @@ class ControllerCommonFileManager extends Controller
         // Parent
         $url = '';
 
-        if (isset($this->request->get['directory'])) {
-            $pos = strrpos($this->request->get['directory'], '/');
+        if ($this->request->has('query.directory')) {
+            $pos = strrpos($this->request->get('query.directory'), '/');
 
             if ($pos) {
-                $url .= '&directory=' . urlencode(substr($this->request->get['directory'], 0, $pos));
+                $url .= '&directory=' . urlencode(substr($this->request->get('query.directory'), 0, $pos));
             }
         }
 
-        if (isset($this->request->get['target'])) {
-            $url .= '&target=' . $this->request->get['target'];
+        if ($this->request->has('query.target')) {
+            $url .= '&target=' . $this->request->get('query.target');
         }
 
-        if (isset($this->request->get['thumb'])) {
-            $url .= '&thumb=' . $this->request->get['thumb'];
+        if ($this->request->has('query.thumb')) {
+            $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
         $data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url, true);
@@ -165,36 +156,36 @@ class ControllerCommonFileManager extends Controller
         // Refresh
         $url = '';
 
-        if (isset($this->request->get['directory'])) {
-            $url .= '&directory=' . urlencode($this->request->get['directory']);
+        if ($this->request->has('query.directory')) {
+            $url .= '&directory=' . urlencode($this->request->get('query.directory'));
         }
 
-        if (isset($this->request->get['target'])) {
-            $url .= '&target=' . $this->request->get['target'];
+        if ($this->request->has('query.target')) {
+            $url .= '&target=' . $this->request->get('query.target');
         }
 
-        if (isset($this->request->get['thumb'])) {
-            $url .= '&thumb=' . $this->request->get['thumb'];
+        if ($this->request->has('query.thumb')) {
+            $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
         $data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url, true);
 
         $url = '';
 
-        if (isset($this->request->get['directory'])) {
-            $url .= '&directory=' . urlencode(html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8'));
+        if ($this->request->has('query.directory')) {
+            $url .= '&directory=' . urlencode(html_entity_decode($this->request->get('query.directory'), ENT_QUOTES, 'UTF-8'));
         }
 
-        if (isset($this->request->get['filter_name'])) {
-            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+        if ($this->request->has('query.filter_name')) {
+            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get('query.filter_name'), ENT_QUOTES, 'UTF-8'));
         }
 
-        if (isset($this->request->get['target'])) {
-            $url .= '&target=' . $this->request->get['target'];
+        if ($this->request->has('query.target')) {
+            $url .= '&target=' . $this->request->get('query.target');
         }
 
-        if (isset($this->request->get['thumb'])) {
-            $url .= '&thumb=' . $this->request->get['thumb'];
+        if ($this->request->has('query.thumb')) {
+            $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
         $pagination = new Pagination();
@@ -220,8 +211,8 @@ class ControllerCommonFileManager extends Controller
         }
 
         // Make sure we have the correct directory
-        if (isset($this->request->get['directory'])) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+        if ($this->request->has('query.directory')) {
+            $directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get('query.directory'), '/');
         } else {
             $directory = DIR_IMAGE . 'catalog';
         }
@@ -235,14 +226,14 @@ class ControllerCommonFileManager extends Controller
             // Check if multiple files are uploaded or just one
             $files = array();
 
-            if (!empty($this->request->files['file']['name']) && is_array($this->request->files['file']['name'])) {
-                foreach (array_keys($this->request->files['file']['name']) as $key) {
+            if (!empty($this->request->get('files.file.name')) && is_array($this->request->get('files.file.name'))) {
+                foreach (array_keys($this->request->getArray('files.file.name', [])) as $key) {
                     $files[] = array(
-                        'name'     => $this->request->files['file']['name'][$key],
-                        'type'     => $this->request->files['file']['type'][$key],
-                        'tmp_name' => $this->request->files['file']['tmp_name'][$key],
-                        'error'    => $this->request->files['file']['error'][$key],
-                        'size'     => $this->request->files['file']['size'][$key]
+                        'name'     => $this->request->get('files.file.name.' . $key),
+                        'type'     => $this->request->get('files.file.type.' . $key),
+                        'tmp_name' => $this->request->get('files.file.tmp_name.' . $key),
+                        'error'    => $this->request->get('files.file.error.' . $key),
+                        'size'     => $this->request->get('files.file.size.' . $key)
                     );
                 }
             }
@@ -316,8 +307,8 @@ class ControllerCommonFileManager extends Controller
         }
 
         // Make sure we have the correct directory
-        if (isset($this->request->get['directory'])) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get['directory'], '/');
+        if ($this->request->has('query.directory')) {
+            $directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get('query.directory'), '/');
         } else {
             $directory = DIR_IMAGE . 'catalog';
         }
@@ -329,7 +320,7 @@ class ControllerCommonFileManager extends Controller
 
         if ($this->request->is('POST')) {
             // Sanitize the folder name
-            $folder = basename(html_entity_decode($this->request->post['folder'], ENT_QUOTES, 'UTF-8'));
+            $folder = basename(html_entity_decode($this->request->get('post.folder'), ENT_QUOTES, 'UTF-8'));
 
             // Validate the filename length
             if ((utf8_strlen($folder) < 3) || (utf8_strlen($folder) > 128)) {
@@ -366,8 +357,8 @@ class ControllerCommonFileManager extends Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        if (isset($this->request->post['path'])) {
-            $paths = $this->request->post['path'];
+        if ($this->request->has('post.path')) {
+            $paths = $this->request->get('post.path');
         } else {
             $paths = array();
         }

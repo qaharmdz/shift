@@ -32,16 +32,16 @@ class ControllerUserUser extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('user/user', 'token=' . $this->session->get('token') . $url, true));
@@ -59,22 +59,22 @@ class ControllerUserUser extends Controller
         $this->load->model('user/user');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user->editUser($this->request->get['user_id'], $this->request->post);
+            $this->model_user_user->editUser($this->request->get('query.user_id'), $this->request->post);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('user/user', 'token=' . $this->session->get('token') . $url, true));
@@ -91,8 +91,8 @@ class ControllerUserUser extends Controller
 
         $this->load->model('user/user');
 
-        if (isset($this->request->post['selected']) && $this->validateDelete()) {
-            foreach ($this->request->post['selected'] as $user_id) {
+        if ($this->request->has('post.selected') && $this->validateDelete()) {
+            foreach ($this->request->get('post.selected') as $user_id) {
                 $this->model_user_user->deleteUser($user_id);
             }
 
@@ -100,16 +100,16 @@ class ControllerUserUser extends Controller
 
             $url = '';
 
-            if (isset($this->request->get['sort'])) {
-                $url .= '&sort=' . $this->request->get['sort'];
+            if ($this->request->has('query.sort')) {
+                $url .= '&sort=' . $this->request->get('query.sort');
             }
 
-            if (isset($this->request->get['order'])) {
-                $url .= '&order=' . $this->request->get['order'];
+            if ($this->request->has('query.order')) {
+                $url .= '&order=' . $this->request->get('query.order');
             }
 
-            if (isset($this->request->get['page'])) {
-                $url .= '&page=' . $this->request->get['page'];
+            if ($this->request->has('query.page')) {
+                $url .= '&page=' . $this->request->get('query.page');
             }
 
             $this->response->redirect($this->url->link('user/user', 'token=' . $this->session->get('token') . $url, true));
@@ -120,36 +120,36 @@ class ControllerUserUser extends Controller
 
     protected function getList()
     {
-        if (isset($this->request->get['sort'])) {
-            $sort = $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $sort = $this->request->get('query.sort');
         } else {
             $sort = 'username';
         }
 
-        if (isset($this->request->get['order'])) {
-            $order = $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $order = $this->request->get('query.order');
         } else {
             $order = 'ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $page = $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $page = $this->request->get('query.page');
         } else {
             $page = 1;
         }
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -213,8 +213,8 @@ class ControllerUserUser extends Controller
 
         $data['success'] = $this->session->pull('flash.success');
 
-        if (isset($this->request->post['selected'])) {
-            $data['selected'] = (array)$this->request->post['selected'];
+        if ($this->request->has('post.selected')) {
+            $data['selected'] = (array)$this->request->get('post.selected');
         } else {
             $data['selected'] = array();
         }
@@ -227,8 +227,8 @@ class ControllerUserUser extends Controller
             $url .= '&order=ASC';
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['sort_username'] = $this->url->link('user/user', 'token=' . $this->session->get('token') . '&sort=username' . $url, true);
@@ -237,12 +237,12 @@ class ControllerUserUser extends Controller
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
         $pagination = new Pagination();
@@ -269,7 +269,7 @@ class ControllerUserUser extends Controller
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_form'] = !$this->request->has('query.user_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -330,16 +330,16 @@ class ControllerUserUser extends Controller
 
         $url = '';
 
-        if (isset($this->request->get['sort'])) {
-            $url .= '&sort=' . $this->request->get['sort'];
+        if ($this->request->has('query.sort')) {
+            $url .= '&sort=' . $this->request->get('query.sort');
         }
 
-        if (isset($this->request->get['order'])) {
-            $url .= '&order=' . $this->request->get['order'];
+        if ($this->request->has('query.order')) {
+            $url .= '&order=' . $this->request->get('query.order');
         }
 
-        if (isset($this->request->get['page'])) {
-            $url .= '&page=' . $this->request->get['page'];
+        if ($this->request->has('query.page')) {
+            $url .= '&page=' . $this->request->get('query.page');
         }
 
         $data['breadcrumbs'] = array();
@@ -354,28 +354,28 @@ class ControllerUserUser extends Controller
             'href' => $this->url->link('user/user', 'token=' . $this->session->get('token') . $url, true)
         );
 
-        if (!isset($this->request->get['user_id'])) {
+        if (!$this->request->has('query.user_id')) {
             $data['action'] = $this->url->link('user/user/add', 'token=' . $this->session->get('token') . $url, true);
         } else {
-            $data['action'] = $this->url->link('user/user/edit', 'token=' . $this->session->get('token') . '&user_id=' . $this->request->get['user_id'] . $url, true);
+            $data['action'] = $this->url->link('user/user/edit', 'token=' . $this->session->get('token') . '&user_id=' . $this->request->get('query.user_id') . $url, true);
         }
 
         $data['cancel'] = $this->url->link('user/user', 'token=' . $this->session->get('token') . $url, true);
 
-        if (isset($this->request->get['user_id']) && !$this->request->is('POST')) {
-            $user_info = $this->model_user_user->getUser($this->request->get['user_id']);
+        if ($this->request->has('query.user_id') && !$this->request->is('POST')) {
+            $user_info = $this->model_user_user->getUser($this->request->get('query.user_id'));
         }
 
-        if (isset($this->request->post['username'])) {
-            $data['username'] = $this->request->post['username'];
+        if ($this->request->has('post.username')) {
+            $data['username'] = $this->request->get('post.username');
         } elseif (!empty($user_info)) {
             $data['username'] = $user_info['username'];
         } else {
             $data['username'] = '';
         }
 
-        if (isset($this->request->post['user_group_id'])) {
-            $data['user_group_id'] = $this->request->post['user_group_id'];
+        if ($this->request->has('post.user_group_id')) {
+            $data['user_group_id'] = $this->request->get('post.user_group_id');
         } elseif (!empty($user_info)) {
             $data['user_group_id'] = $user_info['user_group_id'];
         } else {
@@ -386,44 +386,44 @@ class ControllerUserUser extends Controller
 
         $data['user_groups'] = $this->model_user_user_group->getUserGroups();
 
-        if (isset($this->request->post['password'])) {
-            $data['password'] = $this->request->post['password'];
+        if ($this->request->has('post.password')) {
+            $data['password'] = $this->request->get('post.password');
         } else {
             $data['password'] = '';
         }
 
-        if (isset($this->request->post['confirm'])) {
-            $data['confirm'] = $this->request->post['confirm'];
+        if ($this->request->has('post.confirm')) {
+            $data['confirm'] = $this->request->get('post.confirm');
         } else {
             $data['confirm'] = '';
         }
 
-        if (isset($this->request->post['firstname'])) {
-            $data['firstname'] = $this->request->post['firstname'];
+        if ($this->request->has('post.firstname')) {
+            $data['firstname'] = $this->request->get('post.firstname');
         } elseif (!empty($user_info)) {
             $data['firstname'] = $user_info['firstname'];
         } else {
             $data['firstname'] = '';
         }
 
-        if (isset($this->request->post['lastname'])) {
-            $data['lastname'] = $this->request->post['lastname'];
+        if ($this->request->has('post.lastname')) {
+            $data['lastname'] = $this->request->get('post.lastname');
         } elseif (!empty($user_info)) {
             $data['lastname'] = $user_info['lastname'];
         } else {
             $data['lastname'] = '';
         }
 
-        if (isset($this->request->post['email'])) {
-            $data['email'] = $this->request->post['email'];
+        if ($this->request->has('post.email')) {
+            $data['email'] = $this->request->get('post.email');
         } elseif (!empty($user_info)) {
             $data['email'] = $user_info['email'];
         } else {
             $data['email'] = '';
         }
 
-        if (isset($this->request->post['image'])) {
-            $data['image'] = $this->request->post['image'];
+        if ($this->request->has('post.image')) {
+            $data['image'] = $this->request->get('post.image');
         } elseif (!empty($user_info)) {
             $data['image'] = $user_info['image'];
         } else {
@@ -432,8 +432,8 @@ class ControllerUserUser extends Controller
 
         $this->load->model('tool/image');
 
-        if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-            $data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+        if ($this->request->has('post.image') && is_file(DIR_IMAGE . $this->request->get('post.image'))) {
+            $data['thumb'] = $this->model_tool_image->resize($this->request->get('post.image'), 100, 100);
         } elseif (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
             $data['thumb'] = $this->model_tool_image->resize($user_info['image'], 100, 100);
         } else {
@@ -442,8 +442,8 @@ class ControllerUserUser extends Controller
 
         $data['placeholder'] = $this->model_tool_image->resize('no-image.png', 100, 100);
 
-        if (isset($this->request->post['status'])) {
-            $data['status'] = $this->request->post['status'];
+        if ($this->request->has('post.status')) {
+            $data['status'] = $this->request->get('post.status');
         } elseif (!empty($user_info)) {
             $data['status'] = $user_info['status'];
         } else {
@@ -463,52 +463,52 @@ class ControllerUserUser extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
+        if ((utf8_strlen($this->request->get('post.username')) < 3) || (utf8_strlen($this->request->get('post.username')) > 20)) {
             $this->error['username'] = $this->language->get('error_username');
         }
 
-        $user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
+        $user_info = $this->model_user_user->getUserByUsername($this->request->get('post.username'));
 
-        if (!isset($this->request->get['user_id'])) {
+        if (!$this->request->has('query.user_id')) {
             if ($user_info) {
                 $this->error['warning'] = $this->language->get('error_exists_username');
             }
         } else {
-            if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+            if ($user_info && ($this->request->get('query.user_id') != $user_info['user_id'])) {
                 $this->error['warning'] = $this->language->get('error_exists_username');
             }
         }
 
-        if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+        if ((utf8_strlen(trim($this->request->get('post.firstname'))) < 1) || (utf8_strlen(trim($this->request->get('post.firstname'))) > 32)) {
             $this->error['firstname'] = $this->language->get('error_firstname');
         }
 
-        if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+        if ((utf8_strlen(trim($this->request->get('post.lastname'))) < 1) || (utf8_strlen(trim($this->request->get('post.lastname'))) > 32)) {
             $this->error['lastname'] = $this->language->get('error_lastname');
         }
 
-        if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
+        if ((utf8_strlen($this->request->get('post.email')) > 96) || !filter_var($this->request->get('post.email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        $user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
+        $user_info = $this->model_user_user->getUserByEmail($this->request->get('post.email'));
 
-        if (!isset($this->request->get['user_id'])) {
+        if (!$this->request->has('query.user_id')) {
             if ($user_info) {
                 $this->error['warning'] = $this->language->get('error_exists_email');
             }
         } else {
-            if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+            if ($user_info && ($this->request->get('query.user_id') != $user_info['user_id'])) {
                 $this->error['warning'] = $this->language->get('error_exists_email');
             }
         }
 
-        if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {
-            if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
+        if ($this->request->get('post.password') || (!$this->request->has('query.user_id'))) {
+            if ((utf8_strlen($this->request->get('post.password')) < 4) || (utf8_strlen($this->request->get('post.password')) > 20)) {
                 $this->error['password'] = $this->language->get('error_password');
             }
 
-            if ($this->request->post['password'] != $this->request->post['confirm']) {
+            if ($this->request->get('post.password') != $this->request->get('post.confirm')) {
                 $this->error['confirm'] = $this->language->get('error_confirm');
             }
         }
@@ -522,7 +522,7 @@ class ControllerUserUser extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        foreach ($this->request->post['selected'] as $user_id) {
+        foreach ($this->request->get('post.selected') as $user_id) {
             if ($this->user->getId() == $user_id) {
                 $this->error['warning'] = $this->language->get('error_account');
             }

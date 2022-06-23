@@ -66,13 +66,13 @@ class ControllerExtensionInstaller extends Controller
         }
 
         if (!$json) {
-            if (!empty($this->request->files['file']['name'])) {
-                if (substr($this->request->files['file']['name'], -10) != '.ocmod.zip' && substr($this->request->files['file']['name'], -10) != '.ocmod.xml') {
+            if (!empty($this->request->get('files.file.name'))) {
+                if (substr($this->request->get('files.file.name'), -10) != '.ocmod.zip' && substr($this->request->get('files.file.name'), -10) != '.ocmod.xml') {
                     $json['error'] = $this->language->get('error_filetype');
                 }
 
-                if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-                    $json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+                if ($this->request->get('files.file.error') != UPLOAD_ERR_OK) {
+                    $json['error'] = $this->language->get('error_upload_' . $this->request->get('files.file.error'));
                 }
             } else {
                 $json['error'] = $this->language->get('error_upload');
@@ -91,11 +91,11 @@ class ControllerExtensionInstaller extends Controller
             $json['step'] = array();
             $json['overwrite'] = array();
 
-            if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
+            if (strrchr($this->request->get('files.file.name'), '.') == '.xml') {
                 $file = DIR_UPLOAD . $path . '/install.xml';
 
                 // If xml file copy it to the temporary directory
-                move_uploaded_file($this->request->files['file']['tmp_name'], $file);
+                move_uploaded_file($this->request->get('files.file.tmp_name'), $file);
 
                 if (file_exists($file)) {
                     $json['step'][] = array(
@@ -116,10 +116,10 @@ class ControllerExtensionInstaller extends Controller
             }
 
             // If zip file copy it to the temp directory
-            if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
+            if (strrchr($this->request->get('files.file.name'), '.') == '.zip') {
                 $file = DIR_UPLOAD . $path . '/upload.zip';
 
-                move_uploaded_file($this->request->files['file']['tmp_name'], $file);
+                move_uploaded_file($this->request->get('files.file.tmp_name'), $file);
 
                 if (file_exists($file)) {
                     $zip = zip_open($file);
