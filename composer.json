@@ -15,7 +15,7 @@
         "php": "^8.1",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "adbario/php-dot-notation": "^2.2"
+        "adbario/php-dot-notation": "^3.1"
     },
     "require-dev": {
         "kint-php/kint": "^4.1"

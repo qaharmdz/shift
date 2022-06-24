@@ -11,9 +11,12 @@ return [
         'shift\\system\\core\\autoload\\psr4lower' => $baseDir . '/core/autoload/psr4lower.php',
         'shift\\system\\core\\bags' => $baseDir . '/core/bags.php',
         'shift\\system\\core\\database' => $baseDir . '/core/database.php',
+        'shift\\system\\core\\http\\request' => $baseDir . '/core/http/request.php',
         'shift\\system\\core\\logger' => $baseDir . '/core/logger.php',
         'shift\\system\\core\\registry' => $baseDir . '/core/registry.php',
+        'shift\\system\\core\\session' => $baseDir . '/core/session.php',
         'shift\\system\\framework' => $baseDir . '/framework.php',
+        'shift\\system\\helper\\arr' => $baseDir . '/helper/arr.php',
         'shift\\system\\core\\config' => $baseDir . '/core/config.php',
     ],
 ];

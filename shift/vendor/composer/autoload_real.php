@@ -29,7 +29,7 @@ class ComposerAutoloaderInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         spl_autoload_unregister(array('ComposerAutoloaderInitec3ddbcfb6fb1e1b644ccfec9082eb1e', 'loadClassLoader'));
 
         require __DIR__ . '/autoload_static.php';
-        \Composer\Autoload\ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::getInitializer($loader)();
+        call_user_func(\Composer\Autoload\ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::getInitializer($loader));
 
         $loader->register(true);
 
