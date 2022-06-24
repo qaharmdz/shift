@@ -99,6 +99,10 @@ class Framework
         // Request
         $this->set('request', new Core\Http\Request());
 
+        // Response
+        $response = new Core\Http\Response();
+        $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
+        $this->set('response', $response);
 
         return $this;
     }
@@ -121,12 +125,6 @@ class Framework
         // Loader
         $loader = new \Loader($this->registry);
         $this->set('load', $loader);
-
-
-        // Response
-        $response = new \Response();
-        $response->addHeader('Content-Type: text/html; charset=utf-8');
-        $this->set('response', $response);
 
         // Cache
         $this->set('cache', new \Cache());
@@ -163,8 +161,8 @@ class Framework
         // Dispatch
         $controller->dispatch(new \Action($config->get('root.action_router')), new \Action($config->get('root.action_error')));
 
-        // Output
-        $response->setCompression(0); // TODO: config compression
-        $response->output();
+        // Response
+        $response->setCompression($config->getInt('config_compression', 0));
+        return $response->send();
     }
 }
