@@ -79,16 +79,12 @@ class ControllerToolBackup extends Controller
 
             $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
         } elseif ($this->user->hasPermission('modify', 'tool/backup')) {
-            $this->response->addheader('Pragma: public');
-            $this->response->addheader('Expires: 0');
-            $this->response->addheader('Content-Description: File Transfer');
-            $this->response->addheader('Content-Type: application/octet-stream');
-            $this->response->addheader('Content-Disposition: attachment; filename="' . DB_DATABASE . '_' . date('Y-m-d_H-i-s', time()) . '_backup.sql"');
-            $this->response->addheader('Content-Transfer-Encoding: binary');
-
             $this->load->model('tool/backup');
 
-            $this->response->setOutput($this->model_tool_backup->backup($this->request->get('post.backup')));
+            $this->response->download(
+                $this->model_tool_backup->backup($this->request->get('post.backup')),
+                $this->config->get('root.database.config.database') . '_' . date('Y-m-d_H-i-s', time()) . '_backup.sql',
+            );
         } else {
             $this->session->set('flash.error', $this->language->get('error_permission'));
 

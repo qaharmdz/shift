@@ -85,14 +85,10 @@ class ControllerToolLog extends Controller
         $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
         if (file_exists($file) && filesize($file) > 0) {
-            $this->response->addheader('Pragma: public');
-            $this->response->addheader('Expires: 0');
-            $this->response->addheader('Content-Description: File Transfer');
-            $this->response->addheader('Content-Type: application/octet-stream');
-            $this->response->addheader('Content-Disposition: attachment; filename="' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log"');
-            $this->response->addheader('Content-Transfer-Encoding: binary');
-
-            $this->response->setOutput(file_get_contents($file));
+            $this->response->download(
+                $file,
+                $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log'
+            );
         } else {
             $this->session->set('flash.error', sprintf($this->language->get('error_warning'), basename($file), '0B'));
 
