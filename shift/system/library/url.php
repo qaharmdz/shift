@@ -29,9 +29,9 @@ class Url
 
         if ($args) {
             if (is_array($args)) {
-                $url .= '&amp;' . http_build_query($args);
+                $url .= '&' . http_build_query($args);
             } else {
-                $url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+                $url .= '&' . trim($args, '&');
             }
         }
 
