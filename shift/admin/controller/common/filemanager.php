@@ -291,8 +291,7 @@ class ControllerCommonFileManager extends Controller
             $json['success'] = $this->language->get('text_uploaded');
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function folder()
@@ -342,8 +341,7 @@ class ControllerCommonFileManager extends Controller
             $json['success'] = $this->language->get('text_directory');
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function delete()
@@ -423,7 +421,6 @@ class ControllerCommonFileManager extends Controller
             $json['success'] = $this->language->get('text_delete');
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 }

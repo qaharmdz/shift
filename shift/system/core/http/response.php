@@ -118,9 +118,9 @@ class Response
      * Set a response header by name.
      *
      * @param  string $name
-     * @param  mixed $value
+     * @param  strint|int $value
      */
-    public function setHeader(string $name, string $value)
+    public function setHeader(string $name, string|int $value)
     {
         $this->headers[$name] = $value;
     }

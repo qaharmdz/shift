@@ -216,8 +216,7 @@ class ControllerExtensionInstaller extends Controller
             }
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function unzip()
@@ -252,8 +251,7 @@ class ControllerExtensionInstaller extends Controller
             unlink($file);
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function ftp()
@@ -367,8 +365,7 @@ class ControllerExtensionInstaller extends Controller
             }
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function sql()
@@ -413,8 +410,7 @@ class ControllerExtensionInstaller extends Controller
             }
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function xml()
@@ -427,8 +423,7 @@ class ControllerExtensionInstaller extends Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function php()
@@ -455,8 +450,7 @@ class ControllerExtensionInstaller extends Controller
             }
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function remove()
@@ -514,8 +508,7 @@ class ControllerExtensionInstaller extends Controller
             $json['success'] = $this->language->get('text_success');
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 
     public function clear()
@@ -572,7 +565,6 @@ class ControllerExtensionInstaller extends Controller
             $json['success'] = $this->language->get('text_clear');
         }
 
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        $this->response->setOutputJson($json);
     }
 }
