@@ -178,7 +178,7 @@ class ControllerExtensionInstaller extends Controller
                             }
 
                             // Compare catalog files
-                            $file = DIR_CATALOG . substr($zip_name, 15);
+                            $file = DIR_SITE . substr($zip_name, 15);
 
                             if (is_file($file) && substr($zip_name, 0, 15) == 'upload/catalog/') {
                                 $json['overwrite'][] = substr($zip_name, 7);
@@ -318,7 +318,7 @@ class ControllerExtensionInstaller extends Controller
                             }
 
                             if (substr($destination, 0, 7) == 'catalog') {
-                                $destination = basename(DIR_CATALOG) . substr($destination, 7);
+                                $destination = basename(DIR_SITE) . substr($destination, 7);
                             }
 
                             if (substr($destination, 0, 5) == 'image') {

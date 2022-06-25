@@ -21,7 +21,9 @@ ini_set('display_errors', '1');
 
 //=== Protocols
 $secure = false;
-if (
+if (!empty($rootConfig['force_ssl'])) {
+    $secure = true;
+} elseif (
     (!empty($_SERVER['secure']) && ($_SERVER['secure'] === 'on' || $_SERVER['secure'] !== 'off'))
     || $_SERVER['SERVER_PORT'] == 443
 ) {
@@ -46,7 +48,7 @@ if ($rootConfig) {
 
 // DIR
 define('DIR_APPLICATION', PATH_SHIFT . APP_FOLDER . DS);
-define('DIR_CATALOG', PATH_SHIFT . 'site/'); // TODO: DIR_SITE
+define('DIR_SITE', PATH_SHIFT . 'site/'); // TODO: DIR_SITE
 define('DIR_LANGUAGE', PATH_SHIFT . APP_FOLDER . DS . 'language' . DS);
 
 // TODO: $this->view->setTemplatePath()
@@ -57,22 +59,13 @@ if (APP_FOLDER == 'site') {
 }
 
 define('DIR_SYSTEM', PATH_SHIFT . 'system' . DS);
-// define('DIR_CONFIG', DIR_SYSTEM . 'config' . DS);
-
 define('DIR_STORAGE', PATH_SHIFT . 'storage' . DS);
 define('DIR_CACHE', DIR_STORAGE . 'cache' . DS);
 define('DIR_UPLOAD', DIR_STORAGE . 'upload' . DS);
-
 define('DIR_IMAGE', PATH_PUBLIC . 'image' . DS);
 
 // DB
 if ($rootConfig) {
-//     define('DB_DRIVER', 'mysqli');
-//     define('DB_HOSTNAME', $rootConfig['database']['config']['host']);
-//     define('DB_USERNAME', $rootConfig['database']['config']['username']);
-//     define('DB_PASSWORD', $rootConfig['database']['config']['password']);
-//     define('DB_DATABASE', $rootConfig['database']['config']['database']);
-//     define('DB_PORT', (int)$rootConfig['database']['config']['port']);
     define('DB_PREFIX', $rootConfig['database']['table']['prefix']);
 }
 

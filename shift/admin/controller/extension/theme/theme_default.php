@@ -168,7 +168,7 @@ class ControllerExtensionThemeThemeDefault extends Controller
 
         $data['directories'] = array();
 
-        $directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
+        $directories = glob(DIR_SITE . 'view/theme/*', GLOB_ONLYDIR);
 
         foreach ($directories as $directory) {
             $data['directories'][] = basename($directory);

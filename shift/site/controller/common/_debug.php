@@ -13,7 +13,7 @@ class ControllerCommonDebug extends Controller
                 'URL_APP'         => URL_APP,
                 'URL_SITE'        => URL_SITE,
                 'DIR_APPLICATION' => DIR_APPLICATION,
-                'DIR_CATALOG'     => DIR_CATALOG,
+                'DIR_SITE'        => DIR_SITE,
                 'DIR_LANGUAGE'    => DIR_LANGUAGE,
                 'DIR_TEMPLATE'    => DIR_TEMPLATE,
                 'DIR_SYSTEM'      => DIR_SYSTEM,

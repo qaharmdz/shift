@@ -69,7 +69,7 @@ class ControllerInstallStep3 extends Controller
             $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
             // $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
             $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n";
-            $output .= 'define(\'DIR_CATALOG\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
+            $output .= 'define(\'DIR_SITE\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
             $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->get('post.db_driver')) . '\');' . "\n";
