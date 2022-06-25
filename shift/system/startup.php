@@ -41,7 +41,7 @@ $_SERVER['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 //=== Define
 if ($rootConfig) {
     // TODO: merge the HTTP/ HTTPS
-    if (APP_FOLDER == 'catalog') {
+    if (APP_FOLDER == 'site') {
         define('HTTP_SERVER', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
         define('HTTPS_SERVER', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
     } else {
@@ -58,11 +58,11 @@ if ($rootConfig) {
 
 // DIR
 define('DIR_APPLICATION', PATH_SHIFT . APP_FOLDER . DS);
-define('DIR_CATALOG', PATH_SHIFT . 'catalog/'); // TODO: DIR_SITE
+define('DIR_CATALOG', PATH_SHIFT . 'site/'); // TODO: DIR_SITE
 define('DIR_LANGUAGE', PATH_SHIFT . APP_FOLDER . DS . 'language' . DS);
 
 // TODO: $this->view->setTemplatePath()
-if (APP_FOLDER == 'catalog') {
+if (APP_FOLDER == 'site') {
     define('DIR_TEMPLATE', PATH_SHIFT . APP_FOLDER . DS . 'view' . DS . 'theme' . DS);
 } else {
     define('DIR_TEMPLATE', PATH_SHIFT . APP_FOLDER . DS . 'view' . DS . 'template' . DS);
