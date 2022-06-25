@@ -14,7 +14,7 @@ class ControllerCommonHeader extends Controller
         $data['styles'] = $this->document->getStyles();
         $data['scripts'] = $this->document->getScripts();
 
-        $data['base'] = HTTP_SERVER;
+        $data['base'] = URL_APP;
 
         return $this->load->view('common/header', $data);
     }

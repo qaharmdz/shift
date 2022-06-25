@@ -40,18 +40,6 @@ $_SERVER['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 
 //=== Define
 if ($rootConfig) {
-    // TODO: merge the HTTP/ HTTPS
-    if (APP_FOLDER == 'site') {
-        define('HTTP_SERVER', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
-        define('HTTPS_SERVER', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
-    } else {
-        define('HTTP_SERVER', $_SERVER['PROTOCOL'] . $rootConfig['url_base'] . APP_URL_PATH);
-        define('HTTPS_SERVER', $_SERVER['PROTOCOL'] . $rootConfig['url_base'] . APP_URL_PATH);
-
-        define('HTTP_CATALOG', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
-        define('HTTPS_CATALOG', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
-    }
-
     define('URL_APP', $_SERVER['PROTOCOL'] . $rootConfig['url_base'] . APP_URL_PATH);
     define('URL_SITE', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
 }

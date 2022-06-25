@@ -27,7 +27,7 @@ $rootConfig = [];
 if (is_file(PATH_SHIFT . 'config.php')) {
     $rootConfig = require_once PATH_SHIFT . 'config.php';
 } else {
-    define('HTTP_SERVER', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
+    define('URL_APP', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
 }
 
 require_once PATH_SHIFT . 'system/startup.php';

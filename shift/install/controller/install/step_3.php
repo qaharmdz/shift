@@ -18,10 +18,10 @@ class ControllerInstallStep3 extends Controller
             $output  = '<?php' . "\n";
             $output .= "\n";
             $output .= '// HTTP' . "\n";
-            $output .= 'define(\'HTTP_SERVER\', \'' . HTTP_SHIFT . '\');' . "\n\n";
+            $output .= 'define(\'URL_APP\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// HTTPS' . "\n";
-            $output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_SHIFT . '\');' . "\n\n";
+            $output .= 'define(\'URL_APP\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// DIR' . "\n";
             $output .= 'define(\'DIR_APPLICATION\', \'' . PATH_SHIFT . 'catalog/\');' . "\n";
@@ -52,12 +52,12 @@ class ControllerInstallStep3 extends Controller
             $output  = '<?php' . "\n";
             $output .= "\n";
             $output .= '// HTTP' . "\n";
-            $output .= 'define(\'HTTP_SERVER\', \'' . HTTP_SHIFT . 'admin/\');' . "\n";
-            $output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_SHIFT . '\');' . "\n\n";
+            $output .= 'define(\'URL_APP\', \'' . HTTP_SHIFT . 'admin/\');' . "\n";
+            $output .= 'define(\'URL_SITE\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// HTTPS' . "\n";
-            $output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_SHIFT . 'admin/\');' . "\n";
-            $output .= 'define(\'HTTPS_CATALOG\', \'' . HTTP_SHIFT . '\');' . "\n\n";
+            $output .= 'define(\'URL_APP\', \'' . HTTP_SHIFT . 'admin/\');' . "\n";
+            $output .= 'define(\'URL_SITE\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// DIR' . "\n";
             $output .= 'define(\'DIR_APPLICATION\', \'' . PATH_SHIFT . 'admin/\');' . "\n";

@@ -349,7 +349,7 @@ class ControllerSettingSetting extends Controller
         $data['config_meta_keyword']     = $this->request->get('post.config_meta_keyword', $this->config->get('config_meta_keyword'));
 
         $data['config_theme']   = $this->request->get('post.config_theme', $this->config->get('config_theme'));
-        $data['store_url']      = $this->request->is('secure') ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['store_url']      = $this->request->is('secure') ? URL_SITE : URL_SITE;
 
         $data['themes'] = array();
 

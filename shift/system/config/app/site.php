@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 // Site
-$_['site_base']         = HTTP_SERVER;
-$_['site_ssl']          = HTTPS_SERVER;
+$_['site_base']         = URL_APP;
+$_['site_ssl']          = URL_APP;
 
 // Actions
 $_['action_pre_action'] = array(

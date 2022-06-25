@@ -21,8 +21,8 @@ class ControllerStartupStartup extends Controller
 
         if (!$query->num_rows) {
             // TODO: replace env.url_app, env.url_site, env.url_asset, env.url_media
-            $this->config->set('config_url', HTTP_SERVER);
-            $this->config->set('config_ssl', HTTPS_SERVER);
+            $this->config->set('config_url', URL_APP);
+            $this->config->set('config_ssl', URL_APP);
         }
 
         //=== Settings
