@@ -13,7 +13,7 @@ class ControllerInstallStep3 extends Controller
         if ($this->request->is('POST') && $this->validate()) {
             $this->load->model('install/install');
 
-            $this->model_install_install->database($this->request->post);
+            $this->model_install_install->database($this->request->get('post'));
 
             $output  = '<?php' . "\n";
             $output .= "\n";

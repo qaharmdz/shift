@@ -16,9 +16,9 @@ class ControllerExtensionModuleHTML extends Controller
 
         if ($this->request->is('POST') && $this->validate()) {
             if (!$this->request->has('query.module_id')) {
-                $this->model_extension_module->addModule('html', $this->request->post);
+                $this->model_extension_module->addModule('html', $this->request->get('post'));
             } else {
-                $this->model_extension_module->editModule($this->request->get('query.module_id'), $this->request->post);
+                $this->model_extension_module->editModule($this->request->get('query.module_id'), $this->request->get('post'));
             }
 
             $this->session->set('flash.success', $this->language->get('text_success'));

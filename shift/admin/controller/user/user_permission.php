@@ -26,7 +26,7 @@ class ControllerUserUserPermission extends Controller
         $this->load->model('user/user_group');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user_group->addUserGroup($this->request->post);
+            $this->model_user_user_group->addUserGroup($this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -59,7 +59,7 @@ class ControllerUserUserPermission extends Controller
         $this->load->model('user/user_group');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user_group->editUserGroup($this->request->get('query.user_group_id'), $this->request->post);
+            $this->model_user_user_group->editUserGroup($this->request->get('query.user_group_id'), $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 

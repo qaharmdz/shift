@@ -26,7 +26,7 @@ class ControllerUserUser extends Controller
         $this->load->model('user/user');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user->addUser($this->request->post);
+            $this->model_user_user->addUser($this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -59,7 +59,7 @@ class ControllerUserUser extends Controller
         $this->load->model('user/user');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user->editUser($this->request->get('query.user_id'), $this->request->post);
+            $this->model_user_user->editUser($this->request->get('query.user_id'), $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 

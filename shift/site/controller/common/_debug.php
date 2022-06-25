@@ -30,19 +30,6 @@ class ControllerCommonDebug extends Controller
         $this->load->model('tool/image');
         d($this->model_tool_image->resize('no-image.png', 100, 100));
 
-        /*
-        $this->request->post->all();
-        $this->request->post->get();
-        $this->request->post->set();
-
-        $this->request->query->all();
-        $this->request->query->get();
-        $this->request->query->set();
-
-        $data['config_image'] = $this->request->get('post.config_image', $this->config->get('config_image', ''));
-        $data['config_image'] = $this->request->post->get('config_image', $this->config->get('config_image', ''));
-         */
-
         $this->response->setOutput('<a href="http://localhost/mdzGit/shift/public/" target="_blank">Home</a>');
     }
 

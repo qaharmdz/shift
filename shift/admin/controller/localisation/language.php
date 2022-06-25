@@ -26,7 +26,7 @@ class ControllerLocalisationLanguage extends Controller
         $this->load->model('localisation/language');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_localisation_language->addLanguage($this->request->post);
+            $this->model_localisation_language->addLanguage($this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -59,7 +59,7 @@ class ControllerLocalisationLanguage extends Controller
         $this->load->model('localisation/language');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_localisation_language->editLanguage($this->request->get('query.language_id'), $this->request->post);
+            $this->model_localisation_language->editLanguage($this->request->get('query.language_id'), $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
