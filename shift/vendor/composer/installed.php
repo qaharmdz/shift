@@ -3,7 +3,7 @@
         'name' => 'mdz/shift',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'bfba8a7b4b082293ab879bfea26f93eb8ce53cbe',
+        'reference' => '82d078c67074772d332a4310b1ee1b2a7b369605',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'mdz/shift' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'bfba8a7b4b082293ab879bfea26f93eb8ce53cbe',
+            'reference' => '82d078c67074772d332a4310b1ee1b2a7b369605',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../../',
             'aliases' => array(),
