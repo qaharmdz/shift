@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerAccountForgotten extends Controller
+namespace Shift\Site\Controller\Account;
+
+use Shift\System\Core\Mvc;
+
+class Forgotten extends Mvc\Controller
 {
     private $error = array();
 

@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerInformationInformation extends Controller
+namespace Shift\Site\Controller\Information;
+
+use Shift\System\Core\Mvc;
+
+class Information extends Mvc\Controller
 {
     public function index()
     {

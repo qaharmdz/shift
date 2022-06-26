@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerAccountAccount extends Controller
+namespace Shift\Site\Controller\Account;
+
+use Shift\System\Core\Mvc;
+
+class Account extends Mvc\Controller
 {
     public function index()
     {

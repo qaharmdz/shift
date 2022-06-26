@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionModuleStore extends Controller
+namespace Shift\Site\Controller\Extension\Module;
+
+use Shift\System\Core\Mvc;
+
+class Store extends Mvc\Controller
 {
     public function index()
     {

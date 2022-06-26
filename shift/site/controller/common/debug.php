@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace Shift\Site\Controller\Common;
+
+use Shift\System\Core\Mvc;
 use Shift\System\Helper\Arr;
 
-class ControllerCommonDebug extends Controller
+class Debug extends Mvc\Controller
 {
     public function index()
     {

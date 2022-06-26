@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerAccountRegister extends Controller
+namespace Shift\Site\Controller\Account;
+
+use Shift\System\Core\Mvc;
+
+class Register extends Mvc\Controller
 {
     private $error = array();
 

@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
-class ControllerInformationSitemap extends Controller {
+namespace Shift\Site\Controller\Information;
+
+use Shift\System\Core\Mvc;
+
+class Sitemap extends Mvc\Controller
+{
     public function index()
     {
         $this->load->language('information/sitemap');

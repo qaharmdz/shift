@@ -1,5 +1,12 @@
 <?php
-class ControllerToolUpload extends Controller
+
+declare(strict_types=1);
+
+namespace Shift\Site\Controller\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Upload extends Mvc\Controller
 {
     public function index()
     {

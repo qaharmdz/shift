@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonMaintenance extends Controller
+namespace Shift\Site\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class Maintenance extends Mvc\Controller
 {
     public function index()
     {

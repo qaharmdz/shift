@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerInformationContact extends Controller
+namespace Shift\Site\Controller\Information;
+
+use Shift\System\Core\Mvc;
+
+class Contact extends Mvc\Controller
 {
     private $error = array();
 

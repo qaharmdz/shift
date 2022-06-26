@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionModuleHTML extends Controller
+namespace Shift\Site\Controller\Extension\Module;
+
+use Shift\System\Core\Mvc;
+
+class Html extends Mvc\Controller
 {
     public function index($setting)
     {

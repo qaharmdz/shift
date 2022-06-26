@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerAccountEdit extends Controller
+namespace Shift\Site\Controller\Account;
+
+use Shift\System\Core\Mvc;
+
+class Edit extends Mvc\Controller
 {
     private $error = array();
 
