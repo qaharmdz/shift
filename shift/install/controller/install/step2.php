@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerInstallStep2 extends Controller
+namespace Shift\Install\Controller\Install;
+
+use Shift\System\Core\Mvc;
+
+class Step2 extends Mvc\Controller
 {
     private $error = array();
 

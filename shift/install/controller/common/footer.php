@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonFooter extends Controller
+namespace Shift\Install\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class Footer extends Mvc\Controller
 {
     public function index()
     {

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 // Actions
 $_['action_default']    = 'install/step_1';
-$_['action_router']     = 'startup/router';
 $_['action_error']      = 'error/not_found';
-$_['action_pre_action'] = array(
+$_['app_startup']       = [
     'startup/language',
     'startup/upgrade',
     'startup/database'
-);
+];

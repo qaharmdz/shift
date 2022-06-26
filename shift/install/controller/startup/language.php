@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupLanguage extends Controller
+namespace Shift\Install\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Language extends Mvc\Controller
 {
     public function index()
     {

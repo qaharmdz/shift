@@ -1,5 +1,12 @@
 <?php
-class ControllerUpgradeUpgrade extends Controller
+
+declare(strict_types=1);
+
+namespace Shift\Install\Controller\Upgrade;
+
+use Shift\System\Core\Mvc;
+
+class Upgrade extends Mvc\Controller
 {
     public function index()
     {

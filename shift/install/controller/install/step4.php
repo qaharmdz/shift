@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerInstallStep4 extends Controller
+namespace Shift\Install\Controller\Install;
+
+use Shift\System\Core\Mvc;
+
+class Step4 extends Mvc\Controller
 {
     public function index()
     {

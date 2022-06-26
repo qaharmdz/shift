@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupUpgrade extends Controller
+namespace Shift\Install\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Upgrade extends Mvc\Controller
 {
     public function index()
     {

@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupDatabase extends Controller
+namespace Shift\Install\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Database extends Mvc\Controller
 {
     public function index()
     {
