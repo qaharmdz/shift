@@ -1,5 +1,12 @@
 <?php
-class ControllerStartupEvent extends Controller
+
+declare(strict_types=1);
+
+namespace Shift\Site\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Event extends Mvc\Controller
 {
     public function index()
     {

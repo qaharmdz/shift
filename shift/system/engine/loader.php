@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Shift\System\Core\Http;
+
 final class Loader
 {
     protected $registry;
@@ -26,8 +28,8 @@ final class Loader
         }
 
         if (!$output) {
-            $action = new Action($route);
-            $output = $action->execute($this->registry, array(&$data));
+            $action = new Http\Dispatch($route);
+            $output = $action->execute(array(&$data));
         }
 
         // Trigger the post events

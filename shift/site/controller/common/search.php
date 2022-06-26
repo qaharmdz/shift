@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonSearch extends Controller
+namespace Shift\Site\Controller\common;
+
+use Shift\System\Core\Mvc;
+
+class Search extends Mvc\Controller
 {
     public function index()
     {

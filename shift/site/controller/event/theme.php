@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerEventTheme extends Controller
+namespace Shift\Site\Controller\Event;
+
+use Shift\System\Core\Mvc;
+
+class Theme extends Mvc\Controller
 {
     public function index(&$view, &$data, &$output)
     {

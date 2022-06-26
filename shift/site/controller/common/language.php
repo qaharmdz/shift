@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonLanguage extends Controller
+namespace Shift\Site\Controller\common;
+
+use Shift\System\Core\Mvc;
+
+class Language extends Mvc\Controller
 {
     public function index()
     {

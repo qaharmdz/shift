@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupMaintenance extends Controller
+namespace Shift\Site\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Maintenance extends Mvc\Controller
 {
     public function index()
     {
@@ -25,7 +29,7 @@ class ControllerStartupMaintenance extends Controller
         );
 
         // Show site if logged in as admin
-        $this->user = new Cart\User($this->registry);
+        $this->user = new \Cart\User($this->registry);
 
         if (!in_array($route, $ignore) && !$this->user->isLogged()) {
             return new Action('common/maintenance');

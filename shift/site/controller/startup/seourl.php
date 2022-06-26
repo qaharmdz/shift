@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-class ControllerStartupSeoUrl extends Controller
+namespace Shift\Site\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class SeoUrl extends Mvc\Controller
 {
     public function index()
     {
+        return;
         // Add rewrite to url class
         if ($this->config->get('config_seo_url')) {
             $this->url->addRewrite($this);

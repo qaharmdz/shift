@@ -12,7 +12,7 @@ class Event
         $this->registry = $registry;
     }
 
-    public function register($trigger, Action $action)
+    public function register($trigger, $action)
     {
         $this->data[$trigger][] = $action;
     }
@@ -22,7 +22,7 @@ class Event
         foreach ($this->data as $trigger => $actions) {
             if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($trigger, '/')) . '/', $event)) {
                 foreach ($actions as $action) {
-                    $result = $action->execute($this->registry, $args);
+                    $result = $action->execute($args);
 
                     if (!is_null($result) && !($result instanceof Exception)) {
                         return $result;

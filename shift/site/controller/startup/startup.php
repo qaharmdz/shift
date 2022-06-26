@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupStartup extends Controller
+namespace Shift\Site\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Startup extends Mvc\Controller
 {
     public function index()
     {
@@ -42,7 +46,7 @@ class ControllerStartupStartup extends Controller
         ]);
 
         //=== Url
-        $this->registry->set('url', new Url($this->config->get('config_url'), $this->config->get('config_ssl')));
+        $this->registry->set('url', new \Url($this->config->get('config_url'), $this->config->get('config_ssl')));
 
         //=== Language
         $this->load->model('localisation/language');
@@ -101,7 +105,7 @@ class ControllerStartupStartup extends Controller
         }
 
         // Overwrite the default language object
-        $language = new Language($code);
+        $language = new \Language($code);
         $language->load($code);
 
         $this->registry->set('language', $language);
@@ -110,6 +114,6 @@ class ControllerStartupStartup extends Controller
         $this->config->set('config_language_id', $languages[$code]['language_id']);
 
         //=== User
-        $this->registry->set('user', new Cart\User($this->registry));
+        $this->registry->set('user', new \Cart\User($this->registry));
     }
 }

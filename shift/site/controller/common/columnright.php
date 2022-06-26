@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonColumnRight extends Controller
+namespace Shift\Site\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class ColumnRight extends Mvc\Controller
 {
     public function index()
     {

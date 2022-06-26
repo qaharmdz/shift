@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonContentBottom extends Controller
+namespace Shift\Site\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class ContentTop extends Mvc\Controller
 {
     public function index()
     {
@@ -28,7 +32,7 @@ class ControllerCommonContentBottom extends Controller
 
         $data['modules'] = array();
 
-        $modules = $this->model_design_layout->getLayoutModules($layout_id, 'content_bottom');
+        $modules = $this->model_design_layout->getLayoutModules($layout_id, 'content_top');
 
         foreach ($modules as $module) {
             $part = explode('.', $module['code']);
@@ -54,6 +58,6 @@ class ControllerCommonContentBottom extends Controller
             }
         }
 
-        return $this->load->view('common/content_bottom', $data);
+        return $this->load->view('common/content_top', $data);
     }
 }
