@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupPermission extends Controller
+namespace Shift\Admin\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Permission extends Mvc\Controller
 {
     public function index()
     {

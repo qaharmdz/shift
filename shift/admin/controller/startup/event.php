@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerStartupEvent extends Controller
+namespace Shift\Admin\Controller\Startup;
+
+use Shift\System\Core\Mvc;
+
+class Event extends Mvc\Controller
 {
     public function index()
     {

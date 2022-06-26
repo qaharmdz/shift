@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonDashboard extends Controller
+namespace Shift\Admin\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class Dashboard extends Mvc\Controller
 {
     public function index()
     {

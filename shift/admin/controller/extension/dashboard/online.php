@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionDashboardOnline extends Controller
+namespace Shift\Admin\Controller\Extension\Dashboard;
+
+use Shift\System\Core\Mvc;
+
+class Online extends Mvc\Controller
 {
     private $error = array();
 
