@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-// Site
-$_['site_base']         = URL_APP;
-$_['site_ssl']          = URL_APP;
-
 // Actions
 $_['action_default']    = 'install/step_1';
 $_['action_router']     = 'startup/router';

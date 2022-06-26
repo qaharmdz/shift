@@ -2,17 +2,13 @@
 
 declare(strict_types=1);
 
-// Site
-$_['site_base']         = URL_APP;
-$_['site_ssl']          = URL_APP;
-
 // Actions
-$_['action_pre_action'] = array(
+$_['app_startup']       = [
     'startup/startup',
     'startup/event',
     'startup/maintenance',
-    'startup/seo_url'
-);
+    'startup/seourl',
+];
 
 // Action Events
 $_['action_event'] = array(

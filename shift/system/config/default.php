@@ -9,11 +9,12 @@ $_['site_ssl']          = false;
 $_['url_base']          = '';
 $_['locale']            = 'en-gb';
 
+$_['app_kernel']        = 'startup/kernel';
+$_['app_startup']       = [];
+
 // Actions
 $_['action_default']    = 'common/home';
-$_['action_router']     = 'startup/router';
 $_['action_error']      = 'error/not_found';
-$_['action_pre_action'] = array();
 $_['action_event']      = array();
 
 $_['database'] = [

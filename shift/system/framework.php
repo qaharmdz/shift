@@ -118,7 +118,7 @@ class Framework
         // Event Register
         if ($config->has('root.action_event')) {
             foreach ($config->get('root.action_event') as $key => $value) {
-                $event->register($key, new \Action($value));
+                $event->register($key, new Core\Http\Dispatch($value));
             }
         }
 
@@ -145,21 +145,37 @@ class Framework
 
     public function run()
     {
+        $logger   = $this->get('log');
         $config   = $this->get('config');
+        $request  = $this->get('request');
         $response = $this->get('response');
 
-        // Front Controller
-        $controller = new \Front($this->registry);
+        try {
+            $pageRoute = new Core\Http\Dispatch($config->get('root.app_kernel'));
 
-        // Pre Actions
-        if ($config->has('root.action_pre_action')) {
-            foreach ($config->get('root.action_pre_action') as $value) {
-                $controller->addPreAction(new \Action($value));
+            foreach ($config->get('root.app_startup') as $route) {
+                $dispatch = new Core\Http\Dispatch($route);
+                $result = $dispatch->execute();
+
+                if ($result instanceof Core\Http\Dispatch) {
+                    $pageRoute = $result;
+                    break;
+                }
             }
-        }
 
-        // Dispatch
-        $controller->dispatch(new \Action($config->get('root.action_router')), new \Action($config->get('root.action_error')));
+            $pageRoute->execute();
+
+        // 404 Not Found
+        // TODO: NotFoundHttpException
+        } catch (Core\Exception\NotFoundHttpException | \InvalidArgumentException $e) {
+            $logger->exceptionHandler($e);
+            exit('Exception: 404 not found');
+
+        // Fallback
+        } catch (Exception $e) {
+            $logger->exceptionHandler($e);
+            exit('The site temporarily unavailable!');
+        }
 
         // Response
         $response->setCompression($config->getInt('config_compression', 0));
