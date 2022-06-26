@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionModuleSlideshow extends Controller
+namespace Shift\Admin\Controller\Extension\Module;
+
+use Shift\System\Core\Mvc;
+
+class Slideshow extends Mvc\Controller
 {
     private $error = array();
 

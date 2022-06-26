@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonReset extends Controller
+namespace Shift\Admin\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class Reset extends Mvc\Controller
 {
     private $error = array();
 

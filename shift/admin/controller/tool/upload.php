@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerToolUpload extends Controller
+namespace Shift\Admin\Controller\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Upload extends Mvc\Controller
 {
     private $error = array();
 
@@ -236,7 +240,7 @@ class ControllerToolUpload extends Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $upload_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');

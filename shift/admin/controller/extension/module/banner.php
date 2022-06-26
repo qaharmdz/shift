@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionModuleBanner extends Controller
+namespace Shift\Admin\Controller\Extension\Module;
+
+use Shift\System\Core\Mvc;
+
+class Banner extends Mvc\Controller
 {
     private $error = array();
 

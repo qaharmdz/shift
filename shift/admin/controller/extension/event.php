@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionEvent extends Controller
+namespace Shift\Admin\Controller\Extension;
+
+use Shift\System\Core\Mvc;
+
+class Event extends Mvc\Controller
 {
     private $error = array();
 
@@ -194,7 +198,7 @@ class ControllerExtensionEvent extends Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $event_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');

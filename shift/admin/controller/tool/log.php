@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerToolLog extends Controller
+namespace Shift\Admin\Controller\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Log extends Mvc\Controller
 {
     private $error = array();
 

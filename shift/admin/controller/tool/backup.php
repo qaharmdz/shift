@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerToolBackup extends Controller
+namespace Shift\Admin\Controller\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Backup extends Mvc\Controller
 {
     private $error = array();
 

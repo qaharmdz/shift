@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerDesignBanner extends Controller
+namespace Shift\Admin\Controller\Design;
+
+use Shift\System\Core\Mvc;
+
+class Banner extends Mvc\Controller
 {
     private $error = array();
 
@@ -242,7 +246,7 @@ class ControllerDesignBanner extends Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $banner_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');

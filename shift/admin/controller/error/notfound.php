@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerErrorNotFound extends Controller
+namespace Shift\Admin\Controller\Error;
+
+use Shift\System\Core\Mvc;
+
+class NotFound extends Mvc\Controller
 {
     public function index()
     {

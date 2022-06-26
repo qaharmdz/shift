@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionInstaller extends Controller
+namespace Shift\Admin\Controller\Extension;
+
+use Shift\System\Core\Mvc;
+
+class Installer extends Mvc\Controller
 {
     public function index()
     {

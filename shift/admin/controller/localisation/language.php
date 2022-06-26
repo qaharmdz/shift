@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerLocalisationLanguage extends Controller
+namespace Shift\Admin\Controller\Localisation;
+
+use Shift\System\Core\Mvc;
+
+class Language extends Mvc\Controller
 {
     private $error = array();
 
@@ -245,7 +249,7 @@ class ControllerLocalisationLanguage extends Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $language_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');

@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonLogin extends Controller
+namespace Shift\Admin\Controller\Common;
+
+use Shift\System\Core\{Http, Mvc};
+
+class Login extends Mvc\Controller
 {
     private $error = array();
 

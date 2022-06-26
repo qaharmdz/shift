@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerExtensionExtension extends Controller
+namespace Shift\Admin\Controller\Extension;
+
+use Shift\System\Core\Mvc;
+
+class Extension extends Mvc\Controller
 {
     private $error = array();
 

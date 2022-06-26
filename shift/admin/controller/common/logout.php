@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonLogout extends Controller
+namespace Shift\Admin\Controller\Common;
+
+use Shift\System\Core\{Http, Mvc};
+
+class Logout extends Mvc\Controller
 {
     public function index()
     {

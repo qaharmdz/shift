@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCommonFileManager extends Controller
+namespace Shift\Admin\Controller\Common;
+
+use Shift\System\Core\Mvc;
+
+class FileManager extends Mvc\Controller
 {
     public function index()
     {
@@ -188,7 +192,7 @@ class ControllerCommonFileManager extends Controller
             $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $image_total;
         $pagination->page = $page;
         $pagination->limit = 16;

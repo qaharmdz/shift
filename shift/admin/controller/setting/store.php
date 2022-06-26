@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace Shift\Admin\Controller\Setting;
+
+use Shift\System\Core\Mvc;
 use Shift\System\Helper\Arr;
 
-class ControllerSettingStore extends Controller
+class Store extends Mvc\Controller
 {
     private $error = [];
 

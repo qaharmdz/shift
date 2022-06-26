@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerCatalogInformation extends Controller
+namespace Shift\Admin\Controller\Catalog;
+
+use Shift\System\Core\Mvc;
+
+class Information extends Mvc\Controller
 {
     private $error = array();
 
@@ -167,7 +171,7 @@ class ControllerCatalogInformation extends Controller
 
         $url = $this->urlQueryList(['sort', 'order']);
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $information_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');

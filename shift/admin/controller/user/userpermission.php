@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ControllerUserUserPermission extends Controller
+namespace Shift\Admin\Controller\User;
+
+use Shift\System\Core\Mvc;
+
+class UserPermission extends Mvc\Controller
 {
     private $error = array();
 
@@ -239,7 +243,7 @@ class ControllerUserUserPermission extends Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new Pagination();
+        $pagination = new \Pagination();
         $pagination->total = $user_group_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
