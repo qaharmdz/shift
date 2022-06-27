@@ -24,9 +24,13 @@ class Registry
     /**
      * Add a given key.
      */
-    public function set(string $key, object $value): object
+    public function set(string $key, object $value): object|null
     {
-        return $this->storage[$key] = $value;
+        if (!$this->has($key)) {
+            return $this->storage[$key] = $value;
+        }
+
+        return null;
     }
 
     /**

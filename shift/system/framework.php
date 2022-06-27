@@ -31,7 +31,7 @@ class Framework
         return $this->registry->get($key);
     }
 
-    public function set(string $key, object $library)
+    public function set(string $key, object $library): object|null
     {
         return $this->registry->set($key, $library);
     }
