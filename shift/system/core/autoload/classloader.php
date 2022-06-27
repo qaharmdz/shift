@@ -26,6 +26,14 @@ class ClassLoader
     }
 
     /**
+     * Get all the class map
+     */
+    public function getClassMap()
+    {
+        return $this->classMap;
+    }
+
+    /**
      * Loads the given class or interface.
      *
      * Fallback to composer autoloader.
