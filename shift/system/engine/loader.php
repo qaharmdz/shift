@@ -13,11 +13,9 @@ final class Loader
         $this->registry = $registry;
     }
 
-    public function controller($route, $data = array())
+    public function controller(string $route, $data = array())
     {
-        // Sanitize the call
-        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-
+        $route  = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
         $output = null;
 
         // Trigger the pre events
@@ -27,7 +25,7 @@ final class Loader
             return $result;
         }
 
-        if (!$output) {
+        if (is_null($output)) {
             $action = new Http\Dispatch($route);
             $output = $action->execute(array(&$data));
         }
