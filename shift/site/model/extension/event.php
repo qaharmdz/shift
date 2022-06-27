@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelExtensionEvent extends Model
+namespace Shift\Site\Model\Extension;
+
+use Shift\System\Core\Mvc;
+
+class Event extends Mvc\Model
 {
     function getEvents()
     {

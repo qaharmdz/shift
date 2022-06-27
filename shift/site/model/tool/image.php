@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelToolImage extends Model
+namespace Shift\Site\Model\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Image extends Mvc\Model
 {
     public function resize($filename, $width, $height)
     {

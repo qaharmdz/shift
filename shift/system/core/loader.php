@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Shift\System\Core\Http;
+namespace Shift\System\Core;
 
 final class Loader
 {
@@ -40,35 +40,68 @@ final class Loader
         return $output;
     }
 
-    public function model($route)
+    public function model(string $route)
     {
-        // Sanitize the call
-        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+        $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
+        $modelKey = 'model_' . str_replace(['/', '-', '.'], ['_', '', ''], $route);
 
         // Trigger the pre events
         $this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
 
-        if (!$this->registry->has('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), $route))) {
-            $file  = DIR_APPLICATION . 'model/' . $route . '.php';
-            $class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $route);
+        if (!$this->registry->has($modelKey)) {
+            $parts = array_filter(explode('/', $route));
+            $class = strtolower('Shift\\' . APP_FOLDER . '\Model\\' . implode('\\', $parts));
 
-            if (is_file($file)) {
-                include_once($file);
+            if (class_exists($class)) {
+                $proxy  = new Proxy();
+                $object = new $class();
 
-                $proxy = new Proxy();
-
-                foreach (get_class_methods($class) as $method) {
-                    $proxy->{$method} = $this->callback($this->registry, $route . '/' . $method);
+                foreach (get_class_vars($class) as $name => $value) {
+                    $proxy->{$name} = $value;
                 }
 
-                $this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
+                foreach (get_class_methods($class) as $method) {
+                    if ((substr($method, 0, 2) != '__') && is_callable([$object, $method])) {
+                        $proxy->{$method} = $this->modelCallback($this->registry, $route . '/' . $method, $object, $method);
+                    }
+                }
+
+                $proxy->{'_key'} = $modelKey;
+                $this->registry->set($modelKey, $proxy);
             } else {
-                throw new \Exception('Error: Could not load model ' . $route . '!');
+                throw new \InvalidArgumentException(sprintf('Unable to locate model "%s".', $route));
             }
         }
 
         // Trigger the post events
         $this->registry->get('event')->trigger('model/' . $route . '/after', array(&$route));
+    }
+
+    protected function modelCallback($registry, $route, $class, $method)
+    {
+        return function ($params) use ($registry, $route, $class, $method) {
+            $output = null;
+
+            // Trigger the pre events
+            $result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
+
+            if ($result) {
+                return $result;
+            }
+
+            if (is_null($output)) {
+                $output = call_user_func_array([$class, $method], $params);
+            }
+
+            // Trigger the post events
+            $result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
+
+            if ($result) {
+                return $result;
+            }
+
+            return $output;
+        };
     }
 
     public function view($route, $data = array())
@@ -86,7 +119,7 @@ final class Loader
         }
 
         if (!$output) {
-            $template = new Template();
+            $template = new \Template();
 
             foreach ($data as $key => $value) {
                 $template->set($key, $value);
@@ -153,54 +186,5 @@ final class Loader
         $this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$output));
 
         return $output;
-    }
-
-    protected function callback($registry, $route)
-    {
-        return function ($args) use ($registry, &$route) {
-            static $model = array();
-
-            $output = null;
-
-            // Trigger the pre events
-            $result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
-
-            if ($result) {
-                return $result;
-            }
-
-            // Store the model object
-            if (!isset($model[$route])) {
-                $file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
-                $class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
-
-                if (is_file($file)) {
-                    include_once($file);
-
-                    $model[$route] = new $class($registry);
-                } else {
-                    throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
-                }
-            }
-
-            $method = substr($route, strrpos($route, '/') + 1);
-
-            $callable = array($model[$route], $method);
-
-            if (is_callable($callable)) {
-                $output = call_user_func_array($callable, $args);
-            } else {
-                throw new \Exception('Error: Could not call model/' . $route . '!');
-            }
-
-            // Trigger the post events
-            $result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
-
-            if ($result) {
-                return $result;
-            }
-
-            return $output;
-        };
     }
 }

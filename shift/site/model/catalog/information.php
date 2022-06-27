@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelCatalogInformation extends Model
+namespace Shift\Site\Model\Catalog;
+
+use Shift\System\Core\Mvc;
+
+class Information extends Mvc\Model
 {
     public function getInformation($information_id)
     {

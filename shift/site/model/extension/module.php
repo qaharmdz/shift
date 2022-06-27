@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelExtensionModule extends Model
+namespace Shift\Site\Model\Extension;
+
+use Shift\System\Core\Mvc;
+
+class Module extends Mvc\Model
 {
     public function getModule($module_id)
     {

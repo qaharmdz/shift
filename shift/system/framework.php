@@ -50,7 +50,7 @@ class Framework
         /**
          * TODO: config prefix:
          * v root: Setting from the config file and system/config folder
-         * - env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
+         * v env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
          * - system: Setting from database
          */
         //=== Config
@@ -104,6 +104,10 @@ class Framework
         $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
         $this->set('response', $response);
 
+        // Loader
+        $loader = new Core\Loader($this->registry);
+        $this->set('load', $loader);
+
         return $this;
     }
 
@@ -121,10 +125,6 @@ class Framework
                 $event->register($key, new Core\Http\Dispatch($value));
             }
         }
-
-        // Loader
-        $loader = new \Loader($this->registry);
-        $this->set('load', $loader);
 
         // Cache
         $this->set('cache', new \Cache());

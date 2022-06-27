@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelSettingStore extends Model
+namespace Shift\Site\Model\Setting;
+
+use Shift\System\Core\Mvc;
+
+class Store extends Mvc\Model
 {
     public function getStores($data = array())
     {

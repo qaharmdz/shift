@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelDesignBanner extends Model
+namespace Shift\Site\Model\Design;
+
+use Shift\System\Core\Mvc;
+
+class Banner extends Mvc\Model
 {
     public function getBanner($banner_id)
     {
