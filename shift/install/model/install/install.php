@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelInstallInstall extends Model
+namespace Shift\Install\Model\Install;
+
+use Shift\System\Core\Mvc;
+
+class Install extends Mvc\Model
 {
     public function database($data)
     {
