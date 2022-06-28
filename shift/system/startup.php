@@ -6,7 +6,7 @@ if (!is_array($rootConfig)) {
     exit('(╯°□°）╯︵ ┻━┻');
 }
 
-define('VERSION', '1.0.0-a.1');
+define('VERSION', '0.1.0-a.1'); // Staging: a.*, b.*, rc.*
 list($major, $minor, $patch, $pre) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 
@@ -21,7 +21,7 @@ ini_set('display_errors', '1');
 
 //=== Protocols
 $secure = false;
-if (!empty($rootConfig['force_ssl'])) {
+if ($rootConfig['force_ssl']) {
     $secure = true;
 } elseif (
     (!empty($_SERVER['secure']) && ($_SERVER['secure'] === 'on' || $_SERVER['secure'] !== 'off'))

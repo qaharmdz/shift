@@ -130,7 +130,7 @@ class Framework
         $this->set('cache', new \Cache());
 
         // Url
-        $this->set('url', new \Url($config->get('root.site_base'), $config->get('root.site_ssl')));
+        $this->set('url', new \Url(URL_APP));
 
         // Language
         $language = new \Language($config->get('root.locale'));

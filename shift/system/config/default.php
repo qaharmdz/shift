@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 // Site
-$_['site_base']         = '';
-$_['site_ssl']          = false;
-
 $_['url_base']          = '';
 $_['locale']            = 'en-gb';
 
