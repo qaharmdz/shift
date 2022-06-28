@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelDesignLayout extends Model
+namespace Shift\Admin\Model\Design;
+
+use Shift\System\Core\Mvc;
+
+class Layout extends Mvc\Model
 {
     public function addLayout($data)
     {

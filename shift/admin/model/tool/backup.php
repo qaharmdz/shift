@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelToolBackup extends Model
+namespace Shift\Admin\Model\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Backup extends Mvc\Model
 {
     public function restore($sql)
     {

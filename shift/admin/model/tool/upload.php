@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelToolUpload extends Model
+namespace Shift\Admin\Model\Tool;
+
+use Shift\System\Core\Mvc;
+
+class Upload extends Mvc\Model
 {
     public function addUpload($name, $filename)
     {

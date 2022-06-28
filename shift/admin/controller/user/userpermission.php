@@ -16,7 +16,7 @@ class UserPermission extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('user/user_group');
+        $this->load->model('user/usergroup');
 
         $this->getList();
     }
@@ -27,10 +27,10 @@ class UserPermission extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('user/user_group');
+        $this->load->model('user/usergroup');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user_group->addUserGroup($this->request->get('post'));
+            $this->model_user_usergroup->addUserGroup($this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -60,10 +60,10 @@ class UserPermission extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('user/user_group');
+        $this->load->model('user/usergroup');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_user_user_group->editUserGroup($this->request->get('query.user_group_id'), $this->request->get('post'));
+            $this->model_user_usergroup->editUserGroup($this->request->get('query.user_group_id'), $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -93,11 +93,11 @@ class UserPermission extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('user/user_group');
+        $this->load->model('user/usergroup');
 
         if ($this->request->has('post.selected') && $this->validateDelete()) {
             foreach ($this->request->get('post.selected') as $user_group_id) {
-                $this->model_user_user_group->deleteUserGroup($user_group_id);
+                $this->model_user_usergroup->deleteUserGroup($user_group_id);
             }
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -180,9 +180,9 @@ class UserPermission extends Mvc\Controller
             'limit' => $this->config->get('config_limit_admin')
         );
 
-        $user_group_total = $this->model_user_user_group->getTotalUserGroups();
+        $user_group_total = $this->model_user_usergroup->getTotalUserGroups();
 
-        $results = $this->model_user_user_group->getUserGroups($filter_data);
+        $results = $this->model_user_usergroup->getUserGroups($filter_data);
 
         foreach ($results as $result) {
             $data['user_groups'][] = array(
@@ -325,7 +325,7 @@ class UserPermission extends Mvc\Controller
         $data['cancel'] = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true);
 
         if ($this->request->has('query.user_group_id') && !$this->request->is('POST')) {
-            $user_group_info = $this->model_user_user_group->getUserGroup($this->request->get('query.user_group_id'));
+            $user_group_info = $this->model_user_usergroup->getUserGroup($this->request->get('query.user_group_id'));
         }
 
         if ($this->request->has('post.name')) {

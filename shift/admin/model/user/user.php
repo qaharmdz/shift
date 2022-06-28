@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelUserUser extends Model
+namespace Shift\Admin\Model\User;
+
+use Shift\System\Core\Mvc;
+
+class User extends Mvc\Model
 {
     public function addUser($data)
     {

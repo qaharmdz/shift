@@ -386,9 +386,9 @@ class User extends Mvc\Controller
             $data['user_group_id'] = '';
         }
 
-        $this->load->model('user/user_group');
+        $this->load->model('user/usergroup');
 
-        $data['user_groups'] = $this->model_user_user_group->getUserGroups();
+        $data['user_groups'] = $this->model_user_usergroup->getUserGroups();
 
         if ($this->request->has('post.password')) {
             $data['password'] = $this->request->get('post.password');

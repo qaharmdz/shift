@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelDesignBanner extends Model
+namespace Shift\Admin\Model\Design;
+
+use Shift\System\Core\Mvc;
+
+class Banner extends Mvc\Model
 {
     public function addBanner($data) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "'");

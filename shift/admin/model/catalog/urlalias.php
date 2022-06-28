@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelCatalogUrlAlias extends Model
+namespace Shift\Admin\Model\Catalog;
+
+use Shift\System\Core\Mvc;
+
+class UrlAlias extends Mvc\Model
 {
     public function getUrlAlias($keyword)
     {

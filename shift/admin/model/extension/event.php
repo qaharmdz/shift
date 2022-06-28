@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelExtensionEvent extends Model
+namespace Shift\Admin\Model\Extension;
+
+use Shift\System\Core\Mvc;
+
+class Event extends Mvc\Model
 {
     public function addEvent($code, $trigger, $action, $status = 1)
     {

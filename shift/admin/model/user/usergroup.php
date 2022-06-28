@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelUserUserGroup extends Model
+namespace Shift\Admin\Model\User;
+
+use Shift\System\Core\Mvc;
+
+class UserGroup extends Mvc\Model
 {
     public function addUserGroup($data)
     {

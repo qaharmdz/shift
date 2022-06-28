@@ -363,9 +363,9 @@ class Information extends Mvc\Controller
         }
 
         if (utf8_strlen($this->request->getString('post.keyword')) > 0) {
-            $this->load->model('catalog/url_alias');
+            $this->load->model('catalog/urlalias');
 
-            $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->getString('post.keyword'));
+            $url_alias_info = $this->model_catalog_urlalias->getUrlAlias($this->request->getString('post.keyword'));
 
             if ($url_alias_info && $url_alias_info['query'] != 'information_id=' . $this->request->get('query.information_id', 'x')) {
                 $this->error['keyword'] = sprintf($this->language->get('error_keyword'));

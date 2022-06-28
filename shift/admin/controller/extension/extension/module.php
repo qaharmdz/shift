@@ -32,10 +32,10 @@ class Module extends Mvc\Controller
         if ($this->validate()) {
             $this->model_extension_extension->install('module', $this->request->get('query.extension'));
 
-            $this->load->model('user/user_group');
+            $this->load->model('user/usergroup');
 
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/module/' . $this->request->get('query.extension'));
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get('query.extension'));
+            $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'access', 'extension/module/' . $this->request->get('query.extension'));
+            $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get('query.extension'));
 
             // Call install method if it exsits
             $this->load->controller('extension/module/' . $this->request->get('query.extension') . '/install');

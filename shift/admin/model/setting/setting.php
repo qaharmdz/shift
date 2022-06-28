@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelSettingSetting extends Model
+namespace Shift\Admin\Model\Setting;
+
+use Shift\System\Core\Mvc;
+
+class Setting extends Mvc\Model
 {
     public function getSetting($code, $store_id = 0)
     {

@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-class ModelLocalisationLanguage extends Model
+namespace Shift\Admin\Model\Localisation;
+
+use Shift\System\Core\Mvc;
+
+class Language extends Mvc\Model
 {
     public function addLanguage($data)
     {
