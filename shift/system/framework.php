@@ -99,6 +99,9 @@ class Framework
         // Request
         $this->set('request', new Core\Http\Request());
 
+        // Router
+        $this->set('router', new Core\Http\Router(URL_APP));
+
         // Response
         $response = new Core\Http\Response();
         $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
@@ -128,9 +131,6 @@ class Framework
 
         // Cache
         $this->set('cache', new \Cache());
-
-        // Url
-        $this->set('url', new \Url(URL_APP));
 
         // Language
         $language = new \Language($config->get('root.locale'));

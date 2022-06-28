@@ -20,7 +20,7 @@ class Maintenance extends Mvc\Controller
         );
 
         if (str_starts_with($route, 'startup/')) {
-            $route = $this->config->get('root.action_error');
+            $route = $this->config->get('root.app_error');
         }
 
         $ignore = array(

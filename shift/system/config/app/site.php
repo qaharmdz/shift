@@ -7,7 +7,7 @@ $_['app_startup']       = [
     'startup/startup',
     'startup/event',
     'startup/maintenance',
-    'startup/seourl',
+    'startup/router',
 ];
 
 // Action Events

@@ -177,7 +177,7 @@ class Database
     /**
      * Processing query token into ready use prepared statement.
      *
-     * Strict sequence `:parameter?type|filter` or `:parameter|filter`.
+     * Strict sequence `:parameter?type`
      *
      * - **token-parameter** named parameter to represent the placeholder. Identified with single colon `:value`.
      * - **token-type** represent the parameter type. Identified with a question mark and one characters of `sidb`, `:value?i`.
@@ -185,8 +185,6 @@ class Database
      *   - **?i** integer
      *   - **?d** double/ float
      *   - **?b** bloat
-     * - **token-filter** is an optional data filter for complex placeholder. Identified with a vertical-bar, `:values?i|a`.
-     *   - **|a** array - filter to substitute the array for `IN()` operator placeholder and assigned parameters.
      * - **token-variable** templating variable replacement. Identified with curly bracket `{variable}`.
      *
      * Example:
@@ -195,7 +193,7 @@ class Database
      * $sql = "SELECT * FROM `user` WHERE (firstname LIKE :name OR lastname LIKE :name)
      *      AND phone = :phone?i
      *      AND username LIKE :name
-     *      AND (user_id IN (:items?i|a) OR group_id IN (:items?i|a)
+     *      AND (user_id IN (:items?i) OR group_id IN (:items?i)
      *      ORDER BY {order_column} {sort_order}";
      *
      * $params = [

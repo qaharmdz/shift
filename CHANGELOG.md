@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add system/core/http/request.
 - Add system/core/http/response.
 - Add system/core/http/dispatch.
+- Add system/core/http/router.
 - Add system/core/mvc/controller.
 - Add system/core/mvc/model.
 

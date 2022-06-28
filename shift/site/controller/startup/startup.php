@@ -45,9 +45,6 @@ class Startup extends Mvc\Controller
             'display' => $this->config->getBool('config_error_display', false)
         ]);
 
-        //=== Url
-        $this->registry->set('url', new \Url($this->config->get('config_url'), $this->config->get('config_ssl')));
-
         //=== Language
         $this->load->model('localisation/language');
 
@@ -112,6 +109,9 @@ class Startup extends Mvc\Controller
 
         // Set the config language_id
         $this->config->set('config_language_id', $languages[$code]['language_id']);
+
+        $this->config->set('env.language_id', $languages[$code]['language_id']);
+        $this->config->set('env.language_code', $code);
 
         //=== User
         $this->registry->set('user', new \Cart\User($this->registry));

@@ -7,11 +7,11 @@ $_['url_base']          = '';
 $_['locale']            = 'en-gb';
 
 $_['app_kernel']        = 'startup/kernel';
+$_['app_error']         = 'error/notfound';
 $_['app_startup']       = [];
 
 // Actions
 $_['action_default']    = 'common/home';
-$_['action_error']      = 'error/not_found';
 $_['action_event']      = array();
 
 $_['database'] = [
