@@ -15,7 +15,7 @@ class Login extends Mvc\Controller
         $this->load->model('account/customer');
 
         if ($this->user->isLogged()) {
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->router->url('account/account'));
         }
 
         $this->load->language('account/login');
@@ -35,24 +35,24 @@ class Login extends Mvc\Controller
                 $this->model_account_activity->addActivity('login', $activity_data);
             }
 
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->router->url('account/account'));
         }
 
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_account'),
-            'href' => $this->url->link('account/account', '', true)
+            'href' => $this->router->url('account/account')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_login'),
-            'href' => $this->url->link('account/login', '', true)
+            'href' => $this->router->url('account/login')
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -74,9 +74,9 @@ class Login extends Mvc\Controller
             $data['error_warning'] = $this->error['warning'];
         }
 
-        $data['action'] = $this->url->link('account/login', '', true);
-        $data['register'] = $this->url->link('account/register', '', true);
-        $data['forgotten'] = $this->url->link('account/forgotten', '', true);
+        $data['action'] = $this->router->url('account/login');
+        $data['register'] = $this->router->url('account/register');
+        $data['forgotten'] = $this->router->url('account/forgotten');
 
         $data['redirect'] = $this->session->pull('flash.redirect');
         $data['success'] = $this->session->pull('flash.success');

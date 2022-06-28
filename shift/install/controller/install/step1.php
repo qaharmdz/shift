@@ -13,7 +13,7 @@ class Step1 extends Mvc\Controller
         $this->language->load('install/step_1');
 
         if ($this->request->is('POST')) {
-            $this->response->redirect($this->url->link('install/step_2'));
+            $this->response->redirect($this->router->url('install/step_2'));
         }
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -25,7 +25,7 @@ class Step1 extends Mvc\Controller
 
         $data['button_continue'] = $this->language->get('button_continue');
 
-        $data['action'] = $this->url->link('install/step_1');
+        $data['action'] = $this->router->url('install/step_1');
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');

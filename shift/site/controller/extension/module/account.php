@@ -32,22 +32,22 @@ class Account extends Mvc\Controller
         $data['text_recurring'] = $this->language->get('text_recurring');
 
         $data['logged'] = $this->user->isLogged();
-        $data['register'] = $this->url->link('account/register', '', true);
-        $data['login'] = $this->url->link('account/login', '', true);
-        $data['logout'] = $this->url->link('account/logout', '', true);
-        $data['forgotten'] = $this->url->link('account/forgotten', '', true);
-        $data['account'] = $this->url->link('account/account', '', true);
-        $data['edit'] = $this->url->link('account/edit', '', true);
-        $data['password'] = $this->url->link('account/password', '', true);
-        $data['address'] = $this->url->link('account/address', '', true);
-        $data['wishlist'] = $this->url->link('account/wishlist');
-        $data['order'] = $this->url->link('account/order', '', true);
-        $data['download'] = $this->url->link('account/download', '', true);
-        $data['reward'] = $this->url->link('account/reward', '', true);
-        $data['return'] = $this->url->link('account/return', '', true);
-        $data['transaction'] = $this->url->link('account/transaction', '', true);
-        $data['newsletter'] = $this->url->link('account/newsletter', '', true);
-        $data['recurring'] = $this->url->link('account/recurring', '', true);
+        $data['register'] = $this->router->url('account/register');
+        $data['login'] = $this->router->url('account/login');
+        $data['logout'] = $this->router->url('account/logout');
+        $data['forgotten'] = $this->router->url('account/forgotten');
+        $data['account'] = $this->router->url('account/account');
+        $data['edit'] = $this->router->url('account/edit');
+        $data['password'] = $this->router->url('account/password');
+        $data['address'] = $this->router->url('account/address');
+        $data['wishlist'] = $this->router->url('account/wishlist');
+        $data['order'] = $this->router->url('account/order');
+        $data['download'] = $this->router->url('account/download');
+        $data['reward'] = $this->router->url('account/reward');
+        $data['return'] = $this->router->url('account/return');
+        $data['transaction'] = $this->router->url('account/transaction');
+        $data['newsletter'] = $this->router->url('account/newsletter');
+        $data['recurring'] = $this->router->url('account/recurring');
 
         return $this->load->view('extension/module/account', $data);
     }

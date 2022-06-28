@@ -29,7 +29,7 @@ class Backup extends Mvc\Controller
 
                 $this->session->set('flash.success', $this->language->get('text_success'));
 
-                $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
+                $this->response->redirect($this->router->url('tool/backup', 'token=' . $this->session->get('token')));
             } else {
                 $this->error['warning'] = $this->language->get('error_empty');
             }
@@ -53,17 +53,17 @@ class Backup extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('tool/backup', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('tool/backup', 'token=' . $this->session->get('token'))
         );
 
-        $data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->get('token'), true);
+        $data['restore'] = $this->router->url('tool/backup', 'token=' . $this->session->get('token'));
 
-        $data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->get('token'), true);
+        $data['backup'] = $this->router->url('tool/backup/backup', 'token=' . $this->session->get('token'));
 
         $data['tables'] = $this->model_tool_backup->getTables();
 
@@ -81,7 +81,7 @@ class Backup extends Mvc\Controller
         if (!$this->request->has('post.backup')) {
             $this->session->set('flash.error', $this->language->get('error_export'));
 
-            $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('tool/backup', 'token=' . $this->session->get('token')));
         } elseif ($this->user->hasPermission('modify', 'tool/backup')) {
             $this->load->model('tool/backup');
 
@@ -92,7 +92,7 @@ class Backup extends Mvc\Controller
         } else {
             $this->session->set('flash.error', $this->language->get('error_permission'));
 
-            $this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('tool/backup', 'token=' . $this->session->get('token')));
         }
     }
 }

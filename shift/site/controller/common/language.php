@@ -14,7 +14,7 @@ class Language extends Mvc\Controller
 
         $data['text_language'] = $this->language->get('text_language');
 
-        $data['action'] = $this->url->link('common/language/language', '', $this->request->getBool('server.SECURE'));
+        $data['action'] = $this->router->url('common/language/language');
 
         $data['code'] = $this->session->get('language');
 
@@ -34,9 +34,11 @@ class Language extends Mvc\Controller
         }
 
         if (!$this->request->has('query.route')) {
-            $data['redirect'] = $this->url->link('common/home');
+            $data['redirect'] = $this->router->url('common/home');
         } else {
             $url_data = $this->request->get('query');
+
+            unset($url_data['_route_']);
 
             $route = $url_data['route'];
 
@@ -48,7 +50,7 @@ class Language extends Mvc\Controller
                 $url = '&' . urldecode(http_build_query($url_data, '', '&'));
             }
 
-            $data['redirect'] = $this->url->link($route, $url, $this->request->getBool('server.SECURE'));
+            $data['redirect'] = $this->router->url($route, $url);
         }
 
         return $this->load->view('common/language', $data);

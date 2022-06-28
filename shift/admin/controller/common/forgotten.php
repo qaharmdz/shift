@@ -13,11 +13,11 @@ class Forgotten extends Mvc\Controller
     public function index()
     {
         if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
-            $this->response->redirect($this->url->link('common/dashboard', '', true));
+            $this->response->redirect($this->router->url('common/dashboard'));
         }
 
         if (!$this->config->get('config_password')) {
-            $this->response->redirect($this->url->link('common/login', '', true));
+            $this->response->redirect($this->router->url('common/login'));
         }
 
         $this->load->language('common/forgotten');
@@ -38,7 +38,7 @@ class Forgotten extends Mvc\Controller
 
             $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
             $message .= $this->language->get('text_change') . "\n\n";
-            $message .= $this->url->link('common/reset', 'code=' . $code, true) . "\n\n";
+            $message .= $this->router->url('common/reset', 'code=' . $code) . "\n\n";
             $message .= sprintf($this->language->get('text_ip'), $this->request->getIp()) . "\n\n";
 
             $mail = new Mail();
@@ -59,7 +59,7 @@ class Forgotten extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('common/login', '', true));
+            $this->response->redirect($this->router->url('common/login'));
         }
 
         $data['heading_title']   = $this->language->get('heading_title');
@@ -78,15 +78,15 @@ class Forgotten extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', '', true)
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('common/forgotten', 'token=' . '', true)
+            'href' => $this->router->url('common/forgotten', 'token=' . '')
         );
 
-        $data['action'] = $this->url->link('common/forgotten', '', true);
-        $data['cancel'] = $this->url->link('common/login', '', true);
+        $data['action'] = $this->router->url('common/forgotten');
+        $data['cancel'] = $this->router->url('common/login');
         $data['email']  = $this->request->get('post.email', '');
 
         $data['header'] = $this->load->controller('common/header');

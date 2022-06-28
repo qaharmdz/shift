@@ -65,7 +65,7 @@ class Upgrade extends Mvc\Controller
 
                 $json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step - 1], '.php'), $step, count($files));
 
-                $json['next'] = str_replace('&amp;', '&', $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1)));
+                $json['next'] = str_replace('&amp;', '&', $this->router->url('upgrade/upgrade/next', 'step=' . ($step + 1)));
             } catch (Exception $exception) {
                 $json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
             }

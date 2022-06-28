@@ -23,7 +23,7 @@ class Online extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true));
+            $this->response->redirect($this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -49,22 +49,22 @@ class Online extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true)
+            'href' => $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/dashboard/online', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('extension/dashboard/online', 'token=' . $this->session->get('token'))
         );
 
-        $data['action'] = $this->url->link('extension/dashboard/online', 'token=' . $this->session->get('token'), true);
+        $data['action'] = $this->router->url('extension/dashboard/online', 'token=' . $this->session->get('token'));
 
-        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard', true);
+        $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=dashboard');
 
         if ($this->request->has('post.dashboard_online_width')) {
             $data['dashboard_online_width'] = $this->request->get('post.dashboard_online_width');
@@ -118,7 +118,7 @@ class Online extends Mvc\Controller
 
         // Customers Online
         $data['total'] = 101;
-        $data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->get('token'), true);
+        $data['online'] = $this->router->url('report/customer_online', 'token=' . $this->session->get('token'));
 
         return $this->load->view('extension/dashboard/online_info', $data);
     }

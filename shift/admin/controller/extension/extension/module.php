@@ -110,7 +110,7 @@ class Module extends Mvc\Controller
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'token=' . $this->session->get('token'), true));
+        $data['text_layout'] = sprintf($this->language->get('text_layout'), $this->router->url('design/layout', 'token=' . $this->session->get('token')));
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -162,18 +162,18 @@ class Module extends Mvc\Controller
                     $module_data[] = array(
                         'module_id' => $module['module_id'],
                         'name'      => $module['name'],
-                        'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->get('token') . '&module_id=' . $module['module_id'], true),
-                        'delete'    => $this->url->link('extension/extension/module/delete', 'token=' . $this->session->get('token') . '&module_id=' . $module['module_id'], true)
+                        'edit'      => $this->router->url('extension/module/' . $extension, 'token=' . $this->session->get('token') . '&module_id=' . $module['module_id']),
+                        'delete'    => $this->router->url('extension/extension/module/delete', 'token=' . $this->session->get('token') . '&module_id=' . $module['module_id'])
                     );
                 }
 
                 $data['extensions'][] = array(
                     'name'      => $this->language->get('heading_title'),
                     'module'    => $module_data,
-                    'install'   => $this->url->link('extension/extension/module/install', 'token=' . $this->session->get('token') . '&extension=' . $extension, true),
-                    'uninstall' => $this->url->link('extension/extension/module/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension, true),
+                    'install'   => $this->router->url('extension/extension/module/install', 'token=' . $this->session->get('token') . '&extension=' . $extension),
+                    'uninstall' => $this->router->url('extension/extension/module/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension),
                     'installed' => in_array($extension, $extensions),
-                    'edit'      => $this->url->link('extension/module/' . $extension, 'token=' . $this->session->get('token'), true)
+                    'edit'      => $this->router->url('extension/module/' . $extension, 'token=' . $this->session->get('token'))
                 );
             }
         }

@@ -18,12 +18,12 @@ class Installer extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/installer', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('extension/installer', 'token=' . $this->session->get('token'))
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -104,14 +104,14 @@ class Installer extends Mvc\Controller
                 if (file_exists($file)) {
                     $json['step'][] = array(
                         'text' => $this->language->get('text_xml'),
-                        'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->get('token'), true)),
+                        'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/xml', 'token=' . $this->session->get('token'))),
                         'path' => $path
                     );
 
                     // Clear temporary files
                     $json['step'][] = array(
                         'text' => $this->language->get('text_remove'),
-                        'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->get('token'), true)),
+                        'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/remove', 'token=' . $this->session->get('token'))),
                         'path' => $path
                     );
                 } else {
@@ -132,14 +132,14 @@ class Installer extends Mvc\Controller
                         // Zip
                         $json['step'][] = array(
                             'text' => $this->language->get('text_unzip'),
-                            'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/unzip', 'token=' . $this->session->get('token'), true)),
+                            'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/unzip', 'token=' . $this->session->get('token'))),
                             'path' => $path
                         );
 
                         // FTP
                         $json['step'][] = array(
                             'text' => $this->language->get('text_ftp'),
-                            'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->get('token'), true)),
+                            'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/ftp', 'token=' . $this->session->get('token'))),
                             'path' => $path
                         );
 
@@ -151,7 +151,7 @@ class Installer extends Mvc\Controller
                             if (substr($zip_name, 0, 11) == 'install.sql') {
                                 $json['step'][] = array(
                                     'text' => $this->language->get('text_sql'),
-                                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/sql', 'token=' . $this->session->get('token'), true)),
+                                    'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/sql', 'token=' . $this->session->get('token'))),
                                     'path' => $path
                                 );
                             }
@@ -160,7 +160,7 @@ class Installer extends Mvc\Controller
                             if (substr($zip_name, 0, 11) == 'install.xml') {
                                 $json['step'][] = array(
                                     'text' => $this->language->get('text_xml'),
-                                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->get('token'), true)),
+                                    'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/xml', 'token=' . $this->session->get('token'))),
                                     'path' => $path
                                 );
                             }
@@ -169,7 +169,7 @@ class Installer extends Mvc\Controller
                             if (substr($zip_name, 0, 11) == 'install.php') {
                                 $json['step'][] = array(
                                     'text' => $this->language->get('text_php'),
-                                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token=' . $this->session->get('token'), true)),
+                                    'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/php', 'token=' . $this->session->get('token'))),
                                     'path' => $path
                                 );
                             }
@@ -206,7 +206,7 @@ class Installer extends Mvc\Controller
                         // Clear temporary files
                         $json['step'][] = array(
                             'text' => $this->language->get('text_remove'),
-                            'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->get('token'), true)),
+                            'url'  => str_replace('&amp;', '&', $this->router->url('extension/installer/remove', 'token=' . $this->session->get('token'))),
                             'path' => $path
                         );
 

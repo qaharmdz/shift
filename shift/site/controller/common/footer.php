@@ -37,22 +37,22 @@ class Footer extends Mvc\Controller
             if ($result['bottom']) {
                 $data['informations'][] = array(
                     'title' => $result['title'],
-                    'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
+                    'href'  => $this->router->url('information/information', 'information_id=' . $result['information_id'])
                 );
             }
         }
 
-        $data['contact'] = $this->url->link('information/contact');
-        $data['return'] = $this->url->link('account/return/add', '', true);
-        $data['sitemap'] = $this->url->link('information/sitemap');
-        $data['manufacturer'] = $this->url->link('product/manufacturer');
-        $data['voucher'] = $this->url->link('account/voucher', '', true);
-        $data['affiliate'] = $this->url->link('affiliate/account', '', true);
-        $data['special'] = $this->url->link('product/special');
-        $data['account'] = $this->url->link('account/account', '', true);
-        $data['order'] = $this->url->link('account/order', '', true);
-        $data['wishlist'] = $this->url->link('account/wishlist', '', true);
-        $data['newsletter'] = $this->url->link('account/newsletter', '', true);
+        $data['contact'] = $this->router->url('information/contact');
+        $data['return'] = $this->router->url('account/return/add');
+        $data['sitemap'] = $this->router->url('information/sitemap');
+        $data['manufacturer'] = $this->router->url('product/manufacturer');
+        $data['voucher'] = $this->router->url('account/voucher');
+        $data['affiliate'] = $this->router->url('affiliate/account');
+        $data['special'] = $this->router->url('product/special');
+        $data['account'] = $this->router->url('account/account');
+        $data['order'] = $this->router->url('account/order');
+        $data['wishlist'] = $this->router->url('account/wishlist');
+        $data['newsletter'] = $this->router->url('account/newsletter');
 
         $data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
         $data['config'] = json_encode($this->config->all());

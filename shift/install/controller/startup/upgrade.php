@@ -23,7 +23,7 @@ class Upgrade extends Mvc\Controller
         }
 
         if ($upgrade) {
-            $this->response->redirect($this->url->link('upgrade/upgrade'));
+            $this->response->redirect($this->router->url('upgrade/upgrade'));
         }
     }
 }

@@ -20,7 +20,7 @@ class Maintenance extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_maintenance'),
-            'href' => $this->url->link('common/maintenance')
+            'href' => $this->router->url('common/maintenance')
         );
 
         $data['message'] = $this->language->get('text_message');

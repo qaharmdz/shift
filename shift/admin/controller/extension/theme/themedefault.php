@@ -23,7 +23,7 @@ class ThemeDefault extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=theme', true));
+            $this->response->redirect($this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -141,22 +141,22 @@ class ThemeDefault extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=theme', true)
+            'href' => $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'), true)
+            'href' => $this->router->url('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'))
         );
 
-        $data['action'] = $this->url->link('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'), true);
+        $data['action'] = $this->router->url('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'));
 
-        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=theme', true);
+        $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme');
 
         if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
             $setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get('query.store_id'));

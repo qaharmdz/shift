@@ -41,7 +41,7 @@ class Store extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
         }
 
         $this->getForm();
@@ -64,7 +64,7 @@ class Store extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id', 0), true));
+            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id', 0)));
         }
 
         $this->getForm();
@@ -89,7 +89,7 @@ class Store extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
         }
 
         $this->getList();
@@ -107,16 +107,16 @@ class Store extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('setting/store', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('setting/store', 'token=' . $this->session->get('token'))
         );
 
-        $data['add'] = $this->url->link('setting/store/add', 'token=' . $this->session->get('token'), true);
-        $data['delete'] = $this->url->link('setting/store/delete', 'token=' . $this->session->get('token'), true);
+        $data['add'] = $this->router->url('setting/store/add', 'token=' . $this->session->get('token'));
+        $data['delete'] = $this->router->url('setting/store/delete', 'token=' . $this->session->get('token'));
 
         $data['stores'] = array();
 
@@ -124,7 +124,7 @@ class Store extends Mvc\Controller
             'store_id' => 0,
             'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
             'url'      => URL_SITE,
-            'edit'     => $this->url->link('setting/setting', 'token=' . $this->session->get('token'), true)
+            'edit'     => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
         );
 
         $store_total = $this->model_setting_store->getTotalStores();
@@ -136,7 +136,7 @@ class Store extends Mvc\Controller
                 'store_id' => $result['store_id'],
                 'name'     => $result['name'],
                 'url'      => $result['url'],
-                'edit'     => $this->url->link('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $result['store_id'], true)
+                'edit'     => $this->router->url('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $result['store_id'])
             );
         }
 
@@ -263,34 +263,34 @@ class Store extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('setting/store', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('setting/store', 'token=' . $this->session->get('token'))
         );
 
         if (!$this->request->has('query.store_id')) {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_settings'),
-                'href' => $this->url->link('setting/store/add', 'token=' . $this->session->get('token'), true)
+                'href' => $this->router->url('setting/store/add', 'token=' . $this->session->get('token'))
             );
         } else {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_settings'),
-                'href' => $this->url->link('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'), true)
+                'href' => $this->router->url('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'))
             );
         }
 
         $data['success'] = $this->session->pull('flash.success');
 
         if (!$this->request->has('query.store_id')) {
-            $data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->get('token'), true);
+            $data['action'] = $this->router->url('setting/store/add', 'token=' . $this->session->get('token'));
         } else {
-            $data['action'] = $this->url->link('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'), true);
+            $data['action'] = $this->router->url('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'));
         }
 
-        $data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->get('token'), true);
+        $data['cancel'] = $this->router->url('setting/store', 'token=' . $this->session->get('token'));
 
         $store_info = [];
         if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
@@ -300,7 +300,7 @@ class Store extends Mvc\Controller
         }
 
         if (!$store_info) {
-            $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
         }
 
         $data['token'] = $this->session->get('token');

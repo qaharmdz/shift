@@ -24,12 +24,12 @@ class Information extends Mvc\Controller
         foreach ($this->model_catalog_information->getInformations() as $result) {
             $data['informations'][] = array(
                 'title' => $result['title'],
-                'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
+                'href'  => $this->router->url('information/information', 'information_id=' . $result['information_id'])
             );
         }
 
-        $data['contact'] = $this->url->link('information/contact');
-        $data['sitemap'] = $this->url->link('information/sitemap');
+        $data['contact'] = $this->router->url('information/contact');
+        $data['sitemap'] = $this->router->url('information/sitemap');
 
         return $this->load->view('extension/module/information', $data);
     }

@@ -13,7 +13,7 @@ class Reset extends Mvc\Controller
     public function index()
     {
         if ($this->user->isLogged()) {
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->router->url('account/account'));
         }
 
         $code = $this->request->getString('query.code', '');
@@ -43,7 +43,7 @@ class Reset extends Mvc\Controller
 
                 $this->session->set('flash.success', $this->language->get('text_success'));
 
-                $this->response->redirect($this->url->link('account/login', '', true));
+                $this->response->redirect($this->router->url('account/login'));
             }
 
             $data['heading_title'] = $this->language->get('heading_title');
@@ -60,17 +60,17 @@ class Reset extends Mvc\Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_home'),
-                'href' => $this->url->link('common/home')
+                'href' => $this->router->url('common/home')
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_account'),
-                'href' => $this->url->link('account/account', '', true)
+                'href' => $this->router->url('account/account')
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('account/reset', '', true)
+                'href' => $this->router->url('account/reset')
             );
 
             if (isset($this->error['password'])) {
@@ -85,8 +85,8 @@ class Reset extends Mvc\Controller
                 $data['error_confirm'] = '';
             }
 
-            $data['action']   = $this->url->link('account/reset', 'code=' . $code, true);
-            $data['back']     = $this->url->link('account/login', '', true);
+            $data['action']   = $this->router->url('account/reset', 'code=' . $code);
+            $data['back']     = $this->router->url('account/login');
             $data['password'] = $this->request->getString('post.password');
             $data['confirm']  = $this->request->getString('post.confirm');
 

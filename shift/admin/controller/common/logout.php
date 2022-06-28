@@ -13,6 +13,6 @@ class Logout extends Mvc\Controller
         $this->user->logout();
         $this->session->delete('token');
 
-        $this->response->redirect($this->url->link('common/login', '', true));
+        $this->response->redirect($this->router->url('common/login'));
     }
 }

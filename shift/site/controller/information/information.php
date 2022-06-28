@@ -18,7 +18,7 @@ class Information extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         $information_id   = $this->request->getInt('query.information_id', 0);
@@ -31,7 +31,7 @@ class Information extends Mvc\Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => $information_info['title'],
-                'href' => $this->url->link('information/information', 'information_id=' .  $information_id)
+                'href' => $this->router->url('information/information', 'information_id=' .  $information_id)
             );
 
             $data['heading_title'] = $information_info['title'];
@@ -40,7 +40,7 @@ class Information extends Mvc\Controller
 
             $data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
 
-            $data['continue'] = $this->url->link('common/home');
+            $data['continue'] = $this->router->url('common/home');
 
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['column_right'] = $this->load->controller('common/column_right');
@@ -53,7 +53,7 @@ class Information extends Mvc\Controller
         } else {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_error'),
-                'href' => $this->url->link('information/information', 'information_id=' . $information_id)
+                'href' => $this->router->url('information/information', 'information_id=' . $information_id)
             );
 
             $this->document->setTitle($this->language->get('text_error'));
@@ -64,7 +64,7 @@ class Information extends Mvc\Controller
 
             $data['button_continue'] = $this->language->get('button_continue');
 
-            $data['continue'] = $this->url->link('common/home');
+            $data['continue'] = $this->router->url('common/home');
 
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['column_right'] = $this->load->controller('common/column_right');

@@ -13,9 +13,9 @@ class Edit extends Mvc\Controller
     public function index()
     {
         if (!$this->user->isLogged()) {
-            $this->session->set('flash.redirect', $this->url->link('account/edit', '', true));
+            $this->session->set('flash.redirect', $this->router->url('account/edit'));
 
-            $this->response->redirect($this->url->link('account/login', '', true));
+            $this->response->redirect($this->router->url('account/login'));
         }
 
         $this->load->language('account/edit');
@@ -29,24 +29,24 @@ class Edit extends Mvc\Controller
         if ($this->request->is('post') && $this->validate()) {
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->router->url('account/account'));
         }
 
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
             'text'      => $this->language->get('text_home'),
-            'href'      => $this->url->link('common/home')
+            'href'      => $this->router->url('common/home')
         );
 
         $data['breadcrumbs'][] = array(
             'text'      => $this->language->get('text_account'),
-            'href'      => $this->url->link('account/account', '', true)
+            'href'      => $this->router->url('account/account')
         );
 
         $data['breadcrumbs'][] = array(
             'text'      => $this->language->get('text_edit'),
-            'href'      => $this->url->link('account/edit', '', true)
+            'href'      => $this->router->url('account/edit')
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -102,7 +102,7 @@ class Edit extends Mvc\Controller
             $data['error_custom_field'] = array();
         }
 
-        $data['action'] = $this->url->link('account/edit', '', true);
+        $data['action'] = $this->router->url('account/edit');
 
         $data['firstname'] = $this->request->getString('post.firstname');
         if (isset($customer_info['firstname'])) {
@@ -119,7 +119,7 @@ class Edit extends Mvc\Controller
             $data['email'] = $customer_info['email'];
         }
 
-        $data['back'] = $this->url->link('account/account', '', true);
+        $data['back'] = $this->router->url('account/account');
 
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['column_right'] = $this->load->controller('common/column_right');

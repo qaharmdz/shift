@@ -13,11 +13,11 @@ class Reset extends Mvc\Controller
     public function index()
     {
         if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
-            $this->response->redirect($this->url->link('common/dashboard', '', true));
+            $this->response->redirect($this->router->url('common/dashboard'));
         }
 
         if (!$this->config->get('config_password')) {
-            $this->response->redirect($this->url->link('common/login', '', true));
+            $this->response->redirect($this->router->url('common/login'));
         }
 
         $code = $this->request->get('query.code', '');
@@ -36,7 +36,7 @@ class Reset extends Mvc\Controller
 
                 $this->session->set('flash.success', $this->language->get('text_success'));
 
-                $this->response->redirect($this->url->link('common/login', '', true));
+                $this->response->redirect($this->router->url('common/login'));
             }
 
             $data['heading_title'] = $this->language->get('heading_title');
@@ -51,11 +51,11 @@ class Reset extends Mvc\Controller
             $data['breadcrumbs'] = array();
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_home'),
-                'href' => $this->url->link('common/dashboard', '', true)
+                'href' => $this->router->url('common/dashboard')
             );
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('common/reset', '', true)
+                'href' => $this->router->url('common/reset')
             );
 
             $data['error_password'] = '';
@@ -68,8 +68,8 @@ class Reset extends Mvc\Controller
                 $data['error_confirm'] = $this->error['confirm'];
             }
 
-            $data['action'] = $this->url->link('common/reset', 'code=' . $code, true);
-            $data['cancel'] = $this->url->link('common/login', '', true);
+            $data['action'] = $this->router->url('common/reset', 'code=' . $code);
+            $data['cancel'] = $this->router->url('common/login');
 
             $data['password'] = $this->request->get('post.password', '');
             $data['confirm']  = $this->request->get('post.confirm', '');

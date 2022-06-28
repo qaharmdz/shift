@@ -65,7 +65,7 @@ class Upload extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('tool/upload', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('tool/upload', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getList();
@@ -129,15 +129,15 @@ class Upload extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('tool/upload', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('tool/upload', 'token=' . $this->session->get('token') . $url)
         );
 
-        $data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->get('token') . $url, true);
+        $data['delete'] = $this->router->url('tool/upload/delete', 'token=' . $this->session->get('token') . $url);
 
         $data['uploads'] = array();
 
@@ -160,7 +160,7 @@ class Upload extends Mvc\Controller
                 'name'       => $result['name'],
                 'filename'   => $result['filename'],
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-                'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->get('token') . '&code=' . $result['code'] . $url, true)
+                'download'   => $this->router->url('tool/upload/download', 'token=' . $this->session->get('token') . '&code=' . $result['code'] . $url)
             );
         }
 
@@ -218,9 +218,9 @@ class Upload extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_name'] = $this->url->link('tool/upload', 'token=' . $this->session->get('token') . '&sort=name' . $url, true);
-        $data['sort_filename'] = $this->url->link('tool/upload', 'token=' . $this->session->get('token') . '&sort=filename' . $url, true);
-        $data['sort_date_added'] = $this->url->link('tool/upload', 'token=' . $this->session->get('token') . '&sort=date_added' . $url, true);
+        $data['sort_name'] = $this->router->url('tool/upload', 'token=' . $this->session->get('token') . '&sort=name' . $url);
+        $data['sort_filename'] = $this->router->url('tool/upload', 'token=' . $this->session->get('token') . '&sort=filename' . $url);
+        $data['sort_date_added'] = $this->router->url('tool/upload', 'token=' . $this->session->get('token') . '&sort=date_added' . $url);
 
         $url = '';
 
@@ -244,7 +244,7 @@ class Upload extends Mvc\Controller
         $pagination->total = $upload_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('tool/upload', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
+        $pagination->url = $this->router->url('tool/upload', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -320,12 +320,12 @@ class Upload extends Mvc\Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_home'),
-                'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+                'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('error/not_found', 'token=' . $this->session->get('token'), true)
+                'href' => $this->router->url('error/not_found', 'token=' . $this->session->get('token'))
             );
 
             $data['header'] = $this->load->controller('common/header');

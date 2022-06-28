@@ -13,9 +13,9 @@ class Password extends Mvc\Controller
     public function index()
     {
         if (!$this->user->isLogged()) {
-            $this->session->set('flash.redirect', $this->url->link('account/password', '', true));
+            $this->session->set('flash.redirect', $this->router->url('account/password'));
 
-            $this->response->redirect($this->url->link('account/login', '', true));
+            $this->response->redirect($this->router->url('account/login'));
         }
 
         $this->load->language('account/password');
@@ -41,24 +41,24 @@ class Password extends Mvc\Controller
                 $this->model_account_activity->addActivity('password', $activity_data);
             }
 
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->router->url('account/account'));
         }
 
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_account'),
-            'href' => $this->url->link('account/account', '', true)
+            'href' => $this->router->url('account/account')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('account/password', '', true)
+            'href' => $this->router->url('account/password')
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -83,12 +83,12 @@ class Password extends Mvc\Controller
             $data['error_confirm'] = '';
         }
 
-        $data['action'] = $this->url->link('account/password', '', true);
+        $data['action'] = $this->router->url('account/password');
 
         $data['password'] = $this->request->getString('post.password');
         $data['confirm']  = $this->request->getString('post.confirm');
 
-        $data['back'] = $this->url->link('account/account', '', true);
+        $data['back'] = $this->router->url('account/account');
 
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['column_right'] = $this->load->controller('common/column_right');

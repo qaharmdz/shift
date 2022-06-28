@@ -48,7 +48,7 @@ class Banner extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('design/banner', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getForm();
@@ -81,7 +81,7 @@ class Banner extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('design/banner', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getForm();
@@ -116,7 +116,7 @@ class Banner extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('design/banner', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getList();
@@ -160,16 +160,16 @@ class Banner extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('design/banner', 'token=' . $this->session->get('token') . $url)
         );
 
-        $data['add'] = $this->url->link('design/banner/add', 'token=' . $this->session->get('token') . $url, true);
-        $data['delete'] = $this->url->link('design/banner/delete', 'token=' . $this->session->get('token') . $url, true);
+        $data['add'] = $this->router->url('design/banner/add', 'token=' . $this->session->get('token') . $url);
+        $data['delete'] = $this->router->url('design/banner/delete', 'token=' . $this->session->get('token') . $url);
 
         $data['banners'] = array();
 
@@ -189,7 +189,7 @@ class Banner extends Mvc\Controller
                 'banner_id' => $result['banner_id'],
                 'name'      => $result['name'],
                 'status'    => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-                'edit'      => $this->url->link('design/banner/edit', 'token=' . $this->session->get('token') . '&banner_id=' . $result['banner_id'] . $url, true)
+                'edit'      => $this->router->url('design/banner/edit', 'token=' . $this->session->get('token') . '&banner_id=' . $result['banner_id'] . $url)
             );
         }
 
@@ -233,8 +233,8 @@ class Banner extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_name'] = $this->url->link('design/banner', 'token=' . $this->session->get('token') . '&sort=name' . $url, true);
-        $data['sort_status'] = $this->url->link('design/banner', 'token=' . $this->session->get('token') . '&sort=status' . $url, true);
+        $data['sort_name'] = $this->router->url('design/banner', 'token=' . $this->session->get('token') . '&sort=name' . $url);
+        $data['sort_status'] = $this->router->url('design/banner', 'token=' . $this->session->get('token') . '&sort=status' . $url);
 
         $url = '';
 
@@ -250,7 +250,7 @@ class Banner extends Mvc\Controller
         $pagination->total = $banner_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('design/banner', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
+        $pagination->url = $this->router->url('design/banner', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -323,21 +323,21 @@ class Banner extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('design/banner', 'token=' . $this->session->get('token') . $url)
         );
 
         if (!$this->request->has('query.banner_id')) {
-            $data['action'] = $this->url->link('design/banner/add', 'token=' . $this->session->get('token') . $url, true);
+            $data['action'] = $this->router->url('design/banner/add', 'token=' . $this->session->get('token') . $url);
         } else {
-            $data['action'] = $this->url->link('design/banner/edit', 'token=' . $this->session->get('token') . '&banner_id=' . $this->request->get('query.banner_id') . $url, true);
+            $data['action'] = $this->router->url('design/banner/edit', 'token=' . $this->session->get('token') . '&banner_id=' . $this->request->get('query.banner_id') . $url);
         }
 
-        $data['cancel'] = $this->url->link('design/banner', 'token=' . $this->session->get('token') . $url, true);
+        $data['cancel'] = $this->router->url('design/banner', 'token=' . $this->session->get('token') . $url);
 
         $banner_info = [];
         if ($this->request->has('query.banner_id') && !$this->request->is('POST')) {

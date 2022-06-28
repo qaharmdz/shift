@@ -15,7 +15,7 @@ class Step2 extends Mvc\Controller
         $this->language->load('install/step_2');
 
         if ($this->request->is('POST') && $this->validate()) {
-            $this->response->redirect($this->url->link('install/step_3'));
+            $this->response->redirect($this->router->url('install/step_3'));
         }
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -61,7 +61,7 @@ class Step2 extends Mvc\Controller
             $data['error_warning'] = '';
         }
 
-        $data['action'] = $this->url->link('install/step_2');
+        $data['action'] = $this->router->url('install/step_2');
 
         $data['php_version'] = phpversion();
         $data['file_uploads'] = ini_get('file_uploads');
@@ -113,7 +113,7 @@ class Step2 extends Mvc\Controller
         $data['upload'] = DIR_SYSTEM . 'storage/upload';
         $data['modification'] = DIR_SYSTEM . 'storage/modification';
 
-        $data['back'] = $this->url->link('install/step_1');
+        $data['back'] = $this->router->url('install/step_1');
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');

@@ -46,9 +46,9 @@ class Step4 extends Mvc\Controller
         $data['error_warning'] = $this->language->get('error_warning');
         $data['success'] = $this->session->pull('flash.success');
 
-        $data['maxmind'] = $this->url->link('3rd_party/maxmind');
-        $data['openbay'] = $this->url->link('3rd_party/openbay');
-        $data['extension'] = $this->url->link('3rd_party/extension');
+        $data['maxmind'] = $this->router->url('3rd_party/maxmind');
+        $data['openbay'] = $this->router->url('3rd_party/openbay');
+        $data['extension'] = $this->router->url('3rd_party/extension');
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');

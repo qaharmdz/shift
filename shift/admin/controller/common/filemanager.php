@@ -80,7 +80,7 @@ class FileManager extends Mvc\Controller
                     'name'  => implode(' ', $name),
                     'type'  => 'directory',
                     'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-                    'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, true)
+                    'href'  => $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
                 );
             } elseif (is_file($image)) {
                 $data['images'][] = array(
@@ -155,7 +155,7 @@ class FileManager extends Mvc\Controller
             $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
-        $data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url, true);
+        $data['parent'] = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url);
 
         // Refresh
         $url = '';
@@ -172,7 +172,7 @@ class FileManager extends Mvc\Controller
             $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
-        $data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url, true);
+        $data['refresh'] = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url);
 
         $url = '';
 
@@ -196,7 +196,7 @@ class FileManager extends Mvc\Controller
         $pagination->total = $image_total;
         $pagination->page = $page;
         $pagination->limit = 16;
-        $pagination->url = $this->url->link('common/filemanager', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
+        $pagination->url = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 

@@ -112,22 +112,22 @@ class Theme extends Mvc\Controller
 
                 $store_data[] = array(
                     'name'   => $this->config->get('config_name'),
-                    'edit'   => $this->url->link('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=0', true),
+                    'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=0'),
                     'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                 );
 
                 foreach ($stores as $store) {
                     $store_data[] = array(
                         'name'   => $store['name'],
-                        'edit'   => $this->url->link('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=' . $store['store_id'], true),
+                        'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=' . $store['store_id']),
                         'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                     );
                 }
 
                 $data['extensions'][] = array(
                     'name'      => $this->language->get('heading_title'),
-                    'install'   => $this->url->link('extension/extension/theme/install', 'token=' . $this->session->get('token') . '&extension=' . $extension, true),
-                    'uninstall' => $this->url->link('extension/extension/theme/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension, true),
+                    'install'   => $this->router->url('extension/extension/theme/install', 'token=' . $this->session->get('token') . '&extension=' . $extension),
+                    'uninstall' => $this->router->url('extension/extension/theme/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension),
                     'installed' => in_array($extension, $extensions),
                     'store'     => $store_data
                 );

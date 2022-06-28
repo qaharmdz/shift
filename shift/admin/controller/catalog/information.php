@@ -35,10 +35,9 @@ class Information extends Mvc\Controller
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect(
-                $this->url->link(
+                $this->router->url(
                     'catalog/information',
-                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page']),
-                    true
+                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page'])
                 )
             );
         }
@@ -60,10 +59,9 @@ class Information extends Mvc\Controller
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect(
-                $this->url->link(
+                $this->router->url(
                     'catalog/information',
-                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page']),
-                    true
+                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page'])
                 )
             );
         }
@@ -87,10 +85,9 @@ class Information extends Mvc\Controller
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             $this->response->redirect(
-                $this->url->link(
+                $this->router->url(
                     'catalog/information',
-                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page']),
-                    true
+                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page'])
                 )
             );
         }
@@ -109,15 +106,15 @@ class Information extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url)
         );
 
-        $data['add'] = $this->url->link('catalog/information/add', 'token=' . $this->session->get('token') . $url, true);
-        $data['delete'] = $this->url->link('catalog/information/delete', 'token=' . $this->session->get('token') . $url, true);
+        $data['add'] = $this->router->url('catalog/information/add', 'token=' . $this->session->get('token') . $url);
+        $data['delete'] = $this->router->url('catalog/information/delete', 'token=' . $this->session->get('token') . $url);
 
         $data['informations'] = array();
 
@@ -137,7 +134,7 @@ class Information extends Mvc\Controller
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
                 'sort_order'     => $result['sort_order'],
-                'edit'           => $this->url->link('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $result['information_id'] . $url, true)
+                'edit'           => $this->router->url('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $result['information_id'] . $url)
             );
         }
 
@@ -166,8 +163,8 @@ class Information extends Mvc\Controller
 
         $url = $this->urlQueryList(['page']) . '&order=' . ($order == 'ASC' ? 'DESC' : 'ASC');
 
-        $data['sort_title'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . '&sort=id.title' . $url, true);
-        $data['sort_sort_order'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . '&sort=i.sort_order' . $url, true);
+        $data['sort_title'] = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . '&sort=id.title' . $url);
+        $data['sort_sort_order'] = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . '&sort=i.sort_order' . $url);
 
         $url = $this->urlQueryList(['sort', 'order']);
 
@@ -175,7 +172,7 @@ class Information extends Mvc\Controller
         $pagination->total = $information_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
+        $pagination->url = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -257,20 +254,20 @@ class Information extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url)
         );
 
         if (!$this->request->has('query.information_id')) {
-            $data['action'] = $this->url->link('catalog/information/add', 'token=' . $this->session->get('token') . $url, true);
+            $data['action'] = $this->router->url('catalog/information/add', 'token=' . $this->session->get('token') . $url);
         } else {
-            $data['action'] = $this->url->link('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $this->request->get('query.information_id', 0) . $url, true);
+            $data['action'] = $this->router->url('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $this->request->get('query.information_id', 0) . $url);
         }
 
-        $data['cancel'] = $this->url->link('catalog/information', 'token=' . $this->session->get('token') . $url, true);
+        $data['cancel'] = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url);
 
         if ($this->request->has('query.information_id') && !$this->request->is('POST')) {
             $information_info = $this->model_catalog_information->getInformation($this->request->getInt('query.information_id'));

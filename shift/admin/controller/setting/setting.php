@@ -24,7 +24,7 @@ class Setting extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -329,22 +329,22 @@ class Setting extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_stores'),
-            'href' => $this->url->link('setting/store', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('setting/store', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('setting/setting', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
         );
 
         $data['success'] = $this->session->pull('flash.success');
-        $data['action']  = $this->url->link('setting/setting', 'token=' . $this->session->get('token'), true);
-        $data['cancel']  = $this->url->link('setting/store', 'token=' . $this->session->get('token'), true);
+        $data['action']  = $this->router->url('setting/setting', 'token=' . $this->session->get('token'));
+        $data['cancel']  = $this->router->url('setting/store', 'token=' . $this->session->get('token'));
         $data['token']   = $this->session->get('token');
 
         $data['config_meta_title']       = $this->request->get('post.config_meta_title', $this->config->get('config_meta_title'));

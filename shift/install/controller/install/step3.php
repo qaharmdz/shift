@@ -90,7 +90,7 @@ class Step3 extends Mvc\Controller
 
             fclose($file);
 
-            $this->response->redirect($this->url->link('install/step_4'));
+            $this->response->redirect($this->router->url('install/step_4'));
         }
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -172,7 +172,7 @@ class Step3 extends Mvc\Controller
             $data['error_email'] = '';
         }
 
-        $data['action'] = $this->url->link('install/step_3');
+        $data['action'] = $this->router->url('install/step_3');
 
         if ($this->request->has('post.db_driver')) {
             $data['db_driver'] = $this->request->get('post.db_driver');
@@ -239,7 +239,7 @@ class Step3 extends Mvc\Controller
         $data['pdo'] = extension_loaded('pdo');
         $data['pgsql'] = extension_loaded('pgsql');
 
-        $data['back'] = $this->url->link('install/step_2');
+        $data['back'] = $this->router->url('install/step_2');
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');

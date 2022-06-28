@@ -47,11 +47,11 @@ class Header extends Mvc\Controller
 
         if ($this->request->get('query.token', time()) != $this->session->get('token')) {
             $data['logged'] = false;
-            $data['home']   = $this->url->link('common/dashboard', '', true);
+            $data['home']   = $this->router->url('common/dashboard');
         } else {
             $data['logged'] = true;
-            $data['home']   = $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true);
-            $data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->get('token'), true);
+            $data['home']   = $this->router->url('common/dashboard', 'token=' . $this->session->get('token'));
+            $data['logout'] = $this->router->url('common/logout', 'token=' . $this->session->get('token'));
 
             // Online Stores
             $data['stores'] = array();

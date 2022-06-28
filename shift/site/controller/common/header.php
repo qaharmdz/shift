@@ -37,7 +37,7 @@ class Header extends Mvc\Controller
         $data['text_home'] = $this->language->get('text_home');
 
         $data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
-        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', true), $this->user->getFirstName(), $this->url->link('account/logout', '', true));
+        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->router->url('account/account'), $this->user->getFirstName(), $this->router->url('account/logout'));
 
         $data['text_account'] = $this->language->get('text_account');
         $data['text_register'] = $this->language->get('text_register');
@@ -50,19 +50,19 @@ class Header extends Mvc\Controller
         $data['text_category'] = $this->language->get('text_category');
         $data['text_all'] = $this->language->get('text_all');
 
-        $data['home'] = $this->url->link('common/home');
-        $data['wishlist'] = $this->url->link('account/wishlist', '', true);
+        $data['home'] = $this->router->url('common/home');
+        $data['wishlist'] = $this->router->url('account/wishlist');
         $data['logged'] = $this->user->isLogged();
-        $data['account'] = $this->url->link('account/account', '', true);
-        $data['register'] = $this->url->link('account/register', '', true);
-        $data['login'] = $this->url->link('account/login', '', true);
-        $data['order'] = $this->url->link('account/order', '', true);
-        $data['transaction'] = $this->url->link('account/transaction', '', true);
-        $data['download'] = $this->url->link('account/download', '', true);
-        $data['logout'] = $this->url->link('account/logout', '', true);
-        $data['shopping_cart'] = $this->url->link('checkout/cart');
-        $data['checkout'] = $this->url->link('checkout/checkout', '', true);
-        $data['contact'] = $this->url->link('information/contact');
+        $data['account'] = $this->router->url('account/account');
+        $data['register'] = $this->router->url('account/register');
+        $data['login'] = $this->router->url('account/login');
+        $data['order'] = $this->router->url('account/order');
+        $data['transaction'] = $this->router->url('account/transaction');
+        $data['download'] = $this->router->url('account/download');
+        $data['logout'] = $this->router->url('account/logout');
+        $data['shopping_cart'] = $this->router->url('checkout/cart');
+        $data['checkout'] = $this->router->url('checkout/checkout');
+        $data['contact'] = $this->router->url('information/contact');
         $data['telephone'] = $this->config->get('config_telephone');
 
         // Menu

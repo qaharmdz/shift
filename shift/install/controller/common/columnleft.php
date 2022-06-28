@@ -27,7 +27,7 @@ class ColumnLeft extends Mvc\Controller
         }
 
         if (!$this->request->has('query.route')) {
-            $data['redirect'] = $this->url->link('install/step_1');
+            $data['redirect'] = $this->router->url('install/step_1');
         } else {
             $url_data = $this->request->get;
 
@@ -41,7 +41,7 @@ class ColumnLeft extends Mvc\Controller
                 $url = '&' . urldecode(http_build_query($url_data, '', '&'));
             }
 
-            $data['redirect'] = $this->url->link($route, $url, $this->request->get('server.HTTPS'));
+            $data['redirect'] = $this->router->url($route, $url, $this->request->get('server.HTTPS'));
         }
 
         return $this->load->view('common/column_left', $data);
@@ -56,7 +56,7 @@ class ColumnLeft extends Mvc\Controller
         if ($this->request->has('post.redirect')) {
             $this->response->redirect($this->request->get('post.redirect'));
         } else {
-            $this->response->redirect($this->url->link('install/step_1'));
+            $this->response->redirect($this->router->url('install/step_1'));
         }
     }
 }

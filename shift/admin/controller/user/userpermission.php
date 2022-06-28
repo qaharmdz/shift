@@ -48,7 +48,7 @@ class UserPermission extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getForm();
@@ -81,7 +81,7 @@ class UserPermission extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getForm();
@@ -116,7 +116,7 @@ class UserPermission extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true));
+            $this->response->redirect($this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getList();
@@ -160,16 +160,16 @@ class UserPermission extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url)
         );
 
-        $data['add'] = $this->url->link('user/user_permission/add', 'token=' . $this->session->get('token') . $url, true);
-        $data['delete'] = $this->url->link('user/user_permission/delete', 'token=' . $this->session->get('token') . $url, true);
+        $data['add'] = $this->router->url('user/user_permission/add', 'token=' . $this->session->get('token') . $url);
+        $data['delete'] = $this->router->url('user/user_permission/delete', 'token=' . $this->session->get('token') . $url);
 
         $data['user_groups'] = array();
 
@@ -188,7 +188,7 @@ class UserPermission extends Mvc\Controller
             $data['user_groups'][] = array(
                 'user_group_id' => $result['user_group_id'],
                 'name'          => $result['name'],
-                'edit'          => $this->url->link('user/user_permission/edit', 'token=' . $this->session->get('token') . '&user_group_id=' . $result['user_group_id'] . $url, true)
+                'edit'          => $this->router->url('user/user_permission/edit', 'token=' . $this->session->get('token') . '&user_group_id=' . $result['user_group_id'] . $url)
             );
         }
 
@@ -231,7 +231,7 @@ class UserPermission extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_name'] = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . '&sort=name' . $url, true);
+        $data['sort_name'] = $this->router->url('user/user_permission', 'token=' . $this->session->get('token') . '&sort=name' . $url);
 
         $url = '';
 
@@ -247,7 +247,7 @@ class UserPermission extends Mvc\Controller
         $pagination->total = $user_group_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url . '&page={page}', true);
+        $pagination->url = $this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -308,21 +308,21 @@ class UserPermission extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true)
+            'href' => $this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url)
         );
 
         if (!$this->request->has('query.user_group_id')) {
-            $data['action'] = $this->url->link('user/user_permission/add', 'token=' . $this->session->get('token') . $url, true);
+            $data['action'] = $this->router->url('user/user_permission/add', 'token=' . $this->session->get('token') . $url);
         } else {
-            $data['action'] = $this->url->link('user/user_permission/edit', 'token=' . $this->session->get('token') . '&user_group_id=' . $this->request->get('query.user_group_id') . $url, true);
+            $data['action'] = $this->router->url('user/user_permission/edit', 'token=' . $this->session->get('token') . '&user_group_id=' . $this->request->get('query.user_group_id') . $url);
         }
 
-        $data['cancel'] = $this->url->link('user/user_permission', 'token=' . $this->session->get('token') . $url, true);
+        $data['cancel'] = $this->router->url('user/user_permission', 'token=' . $this->session->get('token') . $url);
 
         if ($this->request->has('query.user_group_id') && !$this->request->is('POST')) {
             $user_group_info = $this->model_user_usergroup->getUserGroup($this->request->get('query.user_group_id'));

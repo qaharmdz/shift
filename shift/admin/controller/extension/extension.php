@@ -20,12 +20,12 @@ class Extension extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('extension/extension', 'token=' . $this->session->get('token'))
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -54,7 +54,7 @@ class Extension extends Mvc\Controller
                 $data['categories'][] = array(
                     'code' => $extension,
                     'text' => $this->language->get('heading_title') . ' (' . count($files) . ')',
-                    'href' => $this->url->link('extension/extension/' . $extension, 'token=' . $this->session->get('token'), true)
+                    'href' => $this->router->url('extension/extension/' . $extension, 'token=' . $this->session->get('token'))
                 );
             }
         }

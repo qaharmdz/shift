@@ -17,13 +17,13 @@ class Login extends Mvc\Controller
         $this->document->setTitle($this->language->get('heading_title'));
 
         if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
-            $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('common/dashboard', 'token=' . $this->session->get('token')));
         }
 
         if ($this->request->is('POST') && $this->validate()) {
             $this->session->set('token', token(32));
 
-            $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true));
+            $this->response->redirect($this->router->url('common/dashboard', 'token=' . $this->session->get('token')));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -40,7 +40,7 @@ class Login extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_token');
         }
 
-        $data['action']        = $this->url->link('common/login', '', true);
+        $data['action']        = $this->router->url('common/login');
         $data['success']       = $this->session->pull('flash.success');
         $data['error_warning'] = $this->error['warning'] ?? '';
 
@@ -57,12 +57,12 @@ class Login extends Mvc\Controller
                 $url .= http_build_query($this->request->get('query'));
             }
 
-            $data['redirect'] = $this->url->link($route, $url, true);
+            $data['redirect'] = $this->router->url($route, $url);
         }
 
         $data['forgotten'] = '';
         if ($this->config->get('config_password')) {
-            $data['forgotten'] = $this->url->link('common/forgotten', '', true);
+            $data['forgotten'] = $this->router->url('common/forgotten');
         }
 
         $data['header'] = $this->load->controller('common/header');

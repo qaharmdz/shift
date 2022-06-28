@@ -21,7 +21,7 @@ class NotFound extends Mvc\Controller
 
         $data['button_continue'] = $this->language->get('button_continue');
 
-        $data['continue'] = $this->url->link('common/home');
+        $data['continue'] = $this->router->url('common/home');
 
         $data['footer'] = $this->load->controller('common/footer');
         $data['header'] = $this->load->controller('common/header');

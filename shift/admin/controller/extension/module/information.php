@@ -23,7 +23,7 @@ class Information extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true));
+            $this->response->redirect($this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -47,22 +47,22 @@ class Information extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true)
+            'href' => $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/module/information', 'token=' . $this->session->get('token'), true)
+            'href' => $this->router->url('extension/module/information', 'token=' . $this->session->get('token'))
         );
 
-        $data['action'] = $this->url->link('extension/module/information', 'token=' . $this->session->get('token'), true);
+        $data['action'] = $this->router->url('extension/module/information', 'token=' . $this->session->get('token'));
 
-        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->get('token') . '&type=module', true);
+        $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module');
 
         if ($this->request->has('post.information_status')) {
             $data['information_status'] = $this->request->get('post.information_status');

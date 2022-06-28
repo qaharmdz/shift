@@ -13,7 +13,7 @@ class Forgotten extends Mvc\Controller
     public function index()
     {
         if ($this->user->isLogged()) {
-            $this->response->redirect($this->url->link('account/account', '', true));
+            $this->response->redirect($this->router->url('account/account'));
         }
 
         $this->load->language('account/forgotten');
@@ -33,7 +33,7 @@ class Forgotten extends Mvc\Controller
 
             $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
             $message .= $this->language->get('text_change') . "\n\n";
-            $message .= $this->url->link('account/reset', 'code=' . $code, true) . "\n\n";
+            $message .= $this->router->url('account/reset', 'code=' . $code) . "\n\n";
             $message .= sprintf($this->language->get('text_ip'), $this->request->get('server.REMOTE_ADDR')) . "\n\n";
 
             $mail = new Mail();
@@ -70,24 +70,24 @@ class Forgotten extends Mvc\Controller
                 }
             }
 
-            $this->response->redirect($this->url->link('account/login', '', true));
+            $this->response->redirect($this->router->url('account/login'));
         }
 
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_account'),
-            'href' => $this->url->link('account/account', '', true)
+            'href' => $this->router->url('account/account')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_forgotten'),
-            'href' => $this->url->link('account/forgotten', '', true)
+            'href' => $this->router->url('account/forgotten')
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -106,8 +106,8 @@ class Forgotten extends Mvc\Controller
             $data['error_warning'] = '';
         }
 
-        $data['action'] = $this->url->link('account/forgotten', '', true);
-        $data['back'] = $this->url->link('account/login', '', true);
+        $data['action'] = $this->router->url('account/forgotten');
+        $data['back'] = $this->router->url('account/login');
         $data['email'] = $this->request->getString('post.email');
 
         $data['column_left'] = $this->load->controller('common/column_left');

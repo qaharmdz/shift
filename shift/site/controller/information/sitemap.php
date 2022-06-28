@@ -18,12 +18,12 @@ class Sitemap extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('information/sitemap')
+            'href' => $this->router->url('information/sitemap')
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -35,10 +35,10 @@ class Sitemap extends Mvc\Controller
         $data['text_contact'] = $this->language->get('text_contact');
 
 
-        $data['account'] = $this->url->link('account/account', '', true);
-        $data['edit'] = $this->url->link('account/edit', '', true);
-        $data['password'] = $this->url->link('account/password', '', true);
-        $data['contact'] = $this->url->link('information/contact');
+        $data['account'] = $this->router->url('account/account');
+        $data['edit'] = $this->router->url('account/edit');
+        $data['password'] = $this->router->url('account/password');
+        $data['contact'] = $this->router->url('information/contact');
 
         $this->load->model('catalog/information');
 
@@ -47,7 +47,7 @@ class Sitemap extends Mvc\Controller
         foreach ($this->model_catalog_information->getInformations() as $result) {
             $data['informations'][] = array(
                 'title' => $result['title'],
-                'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
+                'href'  => $this->router->url('information/information', 'information_id=' . $result['information_id'])
             );
         }
 

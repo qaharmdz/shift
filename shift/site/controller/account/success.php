@@ -18,17 +18,17 @@ class Success extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_account'),
-            'href' => $this->url->link('account/account', '', true)
+            'href' => $this->router->url('account/account')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_success'),
-            'href' => $this->url->link('account/success')
+            'href' => $this->router->url('account/success')
         );
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -38,17 +38,17 @@ class Success extends Mvc\Controller
         $customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
 
         if ($customer_group_info && !$customer_group_info['approval']) {
-            $data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
+            $data['text_message'] = sprintf($this->language->get('text_message'), $this->router->url('information/contact'));
         } else {
-            $data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
+            $data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->router->url('information/contact'));
         }
 
         $data['button_continue'] = $this->language->get('button_continue');
 
         if ($this->cart->hasProducts()) {
-            $data['continue'] = $this->url->link('checkout/cart');
+            $data['continue'] = $this->router->url('checkout/cart');
         } else {
-            $data['continue'] = $this->url->link('account/account', '', true);
+            $data['continue'] = $this->router->url('account/account');
         }
 
         $data['column_left'] = $this->load->controller('common/column_left');

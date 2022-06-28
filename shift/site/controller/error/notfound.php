@@ -18,7 +18,7 @@ class NotFound extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home')
+            'href' => $this->router->url('common/home')
         );
 
         if ($this->request->has('query.route')) {
@@ -38,7 +38,7 @@ class NotFound extends Mvc\Controller
 
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link($route, $url, $this->request->getBool('server.SECURE'))
+                'href' => $this->router->url($route, $url)
             );
         }
 
@@ -48,7 +48,7 @@ class NotFound extends Mvc\Controller
 
         $data['button_continue'] = $this->language->get('button_continue');
 
-        $data['continue'] = $this->url->link('common/home');
+        $data['continue'] = $this->router->url('common/home');
 
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['column_right'] = $this->load->controller('common/column_right');
