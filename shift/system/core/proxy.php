@@ -26,7 +26,7 @@ class Proxy
         } else {
             $trace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 3);
 
-            throw new \BadMethodCallException(sprintf('Undefined "%s::%s" in %s line %s.', $this->{'_key'}, $key, $trace[0]['file'], $trace[0]['line']));
+            throw new \BadMethodCallException(sprintf('Undefined "%s::%s" in %s line %s.', $this->{'_modelPath'}, $key, $trace[0]['file'], $trace[0]['line']));
         }
     }
 }

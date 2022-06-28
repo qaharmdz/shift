@@ -43,12 +43,12 @@ final class Loader
     public function model(string $route)
     {
         $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
-        $modelKey = 'model_' . str_replace(['/', '-', '.'], ['_', '', ''], $route);
+        $modelPath = 'model_' . str_replace(['/', '-', '.'], ['_', '', ''], $route);
 
         // Trigger the pre events
         $this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
 
-        if (!$this->registry->has($modelKey)) {
+        if (!$this->registry->has($modelPath)) {
             $parts = array_filter(explode('/', $route));
             $class = strtolower('Shift\\' . APP_FOLDER . '\Model\\' . implode('\\', $parts));
 
@@ -66,8 +66,8 @@ final class Loader
                     }
                 }
 
-                $proxy->{'_key'} = $modelKey;
-                $this->registry->set($modelKey, $proxy);
+                $proxy->{'_modelPath'} = $modelPath;
+                $this->registry->set($modelPath, $proxy);
             } else {
                 throw new \InvalidArgumentException(sprintf('Unable to locate model "%s".', $route));
             }
