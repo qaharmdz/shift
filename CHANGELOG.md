@@ -26,9 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add system/core/session.
 - Add system/core/http/request.
 - Add system/core/http/response.
+- Add system/core/http/dispatch.
+- Add system/core/mvc/controller.
+- Add system/core/mvc/model.
 
 ### Changed
-- Reorganize folder structure: separate Shift and public files.
+- Folder structure: separate Shift and public files.
+- Renamed folder catalog/ to site/.
 - Refactor front controller.
 - Refactor system/framework.
 
