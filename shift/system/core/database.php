@@ -63,7 +63,18 @@ class Database
      */
     public function raw(string $query)
     {
-        return $this->mysqli->query($query, \MYSQLI_STORE_RESULT);
+        try {
+            return $this->mysqli->query($query, \MYSQLI_STORE_RESULT);
+        } catch (\Mysqli_sql_exception $e) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    '<ul><li><b>\Mysqli_sql_exception</b>: %s</li><li>Error processing query: <i>%s</i></li></ul>',
+                    $e->getMessage(),
+                    $query
+                ),
+                $e->getCode()
+            );
+        }
     }
 
     public function escape(string $value, string $extra = ''): string
