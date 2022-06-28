@@ -364,7 +364,7 @@ class Information extends Mvc\Controller
 
             $url_alias_info = $this->model_catalog_urlalias->getUrlAlias($this->request->getString('post.keyword'));
 
-            if ($url_alias_info && $url_alias_info['query'] != 'information_id=' . $this->request->get('query.information_id', 'x')) {
+            if ($url_alias_info && $url_alias_info['param'] != 'information_id' && $url_alias_info['value'] != $this->request->get('query.information_id', 'x')) {
                 $this->error['keyword'] = sprintf($this->language->get('error_keyword'));
             }
 

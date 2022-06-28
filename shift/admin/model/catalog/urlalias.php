@@ -10,7 +10,7 @@ class UrlAlias extends Mvc\Model
 {
     public function getUrlAlias($keyword)
     {
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($keyword) . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "url_alias WHERE alias = '" . $this->db->escape($keyword) . "'");
 
         return $query->row;
     }

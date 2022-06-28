@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Core\Http;
 
+// TODO: Route schema: URL pattern and request method validation
 class Router
 {
     protected $urlRewrite = [];

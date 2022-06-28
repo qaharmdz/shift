@@ -31,7 +31,7 @@ class Information extends Mvc\Model
         }
 
         if (isset($data['keyword'])) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . $information_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET route = 'information/information' param = 'information_id', value = '" . $information_id . "', alias = '" . $this->db->escape($data['keyword']) . "'");
         }
 
         $this->cache->delete('information');
@@ -65,10 +65,10 @@ class Information extends Mvc\Model
             }
         }
 
-        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . $information_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE param = 'information_id' AND value = '" . $information_id . "'");
 
         if ($data['keyword']) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'information_id=" . $information_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET route = 'information/information', param = 'information_id', value = '" . $information_id . "', alias = '" . $this->db->escape($data['keyword']) . "'");
         }
 
         $this->cache->delete('information');
@@ -80,14 +80,14 @@ class Information extends Mvc\Model
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . $information_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . $information_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . $information_id . "'");
-        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . $information_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE param = 'information_id' AND value = '" . $information_id . "'");
 
         $this->cache->delete('information');
     }
 
     public function getInformation(int $information_id)
     {
-        $query = $this->db->get("SELECT DISTINCT *, (SELECT keyword FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . $information_id . "') AS keyword FROM " . DB_PREFIX . "information WHERE information_id = '" . $information_id . "'");
+        $query = $this->db->get("SELECT DISTINCT *, (SELECT alias FROM " . DB_PREFIX . "url_alias WHERE param = 'information_id' AND value ='" . $information_id . "') AS keyword FROM " . DB_PREFIX . "information WHERE information_id = '" . $information_id . "'");
 
         return $query->row;
     }
