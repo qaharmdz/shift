@@ -444,7 +444,6 @@ class Language extends Mvc\Controller
         }
 
         $this->load->model('setting/store');
-        $this->load->model('sale/order');
 
         foreach ($this->request->get('post.selected') as $language_id) {
             $language_info = $this->model_localisation_language->getLanguage($language_id);
@@ -463,12 +462,6 @@ class Language extends Mvc\Controller
                 if ($store_total) {
                     $this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
                 }
-            }
-
-            $order_total = $this->model_sale_order->getTotalOrdersByLanguageId($language_id);
-
-            if ($order_total) {
-                $this->error['warning'] = sprintf($this->language->get('error_order'), $order_total);
             }
         }
 
