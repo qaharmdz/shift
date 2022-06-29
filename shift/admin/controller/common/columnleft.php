@@ -95,6 +95,14 @@ class ColumnLeft extends Mvc\Controller
                 );
             }
 
+            if ($this->user->hasPermission('access', 'extension/language')) {
+                $extension[] = array(
+                    'name'     => $this->language->get('text_language'),
+                    'href'     => $this->router->url('extension/language', 'token=' . $this->session->get('token')),
+                    'children' => array()
+                );
+            }
+
             if ($extension) {
                 $data['menus'][] = array(
                     'id'       => 'menu-extension',
@@ -168,25 +176,6 @@ class ColumnLeft extends Mvc\Controller
                     'name'     => $this->language->get('text_users'),
                     'href'     => '',
                     'children' => $user
-                );
-            }
-
-            // Localisation
-            $localisation = array();
-
-            if ($this->user->hasPermission('access', 'localisation/language')) {
-                $localisation[] = array(
-                    'name'     => $this->language->get('text_language'),
-                    'href'     => $this->router->url('localisation/language', 'token=' . $this->session->get('token')),
-                    'children' => array()
-                );
-            }
-
-            if ($localisation) {
-                $system[] = array(
-                    'name'     => $this->language->get('text_localisation'),
-                    'href'     => '',
-                    'children' => $localisation
                 );
             }
 

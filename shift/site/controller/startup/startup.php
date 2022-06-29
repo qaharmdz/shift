@@ -46,9 +46,9 @@ class Startup extends Mvc\Controller
         ]);
 
         //=== Language
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
-        $languages = $this->model_localisation_language->getLanguages();
+        $languages = $this->model_extension_language->getLanguages();
         $code = $this->session->get('language');
 
         if ($this->request->has('cookie.language') && !array_key_exists($code, $languages)) {

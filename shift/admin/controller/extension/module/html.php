@@ -108,9 +108,9 @@ class Html extends Mvc\Controller
             $data['module_description'] = array();
         }
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
-        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $data['languages'] = $this->model_extension_language->getLanguages();
 
         if ($this->request->has('post.status')) {
             $data['status'] = $this->request->get('post.status');

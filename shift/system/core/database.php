@@ -188,7 +188,7 @@ class Database
     /**
      * Processing query token into ready use prepared statement.
      *
-     * Strict sequence `:parameter?type`
+     * Usage: `:parameter` or `:parameter?type`
      *
      * - **token-parameter** named parameter to represent the placeholder. Identified with single colon `:value`.
      * - **token-type** represent the parameter type. Identified with a question mark and one characters of `sidb`, `:value?i`.

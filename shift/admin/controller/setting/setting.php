@@ -391,9 +391,9 @@ class Setting extends Mvc\Controller
             $data['thumb'] = $this->model_tool_image->resize($data['config_image'], 100, 100);
         }
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
-        $data['languages']             = $this->model_localisation_language->getLanguages();
+        $data['languages']             = $this->model_extension_language->getLanguages();
         $data['config_language']       = $this->request->get('post.config_language', $this->config->get('config_language'));
         $data['config_admin_language'] = $this->request->get('post.config_admin_language', $this->config->get('config_admin_language'));
         $data['config_limit_admin']    = $this->request->get('post.config_limit_admin', $this->config->get('config_limit_admin'));

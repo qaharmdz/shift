@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Model\Localisation;
+namespace Shift\Admin\Model\Extension;
 
 use Shift\System\Core\Mvc;
 

@@ -36,7 +36,7 @@ return [
         'shift\\admin\\controller\\extension\\module\\slideshow' => $baseDir . '/admin/controller/extension/module/slideshow.php',
         'shift\\admin\\controller\\extension\\module\\store' => $baseDir . '/admin/controller/extension/module/store.php',
         'shift\\admin\\controller\\extension\\theme\\themedefault' => $baseDir . '/admin/controller/extension/theme/themedefault.php',
-        'shift\\admin\\controller\\localisation\\language' => $baseDir . '/admin/controller/localisation/language.php',
+        'shift\\admin\\controller\\localisation\\language' => $baseDir . '/admin/controller/extension/language.php',
         'shift\\admin\\controller\\setting\\setting' => $baseDir . '/admin/controller/setting/setting.php',
         'shift\\admin\\controller\\setting\\store' => $baseDir . '/admin/controller/setting/store.php',
         'shift\\admin\\controller\\startup\\event' => $baseDir . '/admin/controller/startup/event.php',

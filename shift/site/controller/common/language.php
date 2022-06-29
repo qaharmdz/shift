@@ -18,11 +18,11 @@ class Language extends Mvc\Controller
 
         $data['code'] = $this->session->get('language');
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
         $data['languages'] = array();
 
-        $results = $this->model_localisation_language->getLanguages();
+        $results = $this->model_extension_language->getLanguages();
 
         foreach ($results as $result) {
             if ($result['status']) {

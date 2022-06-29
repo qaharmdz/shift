@@ -356,8 +356,8 @@ class Store extends Mvc\Controller
         $data['config_logo']     = $this->request->get('post.config_logo', Arr::get($store_info, 'config_logo', ''));
         $data['config_icon']     = $this->request->get('post.config_icon', Arr::get($store_info, 'config_icon', ''));
 
-        $this->load->model('localisation/language');
-        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $this->load->model('extension/language');
+        $data['languages'] = $this->model_extension_language->getLanguages();
 
         $this->load->model('catalog/information');
         $data['informations'] = $this->model_catalog_information->getInformations();

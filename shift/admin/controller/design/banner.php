@@ -363,9 +363,9 @@ class Banner extends Mvc\Controller
             $data['status'] = true;
         }
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
-        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $data['languages'] = $this->model_extension_language->getLanguages();
 
         $this->load->model('tool/image');
 

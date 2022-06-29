@@ -275,9 +275,9 @@ class Information extends Mvc\Controller
 
         $data['token'] = $this->session->get('token');
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
-        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $data['languages'] = $this->model_extension_language->getLanguages();
 
         $data['information_description'] = $this->request->getArray('post.information_description', []);
         if ($this->request->has('query.information_id')) {

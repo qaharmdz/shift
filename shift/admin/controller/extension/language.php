@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Controller\Localisation;
+namespace Shift\Admin\Controller\Extension;
 
 use Shift\System\Core\Mvc;
 
@@ -12,25 +12,25 @@ class Language extends Mvc\Controller
 
     public function index()
     {
-        $this->load->language('localisation/language');
+        $this->load->language('extension/language');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
         $this->getList();
     }
 
     public function add()
     {
-        $this->load->language('localisation/language');
+        $this->load->language('extension/language');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_localisation_language->addLanguage($this->request->get('post'));
+            $this->model_extension_language->addLanguage($this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -48,7 +48,7 @@ class Language extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('extension/language', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getForm();
@@ -56,14 +56,14 @@ class Language extends Mvc\Controller
 
     public function edit()
     {
-        $this->load->language('localisation/language');
+        $this->load->language('extension/language');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_localisation_language->editLanguage($this->request->get('query.language_id'), $this->request->get('post'));
+            $this->model_extension_language->editLanguage($this->request->get('query.language_id'), $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -81,7 +81,7 @@ class Language extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('extension/language', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getForm();
@@ -89,15 +89,15 @@ class Language extends Mvc\Controller
 
     public function delete()
     {
-        $this->load->language('localisation/language');
+        $this->load->language('extension/language');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('localisation/language');
+        $this->load->model('extension/language');
 
         if ($this->request->has('post.selected') && $this->validateDelete()) {
             foreach ($this->request->get('post.selected') as $language_id) {
-                $this->model_localisation_language->deleteLanguage($language_id);
+                $this->model_extension_language->deleteLanguage($language_id);
             }
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -116,7 +116,7 @@ class Language extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('extension/language', 'token=' . $this->session->get('token') . $url));
         }
 
         $this->getList();
@@ -165,11 +165,11 @@ class Language extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('extension/language', 'token=' . $this->session->get('token') . $url)
         );
 
-        $data['add'] = $this->router->url('localisation/language/add', 'token=' . $this->session->get('token') . $url);
-        $data['delete'] = $this->router->url('localisation/language/delete', 'token=' . $this->session->get('token') . $url);
+        $data['add'] = $this->router->url('extension/language/add', 'token=' . $this->session->get('token') . $url);
+        $data['delete'] = $this->router->url('extension/language/delete', 'token=' . $this->session->get('token') . $url);
 
         $data['languages'] = array();
 
@@ -180,9 +180,9 @@ class Language extends Mvc\Controller
             'limit' => $this->config->get('config_limit_admin')
         );
 
-        $language_total = $this->model_localisation_language->getTotalLanguages();
+        $language_total = $this->model_extension_language->getTotalLanguages();
 
-        $results = $this->model_localisation_language->getLanguages($filter_data);
+        $results = $this->model_extension_language->getLanguages($filter_data);
 
         foreach ($results as $result) {
             $data['languages'][] = array(
@@ -190,7 +190,7 @@ class Language extends Mvc\Controller
                 'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : null),
                 'code'        => $result['code'],
                 'sort_order'  => $result['sort_order'],
-                'edit'        => $this->router->url('localisation/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $result['language_id'] . $url)
+                'edit'        => $this->router->url('extension/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $result['language_id'] . $url)
             );
         }
 
@@ -235,9 +235,9 @@ class Language extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_name'] = $this->router->url('localisation/language', 'token=' . $this->session->get('token') . '&sort=name' . $url);
-        $data['sort_code'] = $this->router->url('localisation/language', 'token=' . $this->session->get('token') . '&sort=code' . $url);
-        $data['sort_sort_order'] = $this->router->url('localisation/language', 'token=' . $this->session->get('token') . '&sort=sort_order' . $url);
+        $data['sort_name'] = $this->router->url('extension/language', 'token=' . $this->session->get('token') . '&sort=name' . $url);
+        $data['sort_code'] = $this->router->url('extension/language', 'token=' . $this->session->get('token') . '&sort=code' . $url);
+        $data['sort_sort_order'] = $this->router->url('extension/language', 'token=' . $this->session->get('token') . '&sort=sort_order' . $url);
 
         $url = '';
 
@@ -253,7 +253,7 @@ class Language extends Mvc\Controller
         $pagination->total = $language_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url . '&page={page}');
+        $pagination->url = $this->router->url('extension/language', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -264,7 +264,7 @@ class Language extends Mvc\Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('localisation/language_list', $data));
+        $this->response->setOutput($this->load->view('extension/language_list', $data));
     }
 
     protected function getForm()
@@ -334,19 +334,19 @@ class Language extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('extension/language', 'token=' . $this->session->get('token') . $url)
         );
 
         if (!$this->request->has('query.language_id')) {
-            $data['action'] = $this->router->url('localisation/language/add', 'token=' . $this->session->get('token') . $url);
+            $data['action'] = $this->router->url('extension/language/add', 'token=' . $this->session->get('token') . $url);
         } else {
-            $data['action'] = $this->router->url('localisation/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $this->request->get('query.language_id') . $url);
+            $data['action'] = $this->router->url('extension/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $this->request->get('query.language_id') . $url);
         }
 
-        $data['cancel'] = $this->router->url('localisation/language', 'token=' . $this->session->get('token') . $url);
+        $data['cancel'] = $this->router->url('extension/language', 'token=' . $this->session->get('token') . $url);
 
         if ($this->request->has('query.language_id') && !$this->request->is('POST')) {
-            $language_info = $this->model_localisation_language->getLanguage($this->request->get('query.language_id'));
+            $language_info = $this->model_extension_language->getLanguage($this->request->get('query.language_id'));
         }
 
         if ($this->request->has('post.name')) {
@@ -401,12 +401,12 @@ class Language extends Mvc\Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('localisation/language_form', $data));
+        $this->response->setOutput($this->load->view('extension/language_form', $data));
     }
 
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', 'localisation/language')) {
+        if (!$this->user->hasPermission('modify', 'extension/language')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
@@ -422,7 +422,7 @@ class Language extends Mvc\Controller
             $this->error['locale'] = $this->language->get('error_locale');
         }
 
-        $language_info = $this->model_localisation_language->getLanguageByCode($this->request->get('post.code'));
+        $language_info = $this->model_extension_language->getLanguageByCode($this->request->get('post.code'));
 
         if (!$this->request->has('query.language_id')) {
             if ($language_info) {
@@ -439,14 +439,14 @@ class Language extends Mvc\Controller
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', 'localisation/language')) {
+        if (!$this->user->hasPermission('modify', 'extension/language')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
         $this->load->model('setting/store');
 
         foreach ($this->request->get('post.selected') as $language_id) {
-            $language_info = $this->model_localisation_language->getLanguage($language_id);
+            $language_info = $this->model_extension_language->getLanguage($language_id);
 
             if ($language_info) {
                 if ($this->config->get('config_language') == $language_info['code']) {
