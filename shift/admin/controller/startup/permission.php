@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Controller\Startup;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Http, Mvc};
 
 class Permission extends Mvc\Controller
 {
@@ -46,7 +46,7 @@ class Permission extends Mvc\Controller
             );
 
             if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-                return new Action('error/permission');
+                return new Http\Dispatch('error/permission');
             }
         }
     }
