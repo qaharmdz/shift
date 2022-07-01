@@ -13,7 +13,11 @@ class ClassLoader
         protected string $baseDir
     ) {
         $composerClassMap = $this->loader->getClassMap();
-        $this->classMap = array_diff_ukey($composerClassMap, $composerClassMap['psr4lower'], 'strcasecmp');
+
+        $this->classMap = $composerClassMap;
+        if (!empty($composerClassMap['psr4lower'])) {
+            $this->classMap = array_diff_ukey($composerClassMap, $composerClassMap['psr4lower'], 'strcasecmp');
+        }
     }
 
     /**
