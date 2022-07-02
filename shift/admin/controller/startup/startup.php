@@ -14,7 +14,7 @@ class Startup extends Mvc\Controller
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");
 
         foreach ($query->rows as $setting) {
-            if (!$setting['serialized']) {
+            if (!$setting['encoded']) {
                 $this->config->set($setting['key'], $setting['value']);
             } else {
                 $this->config->set($setting['key'], json_decode($setting['value'], true));

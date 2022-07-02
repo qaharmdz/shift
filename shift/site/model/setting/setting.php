@@ -15,7 +15,7 @@ class Setting extends Mvc\Model
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
 
         foreach ($query->rows as $result) {
-            if (!$result['serialized']) {
+            if (!$result['encoded']) {
                 $data[$result['key']] = $result['value'];
             } else {
                 $data[$result['key']] = json_decode($result['value'], true);

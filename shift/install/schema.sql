@@ -283,12 +283,12 @@ CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}setting` (
   `code` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `key` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `serialized` tinyint(1) NOT NULL DEFAULT '0',
+  `encoded` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}setting` DISABLE KEYS */;
-INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `store_id`, `group`, `code`, `key`, `value`, `serialized`) VALUES
+INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `store_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES
 	(415, 0, '', 'dashboard_online', 'dashboard_online_width', '12', 0),
 	(416, 0, '', 'dashboard_online', 'dashboard_online_status', '1', 0),
 	(417, 0, '', 'dashboard_online', 'dashboard_online_sort_order', '2', 0),
