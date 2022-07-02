@@ -61,7 +61,7 @@ class Database
      *
      * @return \mysqli_result|bool
      */
-    public function raw(string $query)
+    public function raw(string $query): \mysqli_result|bool
     {
         try {
             return $this->mysqli->query($query, \MYSQLI_STORE_RESULT);
@@ -157,6 +157,55 @@ class Database
     }
 
     /**
+     * Execute groups of statement in one commit.
+     *
+     * - **token-type** represent the parameter type. Identified with a question mark and one characters of `sidb`, `?i`.
+     *   - **?s** string (default)
+     *   - **?i** integer
+     *   - **?d** double/ float
+     *   - **?b** bloat
+     *
+     * Example:
+     * ```
+     * $this->db->transaction(
+     *     "INSERT INTO `setting` (`group`, `code`, `key`, `value`, `encoded`)
+     *     VALUES (?s, ?s, ?s, ?s, ?i)",
+     *     [
+     *         ['test', 'transaction', 'key1', 'value 1', 0],
+     *         ['test', 'transaction', 'key2', 'value 1', 0],
+     *         ['test', 'transaction', 'key3', json_encode(['foo', 'bar']), 1],
+     *         ['test', 'transaction', 'key4', 'value 1', 0],
+     *    ]
+     * );
+     * ```
+     *
+     * @param  string $sql
+     * @param  array  $params
+     * @param  string $types
+     */
+    public function transaction(string $query, array $params, string $types = '')
+    {
+        if (!isset($params[0]) || !is_array($params[0])) {
+            return false;
+        }
+
+        if (!$types && $results = $this->parseParamType($query)) {
+            list($query, $types) = $results;
+        }
+
+        $statement = $this->mysqli->prepare($query);
+
+        $this->mysqli->begin_transaction();
+
+        foreach ($params as $param) {
+            $statement->bind_param($types, ...$param);
+            $statement->execute();
+        }
+
+        $this->mysqli->commit();
+    }
+
+    /**
      * Parameter type hint.
      *
      * @param  string $query
@@ -199,7 +248,6 @@ class Database
      * - **token-variable** templating variable replacement. Identified with curly bracket `{variable}`.
      *
      * Example:
-     *
      * ```
      * $sql = "SELECT * FROM `user` WHERE (firstname LIKE :name OR lastname LIKE :name)
      *      AND phone = :phone?i
@@ -345,7 +393,7 @@ class Database
         return $this->mysqli->ping();
     }
 
-    // Helper
+    // Helpers
     // ================================================
 
     /**
@@ -372,7 +420,7 @@ class Database
     }
 
     /**
-     * INSERT query builder.
+     * INSERT query builder. Use transaction() for multiple INSERT.
      *
      * @param  string $table
      * @param  array  $data
@@ -398,7 +446,7 @@ class Database
     }
 
     /**
-     * UPDATE query builder.
+     * UPDATE query builder. Use transaction() for multiple UPDATE.
      *
      * @param  string $table
      * @param  array  $data
