@@ -8,44 +8,62 @@ use Shift\System\Core\Mvc;
 
 class Setting extends Mvc\Model
 {
-    public function getSetting($code, $store_id = 0)
+    public function getSetting(string $group, string $code = null, int $store_id = 0)
     {
-        $setting_data = array();
+        $data = [];
 
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+        $sqlQuery = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s";
+        $sqlParam = [$store_id, $group];
 
-        foreach ($query->rows as $result) {
-            if (!$result['encoded']) {
-                $setting_data[$result['key']] = $result['value'];
+        if ($code !== null) {
+            $sqlQuery .= " AND `code`= ?s";
+            $sqlParam[] = $code;
+        }
+
+        $results = $this->db->get($sqlQuery, $sqlParam);
+
+        foreach ($results->rows as $result) {
+            $value = $result['encoded'] ? json_decode($result['value'], true) : $result['value'];
+
+            if ($code === null && $result['code']) {
+                $data[$result['code']][$result['key']] = $value;
             } else {
-                $setting_data[$result['key']] = json_decode($result['value'], true);
+                $data[$result['key']] = $value;
             }
         }
 
-        return $setting_data;
+        return $data;
     }
 
-    public function editSetting($code, $data, $store_id = 0)
+    public function editSetting(string $group, string $code, array $data, int $store_id = 0)
     {
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+        $this->deleteSetting($group, $code, $store_id);
 
+        $params = [];
         foreach ($data as $key => $value) {
-            if (substr($key, 0, strlen($code)) == $code) {
-                if (!is_array($value)) {
-                    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
-                } else {
-                    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape(json_encode($value, true)) . "', encoded = '1'");
-                }
-            }
+            $params[] = [$store_id, $group, $code, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
         }
+
+        $this->db->transaction(
+            "INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?s, ?s, ?i)",
+            $params
+        );
     }
 
-    public function deleteSetting($code, $store_id = 0)
+    public function deleteSetting(string $group, string $code = null, int $store_id = 0)
     {
-        $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+        $sqlQuery = "DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = ?s AND `group` = ?s";
+        $sqlParam = [$store_id, $group];
+
+        if ($code !== null) {
+            $sqlQuery .= " AND `code`= ?";
+            $sqlParam[] = $code;
+        }
+
+        return $this->db->query($sqlQuery, $sqlParam);
     }
 
-    public function getSettingValue($key, $store_id = 0)
+    public function gestSettingValue($key, $store_id = 0)
     {
         $query = $this->db->get("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
 
@@ -56,12 +74,21 @@ class Setting extends Mvc\Model
         }
     }
 
-    public function editSettingValue($code = '', $key = '', $value = '', $store_id = 0)
+    public function getSettingValue(string $group, string $code, string $key, int $store_id = 0)
     {
-        if (!is_array($value)) {
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape($value) . "', encoded = '0'  WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND store_id = '" . (int)$store_id . "'");
-        } else {
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape(json_encode($value)) . "', encoded = '1' WHERE `code` = '" . $this->db->escape($code) . "' AND `key` = '" . $this->db->escape($key) . "' AND store_id = '" . (int)$store_id . "'");
-        }
+        $result = $this->db->query(
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
+            [$store_id, $group, $code, $key]
+        )->row;
+
+        return $result['encoded'] ? json_decode($result['value'], true) : $result['value'];
+    }
+
+    public function editSettingValue(string $group, string $code, string $key, string|array $value = '', $store_id = 0)
+    {
+        $this->db->query(
+            "UPDATE `" . DB_PREFIX . "setting` SET `value` = ?s, encoded = ?i WHERE store_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
+            [(is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0), $store_id, $group, $code, $key]
+        );
     }
 }

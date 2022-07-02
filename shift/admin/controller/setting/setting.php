@@ -20,7 +20,7 @@ class Setting extends Mvc\Controller
         $this->load->model('setting/setting');
 
         if ($this->request->is('POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('config', $this->request->get('post'));
+            $this->model_setting_setting->editSetting('system', 'setting', $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -347,12 +347,10 @@ class Setting extends Mvc\Controller
         $data['cancel']  = $this->router->url('setting/store', 'token=' . $this->session->get('token'));
         $data['token']   = $this->session->get('token');
 
-        $data['config_meta_title']       = $this->request->get('post.config_meta_title', $this->config->get('config_meta_title'));
-        $data['config_meta_description'] = $this->request->get('post.config_meta_description', $this->config->get('config_meta_description'));
-        $data['config_meta_keyword']     = $this->request->get('post.config_meta_keyword', $this->config->get('config_meta_keyword'));
-
-        $data['config_theme']   = $this->request->get('post.config_theme', $this->config->get('config_theme'));
-        $data['store_url']      = $this->request->is('secure') ? URL_SITE : URL_SITE;
+        $data['setting'] = array_replace_recursive(
+            $this->model_setting_setting->getSetting('system', 'setting'),
+            $this->request->get('post', [])
+        );
 
         $data['themes'] = array();
 
@@ -370,82 +368,35 @@ class Setting extends Mvc\Controller
         }
 
         $this->load->model('design/layout');
-
-        $data['layouts']           = $this->model_design_layout->getLayouts();
-        $data['config_layout_id']  = $this->request->get('post.config_layout_id', $this->config->get('config_layout_id'));
-
-        $data['config_name']       = $this->request->get('post.config_name', $this->config->get('config_name'));
-        $data['config_owner']      = $this->request->get('post.config_owner', $this->config->get('config_owner'));
-        $data['config_address']    = $this->request->get('post.config_address', $this->config->get('config_address'));
-        $data['config_email']      = $this->request->get('post.config_email', $this->config->get('config_email'));
-        $data['config_telephone']  = $this->request->get('post.config_telephone', $this->config->get('config_telephone'));
-        $data['config_fax']        = $this->request->get('post.config_fax', $this->config->get('config_fax'));
-        $data['config_image']      = $this->request->get('post.config_image', $this->config->get('config_image'));
-        $data['config_country_id'] = $this->request->get('post.config_country_id', $this->config->get('config_country_id'));
+        $data['layouts'] = $this->model_design_layout->getLayouts();
 
         $this->load->model('tool/image');
-
         $data['thumb'] = $data['placeholder'] = $this->model_tool_image->resize('no-image.png', 100, 100);
-
-        if (is_file(DIR_IMAGE . $data['config_image'])) {
-            $data['thumb'] = $this->model_tool_image->resize($data['config_image'], 100, 100);
+        if (is_file(DIR_IMAGE . $data['setting']['image'])) {
+            $data['thumb'] = $this->model_tool_image->resize($data['setting']['image'], 100, 100);
         }
 
         $this->load->model('extension/language');
-
-        $data['languages']             = $this->model_extension_language->getLanguages();
-        $data['config_language']       = $this->request->get('post.config_language', $this->config->get('config_language'));
-        $data['config_admin_language'] = $this->request->get('post.config_admin_language', $this->config->get('config_admin_language'));
-        $data['config_limit_admin']    = $this->request->get('post.config_limit_admin', $this->config->get('config_limit_admin'));
+        $data['languages'] = $this->model_extension_language->getLanguages();
 
         $this->load->model('catalog/information');
         $data['informations'] = $this->model_catalog_information->getInformations();
 
-        $data['config_logo'] = $this->request->get('post.config_logo', $this->config->get('config_logo'));
-        $data['logo']        = $data['placeholder'];
-
-        if (is_file(DIR_IMAGE . $data['config_logo'])) {
-            $data['thumb'] = $this->model_tool_image->resize($data['config_logo'], 100, 100);
+        $data['logo'] = $data['placeholder'];
+        if (is_file(DIR_IMAGE . $data['setting']['logo'])) {
+            $data['thumb'] = $this->model_tool_image->resize($data['setting']['logo'], 100, 100);
         }
 
-        $data['config_icon'] = $this->request->get('post.config_icon', $this->config->get('config_icon'));
-        $data['icon']        = $data['placeholder'];
-
-        if (is_file(DIR_IMAGE . $data['config_icon'])) {
-            $data['icon'] = $this->model_tool_image->resize($data['config_icon'], 100, 100);
+        $data['icon'] = $data['placeholder'];
+        if (is_file(DIR_IMAGE . $data['setting']['icon'])) {
+            $data['icon'] = $this->model_tool_image->resize($data['setting']['icon'], 100, 100);
         }
-
-        $data['config_mail_protocol']      = $this->request->get('post.config_mail_protocol', $this->config->get('config_mail_protocol'));
-        $data['config_mail_parameter']     = $this->request->get('post.config_mail_parameter', $this->config->get('config_mail_parameter'));
-        $data['config_mail_smtp_hostname'] = $this->request->get('post.config_mail_smtp_hostname', $this->config->get('config_mail_smtp_hostname'));
-        $data['config_mail_smtp_username'] = $this->request->get('post.config_mail_smtp_username', $this->config->get('config_mail_smtp_username'));
-        $data['config_mail_smtp_password'] = $this->request->get('post.config_mail_smtp_password', $this->config->get('config_mail_smtp_password'));
-        $data['config_mail_smtp_port']     = $this->request->get('post.config_mail_smtp_port', $this->config->get('config_mail_smtp_port', 25));
-        $data['config_mail_smtp_timeout']  = $this->request->get('post.config_mail_smtp_timeout', $this->config->get('config_mail_smtp_timeout', 5));
-        $data['config_mail_alert']         = $this->request->get('post.config_mail_alert', $this->config->get('config_mail_alert', []));
 
         $data['mail_alerts'] = array();
         $data['mail_alerts'][] = array(
             'text'  => $this->language->get('text_mail_account'),
             'value' => 'account'
         );
-
-        $data['config_alert_email']       = $this->request->get('post.config_alert_email', $this->config->get('config_alert_email'));
-        $data['config_secure']            = $this->request->get('post.config_secure', $this->config->get('config_secure'));
-        $data['config_shared']            = $this->request->get('post.config_shared', $this->config->get('config_shared'));
-        $data['config_robots']            = $this->request->get('post.config_robots', $this->config->get('config_robots'));
-        $data['config_seo_url']           = $this->request->get('post.config_seo_url', $this->config->get('config_seo_url'));
-
-        $data['config_file_max_size']     = $this->request->get('post.config_file_max_size', $this->config->get('config_file_max_size', 300000));
-        $data['config_file_ext_allowed']  = $this->request->get('post.config_file_ext_allowed', $this->config->get('config_file_ext_allowed'));
-        $data['config_file_mime_allowed'] = $this->request->get('post.config_file_mime_allowed', $this->config->get('config_file_mime_allowed'));
-
-        $data['config_maintenance']       = $this->request->get('post.config_maintenance', $this->config->get('config_maintenance'));
-        $data['config_password']          = $this->request->get('post.config_password', $this->config->get('config_password'));
-        $data['config_compression']       = $this->request->get('post.config_compression', $this->config->get('config_compression'));
-        $data['config_error_display']     = $this->request->get('post.config_error_display', $this->config->get('config_error_display'));
-        $data['config_error_log']         = $this->request->get('post.config_error_log', $this->config->get('config_error_log'));
-        $data['config_error_filename']    = $this->request->get('post.config_error_filename', $this->config->get('config_error_filename'));
 
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -460,42 +411,42 @@ class Setting extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!$this->request->get('post.config_meta_title')) {
+        if (!$this->request->get('post.meta_title')) {
             $this->error['meta_title'] = $this->language->get('error_meta_title');
         }
 
-        if (!$this->request->get('post.config_name')) {
+        if (!$this->request->get('post.name')) {
             $this->error['name'] = $this->language->get('error_name');
         }
 
-        if ((utf8_strlen($this->request->get('post.config_owner')) < 3) || (utf8_strlen($this->request->get('post.config_owner')) > 64)) {
+        if ((utf8_strlen($this->request->get('post.owner')) < 3) || (utf8_strlen($this->request->get('post.owner')) > 64)) {
             $this->error['owner'] = $this->language->get('error_owner');
         }
 
-        if ((utf8_strlen($this->request->get('post.config_address')) < 3) || (utf8_strlen($this->request->get('post.config_address')) > 256)) {
+        if ((utf8_strlen($this->request->get('post.address')) < 3) || (utf8_strlen($this->request->get('post.address')) > 256)) {
             $this->error['address'] = $this->language->get('error_address');
         }
 
-        if ((utf8_strlen($this->request->get('post.config_email')) > 96) || !filter_var($this->request->get('post.config_email'), FILTER_VALIDATE_EMAIL)) {
+        if ((utf8_strlen($this->request->get('post.email')) > 96) || !filter_var($this->request->get('post.email'), FILTER_VALIDATE_EMAIL)) {
             $this->error['email'] = $this->language->get('error_email');
         }
 
-        if ((utf8_strlen($this->request->get('post.config_telephone')) < 3) || (utf8_strlen($this->request->get('post.config_telephone')) > 32)) {
+        if ((utf8_strlen($this->request->get('post.telephone')) < 3) || (utf8_strlen($this->request->get('post.telephone')) > 32)) {
             $this->error['telephone'] = $this->language->get('error_telephone');
         }
 
-        if (!empty($this->request->get('post.config_customer_group_display')) && !in_array($this->request->get('post.config_customer_group_id'), $this->request->get('post.config_customer_group_display'))) {
+        if (!empty($this->request->get('post.customer_group_display')) && !in_array($this->request->get('post.customer_group_id'), $this->request->get('post.customer_group_display'))) {
             $this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
         }
 
-        if (!$this->request->get('post.config_limit_admin')) {
+        if (!$this->request->get('post.limit_admin')) {
             $this->error['limit_admin'] = $this->language->get('error_limit');
         }
 
-        if (!$this->request->get('post.config_error_filename')) {
+        if (!$this->request->get('post.error_filename')) {
             $this->error['error_filename'] = $this->language->get('error_error_filename');
         } else {
-            if (preg_match('/\.\.[\/\\\]?/', $this->request->get('post.config_error_filename'))) {
+            if (preg_match('/\.\.[\/\\\]?/', $this->request->get('post.error_filename'))) {
                 $this->error['error_filename'] = $this->language->get('error_malformed_filename');
             }
         }

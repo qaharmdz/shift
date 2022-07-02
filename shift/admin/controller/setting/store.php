@@ -296,7 +296,7 @@ class Store extends Mvc\Controller
         if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
             $this->load->model('setting/setting');
 
-            $store_info = $this->model_setting_setting->getSetting('config', $this->request->get('query.store_id'));
+            $store_info = $this->model_setting_setting->getSetting('system', null, $this->request->get('query.store_id'));
         }
 
         if (!$store_info) {
