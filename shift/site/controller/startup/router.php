@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Startup;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Exception, Mvc};
 
 class Router extends Mvc\Controller
 {
@@ -23,7 +23,8 @@ class Router extends Mvc\Controller
         $alias = [];
 
         if ($this->request->has('query._route_')) {
-            $parts = array_filter(explode('/', $this->request->getString('query._route_')));
+            $routeAlias = $this->request->getString('query._route_');
+            $parts = array_filter(explode('/', $routeAlias));
 
             foreach ($parts as $part) {
                 // TODO: check site_id, language_id
@@ -49,7 +50,7 @@ class Router extends Mvc\Controller
             }
 
             if (!$alias) {
-                $this->request->set('query.route', $this->config->get('root.app_error'));
+                throw new Exception\NotFoundHttpException(sprintf('Unable to resolve URL alias "%s".', $routeAlias));
             }
         }
     }

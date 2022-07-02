@@ -166,7 +166,6 @@ class Framework
             $pageRoute->execute();
 
         // 404 Not Found
-        // TODO: NotFoundHttpException
         } catch (Core\Exception\NotFoundHttpException | \InvalidArgumentException $e) {
             $logger->exceptionHandler($e);
             exit('Exception: 404 not found');
