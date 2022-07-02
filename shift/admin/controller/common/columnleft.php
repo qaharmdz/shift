@@ -163,10 +163,10 @@ class ColumnLeft extends Mvc\Controller
                 );
             }
 
-            if ($this->user->hasPermission('access', 'user/user_permission')) {
+            if ($this->user->hasPermission('access', 'user/userpermission')) {
                 $user[] = array(
                     'name'     => $this->language->get('text_user_group'),
-                    'href'     => $this->router->url('user/user_permission', 'token=' . $this->session->get('token')),
+                    'href'     => $this->router->url('user/userpermission', 'token=' . $this->session->get('token')),
                     'children' => array()
                 );
             }
