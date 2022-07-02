@@ -26,7 +26,7 @@ class Upload extends Mvc\Controller
             // Allowed file extension types
             $allowed = array();
 
-            $extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
+            $extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('system.setting.file_ext_allowed'));
 
             $filetypes = explode("\n", $extension_allowed);
 
@@ -41,7 +41,7 @@ class Upload extends Mvc\Controller
             // Allowed file mime types
             $allowed = array();
 
-            $mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+            $mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('system.setting.file_mime_allowed'));
 
             $filetypes = explode("\n", $mime_allowed);
 

@@ -21,28 +21,32 @@ class Startup extends Mvc\Controller
         if ($query->num_rows) {
             $store_id = $query->row['store_id'];
         }
-        $this->config->set('config_store_id', $store_id);
+        $this->config->set('env.store_id', $store_id);
 
-        if (!$query->num_rows) {
-            // TODO: replace env.url_app, env.url_site, env.url_asset, env.url_media
-            $this->config->set('config_url', URL_APP);
-            $this->config->set('config_ssl', URL_APP);
-        }
 
         //=== Settings
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY store_id ASC");
+        $results = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (store_id = '0' OR store_id = ?i) AND `group` = ? ORDER BY store_id ASC",
+            [$this->config->getInt('env.store_id'), 'system']
+        );
 
-        foreach ($query->rows as $result) {
-            if (!$result['encoded']) {
-                $this->config->set($result['key'], $result['value']);
+        $settings = [];
+        foreach ($results->rows as $row) {
+            $value = $row['encoded'] ? json_decode($row['value'], true) : $row['value'];
+
+            if ($row['code']) {
+                $settings[$row['group']][$row['code']][$row['key']] = $value;
             } else {
-                $this->config->set($result['key'], json_decode($result['value'], true));
+                $settings[$row['group']][$row['key']] = $value;
             }
         }
 
+        $this->config->set($settings);
+        $this->config->set('env.limit', 25);
+
         // Apply DB setting
         $this->log->setConfig([
-            'display' => $this->config->getBool('config_error_display', false)
+            'display' => $this->config->getBool('system.setting.config_error_display', false)
         ]);
 
         //=== Language
@@ -90,7 +94,7 @@ class Startup extends Mvc\Controller
         }
 
         if (!array_key_exists($code, $languages)) {
-            $code = $this->config->get('config_language');
+            $code = $this->config->get('system.setting.config_language');
         }
 
         if ($this->session->isEmpty('language') || $this->session->get('language') != $code) {
@@ -108,7 +112,7 @@ class Startup extends Mvc\Controller
         $this->registry->set('language', $language);
 
         // Set the config language_id
-        $this->config->set('config_language_id', $languages[$code]['language_id']);
+        $this->config->set('system.setting.config_language_id', $languages[$code]['language_id']);
 
         $this->config->set('env.language_id', $languages[$code]['language_id']);
         $this->config->set('env.language_code', $code);

@@ -16,7 +16,7 @@ class Forgotten extends Mvc\Controller
             $this->response->redirect($this->router->url('common/dashboard'));
         }
 
-        if (!$this->config->get('config_password')) {
+        if (!$this->config->get('system.setting.password')) {
             $this->response->redirect($this->router->url('common/login'));
         }
 
@@ -34,25 +34,25 @@ class Forgotten extends Mvc\Controller
 
             $this->model_user_user->editCode($email, $code);
 
-            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('system.setting.name'), ENT_QUOTES, 'UTF-8'));
 
-            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('system.setting.name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
             $message .= $this->language->get('text_change') . "\n\n";
             $message .= $this->router->url('common/reset', 'code=' . $code) . "\n\n";
             $message .= sprintf($this->language->get('text_ip'), $this->request->getIp()) . "\n\n";
 
             $mail = new Mail();
-            $mail->protocol = $this->config->get('config_mail_protocol');
-            $mail->parameter = $this->config->get('config_mail_parameter');
-            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+            $mail->protocol = $this->config->get('system.setting.mail_protocol');
+            $mail->parameter = $this->config->get('system.setting.mail_parameter');
+            $mail->smtp_hostname = $this->config->get('system.setting.mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('system.setting.mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('system.setting.mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('system.setting.mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('system.setting.mail_smtp_timeout');
 
             $mail->setTo($email);
-            $mail->setFrom($this->config->get('config_email'));
-            $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setFrom($this->config->get('system.setting.email'));
+            $mail->setSender(html_entity_decode($this->config->get('system.setting.name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
             $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
             $mail->send();

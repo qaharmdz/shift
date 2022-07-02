@@ -30,7 +30,7 @@ class Password extends Mvc\Controller
             $this->session->set('flash.success', $this->language->get('text_success'));
 
             // Add to activity log
-            if ($this->config->get('config_customer_activity')) {
+            if ($this->config->get('system.setting.customer_activity')) {
                 $this->load->model('account/activity');
 
                 $activity_data = array(

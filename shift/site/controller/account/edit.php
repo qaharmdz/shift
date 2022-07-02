@@ -152,7 +152,7 @@ class Edit extends Mvc\Controller
         // Custom field validation
         $this->load->model('account/custom_field');
 
-        $custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+        $custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('system.setting.customer_group_id'));
         $post_fields   = $this->request->getArray('post.custom_field');
 
         foreach ($custom_fields as $custom_field) {

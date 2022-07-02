@@ -177,7 +177,7 @@ class Framework
         }
 
         // Response
-        $response->setCompression($config->getInt('config_compression', 0));
+        $response->setCompression($config->getInt('system.setting.compression', 0));
         return $response->send();
     }
 }

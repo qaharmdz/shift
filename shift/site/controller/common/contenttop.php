@@ -25,7 +25,7 @@ class ContentTop extends Mvc\Controller
         }
 
         if (!$layout_id) {
-            $layout_id = $this->config->get('config_layout_id');
+            $layout_id = $this->config->get('system.setting.layout_id');
         }
 
         $this->load->model('extension/module');

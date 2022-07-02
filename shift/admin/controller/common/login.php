@@ -61,7 +61,7 @@ class Login extends Mvc\Controller
         }
 
         $data['forgotten'] = '';
-        if ($this->config->get('config_password')) {
+        if ($this->config->get('system.setting.password')) {
             $data['forgotten'] = $this->router->url('common/forgotten');
         }
 

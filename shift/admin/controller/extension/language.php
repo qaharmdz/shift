@@ -176,8 +176,8 @@ class Language extends Mvc\Controller
         $filter_data = array(
             'sort'  => $sort,
             'order' => $order,
-            'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-            'limit' => $this->config->get('config_limit_admin')
+            'start' => ($page - 1) * $this->config->get('system.setting.limit_admin'),
+            'limit' => $this->config->get('system.setting.limit_admin')
         );
 
         $language_total = $this->model_extension_language->getTotalLanguages();
@@ -187,7 +187,7 @@ class Language extends Mvc\Controller
         foreach ($results as $result) {
             $data['languages'][] = array(
                 'language_id' => $result['language_id'],
-                'name'        => $result['name'] . (($result['code'] == $this->config->get('config_language')) ? $this->language->get('text_default') : null),
+                'name'        => $result['name'] . (($result['code'] == $this->config->get('system.setting.language')) ? $this->language->get('text_default') : null),
                 'code'        => $result['code'],
                 'sort_order'  => $result['sort_order'],
                 'edit'        => $this->router->url('extension/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $result['language_id'] . $url)
@@ -252,12 +252,12 @@ class Language extends Mvc\Controller
         $pagination = new \Pagination();
         $pagination->total = $language_total;
         $pagination->page = $page;
-        $pagination->limit = $this->config->get('config_limit_admin');
+        $pagination->limit = $this->config->get('system.setting.limit_admin');
         $pagination->url = $this->router->url('extension/language', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
-        $data['results'] = sprintf($this->language->get('text_pagination'), ($language_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($language_total - $this->config->get('config_limit_admin'))) ? $language_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $language_total, ceil($language_total / $this->config->get('config_limit_admin')));
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($language_total) ? (($page - 1) * $this->config->get('system.setting.limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('system.setting.limit_admin')) > ($language_total - $this->config->get('system.setting.limit_admin'))) ? $language_total : ((($page - 1) * $this->config->get('system.setting.limit_admin')) + $this->config->get('system.setting.limit_admin')), $language_total, ceil($language_total / $this->config->get('system.setting.limit_admin')));
 
         $data['sort'] = $sort;
         $data['order'] = $order;        $data['header'] = $this->load->controller('common/header');
@@ -449,11 +449,11 @@ class Language extends Mvc\Controller
             $language_info = $this->model_extension_language->getLanguage($language_id);
 
             if ($language_info) {
-                if ($this->config->get('config_language') == $language_info['code']) {
+                if ($this->config->get('system.setting.language') == $language_info['code']) {
                     $this->error['warning'] = $this->language->get('error_default');
                 }
 
-                if ($this->config->get('config_admin_language') == $language_info['code']) {
+                if ($this->config->get('system.setting.admin_language') == $language_info['code']) {
                     $this->error['warning'] = $this->language->get('error_admin');
                 }
 

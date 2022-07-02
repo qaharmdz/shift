@@ -54,7 +54,7 @@ class Footer extends Mvc\Controller
         $data['wishlist'] = $this->router->url('account/wishlist');
         $data['newsletter'] = $this->router->url('account/newsletter');
 
-        $data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('config_name'), date('Y', time()));
+        $data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('system.setting.name'), date('Y', time()));
         $data['config'] = json_encode($this->config->all());
 
         return $this->load->view('common/footer', $data);

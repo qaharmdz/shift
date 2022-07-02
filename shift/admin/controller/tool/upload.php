@@ -146,8 +146,8 @@ class Upload extends Mvc\Controller
             'filter_date_added' => $filter_date_added,
             'sort'              => $sort,
             'order'             => $order,
-            'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
-            'limit'             => $this->config->get('config_limit_admin')
+            'start'             => ($page - 1) * $this->config->get('system.setting.limit_admin'),
+            'limit'             => $this->config->get('system.setting.limit_admin')
         );
 
         $upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
@@ -243,12 +243,12 @@ class Upload extends Mvc\Controller
         $pagination = new \Pagination();
         $pagination->total = $upload_total;
         $pagination->page = $page;
-        $pagination->limit = $this->config->get('config_limit_admin');
+        $pagination->limit = $this->config->get('system.setting.limit_admin');
         $pagination->url = $this->router->url('tool/upload', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
-        $data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($upload_total - $this->config->get('config_limit_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $upload_total, ceil($upload_total / $this->config->get('config_limit_admin')));
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('system.setting.limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('system.setting.limit_admin')) > ($upload_total - $this->config->get('system.setting.limit_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('system.setting.limit_admin')) + $this->config->get('system.setting.limit_admin')), $upload_total, ceil($upload_total / $this->config->get('system.setting.limit_admin')));
 
         $data['filter_name'] = $filter_name;
         $data['filter_date_added'] = $filter_date_added;
@@ -359,7 +359,7 @@ class Upload extends Mvc\Controller
                 // Allowed file extension types
                 $allowed = array();
 
-                $extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
+                $extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('system.setting.file_ext_allowed'));
 
                 $filetypes = explode("\n", $extension_allowed);
 
@@ -374,7 +374,7 @@ class Upload extends Mvc\Controller
                 // Allowed file mime types
                 $allowed = array();
 
-                $mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+                $mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('system.setting.file_mime_allowed'));
 
                 $filetypes = explode("\n", $mime_allowed);
 

@@ -16,7 +16,7 @@ class Reset extends Mvc\Controller
             $this->response->redirect($this->router->url('common/dashboard'));
         }
 
-        if (!$this->config->get('config_password')) {
+        if (!$this->config->get('system.setting.password')) {
             $this->response->redirect($this->router->url('common/login'));
         }
 

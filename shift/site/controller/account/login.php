@@ -24,7 +24,7 @@ class Login extends Mvc\Controller
 
         if ($this->request->is('post') && $this->validate()) {
             // Add to activity log
-            if ($this->config->get('config_customer_activity')) {
+            if ($this->config->get('system.setting.customer_activity')) {
                 $this->load->model('account/activity');
 
                 $activity_data = array(
@@ -102,7 +102,7 @@ class Login extends Mvc\Controller
         // Check how many login attempts have been made.
         $login_info = $this->model_account_customer->getLoginAttempts($email);
 
-        if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+        if ($login_info && ($login_info['total'] >= $this->config->get('system.setting.login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
             $this->error['warning'] = $this->language->get('error_attempts');
         }
 

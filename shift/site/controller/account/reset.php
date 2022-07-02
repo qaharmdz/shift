@@ -30,7 +30,7 @@ class Reset extends Mvc\Controller
             if ($this->request->is('post') && $this->validate()) {
                 $this->model_account_customer->editPassword($customer_info['email'], $this->request->getString('post.password'));
 
-                if ($this->config->get('config_customer_activity')) {
+                if ($this->config->get('system.setting.customer_activity')) {
                     $this->load->model('account/activity');
 
                     $activity_data = array(

@@ -111,7 +111,7 @@ class Theme extends Mvc\Controller
                 $store_data = array();
 
                 $store_data[] = array(
-                    'name'   => $this->config->get('config_name'),
+                    'name'   => $this->config->get('system.setting.name'),
                     'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=0'),
                     'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                 );

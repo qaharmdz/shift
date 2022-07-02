@@ -21,15 +21,15 @@ class Header extends Mvc\Controller
         $data['lang']        = $this->language->get('code');
         $data['direction']   = $this->language->get('direction');
 
-        $data['name'] = $this->config->get('config_name');
+        $data['name'] = $this->config->get('system.setting.name');
 
-        if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $this->document->addLink($data['base'] . 'image/' . $this->config->get('config_icon'), 'icon');
+        if (is_file(DIR_IMAGE . $this->config->get('system.setting.icon'))) {
+            $this->document->addLink($data['base'] . 'image/' . $this->config->get('system.setting.icon'), 'icon');
         }
 
         $data['logo'] = '';
-        if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-            $data['logo'] = $data['base'] . 'image/' . $this->config->get('config_logo');
+        if (is_file(DIR_IMAGE . $this->config->get('system.setting.logo'))) {
+            $data['logo'] = $data['base'] . 'image/' . $this->config->get('system.setting.logo');
         }
 
         $this->load->language('common/header');
@@ -63,7 +63,7 @@ class Header extends Mvc\Controller
         $data['shopping_cart'] = $this->router->url('checkout/cart');
         $data['checkout'] = $this->router->url('checkout/checkout');
         $data['contact'] = $this->router->url('information/contact');
-        $data['telephone'] = $this->config->get('config_telephone');
+        $data['telephone'] = $this->config->get('system.setting.telephone');
 
         // Menu
         $data['categories'] = array();

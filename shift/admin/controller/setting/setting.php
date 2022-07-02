@@ -384,7 +384,7 @@ class Setting extends Mvc\Controller
 
         $data['logo'] = $data['placeholder'];
         if (is_file(DIR_IMAGE . $data['setting']['logo'])) {
-            $data['thumb'] = $this->model_tool_image->resize($data['setting']['logo'], 100, 100);
+            $data['logo'] = $this->model_tool_image->resize($data['setting']['logo'], 100, 100);
         }
 
         $data['icon'] = $data['placeholder'];

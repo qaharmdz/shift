@@ -160,7 +160,7 @@ class Register extends Mvc\Controller
 
         $data['action'] = $this->router->url('account/register');
 
-        $data['customer_group_id'] = $this->request->get('post.customer_group_id', $this->config->get('config_customer_group_id'));
+        $data['customer_group_id'] = $this->request->get('post.customer_group_id', $this->config->get('system.setting.customer_group_id'));
         $data['firstname']         = $this->request->getString('post.firstname');
         $data['lastname']          = $this->request->getString('post.lastname');
         $data['email']             = $this->request->getString('post.email');
@@ -168,19 +168,19 @@ class Register extends Mvc\Controller
         $data['confirm']           = $this->request->getString('post.confirm');
 
         // Captcha
-        if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-            $data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'), $this->error);
+        if ($this->config->get($this->config->get('system.setting.captcha') . '_status') && in_array('register', (array)$this->config->get('system.setting.captcha_page'))) {
+            $data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('system.setting.captcha'), $this->error);
         } else {
             $data['captcha'] = '';
         }
 
-        if ($this->config->get('config_account_id')) {
+        if ($this->config->get('system.setting.account_id')) {
             $this->load->model('catalog/information');
 
-            $information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+            $information_info = $this->model_catalog_information->getInformation($this->config->get('system.setting.account_id'));
 
             if ($information_info) {
-                $data['text_agree'] = sprintf($this->language->get('text_agree'), $this->router->url('information/information/agree', 'information_id=' . $this->config->get('config_account_id')), $information_info['title'], $information_info['title']);
+                $data['text_agree'] = sprintf($this->language->get('text_agree'), $this->router->url('information/information/agree', 'information_id=' . $this->config->get('system.setting.account_id')), $information_info['title'], $information_info['title']);
             } else {
                 $data['text_agree'] = '';
             }
@@ -219,10 +219,10 @@ class Register extends Mvc\Controller
         // }
 
         // Customer Group
-        if ($this->request->has('post.customer_group_id') && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get('post.customer_group_id'), $this->config->get('config_customer_group_display'))) {
+        if ($this->request->has('post.customer_group_id') && is_array($this->config->get('system.setting.customer_group_display')) && in_array($this->request->get('post.customer_group_id'), $this->config->get('system.setting.customer_group_display'))) {
             $customer_group_id = $this->request->get('post.customer_group_id');
         } else {
-            $customer_group_id = $this->config->get('config_customer_group_id');
+            $customer_group_id = $this->config->get('system.setting.customer_group_id');
         }
 
         // Custom field validation
@@ -248,8 +248,8 @@ class Register extends Mvc\Controller
         }
 
         // Captcha
-        if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
-            $captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
+        if ($this->config->get($this->config->get('system.setting.captcha') . '_status') && in_array('register', (array)$this->config->get('system.setting.captcha_page'))) {
+            $captcha = $this->load->controller('extension/captcha/' . $this->config->get('system.setting.captcha') . '/validate');
 
             if ($captcha) {
                 $this->error['captcha'] = $captcha;
@@ -257,10 +257,10 @@ class Register extends Mvc\Controller
         }
 
         // Agree to terms
-        if ($this->config->get('config_account_id')) {
+        if ($this->config->get('system.setting.account_id')) {
             $this->load->model('catalog/information');
 
-            $information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
+            $information_info = $this->model_catalog_information->getInformation($this->config->get('system.setting.account_id'));
 
             if ($information_info && !$this->request->has('post.agree')) {
                 $this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
@@ -277,10 +277,10 @@ class Register extends Mvc\Controller
         $this->load->model('account/custom_field');
 
         // Customer Group
-        if ($this->request->has('query.customer_group_id') && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get('query.customer_group_id'), $this->config->get('config_customer_group_display'))) {
+        if ($this->request->has('query.customer_group_id') && is_array($this->config->get('system.setting.customer_group_display')) && in_array($this->request->get('query.customer_group_id'), $this->config->get('system.setting.customer_group_display'))) {
             $customer_group_id = $this->request->get('query.customer_group_id');
         } else {
-            $customer_group_id = $this->config->get('config_customer_group_id');
+            $customer_group_id = $this->config->get('system.setting.customer_group_id');
         }
 
         $custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);

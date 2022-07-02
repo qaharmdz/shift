@@ -176,8 +176,8 @@ class UserPermission extends Mvc\Controller
         $filter_data = array(
             'sort'  => $sort,
             'order' => $order,
-            'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-            'limit' => $this->config->get('config_limit_admin')
+            'start' => ($page - 1) * $this->config->get('system.setting.limit_admin'),
+            'limit' => $this->config->get('system.setting.limit_admin')
         );
 
         $user_group_total = $this->model_user_usergroup->getTotalUserGroups();
@@ -246,12 +246,12 @@ class UserPermission extends Mvc\Controller
         $pagination = new \Pagination();
         $pagination->total = $user_group_total;
         $pagination->page = $page;
-        $pagination->limit = $this->config->get('config_limit_admin');
+        $pagination->limit = $this->config->get('system.setting.limit_admin');
         $pagination->url = $this->router->url('user/userpermission', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
-        $data['results'] = sprintf($this->language->get('text_pagination'), ($user_group_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($user_group_total - $this->config->get('config_limit_admin'))) ? $user_group_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $user_group_total, ceil($user_group_total / $this->config->get('config_limit_admin')));
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($user_group_total) ? (($page - 1) * $this->config->get('system.setting.limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('system.setting.limit_admin')) > ($user_group_total - $this->config->get('system.setting.limit_admin'))) ? $user_group_total : ((($page - 1) * $this->config->get('system.setting.limit_admin')) + $this->config->get('system.setting.limit_admin')), $user_group_total, ceil($user_group_total / $this->config->get('system.setting.limit_admin')));
 
         $data['sort'] = $sort;
         $data['order'] = $order;

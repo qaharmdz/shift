@@ -25,7 +25,7 @@ class Store extends Mvc\Controller
 
             $data['text_store'] = $this->language->get('text_store');
 
-            $data['store_id'] = $this->config->get('config_store_id');
+            $data['store_id'] = $this->config->get('system.setting.store_id');
 
             $data['stores'] = array();
 

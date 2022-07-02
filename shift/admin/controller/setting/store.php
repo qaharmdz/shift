@@ -122,7 +122,7 @@ class Store extends Mvc\Controller
 
         $data['stores'][] = array(
             'store_id' => 0,
-            'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
+            'name'     => $this->config->get('system.setting.name') . $this->language->get('text_default'),
             'url'      => URL_SITE,
             'edit'     => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
         );
@@ -352,7 +352,7 @@ class Store extends Mvc\Controller
             $data['thumb'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_image'), 100, 100);
         }
 
-        $data['config_language'] = $this->request->get('post.config_logoconfig_language', Arr::get($store_info, 'config_language', $this->config->get('config_language')));
+        $data['config_language'] = $this->request->get('post.config_logoconfig_language', Arr::get($store_info, 'config_language', $this->config->get('system.setting.language')));
         $data['config_logo']     = $this->request->get('post.config_logo', Arr::get($store_info, 'config_logo', ''));
         $data['config_icon']     = $this->request->get('post.config_icon', Arr::get($store_info, 'config_icon', ''));
 

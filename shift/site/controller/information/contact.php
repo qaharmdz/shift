@@ -18,15 +18,15 @@ class Contact extends Mvc\Controller
 
         if ($this->request->is('post') && $this->validate()) {
             $mail = new Mail();
-            $mail->protocol = $this->config->get('config_mail_protocol');
-            $mail->parameter = $this->config->get('config_mail_parameter');
-            $mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
-            $mail->smtp_username = $this->config->get('config_mail_smtp_username');
-            $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-            $mail->smtp_port = $this->config->get('config_mail_smtp_port');
-            $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+            $mail->protocol = $this->config->get('system.setting.mail_protocol');
+            $mail->parameter = $this->config->get('system.setting.mail_parameter');
+            $mail->smtp_hostname = $this->config->get('system.setting.mail_smtp_hostname');
+            $mail->smtp_username = $this->config->get('system.setting.mail_smtp_username');
+            $mail->smtp_password = html_entity_decode($this->config->get('system.setting.mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+            $mail->smtp_port = $this->config->get('system.setting.mail_smtp_port');
+            $mail->smtp_timeout = $this->config->get('system.setting.mail_smtp_timeout');
 
-            $mail->setTo($this->config->get('config_email'));
+            $mail->setTo($this->config->get('system.setting.email'));
             $mail->setFrom($this->request->get('post.email'));
             $mail->setSender(html_entity_decode($this->request->get('post.name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->get('post.name')), ENT_QUOTES, 'UTF-8'));
@@ -89,20 +89,20 @@ class Contact extends Mvc\Controller
 
         $this->load->model('tool/image');
 
-        if ($this->config->get('config_image')) {
-            $data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get($this->config->get('config_theme') . '_image_location_width'), $this->config->get($this->config->get('config_theme') . '_image_location_height'));
+        if ($this->config->get('system.setting.image')) {
+            $data['image'] = $this->model_tool_image->resize($this->config->get('system.setting.image'), $this->config->get($this->config->get('system.setting.theme') . '_image_location_width'), $this->config->get($this->config->get('system.setting.theme') . '_image_location_height'));
         } else {
             $data['image'] = false;
         }
 
-        $data['store'] = $this->config->get('config_name');
+        $data['store'] = $this->config->get('system.setting.name');
         $data['address'] = '';
-        $data['geocode'] = $this->config->get('config_geocode');
-        $data['geocode_hl'] = $this->config->get('config_language');
-        $data['telephone'] = $this->config->get('config_telephone');
-        $data['fax'] = $this->config->get('config_fax');
+        $data['geocode'] = $this->config->get('system.setting.geocode');
+        $data['geocode_hl'] = $this->config->get('system.setting.language');
+        $data['telephone'] = $this->config->get('system.setting.telephone');
+        $data['fax'] = $this->config->get('system.setting.fax');
         $data['open'] = '';
-        $data['comment'] = $this->config->get('config_comment');
+        $data['comment'] = $this->config->get('system.setting.comment');
 
         $data['locations'] = array();
 
@@ -113,8 +113,8 @@ class Contact extends Mvc\Controller
 
         // Captcha
         $data['captcha'] = '';
-        if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('contact', (array)$this->config->get('config_captcha_page'))) {
-            $data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'), $this->error);
+        if ($this->config->get($this->config->get('system.setting.captcha') . '_status') && in_array('contact', (array)$this->config->get('system.setting.captcha_page'))) {
+            $data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('system.setting.captcha'), $this->error);
         }
 
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -142,8 +142,8 @@ class Contact extends Mvc\Controller
         }
 
         // Captcha
-        if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('contact', (array)$this->config->get('config_captcha_page'))) {
-            $captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
+        if ($this->config->get($this->config->get('system.setting.captcha') . '_status') && in_array('contact', (array)$this->config->get('system.setting.captcha_page'))) {
+            $captcha = $this->load->controller('extension/captcha/' . $this->config->get('system.setting.captcha') . '/validate');
 
             if ($captcha) {
                 $this->error['captcha'] = $captcha;

@@ -269,7 +269,7 @@ class Installer extends Mvc\Controller
         }
 
         // Check FTP status
-        if (!$this->config->get('config_ftp_status')) {
+        if (!$this->config->get('system.setting.ftp_status')) {
             $json['error'] = $this->language->get('error_ftp_status');
         }
 
@@ -298,14 +298,14 @@ class Installer extends Mvc\Controller
             }
 
             // Connect to the site via FTP
-            $connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+            $connection = ftp_connect($this->config->get('system.setting.ftp_hostname'), $this->config->get('system.setting.ftp_port'));
 
             if ($connection) {
-                $login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+                $login = ftp_login($connection, $this->config->get('system.setting.ftp_username'), $this->config->get('system.setting.ftp_password'));
 
                 if ($login) {
-                    if ($this->config->get('config_ftp_root')) {
-                        $root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
+                    if ($this->config->get('system.setting.ftp_root')) {
+                        $root = ftp_chdir($connection, $this->config->get('system.setting.ftp_root'));
                     } else {
                         $root = ftp_chdir($connection, '/');
                     }
@@ -360,12 +360,12 @@ class Installer extends Mvc\Controller
                         $json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
                     }
                 } else {
-                    $json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+                    $json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('system.setting.ftp_username'));
                 }
 
                 ftp_close($connection);
             } else {
-                $json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+                $json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('system.setting.ftp_hostname'), $this->config->get('system.setting.ftp_port'));
             }
         }
 

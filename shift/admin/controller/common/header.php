@@ -57,7 +57,7 @@ class Header extends Mvc\Controller
             $data['stores'] = array();
 
             $data['stores'][] = array(
-                'name' => $this->config->get('config_name'),
+                'name' => $this->config->get('system.setting.name'),
                 'href' => URL_SITE
             );
 

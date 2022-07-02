@@ -11,7 +11,7 @@ class Router extends Mvc\Controller
     public function index()
     {
         // Register URL rewriter
-        if ($this->config->get('config_seo_url')) {
+        if ($this->config->get('system.setting.seo_url')) {
             $this->router->addUrlRewrite($this);
         }
 
