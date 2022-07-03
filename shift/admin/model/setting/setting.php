@@ -63,17 +63,6 @@ class Setting extends Mvc\Model
         return $this->db->query($sqlQuery, $sqlParam);
     }
 
-    public function gestSettingValue($key, $store_id = 0)
-    {
-        $query = $this->db->get("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
-
-        if ($query->num_rows) {
-            return $query->row['value'];
-        } else {
-            return null;
-        }
-    }
-
     public function getSettingValue(string $group, string $code, string $key, int $store_id = 0)
     {
         $result = $this->db->query(

@@ -8,20 +8,40 @@ use Shift\System\Core\Mvc;
 
 class Setting extends Mvc\Model
 {
-    public function getSetting($code, $store_id = 0)
+    public function getSetting(string $group, string $code = null, int $store_id = 0)
     {
-        $data = array();
+        $data = [];
 
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+        $sqlQuery = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s";
+        $sqlParam = [$store_id, $group];
 
-        foreach ($query->rows as $result) {
-            if (!$result['encoded']) {
-                $data[$result['key']] = $result['value'];
+        if ($code !== null) {
+            $sqlQuery .= " AND `code`= ?s";
+            $sqlParam[] = $code;
+        }
+
+        $results = $this->db->get($sqlQuery, $sqlParam);
+
+        foreach ($results->rows as $result) {
+            $value = $result['encoded'] ? json_decode($result['value'], true) : $result['value'];
+
+            if ($code === null && $result['code']) {
+                $data[$result['code']][$result['key']] = $value;
             } else {
-                $data[$result['key']] = json_decode($result['value'], true);
+                $data[$result['key']] = $value;
             }
         }
 
         return $data;
+    }
+
+    public function getSettingValue(string $group, string $code, string $key, int $store_id = 0)
+    {
+        $result = $this->db->query(
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
+            [$store_id, $group, $code, $key]
+        )->row;
+
+        return $result['encoded'] ? json_decode($result['value'], true) : $result['value'];
     }
 }

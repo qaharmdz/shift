@@ -32,7 +32,7 @@ class Extension extends Mvc\Model
 
     public function uninstall($type, $code)
     {
-        $this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "' AND `code` = '" . $this->db->escape($code) . "'");
-        $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE `code` = '" . $this->db->escape($code) . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `code` = ?s", [$type, $code]);
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = ?S AND `code` = ?s", [$type, $code]);
     }
 }

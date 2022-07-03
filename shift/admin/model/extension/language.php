@@ -48,11 +48,39 @@ class Language extends Mvc\Model
     {
         $language_query = $this->db->get("SELECT `code` FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 
-        $this->db->query("UPDATE " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "' WHERE language_id = '" . (int)$language_id . "'");
+        $this->db->set(
+            DB_PREFIX . 'language',
+            [
+                'name'       => $data['name'],
+                'code'       => $data['code'],
+                'locale'     => $data['locale'],
+                'sort_order' => $data['sort_order'],
+                'status'     => (int)$data['status'],
+            ],
+            ['language_id' => (int)$language_id]
+        );
 
         if ($language_query->row['code'] != $data['code']) {
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '" . $this->db->escape($data['code']) . "' WHERE `key` = 'config_language' AND value = '" . $this->db->escape($language_query->row['code']) . "'");
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET value = '" . $this->db->escape($data['code']) . "' WHERE `key` = 'config_admin_language' AND value = '" . $this->db->escape($language_query->row['code']) . "'");
+            $this->db->set(
+                DB_PREFIX . 'setting',
+                ['value' => $data['code']],
+                [
+                    'group' => 'system',
+                    'code'  => 'setting',
+                    'key'   => 'language',
+                    'value' => $language_query->row['code'],
+                ]
+            );
+            $this->db->set(
+                DB_PREFIX . 'setting',
+                ['value' => $data['code']],
+                [
+                    'group' => 'system',
+                    'code'  => 'setting',
+                    'key'   => 'admin_language',
+                    'value' => $language_query->row['code'],
+                ]
+            );
         }
 
         $this->cache->delete('language');
