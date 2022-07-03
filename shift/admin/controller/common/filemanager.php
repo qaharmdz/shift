@@ -195,7 +195,7 @@ class FileManager extends Mvc\Controller
         $pagination = new \Pagination();
         $pagination->total = $image_total;
         $pagination->page = $page;
-        $pagination->limit = 16;
+        $pagination->limit = 20;
         $pagination->url = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();

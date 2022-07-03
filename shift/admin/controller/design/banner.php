@@ -176,8 +176,8 @@ class Banner extends Mvc\Controller
         $filter_data = array(
             'sort'  => $sort,
             'order' => $order,
-            'start' => ($page - 1) * $this->config->get('system.setting.limit_admin'),
-            'limit' => $this->config->get('system.setting.limit_admin')
+            'start' => ($page - 1) * $this->config->get('env.limit'),
+            'limit' => $this->config->get('env.limit')
         );
 
         $banner_total = $this->model_design_banner->getTotalBanners();
@@ -249,12 +249,12 @@ class Banner extends Mvc\Controller
         $pagination = new \Pagination();
         $pagination->total = $banner_total;
         $pagination->page = $page;
-        $pagination->limit = $this->config->get('system.setting.limit_admin');
+        $pagination->limit = $this->config->get('env.limit');
         $pagination->url = $this->router->url('design/banner', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
-        $data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('system.setting.limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('system.setting.limit_admin')) > ($banner_total - $this->config->get('system.setting.limit_admin'))) ? $banner_total : ((($page - 1) * $this->config->get('system.setting.limit_admin')) + $this->config->get('system.setting.limit_admin')), $banner_total, ceil($banner_total / $this->config->get('system.setting.limit_admin')));
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($banner_total) ? (($page - 1) * $this->config->get('env.limit')) + 1 : 0, ((($page - 1) * $this->config->get('env.limit')) > ($banner_total - $this->config->get('env.limit'))) ? $banner_total : ((($page - 1) * $this->config->get('env.limit')) + $this->config->get('env.limit')), $banner_total, ceil($banner_total / $this->config->get('env.limit')));
 
         $data['sort'] = $sort;
         $data['order'] = $order;

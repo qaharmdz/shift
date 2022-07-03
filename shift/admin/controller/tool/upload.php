@@ -146,8 +146,8 @@ class Upload extends Mvc\Controller
             'filter_date_added' => $filter_date_added,
             'sort'              => $sort,
             'order'             => $order,
-            'start'             => ($page - 1) * $this->config->get('system.setting.limit_admin'),
-            'limit'             => $this->config->get('system.setting.limit_admin')
+            'start'             => ($page - 1) * $this->config->get('env.limit'),
+            'limit'             => $this->config->get('env.limit')
         );
 
         $upload_total = $this->model_tool_upload->getTotalUploads($filter_data);
@@ -243,12 +243,12 @@ class Upload extends Mvc\Controller
         $pagination = new \Pagination();
         $pagination->total = $upload_total;
         $pagination->page = $page;
-        $pagination->limit = $this->config->get('system.setting.limit_admin');
+        $pagination->limit = $this->config->get('env.limit');
         $pagination->url = $this->router->url('tool/upload', 'token=' . $this->session->get('token') . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
-        $data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('system.setting.limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('system.setting.limit_admin')) > ($upload_total - $this->config->get('system.setting.limit_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('system.setting.limit_admin')) + $this->config->get('system.setting.limit_admin')), $upload_total, ceil($upload_total / $this->config->get('system.setting.limit_admin')));
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('env.limit')) + 1 : 0, ((($page - 1) * $this->config->get('env.limit')) > ($upload_total - $this->config->get('env.limit'))) ? $upload_total : ((($page - 1) * $this->config->get('env.limit')) + $this->config->get('env.limit')), $upload_total, ceil($upload_total / $this->config->get('env.limit')));
 
         $data['filter_name'] = $filter_name;
         $data['filter_date_added'] = $filter_date_added;
