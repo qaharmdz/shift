@@ -484,4 +484,32 @@ class Database
             $types
         );
     }
+
+    /**
+     * DELETE query helper
+     *
+     * @param  string $table
+     * @param  array  $where
+     */
+    public function delete(string $table, array $where)
+    {
+        $wheres = [];
+        $types  = '';
+
+        foreach ($where as $key => $value) {
+            if (is_array($value)) {
+                $wheres[] = "`" . $key . "` IN (" . '?' . str_repeat(',?', count($value) - 1) . ")";
+                $params   = array_merge($params, $value);
+                $types   .= str_repeat('s', count($value));
+            } else {
+                $wheres[] = "`" . $key . "` = ?";
+                $params[] = $value;
+                $types   .= 's';
+            }
+        }
+
+        if ($wheres) {
+            $this->db->query("DELETE FROM `" . $table . "` WHERE " . implode(' AND ', $wheres));
+        }
+    }
 }
