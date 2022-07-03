@@ -111,10 +111,7 @@ class Startup extends Mvc\Controller
 
         $this->registry->set('language', $language);
 
-        // Set the config language_id
-        $this->config->set('system.setting.config_language_id', $languages[$code]['language_id']);
-
-        $this->config->set('env.language_id', $languages[$code]['language_id']);
+        $this->config->set('env.language_id', (int)$languages[$code]['language_id']);
         $this->config->set('env.language_code', $code);
 
         //=== User

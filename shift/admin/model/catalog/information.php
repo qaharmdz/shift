@@ -95,7 +95,7 @@ class Information extends Mvc\Model
     public function getInformations(array $data = array())
     {
         if ($data) {
-            $sql = "SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('system.setting.language_id') . "'";
+            $sql = "SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('env.language_id') . "'";
 
             $sort_data = array(
                 'id.title',
@@ -130,14 +130,14 @@ class Information extends Mvc\Model
 
             return $query->rows;
         } else {
-            $information_data = $this->cache->get('information.' . (int)$this->config->get('system.setting.language_id'));
+            $information_data = $this->cache->get('information.' . (int)$this->config->get('env.language_id'));
 
             if (!$information_data) {
-                $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('system.setting.language_id') . "' ORDER BY id.title");
+                $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information i LEFT JOIN " . DB_PREFIX . "information_description id ON (i.information_id = id.information_id) WHERE id.language_id = '" . (int)$this->config->get('env.language_id') . "' ORDER BY id.title");
 
                 $information_data = $query->rows;
 
-                $this->cache->set('information.' . (int)$this->config->get('system.setting.language_id'), $information_data);
+                $this->cache->set('information.' . (int)$this->config->get('env.language_id'), $information_data);
             }
 
             return $information_data;

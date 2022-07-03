@@ -28,7 +28,7 @@ class Startup extends Mvc\Controller
         }
 
         $this->config->set($settings);
-        $this->config->set('env.limit', 25);
+        $this->config->set('env.limit', $this->config->getInt('system.setting.limit_admin', 25));
 
         // Apply DB setting
         $this->log->setConfig([
@@ -39,12 +39,13 @@ class Startup extends Mvc\Controller
         $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` WHERE code = '" . $this->db->escape($this->config->get('system.setting.admin_language')) . "'");
 
         if ($query->num_rows) {
-            $this->config->set('system.setting.language_id', $query->row['language_id']);
+            $this->config->set('env.language_id', (int)$query->row['language_id']);
+            $this->config->set('env.language_code', $query->row['code']);
         }
 
         //=== Language
-        $language = new \Language($this->config->get('system.setting.admin_language'));
-        $language->load($this->config->get('system.setting.admin_language'));
+        $language = new \Language($this->config->get('env.language_code'));
+        $language->load($this->config->get('env.language_code'));
         $this->registry->set('language', $language);
     }
 }
