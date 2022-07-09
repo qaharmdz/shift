@@ -68,7 +68,7 @@ class Database
         } catch (\Mysqli_sql_exception $e) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    '<ul><li><b>\Mysqli_sql_exception</b>: %s</li><li>Error processing query: <i>%s</i></li></ul>',
+                    '<br>- <b>\Mysqli_sql_exception</b>: %s<br>- <b>Error query</b>: <i>%s</i>',
                     $e->getMessage(),
                     $query
                 ),
