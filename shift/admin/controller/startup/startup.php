@@ -32,7 +32,7 @@ class Startup extends Mvc\Controller
 
         // Apply DB setting
         $this->log->setConfig([
-            'display' => $this->config->getBool('system.setting.config_error_display', false)
+            'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
 
         //=== Language

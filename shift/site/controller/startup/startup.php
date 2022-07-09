@@ -23,7 +23,6 @@ class Startup extends Mvc\Controller
         }
         $this->config->set('env.store_id', $store_id);
 
-
         //=== Settings
         $results = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (store_id = '0' OR store_id = ?i) AND `group` = ? ORDER BY store_id ASC",
@@ -46,7 +45,7 @@ class Startup extends Mvc\Controller
 
         // Apply DB setting
         $this->log->setConfig([
-            'display' => $this->config->getBool('system.setting.config_error_display', false)
+            'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
 
         //=== Language
@@ -94,7 +93,7 @@ class Startup extends Mvc\Controller
         }
 
         if (!array_key_exists($code, $languages)) {
-            $code = $this->config->get('system.setting.config_language');
+            $code = $this->config->get('system.setting.language');
         }
 
         if ($this->session->isEmpty('language') || $this->session->get('language') != $code) {
