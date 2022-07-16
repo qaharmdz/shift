@@ -22,7 +22,7 @@
           <li><?php echo $text_admin; ?></li>
           <li><?php echo $text_user; ?></li>
           <li><?php echo $text_setting; ?></li>
-          <li><?php echo $text_store; ?></li>
+          <li><?php echo $text_site; ?></li>
         </ol>
       </fieldset>
       <h3><?php echo $text_steps; ?></h3>
@@ -79,7 +79,7 @@ function start(url) {
                 if (json['next']) {
                     start(json['next']);
                 } else if (!json['error']) {
-                    $('#button-continue').replaceWith('<a href="<?php echo $store; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
+                    $('#button-continue').replaceWith('<a href="<?php echo $site; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
                     $('.fa-spinner').remove();
                 }
 

@@ -19,7 +19,7 @@ class ThemeDefault extends Mvc\Controller
         $this->load->model('setting/setting');
 
         if ($this->request->is('POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('theme_default', $this->request->get('post'), $this->request->get('query.store_id'));
+            $this->model_setting_setting->editSetting('theme_default', $this->request->get('post'), $this->request->get('query.site_id'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -151,15 +151,15 @@ class ThemeDefault extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'))
+            'href' => $this->router->url('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'))
         );
 
-        $data['action'] = $this->router->url('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'));
+        $data['action'] = $this->router->url('extension/theme/theme_default', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'));
 
         $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme');
 
-        if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
-            $setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get('query.store_id'));
+        if ($this->request->has('query.site_id') && !$this->request->is('POST')) {
+            $setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get('query.site_id'));
         }
 
         if ($this->request->has('post.theme_default_directory')) {

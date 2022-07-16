@@ -12,7 +12,7 @@ class Startup extends Mvc\Controller
     {
         //=== Settings
         $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' AND `group` = ?",
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = '0' AND `group` = ?",
             ['system']
         );
 

@@ -203,7 +203,7 @@ class Information extends Mvc\Controller
         $data['entry_meta_description'] = $this->language->get('entry_meta_description');
         $data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
         $data['entry_keyword'] = $this->language->get('entry_keyword');
-        $data['entry_store'] = $this->language->get('entry_store');
+        $data['entry_site'] = $this->language->get('entry_site');
         $data['entry_bottom'] = $this->language->get('entry_bottom');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $data['entry_status'] = $this->language->get('entry_status');
@@ -284,13 +284,13 @@ class Information extends Mvc\Controller
             $data['information_description'] = $this->model_catalog_information->getInformationDescriptions($this->request->getInt('query.information_id'));
         }
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
-        $data['stores'] = $this->model_setting_store->getStores();
+        $data['sites'] = $this->model_setting_site->getSites();
 
-        $data['information_store'] = $this->request->getArray('post.information_store', [0]);
+        $data['information_site'] = $this->request->getArray('post.information_site', [0]);
         if ($this->request->has('query.information_id')) {
-            $data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->getInt('query.information_id'));
+            $data['information_site'] = $this->model_catalog_information->getInformationSites($this->request->getInt('query.information_id'));
         }
 
         $data['keyword'] = '';
@@ -386,7 +386,7 @@ class Information extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
         foreach ($this->request->get('post.selected', []) as $information_id) {
             if ($this->config->get('system.setting.account_id') == $information_id) {
@@ -405,10 +405,10 @@ class Information extends Mvc\Controller
                 $this->error['warning'] = $this->language->get('error_return');
             }
 
-            $store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);
+            $site_total = $this->model_setting_site->getTotalSitesByInformationId($information_id);
 
-            if ($store_total) {
-                $this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+            if ($site_total) {
+                $this->error['warning'] = sprintf($this->language->get('error_site'), $site_total);
             }
         }
 

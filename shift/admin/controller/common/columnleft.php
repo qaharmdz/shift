@@ -147,7 +147,7 @@ class ColumnLeft extends Mvc\Controller
             if ($this->user->hasPermission('access', 'setting/setting')) {
                 $system[] = array(
                     'name'     => $this->language->get('text_setting'),
-                    'href'     => $this->router->url('setting/store', 'token=' . $this->session->get('token')),
+                    'href'     => $this->router->url('setting/site', 'token=' . $this->session->get('token')),
                     'children' => array()
                 );
             }

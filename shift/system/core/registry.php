@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shift\System\Core;
 
 /**
- * Stores instance of objects
+ * Sites instance of objects
  */
 class Registry
 {

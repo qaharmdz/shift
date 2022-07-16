@@ -44,9 +44,9 @@
   <ul class="nav pull-right">
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-home fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right">
-        <li class="dropdown-header"><?php echo $text_store; ?></li>
-        <?php foreach ($stores as $store) { ?>
-        <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
+        <li class="dropdown-header"><?php echo $text_site; ?></li>
+        <?php foreach ($sites as $site) { ?>
+        <li><a href="<?php echo $site['href']; ?>" target="_blank"><?php echo $site['name']; ?></a></li>
         <?php } ?>
       </ul>
     </li>

@@ -39,7 +39,7 @@
             <table id="route" class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-left"><?php echo $entry_store; ?></td>
+                  <td class="text-left"><?php echo $entry_site; ?></td>
                   <td class="text-left"><?php echo $entry_route; ?></td>
                   <td></td>
                 </tr>
@@ -48,13 +48,13 @@
                 <?php $route_row = 0; ?>
                 <?php foreach ($layout_routes as $layout_route) { ?>
                 <tr id="route-row<?php echo $route_row; ?>">
-                  <td class="text-left"><select name="layout_route[<?php echo $route_row; ?>][store_id]" class="form-control">
+                  <td class="text-left"><select name="layout_route[<?php echo $route_row; ?>][site_id]" class="form-control">
                       <option value="0"><?php echo $text_default; ?></option>
-                      <?php foreach ($stores as $store) { ?>
-                      <?php if ($store['store_id'] == $layout_route['store_id']) { ?>
-                      <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                      <?php foreach ($sites as $site) { ?>
+                      <?php if ($site['site_id'] == $layout_route['site_id']) { ?>
+                      <option value="<?php echo $site['site_id']; ?>" selected="selected"><?php echo $site['name']; ?></option>
                       <?php } else { ?>
-                      <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                      <option value="<?php echo $site['site_id']; ?>"><?php echo $site['name']; ?></option>
                       <?php } ?>
                       <?php } ?>
                     </select></td>
@@ -357,10 +357,10 @@ var route_row = <?php echo $route_row; ?>;
 
 function addRoute() {
     html  = '<tr id="route-row' + route_row + '">';
-    html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
+    html += '  <td class="text-left"><select name="layout_route[' + route_row + '][site_id]" class="form-control">';
     html += '  <option value="0"><?php echo $text_default; ?></option>';
-    <?php foreach ($stores as $store) { ?>
-    html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+    <?php foreach ($sites as $site) { ?>
+    html += '<option value="<?php echo $site['site_id']; ?>"><?php echo addslashes($site['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';
     html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';

@@ -11,7 +11,7 @@ class Image extends Mvc\Model
     public function resize($filename, $width, $height)
     {
         if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', DS, realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != DIR_IMAGE) {
-            return;
+            return null;
         }
 
         $image_old     = $filename;

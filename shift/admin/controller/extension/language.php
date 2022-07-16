@@ -443,7 +443,7 @@ class Language extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
         foreach ($this->request->get('post.selected') as $language_id) {
             $language_info = $this->model_extension_language->getLanguage($language_id);
@@ -457,10 +457,10 @@ class Language extends Mvc\Controller
                     $this->error['warning'] = $this->language->get('error_admin');
                 }
 
-                $store_total = $this->model_setting_store->getTotalStoresByLanguage($language_info['code']);
+                $site_total = $this->model_setting_site->getTotalSitesByLanguage($language_info['code']);
 
-                if ($store_total) {
-                    $this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+                if ($site_total) {
+                    $this->error['warning'] = sprintf($this->language->get('error_site'), $site_total);
                 }
             }
         }

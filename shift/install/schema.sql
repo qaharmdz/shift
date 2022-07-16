@@ -131,13 +131,13 @@ INSERT INTO `{{ DB_PREFIX }}information_description` (`information_id`, `languag
 DROP TABLE IF EXISTS `{{ DB_PREFIX }}information_to_layout`;
 CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}information_to_layout` (
   `information_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
-  PRIMARY KEY (`information_id`,`store_id`)
+  PRIMARY KEY (`information_id`,`site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}information_to_layout` DISABLE KEYS */;
-INSERT INTO `{{ DB_PREFIX }}information_to_layout` (`information_id`, `store_id`, `layout_id`) VALUES
+INSERT INTO `{{ DB_PREFIX }}information_to_layout` (`information_id`, `site_id`, `layout_id`) VALUES
 	(4, 0, 0),
 	(4, 1, 0),
 	(6, 0, 0),
@@ -146,21 +146,21 @@ INSERT INTO `{{ DB_PREFIX }}information_to_layout` (`information_id`, `store_id`
 	(9, 1, 0);
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}information_to_layout` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `{{ DB_PREFIX }}information_to_store`;
-CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}information_to_store` (
+DROP TABLE IF EXISTS `{{ DB_PREFIX }}information_to_site`;
+CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}information_to_site` (
   `information_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  PRIMARY KEY (`information_id`,`store_id`)
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`information_id`,`site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-/*!40000 ALTER TABLE `{{ DB_PREFIX }}information_to_store` DISABLE KEYS */;
-INSERT INTO `{{ DB_PREFIX }}information_to_store` (`information_id`, `store_id`) VALUES
+/*!40000 ALTER TABLE `{{ DB_PREFIX }}information_to_site` DISABLE KEYS */;
+INSERT INTO `{{ DB_PREFIX }}information_to_site` (`information_id`, `site_id`) VALUES
 	(3, 0),
 	(4, 0),
 	(5, 0),
 	(6, 0),
 	(9, 0);
-/*!40000 ALTER TABLE `{{ DB_PREFIX }}information_to_store` ENABLE KEYS */;
+/*!40000 ALTER TABLE `{{ DB_PREFIX }}information_to_site` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{{ DB_PREFIX }}language`;
 CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}language` (
@@ -221,13 +221,13 @@ DROP TABLE IF EXISTS `{{ DB_PREFIX }}layout_route`;
 CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}layout_route` (
   `layout_route_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
   `route` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`layout_route_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}layout_route` DISABLE KEYS */;
-INSERT INTO `{{ DB_PREFIX }}layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`) VALUES
+INSERT INTO `{{ DB_PREFIX }}layout_route` (`layout_route_id`, `layout_id`, `site_id`, `route`) VALUES
 	(24, 11, 0, 'information/information'),
 	(31, 8, 0, 'information/contact'),
 	(32, 9, 0, 'information/sitemap'),
@@ -278,7 +278,7 @@ INSERT INTO `{{ DB_PREFIX }}session` (`session_id`, `hash`, `session_data`, `ses
 DROP TABLE IF EXISTS `{{ DB_PREFIX }}setting`;
 CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}setting` (
   `setting_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `store_id` bigint(20) NOT NULL DEFAULT '0',
+  `site_id` bigint(20) NOT NULL DEFAULT '0',
   `group` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `code` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `key` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}setting` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}setting` DISABLE KEYS */;
-INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `store_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES
+INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `site_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES
 	(415, 0, '', 'dashboard_online', 'dashboard_online_width', '12', 0),
 	(416, 0, '', 'dashboard_online', 'dashboard_online_status', '1', 0),
 	(417, 0, '', 'dashboard_online', 'dashboard_online_sort_order', '2', 0),
@@ -300,8 +300,8 @@ INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `store_id`, `group`, `code`,
 	(1025, 1, '', 'config', 'config_meta_keyword', '', 0),
 	(1026, 1, '', 'config', 'config_theme', 'theme_default', 0),
 	(1027, 1, '', 'config', 'config_layout_id', '6', 0),
-	(1028, 1, '', 'config', 'config_name', 'store name', 0),
-	(1029, 1, '', 'config', 'config_owner', 'store owner', 0),
+	(1028, 1, '', 'config', 'config_name', 'site name', 0),
+	(1029, 1, '', 'config', 'config_owner', 'site owner', 0),
 	(1030, 1, '', 'config', 'config_address', 'Alamat', 0),
 	(1031, 1, '', 'config', 'config_email', 'admin@example.com', 0),
 	(1032, 1, '', 'config', 'config_telephone', '124124', 0),
@@ -310,12 +310,12 @@ INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `store_id`, `group`, `code`,
 	(1035, 1, '', 'config', 'config_language', 'en-gb', 0),
 	(1036, 1, '', 'config', 'config_logo', '', 0),
 	(1037, 1, '', 'config', 'config_icon', '', 0),
-	(1186, 0, '', 'config', 'config_meta_title', 'Your Store', 0),
-	(1187, 0, '', 'config', 'config_meta_description', 'My Store', 0),
+	(1186, 0, '', 'config', 'config_meta_title', 'Your site', 0),
+	(1187, 0, '', 'config', 'config_meta_description', 'My site', 0),
 	(1188, 0, '', 'config', 'config_meta_keyword', '', 0),
 	(1189, 0, '', 'config', 'config_theme', 'theme_default', 0),
 	(1190, 0, '', 'config', 'config_layout_id', '4', 0),
-	(1191, 0, '', 'config', 'config_name', 'Your Store', 0),
+	(1191, 0, '', 'config', 'config_name', 'Your site', 0),
 	(1192, 0, '', 'config', 'config_owner', 'Your Name', 0),
 	(1193, 0, '', 'config', 'config_address', 'Address 1', 0),
 	(1194, 0, '', 'config', 'config_email', 'admin@example.com', 0),
@@ -401,24 +401,24 @@ INSERT INTO `{{ DB_PREFIX }}setting` (`setting_id`, `store_id`, `group`, `code`,
 	(1298, 0, 'system', 'alias_multi', 'content/category', 'category_id', 0);
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}setting` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `{{ DB_PREFIX }}store`;
-CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}store` (
-  `store_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `{{ DB_PREFIX }}site`;
+CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}site` (
+  `site_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `ssl` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  PRIMARY KEY (`store_id`)
+  PRIMARY KEY (`site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-/*!40000 ALTER TABLE `{{ DB_PREFIX }}store` DISABLE KEYS */;
-INSERT INTO `{{ DB_PREFIX }}store` (`store_id`, `name`, `url`, `ssl`) VALUES
-	(1, 'store name', 'http://example.com', '');
-/*!40000 ALTER TABLE `{{ DB_PREFIX }}store` ENABLE KEYS */;
+/*!40000 ALTER TABLE `{{ DB_PREFIX }}site` DISABLE KEYS */;
+INSERT INTO `{{ DB_PREFIX }}site` (`site_id`, `name`, `url`, `ssl`) VALUES
+	(1, 'site name', 'http://example.com', '');
+/*!40000 ALTER TABLE `{{ DB_PREFIX }}site` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{{ DB_PREFIX }}theme`;
 CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}theme` (
   `theme_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
   `theme` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `route` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `code` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `{{ DB_PREFIX }}user_group` (
 
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}user_group` DISABLE KEYS */;
 INSERT INTO `{{ DB_PREFIX }}user_group` (`user_group_id`, `name`, `permission`) VALUES
-	(1, 'Administrator', '{"access":["catalog\\/information","common\\/column_left","common\\/filemanager","design\\/banner","design\\/language","design\\/layout","extension\\/dashboard\\/map","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/slideshow","extension\\/module\\/store","extension\\/theme\\/theme_default","localisation\\/language","setting\\/setting","setting\\/store","startup\\/compatibility","startup\\/event","startup\\/login","startup\\/permission","startup\\/router","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/themedefault"],"modify":["catalog\\/information","common\\/column_left","common\\/filemanager","design\\/banner","design\\/language","design\\/layout","extension\\/dashboard\\/map","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/slideshow","extension\\/module\\/store","extension\\/theme\\/theme_default","localisation\\/language","setting\\/setting","setting\\/store","startup\\/compatibility","startup\\/event","startup\\/login","startup\\/permission","startup\\/router","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/themedefault"]}'),
+	(1, 'Administrator', '{"access":["catalog\\/information","common\\/column_left","common\\/filemanager","design\\/banner","design\\/language","design\\/layout","extension\\/dashboard\\/map","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/slideshow","extension\\/module\\/site","extension\\/theme\\/theme_default","localisation\\/language","setting\\/setting","setting\\/site","startup\\/compatibility","startup\\/event","startup\\/login","startup\\/permission","startup\\/router","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/themedefault"],"modify":["catalog\\/information","common\\/column_left","common\\/filemanager","design\\/banner","design\\/language","design\\/layout","extension\\/dashboard\\/map","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/slideshow","extension\\/module\\/site","extension\\/theme\\/theme_default","localisation\\/language","setting\\/setting","setting\\/site","startup\\/compatibility","startup\\/event","startup\\/login","startup\\/permission","startup\\/router","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/themedefault"]}'),
 	(10, 'Demonstration', '');
 /*!40000 ALTER TABLE `{{ DB_PREFIX }}user_group` ENABLE KEYS */;
 

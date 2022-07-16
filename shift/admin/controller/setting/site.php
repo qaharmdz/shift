@@ -7,17 +7,17 @@ namespace Shift\Admin\Controller\Setting;
 use Shift\System\Core\Mvc;
 use Shift\System\Helper\Arr;
 
-class Store extends Mvc\Controller
+class Site extends Mvc\Controller
 {
     private $error = [];
 
     public function index()
     {
-        $this->load->language('setting/store');
+        $this->load->language('setting/site');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
         $this->load->model('setting/setting');
 
@@ -26,22 +26,22 @@ class Store extends Mvc\Controller
 
     public function add()
     {
-        $this->load->language('setting/store');
+        $this->load->language('setting/site');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $store_id = $this->model_setting_store->addStore($this->request->get('post'));
+            $site_id = $this->model_setting_site->addSite($this->request->get('post'));
 
             $this->load->model('setting/setting');
 
-            $this->model_setting_setting->editSetting('config', $this->request->get('post'), $store_id);
+            $this->model_setting_setting->editSetting('config', $this->request->get('post'), $site_id);
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
         }
 
         $this->getForm();
@@ -49,22 +49,22 @@ class Store extends Mvc\Controller
 
     public function edit()
     {
-        $this->load->language('setting/store');
+        $this->load->language('setting/site');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
         if ($this->request->is('POST') && $this->validateForm()) {
-            $this->model_setting_store->editStore($this->request->get('query.store_id', 0), $this->request->get('post'));
+            $this->model_setting_site->editSite($this->request->get('query.site_id', 0), $this->request->get('post'));
 
             $this->load->model('setting/setting');
 
-            $this->model_setting_setting->editSetting('config', $this->request->get('post'), $this->request->get('query.store_id', 0));
+            $this->model_setting_setting->editSetting('config', $this->request->get('post'), $this->request->get('query.site_id', 0));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id', 0)));
+            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id', 0)));
         }
 
         $this->getForm();
@@ -72,24 +72,24 @@ class Store extends Mvc\Controller
 
     public function delete()
     {
-        $this->load->language('setting/store');
+        $this->load->language('setting/site');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
         if ($this->request->has('post.selected') && $this->validateDelete()) {
             $this->load->model('setting/setting');
 
-            foreach ($this->request->get('post.selected') as $store_id) {
-                $this->model_setting_store->deleteStore($store_id);
+            foreach ($this->request->get('post.selected') as $site_id) {
+                $this->model_setting_site->deleteSite($site_id);
 
-                $this->model_setting_setting->deleteSetting('config', $store_id);
+                $this->model_setting_setting->deleteSetting('config', $site_id);
             }
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
         }
 
         $this->getList();
@@ -112,31 +112,31 @@ class Store extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('setting/store', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('setting/site', 'token=' . $this->session->get('token'))
         );
 
-        $data['add'] = $this->router->url('setting/store/add', 'token=' . $this->session->get('token'));
-        $data['delete'] = $this->router->url('setting/store/delete', 'token=' . $this->session->get('token'));
+        $data['add'] = $this->router->url('setting/site/add', 'token=' . $this->session->get('token'));
+        $data['delete'] = $this->router->url('setting/site/delete', 'token=' . $this->session->get('token'));
 
-        $data['stores'] = array();
+        $data['sites'] = array();
 
-        $data['stores'][] = array(
-            'store_id' => 0,
+        $data['sites'][] = array(
+            'site_id' => 0,
             'name'     => $this->config->get('system.setting.name') . $this->language->get('text_default'),
             'url'      => URL_SITE,
             'edit'     => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
         );
 
-        $store_total = $this->model_setting_store->getTotalStores();
+        $site_total = $this->model_setting_site->getTotalSites();
 
-        $results = $this->model_setting_store->getStores();
+        $results = $this->model_setting_site->getSites();
 
         foreach ($results as $result) {
-            $data['stores'][] = array(
-                'store_id' => $result['store_id'],
+            $data['sites'][] = array(
+                'site_id' => $result['site_id'],
                 'name'     => $result['name'],
                 'url'      => $result['url'],
-                'edit'     => $this->router->url('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $result['store_id'])
+                'edit'     => $this->router->url('setting/site/edit', 'token=' . $this->session->get('token') . '&site_id=' . $result['site_id'])
             );
         }
 
@@ -162,14 +162,14 @@ class Store extends Mvc\Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer']      = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('setting/store_list', $data));
+        $this->response->setOutput($this->load->view('setting/site_list', $data));
     }
 
     protected function getForm()
     {
         $data['heading_title'] = $this->language->get('heading_title');
 
-        $data['text_form'] = !$this->request->has('query.store_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_form'] = !$this->request->has('query.site_id') ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_select'] = $this->language->get('text_select');
         $data['text_none'] = $this->language->get('text_none');
         $data['text_yes'] = $this->language->get('text_yes');
@@ -244,7 +244,7 @@ class Store extends Mvc\Controller
         $data['button_cancel'] = $this->language->get('button_cancel');
 
         $data['tab_general'] = $this->language->get('tab_general');
-        $data['tab_store'] = $this->language->get('tab_store');
+        $data['tab_site'] = $this->language->get('tab_site');
         $data['tab_local'] = $this->language->get('tab_local');
         $data['tab_option'] = $this->language->get('tab_option');
         $data['tab_image'] = $this->language->get('tab_image');
@@ -267,52 +267,52 @@ class Store extends Mvc\Controller
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('setting/store', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('setting/site', 'token=' . $this->session->get('token'))
         );
 
-        if (!$this->request->has('query.store_id')) {
+        if (!$this->request->has('query.site_id')) {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_settings'),
-                'href' => $this->router->url('setting/store/add', 'token=' . $this->session->get('token'))
+                'href' => $this->router->url('setting/site/add', 'token=' . $this->session->get('token'))
             );
         } else {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_settings'),
-                'href' => $this->router->url('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'))
+                'href' => $this->router->url('setting/site/edit', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'))
             );
         }
 
         $data['success'] = $this->session->pull('flash.success');
 
-        if (!$this->request->has('query.store_id')) {
-            $data['action'] = $this->router->url('setting/store/add', 'token=' . $this->session->get('token'));
+        if (!$this->request->has('query.site_id')) {
+            $data['action'] = $this->router->url('setting/site/add', 'token=' . $this->session->get('token'));
         } else {
-            $data['action'] = $this->router->url('setting/store/edit', 'token=' . $this->session->get('token') . '&store_id=' . $this->request->get('query.store_id'));
+            $data['action'] = $this->router->url('setting/site/edit', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'));
         }
 
-        $data['cancel'] = $this->router->url('setting/store', 'token=' . $this->session->get('token'));
+        $data['cancel'] = $this->router->url('setting/site', 'token=' . $this->session->get('token'));
 
-        $store_info = [];
-        if ($this->request->has('query.store_id') && !$this->request->is('POST')) {
+        $site_info = [];
+        if ($this->request->has('query.site_id') && !$this->request->is('POST')) {
             $this->load->model('setting/setting');
 
-            $store_info = $this->model_setting_setting->getSetting('system', null, $this->request->get('query.store_id'));
+            $site_info = $this->model_setting_setting->getSetting('system', null, $this->request->get('query.site_id'));
         }
 
-        if (!$store_info) {
-            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
+        if (!$site_info) {
+            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
         }
 
         $data['token'] = $this->session->get('token');
 
-        $data['config_url']  = $this->request->get('post.config_url', Arr::get($store_info, 'config_url', ''));
-        $data['config_ssl']  = $this->request->get('post.config_ssl', Arr::get($store_info, 'config_ssl', ''));
+        $data['config_url']  = $this->request->get('post.config_url', Arr::get($site_info, 'config_url', ''));
+        $data['config_ssl']  = $this->request->get('post.config_ssl', Arr::get($site_info, 'config_ssl', ''));
 
-        $data['config_meta_title']       = $this->request->get('post.config_meta_title', Arr::get($store_info, 'config_meta_title', ''));
-        $data['config_meta_description'] = $this->request->get('post.config_meta_description', Arr::get($store_info, 'config_meta_description', ''));
-        $data['config_meta_keyword']     = $this->request->get('post.config_meta_keyword', Arr::get($store_info, 'config_meta_keyword', ''));
+        $data['config_meta_title']       = $this->request->get('post.config_meta_title', Arr::get($site_info, 'config_meta_title', ''));
+        $data['config_meta_description'] = $this->request->get('post.config_meta_description', Arr::get($site_info, 'config_meta_description', ''));
+        $data['config_meta_keyword']     = $this->request->get('post.config_meta_keyword', Arr::get($site_info, 'config_meta_keyword', ''));
 
-        $data['config_theme']  = $this->request->get('post.config_theme', Arr::get($store_info, 'config_theme', ''));
+        $data['config_theme']  = $this->request->get('post.config_theme', Arr::get($site_info, 'config_theme', ''));
 
         $data['themes'] = array();
 
@@ -332,14 +332,14 @@ class Store extends Mvc\Controller
         $this->load->model('design/layout');
 
         $data['layouts'] = $this->model_design_layout->getLayouts();
-        $data['config_layout_id'] = $this->request->get('post.config_layout_id', Arr::get($store_info, 'config_layout_id', ''));
-        $data['config_name']      = $this->request->get('post.config_name', Arr::get($store_info, 'config_name', ''));
-        $data['config_owner']     = $this->request->get('post.config_owner', Arr::get($store_info, 'config_owner', ''));
-        $data['config_address']   = $this->request->get('post.config_address', Arr::get($store_info, 'config_address', ''));
-        $data['config_email']     = $this->request->get('post.config_email', Arr::get($store_info, 'config_email', ''));
-        $data['config_telephone'] = $this->request->get('post.config_telephone', Arr::get($store_info, 'config_telephone', ''));
-        $data['config_fax']       = $this->request->get('post.config_fax', Arr::get($store_info, 'config_fax', ''));
-        $data['config_image']     = $this->request->get('post.config_image', Arr::get($store_info, 'config_image', ''));
+        $data['config_layout_id'] = $this->request->get('post.config_layout_id', Arr::get($site_info, 'config_layout_id', ''));
+        $data['config_name']      = $this->request->get('post.config_name', Arr::get($site_info, 'config_name', ''));
+        $data['config_owner']     = $this->request->get('post.config_owner', Arr::get($site_info, 'config_owner', ''));
+        $data['config_address']   = $this->request->get('post.config_address', Arr::get($site_info, 'config_address', ''));
+        $data['config_email']     = $this->request->get('post.config_email', Arr::get($site_info, 'config_email', ''));
+        $data['config_telephone'] = $this->request->get('post.config_telephone', Arr::get($site_info, 'config_telephone', ''));
+        $data['config_fax']       = $this->request->get('post.config_fax', Arr::get($site_info, 'config_fax', ''));
+        $data['config_image']     = $this->request->get('post.config_image', Arr::get($site_info, 'config_image', ''));
 
         $this->load->model('tool/image');
 
@@ -348,13 +348,13 @@ class Store extends Mvc\Controller
 
         if ($this->request->has('post.config_image') && is_file(DIR_IMAGE . $this->request->get('post.config_image'))) {
             $data['thumb'] = $this->model_tool_image->resize($this->request->get('post.config_image'), 100, 100);
-        } elseif (Arr::has($store_info, 'config_image') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_image'))) {
-            $data['thumb'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_image'), 100, 100);
+        } elseif (Arr::has($site_info, 'config_image') && is_file(DIR_IMAGE . Arr::get($site_info, 'config_image'))) {
+            $data['thumb'] = $this->model_tool_image->resize(Arr::get($site_info, 'config_image'), 100, 100);
         }
 
-        $data['config_language'] = $this->request->get('post.config_logoconfig_language', Arr::get($store_info, 'config_language', $this->config->get('system.setting.language')));
-        $data['config_logo']     = $this->request->get('post.config_logo', Arr::get($store_info, 'config_logo', ''));
-        $data['config_icon']     = $this->request->get('post.config_icon', Arr::get($store_info, 'config_icon', ''));
+        $data['config_language'] = $this->request->get('post.config_logoconfig_language', Arr::get($site_info, 'config_language', $this->config->get('system.setting.language')));
+        $data['config_logo']     = $this->request->get('post.config_logo', Arr::get($site_info, 'config_logo', ''));
+        $data['config_icon']     = $this->request->get('post.config_icon', Arr::get($site_info, 'config_icon', ''));
 
         $this->load->model('extension/language');
         $data['languages'] = $this->model_extension_language->getLanguages();
@@ -365,27 +365,27 @@ class Store extends Mvc\Controller
         $data['logo'] = $no_image_thumb;
         if ($this->request->has('post.config_logo') && is_file(DIR_IMAGE . $this->request->get('post.config_logo'))) {
             $data['logo'] = $this->model_tool_image->resize($this->request->get('post.config_logo'), 100, 100);
-        } elseif (Arr::has($store_info, 'config_logo') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_logo'))) {
-            $data['logo'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_logo'), 100, 100);
+        } elseif (Arr::has($site_info, 'config_logo') && is_file(DIR_IMAGE . Arr::get($site_info, 'config_logo'))) {
+            $data['logo'] = $this->model_tool_image->resize(Arr::get($site_info, 'config_logo'), 100, 100);
         }
 
         $data['icon'] = $no_image_thumb;
         if ($this->request->has('post.config_icon') && is_file(DIR_IMAGE . $this->request->get('post.config_icon'))) {
             $data['icon'] = $this->model_tool_image->resize($this->request->get('post.config_icon'), 100, 100);
-        } elseif (Arr::has($store_info, 'config_icon') && is_file(DIR_IMAGE . Arr::get($store_info, 'config_icon'))) {
-            $data['icon'] = $this->model_tool_image->resize(Arr::get($store_info, 'config_icon'), 100, 100);
+        } elseif (Arr::has($site_info, 'config_icon') && is_file(DIR_IMAGE . Arr::get($site_info, 'config_icon'))) {
+            $data['icon'] = $this->model_tool_image->resize(Arr::get($site_info, 'config_icon'), 100, 100);
         }
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('setting/store_form', $data));
+        $this->response->setOutput($this->load->view('setting/site_form', $data));
     }
 
     protected function validateForm()
     {
-        if (!$this->user->hasPermission('modify', 'setting/store')) {
+        if (!$this->user->hasPermission('modify', 'setting/site')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
@@ -433,12 +433,12 @@ class Store extends Mvc\Controller
 
     protected function validateDelete()
     {
-        if (!$this->user->hasPermission('modify', 'setting/store')) {
+        if (!$this->user->hasPermission('modify', 'setting/site')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        foreach ($this->request->get('post.selected', []) as $store_id) {
-            if (!$store_id) {
+        foreach ($this->request->get('post.selected', []) as $site_id) {
+            if (!$site_id) {
                 $this->error['warning'] = $this->language->get('error_default');
             }
         }

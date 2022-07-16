@@ -36,7 +36,7 @@ class Header extends Mvc\Controller
         $data['text_stock'] = $this->language->get('text_stock');
         $data['text_review'] = $this->language->get('text_review');
         $data['text_affiliate'] = $this->language->get('text_affiliate');
-        $data['text_store'] = $this->language->get('text_store');
+        $data['text_site'] = $this->language->get('text_site');
         $data['text_front'] = $this->language->get('text_front');
         $data['text_help'] = $this->language->get('text_help');
         $data['text_homepage'] = $this->language->get('text_homepage');
@@ -53,20 +53,20 @@ class Header extends Mvc\Controller
             $data['home']   = $this->router->url('common/dashboard', 'token=' . $this->session->get('token'));
             $data['logout'] = $this->router->url('common/logout', 'token=' . $this->session->get('token'));
 
-            // Online Stores
-            $data['stores'] = array();
+            // Online Sites
+            $data['sites'] = array();
 
-            $data['stores'][] = array(
+            $data['sites'][] = array(
                 'name' => $this->config->get('system.setting.name'),
                 'href' => URL_SITE
             );
 
-            $this->load->model('setting/store');
+            $this->load->model('setting/site');
 
-            $results = $this->model_setting_store->getStores();
+            $results = $this->model_setting_site->getSites();
 
             foreach ($results as $result) {
-                $data['stores'][] = array(
+                $data['sites'][] = array(
                     'name' => $result['name'],
                     'href' => $result['url']
                 );

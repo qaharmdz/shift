@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-store').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-site').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -29,7 +29,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-store">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-site">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -41,17 +41,17 @@
                 </tr>
               </thead>
               <tbody>
-                <?php if ($stores) { ?>
-                <?php foreach ($stores as $store) { ?>
+                <?php if ($sites) { ?>
+                <?php foreach ($sites as $site) { ?>
                 <tr>
-                  <td class="text-center"><?php if (in_array($store['store_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                  <td class="text-center"><?php if (in_array($site['site_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $site['site_id']; ?>" checked="checked" />
                     <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $store['store_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="<?php echo $site['site_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $store['name']; ?></td>
-                  <td class="text-left"><?php echo $store['url']; ?></td>
-                  <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-left"><?php echo $site['name']; ?></td>
+                  <td class="text-left"><?php echo $site['url']; ?></td>
+                  <td class="text-right"><a href="<?php echo $site['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>

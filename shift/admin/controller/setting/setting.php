@@ -24,7 +24,7 @@ class Setting extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/store', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -219,7 +219,7 @@ class Setting extends Mvc\Controller
         $data['button_cancel'] = $this->language->get('button_cancel');
 
         $data['tab_general'] = $this->language->get('tab_general');
-        $data['tab_store'] = $this->language->get('tab_store');
+        $data['tab_site'] = $this->language->get('tab_site');
         $data['tab_local'] = $this->language->get('tab_local');
         $data['tab_option'] = $this->language->get('tab_option');
         $data['tab_image'] = $this->language->get('tab_image');
@@ -333,8 +333,8 @@ class Setting extends Mvc\Controller
         );
 
         $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_stores'),
-            'href' => $this->router->url('setting/store', 'token=' . $this->session->get('token'))
+            'text' => $this->language->get('text_sites'),
+            'href' => $this->router->url('setting/site', 'token=' . $this->session->get('token'))
         );
 
         $data['breadcrumbs'][] = array(
@@ -344,7 +344,7 @@ class Setting extends Mvc\Controller
 
         $data['success'] = $this->session->pull('flash.success');
         $data['action']  = $this->router->url('setting/setting', 'token=' . $this->session->get('token'));
-        $data['cancel']  = $this->router->url('setting/store', 'token=' . $this->session->get('token'));
+        $data['cancel']  = $this->router->url('setting/site', 'token=' . $this->session->get('token'));
         $data['token']   = $this->session->get('token');
 
         $data['setting'] = array_replace_recursive(

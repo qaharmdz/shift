@@ -11,7 +11,7 @@ class Theme extends Mvc\Controller
     public function index(&$view, &$data, &$output)
     {
         // if (!$this->config->get($this->config->get('system.setting.theme') . '_status')) {
-        //     exit('Error: A theme has not been assigned to this store!');
+        //     exit('Error: A theme has not been assigned to this site!');
         // }
 
         // This is only here for compatibility with older extensions

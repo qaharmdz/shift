@@ -51,7 +51,7 @@ class Contact extends Mvc\Controller
         $data['heading_title'] = $this->language->get('heading_title');
 
         $data['text_location'] = $this->language->get('text_location');
-        $data['text_store'] = $this->language->get('text_store');
+        $data['text_site'] = $this->language->get('text_site');
         $data['text_contact'] = $this->language->get('text_contact');
         $data['text_address'] = $this->language->get('text_address');
         $data['text_telephone'] = $this->language->get('text_telephone');
@@ -95,7 +95,7 @@ class Contact extends Mvc\Controller
             $data['image'] = false;
         }
 
-        $data['store'] = $this->config->get('system.setting.name');
+        $data['site'] = $this->config->get('system.setting.name');
         $data['address'] = '';
         $data['geocode'] = $this->config->get('system.setting.geocode');
         $data['geocode_hl'] = $this->config->get('system.setting.language');

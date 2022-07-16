@@ -18,15 +18,15 @@ class Information extends Mvc\Model
             $this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . $information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
 
-        if (isset($data['information_store'])) {
-            foreach ($data['information_store'] as $store_id) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_store SET information_id = '" . $information_id . "', store_id = '" . (int)$store_id . "'");
+        if (isset($data['information_site'])) {
+            foreach ($data['information_site'] as $site_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_site SET information_id = '" . $information_id . "', site_id = '" . (int)$site_id . "'");
             }
         }
 
         if (isset($data['information_layout'])) {
-            foreach ($data['information_layout'] as $store_id => $layout_id) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . $information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
+            foreach ($data['information_layout'] as $site_id => $layout_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . $information_id . "', site_id = '" . (int)$site_id . "', layout_id = '" . (int)$layout_id . "'");
             }
         }
 
@@ -49,19 +49,19 @@ class Information extends Mvc\Model
             $this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . $information_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', description = '" . $this->db->escape($value['description']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
 
-        $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . $information_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_site WHERE information_id = '" . $information_id . "'");
 
-        if (isset($data['information_store'])) {
-            foreach ($data['information_store'] as $store_id) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_store SET information_id = '" . $information_id . "', store_id = '" . (int)$store_id . "'");
+        if (isset($data['information_site'])) {
+            foreach ($data['information_site'] as $site_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_site SET information_id = '" . $information_id . "', site_id = '" . (int)$site_id . "'");
             }
         }
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . $information_id . "'");
 
         if (isset($data['information_layout'])) {
-            foreach ($data['information_layout'] as $store_id => $layout_id) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . $information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
+            foreach ($data['information_layout'] as $site_id => $layout_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . $information_id . "', site_id = '" . (int)$site_id . "', layout_id = '" . (int)$layout_id . "'");
             }
         }
 
@@ -78,7 +78,7 @@ class Information extends Mvc\Model
     {
         $this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . $information_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . $information_id . "'");
-        $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . $information_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_site WHERE information_id = '" . $information_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . $information_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE param = 'information_id' AND value = '" . $information_id . "'");
 
@@ -163,17 +163,17 @@ class Information extends Mvc\Model
         return $information_description_data;
     }
 
-    public function getInformationStores(int $information_id)
+    public function getInformationSites(int $information_id)
     {
-        $information_store_data = array();
+        $information_site_data = array();
 
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . $information_id . "'");
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information_to_site WHERE information_id = '" . $information_id . "'");
 
         foreach ($query->rows as $result) {
-            $information_store_data[] = $result['store_id'];
+            $information_site_data[] = $result['site_id'];
         }
 
-        return $information_store_data;
+        return $information_site_data;
     }
 
     public function getInformationLayouts(int $information_id)
@@ -183,7 +183,7 @@ class Information extends Mvc\Model
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . $information_id . "'");
 
         foreach ($query->rows as $result) {
-            $information_layout_data[$result['store_id']] = $result['layout_id'];
+            $information_layout_data[$result['site_id']] = $result['layout_id'];
         }
 
         return $information_layout_data;

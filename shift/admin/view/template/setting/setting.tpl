@@ -32,7 +32,7 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-setting" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-            <li><a href="#tab-store" data-toggle="tab"><?php echo $tab_store; ?></a></li>
+            <li><a href="#tab-site" data-toggle="tab"><?php echo $tab_site; ?></a></li>
             <li><a href="#tab-local" data-toggle="tab"><?php echo $tab_local; ?></a></li>
             <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
             <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
@@ -93,7 +93,7 @@
               </div>
             </div>
 
-            <div class="tab-pane" id="tab-store">
+            <div class="tab-pane" id="tab-site">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
                 <div class="col-sm-10">

@@ -279,7 +279,7 @@ class Layout extends Mvc\Controller
         $data['text_remove'] = $this->language->get('text_remove');
 
         $data['entry_name'] = $this->language->get('entry_name');
-        $data['entry_store'] = $this->language->get('entry_store');
+        $data['entry_site'] = $this->language->get('entry_site');
         $data['entry_route'] = $this->language->get('entry_route');
         $data['entry_module'] = $this->language->get('entry_module');
 
@@ -350,9 +350,9 @@ class Layout extends Mvc\Controller
             $data['name'] = '';
         }
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
 
-        $data['stores'] = $this->model_setting_store->getStores();
+        $data['sites'] = $this->model_setting_site->getSites();
 
         if ($this->request->has('post.layout_route')) {
             $data['layout_routes'] = $this->request->get('post.layout_route');
@@ -461,7 +461,7 @@ class Layout extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
         $this->load->model('catalog/product');
         $this->load->model('catalog/category');
         $this->load->model('catalog/information');
@@ -471,10 +471,10 @@ class Layout extends Mvc\Controller
                 $this->error['warning'] = $this->language->get('error_default');
             }
 
-            $store_total = $this->model_setting_store->getTotalStoresByLayoutId($layout_id);
+            $site_total = $this->model_setting_site->getTotalSitesByLayoutId($layout_id);
 
-            if ($store_total) {
-                $this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
+            if ($site_total) {
+                $this->error['warning'] = sprintf($this->language->get('error_site'), $site_total);
             }
 
             $product_total = $this->model_catalog_product->getTotalProductsByLayoutId($layout_id);

@@ -8,12 +8,12 @@ use Shift\System\Core\Mvc;
 
 class Setting extends Mvc\Model
 {
-    public function getSetting(string $group, string $code = null, int $store_id = 0)
+    public function getSetting(string $group, string $code = null, int $site_id = 0)
     {
         $data = [];
 
-        $sqlQuery = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s";
-        $sqlParam = [$store_id, $group];
+        $sqlQuery = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s";
+        $sqlParam = [$site_id, $group];
 
         if ($code !== null) {
             $sqlQuery .= " AND `code`= ?s";
@@ -35,25 +35,25 @@ class Setting extends Mvc\Model
         return $data;
     }
 
-    public function editSetting(string $group, string $code, array $data, int $store_id = 0)
+    public function editSetting(string $group, string $code, array $data, int $site_id = 0)
     {
-        $this->deleteSetting($group, $code, $store_id);
+        $this->deleteSetting($group, $code, $site_id);
 
         $params = [];
         foreach ($data as $key => $value) {
-            $params[] = [$store_id, $group, $code, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
+            $params[] = [$site_id, $group, $code, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
         }
 
         $this->db->transaction(
-            "INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?s, ?s, ?i)",
+            "INSERT INTO `" . DB_PREFIX . "setting` (`site_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?s, ?s, ?i)",
             $params
         );
     }
 
-    public function deleteSetting(string $group, string $code = null, int $store_id = 0)
+    public function deleteSetting(string $group, string $code = null, int $site_id = 0)
     {
-        $sqlQuery = "DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = ?s AND `group` = ?s";
-        $sqlParam = [$store_id, $group];
+        $sqlQuery = "DELETE FROM `" . DB_PREFIX . "setting` WHERE site_id = ?s AND `group` = ?s";
+        $sqlParam = [$site_id, $group];
 
         if ($code !== null) {
             $sqlQuery .= " AND `code`= ?";
@@ -63,21 +63,25 @@ class Setting extends Mvc\Model
         return $this->db->query($sqlQuery, $sqlParam);
     }
 
-    public function getSettingValue(string $group, string $code, string $key, int $store_id = 0)
+    public function getSettingValue(string $group, string $code, string $key, int $site_id = 0)
     {
-        $result = $this->db->query(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
-            [$store_id, $group, $code, $key]
+        $result = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
+            [$site_id, $group, $code, $key]
         )->row;
 
-        return $result['encoded'] ? json_decode($result['value'], true) : $result['value'];
+        if ($result) {
+            return $result['encoded'] ? json_decode($result['value'], true) : $result['value'];
+        }
+
+        return null;
     }
 
-    public function editSettingValue(string $group, string $code, string $key, string|array $value = '', $store_id = 0)
+    public function editSettingValue(string $group, string $code, string $key, string|array $value = '', $site_id = 0)
     {
         $this->db->query(
-            "UPDATE `" . DB_PREFIX . "setting` SET `value` = ?s, encoded = ?i WHERE store_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
-            [(is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0), $store_id, $group, $code, $key]
+            "UPDATE `" . DB_PREFIX . "setting` SET `value` = ?s, encoded = ?i WHERE site_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
+            [(is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0), $site_id, $group, $code, $key]
         );
     }
 }

@@ -50,7 +50,7 @@ class Framework
         /**
          * TODO: config prefix:
          * v root: Setting from the config file and system/config folder
-         * v env: Changeable setting represent "current" environment, ex: store_id, lang_id, lang_code
+         * v env: Changeable setting represent "current" environment, ex: site_id, lang_id, lang_code
          * - system: Setting from database
          */
         //=== Config

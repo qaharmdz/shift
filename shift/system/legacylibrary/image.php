@@ -87,7 +87,7 @@ class Image
     public function resize($width = 0, $height = 0, $default = '')
     {
         if (!$this->width || !$this->height) {
-            return;
+            return null;
         }
 
         $xpos = 0;
@@ -106,7 +106,7 @@ class Image
         }
 
         if ($scale == 1 && $scale_h == $scale_w && $this->mime != 'image/png') {
-            return;
+            return null;
         }
 
         $new_width = (int)($this->width * $scale);

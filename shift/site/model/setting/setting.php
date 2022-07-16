@@ -8,12 +8,12 @@ use Shift\System\Core\Mvc;
 
 class Setting extends Mvc\Model
 {
-    public function getSetting(string $group, string $code = null, int $store_id = 0)
+    public function getSetting(string $group, string $code = null, int $site_id = 0)
     {
         $data = [];
 
-        $sqlQuery = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s";
-        $sqlParam = [$store_id, $group];
+        $sqlQuery = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s";
+        $sqlParam = [$site_id, $group];
 
         if ($code !== null) {
             $sqlQuery .= " AND `code`= ?s";
@@ -35,11 +35,11 @@ class Setting extends Mvc\Model
         return $data;
     }
 
-    public function getSettingValue(string $group, string $code, string $key, int $store_id = 0)
+    public function getSettingValue(string $group, string $code, string $key, int $site_id = 0)
     {
         $result = $this->db->query(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
-            [$store_id, $group, $code, $key]
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
+            [$site_id, $group, $code, $key]
         )->row;
 
         return $result['encoded'] ? json_decode($result['value'], true) : $result['value'];

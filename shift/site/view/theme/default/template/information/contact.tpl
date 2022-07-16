@@ -20,9 +20,9 @@
         <div class="panel-body">
           <div class="row">
             <?php if ($image) { ?>
-            <div class="col-sm-3"><img src="<?php echo $image; ?>" alt="<?php echo $store; ?>" title="<?php echo $store; ?>" class="img-thumbnail" /></div>
+            <div class="col-sm-3"><img src="<?php echo $image; ?>" alt="<?php echo $site; ?>" title="<?php echo $site; ?>" class="img-thumbnail" /></div>
             <?php } ?>
-            <div class="col-sm-3"><strong><?php echo $store; ?></strong><br />
+            <div class="col-sm-3"><strong><?php echo $site; ?></strong><br />
               <address>
               <?php echo $address; ?>
               </address>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <?php if ($locations) { ?>
-      <h3><?php echo $text_store; ?></h3>
+      <h3><?php echo $text_site; ?></h3>
       <div class="panel-group" id="accordion">
         <?php foreach ($locations as $location) { ?>
         <div class="panel panel-default">

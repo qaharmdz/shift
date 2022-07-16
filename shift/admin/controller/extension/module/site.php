@@ -6,20 +6,20 @@ namespace Shift\Admin\Controller\Extension\Module;
 
 use Shift\System\Core\Mvc;
 
-class Store extends Mvc\Controller
+class Site extends Mvc\Controller
 {
     private $error = array();
 
     public function index()
     {
-        $this->load->language('extension/module/store');
+        $this->load->language('extension/module/site');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
         $this->load->model('setting/setting');
 
         if ($this->request->is('POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('store', $this->request->get('post'));
+            $this->model_setting_setting->editSetting('site', $this->request->get('post'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -60,35 +60,35 @@ class Store extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('extension/module/store', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('extension/module/site', 'token=' . $this->session->get('token'))
         );
 
-        $data['action'] = $this->router->url('extension/module/store', 'token=' . $this->session->get('token'));
+        $data['action'] = $this->router->url('extension/module/site', 'token=' . $this->session->get('token'));
 
         $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module');
 
-        if ($this->request->has('post.store_admin')) {
-            $data['store_admin'] = $this->request->get('post.store_admin');
+        if ($this->request->has('post.site_admin')) {
+            $data['site_admin'] = $this->request->get('post.site_admin');
         } else {
-            $data['store_admin'] = $this->config->get('store_admin');
+            $data['site_admin'] = $this->config->get('site_admin');
         }
 
-        if ($this->request->has('post.store_status')) {
-            $data['store_status'] = $this->request->get('post.store_status');
+        if ($this->request->has('post.site_status')) {
+            $data['site_status'] = $this->request->get('post.site_status');
         } else {
-            $data['store_status'] = $this->config->get('store_status');
+            $data['site_status'] = $this->config->get('site_status');
         }
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('extension/module/store', $data));
+        $this->response->setOutput($this->load->view('extension/module/site', $data));
     }
 
     protected function validate()
     {
-        if (!$this->user->hasPermission('modify', 'extension/module/store')) {
+        if (!$this->user->hasPermission('modify', 'extension/module/site')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 

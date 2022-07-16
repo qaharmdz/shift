@@ -92,10 +92,10 @@ class Theme extends Mvc\Controller
             }
         }
 
-        $this->load->model('setting/store');
+        $this->load->model('setting/site');
         $this->load->model('setting/setting');
 
-        $stores = $this->model_setting_store->getStores();
+        $sites = $this->model_setting_site->getSites();
 
         $data['extensions'] = array();
 
@@ -108,19 +108,19 @@ class Theme extends Mvc\Controller
 
                 $this->load->language('extension/theme/' . $extension);
 
-                $store_data = array();
+                $site_data = array();
 
-                $store_data[] = array(
+                $site_data[] = array(
                     'name'   => $this->config->get('system.setting.name'),
-                    'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=0'),
+                    'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&site_id=0'),
                     'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                 );
 
-                foreach ($stores as $store) {
-                    $store_data[] = array(
-                        'name'   => $store['name'],
-                        'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&store_id=' . $store['store_id']),
-                        'status' => $this->model_setting_setting->getSettingValue($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+                foreach ($sites as $site) {
+                    $site_data[] = array(
+                        'name'   => $site['name'],
+                        'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&site_id=' . $site['site_id']),
+                        'status' => $this->model_setting_setting->getSettingValue('theme', 'default', $extension . '_status', $site['site_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                     );
                 }
 
@@ -129,7 +129,7 @@ class Theme extends Mvc\Controller
                     'install'   => $this->router->url('extension/extension/theme/install', 'token=' . $this->session->get('token') . '&extension=' . $extension),
                     'uninstall' => $this->router->url('extension/extension/theme/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension),
                     'installed' => in_array($extension, $extensions),
-                    'store'     => $store_data
+                    'site'      => $site_data
                 );
             }
         }

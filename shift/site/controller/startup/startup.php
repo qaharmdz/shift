@@ -12,21 +12,21 @@ class Startup extends Mvc\Controller
     {
         //=== Multi sites
         if ($this->request->getBool('server.SECURE')) {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
         } else {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
+            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
         }
 
-        $store_id = $this->request->get('query.store_id', 0);
+        $site_id = $this->request->get('query.site_id', 0);
         if ($query->num_rows) {
-            $store_id = $query->row['store_id'];
+            $site_id = $query->row['site_id'];
         }
-        $this->config->set('env.store_id', $store_id);
+        $this->config->set('env.site_id', $site_id);
 
         //=== Settings
         $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (store_id = '0' OR store_id = ?i) AND `group` = ? ORDER BY store_id ASC",
-            [$this->config->getInt('env.store_id'), 'system']
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (site_id = '0' OR site_id = ?i) AND `group` = ? ORDER BY site_id ASC",
+            [$this->config->getInt('env.site_id'), 'system']
         );
 
         $settings = [];

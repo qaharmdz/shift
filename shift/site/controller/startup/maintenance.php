@@ -11,7 +11,7 @@ class Maintenance extends Mvc\Controller
     public function index()
     {
         if (!$this->config->get('system.setting.maintenance')) {
-            return;
+            return null;
         }
 
         $route = $this->request->getString(

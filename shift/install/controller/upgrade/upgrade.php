@@ -24,13 +24,13 @@ class Upgrade extends Mvc\Controller
         $data['text_admin'] = $this->language->get('text_admin');
         $data['text_user'] = $this->language->get('text_user');
         $data['text_setting'] = $this->language->get('text_setting');
-        $data['text_store'] = $this->language->get('text_store');
+        $data['text_site'] = $this->language->get('text_site');
 
         $data['entry_progress'] = $this->language->get('entry_progress');
 
         $data['button_continue'] = $this->language->get('button_continue');
 
-        $data['store'] = HTTP_SHIFT;
+        $data['site'] = HTTP_SHIFT;
 
         $data['total'] = count(glob(DIR_APPLICATION . 'model/upgrade/*.php'));
 
