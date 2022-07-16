@@ -30,18 +30,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add system/core/http/router.
 - Add system/core/mvc/controller.
 - Add system/core/mvc/model.
+- Add system/core/http/exception.
 
 ### Changed
 - Folder structure: separate Shift and public files.
 - Renamed folder catalog/ to site/.
-- Refactor front controller.
 - Refactor system/framework.
+- Database schema.
 
 ## [v0.1.0] - 2022-02-01
-Based on OpenCart v2.3.0.2 with the following change:
-
-### Changed
-- Indention use 4 space.
+Based on OpenCart v2.3.0.2.
 
 ### Removed
 - Ecommerce features (catalog, cart, order, customer etc).
