@@ -68,7 +68,7 @@ class Header extends Mvc\Controller
             foreach ($results as $result) {
                 $data['sites'][] = array(
                     'name' => $result['name'],
-                    'href' => $result['url']
+                    'href' => $this->request->get('server.PROTOCOL') . $result['url_host']
                 );
             }
         }

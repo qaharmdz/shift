@@ -42,8 +42,8 @@ $_SERVER['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 
 //=== Define
 if ($rootConfig) {
-    define('URL_APP', $_SERVER['PROTOCOL'] . $rootConfig['url_base'] . APP_URL_PATH);
-    define('URL_SITE', $_SERVER['PROTOCOL'] . $rootConfig['url_base']);
+    define('URL_APP', $_SERVER['PROTOCOL'] . $rootConfig['url_host'] . APP_URL_PATH);
+    define('URL_SITE', $_SERVER['PROTOCOL'] . $rootConfig['url_host']);
 }
 
 // DIR

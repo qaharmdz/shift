@@ -11,15 +11,11 @@ class Startup extends Mvc\Controller
     public function index()
     {
         //=== Multi sites
-        if ($this->request->getBool('server.SECURE')) {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
-        } else {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
-        }
+        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site WHERE REPLACE(`url_host`, 'www.', '') = '" . $this->db->escape(str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\')) . "'");
 
-        $site_id = $this->request->get('query.site_id', 0);
+        $site_id = $this->request->getInt('query.site_id', 0);
         if ($query->num_rows) {
-            $site_id = $query->row['site_id'];
+            $site_id = (int)$query->row['site_id'];
         }
         $this->config->set('env.site_id', $site_id);
 

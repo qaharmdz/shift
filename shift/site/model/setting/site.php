@@ -13,7 +13,7 @@ class Site extends Mvc\Model
         $site_data = $this->cache->get('site');
 
         if (!$site_data) {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY url");
+            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY url_host");
 
             $site_data = $query->rows;
 

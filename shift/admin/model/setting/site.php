@@ -10,7 +10,7 @@ class Site extends Mvc\Model
 {
     public function addSite($data)
     {
-        $this->db->query("INSERT INTO " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['config_name']) . "', `url` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['config_name']) . "', `url_host` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "'");
 
         $site_id = $this->db->getLastId();
 
@@ -28,7 +28,7 @@ class Site extends Mvc\Model
 
     public function editSite($site_id, $data)
     {
-        $this->db->query("UPDATE " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['config_name']) . "', `url` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "' WHERE site_id = '" . (int)$site_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['config_name']) . "', `url_host` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "' WHERE site_id = '" . (int)$site_id . "'");
 
         $this->cache->delete('site');
     }
@@ -53,7 +53,7 @@ class Site extends Mvc\Model
         $site_data = $this->cache->get('site');
 
         if (!$site_data) {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY url");
+            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY url_host");
 
             $site_data = $query->rows;
 
