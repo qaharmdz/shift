@@ -20,7 +20,12 @@ class Config extends Bags
             throw new \InvalidArgumentException(sprintf('Unable to locate config file "%s".', $file));
         }
 
-        $this->replaceRecursive($group ? [$group => $data] : $data);
+        if ($group) {
+            $data = $this->set('_temp.' . $group, $data)->get('_temp');
+            $this->delete('_temp');
+        }
+
+        $this->replaceRecursive($data);
 
         return $data;
     }
