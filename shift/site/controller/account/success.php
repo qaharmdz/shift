@@ -40,7 +40,7 @@ class Success extends Mvc\Controller
         if ($customer_group_info && !$customer_group_info['approval']) {
             $data['text_message'] = sprintf($this->language->get('text_message'), $this->router->url('information/contact'));
         } else {
-            $data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('system.setting.name'), $this->router->url('information/contact'));
+            $data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('system.site.name'), $this->router->url('information/contact'));
         }
 
         $data['button_continue'] = $this->language->get('button_continue');

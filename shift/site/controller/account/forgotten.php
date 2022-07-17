@@ -29,9 +29,9 @@ class Forgotten extends Mvc\Controller
 
             $this->model_account_customer->editCode($this->request->get('post.email'), $code);
 
-            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('system.setting.name'), ENT_QUOTES, 'UTF-8'));
+            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES, 'UTF-8'));
 
-            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('system.setting.name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
             $message .= $this->language->get('text_change') . "\n\n";
             $message .= $this->router->url('account/reset', 'code=' . $code) . "\n\n";
             $message .= sprintf($this->language->get('text_ip'), $this->request->get('server.REMOTE_ADDR')) . "\n\n";
@@ -46,8 +46,8 @@ class Forgotten extends Mvc\Controller
             $mail->smtp_timeout = $this->config->get('system.setting.mail_smtp_timeout');
 
             $mail->setTo($this->request->get('post.email'));
-            $mail->setFrom($this->config->get('system.setting.email'));
-            $mail->setSender(html_entity_decode($this->config->get('system.setting.name'), ENT_QUOTES, 'UTF-8'));
+            $mail->setFrom($this->config->get('system.site.email'));
+            $mail->setSender(html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
             $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
             $mail->send();

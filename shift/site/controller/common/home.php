@@ -10,9 +10,9 @@ class Home extends Mvc\Controller
 {
     public function index()
     {
-        $this->document->setTitle($this->config->get('system.setting.meta_title'));
-        $this->document->setDescription($this->config->get('system.setting.meta_description'));
-        $this->document->setKeywords($this->config->get('system.setting.meta_keyword'));
+        $this->document->setTitle($this->config->get('system.site.meta_title'));
+        $this->document->setDescription($this->config->get('system.site.meta_description'));
+        $this->document->setKeywords($this->config->get('system.site.meta_keyword'));
 
         if ($this->request->has('query.route')) {
             $this->document->addLink($this->config->get('env.url_app'), 'canonical');

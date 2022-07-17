@@ -109,13 +109,6 @@ class Theme extends Mvc\Controller
                 $this->load->language('extension/theme/' . $extension);
 
                 $site_data = array();
-
-                $site_data[] = array(
-                    'name'   => $this->config->get('system.setting.name'),
-                    'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&site_id=0'),
-                    'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
-                );
-
                 foreach ($sites as $site) {
                     $site_data[] = array(
                         'name'   => $site['name'],

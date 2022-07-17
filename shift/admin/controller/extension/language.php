@@ -187,7 +187,7 @@ class Language extends Mvc\Controller
         foreach ($results as $result) {
             $data['languages'][] = array(
                 'language_id' => $result['language_id'],
-                'name'        => $result['name'] . (($result['code'] == $this->config->get('system.setting.language')) ? $this->language->get('text_default') : null),
+                'name'        => $result['name'] . (($result['code'] == $this->config->get('system.site.language')) ? $this->language->get('text_default') : null),
                 'code'        => $result['code'],
                 'sort_order'  => $result['sort_order'],
                 'edit'        => $this->router->url('extension/language/edit', 'token=' . $this->session->get('token') . '&language_id=' . $result['language_id'] . $url)
@@ -449,7 +449,7 @@ class Language extends Mvc\Controller
             $language_info = $this->model_extension_language->getLanguage($language_id);
 
             if ($language_info) {
-                if ($this->config->get('system.setting.language') == $language_info['code']) {
+                if ($this->config->get('system.site.language') == $language_info['code']) {
                     $this->error['warning'] = $this->language->get('error_default');
                 }
 

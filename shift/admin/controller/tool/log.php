@@ -91,7 +91,7 @@ class Log extends Mvc\Controller
         if (file_exists($file) && filesize($file) > 0) {
             $this->response->download(
                 $file,
-                $this->config->get('system.setting.name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log'
+                $this->config->get('system.site.name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log'
             );
         } else {
             $this->session->set('flash.error', sprintf($this->language->get('error_warning'), basename($file), '0B'));

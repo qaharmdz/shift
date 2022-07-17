@@ -21,15 +21,15 @@ class Header extends Mvc\Controller
         $data['lang']        = $this->language->get('code');
         $data['direction']   = $this->language->get('direction');
 
-        $data['name'] = $this->config->get('system.setting.name');
+        $data['name'] = $this->config->get('system.site.name');
 
-        if (is_file(DIR_IMAGE . $this->config->get('system.setting.icon'))) {
-            $this->document->addLink($data['base'] . 'image/' . $this->config->get('system.setting.icon'), 'icon');
+        if (is_file(DIR_IMAGE . $this->config->get('system.site.icon'))) {
+            $this->document->addLink($data['base'] . 'image/' . $this->config->get('system.site.icon'), 'icon');
         }
 
         $data['logo'] = '';
-        if (is_file(DIR_IMAGE . $this->config->get('system.setting.logo'))) {
-            $data['logo'] = $data['base'] . 'image/' . $this->config->get('system.setting.logo');
+        if (is_file(DIR_IMAGE . $this->config->get('system.site.logo'))) {
+            $data['logo'] = $data['base'] . 'image/' . $this->config->get('system.site.logo');
         }
 
         $this->load->language('common/header');

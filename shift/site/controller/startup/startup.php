@@ -89,7 +89,7 @@ class Startup extends Mvc\Controller
         }
 
         if (!array_key_exists($code, $languages)) {
-            $code = $this->config->get('system.setting.language');
+            $code = $this->config->get('system.site.language');
         }
 
         if ($this->session->isEmpty('language') || $this->session->get('language') != $code) {

@@ -54,17 +54,10 @@ class Header extends Mvc\Controller
             $data['logout'] = $this->router->url('common/logout', 'token=' . $this->session->get('token'));
 
             // Online Sites
-            $data['sites'] = array();
-
-            $data['sites'][] = array(
-                'name' => $this->config->get('system.setting.name'),
-                'href' => URL_SITE
-            );
-
             $this->load->model('setting/site');
-
             $results = $this->model_setting_site->getSites();
 
+            $data['sites'] = array();
             foreach ($results as $result) {
                 $data['sites'][] = array(
                     'name' => $result['name'],

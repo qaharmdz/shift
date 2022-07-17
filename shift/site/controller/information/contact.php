@@ -26,7 +26,7 @@ class Contact extends Mvc\Controller
             $mail->smtp_port = $this->config->get('system.setting.mail_smtp_port');
             $mail->smtp_timeout = $this->config->get('system.setting.mail_smtp_timeout');
 
-            $mail->setTo($this->config->get('system.setting.email'));
+            $mail->setTo($this->config->get('system.site.email'));
             $mail->setFrom($this->request->get('post.email'));
             $mail->setSender(html_entity_decode($this->request->get('post.name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject(html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->get('post.name')), ENT_QUOTES, 'UTF-8'));
@@ -90,15 +90,15 @@ class Contact extends Mvc\Controller
         $this->load->model('tool/image');
 
         if ($this->config->get('system.setting.image')) {
-            $data['image'] = $this->model_tool_image->resize($this->config->get('system.setting.image'), $this->config->get($this->config->get('system.setting.theme') . '_image_location_width'), $this->config->get($this->config->get('system.setting.theme') . '_image_location_height'));
+            $data['image'] = $this->model_tool_image->resize($this->config->get('system.setting.image'), $this->config->get($this->config->get('system.site.theme') . '_image_location_width'), $this->config->get($this->config->get('system.site.theme') . '_image_location_height'));
         } else {
             $data['image'] = false;
         }
 
-        $data['site'] = $this->config->get('system.setting.name');
+        $data['site'] = $this->config->get('system.site.name');
         $data['address'] = '';
         $data['geocode'] = $this->config->get('system.setting.geocode');
-        $data['geocode_hl'] = $this->config->get('system.setting.language');
+        $data['geocode_hl'] = $this->config->get('system.site.language');
         $data['telephone'] = $this->config->get('system.setting.telephone');
         $data['fax'] = $this->config->get('system.setting.fax');
         $data['open'] = '';

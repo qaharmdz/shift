@@ -467,7 +467,7 @@ class Layout extends Mvc\Controller
         $this->load->model('catalog/information');
 
         foreach ($this->request->get('post.selected') as $layout_id) {
-            if ($this->config->get('system.setting.layout_id') == $layout_id) {
+            if ($this->config->get('system.site.layout_id') == $layout_id) {
                 $this->error['warning'] = $this->language->get('error_default');
             }
 
