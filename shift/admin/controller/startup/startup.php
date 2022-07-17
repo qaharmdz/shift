@@ -12,7 +12,7 @@ class Startup extends Mvc\Controller
     {
         //=== Settings
         $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = '0' AND `group` = ?",
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = '0' AND `group` = ? ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
             ['system']
         );
 
@@ -28,7 +28,7 @@ class Startup extends Mvc\Controller
         }
 
         $this->config->set($settings);
-        $this->config->set('env.limit', $this->config->getInt('env.limit', 25));
+        $this->config->set('env.limit', $this->config->getInt('system.setting.admin_limit', 25));
 
         // Apply DB setting
         $this->log->setConfig([
