@@ -168,23 +168,27 @@ final class Loader
 
     public function config($route)
     {
-        $this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route));
+        $data = [];
 
-        $this->registry->get('config')->load($route);
+        $this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route, &$data));
 
-        $this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route));
+        $data  = $this->registry->get('config')->load($route, str_replace('/', '.', $route));
+
+        $this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route, &$data));
+
+        return $data;
     }
 
     public function language($route)
     {
-        $output = null;
+        $data = [];
 
-        $this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$output));
+        $this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$data));
 
-        $output = $this->registry->get('language')->load($route);
+        $data = $this->registry->get('language')->load($route);
 
-        $this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$output));
+        $this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$data));
 
-        return $output;
+        return $data;
     }
 }
