@@ -10,7 +10,7 @@ class Maintenance extends Mvc\Controller
 {
     public function index()
     {
-        if (!$this->config->get('system.setting.maintenance')) {
+        if (!$this->config->getBool('system.site.maintenance')) {
             return null;
         }
 
