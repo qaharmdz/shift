@@ -24,7 +24,7 @@ class Setting extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/setting', 'token=' . $this->session->get('token')));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -227,116 +227,14 @@ class Setting extends Mvc\Controller
         $data['tab_mail'] = $this->language->get('tab_mail');
         $data['tab_server'] = $this->language->get('tab_server');
 
-        $data['error_warning']    = Arr::get($this->error, 'warning', '');
-        $data['error_name']       = Arr::get($this->error, 'name', '');
-        $data['error_owner']      = Arr::get($this->error, 'owner', '');
-        $data['error_address']    = Arr::get($this->error, 'address', '');
-        $data['error_email']      = Arr::get($this->error, 'email', '');
-        $data['error_telephone']  = Arr::get($this->error, 'telephone', '');
-        $data['error_meta_title'] = Arr::get($this->error, 'meta_title', '');
-
-        if (isset($this->error['meta_title'])) {
-            $data['error_meta_title'] = $this->error['meta_title'];
-        } else {
-            $data['error_meta_title'] = '';
-        }
-
-        if (isset($this->error['country'])) {
-            $data['error_country'] = $this->error['country'];
-        } else {
-            $data['error_country'] = '';
-        }
-
-        if (isset($this->error['zone'])) {
-            $data['error_zone'] = $this->error['zone'];
-        } else {
-            $data['error_zone'] = '';
-        }
-
-        if (isset($this->error['customer_group_display'])) {
-            $data['error_customer_group_display'] = $this->error['customer_group_display'];
-        } else {
-            $data['error_customer_group_display'] = '';
-        }
-
-        if (isset($this->error['login_attempts'])) {
-            $data['error_login_attempts'] = $this->error['login_attempts'];
-        } else {
-            $data['error_login_attempts'] = '';
-        }
-
-        if (isset($this->error['voucher_min'])) {
-            $data['error_voucher_min'] = $this->error['voucher_min'];
-        } else {
-            $data['error_voucher_min'] = '';
-        }
-
-        if (isset($this->error['voucher_max'])) {
-            $data['error_voucher_max'] = $this->error['voucher_max'];
-        } else {
-            $data['error_voucher_max'] = '';
-        }
-
-        if (isset($this->error['processing_status'])) {
-            $data['error_processing_status'] = $this->error['processing_status'];
-        } else {
-            $data['error_processing_status'] = '';
-        }
-
-        if (isset($this->error['complete_status'])) {
-            $data['error_complete_status'] = $this->error['complete_status'];
-        } else {
-            $data['error_complete_status'] = '';
-        }
-
-        if (isset($this->error['ftp_hostname'])) {
-            $data['error_ftp_hostname'] = $this->error['ftp_hostname'];
-        } else {
-            $data['error_ftp_hostname'] = '';
-        }
-
-        if (isset($this->error['ftp_port'])) {
-            $data['error_ftp_port'] = $this->error['ftp_port'];
-        } else {
-            $data['error_ftp_port'] = '';
-        }
-
-        if (isset($this->error['ftp_username'])) {
-            $data['error_ftp_username'] = $this->error['ftp_username'];
-        } else {
-            $data['error_ftp_username'] = '';
-        }
-
-        if (isset($this->error['ftp_password'])) {
-            $data['error_ftp_password'] = $this->error['ftp_password'];
-        } else {
-            $data['error_ftp_password'] = '';
-        }
-
-        if (isset($this->error['error_filename'])) {
-            $data['error_error_filename'] = $this->error['error_filename'];
-        } else {
-            $data['error_error_filename'] = '';
-        }
-
-        if (isset($this->error['limit_admin'])) {
-            $data['error_limit_admin'] = $this->error['limit_admin'];
-        } else {
-            $data['error_limit_admin'] = '';
-        }
+        $data['error_warning']     = Arr::get($this->error, 'warning', '');
+        $data['error_admin_limit'] = Arr::get($this->error, 'admin_limit', '');
 
         $data['breadcrumbs'] = array();
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_sites'),
-            'href' => $this->router->url('setting/site', 'token=' . $this->session->get('token'))
-        );
-
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
@@ -344,59 +242,18 @@ class Setting extends Mvc\Controller
 
         $data['success'] = $this->session->pull('flash.success');
         $data['action']  = $this->router->url('setting/setting', 'token=' . $this->session->get('token'));
-        $data['cancel']  = $this->router->url('setting/site', 'token=' . $this->session->get('token'));
         $data['token']   = $this->session->get('token');
 
+        $this->load->config('setting/setting');
+
         $data['setting'] = array_replace_recursive(
+            $this->config->getArray('setting.setting.form'),
             $this->model_setting_setting->getSetting('system', 'setting'),
             $this->request->get('post', [])
         );
 
-        $data['themes'] = array();
-
-        $this->load->model('extension/extension');
-
-        $extensions = $this->model_extension_extension->getInstalled('theme');
-
-        foreach ($extensions as $code) {
-            $this->load->language('extension/theme/' . $code);
-
-            $data['themes'][] = array(
-                'text'  => $this->language->get('heading_title'),
-                'value' => $code
-            );
-        }
-
-        $this->load->model('design/layout');
-        $data['layouts'] = $this->model_design_layout->getLayouts();
-
-        $this->load->model('tool/image');
-        $data['thumb'] = $data['placeholder'] = $this->model_tool_image->resize('no-image.png', 100, 100);
-        if (is_file(DIR_IMAGE . $data['setting']['image'])) {
-            $data['thumb'] = $this->model_tool_image->resize($data['setting']['image'], 100, 100);
-        }
-
         $this->load->model('extension/language');
         $data['languages'] = $this->model_extension_language->getLanguages();
-
-        $this->load->model('catalog/information');
-        $data['informations'] = $this->model_catalog_information->getInformations();
-
-        $data['logo'] = $data['placeholder'];
-        if (is_file(DIR_IMAGE . $data['setting']['logo'])) {
-            $data['logo'] = $this->model_tool_image->resize($data['setting']['logo'], 100, 100);
-        }
-
-        $data['icon'] = $data['placeholder'];
-        if (is_file(DIR_IMAGE . $data['setting']['icon'])) {
-            $data['icon'] = $this->model_tool_image->resize($data['setting']['icon'], 100, 100);
-        }
-
-        $data['mail_alerts'] = array();
-        $data['mail_alerts'][] = array(
-            'text'  => $this->language->get('text_mail_account'),
-            'value' => 'account'
-        );
 
         $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -411,44 +268,8 @@ class Setting extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!$this->request->get('post.meta_title')) {
-            $this->error['meta_title'] = $this->language->get('error_meta_title');
-        }
-
-        if (!$this->request->get('post.name')) {
-            $this->error['name'] = $this->language->get('error_name');
-        }
-
-        if ((utf8_strlen($this->request->get('post.owner')) < 3) || (utf8_strlen($this->request->get('post.owner')) > 64)) {
-            $this->error['owner'] = $this->language->get('error_owner');
-        }
-
-        if ((utf8_strlen($this->request->get('post.address')) < 3) || (utf8_strlen($this->request->get('post.address')) > 256)) {
-            $this->error['address'] = $this->language->get('error_address');
-        }
-
-        if ((utf8_strlen($this->request->get('post.email')) > 96) || !filter_var($this->request->get('post.email'), FILTER_VALIDATE_EMAIL)) {
-            $this->error['email'] = $this->language->get('error_email');
-        }
-
-        if ((utf8_strlen($this->request->get('post.telephone')) < 3) || (utf8_strlen($this->request->get('post.telephone')) > 32)) {
-            $this->error['telephone'] = $this->language->get('error_telephone');
-        }
-
-        if (!empty($this->request->get('post.customer_group_display')) && !in_array($this->request->get('post.customer_group_id'), $this->request->get('post.customer_group_display'))) {
-            $this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
-        }
-
-        if (!$this->request->get('post.limit_admin')) {
-            $this->error['limit_admin'] = $this->language->get('error_limit');
-        }
-
-        if (!$this->request->get('post.error_filename')) {
-            $this->error['error_filename'] = $this->language->get('error_error_filename');
-        } else {
-            if (preg_match('/\.\.[\/\\\]?/', $this->request->get('post.error_filename'))) {
-                $this->error['error_filename'] = $this->language->get('error_malformed_filename');
-            }
+        if (!$this->request->get('post.admin_limit')) {
+            $this->error['admin_limit'] = $this->language->get('error_limit');
         }
 
         if ($this->error && !isset($this->error['warning'])) {
@@ -456,23 +277,5 @@ class Setting extends Mvc\Controller
         }
 
         return !$this->error;
-    }
-
-    public function theme()
-    {
-        $url_site = $this->config->get('env.url_site');
-
-        // This is only here for compatibility with old themes.
-        if ($this->request->get('query.theme') == 'theme_default') {
-            $theme = $this->config->get('theme_default_directory');
-        } else {
-            $theme = basename($this->request->get('query.theme', ''));
-        }
-
-        if (is_file(DIR_IMAGE . 'theme/' . $theme . '.png')) {
-            $this->response->setOutput($url_site . 'image/theme/' . $theme . '.png');
-        } else {
-            $this->response->setOutput($url_site . 'image/no-image.png');
-        }
     }
 }

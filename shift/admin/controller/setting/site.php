@@ -338,4 +338,22 @@ class Site extends Mvc\Controller
 
         return !$this->error;
     }
+
+    public function theme()
+    {
+        $url_site = $this->config->get('env.url_site');
+
+        // This is only here for compatibility with old themes.
+        if ($this->request->get('query.theme') == 'theme_default') {
+            $theme = $this->config->get('theme_default_directory');
+        } else {
+            $theme = basename($this->request->get('query.theme', ''));
+        }
+
+        if (is_file(DIR_IMAGE . 'theme/' . $theme . '.png')) {
+            $this->response->setOutput($url_site . 'image/theme/' . $theme . '.png');
+        } else {
+            $this->response->setOutput($url_site . 'image/no-image.png');
+        }
+    }
 }

@@ -21,6 +21,6 @@ $_['form'] = [
     // Configuration
     'language'         => 'en',
     'layout_id'        => 0,
-    'maintenance'      => 1,
+    'maintenance'      => 0,
     'theme'            => 'default',
 ];
