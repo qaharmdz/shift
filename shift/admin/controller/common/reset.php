@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Controller\Common;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Http, Mvc};
 
 class Reset extends Mvc\Controller
 {
@@ -83,7 +83,7 @@ class Reset extends Mvc\Controller
 
             $this->model_setting_setting->editSettingValue('config', 'config_password', '0');
 
-            return new Action('common/login');
+            return new Http\Dispatch('common/login');
         }
     }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Startup;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Http, Mvc};
 
 class Maintenance extends Mvc\Controller
 {
@@ -32,7 +32,7 @@ class Maintenance extends Mvc\Controller
         $this->user = new \Cart\User($this->registry);
 
         if (!in_array($route, $ignore) && !$this->user->isLogged()) {
-            return new Action('common/maintenance');
+            return new Http\Dispatch('common/maintenance');
         }
     }
 }

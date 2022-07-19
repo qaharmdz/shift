@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Account;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Http, Mvc};
 
 class Reset extends Mvc\Controller
 {
@@ -103,7 +103,7 @@ class Reset extends Mvc\Controller
 
             $this->session->set('flash.error', $this->language->get('error_code'));
 
-            return new Action('account/login');
+            return new Http\Dispatch('common/login');
         }
     }
 

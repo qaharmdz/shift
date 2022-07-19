@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Controller\Startup;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Http, Mvc};
 
 class Event extends Mvc\Controller
 {
@@ -17,7 +17,7 @@ class Event extends Mvc\Controller
 
         foreach ($results as $result) {
             if ((substr($result['trigger'], 0, 6) == 'admin/') && $result['status']) {
-                $this->event->register(substr($result['trigger'], 6), new Action($result['action']));
+                $this->event->register(substr($result['trigger'], 6), new Http\Dispatch($result['action']));
             }
         }
     }

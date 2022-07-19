@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Startup;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Core\{Http, Mvc};
 
 class Event extends Mvc\Controller
 {
@@ -16,7 +16,7 @@ class Event extends Mvc\Controller
         $results = $this->model_extension_event->getEvents();
 
         foreach ($results as $result) {
-            $this->event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
+            $this->event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Http\Dispatch($result['action']));
         }
     }
 }
