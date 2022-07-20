@@ -27,18 +27,11 @@ class Site extends Mvc\Controller
 
             $data['site_id'] = $this->config->get('env.site_id');
 
-            $data['sites'] = array();
-
-            $data['sites'][] = array(
-                'site_id' => 0,
-                'name'     => $this->language->get('text_default'),
-                'url'      => URL_APP . 'index.php?route=common/home&session_id=' . $this->session->getId()
-            );
-
             $this->load->model('setting/site');
 
             $results = $this->model_setting_site->getSites();
 
+            $data['sites'] = array();
             foreach ($results as $result) {
                 $data['sites'][] = array(
                     'site_id' => $result['site_id'],

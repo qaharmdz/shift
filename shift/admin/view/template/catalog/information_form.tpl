@@ -88,17 +88,6 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_site; ?></label>
                 <div class="col-sm-10">
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
-                    <div class="checkbox">
-                      <label>
-                        <?php if (in_array(0, $information_site)) { ?>
-                        <input type="checkbox" name="information_site[]" value="0" checked="checked" />
-                        <?php echo $text_default; ?>
-                        <?php } else { ?>
-                        <input type="checkbox" name="information_site[]" value="0" />
-                        <?php echo $text_default; ?>
-                        <?php } ?>
-                      </label>
-                    </div>
                     <?php foreach ($sites as $site) { ?>
                     <div class="checkbox">
                       <label>
@@ -169,19 +158,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="text-left"><?php echo $text_default; ?></td>
-                      <td class="text-left"><select name="information_layout[0]" class="form-control">
-                          <option value=""></option>
-                          <?php foreach ($layouts as $layout) { ?>
-                          <?php if (isset($information_layout[0]) && $information_layout[0] == $layout['layout_id']) { ?>
-                          <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                          <?php } else { ?>
-                          <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                          <?php } ?>
-                          <?php } ?>
-                        </select></td>
-                    </tr>
                     <?php foreach ($sites as $site) { ?>
                     <tr>
                       <td class="text-left"><?php echo $site['name']; ?></td>

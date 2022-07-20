@@ -49,7 +49,6 @@
                 <?php foreach ($layout_routes as $layout_route) { ?>
                 <tr id="route-row<?php echo $route_row; ?>">
                   <td class="text-left"><select name="layout_route[<?php echo $route_row; ?>][site_id]" class="form-control">
-                      <option value="0"><?php echo $text_default; ?></option>
                       <?php foreach ($sites as $site) { ?>
                       <?php if ($site['site_id'] == $layout_route['site_id']) { ?>
                       <option value="<?php echo $site['site_id']; ?>" selected="selected"><?php echo $site['name']; ?></option>
@@ -358,7 +357,6 @@ var route_row = <?php echo $route_row; ?>;
 function addRoute() {
     html  = '<tr id="route-row' + route_row + '">';
     html += '  <td class="text-left"><select name="layout_route[' + route_row + '][site_id]" class="form-control">';
-    html += '  <option value="0"><?php echo $text_default; ?></option>';
     <?php foreach ($sites as $site) { ?>
     html += '<option value="<?php echo $site['site_id']; ?>"><?php echo addslashes($site['name']); ?></option>';
     <?php } ?>
