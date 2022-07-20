@@ -20,23 +20,26 @@ class Startup extends Mvc\Controller
         $this->config->set('env.site_id', $site_id);
 
         //=== Settings
-        $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (site_id = '0' OR site_id = ?i) AND `group` = ? ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
-            [$this->config->getInt('env.site_id'), 'system']
-        );
+        foreach (['system', 'theme'] as $group) {
+            $results = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (site_id = '0' OR site_id = ?i) AND `group` = ? ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
+                [$this->config->getInt('env.site_id'), $group]
+            );
 
-        $settings = [];
-        foreach ($results->rows as $row) {
-            $value = $row['encoded'] ? json_decode($row['value'], true) : $row['value'];
+            $settings = [];
+            foreach ($results->rows as $row) {
+                $value = $row['encoded'] ? json_decode($row['value'], true) : $row['value'];
 
-            if ($row['code']) {
-                $settings[$row['group']][$row['code']][$row['key']] = $value;
-            } else {
-                $settings[$row['group']][$row['key']] = $value;
+                if ($row['code']) {
+                    $settings[$row['group']][$row['code']][$row['key']] = $value;
+                } else {
+                    $settings[$row['group']][$row['key']] = $value;
+                }
             }
+
+            $this->config->set($settings);
         }
 
-        $this->config->set($settings);
         $this->config->set('env.limit', 25);
 
         // Apply DB setting

@@ -37,7 +37,6 @@ class Module extends Mvc\Controller
             $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'access', 'extension/module/' . $this->request->get('query.extension'));
             $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get('query.extension'));
 
-            // Call install method if it exsits
             $this->load->controller('extension/module/' . $this->request->get('query.extension') . '/install');
 
             $this->session->set('flash.success', $this->language->get('text_success'));

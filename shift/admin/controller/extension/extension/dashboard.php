@@ -33,7 +33,6 @@ class Dashboard extends Mvc\Controller
             $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'access', 'extension/dashboard/' . $this->request->get('query.extension'));
             $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'modify', 'extension/dashboard/' . $this->request->get('query.extension'));
 
-            // Call install method if it exsits
             $this->load->controller('extension/dashboard/' . $this->request->get('query.extension') . '/install');
 
             $this->session->set('flash.success', $this->language->get('text_success'));

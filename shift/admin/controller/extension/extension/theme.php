@@ -33,7 +33,6 @@ class Theme extends Mvc\Controller
             $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'access', 'extension/theme/' . $this->request->get('query.extension'));
             $this->model_user_usergroup->addPermission($this->user->getGroupId(), 'modify', 'extension/theme/' . $this->request->get('query.extension'));
 
-            // Call install method if it exsits
             $this->load->controller('extension/theme/' . $this->request->get('query.extension') . '/install');
 
             $this->session->set('flash.success', $this->language->get('text_success'));
@@ -82,12 +81,12 @@ class Theme extends Mvc\Controller
 
         $data['success'] = $this->session->pull('flash.success');
 
+        // Validate installed themes
         $extensions = $this->model_extension_extension->getInstalled('theme');
 
         foreach ($extensions as $key => $value) {
             if (!is_file(DIR_APPLICATION . 'controller/extension/theme/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/theme/' . $value . '.php')) {
                 $this->model_extension_extension->uninstall('theme', $value);
-
                 unset($extensions[$key]);
             }
         }
@@ -99,8 +98,7 @@ class Theme extends Mvc\Controller
 
         $data['extensions'] = array();
 
-        // Compatibility code for old extension folders
-        $files = glob(DIR_APPLICATION . 'controller/{extension/theme,theme}/*.php', GLOB_BRACE);
+        $files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php', GLOB_BRACE);
 
         if ($files) {
             foreach ($files as $file) {
@@ -113,7 +111,7 @@ class Theme extends Mvc\Controller
                     $site_data[] = array(
                         'name'   => $site['name'],
                         'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&site_id=' . $site['site_id']),
-                        'status' => $this->model_setting_setting->getSettingValue('theme', 'default', $extension . '_status', $site['site_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+                        'status' => $this->model_setting_setting->getSettingValue('theme', $extension, 'status', $site['site_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                     );
                 }
 
