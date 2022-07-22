@@ -147,8 +147,8 @@
                             <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_maintenance; ?></label>
                             <div class="col-sm-10">
                                 <select name="maintenance" id="input-layout" class="form-control">
-                                    <option value="1" <?php echo !$setting['maintenance'] ? 'selected="selected"' : ''; ?>><?php echo $text_yes; ?></option>
-                                    <option value="0" <?php echo $setting['maintenance'] ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
+                                    <option value="1" <?php echo $setting['maintenance'] ? 'selected="selected"' : ''; ?>><?php echo $text_yes; ?></option>
+                                    <option value="0" <?php echo !$setting['maintenance'] ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
                                 </select>
                             </div>
                         </div>

@@ -157,8 +157,8 @@
                             <label class="col-sm-2 control-label" for="input-layout">Development Mode</label>
                             <div class="col-sm-10">
                                 <select name="development" id="input-layout" class="form-control">
-                                    <option value="1" <?php echo !$setting['development'] ? 'selected="selected"' : ''; ?>><?php echo $text_yes; ?></option>
-                                    <option value="0" <?php echo $setting['development'] ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
+                                    <option value="1" <?php echo $setting['development'] ? 'selected="selected"' : ''; ?>><?php echo $text_yes; ?></option>
+                                    <option value="0" <?php echo !$setting['development'] ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
                                 </select>
                             </div>
                         </div>
