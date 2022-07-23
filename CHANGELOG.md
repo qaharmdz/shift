@@ -28,9 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add system/core/http/response.
 - Add system/core/http/dispatch.
 - Add system/core/http/router.
+- Add system/core/exception.
 - Add system/core/mvc/controller.
 - Add system/core/mvc/model.
-- Add system/core/http/exception.
+- Add system/core/event.
 
 ### Changed
 - Folder structure: separate Shift and public files.

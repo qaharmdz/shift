@@ -107,9 +107,22 @@ class Framework
         $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
         $this->set('response', $response);
 
+        // Event
+        $event = new Core\Event($this->registry);
+        $this->set('event', $event);
+
+        // Event Register
+        if ($config->has('root.action_event')) {
+            foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
+                $event->addListener($eventName, new Core\Http\Dispatch($listenerRoute));
+            }
+        }
+
         // Loader
         $loader = new Core\Loader($this->registry);
         $this->set('load', $loader);
+
+        // TODO: View
 
         return $this;
     }
@@ -117,17 +130,6 @@ class Framework
     protected function library(): Framework
     {
         $config = $this->get('config');
-
-        // Event
-        $event = new \Event($this->registry);
-        $this->set('event', $event);
-
-        // Event Register
-        if ($config->has('root.action_event')) {
-            foreach ($config->get('root.action_event') as $key => $value) {
-                $event->register($key, new Core\Http\Dispatch($value));
-            }
-        }
 
         // Cache
         $this->set('cache', new \Cache());

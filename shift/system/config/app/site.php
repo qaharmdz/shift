@@ -9,8 +9,3 @@ $_['app_startup']       = [
     'startup/maintenance',
     'startup/router',
 ];
-
-// Action Events
-$_['action_event'] = array(
-    'view/*/before' => 'event/theme',
-);

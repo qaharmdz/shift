@@ -15,6 +15,10 @@ final class PHP
 
     public function render($template)
     {
+        // TODO: refactor "view" for config->theme
+        if (APP_FOLDER == 'site') {
+            $template = 'base/template/' . $template;
+        }
         $file = DIR_TEMPLATE . $template;
 
         if (is_file($file)) {

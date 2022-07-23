@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
-final class Loader
+class Loader
 {
-    protected $registry;
+    protected Event $event;
 
-    public function __construct($registry)
+    public function __construct(protected Registry $registry)
     {
-        $this->registry = $registry;
+        $this->event = $registry->get('event');
     }
 
     public function controller(string $route, $data = array())
@@ -18,8 +18,7 @@ final class Loader
         $route  = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
         $output = null;
 
-        // Trigger the pre events
-        $result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data, &$output));
+        $result = $this->event->emit('controller/' . $route . '::before', array(&$route, &$data, &$output));
 
         if ($result) {
             return $result;
@@ -30,8 +29,7 @@ final class Loader
             $output = $action->execute(array(&$data));
         }
 
-        // Trigger the post events
-        $result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
+        $result = $this->event->emit('controller/' . $route . '::after', array(&$route, &$data, &$output));
 
         if ($output instanceof Exception) {
             return false;
@@ -45,8 +43,7 @@ final class Loader
         $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
         $modelPath = 'model_' . str_replace(['/', '-', '.'], ['_', '', ''], $route);
 
-        // Trigger the pre events
-        $this->registry->get('event')->trigger('model/' . $route . '/before', array(&$route));
+        $this->event->emit('model/' . $route . '::before', array(&$route));
 
         if (!$this->registry->has($modelPath)) {
             $parts = array_filter(explode('/', $route));
@@ -73,8 +70,7 @@ final class Loader
             }
         }
 
-        // Trigger the post events
-        $this->registry->get('event')->trigger('model/' . $route . '/after', array(&$route));
+        $this->event->emit('model/' . $route . '::after', array(&$route));
     }
 
     protected function modelCallback($registry, $route, $class, $method)
@@ -82,8 +78,7 @@ final class Loader
         return function ($params) use ($registry, $route, $class, $method) {
             $output = null;
 
-            // Trigger the pre events
-            $result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args, &$output));
+            $result = $registry->get('event')->emit('model/' . $route . '::before', array(&$route, &$args, &$output));
 
             if ($result) {
                 return $result;
@@ -93,8 +88,7 @@ final class Loader
                 $output = call_user_func_array([$class, $method], $params);
             }
 
-            // Trigger the post events
-            $result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, &$args, &$output));
+            $result = $registry->get('event')->emit('model/' . $route . '::after', array(&$route, &$args, &$output));
 
             if ($result) {
                 return $result;
@@ -111,8 +105,7 @@ final class Loader
         // Sanitize the call
         $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
 
-        // Trigger the pre events
-        $result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data, &$output));
+        $result = $this->event->emit('view/' . $route . '::before', array(&$route, &$data, &$output));
 
         if ($result) {
             return $result;
@@ -128,8 +121,7 @@ final class Loader
             $output = $template->render($route . '.tpl');
         }
 
-        // Trigger the post events
-        $result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
+        $result = $this->event->emit('view/' . $route . '::after', array(&$route, &$data, &$output));
 
         if ($result) {
             return $result;
@@ -170,11 +162,11 @@ final class Loader
     {
         $data = [];
 
-        $this->registry->get('event')->trigger('config/' . $route . '/before', array(&$route, &$data));
+        $this->event->emit('config/' . $route . '::before', array(&$route, &$data));
 
         $data  = $this->registry->get('config')->load($route, str_replace('/', '.', $route));
 
-        $this->registry->get('event')->trigger('config/' . $route . '/after', array(&$route, &$data));
+        $this->event->emit('config/' . $route . '::after', array(&$route, &$data));
 
         return $data;
     }
@@ -183,11 +175,11 @@ final class Loader
     {
         $data = [];
 
-        $this->registry->get('event')->trigger('language/' . $route . '/before', array(&$route, &$data));
+        $this->event->emit('language/' . $route . '::before', array(&$route, &$data));
 
         $data = $this->registry->get('language')->load($route);
 
-        $this->registry->get('event')->trigger('language/' . $route . '/after', array(&$route, &$data));
+        $this->event->emit('language/' . $route . '::after', array(&$route, &$data));
 
         return $data;
     }

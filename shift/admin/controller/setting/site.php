@@ -235,7 +235,7 @@ class Site extends Mvc\Controller
 
         $data['cancel'] = $this->router->url('setting/site', 'token=' . $this->session->get('token'));
 
-        // TODO: add before POST save add/ edit
+        // TODO: add array_replace_recursive() before POST save add/ edit
         $this->load->config('setting/site');
 
         $site_info = [];
