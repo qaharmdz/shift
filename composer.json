@@ -34,7 +34,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "Shift\\System\\Core\\Autoload\\Psr4Lower::classMap"
+            "Shift\\System\\Autoloader\\Psr4Lowercase::classMap"
         ]
     },
     "minimum-stability": "stable",

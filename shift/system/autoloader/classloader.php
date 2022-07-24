@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Core\Autoload;
+namespace Shift\System\Autoloader;
 
 class ClassLoader
 {
@@ -74,7 +74,7 @@ class ClassLoader
             return $this->classMap[$class];
         }
 
-        // PSR-4-lower lookup
+        // PSR-4-lowercase lookup
         $logicalPath = substr(
             strtr($namespace, '\\', '/') . '.php',
             6 // strlen(Shift\System\Autoload\Psr4Lower::$prefixPsr4)

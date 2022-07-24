@@ -251,9 +251,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\Site\\Model\\Setting\\Site' => __DIR__ . '/../../..' . '/shift/site/model/setting/site.php',
         'Shift\\Site\\Model\\Tool\\Image' => __DIR__ . '/../../..' . '/shift/site/model/tool/image.php',
         'Shift\\Site\\Model\\Tool\\Upload' => __DIR__ . '/../../..' . '/shift/site/model/tool/upload.php',
-        'Shift\\System\\Core\\Autoload\\ClassLoader' => __DIR__ . '/../../..' . '/shift/system/core/autoload/classloader.php',
-        'Shift\\System\\Core\\Autoload\\Psr4Lower' => __DIR__ . '/../../..' . '/shift/system/core/autoload/psr4lower.php',
+        'Shift\\System\\Autoloader\\ClassLoader' => __DIR__ . '/../../..' . '/shift/system/autoloader/classloader.php',
+        'Shift\\System\\Autoloader\\Psr4Lowercase' => __DIR__ . '/../../..' . '/shift/system/autoloader/psr4lowercase.php',
         'Shift\\System\\Core\\Bags' => __DIR__ . '/../../..' . '/shift/system/core/bags.php',
+        'Shift\\System\\Core\\Config' => __DIR__ . '/../../..' . '/shift/system/core/config.php',
         'Shift\\System\\Core\\Database' => __DIR__ . '/../../..' . '/shift/system/core/database.php',
         'Shift\\System\\Core\\Event' => __DIR__ . '/../../..' . '/shift/system/core/event.php',
         'Shift\\System\\Core\\Http\\Dispatch' => __DIR__ . '/../../..' . '/shift/system/core/http/dispatch.php',
@@ -272,7 +273,6 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Mvc\\Controller' => __DIR__ . '/../../..' . '/shift/system/mvc/controller.php',
         'Shift\\System\\Mvc\\Model' => __DIR__ . '/../../..' . '/shift/system/mvc/model.php',
         'Shift\\System\\Mvc\\View' => __DIR__ . '/../../..' . '/shift/system/mvc/view.php',
-        'Shift\\System\\core\\Config' => __DIR__ . '/../../..' . '/shift/system/core/config.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

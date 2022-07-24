@@ -221,9 +221,10 @@ return array(
     'Shift\\Site\\Model\\Setting\\Site' => $baseDir . '/shift/site/model/setting/site.php',
     'Shift\\Site\\Model\\Tool\\Image' => $baseDir . '/shift/site/model/tool/image.php',
     'Shift\\Site\\Model\\Tool\\Upload' => $baseDir . '/shift/site/model/tool/upload.php',
-    'Shift\\System\\Core\\Autoload\\ClassLoader' => $baseDir . '/shift/system/core/autoload/classloader.php',
-    'Shift\\System\\Core\\Autoload\\Psr4Lower' => $baseDir . '/shift/system/core/autoload/psr4lower.php',
+    'Shift\\System\\Autoloader\\ClassLoader' => $baseDir . '/shift/system/autoloader/classloader.php',
+    'Shift\\System\\Autoloader\\Psr4Lowercase' => $baseDir . '/shift/system/autoloader/psr4lowercase.php',
     'Shift\\System\\Core\\Bags' => $baseDir . '/shift/system/core/bags.php',
+    'Shift\\System\\Core\\Config' => $baseDir . '/shift/system/core/config.php',
     'Shift\\System\\Core\\Database' => $baseDir . '/shift/system/core/database.php',
     'Shift\\System\\Core\\Event' => $baseDir . '/shift/system/core/event.php',
     'Shift\\System\\Core\\Http\\Dispatch' => $baseDir . '/shift/system/core/http/dispatch.php',
@@ -242,5 +243,4 @@ return array(
     'Shift\\System\\Mvc\\Controller' => $baseDir . '/shift/system/mvc/controller.php',
     'Shift\\System\\Mvc\\Model' => $baseDir . '/shift/system/mvc/model.php',
     'Shift\\System\\Mvc\\View' => $baseDir . '/shift/system/mvc/view.php',
-    'Shift\\System\\core\\Config' => $baseDir . '/shift/system/core/config.php',
 );

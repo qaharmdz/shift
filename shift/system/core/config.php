@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\core;
+namespace Shift\System\Core;
 
 class Config extends Bags
 {

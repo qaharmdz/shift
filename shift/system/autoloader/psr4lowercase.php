@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Core\Autoload;
+namespace Shift\System\Autoloader;
 
-class Psr4Lower
+class Psr4Lowercase
 {
     protected static $prefixPsr4 = 'Shift\\';
 
@@ -52,7 +52,7 @@ class Psr4Lower
         $output .= '    ],' . "\n";
         $output .= '];' . "\n";
 
-        $file = fopen($pathSave . 'classmap_psr4_lower.php', 'w');
+        $file = fopen($pathSave . 'classmap_psr4_lowercase.php', 'w');
         fwrite($file, $output);
         fclose($file);
     }
