@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Core\Http;
+namespace Shift\System\Http;
 
 // TODO: Route schema: URL pattern and request method validation
 class Router

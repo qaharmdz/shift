@@ -39,7 +39,7 @@ class Framework
     public function kernel(string $appFolder, array $rootConfig = []): Framework
     {
         $this->init($appFolder, $rootConfig);
-        $this->core();
+        $this->engine();
         $this->library();
 
         return $this;
@@ -92,18 +92,18 @@ class Framework
         return $this;
     }
 
-    protected function core(): Framework
+    protected function engine(): Framework
     {
         $config = $this->get('config');
 
         // Request
-        $this->set('request', new Core\Http\Request());
+        $this->set('request', new Http\Request());
 
         // Router
-        $this->set('router', new Core\Http\Router(URL_APP));
+        $this->set('router', new Http\Router(URL_APP));
 
         // Response
-        $response = new Core\Http\Response();
+        $response = new Http\Response();
         $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
         $this->set('response', $response);
 
@@ -114,15 +114,15 @@ class Framework
         // Event Register
         if ($config->has('root.action_event')) {
             foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
-                $event->addListener($eventName, new Core\Http\Dispatch($listenerRoute));
+                $event->addListener($eventName, new Http\Dispatch($listenerRoute));
             }
         }
 
-        // View
-        $this->set('view', new Mvc\View());
-
         // Loader
         $this->set('load', new Core\Loader($this->registry));
+
+        // View
+        $this->set('view', new Mvc\View());
 
         return $this;
     }
@@ -153,13 +153,13 @@ class Framework
         $response = $this->get('response');
 
         try {
-            $pageRoute = new Core\Http\Dispatch($config->get('root.app_kernel'));
+            $pageRoute = new Http\Dispatch($config->get('root.app_kernel'));
 
             foreach ($config->get('root.app_startup') as $route) {
-                $dispatch = new Core\Http\Dispatch($route);
+                $dispatch = new Http\Dispatch($route);
                 $result = $dispatch->execute();
 
-                if ($result instanceof Core\Http\Dispatch) {
+                if ($result instanceof Http\Dispatch) {
                     $pageRoute = $result;
                     break;
                 }

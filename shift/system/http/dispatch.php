@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Core\Http;
+namespace Shift\System\Http;
 
 /**
  * Determine and dispatch resource from given path.

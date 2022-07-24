@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
+use Shift\System\Http;
+
 class Loader
 {
     protected Event $event;
