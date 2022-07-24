@@ -118,11 +118,11 @@ class Framework
             }
         }
 
-        // Loader
-        $loader = new Core\Loader($this->registry);
-        $this->set('load', $loader);
+        // View
+        $this->set('view', new Core\Mvc\View());
 
-        // TODO: View
+        // Loader
+        $this->set('load', new Core\Loader($this->registry));
 
         return $this;
     }

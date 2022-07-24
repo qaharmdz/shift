@@ -2,27 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Template;
+namespace Shift\System\Core\Mvc;
 
-final class PHP
+class View
 {
-    private $data = array();
-
-    public function set($key, $value)
+    public function render($template, array $vars = [])
     {
-        $this->data[$key] = $value;
-    }
-
-    public function render($template)
-    {
-        // TODO: refactor "view" for config->theme
         if (APP_FOLDER == 'site') {
             $template = 'base/template/' . $template;
         }
+
         $file = DIR_TEMPLATE . $template;
 
         if (is_file($file)) {
-            extract($this->data);
+            extract($vars);
 
             ob_start();
 

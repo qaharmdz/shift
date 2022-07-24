@@ -85,13 +85,7 @@ class Loader
         $this->event->emit($eventName = 'view/' . $template . '::before', [$eventName, &$vars, &$output]);
 
         if (is_null($output)) {
-            $view = new \Template();
-
-            foreach ($vars as $key => $value) {
-                $view->set($key, $value);
-            }
-
-            $output = $view->render($template . '.tpl');
+            $output = $this->registry->get('view')->render($template . '.tpl', $vars);
         }
 
         $this->event->emit($eventName = 'view/' . $template . '::after', [$eventName, &$vars, &$output]);
