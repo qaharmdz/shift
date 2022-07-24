@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Model\Catalog;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class UrlAlias extends Mvc\Model
 {

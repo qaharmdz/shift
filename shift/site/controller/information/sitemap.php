@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Information;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Sitemap extends Mvc\Controller
 {

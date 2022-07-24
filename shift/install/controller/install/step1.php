@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Install\Controller\Install;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Step1 extends Mvc\Controller
 {

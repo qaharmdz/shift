@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Install\Controller\Common;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Footer extends Mvc\Controller
 {

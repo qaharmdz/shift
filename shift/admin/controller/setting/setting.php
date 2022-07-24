@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Controller\Setting;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 use Shift\System\Helper\Arr;
 
 class Setting extends Mvc\Controller

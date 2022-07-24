@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Startup;
 
-use Shift\System\Core\{Exception, Mvc};
+use Shift\System\Mvc;
+use Shift\System\Exception;
 
 class Router extends Mvc\Controller
 {

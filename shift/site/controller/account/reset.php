@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\Account;
 
-use Shift\System\Core\{Http, Mvc};
+use Shift\System\Mvc;
+use Shift\System\Core\Http;
 
 class Reset extends Mvc\Controller
 {

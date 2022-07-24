@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Model\User;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class UserGroup extends Mvc\Model
 {

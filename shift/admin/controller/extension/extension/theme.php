@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Controller\Extension\Extension;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Theme extends Mvc\Controller
 {

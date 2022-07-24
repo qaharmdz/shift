@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Controller\common;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Search extends Mvc\Controller
 {

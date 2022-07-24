@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Site\Model\Extension;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Language extends Mvc\Model
 {

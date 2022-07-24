@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\Admin\Controller\Tool;
 
-use Shift\System\Core\Mvc;
+use Shift\System\Mvc;
 
 class Log extends Mvc\Controller
 {
