@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Core\Mvc;
+namespace Shift\System\Mvc;
 
 use Shift\System\Core;
 
-abstract class Model
+abstract class Controller
 {
     protected Core\Registry $registry;
 

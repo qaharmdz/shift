@@ -119,7 +119,7 @@ class Framework
         }
 
         // View
-        $this->set('view', new Core\Mvc\View());
+        $this->set('view', new Mvc\View());
 
         // Loader
         $this->set('load', new Core\Loader($this->registry));
@@ -168,7 +168,7 @@ class Framework
             $pageRoute->execute();
 
         // 404 Not Found
-        } catch (Core\Exception\NotFoundHttpException | \InvalidArgumentException $e) {
+        } catch (Exception\NotFoundHttpException | \InvalidArgumentException $e) {
             $logger->exceptionHandler($e);
             exit('Exception: 404 not found');
 

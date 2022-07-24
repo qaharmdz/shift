@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\System\Core\Mvc;
+namespace Shift\System\Mvc;
 
 class View
 {
