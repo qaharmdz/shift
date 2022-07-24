@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shift\Admin\Controller\Startup;
 
 use Shift\System\Mvc;
-use Shift\System\Core\Http;
+use Shift\System\Http;
 
 class Kernel extends Mvc\Controller
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shift\Site\Controller\Startup;
 
 use Shift\System\Mvc;
-use Shift\System\Core\Http;
+use Shift\System\Http;
 
 class Maintenance extends Mvc\Controller
 {
