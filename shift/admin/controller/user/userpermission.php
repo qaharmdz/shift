@@ -12,7 +12,7 @@ class UserPermission extends Mvc\Controller
 
     public function index()
     {
-        $this->load->language('user/user_group');
+        $this->load->language('user/usergroup');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
@@ -23,7 +23,7 @@ class UserPermission extends Mvc\Controller
 
     public function add()
     {
-        $this->load->language('user/user_group');
+        $this->load->language('user/usergroup');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
@@ -56,7 +56,7 @@ class UserPermission extends Mvc\Controller
 
     public function edit()
     {
-        $this->load->language('user/user_group');
+        $this->load->language('user/usergroup');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
@@ -89,7 +89,7 @@ class UserPermission extends Mvc\Controller
 
     public function delete()
     {
-        $this->load->language('user/user_group');
+        $this->load->language('user/usergroup');
 
         $this->document->setTitle($this->language->get('heading_title'));
 

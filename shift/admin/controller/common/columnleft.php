@@ -11,7 +11,7 @@ class ColumnLeft extends Mvc\Controller
     public function index()
     {
         if ($this->request->get('query.token', time()) == $this->session->get('token')) {
-            $this->load->language('common/column_left');
+            $this->load->language('common/columnleft');
 
             $this->load->model('user/user');
 

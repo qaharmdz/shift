@@ -308,7 +308,7 @@ class Upload extends Mvc\Controller
                 exit('Error: Headers already sent out!');
             }
         } else {
-            $this->load->language('error/not_found');
+            $this->load->language('error/notfound');
 
             $this->document->setTitle($this->language->get('heading_title'));
 

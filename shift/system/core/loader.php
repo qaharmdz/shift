@@ -13,40 +13,29 @@ class Loader
         $this->event = $registry->get('event');
     }
 
-    public function controller(string $route, $data = array())
+    public function controller(string $route, ...$params)
     {
         $route  = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
         $output = null;
 
-        $result = $this->event->emit('controller/' . $route . '::before', array(&$route, &$data, &$output));
-
-        if ($result) {
-            return $result;
-        }
+        $this->event->emit($eventName = 'controller/' . $route . '::before', [$eventName, &$params, &$output]);
 
         if (is_null($output)) {
-            $action = new Http\Dispatch($route);
-            $output = $action->execute(array(&$data));
+            $output = (new Http\Dispatch($route))->execute($params);
         }
 
-        $result = $this->event->emit('controller/' . $route . '::after', array(&$route, &$data, &$output));
-
-        if ($output instanceof Exception) {
-            return false;
-        }
+        $this->event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
 
         return $output;
     }
 
-    public function model(string $route)
+    public function model(string $path)
     {
-        $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
-        $modelPath = 'model_' . str_replace(['/', '-', '.'], ['_', '', ''], $route);
+        $path = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
+        $model_key = 'model_' . str_replace(['/', '-', '.'], ['_', '', ''], $path);
 
-        $this->event->emit('model/' . $route . '::before', array(&$route));
-
-        if (!$this->registry->has($modelPath)) {
-            $parts = array_filter(explode('/', $route));
+        if (!$this->registry->has($model_key)) {
+            $parts = array_filter(explode('/', $path));
             $class = strtolower('Shift\\' . APP_FOLDER . '\Model\\' . implode('\\', $parts));
 
             if (class_exists($class)) {
@@ -59,127 +48,81 @@ class Loader
 
                 foreach (get_class_methods($class) as $method) {
                     if ((substr($method, 0, 2) != '__') && is_callable([$object, $method])) {
-                        $proxy->{$method} = $this->modelCallback($this->registry, $route . '/' . $method, $object, $method);
+                        $proxy->{$method} = $this->modelCallback($this->event, $path . '/' . $method, $object, $method);
                     }
                 }
 
-                $proxy->{'_modelPath'} = $modelPath;
-                $this->registry->set($modelPath, $proxy);
+                $proxy->{'_key'} = $model_key;
+                $this->registry->set($model_key, $proxy);
             } else {
-                throw new \InvalidArgumentException(sprintf('Unable to locate model "%s".', $route));
+                throw new \InvalidArgumentException(sprintf('Unable to locate model "%s".', $path));
             }
         }
-
-        $this->event->emit('model/' . $route . '::after', array(&$route));
     }
 
-    protected function modelCallback($registry, $route, $class, $method)
+    protected function modelCallback(Event $event, string $path, $class, $method)
     {
-        return function ($params) use ($registry, $route, $class, $method) {
-            $output = null;
+        return function ($params) use ($event, $path, $class, $method) {
+            $result = null;
 
-            $result = $registry->get('event')->emit('model/' . $route . '::before', array(&$route, &$args, &$output));
+            $event->emit($eventName = 'model/' . $path . '::before', [$eventName, &$params, &$result]);
 
-            if ($result) {
-                return $result;
+            if (is_null($result)) {
+                $result = call_user_func_array([$class, $method], $params);
             }
 
-            if (is_null($output)) {
-                $output = call_user_func_array([$class, $method], $params);
-            }
+            $event->emit($eventName = 'model/' . $path . '::after', [$eventName, &$params, &$result]);
 
-            $result = $registry->get('event')->emit('model/' . $route . '::after', array(&$route, &$args, &$output));
-
-            if ($result) {
-                return $result;
-            }
-
-            return $output;
+            return $result;
         };
     }
 
-    public function view($route, $data = array())
+    public function view(string $template, array $vars = [])
     {
+        $template = preg_replace(['#[^a-zA-Z0-9._/]#', '#/+#'], ['', '/'], $template);
         $output = null;
 
-        // Sanitize the call
-        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+        $this->event->emit($eventName = 'view/' . $template . '::before', [$eventName, &$vars, &$output]);
 
-        $result = $this->event->emit('view/' . $route . '::before', array(&$route, &$data, &$output));
+        if (is_null($output)) {
+            $view = new \Template();
 
-        if ($result) {
-            return $result;
-        }
-
-        if (!$output) {
-            $template = new \Template();
-
-            foreach ($data as $key => $value) {
-                $template->set($key, $value);
+            foreach ($vars as $key => $value) {
+                $view->set($key, $value);
             }
 
-            $output = $template->render($route . '.tpl');
+            $output = $view->render($template . '.tpl');
         }
 
-        $result = $this->event->emit('view/' . $route . '::after', array(&$route, &$data, &$output));
-
-        if ($result) {
-            return $result;
-        }
+        $this->event->emit($eventName = 'view/' . $template . '::after', [$eventName, &$vars, &$output]);
 
         return $output;
     }
 
-    public function library($route)
+    public function language(string $path, string $group = '')
     {
-        // Sanitize the call
-        $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
-
-        $file = DIR_SYSTEM . 'library/' . $route . '.php';
-        $class = str_replace('/', '\\', $route);
-
-        if (is_file($file)) {
-            include_once($file);
-
-            $this->registry->set(basename($route), new $class($this->registry));
-        } else {
-            throw new \Exception('Error: Could not load library ' . $route . '!');
-        }
-    }
-
-    public function helper($route)
-    {
-        $file = DIR_SYSTEM . 'helper/' . preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route) . '.php';
-
-        if (is_file($file)) {
-            include_once($file);
-        } else {
-            throw new \Exception('Error: Could not load helper ' . $route . '!');
-        }
-    }
-
-    public function config($route)
-    {
+        $path = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
         $data = [];
 
-        $this->event->emit('config/' . $route . '::before', array(&$route, &$data));
+        $this->event->emit($eventName = 'language/' . $path . '::before', [$eventName, &$data, &$group]);
 
-        $data  = $this->registry->get('config')->load($route, str_replace('/', '.', $route));
+        $data = $this->registry->get('language')->load($path, $group);
 
-        $this->event->emit('config/' . $route . '::after', array(&$route, &$data));
+        $this->event->emit($eventName = 'language/' . $path . '::after', [$eventName, &$data, &$group]);
 
         return $data;
     }
 
-    public function language($route)
+    public function config(string $path, string $group = '')
     {
+        $path = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
         $data = [];
 
-        $this->event->emit('language/' . $route . '::before', array(&$route, &$data));
+        $this->event->emit($eventName = 'config/' . $path . '::before', [$eventName, &$data, &$group]);
 
-        $data = $this->registry->get('language')->load($route);
+        $data = $this->registry->get('config')->load($path, $group);
 
-        $this->event->emit('language/' . $route . '::after', array(&$route, &$data));
+        $this->event->emit($eventName = 'config/' . $path . '::after', [$eventName, &$data, &$group]);
 
         return $data;
     }

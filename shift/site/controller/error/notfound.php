@@ -10,7 +10,7 @@ class NotFound extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('error/not_found');
+        $this->load->language('error/notfound');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
