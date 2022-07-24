@@ -20,24 +20,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - PSR-4 lowercase path.
+- Add system/exception.
+- Add system/http/request.
+- Add system/http/response.
+- Add system/http/dispatch.
+- Add system/http/router.
+- Add system/mvc/controller.
+- Add system/mvc/model.
+- Add system/mvc/view.
 - Add system/core/bags.
 - Add system/core/config.
 - Add system/core/database.
 - Add system/core/session.
-- Add system/core/exception.
 - Add system/core/event.
-- Add system/core/http/request.
-- Add system/core/http/response.
-- Add system/core/http/dispatch.
-- Add system/core/http/router.
-- Add system/core/mvc/controller.
-- Add system/core/mvc/model.
-- Add system/core/mvc/view.
 
 ### Changed
-- Folder structure: separate Shift and public files.
+- Rewrite system startup.php and framework.php.
+- Separate folder Shift and public files.
 - Renamed folder catalog/ to site/.
-- Refactor system/framework.
 - Database schema.
 
 ## [v0.1.0] - 2022-02-01
