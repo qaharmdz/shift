@@ -95,22 +95,16 @@ class Startup extends Mvc\Controller
             $code = $this->config->get('system.site.language');
         }
 
-        if ($this->session->isEmpty('language') || $this->session->get('language') != $code) {
-            $this->session->set('language', $code);
-        }
+        $this->config->set('env.language_id', (int)$languages[$code]['language_id']);
+        $this->config->set('env.language_code', $code);
+        $this->session->set('language', $code);
 
         if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
             setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->get('server.HTTP_HOST'));
         }
 
-        // Overwrite the default language object
-        $language = new \Language($code);
-        $language->load($code);
-
-        $this->registry->set('language', $language);
-
-        $this->config->set('env.language_id', (int)$languages[$code]['language_id']);
-        $this->config->set('env.language_code', $code);
+        $this->language->set('_param.active', $code);
+        $this->language->load($code);
 
         //=== User
         $this->registry->set('user', new \Cart\User($this->registry));

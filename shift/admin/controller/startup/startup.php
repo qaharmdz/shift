@@ -43,9 +43,7 @@ class Startup extends Mvc\Controller
             $this->config->set('env.language_code', $query->row['code']);
         }
 
-        //=== Language
-        $language = new \Language($this->config->get('env.language_code'));
-        $language->load($this->config->get('env.language_code'));
-        $this->registry->set('language', $language);
+        $this->language->set('_param.active', $this->config->get('env.language_code'));
+        $this->language->load($this->config->get('env.language_code'));
     }
 }

@@ -135,7 +135,7 @@ class Framework
         $this->set('cache', new \Cache());
 
         // Language
-        $language = new \Language($config->get('root.locale'));
+        $language = new Library\Language($config->get('root.locale'));
         $language->load($config->get('root.locale'));
         $this->set('language', $language);
 
