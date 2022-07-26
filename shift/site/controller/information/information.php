@@ -26,8 +26,8 @@ class Information extends Mvc\Controller
 
         if ($information_info) {
             $this->document->setTitle($information_info['meta_title']);
-            $this->document->setDescription($information_info['meta_description']);
-            $this->document->setKeywords($information_info['meta_keyword']);
+            $this->document->addMeta('name', 'description', $information_info['meta_description']);
+            $this->document->addMeta('name', 'keywords', $information_info['meta_keyword']);
 
             $data['breadcrumbs'][] = array(
                 'text' => $information_info['title'],

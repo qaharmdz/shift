@@ -13,8 +13,14 @@ class Header extends Mvc\Controller
         $data['base']        = $this->config->get('env.url_app');
         $data['title']       = $this->document->getTitle();
 
-        $data['description'] = $this->document->getDescription();
-        $data['keywords']    = $this->document->getKeywords();
+        $metas = array_merge([
+            ['value' => 'description', 'content' => ''],
+            ['value' => 'keywords', 'content' => ''],
+        ], $this->document->getMetas());
+        foreach ($metas as $meta) {
+            $data[$meta['value']] = $meta['content'];
+        }
+
         $data['links']       = $this->document->getLinks();
         $data['styles']      = $this->document->getStyles();
         $data['scripts']     = $this->document->getScripts();

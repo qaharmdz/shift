@@ -140,7 +140,7 @@ class Framework
         $this->set('language', $language);
 
         // Document
-        $this->set('document', new \Document());
+        $this->set('document', new Library\Document());
 
         return $this;
     }
