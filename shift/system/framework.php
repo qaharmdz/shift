@@ -131,8 +131,11 @@ class Framework
     {
         $config = $this->get('config');
 
-        // Cache
-        $this->set('cache', new \Cache());
+        // Secure
+        $this->set('secure', new Library\Secure());
+
+        // User
+        $this->set('user', new Library\User($this->registry));
 
         // Language
         $language = new Library\Language($config->get('root.locale'));
@@ -141,6 +144,9 @@ class Framework
 
         // Document
         $this->set('document', new Library\Document());
+
+        // Cache
+        $this->set('cache', new \Cache());
 
         return $this;
     }

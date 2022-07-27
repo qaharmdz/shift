@@ -294,18 +294,6 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1296, 0, 'system', 'alias_distinct', 'information/information', 'information_id', 0),
 	(1297, 0, 'system', 'alias_distinct', 'content/post', 'post_id', 0),
 	(1298, 0, 'system', 'alias_multi', 'content/category', 'category_id', 0),
-	(1709, 1, 'system', 'site', 'name', 'Site Name 1', 0),
-	(1710, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
-	(1711, 1, 'system', 'site', 'email', 'admin@example.com', 0),
-	(1712, 1, 'system', 'site', 'meta_title', 'Meta Site Name 1', 0),
-	(1713, 1, 'system', 'site', 'meta_description', 'Meta Tag Description', 0),
-	(1714, 1, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
-	(1715, 1, 'system', 'site', 'logo', 'https://localhost/mdzGit/shift/public/image/cache/no-image-100x100.png', 0),
-	(1716, 1, 'system', 'site', 'icon', 'https://localhost/mdzGit/shift/public/image/cache/no-image-100x100.png', 0),
-	(1717, 1, 'system', 'site', 'language', 'en-gb', 0),
-	(1718, 1, 'system', 'site', 'layout_id', '4', 0),
-	(1719, 1, 'system', 'site', 'maintenance', '1', 0),
-	(1720, 1, 'system', 'site', 'theme', 'themedefault', 0),
 	(1855, 0, 'system', 'setting', 'compression', '0', 0),
 	(1856, 0, 'system', 'setting', 'admin_language', 'en-gb', 0),
 	(1857, 0, 'system', 'setting', 'admin_limit', '25', 0),
@@ -330,7 +318,19 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1888, 0, 'system', 'site', 'language', 'en-gb', 0),
 	(1889, 0, 'system', 'site', 'layout_id', '4', 0),
 	(1890, 0, 'system', 'site', 'maintenance', '0', 0),
-	(1891, 0, 'system', 'site', 'theme', 'base', 0);
+	(1891, 0, 'system', 'site', 'theme', 'base', 0),
+	(1904, 1, 'system', 'site', 'name', 'Site Name 1', 0),
+	(1905, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
+	(1906, 1, 'system', 'site', 'email', 'admin@example.com', 0),
+	(1907, 1, 'system', 'site', 'meta_title', 'Meta Site Name 1', 0),
+	(1908, 1, 'system', 'site', 'meta_description', 'Meta Tag Description', 0),
+	(1909, 1, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
+	(1910, 1, 'system', 'site', 'logo', 'https://localhost/mdzGit/shift/public/image/cache/no-image-100x100.png', 0),
+	(1911, 1, 'system', 'site', 'icon', 'https://localhost/mdzGit/shift/public/image/cache/no-image-100x100.png', 0),
+	(1912, 1, 'system', 'site', 'language', 'en-gb', 0),
+	(1913, 1, 'system', 'site', 'layout_id', '4', 0),
+	(1914, 1, 'system', 'site', 'maintenance', '1', 0),
+	(1915, 1, 'system', 'site', 'theme', 'base', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}site`;
@@ -390,37 +390,59 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
   `user_group_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `email` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `password` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `salt` varchar(9) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `username` varchar(20) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `firstname` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `lastname` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `image` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `code` varchar(40) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `ip` varchar(40) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `code` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `date_added` datetime DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `salt`, `username`, `firstname`, `lastname`, `image`, `code`, `ip`, `status`, `date_added`) VALUES
-	(1, 1, 'admin@example.com', '069920bcaa461dc9c84e0d93c217c51565dbe44f', 'PdYDbcyRo', 'admin', 'John', 'Doe', '', '', '::1', 1, '2022-01-30 16:17:31');
+INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `code`, `status`, `created`, `updated`, `last_login`) VALUES
+	(1, 1, 'admin@example.com', '$2y$10$hNWx9oo3LCUiVe058qT1/ORSbFdbym9h53vh3B.M2.heEpkfkCQFS', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-07-27 06:26:24');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user_group`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_group` (
   `user_group_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `super_admin` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `backend` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `permission` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`user_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user_group` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}user_group` (`user_group_id`, `name`, `permission`) VALUES
-	(1, 'Administrator', '{"access":["catalog\\/information","common\\/columnleft","common\\/filemanager","design\\/banner","design\\/layout","error\\/notfound","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/language","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/site","extension\\/module\\/slideshow","extension\\/theme\\/themedefault","setting\\/setting","setting\\/site","startup\\/event","startup\\/kernel","startup\\/login","startup\\/permission","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/default","extension\\/theme\\/base","extension\\/theme\\/base","extension\\/theme\\/base"],"modify":["catalog\\/information","common\\/columnleft","common\\/filemanager","design\\/banner","design\\/layout","error\\/notfound","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/language","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/site","extension\\/module\\/slideshow","extension\\/theme\\/themedefault","setting\\/setting","setting\\/site","startup\\/event","startup\\/kernel","startup\\/login","startup\\/permission","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/default","extension\\/theme\\/base","extension\\/theme\\/base","extension\\/theme\\/base"]}'),
-	(10, 'Demonstration', '{"access":["catalog\\/information"],"modify":["catalog\\/information"]}');
+INSERT INTO `{DB_PREFIX}user_group` (`user_group_id`, `name`, `super_admin`, `backend`, `permission`, `status`, `created`, `updated`) VALUES
+	(1, 'Administrator', 1, 1, '{"access":["catalog\\/information","common\\/columnleft","common\\/filemanager","design\\/banner","design\\/layout","error\\/notfound","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/language","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/site","extension\\/module\\/slideshow","extension\\/theme\\/themedefault","setting\\/setting","setting\\/site","startup\\/event","startup\\/kernel","startup\\/login","startup\\/permission","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/default","extension\\/theme\\/base","extension\\/theme\\/base","extension\\/theme\\/base"],"modify":["catalog\\/information","common\\/columnleft","common\\/filemanager","design\\/banner","design\\/layout","error\\/notfound","extension\\/dashboard\\/online","extension\\/event","extension\\/extension","extension\\/extension\\/dashboard","extension\\/extension\\/module","extension\\/extension\\/theme","extension\\/installer","extension\\/language","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/site","extension\\/module\\/slideshow","extension\\/theme\\/themedefault","setting\\/setting","setting\\/site","startup\\/event","startup\\/kernel","startup\\/login","startup\\/permission","startup\\/startup","tool\\/backup","tool\\/log","tool\\/upload","user\\/user","user\\/userpermission","extension\\/theme\\/default","extension\\/theme\\/base","extension\\/theme\\/base","extension\\/theme\\/base"]}', 1, NULL, NULL),
+	(10, 'Demonstration', 0, 0, '{"access":["catalog\\/information"],"modify":["catalog\\/information"]}', 0, NULL, NULL);
 /*!40000 ALTER TABLE `{DB_PREFIX}user_group` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}user_meta`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_meta` (
+  `user_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_meta_id`) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `key` (`key`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}user_meta` DISABLE KEYS */;
+INSERT INTO `{DB_PREFIX}user_meta` (`user_meta_id`, `user_id`, `key`, `value`, `encoded`) VALUES
+	(1, 1, 'twitter', '@example', 0);
+/*!40000 ALTER TABLE `{DB_PREFIX}user_meta` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

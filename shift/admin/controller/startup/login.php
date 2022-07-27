@@ -21,8 +21,6 @@ class Login extends Mvc\Controller
         );
 
         // User
-        $this->registry->set('user', new \Cart\User($this->registry));
-
         if (!$this->user->isLogged() && !in_array($route, $ignore)) {
             return new Http\Dispatch('common/login');
         }

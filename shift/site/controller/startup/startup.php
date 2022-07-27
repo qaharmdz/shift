@@ -105,8 +105,5 @@ class Startup extends Mvc\Controller
 
         $this->language->set('_param.active', $code);
         $this->language->load($code);
-
-        //=== User
-        $this->registry->set('user', new \Cart\User($this->registry));
     }
 }
