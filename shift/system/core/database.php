@@ -131,7 +131,7 @@ class Database
         } catch (\Mysqli_sql_exception $e) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    '<ul><li><b>\Mysqli_sql_exception</b>: %s</li><li>Error processing query: <i>%s</i></li></ul>',
+                    '<br>- <b>\Mysqli_sql_exception</b>: %s<br>- <b>Error query</b>: <i>%s</i>',
                     $e->getMessage(),
                     $query
                 ),
@@ -408,6 +408,10 @@ class Database
     public function get(string $query, array $params = [], string $types = ''): \stdClass
     {
         $stmt_result = $params ? $this->query($query, $params, $types) : $this->raw($query);
+
+        if (!$stmt_result instanceof \mysqli_result) {
+            throw new \InvalidArgumentException(sprintf('Invalid \mysqli_result instance for "SELECT" query: <i>%s</i>', $query));
+        }
 
         $result = new \stdClass();
         $result->num_rows = (int)$stmt_result->num_rows;

@@ -54,7 +54,7 @@ class Session extends Bags
      *
      * @param  bool   $delete   Delete old session
      */
-    public function regenerateId(bool $delete = false): string
+    public function regenerateId(bool $delete = false)
     {
         if (session_status() === \PHP_SESSION_ACTIVE) {
             session_regenerate_id($delete);
@@ -64,7 +64,7 @@ class Session extends Bags
     /**
      * Deleting the whole session.
      */
-    public function destroy(bool $restart = true): void
+    public function destroy(bool $restart = true)
     {
         $data = session_get_cookie_params();
 
