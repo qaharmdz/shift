@@ -1,7 +1,7 @@
 {
     "name": "mdz/shift",
     "type": "project",
-    "description": "Shift - Pragmatic Content Management",
+    "description": "Shift - Pragmatic PHP CMS",
     "keywords": ["php-cms"],
     "homepage": "https://github.com/qaharmdz/shift",
     "license": "GPL-3.0-or-later",
@@ -15,7 +15,8 @@
         "php": "^8.1",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "adbario/php-dot-notation": "^3.1"
+        "adbario/php-dot-notation": "^3.1",
+        "phpmailer/phpmailer": "^6.6"
     },
     "require-dev": {
         "kint-php/kint": "^4.1"

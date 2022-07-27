@@ -45,5 +45,15 @@ class Startup extends Mvc\Controller
 
         $this->language->set('_param.active', $this->config->get('env.language_code'));
         $this->language->load($this->config->get('env.language_code'));
+
+        //=== Mail
+        $this->mail->quickSetup([
+            'engine'        => $this->config->get('system.setting.mail_engine'),
+            'smtp_host'     => $this->config->get('system.setting.smtp_host'),
+            'smtp_username' => $this->config->get('system.setting.smtp_username'),
+            'smtp_password' => $this->config->getInt('system.setting.smtp_password'),
+            'smtp_port'     => $this->config->getInt('system.setting.smtp_port', 25),
+            'smtp_timeout'  => $this->config->getInt('system.setting.smtp_timeout', 300),
+        ]);
     }
 }

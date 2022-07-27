@@ -148,6 +148,9 @@ class Framework
         // Cache
         $this->set('cache', new \Cache());
 
+        // Mail
+        $this->set('mail', new Library\Mail());
+
         return $this;
     }
 

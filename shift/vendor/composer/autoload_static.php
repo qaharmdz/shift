@@ -13,6 +13,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
     );
 
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'K' => 
         array (
             'Kint\\' => 5,
@@ -24,6 +28,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
     );
 
     public static $prefixDirsPsr4 = array (
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
         'Kint\\' => 
         array (
             0 => __DIR__ . '/..' . '/kint-php/kint/src',
@@ -126,7 +134,12 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Zval\\TraceFrameValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/TraceFrameValue.php',
         'Kint\\Zval\\TraceValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/TraceValue.php',
         'Kint\\Zval\\Value' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Value.php',
-        'Mail' => __DIR__ . '/../../..' . '/shift/system/legacylibrary/mail.php',
+        'PHPMailer\\PHPMailer\\Exception' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/Exception.php',
+        'PHPMailer\\PHPMailer\\OAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuth.php',
+        'PHPMailer\\PHPMailer\\OAuthTokenProvider' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuthTokenProvider.php',
+        'PHPMailer\\PHPMailer\\PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/PHPMailer.php',
+        'PHPMailer\\PHPMailer\\POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/POP3.php',
+        'PHPMailer\\PHPMailer\\SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/SMTP.php',
         'Pagination' => __DIR__ . '/../../..' . '/shift/system/legacylibrary/pagination.php',
         'Shift\\Admin\\Controller\\Catalog\\Information' => __DIR__ . '/../../..' . '/shift/admin/controller/catalog/information.php',
         'Shift\\Admin\\Controller\\Common\\ColumnLeft' => __DIR__ . '/../../..' . '/shift/admin/controller/common/columnleft.php',
@@ -268,6 +281,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Http\\Router' => __DIR__ . '/../../..' . '/shift/system/http/router.php',
         'Shift\\System\\Library\\Document' => __DIR__ . '/../../..' . '/shift/system/library/document.php',
         'Shift\\System\\Library\\Language' => __DIR__ . '/../../..' . '/shift/system/library/language.php',
+        'Shift\\System\\Library\\Mail' => __DIR__ . '/../../..' . '/shift/system/library/mail.php',
         'Shift\\System\\Library\\Secure' => __DIR__ . '/../../..' . '/shift/system/library/secure.php',
         'Shift\\System\\Library\\User' => __DIR__ . '/../../..' . '/shift/system/library/user.php',
         'Shift\\System\\Mvc\\Controller' => __DIR__ . '/../../..' . '/shift/system/mvc/controller.php',
