@@ -16,6 +16,8 @@ $_['form'] = [
     'smtp_host'         => '',
     'smtp_username'     => '',
     'smtp_password'     => '',
+    'smtp_port'         => 25,
+    'smtp_timeout'      => 300, // In seconds
 
     // Cache
 

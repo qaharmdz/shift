@@ -130,7 +130,7 @@ class Setting extends Mvc\Controller
         $data['entry_ftp_password'] = $this->language->get('entry_ftp_password');
         $data['entry_ftp_root'] = $this->language->get('entry_ftp_root');
         $data['entry_ftp_status'] = $this->language->get('entry_ftp_status');
-        $data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
+        $data['entry_mail_engine'] = $this->language->get('entry_mail_engine');
         $data['entry_mail_parameter'] = $this->language->get('entry_mail_parameter');
         $data['entry_mail_smtp_hostname'] = $this->language->get('entry_mail_smtp_hostname');
         $data['entry_mail_smtp_username'] = $this->language->get('entry_mail_smtp_username');
@@ -198,7 +198,7 @@ class Setting extends Mvc\Controller
         $data['help_captcha'] = $this->language->get('help_captcha');
         $data['help_icon'] = $this->language->get('help_icon');
         $data['help_ftp_root'] = $this->language->get('help_ftp_root');
-        $data['help_mail_protocol'] = $this->language->get('help_mail_protocol');
+        $data['help_mail_engine'] = $this->language->get('help_mail_engine');
         $data['help_mail_parameter'] = $this->language->get('help_mail_parameter');
         $data['help_mail_smtp_hostname'] = $this->language->get('help_mail_smtp_hostname');
         $data['help_mail_smtp_password'] = $this->language->get('help_mail_smtp_password');

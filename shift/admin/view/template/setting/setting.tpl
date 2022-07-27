@@ -73,26 +73,20 @@
                         <legend>Mail</legend>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="input-mail-protocol"><span data-toggle="tooltip" title="<?php echo $help_mail_protocol; ?>"><?php echo $entry_mail_protocol; ?></span></label>
+                            <label class="col-sm-2 control-label" for="input-mail-protocol"><span data-toggle="tooltip" title="<?php echo $help_mail_engine; ?>"><?php echo $entry_mail_engine; ?></span></label>
                             <div class="col-sm-10">
-                                <select name="mail_protocol" id="input-mail-protocol" class="form-control">
-                                    <?php if ($setting['mail_protocol'] == 'mail') { ?>
+                                <select name="mail_engine" id="input-mail-protocol" class="form-control">
+                                    <?php if ($setting['mail_engine'] == 'mail') { ?>
                                     <option value="mail" selected="selected"><?php echo $text_mail; ?></option>
                                     <?php } else { ?>
                                     <option value="mail"><?php echo $text_mail; ?></option>
                                     <?php } ?>
-                                    <?php if ($setting['mail_protocol'] == 'smtp') { ?>
+                                    <?php if ($setting['mail_engine'] == 'smtp') { ?>
                                     <option value="smtp" selected="selected"><?php echo $text_smtp; ?></option>
                                     <?php } else { ?>
                                     <option value="smtp"><?php echo $text_smtp; ?></option>
                                     <?php } ?>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="input-mail-parameter"><span data-toggle="tooltip" title="<?php echo $help_mail_parameter; ?>"><?php echo $entry_mail_parameter; ?></span></label>
-                            <div class="col-sm-10">
-                                <input type="text" name="mail_parameter" value="<?php echo $setting['mail_parameter']; ?>" placeholder="<?php echo $entry_mail_parameter; ?>" id="input-mail-parameter" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -108,7 +102,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="input-mail-smtp-password"><span data-toggle="tooltip" title="<?php echo $help_mail_smtp_password; ?>"><?php echo $entry_mail_smtp_password; ?></span></label>
+                            <label class="col-sm-2 control-label" for="input-mail-smtp-password">
+                                <span data-toggle="tooltip" title="<?php echo $help_mail_smtp_password; ?>"><?php echo $entry_mail_smtp_password; ?></span>
+                            </label>
                             <div class="col-sm-10">
                                 <input type="text" name="mail_smtp_password" value="<?php echo $setting['mail_smtp_password']; ?>" placeholder="<?php echo $entry_mail_smtp_password; ?>" id="input-mail-smtp-password" class="form-control" />
                             </div>
@@ -120,7 +116,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="input-mail-smtp-timeout"><?php echo $entry_mail_smtp_timeout; ?></label>
+                            <label class="col-sm-2 control-label" for="input-mail-smtp-timeout">
+                                <span data-toggle="tooltip" title="In seconds"><?php echo $entry_mail_smtp_timeout; ?></span>
+                            </label>
                             <div class="col-sm-10">
                                 <input type="text" name="mail_smtp_timeout" value="<?php echo $setting['mail_smtp_timeout']; ?>" placeholder="<?php echo $entry_mail_smtp_timeout; ?>" id="input-mail-smtp-timeout" class="form-control" />
                             </div>
