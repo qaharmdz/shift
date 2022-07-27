@@ -25,7 +25,7 @@ class Forgotten extends Mvc\Controller
         if ($this->request->is('post') && $this->validate()) {
             $this->load->language('mail/forgotten');
 
-            $code = token(40);
+            $code = $this->secure->token('hash', 48);
 
             $this->model_account_customer->editCode($this->request->get('post.email'), $code);
 

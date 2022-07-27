@@ -21,7 +21,7 @@ class Login extends Mvc\Controller
         }
 
         if ($this->request->is('POST') && $this->validate()) {
-            $this->session->set('token', token(32));
+            $this->session->set('token', $this->secure->token());
 
             $this->response->redirect($this->router->url('common/dashboard', 'token=' . $this->session->get('token')));
         }

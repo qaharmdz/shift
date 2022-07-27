@@ -403,7 +403,7 @@ class Upload extends Mvc\Controller
         }
 
         if (!$json) {
-            $file = $filename . '.' . token(32);
+            $file = $filename . '.' . $this->secure->token();
 
             move_uploaded_file($this->request->get('files.file.tmp_name'), DIR_UPLOAD . $file);
 

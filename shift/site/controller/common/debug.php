@@ -31,7 +31,6 @@ class Debug extends Mvc\Controller
             $this->user->get(),
         );
 
-
         // $this->helperArr();
 
         // $this->load->model('tool/image');

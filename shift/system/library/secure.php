@@ -85,7 +85,7 @@ class Secure
      *
      * @return string
      */
-    public function token(string $type = 'crypt', int $length = 32): string
+    public function token(string $type = 'hash', int $length = 32): string
     {
         switch ($type) {
             case 'basic':
@@ -107,13 +107,13 @@ class Secure
                 $result = str_shuffle(str_repeat($pool, (int)ceil($length / strlen($pool))));
                 break;
 
-            case 'hash':
-                $result = $this->hash((string)mt_rand());
+            case 'crypt':
+                $result = random_bytes($length);
                 break;
 
-            case 'crypt':
+            case 'hash':
             default:
-                $result = random_bytes($length);
+                $result = $this->hash((string)mt_rand());
                 break;
         }
 
