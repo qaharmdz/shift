@@ -111,8 +111,9 @@ class Loader
 
     public function config(string $path, string $group = '')
     {
-        $path = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
-        $data = [];
+        $path  = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
+        $group = $group ?: str_replace('/', '.', $path);
+        $data  = [];
 
         $this->event->emit($eventName = 'config/' . $path . '::before', [$eventName, &$data, &$group]);
 
