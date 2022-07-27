@@ -43,7 +43,7 @@ class Header extends Mvc\Controller
         $data['text_home'] = $this->language->get('text_home');
 
         $data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
-        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->router->url('account/account'), $this->user->getFirstName(), $this->router->url('account/logout'));
+        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->router->url('account/account'), $this->user->get('firstname'), $this->router->url('account/logout'));
 
         $data['text_account'] = $this->language->get('text_account');
         $data['text_register'] = $this->language->get('text_register');

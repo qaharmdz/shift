@@ -12,6 +12,8 @@ class Debug extends Mvc\Controller
     public function index()
     {
         d(
+            $_SESSION === $this->session->all(),
+            $this->session->all(),
             [
                 'URL_APP'         => URL_APP,
                 'URL_SITE'        => URL_SITE,
@@ -25,13 +27,15 @@ class Debug extends Mvc\Controller
                 'DIR_UPLOAD'      => DIR_UPLOAD,
                 'DIR_IMAGE'       => DIR_IMAGE,
             ],
-            $this->config->all()
+            $this->config->all(),
+            $this->user->get(),
         );
 
-        $this->helperArr();
 
-        $this->load->model('tool/image');
-        d($this->model_tool_image->resize('no-image.png', 100, 100));
+        // $this->helperArr();
+
+        // $this->load->model('tool/image');
+        // d($this->model_tool_image->resize('no-image.png', 100, 100));
 
         $this->response->setOutput('<a href="http://localhost/mdzGit/shift/public/" target="_blank">Home</a>');
     }

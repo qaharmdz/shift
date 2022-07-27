@@ -13,29 +13,10 @@ class ColumnLeft extends Mvc\Controller
         if ($this->request->get('query.token', time()) == $this->session->get('token')) {
             $this->load->language('common/columnleft');
 
-            $this->load->model('user/user');
-
-            $this->load->model('tool/image');
-
-            $user_info = $this->model_user_user->getUser($this->user->getId());
-
-            if ($user_info) {
-                $data['firstname'] = $user_info['firstname'];
-                $data['lastname'] = $user_info['lastname'];
-
-                $data['user_group'] = $user_info['user_group'];
-
-                if (is_file(DIR_IMAGE . $user_info['image'])) {
-                    $data['image'] = $this->model_tool_image->resize($user_info['image'], 45, 45);
-                } else {
-                    $data['image'] = '';
-                }
-            } else {
-                $data['firstname'] = '';
-                $data['lastname'] = '';
-                $data['user_group'] = '';
-                $data['image'] = '';
-            }
+            $data['firstname']  = $this->user->get('firstname');
+            $data['lastname']   = $this->user->get('lastname');
+            $data['user_group'] = $this->user->get('usergroup');
+            $data['image']      = '';
 
             // Create a 3 level menu array
             // Level 2 can not have children

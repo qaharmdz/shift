@@ -29,7 +29,7 @@ class Login extends Mvc\Controller
 
                 $activity_data = array(
                     'customer_id' => $this->user->getId(),
-                    'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
+                    'name'        => $this->user->get('fullname'),
                 );
 
                 $this->model_account_activity->addActivity('login', $activity_data);

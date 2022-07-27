@@ -106,9 +106,8 @@ class Contact extends Mvc\Controller
 
         $data['locations'] = array();
 
-
-        $data['name']    = $this->request->getString('post.name', $this->user->getFirstName());
-        $data['email']   = $this->request->getString('post.email', $this->user->getEmail());
+        $data['name']    = $this->request->getString('post.name', $this->user->get('fullname'));
+        $data['email']   = $this->request->getString('post.email', $this->user->get('email'));
         $data['enquiry'] = $this->request->getString('post.enquiry');
 
         // Captcha

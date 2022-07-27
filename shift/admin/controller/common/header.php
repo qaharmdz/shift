@@ -48,7 +48,7 @@ class Header extends Mvc\Controller
         $data['text_homepage'] = $this->language->get('text_homepage');
         $data['text_documentation'] = $this->language->get('text_documentation');
         $data['text_support'] = $this->language->get('text_support');
-        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
+        $data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->get('firstname'));
         $data['text_logout'] = $this->language->get('text_logout');
 
         if ($this->request->get('query.token', time()) != $this->session->get('token')) {

@@ -25,7 +25,7 @@ class Password extends Mvc\Controller
         if ($this->request->is('post') && $this->validate()) {
             $this->load->model('account/customer');
 
-            $this->model_account_customer->editPassword($this->user->getEmail(), $this->request->get('post.password'));
+            $this->model_account_customer->editPassword($this->user->get('email'), $this->request->get('post.password'));
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
@@ -35,7 +35,7 @@ class Password extends Mvc\Controller
 
                 $activity_data = array(
                     'customer_id' => $this->user->getId(),
-                    'name'        => $this->user->getFirstName() . ' ' . $this->user->getLastName()
+                    'name'        => $this->user->get('fullname'),
                 );
 
                 $this->model_account_activity->addActivity('password', $activity_data);
