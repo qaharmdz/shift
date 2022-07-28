@@ -105,5 +105,15 @@ class Startup extends Mvc\Controller
 
         $this->language->set('_param.active', $code);
         $this->language->load($code);
+
+        //=== Mail
+        $this->mail->setConfig([
+            'mail_engine'   => $this->config->get('system.setting.mail_engine'),
+            'smtp_host'     => $this->config->get('system.setting.mail_smtp_hostname'),
+            'smtp_username' => $this->config->get('system.setting.mail_smtp_username'),
+            'smtp_password' => $this->config->get('system.setting.mail_smtp_password'),
+            'smtp_port'     => $this->config->getInt('system.setting.mail_smtp_port', 25),
+            'smtp_timeout'  => $this->config->getInt('system.setting.mail_smtp_timeout', 300),
+        ]);
     }
 }

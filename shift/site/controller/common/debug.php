@@ -31,6 +31,9 @@ class Debug extends Mvc\Controller
             $this->user->get(),
         );
 
+        // $mail = $this->mail->getInstance();
+        // d($this->mail, $mail);
+
         // $this->helperArr();
 
         // $this->load->model('tool/image');

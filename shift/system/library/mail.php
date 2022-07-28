@@ -7,66 +7,65 @@ namespace Shift\System\Library;
 use PHPMailer\PHPMailer\PHPMailer;
 
 /**
- * Mail library.
+ * PHPMailer wrapper
  *
  * @link https://github.com/PHPMailer/PHPMailer
  */
-class Mail extends PHPMailer
+class Mail
 {
-    /**
-     * @param bool $exceptions
-     */
-    public function __construct($exceptions = true)
+    private array $config = [];
+
+    public function setConfig(array $configuration = [])
     {
-        parent::__construct($exceptions);
+        $this->config = array_replace_recursive(
+            [
+                'mail_engine'   => 'mail',
+                'smtp_host'     => '',
+                'smtp_username' => '',
+                'smtp_password' => '',
+                'smtp_port'     => 25,
+                'smtp_timeout'  => 300,
+            ],
+            $this->config,
+            $configuration
+        );
     }
 
-    /**
-     * Quick mail setup.
-     *
-     * @param  array  $param
-     */
-    public function quickSetup(array $param): void
+    public function getConfig($key = null, $default = null)
     {
-        switch ($param['engine']) {
+        if (!$key) {
+            return $this->config;
+        }
+
+        return $this->config[$key] ?? $default;
+    }
+
+    public function getInstance()
+    {
+        $mail = new PHPMailer(true);
+        $mail->CharSet = PHPMailer::CHARSET_UTF8;
+
+        switch ($this->getConfig('mail_engine')) {
             case 'smtp':
-                $this->isSMTP();
-                $param = array_merge([
-                    'smtp_host'     => '',
-                    'smtp_username' => '',
-                    'smtp_password' => '',
-                    'smtp_port'     => 25,
-                    'smtp_timeout'  => 300,
-                ], $param);
+                $mail->isSMTP();
 
-                $this->Host    = $param['smtp_host'];
-                $this->Port    = (int)$param['smtp_port'];
-                $this->Timeout = (int)$param['smtp_timeout'];
+                $mail->Host    = $this->getConfig('smtp_host');
+                $mail->Port    = (int)$this->getConfig('smtp_port');
+                $mail->Timeout = (int)$this->getConfig('smtp_timeout');
 
-                if ($param['smtp_username'] && $param['smtp_password']) {
-                    $this->SMTPAuth = true;
-                    $this->Username = $param['smtp_username'];
-                    $this->Password = $param['smtp_password'];
+                if ($this->getConfig('smtp_username') && $this->getConfig('smtp_password')) {
+                    $mail->SMTPAuth = true;
+                    $mail->Username = $this->getConfig('smtp_username');
+                    $mail->Password = $this->getConfig('smtp_password');
                 }
                 break;
 
             case 'mail':
             default:
-                $this->isMail();
+                $mail->isMail();
                 break;
         }
 
-        $this->CharSet = PHPMailer::CHARSET_UTF8;
-    }
-
-    /**
-     * Clear all mail settings.
-     */
-    public function clearAll(): void
-    {
-        $this->clearCustomHeaders();
-        $this->clearAllRecipients();
-        $this->clearReplyTos();
-        $this->clearAttachments();
+        return $mail;
     }
 }
