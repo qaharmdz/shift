@@ -40,8 +40,12 @@ class Database
         );
     }
 
-    public function getConfig($key, $default = null)
+    public function getConfig($key = null, $default = null)
     {
+        if (!$key) {
+            return $this->config;
+        }
+
         return $this->config[$key] ?? $default;
     }
 
