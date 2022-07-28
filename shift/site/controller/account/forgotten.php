@@ -26,30 +26,25 @@ class Forgotten extends Mvc\Controller
             $this->load->language('mail/forgotten');
 
             $code = $this->secure->token('hash', 48);
+            $email = $this->request->getString('post.email');
 
             $this->model_account_customer->editCode($this->request->get('post.email'), $code);
 
-            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES, 'UTF-8'));
+            $subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
 
-            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
+            $message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES | ENT_HTML5, 'UTF-8')) . "\n\n";
             $message .= $this->language->get('text_change') . "\n\n";
             $message .= $this->router->url('account/reset', 'code=' . $code) . "\n\n";
             $message .= sprintf($this->language->get('text_ip'), $this->request->get('server.REMOTE_ADDR')) . "\n\n";
 
-            $mail = new Mail();
-            $mail->protocol = $this->config->get('system.setting.mail_protocol');
-            $mail->parameter = $this->config->get('system.setting.mail_parameter');
-            $mail->smtp_hostname = $this->config->get('system.setting.mail_smtp_hostname');
-            $mail->smtp_username = $this->config->get('system.setting.mail_smtp_username');
-            $mail->smtp_password = html_entity_decode($this->config->get('system.setting.mail_smtp_password'), ENT_QUOTES, 'UTF-8');
-            $mail->smtp_port = $this->config->get('system.setting.mail_smtp_port');
-            $mail->smtp_timeout = $this->config->get('system.setting.mail_smtp_timeout');
+            $mail = $this->mail->getInstance();
+            $mail->setFrom($this->config->get('system.site.email'), $this->config->get('system.site.name'));
+            $mail->addAddress($email);
 
-            $mail->setTo($this->request->get('post.email'));
-            $mail->setFrom($this->config->get('system.site.email'));
-            $mail->setSender(html_entity_decode($this->config->get('system.site.name'), ENT_QUOTES, 'UTF-8'));
-            $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-            $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+            $mail->Subject = $subject;
+            $mail->Body    = $message;
+
+            $mail->isHTML(false);
             $mail->send();
 
             $this->session->set('flash.success', $this->language->get('text_success'));

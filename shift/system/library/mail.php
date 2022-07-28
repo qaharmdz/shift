@@ -19,7 +19,7 @@ class Mail
     {
         $this->config = array_replace_recursive(
             [
-                'mail_engine'   => 'mail',
+                'engine'        => 'mail',
                 'smtp_host'     => '',
                 'smtp_username' => '',
                 'smtp_password' => '',
@@ -45,7 +45,7 @@ class Mail
         $mail = new PHPMailer(true);
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
 
-        switch ($this->getConfig('mail_engine')) {
+        switch ($this->getConfig('engine')) {
             case 'smtp':
                 $mail->isSMTP();
 

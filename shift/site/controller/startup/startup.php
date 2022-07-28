@@ -108,7 +108,7 @@ class Startup extends Mvc\Controller
 
         //=== Mail
         $this->mail->setConfig([
-            'mail_engine'   => $this->config->get('system.setting.mail_engine'),
+            'engine'        => $this->config->get('system.setting.mail_engine'),
             'smtp_host'     => $this->config->get('system.setting.mail_smtp_hostname'),
             'smtp_username' => $this->config->get('system.setting.mail_smtp_username'),
             'smtp_password' => $this->config->get('system.setting.mail_smtp_password'),
