@@ -34,6 +34,10 @@
         "optimize-autoloader": true
     },
     "scripts": {
+        "vendor-check": [
+            "composer show --latest",
+            "composer show --tree"
+        ],
         "post-autoload-dump": [
             "Shift\\System\\Autoloader\\Psr4Lowercase::classMap"
         ]
