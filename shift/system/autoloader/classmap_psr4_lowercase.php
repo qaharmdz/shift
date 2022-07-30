@@ -147,6 +147,7 @@ return [
         'shift\\system\\http\\router' => $baseDir . '/shift/system/http/router.php',
         'shift\\system\\library\\cache' => $baseDir . '/shift/system/library/cache.php',
         'shift\\system\\library\\document' => $baseDir . '/shift/system/library/document.php',
+        'shift\\system\\library\\image' => $baseDir . '/shift/system/library/image.php',
         'shift\\system\\library\\language' => $baseDir . '/shift/system/library/language.php',
         'shift\\system\\library\\legacy\\image' => $baseDir . '/shift/system/library/legacy/image.php',
         'shift\\system\\library\\legacy\\pagination' => $baseDir . '/shift/system/library/legacy/pagination.php',

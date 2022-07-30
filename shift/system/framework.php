@@ -154,6 +154,14 @@ class Framework
         // Mail
         $this->set('mail', new Library\Mail(true));
 
+        // Image
+        $this->set('image', new Library\Image([
+            'quality'       => 100,
+            'path_image'    => DIR_MEDIA,
+            'path_cache'    => DIR_MEDIA . 'cache/',
+            'url'           => $config->get('env.url_media') . 'cache/',
+        ]));
+
         return $this;
     }
 

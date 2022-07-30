@@ -39,7 +39,7 @@ class Image extends Mvc\Model
             }
 
             if ($width_orig != $width || $height_orig != $height) {
-                $image = new Image(DIR_IMAGE . $image_old);
+                $image = new \Shift\System\Library\Legacy\Image(DIR_IMAGE . $image_old);
                 $image->resize($width, $height);
                 $image->save(DIR_IMAGE . $image_new);
             } else {

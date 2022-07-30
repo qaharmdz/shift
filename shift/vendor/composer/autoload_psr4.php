@@ -13,4 +13,5 @@ return array(
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Adbar\\' => array($vendorDir . '/adbario/php-dot-notation/src'),
+    '' => array($vendorDir . '/league/color-extractor/src'),
 );

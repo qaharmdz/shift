@@ -19,26 +19,47 @@ class Debug extends Mvc\Controller
             // $this->user->get(),
         );
 
-        // d(
-        //     $this->cache->getInstance()->getConfig(),
-        //     $this->cache->getInstance()->getStats(),
-        //     $this->cache->setup('DevNull'),
-        //     $this->cache->getInstance()->getConfig(),
-        //     $this->cache->getInstance()->getStats(),
-        // );
-
         // $mail = $this->mail->getInstance();
         // d($this->mail, $mail);
 
-        // $this->helperArr();
-
-        // $this->load->model('tool/image');
-        // d($this->model_tool_image->resize('no-image.png', 100, 100));
+        // $this->testHelperArr();
+        $this->testCache();
+        $this->testImage();
 
         $this->response->setOutput('<a href="http://localhost/mdzGit/shift/public/" target="_blank">Home</a>');
     }
 
-    private function helperArr()
+    private function testImage()
+    {
+        $html = '';
+
+        $this->load->model('tool/image');
+
+        $no_image = $this->image->fromFile('image/no-image.png')->resize(150, 150)->getUrl();
+        $thumbnail = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->thumbnail(300, 300, 'center')->getUrl();
+        $bestfit = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->bestFit(305, 305)->getUrl();
+        $resize = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->resize(310, 310)->getUrl();
+
+        $html .= '<div style="margin:10px;padding:10px;background:#eee;"><img src="' . $no_image . '" /></div>';
+        $html .= '<div style="margin:10px;padding:10px;background:#eee;">Thumbnail <img src="' . $thumbnail . '" /></div>';
+        $html .= '<div style="margin:10px;padding:10px;background:#eee;">BestFit <img src="' . $bestfit . '" /></div>';
+        $html .= '<div style="margin:10px;padding:10px;background:#eee;">Resize <img src="' . $resize . '" /></div>';
+
+        echo $html;
+    }
+
+    private function testCache()
+    {
+        d(
+            $this->cache->getInstance()->getConfig(),
+            $this->cache->getInstance()->getStats(),
+            $this->cache->setup('DevNull'),
+            $this->cache->getInstance()->getConfig(),
+            $this->cache->getInstance()->getStats(),
+        );
+    }
+
+    private function testHelperArr()
     {
         $array = [
             'foo' => 'bar',

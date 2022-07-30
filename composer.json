@@ -17,7 +17,8 @@
         "ext-mbstring": "*",
         "adbario/php-dot-notation": "^3.1",
         "phpfastcache/phpfastcache": "^9.1",
-        "phpmailer/phpmailer": "^6.6"
+        "phpmailer/phpmailer": "^6.6",
+        "claviska/simpleimage": "^3.7"
     },
     "require-dev": {
         "kint-php/kint": "^4.1"

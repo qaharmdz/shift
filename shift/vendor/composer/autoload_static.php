@@ -62,6 +62,20 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         ),
     );
 
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/league/color-extractor/src',
+    );
+
+    public static $prefixesPsr0 = array (
+        'c' => 
+        array (
+            'claviska' => 
+            array (
+                0 => __DIR__ . '/..' . '/claviska/simpleimage/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Adbar\\Dot' => __DIR__ . '/..' . '/adbario/php-dot-notation/src/Dot.php',
         'ComposerAutoloaderInitec3ddbcfb6fb1e1b644ccfec9082eb1e' => __DIR__ . '/..' . '/composer/autoload_real.php',
@@ -151,6 +165,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Zval\\TraceFrameValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/TraceFrameValue.php',
         'Kint\\Zval\\TraceValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/TraceValue.php',
         'Kint\\Zval\\Value' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Value.php',
+        'League\\ColorExtractor\\Color' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/Color.php',
+        'League\\ColorExtractor\\ColorExtractor' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/ColorExtractor.php',
+        'League\\ColorExtractor\\Palette' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/Palette.php',
+        'League\\ColorExtractor\\Test\\PaletteTest' => __DIR__ . '/..' . '/league/color-extractor/tests/League/ColorExtractor/Test/PaletteTest.php',
         'PHPMailer\\PHPMailer\\Exception' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/Exception.php',
         'PHPMailer\\PHPMailer\\OAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuth.php',
         'PHPMailer\\PHPMailer\\OAuthTokenProvider' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuthTokenProvider.php',
@@ -453,6 +471,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Http\\Router' => __DIR__ . '/../../..' . '/shift/system/http/router.php',
         'Shift\\System\\Library\\Cache' => __DIR__ . '/../../..' . '/shift/system/library/cache.php',
         'Shift\\System\\Library\\Document' => __DIR__ . '/../../..' . '/shift/system/library/document.php',
+        'Shift\\System\\Library\\Image' => __DIR__ . '/../../..' . '/shift/system/library/image.php',
         'Shift\\System\\Library\\Language' => __DIR__ . '/../../..' . '/shift/system/library/language.php',
         'Shift\\System\\Library\\Legacy\\Image' => __DIR__ . '/../../..' . '/shift/system/library/legacy/image.php',
         'Shift\\System\\Library\\Legacy\\Pagination' => __DIR__ . '/../../..' . '/shift/system/library/legacy/pagination.php',
@@ -462,6 +481,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Mvc\\Controller' => __DIR__ . '/../../..' . '/shift/system/mvc/controller.php',
         'Shift\\System\\Mvc\\Model' => __DIR__ . '/../../..' . '/shift/system/mvc/model.php',
         'Shift\\System\\Mvc\\View' => __DIR__ . '/../../..' . '/shift/system/mvc/view.php',
+        'claviska\\SimpleImage' => __DIR__ . '/..' . '/claviska/simpleimage/src/claviska/SimpleImage.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -469,6 +489,8 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$classMap;
 
         }, null, ClassLoader::class);
