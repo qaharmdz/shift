@@ -146,7 +146,10 @@ class Framework
         $this->set('document', new Library\Document());
 
         // Cache
-        $this->set('cache', new \Cache());
+        $this->set('cache', new Library\Cache($config->get('root.cache_driver'), [
+            'path'       => DIR_CACHE,
+            'defaultTtl' => $config->get('root.cache_ttl'),
+        ]));
 
         // Mail
         $this->set('mail', new Library\Mail(true));

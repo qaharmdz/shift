@@ -12,24 +12,20 @@ class Debug extends Mvc\Controller
     public function index()
     {
         d(
+            $userDefinedConstants = get_defined_constants(true)['user'],
             $_SESSION === $this->session->all(),
             $this->session->all(),
-            [
-                'URL_APP'         => URL_APP,
-                'URL_SITE'        => URL_SITE,
-                'DIR_APPLICATION' => DIR_APPLICATION,
-                'DIR_SITE'        => DIR_SITE,
-                'DIR_LANGUAGE'    => DIR_LANGUAGE,
-                'DIR_TEMPLATE'    => DIR_TEMPLATE,
-                'DIR_SYSTEM'      => DIR_SYSTEM,
-                'DIR_STORAGE'     => DIR_STORAGE,
-                'DIR_CACHE'       => DIR_CACHE,
-                'DIR_UPLOAD'      => DIR_UPLOAD,
-                'DIR_IMAGE'       => DIR_IMAGE,
-            ],
             $this->config->all(),
-            $this->user->get(),
+            // $this->user->get(),
         );
+
+        // d(
+        //     $this->cache->getInstance()->getConfig(),
+        //     $this->cache->getInstance()->getStats(),
+        //     $this->cache->setup('DevNull'),
+        //     $this->cache->getInstance()->getConfig(),
+        //     $this->cache->getInstance()->getStats(),
+        // );
 
         // $mail = $this->mail->getInstance();
         // d($this->mail, $mail);
