@@ -13,8 +13,8 @@ shift/admin/config.php
 shift/storage/*/*
 !shift/storage/*/index.html
 
-public/image/cache/*
-!public/image/cache/index.html
+public/media/cache/*
+!public/media/cache/index.html
 
 #--------------------------------------------------
 # https://github.com/github/gitignore

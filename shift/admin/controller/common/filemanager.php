@@ -18,9 +18,9 @@ class FileManager extends Mvc\Controller
         }
 
         // Make sure we have the correct directory
-        $directory = DIR_IMAGE . 'catalog';
+        $directory = DIR_MEDIA . 'image';
         if ($this->request->has('query.directory')) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace('*', '', $this->request->get('query.directory')), '/');
+            $directory = rtrim(DIR_MEDIA . 'image/' . str_replace('*', '', $this->request->get('query.directory')), '/');
         }
 
         if ($this->request->has('query.page')) {
@@ -36,7 +36,7 @@ class FileManager extends Mvc\Controller
 
         $this->load->model('tool/image');
 
-        if (substr(str_replace('\\', DS, realpath($directory . '/' . $filter_name)), 0, strlen(DIR_IMAGE . 'catalog')) == DIR_IMAGE . 'catalog') {
+        if (substr(str_replace('\\', DS, realpath($directory . '/' . $filter_name)), 0, strlen(DIR_MEDIA . 'image')) == DIR_MEDIA . 'image') {
             // Get directories
             $directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
 
@@ -79,16 +79,16 @@ class FileManager extends Mvc\Controller
                     'thumb' => '',
                     'name'  => implode(' ', $name),
                     'type'  => 'directory',
-                    'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-                    'href'  => $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url)
+                    'path'  => utf8_substr($image, utf8_strlen(DIR_MEDIA)),
+                    'href'  => $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_MEDIA . 'image/'))) . $url)
                 );
             } elseif (is_file($image)) {
                 $data['images'][] = array(
-                    'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
+                    'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_MEDIA)), 100, 100),
                     'name'  => implode(' ', $name),
                     'type'  => 'image',
-                    'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-                    'href'  => $this->config->get('env.url_site') . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
+                    'path'  => utf8_substr($image, utf8_strlen(DIR_MEDIA)),
+                    'href'  => $this->config->get('env.url_site') . 'image/' . utf8_substr($image, utf8_strlen(DIR_MEDIA))
                 );
             }
         }
@@ -216,13 +216,13 @@ class FileManager extends Mvc\Controller
 
         // Make sure we have the correct directory
         if ($this->request->has('query.directory')) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get('query.directory'), '/');
+            $directory = rtrim(DIR_MEDIA . 'image/' . $this->request->get('query.directory'), '/');
         } else {
-            $directory = DIR_IMAGE . 'catalog';
+            $directory = DIR_MEDIA . 'image';
         }
 
         // Check its a directory
-        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_MEDIA . 'image')) != DIR_MEDIA . 'image') {
             $json['error'] = $this->language->get('error_directory');
         }
 
@@ -311,13 +311,13 @@ class FileManager extends Mvc\Controller
 
         // Make sure we have the correct directory
         if ($this->request->has('query.directory')) {
-            $directory = rtrim(DIR_IMAGE . 'catalog/' . $this->request->get('query.directory'), '/');
+            $directory = rtrim(DIR_MEDIA . 'image/' . $this->request->get('query.directory'), '/');
         } else {
-            $directory = DIR_IMAGE . 'catalog';
+            $directory = DIR_MEDIA . 'image';
         }
 
         // Check its a directory
-        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_MEDIA . 'image')) != DIR_MEDIA . 'image') {
             $json['error'] = $this->language->get('error_directory');
         }
 
@@ -368,7 +368,7 @@ class FileManager extends Mvc\Controller
         // Loop through each path to run validations
         foreach ($paths as $path) {
             // Check path exsists
-            if ($path == DIR_IMAGE . 'catalog' || substr(str_replace('\\', DS, realpath(DIR_IMAGE . $path)), 0, strlen(DIR_IMAGE . 'catalog')) != DIR_IMAGE . 'catalog') {
+            if ($path == DIR_MEDIA . 'image' || substr(str_replace('\\', DS, realpath(DIR_MEDIA . $path)), 0, strlen(DIR_MEDIA . 'image')) != DIR_MEDIA . 'image') {
                 $json['error'] = $this->language->get('error_delete');
 
                 break;
@@ -378,7 +378,7 @@ class FileManager extends Mvc\Controller
         if (!$json) {
             // Loop through each path
             foreach ($paths as $path) {
-                $path = rtrim(DIR_IMAGE . $path, '/');
+                $path = rtrim(DIR_MEDIA . $path, '/');
 
                 // If path is just a file delete it
                 if (is_file($path)) {

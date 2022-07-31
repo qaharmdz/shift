@@ -29,12 +29,12 @@ class Header extends Mvc\Controller
 
         $data['name'] = $this->config->get('system.site.name');
 
-        if (is_file(DIR_IMAGE . $this->config->get('system.site.icon'))) {
+        if (is_file(DIR_MEDIA . $this->config->get('system.site.icon'))) {
             $this->document->addLink($data['base'] . 'image/' . $this->config->get('system.site.icon'), 'icon');
         }
 
         $data['logo'] = '';
-        if (is_file(DIR_IMAGE . $this->config->get('system.site.logo'))) {
+        if (is_file(DIR_MEDIA . $this->config->get('system.site.logo'))) {
             $data['logo'] = $data['base'] . 'image/' . $this->config->get('system.site.logo');
         }
 

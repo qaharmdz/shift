@@ -276,16 +276,16 @@ class Site extends Mvc\Controller
         $data['placeholder'] = $no_image_thumb = $this->model_tool_image->resize('no-image.png', 100, 100);
 
         $data['logo'] = $no_image_thumb;
-        if ($this->request->has('post.logo') && is_file(DIR_IMAGE . $this->request->get('post.logo'))) {
+        if ($this->request->has('post.logo') && is_file(DIR_MEDIA . $this->request->get('post.logo'))) {
             $data['logo'] = $this->model_tool_image->resize($this->request->get('post.logo'), 100, 100);
-        } elseif (Arr::has($site_info, 'logo') && is_file(DIR_IMAGE . Arr::get($site_info, 'logo'))) {
+        } elseif (Arr::has($site_info, 'logo') && is_file(DIR_MEDIA . Arr::get($site_info, 'logo'))) {
             $data['logo'] = $this->model_tool_image->resize(Arr::get($site_info, 'logo'), 100, 100);
         }
 
         $data['icon'] = $no_image_thumb;
-        if ($this->request->has('post.icon') && is_file(DIR_IMAGE . $this->request->get('post.icon'))) {
+        if ($this->request->has('post.icon') && is_file(DIR_MEDIA . $this->request->get('post.icon'))) {
             $data['icon'] = $this->model_tool_image->resize($this->request->get('post.icon'), 100, 100);
-        } elseif (Arr::has($site_info, 'icon') && is_file(DIR_IMAGE . Arr::get($site_info, 'icon'))) {
+        } elseif (Arr::has($site_info, 'icon') && is_file(DIR_MEDIA . Arr::get($site_info, 'icon'))) {
             $data['icon'] = $this->model_tool_image->resize(Arr::get($site_info, 'icon'), 100, 100);
         }
 
@@ -346,7 +346,7 @@ class Site extends Mvc\Controller
 
         $theme = basename($this->request->get('query.theme', ''));
 
-        if (is_file(DIR_IMAGE . 'theme/' . $theme . '.png')) {
+        if (is_file(DIR_MEDIA . 'theme/' . $theme . '.png')) {
             $this->response->setOutput($url_site . 'image/theme/' . $theme . '.png');
         } else {
             $this->response->setOutput($url_site . 'image/no-image.png');
