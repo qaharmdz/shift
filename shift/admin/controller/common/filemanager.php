@@ -192,7 +192,7 @@ class FileManager extends Mvc\Controller
             $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
-        $pagination = new \Pagination();
+        $pagination = new \Shift\System\Library\Legacy\Pagination();
         $pagination->total = $image_total;
         $pagination->page = $page;
         $pagination->limit = 20;

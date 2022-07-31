@@ -243,7 +243,7 @@ class UserPermission extends Mvc\Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new \Pagination();
+        $pagination = new \Shift\System\Library\Legacy\Pagination();
         $pagination->total = $user_group_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');

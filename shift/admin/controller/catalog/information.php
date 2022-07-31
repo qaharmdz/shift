@@ -168,7 +168,7 @@ class Information extends Mvc\Controller
 
         $url = $this->urlQueryList(['sort', 'order']);
 
-        $pagination = new \Pagination();
+        $pagination = new \Shift\System\Library\Legacy\Pagination();
         $pagination->total = $information_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');

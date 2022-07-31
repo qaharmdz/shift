@@ -198,7 +198,7 @@ class Event extends Mvc\Controller
             $url .= '&order=' . $this->request->get('query.order');
         }
 
-        $pagination = new \Pagination();
+        $pagination = new \Shift\System\Library\Legacy\Pagination();
         $pagination->total = $event_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');
