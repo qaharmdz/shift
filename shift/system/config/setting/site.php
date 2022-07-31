@@ -15,8 +15,8 @@ $_['form'] = [
     'meta_keyword'     => '',
 
     // Media
-    'logo'             => '',
-    'icon'             => '',
+    'logo'             => 'image/no-image.png',
+    'icon'             => 'image/no-image.png',
 
     // Configuration
     'language'         => 'en',

@@ -82,10 +82,8 @@ class Contact extends Mvc\Controller
 
         $data['action'] = $this->router->url('information/contact');
 
-        $this->load->model('tool/image');
-
         if ($this->config->get('system.setting.image')) {
-            $data['image'] = $this->model_tool_image->resize($this->config->get('system.setting.image'), $this->config->get($this->config->get('system.site.theme') . '_image_location_width'), $this->config->get($this->config->get('system.site.theme') . '_image_location_height'));
+            $data['image'] = $this->image->construct($this->config->get('system.setting.image'), (int)$this->config->get($this->config->get('system.site.theme') . '_image_location_width'), (int)$this->config->get($this->config->get('system.site.theme') . '_image_location_height'));
         } else {
             $data['image'] = false;
         }

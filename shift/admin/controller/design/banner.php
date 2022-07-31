@@ -367,8 +367,6 @@ class Banner extends Mvc\Controller
 
         $data['languages'] = $this->model_extension_language->getLanguages();
 
-        $this->load->model('tool/image');
-
         if ($this->request->has('post.banner_image')) {
             $banner_images = $this->request->get('post.banner_image');
         } elseif ($this->request->has('query.banner_id')) {
@@ -386,20 +384,20 @@ class Banner extends Mvc\Controller
                     $thumb = $banner_image['image'];
                 } else {
                     $image = '';
-                    $thumb = 'no-image.png';
+                    $thumb = 'image/no-image.png';
                 }
 
                 $data['banner_images'][$key][] = array(
                     'title'      => $banner_image['title'],
                     'link'       => $banner_image['link'],
                     'image'      => $image,
-                    'thumb'      => $this->model_tool_image->resize($thumb, 100, 100),
+                    'thumb'      => $this->image->construct($thumb, 100, 100),
                     'sort_order' => $banner_image['sort_order']
                 );
             }
         }
 
-        $data['placeholder'] = $this->model_tool_image->resize('no-image.png', 100, 100);
+        $data['placeholder'] = $this->image->construct('image/no-image.png', 100, 100);
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

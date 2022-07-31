@@ -434,17 +434,15 @@ class User extends Mvc\Controller
             $data['image'] = '';
         }
 
-        $this->load->model('tool/image');
-
         if ($this->request->has('post.image') && is_file(DIR_MEDIA . $this->request->get('post.image'))) {
-            $data['thumb'] = $this->model_tool_image->resize($this->request->get('post.image'), 100, 100);
+            $data['thumb'] = $this->image->construct($this->request->get('post.image'), 100, 100);
         } elseif (!empty($user_info) && $user_info['image'] && is_file(DIR_MEDIA . $user_info['image'])) {
-            $data['thumb'] = $this->model_tool_image->resize($user_info['image'], 100, 100);
+            $data['thumb'] = $this->image->construct($user_info['image'], 100, 100);
         } else {
-            $data['thumb'] = $this->model_tool_image->resize('no-image.png', 100, 100);
+            $data['thumb'] = $this->image->construct('image/no-image.png', 100, 100);
         }
 
-        $data['placeholder'] = $this->model_tool_image->resize('no-image.png', 100, 100);
+        $data['placeholder'] = $this->image->construct('image/no-image.png', 100, 100);
 
         if ($this->request->has('post.status')) {
             $data['status'] = $this->request->get('post.status');

@@ -13,7 +13,6 @@ class Carousel extends Mvc\Controller
         static $module = 0;
 
         $this->load->model('design/banner');
-        $this->load->model('tool/image');
 
         $this->document->addStyle('asset/script/jquery/owl-carousel/owl.carousel.css');
         $this->document->addScript('asset/script/jquery/owl-carousel/owl.carousel.min.js');
@@ -27,7 +26,7 @@ class Carousel extends Mvc\Controller
                 $data['banners'][] = array(
                     'title' => $result['title'],
                     'link'  => $result['link'],
-                    'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+                    'image' => $this->image->construct($result['image'], (int)$setting['width'], (int)$setting['height'])
                 );
             }
         }

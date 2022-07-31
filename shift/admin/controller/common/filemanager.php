@@ -34,8 +34,6 @@ class FileManager extends Mvc\Controller
 
         $data['images'] = array();
 
-        $this->load->model('tool/image');
-
         if (substr(str_replace('\\', DS, realpath($directory . '/' . $filter_name)), 0, strlen(DIR_MEDIA . 'image')) == DIR_MEDIA . 'image') {
             // Get directories
             $directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
@@ -84,11 +82,11 @@ class FileManager extends Mvc\Controller
                 );
             } elseif (is_file($image)) {
                 $data['images'][] = array(
-                    'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_MEDIA)), 100, 100),
+                    'thumb' => $this->image->construct(utf8_substr($image, utf8_strlen(DIR_MEDIA)),100, 100),
                     'name'  => implode(' ', $name),
                     'type'  => 'image',
                     'path'  => utf8_substr($image, utf8_strlen(DIR_MEDIA)),
-                    'href'  => $this->config->get('env.url_site') . 'image/' . utf8_substr($image, utf8_strlen(DIR_MEDIA))
+                    'href'  => $this->config->get('env.url_site') . 'media/' . utf8_substr($image, utf8_strlen(DIR_MEDIA))
                 );
             }
         }
