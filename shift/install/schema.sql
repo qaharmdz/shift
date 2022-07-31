@@ -17,7 +17,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}banner` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}banner` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}banner` (`banner_id`, `name`, `status`) VALUES
-	(6, 'HP Products', 1),
 	(7, 'Home Page Slideshow', 1),
 	(8, 'Manufacturers', 1);
 /*!40000 ALTER TABLE `{DB_PREFIX}banner` ENABLE KEYS */;
@@ -36,20 +35,19 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}banner_image` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}banner_image` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}banner_image` (`banner_image_id`, `banner_id`, `language_id`, `title`, `link`, `image`, `sort_order`) VALUES
-	(88, 8, 1, 'Harley Davidson', '', 'catalog/demo/manufacturer/harley.png', 0),
-	(89, 8, 1, 'Dell', '', 'catalog/demo/manufacturer/dell.png', 0),
-	(90, 8, 1, 'Disney', '', 'catalog/demo/manufacturer/disney.png', 0),
-	(91, 8, 1, 'Coca Cola', '', 'catalog/demo/manufacturer/cocacola.png', 0),
-	(92, 8, 1, 'Burger King', '', 'catalog/demo/manufacturer/burgerking.png', 0),
-	(93, 8, 1, 'Canon', '', 'catalog/demo/manufacturer/canon.png', 0),
-	(94, 8, 1, 'NFL', '', 'catalog/demo/manufacturer/nfl.png', 0),
-	(95, 8, 1, 'RedBull', '', 'catalog/demo/manufacturer/redbull.png', 0),
-	(96, 8, 1, 'Sony', '', 'catalog/demo/manufacturer/sony.png', 0),
-	(97, 8, 1, 'Starbucks', '', 'catalog/demo/manufacturer/starbucks.png', 0),
-	(98, 8, 1, 'Nintendo', '', 'catalog/demo/manufacturer/nintendo.png', 0),
-	(101, 6, 1, 'HP Banner', 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', '', 0),
-	(102, 7, 1, 'iPhone 6', 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'catalog/demo/banners/iPhone6.jpg', 0),
-	(103, 7, 1, 'MacBookAir', '', 'catalog/demo/banners/MacBookAir.jpg', 0);
+	(88, 8, 1, 'Harley Davidson', '', 'image/demo/manufacturer/harley.png', 0),
+	(89, 8, 1, 'Dell', '', 'image/demo/manufacturer/dell.png', 0),
+	(90, 8, 1, 'Disney', '', 'image/demo/manufacturer/disney.png', 0),
+	(91, 8, 1, 'Coca Cola', '', 'image/demo/manufacturer/cocacola.png', 0),
+	(92, 8, 1, 'Burger King', '', 'image/demo/manufacturer/burgerking.png', 0),
+	(93, 8, 1, 'Canon', '', 'image/demo/manufacturer/canon.png', 0),
+	(94, 8, 1, 'NFL', '', 'image/demo/manufacturer/nfl.png', 0),
+	(95, 8, 1, 'RedBull', '', 'image/demo/manufacturer/redbull.png', 0),
+	(96, 8, 1, 'Sony', '', 'image/demo/manufacturer/sony.png', 0),
+	(97, 8, 1, 'Starbucks', '', 'image/demo/manufacturer/starbucks.png', 0),
+	(98, 8, 1, 'Nintendo', '', 'image/demo/manufacturer/nintendo.png', 0),
+	(102, 7, 1, 'iPhone 6', 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'image/demo/banners/iPhone6.jpg', 0),
+	(103, 7, 1, 'MacBookAir', '', 'image/demo/banners/MacBookAir.jpg', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}banner_image` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}event`;
@@ -122,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}information_description` (
 /*!40000 ALTER TABLE `{DB_PREFIX}information_description` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}information_description` (`information_id`, `language_id`, `title`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 	(3, 1, 'Privacy Policy', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', 'Privacy Policy', '', ''),
-	(4, 1, 'About Us', '&lt;p&gt;\r\n	About Us 2&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 170px;&quot; src=&quot;http://localhost/mdzGit/shift/public/image/catalog/logo.png&quot;&gt;&lt;/p&gt;&lt;p&gt;Test&lt;/p&gt;', 'About Us', '', ''),
+	(4, 1, 'About Us', '&lt;p&gt;\r\n	About Us 2&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 170px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/logo.png&quot;&gt;&lt;/p&gt;&lt;p&gt;Test&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 130px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/demo/manufacturer/disney.png&quot;&gt;&lt;/p&gt;&lt;p&gt;test&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 799.359px; height: 266.453px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/demo/banners/MacBookAir.jpg&quot;&gt;&lt;br&gt;&lt;/p&gt;', 'About Us', '', ''),
 	(5, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 	(6, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;', 'Delivery Information', '', ''),
 	(9, 1, 'New Information', '&lt;p&gt;Info Desc&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 170px;&quot; src=&quot;http://localhost/mdzGit/shift/public/image/catalog/logo.png&quot;&gt;&lt;br&gt;&lt;/p&gt;', 'New Info', '', '');
@@ -294,43 +292,42 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1296, 0, 'system', 'alias_distinct', 'information/information', 'information_id', 0),
 	(1297, 0, 'system', 'alias_distinct', 'content/post', 'post_id', 0),
 	(1298, 0, 'system', 'alias_multi', 'content/category', 'category_id', 0),
-	(1855, 0, 'system', 'setting', 'compression', '0', 0),
-	(1856, 0, 'system', 'setting', 'admin_language', 'en-gb', 0),
-	(1857, 0, 'system', 'setting', 'admin_limit', '25', 0),
-	(1858, 0, 'system', 'setting', 'mail_protocol', 'mail', 0),
-	(1859, 0, 'system', 'setting', 'mail_parameter', '', 0),
-	(1860, 0, 'system', 'setting', 'mail_smtp_hostname', '', 0),
-	(1861, 0, 'system', 'setting', 'mail_smtp_username', '', 0),
-	(1862, 0, 'system', 'setting', 'mail_smtp_password', '', 0),
-	(1863, 0, 'system', 'setting', 'mail_smtp_port', '25', 0),
-	(1864, 0, 'system', 'setting', 'mail_smtp_timeout', '5', 0),
-	(1865, 0, 'system', 'setting', 'error_display', '1', 0),
-	(1866, 0, 'system', 'setting', 'development', '1', 0),
 	(1879, 0, 'theme', 'base', 'status', '1', 0),
-	(1880, 0, 'system', 'site', 'name', 'Your Site', 0),
-	(1881, 0, 'system', 'site', 'url_host', 'https://localhost/mdzGit/shift/public/', 0),
-	(1882, 0, 'system', 'site', 'email', 'admin@example.com', 0),
-	(1883, 0, 'system', 'site', 'meta_title', 'Your Site', 0),
-	(1884, 0, 'system', 'site', 'meta_description', 'Meta Tag Description', 0),
-	(1885, 0, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
-	(1886, 0, 'system', 'site', 'logo', 'catalog/logo.png', 0),
-	(1887, 0, 'system', 'site', 'icon', 'catalog/favicon.png', 0),
-	(1888, 0, 'system', 'site', 'language', 'en-gb', 0),
-	(1889, 0, 'system', 'site', 'layout_id', '4', 0),
-	(1890, 0, 'system', 'site', 'maintenance', '0', 0),
-	(1891, 0, 'system', 'site', 'theme', 'base', 0),
-	(1904, 1, 'system', 'site', 'name', 'Site Name 1', 0),
-	(1905, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
-	(1906, 1, 'system', 'site', 'email', 'admin@example.com', 0),
-	(1907, 1, 'system', 'site', 'meta_title', 'Meta Site Name 1', 0),
-	(1908, 1, 'system', 'site', 'meta_description', 'Meta Tag Description', 0),
-	(1909, 1, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
-	(1910, 1, 'system', 'site', 'logo', 'https://localhost/mdzGit/shift/public/image/cache/no-image-100x100.png', 0),
-	(1911, 1, 'system', 'site', 'icon', 'https://localhost/mdzGit/shift/public/image/cache/no-image-100x100.png', 0),
-	(1912, 1, 'system', 'site', 'language', 'en-gb', 0),
-	(1913, 1, 'system', 'site', 'layout_id', '4', 0),
-	(1914, 1, 'system', 'site', 'maintenance', '1', 0),
-	(1915, 1, 'system', 'site', 'theme', 'base', 0);
+	(1949, 0, 'system', 'setting', 'compression', '0', 0),
+	(1950, 0, 'system', 'setting', 'admin_language', 'en-gb', 0),
+	(1951, 0, 'system', 'setting', 'admin_limit', '25', 0),
+	(1952, 0, 'system', 'setting', 'mail_engine', 'mail', 0),
+	(1953, 0, 'system', 'setting', 'mail_smtp_hostname', 'test', 0),
+	(1954, 0, 'system', 'setting', 'mail_smtp_username', 'test', 0),
+	(1955, 0, 'system', 'setting', 'mail_smtp_password', 'test', 0),
+	(1956, 0, 'system', 'setting', 'mail_smtp_port', '123456', 0),
+	(1957, 0, 'system', 'setting', 'mail_smtp_timeout', '300', 0),
+	(1958, 0, 'system', 'setting', 'error_display', '1', 0),
+	(1959, 0, 'system', 'setting', 'development', '1', 0),
+	(1960, 0, 'system', 'site', 'name', 'Your Site', 0),
+	(1961, 0, 'system', 'site', 'url_host', 'https://localhost/mdzGit/shift/public/', 0),
+	(1962, 0, 'system', 'site', 'email', 'admin@example.com', 0),
+	(1963, 0, 'system', 'site', 'meta_title', 'Your Site', 0),
+	(1964, 0, 'system', 'site', 'meta_description', 'Meta Tag Description', 0),
+	(1965, 0, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
+	(1966, 0, 'system', 'site', 'logo', 'image/logo.png', 0),
+	(1967, 0, 'system', 'site', 'icon', 'image/favicon.png', 0),
+	(1968, 0, 'system', 'site', 'language', 'en-gb', 0),
+	(1969, 0, 'system', 'site', 'layout_id', '4', 0),
+	(1970, 0, 'system', 'site', 'maintenance', '0', 0),
+	(1971, 0, 'system', 'site', 'theme', 'base', 0),
+	(1984, 1, 'system', 'site', 'name', 'Site Name 1', 0),
+	(1985, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
+	(1986, 1, 'system', 'site', 'email', 'admin@example.com', 0),
+	(1987, 1, 'system', 'site', 'meta_title', 'Meta Site Name 1', 0),
+	(1988, 1, 'system', 'site', 'meta_description', 'Meta Tag Description', 0),
+	(1989, 1, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
+	(1990, 1, 'system', 'site', 'logo', 'image/logo.png', 0),
+	(1991, 1, 'system', 'site', 'icon', 'image/favicon.png', 0),
+	(1992, 1, 'system', 'site', 'language', 'en-gb', 0),
+	(1993, 1, 'system', 'site', 'layout_id', '4', 0),
+	(1994, 1, 'system', 'site', 'maintenance', '1', 0),
+	(1995, 1, 'system', 'site', 'theme', 'base', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}site`;
@@ -381,7 +378,7 @@ INSERT INTO `{DB_PREFIX}url_alias` (`url_alias_id`, `site_id`, `language_id`, `r
 	(5, 0, 1, 'information/information', 'information_id', '6', 'delivery'),
 	(6, 0, 1, 'information/contact', '', '', 'contact-us'),
 	(7, 0, 1, 'common/home', '', '', '/'),
-	(12, 0, 1, 'information/information', 'information_id', '4', 'about-us');
+	(14, 0, 1, 'information/information', 'information_id', '4', 'about-us');
 /*!40000 ALTER TABLE `{DB_PREFIX}url_alias` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user`;
@@ -405,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `code`, `status`, `created`, `updated`, `last_login`) VALUES
-	(1, 1, 'admin@example.com', '$2y$10$hNWx9oo3LCUiVe058qT1/ORSbFdbym9h53vh3B.M2.heEpkfkCQFS', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-07-27 06:26:24');
+	(1, 1, 'admin@example.com', '$2y$10$J/TdkKAs7gKlLsfcwJSIjOw4/89JW2OlFf2icwqkL15AhT5.7SAEa', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-07-30 08:18:42');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user_group`;
