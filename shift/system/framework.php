@@ -159,7 +159,7 @@ class Framework
             'quality'       => 100,
             'path_image'    => DIR_MEDIA,
             'path_cache'    => DIR_MEDIA . 'cache/',
-            'url'           => $config->get('env.url_media') . 'cache/',
+            'url'           => $config->get('env.url_media'),
         ]));
 
         return $this;

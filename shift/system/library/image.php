@@ -11,6 +11,7 @@ class Image extends SimpleImage
     private array $config = [];
     protected $flags = [];
     protected $imageFile;
+    protected $cacheInfo = [];
 
     public function __construct(array $configuration = [])
     {
@@ -40,43 +41,132 @@ class Image extends SimpleImage
         return $this->config[$key] ?? $default;
     }
 
-    public function fromFile($file)
+    /**
+     * Shortcut to create thumbnail and return the URL.
+     *
+     * @param  string      $imageFile
+     * @param  int|null    $toWidth
+     * @param  int|null    $toHeight
+     * @param  string|null $cacheName
+     *
+     * @return string
+     */
+    public function construct(string $imageFile, int $toWidth = null, int $toHeight = null, string $cacheName = null): string
     {
-        $this->imageFile = $file;
+        $this->setCacheInfo($imageFile, $toWidth, $toHeight, $cacheName);
 
-        if (!is_file($file)) {
-            $file = $this->config['path_image'] . $file;
+        $result = $this->config['url'] . $this->cacheInfo['cacheUrlPath'];
+
+        if (!$this->isCacheValid()) {
+            $result = $this->fromFile($imageFile)->thumbnail($toWidth, $toHeight)->toCache($cacheName)->getUrl();
         }
 
-        return parent::fromFile($file);
+        // Reset for next cache
+        $this->cacheInfo = [];
+
+        return $result;
     }
 
-    public function getUrl()
+    /**
+     * Add file checker relative to the config path_image.
+     *
+     * @param  string $imageFile
+     */
+    public function fromFile($imageFile)
     {
-        $pathInfo  = pathinfo($this->imageFile);
-        $cacheFile = sprintf(
-            '%s-%sx%s.%s',
-            $pathInfo['dirname'] . '/' . $pathInfo['filename'],
-            $this->getWidth(),
-            $this->getHeight(),
-            $pathInfo['extension']
-        );
-        $cachePath = $this->config['path_cache'] . $cacheFile;
+        $this->imageFile = $imageFile;
 
+        if (!is_file($imageFile)) {
+            $imageFile = $this->config['path_image'] . $imageFile;
+        }
+
+        return parent::fromFile($imageFile);
+    }
+
+    /**
+     * Return the image cache URL.
+     *
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->config['url'] . $this->imageFile;
+    }
+
+        /**
+     * Save image to cache path.
+     *
+     * @param  string|null $cacheName
+     */
+    public function toCache(string $cacheName = null)
+    {
+        if (!isset($this->cacheInfo['cacheFilePath'])) {
+            $this->setCacheInfo($this->imageFile, cacheName: $cacheName);
+        }
+
+        if (!$this->isCacheValid()) {
+            $this->preparePath($this->cacheInfo['cacheFilePath']);
+            $this->toFile($this->cacheInfo['cacheFilePath'], null, $this->config['quality']);
+        }
+
+        // Update to the cache file image
+        $this->imageFile = $this->cacheInfo['cacheUrlPath'];
+
+        // Reset for next cache
+        $this->cacheInfo = [];
+
+        return $this;
+    }
+
+    public function clearCache()
+    {
+        if (file_exists($this->config['path_cache'])) {
+            $dirIterator = new \RecursiveDirectoryIterator($this->config['path_cache'], \FilesystemIterator::SKIP_DOTS);
+            $nodes = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+            foreach ($nodes as $node) {
+                if ($node->getFileName() == 'index.html') {
+                    continue;
+                }
+
+                $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
+            }
+        }
+    }
+
+    protected function setCacheInfo(string $imageFile, int $toWidth = null, int $toHeight = null, string $cacheName = null)
+    {
+        $this->cacheInfo = array_merge($this->cacheInfo, pathinfo($imageFile));
+        $this->cacheInfo['imageFile'] = $imageFile;
+        $this->cacheInfo['cacheFile'] = strtr('{filepath}-{width}x{height}.{ext}', [
+            '{filepath}' => $this->cacheInfo['dirname'] . '/' . ($cacheName ?: $this->cacheInfo['filename']),
+            '{width}'    => ($toWidth ?: $this->getWidth()),
+            '{height}'   => ($toHeight ?: $this->getHeight()),
+            '{ext}'      => $this->cacheInfo['extension'],
+        ]);
+        $this->cacheInfo['cacheFilePath'] = $this->config['path_cache'] . $this->cacheInfo['cacheFile'];
+        $this->cacheInfo['cacheUrlPath'] = 'cache/' . $this->cacheInfo['cacheFile'];
+    }
+
+    protected function isCacheValid()
+    {
         if (
-            !is_file($cachePath)
-            || filectime($this->config['path_image'] . $this->imageFile) > filectime($cachePath)
-            || time() - filectime($cachePath) > (60 * 60)
+            !is_file($this->cacheInfo['cacheFilePath'])
+            || filectime($this->config['path_image'] . $this->cacheInfo['imageFile']) > filectime($this->cacheInfo['cacheFilePath'])
+            || (time() - filectime($this->cacheInfo['cacheFilePath'])) > (60 * 60)
         ) {
-            $this->preparePath($cachePath);
-            $this->toFile($cachePath, null, $this->config['quality']);
+            return false;
         }
 
-
-        return $this->config['url'] . $cacheFile;
+        return true;
     }
 
-    protected function preparePath($image)
+    /**
+     * Check and create image path.
+     *
+     * @param  string $image
+     */
+    protected function preparePath(string $image)
     {
         $path_image = str_replace('/', DS, dirname($image));
 
