@@ -44,8 +44,8 @@ class Language extends Core\Bags
         }
 
         $paths = array_unique([
-            DIR_APPLICATION . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
-            DIR_APPLICATION . 'language/' . $this->get('_param.active') . '/' . $path . '.php'
+            PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
+            PATH_APP . 'language/' . $this->get('_param.active') . '/' . $path . '.php'
         ]);
 
         $data = [];

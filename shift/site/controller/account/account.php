@@ -58,7 +58,7 @@ class Account extends Mvc\Controller
 
         $data['credit_cards'] = array();
 
-        $files = glob(DIR_APPLICATION . 'controller/extension/credit_card/*.php');
+        $files = glob(PATH_APP . 'controller/extension/credit_card/*.php');
 
         foreach ($files as $file) {
             $code = basename($file, '.php');

@@ -28,15 +28,15 @@ class Step3 extends Mvc\Controller
             $output .= 'define(\'URL_APP\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// DIR' . "\n";
-            $output .= 'define(\'DIR_APPLICATION\', \'' . PATH_SHIFT . 'catalog/\');' . "\n";
-            $output .= 'define(\'DIR_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
-            $output .= 'define(\'DIR_IMAGE\', \'' . PATH_SHIFT . 'image/\');' . "\n";
-            $output .= 'define(\'DIR_LANGUAGE\', \'' . PATH_SHIFT . 'catalog/language/\');' . "\n";
-            $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'catalog/view/theme/\');' . "\n";
+            $output .= 'define(\'PATH_APP\', \'' . PATH_SHIFT . 'catalog/\');' . "\n";
+            $output .= 'define(\'PATH_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
+            $output .= 'define(\'DIR_MEDIA\', \'' . PATH_SHIFT . 'media/\');' . "\n";
+            $output .= 'define(\'PATH_LANGUAGE\', \'' . PATH_SHIFT . 'catalog/language/\');' . "\n";
+            $output .= 'define(\'PATH_TEMPLATE\', \'' . PATH_SHIFT . 'catalog/view/theme/\');' . "\n";
             // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
-            $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
+            // $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
             // $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
-            $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n\n";
+            // $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
             $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->get('post.db_driver')) . '\');' . "\n";
@@ -64,16 +64,16 @@ class Step3 extends Mvc\Controller
             $output .= 'define(\'URL_SITE\', \'' . HTTP_SHIFT . '\');' . "\n\n";
 
             $output .= '// DIR' . "\n";
-            $output .= 'define(\'DIR_APPLICATION\', \'' . PATH_SHIFT . 'admin/\');' . "\n";
-            $output .= 'define(\'DIR_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
-            $output .= 'define(\'DIR_IMAGE\', \'' . PATH_SHIFT . 'image/\');' . "\n";
-            $output .= 'define(\'DIR_LANGUAGE\', \'' . PATH_SHIFT . 'admin/language/\');' . "\n";
-            $output .= 'define(\'DIR_TEMPLATE\', \'' . PATH_SHIFT . 'admin/view/template/\');' . "\n";
+            $output .= 'define(\'PATH_APP\', \'' . PATH_SHIFT . 'admin/\');' . "\n";
+            $output .= 'define(\'PATH_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
+            $output .= 'define(\'DIR_MEDIA\', \'' . PATH_SHIFT . 'media/\');' . "\n";
+            $output .= 'define(\'PATH_LANGUAGE\', \'' . PATH_SHIFT . 'admin/language/\');' . "\n";
+            $output .= 'define(\'PATH_TEMPLATE\', \'' . PATH_SHIFT . 'admin/view/template/\');' . "\n";
             // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
-            $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
+            // $output .= 'define(\'DIR_CACHE\', \'' . PATH_SHIFT . 'system/storage/cache/\');' . "\n";
             // $output .= 'define(\'DIR_LOGS\', \'' . PATH_SHIFT . 'system/storage/logs/\');' . "\n";
-            $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n";
-            $output .= 'define(\'DIR_SITE\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
+            // $output .= 'define(\'DIR_UPLOAD\', \'' . PATH_SHIFT . 'system/storage/upload/\');' . "\n";
+            $output .= 'define(\'PATH_SITE\', \'' . PATH_SHIFT . 'catalog/\');' . "\n\n";
 
             $output .= '// DB' . "\n";
             $output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->get('post.db_driver')) . '\');' . "\n";

@@ -11,6 +11,8 @@ class Debug extends Mvc\Controller
 {
     public function index()
     {
+        echo '<a href="http://localhost/mdzGit/shift/public/" target="_blank">Home</a>';
+
         d(
             $userDefinedConstants = get_defined_constants(true)['user'],
             $_SESSION === $this->session->all(),
@@ -22,11 +24,9 @@ class Debug extends Mvc\Controller
         // $mail = $this->mail->getInstance();
         // d($this->mail, $mail);
 
-        // $this->testHelperArr();
+        // $this->testImage();
         // $this->testCache();
-        $this->testImage();
-
-        $this->response->setOutput('<a href="http://localhost/mdzGit/shift/public/" target="_blank">Home</a>');
+        // $this->testHelperArr();
     }
 
     private function testImage()

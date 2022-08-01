@@ -71,7 +71,7 @@ class Upload extends Mvc\Controller
         if (!$json) {
             $file = $filename . '.' . $this->secure->token();
 
-            move_uploaded_file($this->request->get('files.file.tmp_name'), DIR_UPLOAD . $file);
+            move_uploaded_file($this->request->get('files.file.tmp_name'), PATH_STORAGE . 'upload' . DS . $file);
 
             // Hide the uploaded file name so people can not link to it directly.
             $this->load->model('tool/upload');

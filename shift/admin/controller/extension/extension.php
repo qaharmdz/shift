@@ -41,7 +41,7 @@ class Extension extends Mvc\Controller
 
         $data['categories'] = array();
 
-        $files = glob(DIR_APPLICATION . 'controller/extension/extension/*.php', GLOB_BRACE);
+        $files = glob(PATH_APP . 'controller/extension/extension/*.php', GLOB_BRACE);
 
         foreach ($files as $file) {
             $extension = basename($file, '.php');
@@ -49,7 +49,7 @@ class Extension extends Mvc\Controller
             $this->load->language('extension/extension/' . $extension);
 
             if ($this->user->hasPermission('access', 'extension/extension/' . $extension)) {
-                $files = glob(DIR_APPLICATION . 'controller/{extension/' . $extension . ',' . $extension . '}/*.php', GLOB_BRACE);
+                $files = glob(PATH_APP . 'controller/{extension/' . $extension . ',' . $extension . '}/*.php', GLOB_BRACE);
 
                 $data['categories'][] = array(
                     'code' => $extension,

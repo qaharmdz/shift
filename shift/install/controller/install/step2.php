@@ -107,11 +107,11 @@ class Step2 extends Mvc\Controller
         $data['image'] = PATH_SHIFT . 'image';
         $data['image_cache'] = PATH_SHIFT . 'image/cache';
         $data['image_catalog'] = PATH_SHIFT . 'image/catalog';
-        $data['cache'] = DIR_SYSTEM . 'storage/cache';
-        $data['logs'] = DIR_SYSTEM . 'storage/logs';
-        $data['download'] = DIR_SYSTEM . 'storage/download';
-        $data['upload'] = DIR_SYSTEM . 'storage/upload';
-        $data['modification'] = DIR_SYSTEM . 'storage/modification';
+        $data['cache'] = PATH_SYSTEM . 'storage/cache';
+        $data['logs'] = PATH_SYSTEM . 'storage/logs';
+        $data['download'] = PATH_SYSTEM . 'storage/download';
+        $data['upload'] = PATH_SYSTEM . 'storage/upload';
+        $data['modification'] = PATH_SYSTEM . 'storage/modification';
 
         $data['back'] = $this->router->url('install/step_1');
 
@@ -192,15 +192,15 @@ class Step2 extends Mvc\Controller
             $this->error['warning'] = $this->language->get('error_image_catalog');
         }
 
-        if (!is_writable(DIR_SYSTEM . 'storage/cache')) {
+        if (!is_writable(PATH_SYSTEM . 'storage/cache')) {
             $this->error['warning'] = $this->language->get('error_cache');
         }
 
-        if (!is_writable(DIR_SYSTEM . 'storage/logs')) {
+        if (!is_writable(PATH_SYSTEM . 'storage/logs')) {
             $this->error['warning'] = $this->language->get('error_log');
         }
 
-        if (!is_writable(DIR_SYSTEM . 'storage/upload')) {
+        if (!is_writable(PATH_SYSTEM . 'storage/upload')) {
             $this->error['warning'] = $this->language->get('error_upload');
         }
 

@@ -85,7 +85,7 @@ class Theme extends Mvc\Controller
         $extensions = $this->model_extension_extension->getInstalled('theme');
 
         foreach ($extensions as $key => $value) {
-            if (!is_file(DIR_APPLICATION . 'controller/extension/theme/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/theme/' . $value . '.php')) {
+            if (!is_file(PATH_APP . 'controller/extension/theme/' . $value . '.php') && !is_file(PATH_APP . 'controller/theme/' . $value . '.php')) {
                 $this->model_extension_extension->uninstall('theme', $value);
                 unset($extensions[$key]);
             }
@@ -98,7 +98,7 @@ class Theme extends Mvc\Controller
 
         $data['extensions'] = array();
 
-        $files = glob(DIR_APPLICATION . 'controller/extension/theme/*.php', GLOB_BRACE);
+        $files = glob(PATH_APP . 'controller/extension/theme/*.php', GLOB_BRACE);
 
         if ($files) {
             foreach ($files as $file) {

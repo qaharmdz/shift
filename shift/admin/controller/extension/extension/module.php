@@ -133,7 +133,7 @@ class Module extends Mvc\Controller
         $extensions = $this->model_extension_extension->getInstalled('module');
 
         foreach ($extensions as $key => $value) {
-            if (!is_file(DIR_APPLICATION . 'controller/extension/module/' . $value . '.php') && !is_file(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
+            if (!is_file(PATH_APP . 'controller/extension/module/' . $value . '.php') && !is_file(PATH_APP . 'controller/module/' . $value . '.php')) {
                 $this->model_extension_extension->uninstall('module', $value);
 
                 unset($extensions[$key]);
@@ -144,7 +144,7 @@ class Module extends Mvc\Controller
 
         $data['extensions'] = array();
 
-        $files = glob(DIR_APPLICATION . 'controller/extension/module/*.php', GLOB_BRACE);
+        $files = glob(PATH_APP . 'controller/extension/module/*.php', GLOB_BRACE);
 
         if ($files) {
             foreach ($files as $file) {

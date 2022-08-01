@@ -49,7 +49,7 @@ class ColumnLeft extends Mvc\Controller
 
     public function language()
     {
-        if ($this->request->has('post.code') && is_dir(DIR_LANGUAGE . basename($this->request->get('post.code')))) {
+        if ($this->request->has('post.code') && is_dir(PATH_LANGUAGE . basename($this->request->get('post.code')))) {
             $this->session->set('language', $this->request->get('post.code'));
         }
 

@@ -47,12 +47,6 @@ class Framework
 
     public function init(string $appFolder, array $rootConfig = []): Framework
     {
-        /**
-         * TODO: config prefix:
-         * v root: Setting from the config file and system/config folder
-         * v env: Changeable setting represent "current" environment, ex: site_id, lang_id, lang_code
-         * - system: Setting from database
-         */
         //=== Config
         $config = new Core\Config();
         $config->set('root.version', VERSION);
@@ -147,7 +141,7 @@ class Framework
 
         // Cache
         $this->set('cache', new Library\Cache($config->get('root.cache_driver'), [
-            'path'       => DIR_CACHE,
+            'path'       => PATH_STORAGE . 'cache' . DS,
             'defaultTtl' => $config->get('root.cache_ttl'),
         ]));
 

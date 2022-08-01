@@ -29,7 +29,7 @@ class Dashboard extends Mvc\Controller
         );
 
         // Check install directory exists
-        if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
+        if (is_dir(dirname(PATH_APP) . '/install')) {
             $data['error_install'] = $this->language->get('error_install');
         } else {
             $data['error_install'] = '';

@@ -19,7 +19,7 @@ class Install extends Mvc\Model
             (int)$data['db_port']
         );
 
-        $file = DIR_APPLICATION . 'schema.sql';
+        $file = PATH_APP . 'schema.sql';
 
         if (!file_exists($file)) {
             exit('Could not load sql file: ' . $file);

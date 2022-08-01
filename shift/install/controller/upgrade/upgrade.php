@@ -32,7 +32,7 @@ class Upgrade extends Mvc\Controller
 
         $data['site'] = HTTP_SHIFT;
 
-        $data['total'] = count(glob(DIR_APPLICATION . 'model/upgrade/*.php'));
+        $data['total'] = count(glob(PATH_APP . 'model/upgrade/*.php'));
 
         $data['header'] = $this->load->controller('common/header');
         $data['footer'] = $this->load->controller('common/footer');
@@ -53,7 +53,7 @@ class Upgrade extends Mvc\Controller
             $step = 1;
         }
 
-        $files = glob(DIR_APPLICATION . 'model/upgrade/*.php');
+        $files = glob(PATH_APP . 'model/upgrade/*.php');
 
         if (isset($files[$step - 1])) {
             // Get the upgrade file

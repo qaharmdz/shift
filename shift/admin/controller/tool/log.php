@@ -44,7 +44,7 @@ class Log extends Mvc\Controller
 
         $data['log'] = '';
 
-        $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
+        $file = PATH_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
         if (file_exists($file)) {
             $size = filesize($file);
@@ -86,7 +86,7 @@ class Log extends Mvc\Controller
     {
         $this->load->language('tool/log');
 
-        $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
+        $file = PATH_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
         if (file_exists($file) && filesize($file) > 0) {
             $this->response->download(
@@ -107,7 +107,7 @@ class Log extends Mvc\Controller
         if (!$this->user->hasPermission('modify', 'tool/log')) {
             $this->session->set('flash.error', $this->language->get('error_permission'));
         } else {
-            $file = DIR_STORAGE . 'logs/' . $this->log->getConfig('logfile');
+            $file = PATH_STORAGE . 'logs/' . $this->log->getConfig('logfile');
 
             $handle = fopen($file, 'w+');
 

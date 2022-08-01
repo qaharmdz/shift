@@ -86,7 +86,7 @@ class Dashboard extends Mvc\Controller
         $extensions = $this->model_extension_extension->getInstalled('dashboard');
 
         foreach ($extensions as $key => $value) {
-            if (!is_file(DIR_APPLICATION . 'controller/extension/dashboard/' . $value . '.php')) {
+            if (!is_file(PATH_APP . 'controller/extension/dashboard/' . $value . '.php')) {
                 $this->model_extension_extension->uninstall('dashboard', $value);
 
                 unset($extensions[$key]);
@@ -95,7 +95,7 @@ class Dashboard extends Mvc\Controller
 
         $data['extensions'] = array();
 
-        $files = glob(DIR_APPLICATION . 'controller/extension/dashboard/*.php', GLOB_BRACE);
+        $files = glob(PATH_APP . 'controller/extension/dashboard/*.php', GLOB_BRACE);
 
         if ($files) {
             foreach ($files as $file) {

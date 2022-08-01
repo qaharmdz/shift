@@ -22,7 +22,7 @@ class Dispatch
         $method    = $this->method;
 
         while ($parts) {
-            $file = DIR_APPLICATION . implode('/', $parts) . '.php';
+            $file = PATH_APP . implode('/', $parts) . '.php';
 
             if (is_file($file)) {
                 $this->file  = $file;

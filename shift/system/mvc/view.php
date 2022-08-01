@@ -12,7 +12,7 @@ class View
             $template = 'base/template/' . $template;
         }
 
-        $file = DIR_TEMPLATE . $template;
+        $file = PATH_TEMPLATE . $template;
 
         if (is_file($file)) {
             extract($vars);

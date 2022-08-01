@@ -354,7 +354,7 @@ class UserPermission extends Mvc\Controller
         $files = array();
 
         // Make path into an array
-        $path = array(DIR_APPLICATION . 'controller/*');
+        $path = array(PATH_APP . 'controller/*');
 
         // While the path array is still populated keep looping through
         while (count($path) != 0) {
@@ -377,7 +377,7 @@ class UserPermission extends Mvc\Controller
         sort($files);
 
         foreach ($files as $file) {
-            $controller = substr($file, strlen(DIR_APPLICATION . 'controller/'));
+            $controller = substr($file, strlen(PATH_APP . 'controller/'));
 
             $permission = substr($controller, 0, strrpos($controller, '.'));
 

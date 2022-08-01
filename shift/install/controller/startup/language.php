@@ -13,7 +13,7 @@ class Language extends Mvc\Controller
         // Default language code
         $code = $this->config->get('language_default');
 
-        $languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
+        $languages = glob(PATH_LANGUAGE . '*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
             $languages[] = basename($language);
@@ -30,7 +30,7 @@ class Language extends Mvc\Controller
             }
         }
 
-        if ($this->session->isEmpty('language') || !is_dir(DIR_LANGUAGE . basename($this->session->get('language')))) {
+        if ($this->session->isEmpty('language') || !is_dir(PATH_LANGUAGE . basename($this->session->get('language')))) {
             $this->session->set('language', $code);
         }
 

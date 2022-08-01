@@ -8,12 +8,12 @@ if (is_file('config.php')) {
 }
 
 // Install
-if (!defined('DIR_APPLICATION')) {
+if (!defined('PATH_APP')) {
     header('Location: ../install/index.php');
     exit;
 }
 
 // Startup
-require_once(DIR_SYSTEM . 'startup.php');
+require_once(PATH_SYSTEM . 'startup.php');
 
 start('admin');

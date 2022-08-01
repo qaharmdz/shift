@@ -8,7 +8,7 @@ class Config extends Bags
 {
     public function load(string $filename, string $group = '')
     {
-        $file = DIR_SYSTEM . 'config' . DS . $filename . '.php';
+        $file = PATH_SYSTEM . 'config' . DS . $filename . '.php';
 
         $data = [];
         if (is_file($file)) {

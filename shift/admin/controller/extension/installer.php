@@ -43,7 +43,7 @@ class Installer extends Mvc\Controller
 
         $data['token'] = $this->session->get('token');
 
-        $directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
+        $directories = glob(PATH_STORAGE . 'upload' . DS . 'temp-*', GLOB_ONLYDIR);
 
         if ($directories) {
             $data['error_warning'] = $this->language->get('error_temporary');
@@ -87,8 +87,8 @@ class Installer extends Mvc\Controller
             // If no temp directory exists create it
             $path = 'temp-' . $this->secure->token();
 
-            if (!is_dir(DIR_UPLOAD . $path)) {
-                mkdir(DIR_UPLOAD . $path, 0777);
+            if (!is_dir(PATH_STORAGE . 'upload' . DS . $path)) {
+                mkdir(PATH_STORAGE . 'upload' . DS . $path, 0777);
             }
 
             // Set the steps required for installation
@@ -96,7 +96,7 @@ class Installer extends Mvc\Controller
             $json['overwrite'] = array();
 
             if (strrchr($this->request->get('files.file.name'), '.') == '.xml') {
-                $file = DIR_UPLOAD . $path . '/install.xml';
+                $file = PATH_STORAGE . 'upload' . DS . $path . '/install.xml';
 
                 // If xml file copy it to the temporary directory
                 move_uploaded_file($this->request->get('files.file.tmp_name'), $file);
@@ -121,7 +121,7 @@ class Installer extends Mvc\Controller
 
             // If zip file copy it to the temp directory
             if (strrchr($this->request->get('files.file.name'), '.') == '.zip') {
-                $file = DIR_UPLOAD . $path . '/upload.zip';
+                $file = PATH_STORAGE . 'upload' . DS . $path . '/upload.zip';
 
                 move_uploaded_file($this->request->get('files.file.tmp_name'), $file);
 
@@ -175,14 +175,14 @@ class Installer extends Mvc\Controller
                             }
 
                             // Compare admin files
-                            $file = DIR_APPLICATION . substr($zip_name, 13);
+                            $file = PATH_APP . substr($zip_name, 13);
 
                             if (is_file($file) && substr($zip_name, 0, 13) == 'upload/admin/') {
                                 $json['overwrite'][] = substr($zip_name, 7);
                             }
 
                             // Compare catalog files
-                            $file = DIR_SITE . substr($zip_name, 15);
+                            $file = PATH_SITE . substr($zip_name, 15);
 
                             if (is_file($file) && substr($zip_name, 0, 15) == 'upload/catalog/') {
                                 $json['overwrite'][] = substr($zip_name, 7);
@@ -196,7 +196,7 @@ class Installer extends Mvc\Controller
                             }
 
                             // Compare system files
-                            $file = DIR_SYSTEM . substr($zip_name, 14);
+                            $file = PATH_SYSTEM . substr($zip_name, 14);
 
                             if (is_file($file) && substr($zip_name, 0, 14) == 'upload/system/') {
                                 $json['overwrite'][] = substr($zip_name, 7);
@@ -234,9 +234,9 @@ class Installer extends Mvc\Controller
         }
 
         // Sanitize the filename
-        $file = DIR_UPLOAD . $this->request->get('post.path', '') . '/upload.zip';
+        $file = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/upload.zip';
 
-        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
             $json['error'] = $this->language->get('error_file');
         }
 
@@ -245,7 +245,7 @@ class Installer extends Mvc\Controller
             $zip = new ZipArchive();
 
             if ($zip->open($file)) {
-                $zip->extractTo(DIR_UPLOAD . $this->request->get('post.path', ''));
+                $zip->extractTo(PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', ''));
                 $zip->close();
             } else {
                 $json['error'] = $this->language->get('error_unzip');
@@ -273,9 +273,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_ftp_status');
         }
 
-        $directory = DIR_UPLOAD . $this->request->get('post.path', '') . '/upload/';
+        $directory = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/upload/';
 
-        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
             $json['error'] = $this->language->get('error_directory');
         }
 
@@ -318,11 +318,11 @@ class Installer extends Mvc\Controller
                             // Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
                             // the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
                             if (substr($destination, 0, 5) == 'admin') {
-                                $destination = basename(DIR_APPLICATION) . substr($destination, 5);
+                                $destination = basename(PATH_APP) . substr($destination, 5);
                             }
 
                             if (substr($destination, 0, 7) == 'catalog') {
-                                $destination = basename(DIR_SITE) . substr($destination, 7);
+                                $destination = basename(PATH_SITE) . substr($destination, 7);
                             }
 
                             if (substr($destination, 0, 5) == 'image') {
@@ -330,7 +330,7 @@ class Installer extends Mvc\Controller
                             }
 
                             if (substr($destination, 0, 6) == 'system') {
-                                $destination = basename(DIR_SYSTEM) . substr($destination, 6);
+                                $destination = basename(PATH_SYSTEM) . substr($destination, 6);
                             }
 
                             if (is_dir($file)) {
@@ -382,9 +382,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $file = DIR_UPLOAD . $this->request->get('post.path', '') . '/install.sql';
+        $file = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/install.sql';
 
-        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
             $json['error'] = $this->language->get('error_file');
         }
 
@@ -440,9 +440,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $file = DIR_UPLOAD . $this->request->get('post.path', '') . '/install.php';
+        $file = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/install.php';
 
-        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
             $json['error'] = $this->language->get('error_file');
         }
 
@@ -467,9 +467,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $directory = DIR_UPLOAD . $this->request->get('post.path', '');
+        $directory = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '');
 
-        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(DIR_UPLOAD)) != DIR_UPLOAD) {
+        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
             $json['error'] = $this->language->get('error_directory');
         }
 
@@ -526,7 +526,7 @@ class Installer extends Mvc\Controller
         }
 
         if (!$json) {
-            $directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
+            $directories = glob(PATH_STORAGE . 'upload' . DS . 'temp-*', GLOB_ONLYDIR);
 
             if ($directories) {
                 foreach ($directories as $directory) {
