@@ -35,7 +35,7 @@ class Header extends Mvc\Controller
 
         $data['logo'] = '';
         if (is_file(DIR_MEDIA . $this->config->get('system.site.logo'))) {
-            $data['logo'] = $data['base'] . 'image/' . $this->config->get('system.site.logo');
+            $data['logo'] = $this->config->get('env.url_media') . $this->config->get('system.site.logo');
         }
 
         $this->load->language('common/header');
