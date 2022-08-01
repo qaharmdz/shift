@@ -344,19 +344,6 @@ INSERT INTO `{DB_PREFIX}site` (`site_id`, `name`, `url_host`) VALUES
 	(1, 'Site Name 1', 'https://example.com/');
 /*!40000 ALTER TABLE `{DB_PREFIX}site` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `{DB_PREFIX}upload`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}upload` (
-  `upload_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `filename` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `code` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `date_added` datetime DEFAULT NULL,
-  PRIMARY KEY (`upload_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
-/*!40000 ALTER TABLE `{DB_PREFIX}upload` DISABLE KEYS */;
-/*!40000 ALTER TABLE `{DB_PREFIX}upload` ENABLE KEYS */;
-
 DROP TABLE IF EXISTS `{DB_PREFIX}url_alias`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}url_alias` (
   `url_alias_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -402,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `code`, `status`, `created`, `updated`, `last_login`) VALUES
-	(1, 1, 'admin@example.com', '$2y$10$J/TdkKAs7gKlLsfcwJSIjOw4/89JW2OlFf2icwqkL15AhT5.7SAEa', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-07-30 08:18:42');
+	(1, 1, 'admin@example.com', '$2y$10$m0eY.aYEMndUDAbmzRrupeZI0qTSUa4WaUiUjbj6h32TQ/miXuzFC', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-08-01 17:03:02');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user_group`;

@@ -169,14 +169,6 @@ class ColumnLeft extends Mvc\Controller
             // Tools
             $tool = array();
 
-            if ($this->user->hasPermission('access', 'tool/upload')) {
-                $tool[] = array(
-                    'name'     => $this->language->get('text_upload'),
-                    'href'     => $this->router->url('tool/upload', 'token=' . $this->session->get('token')),
-                    'children' => array()
-                );
-            }
-
             if ($this->user->hasPermission('access', 'tool/backup')) {
                 $tool[] = array(
                     'name'     => $this->language->get('text_backup'),
