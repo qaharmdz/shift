@@ -29,7 +29,7 @@ class Document
      */
     public function addMeta(string $attribute, string $value, string $content)
     {
-        $this->data['meta'][] = [
+        $this->data['meta'][$attribute . '-' . $value] = [
             'attribute' => $attribute,
             'value'     => $value,
             'content'   => $content
@@ -46,7 +46,7 @@ class Document
      */
     public function addLink(string $rel, string $href, string $hreflang = '', string $type = '', string $media = '')
     {
-        $this->data['link'][] = [
+        $this->data['link'][$href] = [
             'rel'       => $rel,
             'href'      => $href,
             'hreflang'  => $hreflang,
@@ -62,7 +62,7 @@ class Document
 
     public function addStyle(string $href, string $rel = 'stylesheet', string $media = 'screen')
     {
-        $this->data['style'][] = [
+        $this->data['style'][$href] = [
             'href'  => $href,
             'rel'   => $rel,
             'media' => $media
@@ -80,7 +80,7 @@ class Document
      */
     public function addScript(string $href, string $placement = 'header')
     {
-        $this->data[$placement]['script'][] = $href;
+        $this->data[$placement]['script'][$href] = $href;
     }
 
     public function getScripts(string $placement = 'header')
