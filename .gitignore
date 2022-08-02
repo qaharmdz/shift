@@ -10,8 +10,8 @@ _dev/
 shift/config.php
 shift/admin/config.php
 
-shift/storage/*/*
-!shift/storage/*/index.html
+shift/temp/*/*
+!shift/temp/*/index.html
 
 public/media/cache/*
 !public/media/cache/index.html
