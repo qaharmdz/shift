@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fixed library/document duplicate meta, link, style and script.
+
 ## [v0.2.0] - 2022-07-31
 ### Added
 - PSR-4 lowercase path.

@@ -43,7 +43,7 @@ class Installer extends Mvc\Controller
 
         $data['token'] = $this->session->get('token');
 
-        $directories = glob(PATH_STORAGE . 'upload' . DS . 'temp-*', GLOB_ONLYDIR);
+        $directories = glob(PATH_TEMP . 'upload' . DS . 'temp-*', GLOB_ONLYDIR);
 
         if ($directories) {
             $data['error_warning'] = $this->language->get('error_temporary');
@@ -87,8 +87,8 @@ class Installer extends Mvc\Controller
             // If no temp directory exists create it
             $path = 'temp-' . $this->secure->token();
 
-            if (!is_dir(PATH_STORAGE . 'upload' . DS . $path)) {
-                mkdir(PATH_STORAGE . 'upload' . DS . $path, 0777);
+            if (!is_dir(PATH_TEMP . 'upload' . DS . $path)) {
+                mkdir(PATH_TEMP . 'upload' . DS . $path, 0777);
             }
 
             // Set the steps required for installation
@@ -96,7 +96,7 @@ class Installer extends Mvc\Controller
             $json['overwrite'] = array();
 
             if (strrchr($this->request->get('files.file.name'), '.') == '.xml') {
-                $file = PATH_STORAGE . 'upload' . DS . $path . '/install.xml';
+                $file = PATH_TEMP . 'upload' . DS . $path . '/install.xml';
 
                 // If xml file copy it to the temporary directory
                 move_uploaded_file($this->request->get('files.file.tmp_name'), $file);
@@ -121,7 +121,7 @@ class Installer extends Mvc\Controller
 
             // If zip file copy it to the temp directory
             if (strrchr($this->request->get('files.file.name'), '.') == '.zip') {
-                $file = PATH_STORAGE . 'upload' . DS . $path . '/upload.zip';
+                $file = PATH_TEMP . 'upload' . DS . $path . '/upload.zip';
 
                 move_uploaded_file($this->request->get('files.file.tmp_name'), $file);
 
@@ -234,9 +234,9 @@ class Installer extends Mvc\Controller
         }
 
         // Sanitize the filename
-        $file = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/upload.zip';
+        $file = PATH_TEMP . 'upload' . DS . $this->request->get('post.path', '') . '/upload.zip';
 
-        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
+        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_TEMP . 'upload' . DS)) != PATH_TEMP . 'upload' . DS) {
             $json['error'] = $this->language->get('error_file');
         }
 
@@ -245,7 +245,7 @@ class Installer extends Mvc\Controller
             $zip = new ZipArchive();
 
             if ($zip->open($file)) {
-                $zip->extractTo(PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', ''));
+                $zip->extractTo(PATH_TEMP . 'upload' . DS . $this->request->get('post.path', ''));
                 $zip->close();
             } else {
                 $json['error'] = $this->language->get('error_unzip');
@@ -273,9 +273,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_ftp_status');
         }
 
-        $directory = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/upload/';
+        $directory = PATH_TEMP . 'upload' . DS . $this->request->get('post.path', '') . '/upload/';
 
-        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
+        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(PATH_TEMP . 'upload' . DS)) != PATH_TEMP . 'upload' . DS) {
             $json['error'] = $this->language->get('error_directory');
         }
 
@@ -382,9 +382,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $file = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/install.sql';
+        $file = PATH_TEMP . 'upload' . DS . $this->request->get('post.path', '') . '/install.sql';
 
-        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
+        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_TEMP . 'upload' . DS)) != PATH_TEMP . 'upload' . DS) {
             $json['error'] = $this->language->get('error_file');
         }
 
@@ -440,9 +440,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $file = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '') . '/install.php';
+        $file = PATH_TEMP . 'upload' . DS . $this->request->get('post.path', '') . '/install.php';
 
-        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
+        if (!is_file($file) || substr(str_replace('\\', DS, realpath($file)), 0, strlen(PATH_TEMP . 'upload' . DS)) != PATH_TEMP . 'upload' . DS) {
             $json['error'] = $this->language->get('error_file');
         }
 
@@ -467,9 +467,9 @@ class Installer extends Mvc\Controller
             $json['error'] = $this->language->get('error_permission');
         }
 
-        $directory = PATH_STORAGE . 'upload' . DS . $this->request->get('post.path', '');
+        $directory = PATH_TEMP . 'upload' . DS . $this->request->get('post.path', '');
 
-        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(PATH_STORAGE . 'upload' . DS)) != PATH_STORAGE . 'upload' . DS) {
+        if (!is_dir($directory) || substr(str_replace('\\', DS, realpath($directory)), 0, strlen(PATH_TEMP . 'upload' . DS)) != PATH_TEMP . 'upload' . DS) {
             $json['error'] = $this->language->get('error_directory');
         }
 
@@ -526,7 +526,7 @@ class Installer extends Mvc\Controller
         }
 
         if (!$json) {
-            $directories = glob(PATH_STORAGE . 'upload' . DS . 'temp-*', GLOB_ONLYDIR);
+            $directories = glob(PATH_TEMP . 'upload' . DS . 'temp-*', GLOB_ONLYDIR);
 
             if ($directories) {
                 foreach ($directories as $directory) {

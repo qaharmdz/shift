@@ -141,7 +141,7 @@ class Framework
 
         // Cache
         $this->set('cache', new Library\Cache($config->get('root.cache_driver'), [
-            'path'       => PATH_STORAGE . 'cache' . DS,
+            'path'       => PATH_TEMP . 'cache' . DS,
             'defaultTtl' => $config->get('root.cache_ttl'),
         ]));
 

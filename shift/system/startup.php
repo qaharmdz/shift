@@ -59,7 +59,7 @@ if (APP_FOLDER == 'site') {
 }
 
 define('PATH_SYSTEM', PATH_SHIFT . 'system' . DS);
-define('PATH_STORAGE', PATH_SHIFT . 'storage' . DS);
+define('PATH_TEMP', PATH_SHIFT . 'storage' . DS);
 define('DIR_MEDIA', PATH_PUBLIC . 'media' . DS);
 
 // DB
