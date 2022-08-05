@@ -106,17 +106,15 @@ class Framework
         $this->set('event', $event);
 
         // Event Register
-        if ($config->has('root.action_event')) {
-            foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
-                $event->addListener($eventName, new Http\Dispatch($listenerRoute));
-            }
+        foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
+            $event->addListener($eventName, new Http\Dispatch($listenerRoute));
         }
 
         // Loader
         $this->set('load', new Core\Loader($this->registry));
 
         // View
-        $this->set('view', new Mvc\View());
+        $this->set('view', new Mvc\View($config->get('root.template')));
 
         return $this;
     }

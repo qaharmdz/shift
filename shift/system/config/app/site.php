@@ -8,3 +8,6 @@ $_['app_startup']       = [
     'startup/maintenance',
     'startup/router',
 ];
+
+$_['template']['theme_default'] = 'base';
+$_['template']['theme_active']  = 'base';

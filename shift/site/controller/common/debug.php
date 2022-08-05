@@ -19,6 +19,8 @@ class Debug extends Mvc\Controller
             $this->session->all(),
             $this->config->all(),
             // $this->user->get(),
+            $this->view->getConfig(),
+            $this->view->getTemplatePath(),
         );
 
         // $mail = $this->mail->getInstance();

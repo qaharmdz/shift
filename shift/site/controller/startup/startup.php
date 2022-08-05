@@ -115,5 +115,11 @@ class Startup extends Mvc\Controller
             'smtp_port'     => $this->config->getInt('system.setting.mail_smtp_port', 25),
             'smtp_timeout'  => $this->config->getInt('system.setting.mail_smtp_timeout', 300),
         ]);
+
+        //=== MVC View
+        $this->view->setConfig([
+            'debug'        => $this->config->getBool('system.setting.development'),
+            'theme_active' => $this->config->get('system.site.theme'),
+        ]);
     }
 }
