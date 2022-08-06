@@ -342,12 +342,11 @@ class Site extends Mvc\Controller
     public function theme()
     {
         $theme = basename($this->request->get('query.theme', 'xyz'));
-        $urlMedia = $this->config->get('env.url_media');
 
-        if (is_file(DIR_MEDIA . 'theme/' . $theme . '.png')) {
-            $this->response->setOutput($urlMedia . 'theme/' . $theme . '.png');
+        if (is_file(PATH_PUBLIC . 'asset' . '/theme/' . $theme . '/theme.png')) {
+            $this->response->setOutput($this->config->get('env.url_asset') . 'theme/' . $theme . '/theme.png');
         } else {
-            $this->response->setOutput($urlMedia . 'image/no-image.png');
+            $this->response->setOutput($this->config->get('env.url_media') . 'image/no-image.png');
         }
     }
 }

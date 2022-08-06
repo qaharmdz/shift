@@ -91,6 +91,6 @@ class Header extends Mvc\Controller
         }
 
 
-        return $this->load->view('common/header', $data);
+        return $this->load->view('block/header', $data);
     }
 }

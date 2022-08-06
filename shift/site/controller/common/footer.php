@@ -57,6 +57,6 @@ class Footer extends Mvc\Controller
         $data['powered'] = sprintf($this->language->get('text_powered'), $this->config->get('system.site.name'), date('Y', time()));
         $data['config'] = json_encode($this->config->all());
 
-        return $this->load->view('common/footer', $data);
+        return $this->load->view('block/footer', $data);
     }
 }

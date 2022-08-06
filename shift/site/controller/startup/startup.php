@@ -121,5 +121,10 @@ class Startup extends Mvc\Controller
             'debug'        => $this->config->getBool('system.setting.development'),
             'theme_active' => $this->config->get('system.site.theme'),
         ]);
+
+        $this->view->setGlobal('config', $this->config);
+        $this->view->setGlobal('document', $this->document);
+        $this->view->setGlobal('language', $this->language);
+        $this->view->setGlobal('router', $this->router);
     }
 }
