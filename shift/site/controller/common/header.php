@@ -21,7 +21,7 @@ class Header extends Mvc\Controller
             $data[$meta['value']] = $meta['content'];
         }
 
-        if (is_file(DIR_MEDIA . $this->config->get('system.site.icon'))) {
+        if (is_file(PATH_MEDIA . $this->config->get('system.site.icon'))) {
             $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'), type:'image/x-icon');
         }
 
@@ -34,7 +34,7 @@ class Header extends Mvc\Controller
         $data['name'] = $this->config->get('system.site.name');
 
         $data['logo'] = '';
-        if (is_file(DIR_MEDIA . $this->config->get('system.site.logo'))) {
+        if (is_file(PATH_MEDIA . $this->config->get('system.site.logo'))) {
             $data['logo'] = $this->config->get('env.url_media') . $this->config->get('system.site.logo');
         }
 

@@ -275,16 +275,16 @@ class Site extends Mvc\Controller
         $data['placeholder'] = $no_image_thumb = $this->image->construct('image/no-image.png', 100, 100);
 
         $data['logo'] = $no_image_thumb;
-        if ($this->request->has('post.logo') && is_file(DIR_MEDIA . $this->request->get('post.logo'))) {
+        if ($this->request->has('post.logo') && is_file(PATH_MEDIA . $this->request->get('post.logo'))) {
             $data['logo'] = $this->image->construct($this->request->get('post.logo'), 100, 100);
-        } elseif (Arr::has($site_info, 'logo') && is_file(DIR_MEDIA . Arr::get($site_info, 'logo'))) {
+        } elseif (Arr::has($site_info, 'logo') && is_file(PATH_MEDIA . Arr::get($site_info, 'logo'))) {
             $data['logo'] = $this->image->construct(Arr::get($site_info, 'logo'), 100, 100);
         }
 
         $data['icon'] = $no_image_thumb;
-        if ($this->request->has('post.icon') && is_file(DIR_MEDIA . $this->request->get('post.icon'))) {
+        if ($this->request->has('post.icon') && is_file(PATH_MEDIA . $this->request->get('post.icon'))) {
             $data['icon'] = $this->image->construct($this->request->get('post.icon'), 100, 100);
-        } elseif (Arr::has($site_info, 'icon') && is_file(DIR_MEDIA . Arr::get($site_info, 'icon'))) {
+        } elseif (Arr::has($site_info, 'icon') && is_file(PATH_MEDIA . Arr::get($site_info, 'icon'))) {
             $data['icon'] = $this->image->construct(Arr::get($site_info, 'icon'), 100, 100);
         }
 

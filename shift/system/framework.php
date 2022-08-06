@@ -149,8 +149,8 @@ class Framework
         // Image
         $this->set('image', new Library\Image([
             'quality'       => 100,
-            'path_image'    => DIR_MEDIA,
-            'path_cache'    => DIR_MEDIA . 'cache/',
+            'path_image'    => PATH_MEDIA,
+            'path_cache'    => PATH_MEDIA . 'cache/',
             'url'           => $config->get('env.url_media'),
         ]));
 

@@ -60,7 +60,7 @@ if (APP_FOLDER == 'site') {
 
 define('PATH_SYSTEM', PATH_SHIFT . 'system' . DS);
 define('PATH_TEMP', PATH_SHIFT . 'temp' . DS);
-define('DIR_MEDIA', PATH_PUBLIC . 'media' . DS);
+define('PATH_MEDIA', PATH_PUBLIC . 'media' . DS);
 
 // DB
 if ($rootConfig) {

@@ -379,7 +379,7 @@ class Banner extends Mvc\Controller
 
         foreach ($banner_images as $key => $value) {
             foreach ($value as $banner_image) {
-                if (is_file(DIR_MEDIA . $banner_image['image'])) {
+                if (is_file(PATH_MEDIA . $banner_image['image'])) {
                     $image = $banner_image['image'];
                     $thumb = $banner_image['image'];
                 } else {

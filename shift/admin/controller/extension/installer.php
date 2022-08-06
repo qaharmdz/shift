@@ -189,7 +189,7 @@ class Installer extends Mvc\Controller
                             }
 
                             // Compare image files
-                            $file = DIR_MEDIA . substr($zip_name, 13);
+                            $file = PATH_MEDIA . substr($zip_name, 13);
 
                             if (is_file($file) && substr($zip_name, 0, 13) == 'upload/image/') {
                                 $json['overwrite'][] = substr($zip_name, 7);
@@ -326,7 +326,7 @@ class Installer extends Mvc\Controller
                             }
 
                             if (substr($destination, 0, 5) == 'image') {
-                                $destination = basename(DIR_MEDIA) . substr($destination, 5);
+                                $destination = basename(PATH_MEDIA) . substr($destination, 5);
                             }
 
                             if (substr($destination, 0, 6) == 'system') {
