@@ -1,6 +1,4 @@
-<div id="search" class="input-group">
-    <input type="text" name="search" value="{{ search }}" placeholder="{{ text_search }}" class="form-control">
-    <div class="input-group-append">
-       <button class="btn btn-outline-secondary" type="button">Search</button>
-    </div>
-</div>
+<form class="uk-search uk-search-navbar">
+    <span uk-search-icon></span>
+    <input class="uk-search-input" type="search" placeholder="{{ app.language.get('text_search') }}">
+</form>

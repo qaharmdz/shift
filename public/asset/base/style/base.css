@@ -1,5 +1,5 @@
 :root {
-    --id-navbar-top-height: 36px;
+    --id-navbar-top-height: 38px;
     --id-navbar-main-height: 38px;
 }
 
@@ -30,17 +30,18 @@
     font-size: 1rem;
     height: var(--id-navbar-top-height);
     min-height: var(--id-navbar-top-height);
-    line-height: var(--id-navbar-top-height);
 }
 .block-navbar-top .uk-search-navbar {
     width: 200px;
 }
 .block-navbar-top .uk-search-navbar .uk-search-icon {
     width: 15px;
+    height: var(--id-navbar-top-height);
 }
 .block-navbar-top .uk-search-navbar .uk-search-input {
-    height: var(--id-navbar-top-height);
     font-size: 1rem;
+    height: var(--id-navbar-top-height);
+    padding: 0;
     padding-left: 25px !important;
 }
 

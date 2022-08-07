@@ -3,10 +3,7 @@
         <nav class="uk-navbar-container uk-navbar-transparent uk-light" uk-navbar>
             <div class="uk-navbar-left">
                 <div class="uk-navbar-item">
-                    <form class="uk-search uk-search-navbar">
-                        <span uk-search-icon></span>
-                        <input class="uk-search-input" type="search" placeholder="{{ app.language.get('text_search') }}">
-                    </form>
+                    {{ search|raw }}
                 </div>
             </div>
             <div class="uk-navbar-right">
