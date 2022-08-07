@@ -47,6 +47,11 @@ class Startup extends Mvc\Controller
             'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
 
+        //=== Cache
+        if ($this->config->getBool('system.setting.development')) {
+            $this->cache->setup('DevNull');
+        }
+
         //=== Language
         $this->load->model('extension/language');
 
