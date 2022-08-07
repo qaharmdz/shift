@@ -1,7 +1,4 @@
 <?php
 
-// Heading
-$_['heading_title'] = 'The page you requested cannot be found!';
-
-// Text
-$_['text_error']    = 'The page you requested cannot be found.';
+$_['page_title']    = '404 Not Found';
+$_['content']       = 'The page you are looking for could not be found.';
