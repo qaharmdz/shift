@@ -182,7 +182,22 @@ class Framework
         // 404 Not Found
         } catch (Exception\NotFoundHttpException | \InvalidArgumentException $e) {
             $logger->exceptionHandler($e);
-            exit('Exception: 404 not found');
+
+            $event = $this->get('event');
+            $request->set('query.route', $config->get('root.app_error'));
+
+            $route  = $request->get('query.route');
+            $params = [];
+            $output = null;
+
+            $event->emit($eventName = 'controller/' . $route . '::before', [$eventName, &$params, &$output]);
+
+            if (is_null($output)) {
+                $dispatch = (new Http\Dispatch($route))->execute($params);
+                $output   = $response->getOutput();
+            }
+
+            $event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
 
         // Fallback
         } catch (Exception $e) {
