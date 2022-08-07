@@ -18,7 +18,9 @@ class Debug extends Mvc\Controller
             $_SESSION === $this->session->all(),
             $this->session->all(),
             $this->config->all(),
+            $this->language->all(),
             // $this->user->get(),
+
             $this->view->getConfig(),
             $this->view->getTemplatePath(),
         );

@@ -35,7 +35,7 @@
 </nav>
 
 <header class="region-header">
-    <div class="uk-container">
+    <div class="uk-container nav-boundary">
         <div class="uk-grid" uk-grid>
             <div class="uk-width-225 uk-visible@m">
                 {% if logo %}
@@ -52,7 +52,7 @@
                                 {% if nav.children is defined and nav.children %}
                                     <li>
                                         <a href="{{ nav.href }}" >{{ nav.name }}</a>
-                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-{{ nav.column }}" uk-dropdown="offset:10;">
+                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-{{ nav.column }}" uk-dropdown="offset:10; boundary: !.nav-boundary;">
                                             <div class="uk-navbar-dropdown-grid uk-grid uk-child-width-1-{{ nav.column }}" uk-grid>
                                                 {% for children in nav.children|batch(nav.children|length / nav.column|round(1, 'ceil')) %}
                                                 <div>

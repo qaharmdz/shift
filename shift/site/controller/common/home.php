@@ -14,9 +14,7 @@ class Home extends Mvc\Controller
         $this->document->addMeta('name', 'description', $this->config->get('system.site.meta_description'));
         $this->document->addMeta('name', 'keywords', $this->config->get('system.site.meta_keyword'));
 
-        if ($this->request->has('query.route')) {
-            $this->document->addLink($this->config->get('env.url_app'), 'canonical');
-        }
+        $this->document->addLink($this->config->get('env.url_app'), 'canonical');
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('common/footer');
