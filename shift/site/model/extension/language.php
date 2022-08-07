@@ -42,4 +42,9 @@ class Language extends Mvc\Model
 
         return $language_data;
     }
+
+    public function getTotalLanguages(): int
+    {
+        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "language`")->row['total'];
+    }
 }

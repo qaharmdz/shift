@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.config.get('env.language_code') }}" dir="{{ app.language.get('direction') }}" class="{{ app.document.getNode('class_html')|join(' ') }}">
+<html lang="{{ app.language.get('code') }}" dir="{{ app.language.get('direction') }}" class="{{ app.document.getNode('class_html')|join(' ') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,6 @@
     <meta {{ meta.attribute }}="{{ meta.value }}" content="{{ meta.content }}">
 {% endfor %}
 
-    <link href="media/image/favicon.png" rel="icon">
 {% for link in app.document.getLinks() %}
     <link rel="{{ link.rel }}" href="{{ link.href }}" {{ link.hreflang ? 'hreflang="' ~ link.hreflang ~ '"' }} {{ link.type ? 'type="' ~ link.type ~ '"' }} {{ link.media ? 'type="' ~ link.media ~ '"' }}>
 {% endfor %}
@@ -42,5 +41,8 @@
 
 {% block base_body %}{% endblock %}
 
+{% for script in app.document.getScripts('footer') %}
+    <script src="{{ script }}"></script>
+{% endfor %}
 </body>
 </html>

@@ -1,90 +1,121 @@
-<!DOCTYPE html>
-<!--[if IE]><![endif]-->
-<!--[if IE 8 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie8"><![endif]-->
-<!--[if IE 9 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie9"><![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->
-<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title><?php echo $title; ?></title>
-<base href="<?php echo $base; ?>" />
-<?php if ($description) { ?>
-<meta name="description" content="<?php echo $description; ?>" />
-<?php } ?>
-<?php if ($keywords) { ?>
-<meta name="keywords" content= "<?php echo $keywords; ?>" />
-<?php } ?>
-<script src="asset/script/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-<link href="asset/script/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<script src="asset/script/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<link href="asset/script/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
-<link href="asset/theme/base/style/stylesheet.css" rel="stylesheet">
-<?php foreach ($styles as $style) { ?>
-<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
-<?php } ?>
-<script src="asset/script/common.js" type="text/javascript"></script>
-<?php foreach ($links as $link) { ?>
-<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
-<?php } ?>
-<?php foreach ($scripts as $script) { ?>
-<script src="<?php echo $script; ?>" type="text/javascript"></script>
-<?php } ?>
-
-</head>
-<body class="<?php echo $class; ?>">
-<nav id="top">
-  <div class="container">
-    <?php echo $language; ?>
-    <div id="top-links" class="nav pull-right">
-      <ul class="list-inline">
-        <li><a href="<?php echo $contact; ?>"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></li>
-        <li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span> <span class="caret"></span></a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <?php if ($logged) { ?>
-            <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
-            <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-            <?php } else { ?>
-            <li><a href="<?php echo $register; ?>"><?php echo $text_register; ?></a></li>
-            <li><a href="<?php echo $login; ?>"><?php echo $text_login; ?></a></li>
-            <?php } ?>
-          </ul>
-        </li>
-      </ul>
+<nav class="block-navbar-top">
+    <div class="uk-container">
+        <nav class="uk-navbar-container uk-navbar-transparent uk-light" uk-navbar>
+            <div class="uk-navbar-left">
+                <div class="uk-navbar-item">
+                    <form class="uk-search uk-search-navbar">
+                        <span uk-search-icon></span>
+                        <input class="uk-search-input" type="search" placeholder="{{ app.language.get('text_search') }}">
+                    </form>
+                </div>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        {{ language|raw }}
+                    </li>
+                    <li>
+                        <a>{{ app.language.get('text_account') }}</a>
+                        <div class="uk-navbar-dropdown uk-width-small" uk-dropdown="offset:0; pos:bottom-right;">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                {% if logged %}
+                                    <li><a href="{{ app.router.url('account/account') }}">{{ app.language.get('text_account') }}</a></li>
+                                    <li><a href="{{ app.router.url('account/logout') }}">{{ app.language.get('text_logout') }}</a></li>
+                                {% else %}
+                                    <li><a href="{{ app.router.url('account/register') }}">{{ app.language.get('text_register') }}</a></li>
+                                    <li><a href="{{ app.router.url('account/login') }}">{{ app.language.get('text_login') }}</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
-  </div>
 </nav>
-<header>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        <div id="logo">
-          <?php if ($logo) { ?>
-          <a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" class="img-responsive" /></a>
-          <?php } else { ?>
-          <h1><a href="<?php echo $home; ?>"><?php echo $name; ?></a></h1>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="col-sm-5"><?php echo $search; ?>
-      </div>
-      <div class="col-sm-3">...</div>
-    </div>
-  </div>
-</header>
 
-<div class="container">
-  <nav id="menu" class="navbar">
-    <div class="navbar-header"><span id="category" class="visible-xs"><?php echo $text_category; ?></span>
-      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+<header class="region-header">
+    <div class="uk-container">
+        <div class="uk-grid" uk-grid>
+            <div class="uk-width-225 uk-visible@m">
+                {% if logo %}
+                    <a href="{{ app.router.url('common/home') }}"><img src="{{ logo }}" title="{{ app.config.get('system.setting.site_name') }}" alt="{{ app.config.get('system.setting.site_name') }}"></a>
+                {% else %}
+                    <h1><a href="{{ app.router.url('common/home') }}">{{ app.config.get('system.setting.site_name') }}</a></h1>
+                {% endif %}
+            </div>
+            <div class="uk-width-expand">
+                <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-desktop uk-margin-small-top uk-visible@m" uk-navbar>
+                    <div class="uk-navbar-right">
+                        <ul class="uk-navbar-nav">
+                            {% for nav in navigations %}
+                                {% if nav.children is defined and nav.children %}
+                                    <li>
+                                        <a href="{{ nav.href }}" >{{ nav.name }}</a>
+                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-{{ nav.column }}" uk-dropdown="offset:10;">
+                                            <div class="uk-navbar-dropdown-grid uk-grid uk-child-width-1-{{ nav.column }}" uk-grid>
+                                                {% for children in nav.children|batch(nav.children|length / nav.column|round(1, 'ceil')) %}
+                                                <div>
+                                                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                                                        {% for child in children %}
+                                                            <li><a href="{{ child.href }}">{{ child.name }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{{ nav.href }}">{{ nav.name }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </nav>
+
+                <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-mobile uk-hidden@m" uk-navbar>
+                    <div class="uk-navbar-left">
+                        <a class="uk-navbar-item uk-logo uk-width-100 uk-padding-remove" href="{{ app.router.url('common/home') }}">
+                            {% if logo %}
+                                <img src="{{ logo }}" title="{{ app.config.get('system.setting.site_name') }}" alt="{{ app.config.get('system.setting.site_name') }}">
+                            {% else %}
+                                {{ app.config.get('system.setting.site_name') }}
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="uk-navbar-right">
+                        <a uk-navbar-toggle-icon="" href="#offcanvas" uk-toggle class="uk-navbar-toggle uk-hidden@m uk-icon uk-navbar-toggle-icon"></a>
+                    </div>
+                </nav>
+            </div> {# .uk-width-expand #}
+        </div>
     </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="<?php echo $home; ?>">Home</a></li>
-      </ul>
+
+    <div id="offcanvas" uk-offcanvas="mode: push; overlay: true">
+        <div class="uk-offcanvas-bar">
+
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+            <ul class="uk-nav uk-nav-default">
+                <li class="uk-active"><a href="#">Active</a></li>
+                <li class="uk-parent">
+                    <a href="#">Parent</a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#">Sub item</a></li>
+                        <li><a href="#">Sub item</a></li>
+                    </ul>
+                </li>
+                <li class="uk-nav-header">Header</li>
+                <li><a href="#js-options"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+                <li class="uk-nav-divider"></li>
+                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+            </ul>
+
+            <h3>Title</h3>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
     </div>
-  </nav>
-</div>
+</header>
