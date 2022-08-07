@@ -11,7 +11,6 @@ class Information extends Mvc\Controller
     public function index()
     {
         $this->load->model('catalog/information');
-        $this->load->language('information/information');
 
         $information_id = $this->request->getInt('query.information_id', 0);
         $information_info = $this->model_catalog_information->getInformation($information_id);
@@ -45,7 +44,6 @@ class Information extends Mvc\Controller
     public function agree()
     {
         $this->load->model('catalog/information');
-
 
         $information_id   = $this->request->getInt('query.information_id', 0);
         $information_info = $this->model_catalog_information->getInformation($information_id);
