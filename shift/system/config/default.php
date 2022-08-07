@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 // Site
 $_['url_host']          = '';
-$_['locale']            = 'en-gb';
+$_['locale']            = 'en';
 
 // Application
 $_['app_kernel']        = 'startup/kernel';
