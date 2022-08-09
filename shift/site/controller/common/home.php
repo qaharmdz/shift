@@ -10,7 +10,6 @@ class Home extends Mvc\Controller
 {
     public function index()
     {
-        $this->document->setTitle($this->config->get('system.site.meta_title'));
         $this->document->addMeta('name', 'description', $this->config->get('system.site.meta_description'));
         $this->document->addMeta('name', 'keywords', $this->config->get('system.site.meta_keyword'));
 
