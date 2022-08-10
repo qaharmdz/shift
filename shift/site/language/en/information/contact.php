@@ -1,11 +1,10 @@
 <?php
 
-// Heading
-$_['heading_title']  = 'Contact Us';
+$_['page_title']  = 'Contact Us';
 
 // Text
 $_['text_location']  = 'Our Location';
-$_['text_site']     = 'Our Sites';
+$_['text_site']      = 'Our Sites';
 $_['text_contact']   = 'Contact Form';
 $_['text_address']   = 'Address';
 $_['text_telephone'] = 'Telephone';
