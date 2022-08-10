@@ -15,6 +15,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'Webmozart\\Assert\\' => 17,
+        ),
         'T' => 
         array (
             'Twig\\' => 5,
@@ -43,6 +47,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
     );
 
     public static $prefixDirsPsr4 = array (
+        'Webmozart\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
@@ -406,7 +414,6 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\Admin\\Model\\Setting\\Setting' => __DIR__ . '/../../..' . '/shift/admin/model/setting/setting.php',
         'Shift\\Admin\\Model\\Setting\\Site' => __DIR__ . '/../../..' . '/shift/admin/model/setting/site.php',
         'Shift\\Admin\\Model\\Tool\\Backup' => __DIR__ . '/../../..' . '/shift/admin/model/tool/backup.php',
-        'Shift\\Admin\\Model\\Tool\\Image' => __DIR__ . '/../../..' . '/shift/admin/model/tool/image.php',
         'Shift\\Admin\\Model\\User\\User' => __DIR__ . '/../../..' . '/shift/admin/model/user/user.php',
         'Shift\\Admin\\Model\\User\\UserGroup' => __DIR__ . '/../../..' . '/shift/admin/model/user/usergroup.php',
         'Shift\\Install\\Controller\\Common\\ColumnLeft' => __DIR__ . '/../../..' . '/shift/install/controller/common/columnleft.php',
@@ -432,10 +439,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\Site\\Controller\\Account\\Register' => __DIR__ . '/../../..' . '/shift/site/controller/account/register.php',
         'Shift\\Site\\Controller\\Account\\Reset' => __DIR__ . '/../../..' . '/shift/site/controller/account/reset.php',
         'Shift\\Site\\Controller\\Account\\Success' => __DIR__ . '/../../..' . '/shift/site/controller/account/success.php',
-        'Shift\\Site\\Controller\\Common\\ColumnLeft' => __DIR__ . '/../../..' . '/shift/site/controller/common/columnleft.php',
-        'Shift\\Site\\Controller\\Common\\ColumnRight' => __DIR__ . '/../../..' . '/shift/site/controller/common/columnright.php',
-        'Shift\\Site\\Controller\\Common\\ContentBottom' => __DIR__ . '/../../..' . '/shift/site/controller/common/contentbottom.php',
-        'Shift\\Site\\Controller\\Common\\ContentTop' => __DIR__ . '/../../..' . '/shift/site/controller/common/contenttop.php',
+        'Shift\\Site\\Controller\\Block\\Position' => __DIR__ . '/../../..' . '/shift/site/controller/block/position.php',
         'Shift\\Site\\Controller\\Common\\Debug' => __DIR__ . '/../../..' . '/shift/site/controller/common/debug.php',
         'Shift\\Site\\Controller\\Common\\Footer' => __DIR__ . '/../../..' . '/shift/site/controller/common/footer.php',
         'Shift\\Site\\Controller\\Common\\Header' => __DIR__ . '/../../..' . '/shift/site/controller/common/header.php',
@@ -468,8 +472,6 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\Site\\Model\\Extension\\Module' => __DIR__ . '/../../..' . '/shift/site/model/extension/module.php',
         'Shift\\Site\\Model\\Setting\\Setting' => __DIR__ . '/../../..' . '/shift/site/model/setting/setting.php',
         'Shift\\Site\\Model\\Setting\\Site' => __DIR__ . '/../../..' . '/shift/site/model/setting/site.php',
-        'Shift\\Site\\Model\\Tool\\Image' => __DIR__ . '/../../..' . '/shift/site/model/tool/image.php',
-        'Shift\\Site\\Model\\Tool\\Upload' => __DIR__ . '/../../..' . '/shift/site/model/tool/upload.php',
         'Shift\\System\\Autoloader\\ClassLoader' => __DIR__ . '/../../..' . '/shift/system/autoloader/classloader.php',
         'Shift\\System\\Autoloader\\Psr4Lowercase' => __DIR__ . '/../../..' . '/shift/system/autoloader/psr4lowercase.php',
         'Shift\\System\\Core\\Bags' => __DIR__ . '/../../..' . '/shift/system/core/bags.php',
@@ -481,6 +483,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Core\\Proxy' => __DIR__ . '/../../..' . '/shift/system/core/proxy.php',
         'Shift\\System\\Core\\Registry' => __DIR__ . '/../../..' . '/shift/system/core/registry.php',
         'Shift\\System\\Core\\Session' => __DIR__ . '/../../..' . '/shift/system/core/session.php',
+        'Shift\\System\\Exception\\AssertException' => __DIR__ . '/../../..' . '/shift/system/exception/assertexception.php',
         'Shift\\System\\Exception\\HttpException' => __DIR__ . '/../../..' . '/shift/system/exception/httpexception.php',
         'Shift\\System\\Exception\\NotFoundHttpException' => __DIR__ . '/../../..' . '/shift/system/exception/notfoundhttpexception.php',
         'Shift\\System\\Framework' => __DIR__ . '/../../..' . '/shift/system/framework.php',
@@ -489,12 +492,13 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\System\\Http\\Request' => __DIR__ . '/../../..' . '/shift/system/http/request.php',
         'Shift\\System\\Http\\Response' => __DIR__ . '/../../..' . '/shift/system/http/response.php',
         'Shift\\System\\Http\\Router' => __DIR__ . '/../../..' . '/shift/system/http/router.php',
+        'Shift\\System\\Library\\Assert' => __DIR__ . '/../../..' . '/shift/system/library/assert.php',
         'Shift\\System\\Library\\Cache' => __DIR__ . '/../../..' . '/shift/system/library/cache.php',
         'Shift\\System\\Library\\Document' => __DIR__ . '/../../..' . '/shift/system/library/document.php',
         'Shift\\System\\Library\\Image' => __DIR__ . '/../../..' . '/shift/system/library/image.php',
         'Shift\\System\\Library\\Language' => __DIR__ . '/../../..' . '/shift/system/library/language.php',
-        'Shift\\System\\Library\\Legacy\\Pagination' => __DIR__ . '/../../..' . '/shift/system/library/legacy/pagination.php',
         'Shift\\System\\Library\\Mail' => __DIR__ . '/../../..' . '/shift/system/library/mail.php',
+        'Shift\\System\\Library\\Pagination' => __DIR__ . '/../../..' . '/shift/system/library/pagination.php',
         'Shift\\System\\Library\\Secure' => __DIR__ . '/../../..' . '/shift/system/library/secure.php',
         'Shift\\System\\Library\\User' => __DIR__ . '/../../..' . '/shift/system/library/user.php',
         'Shift\\System\\Mvc\\Controller' => __DIR__ . '/../../..' . '/shift/system/mvc/controller.php',
@@ -676,6 +680,9 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Twig\\TwigTest' => __DIR__ . '/..' . '/twig/twig/src/TwigTest.php',
         'Twig\\Util\\DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/src/Util/DeprecationCollector.php',
         'Twig\\Util\\TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/src/Util/TemplateDirIterator.php',
+        'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
+        'Webmozart\\Assert\\InvalidArgumentException' => __DIR__ . '/..' . '/webmozart/assert/src/InvalidArgumentException.php',
+        'Webmozart\\Assert\\Mixin' => __DIR__ . '/..' . '/webmozart/assert/src/Mixin.php',
         'claviska\\SimpleImage' => __DIR__ . '/..' . '/claviska/simpleimage/src/claviska/SimpleImage.php',
     );
 
