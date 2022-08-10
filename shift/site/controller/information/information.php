@@ -31,8 +31,8 @@ class Information extends Mvc\Controller
 
         $data = [];
 
-        $data['page_title']     = html_entity_decode($information_info['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $data['content']        = html_entity_decode($information_info['description'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['page_title'] = html_entity_decode($information_info['title'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['content']    = html_entity_decode($information_info['description'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('common/footer');

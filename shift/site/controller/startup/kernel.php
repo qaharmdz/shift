@@ -11,10 +11,7 @@ class Kernel extends Mvc\Controller
 {
     public function index()
     {
-        $route = $this->request->getString(
-            'query.route',
-            $this->config->get('root.action_default')
-        );
+        $route = $this->request->get('query.route');
 
         if (str_starts_with($route, 'startup/')) {
             throw new \InvalidArgumentException('Oops!');

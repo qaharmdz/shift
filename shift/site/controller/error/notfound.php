@@ -13,7 +13,7 @@ class NotFound extends Mvc\Controller
         $this->load->language('error/notfound');
 
         $this->document->setTitle($this->language->get('page_title'));
-        $this->document->addNode('class_body', 'error-404');
+        $this->document->addNode('class_body', ['error-404']);
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('common/footer');

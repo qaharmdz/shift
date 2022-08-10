@@ -14,6 +14,11 @@ class Router extends Mvc\Controller
         $this->router->addUrlGenerator($this);
 
         $this->resolveAlias();
+
+        $this->request->set('query.route', $this->request->getString(
+            'query.route',
+            $this->config->get('root.action_default')
+        ));
     }
 
     protected function resolveAlias()

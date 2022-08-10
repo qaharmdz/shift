@@ -32,6 +32,15 @@ class Debug extends Mvc\Controller
         // $this->testImage();
         // $this->testCache();
         // $this->testHelperArr();
+
+        // $pagination = new \Shift\System\Library\Pagination();
+        // $pagination->page  = 6;
+        // $pagination->total = 300;
+        // $pagination->limit = 25;
+        // $pagination->url = $this->router->url('catalog/information', '&page={page}');
+        // d($pagination);
+        // echo $pagination->render();
+        // echo '<pre><code>' . $this->router->url('catalog/information', '&page={page}') . '</code></pre>';
     }
 
     private function testImage()

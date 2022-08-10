@@ -16,6 +16,17 @@ class Header extends Mvc\Controller
             $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'), type:'image/x-icon');
         }
 
+        $class_body = [];
+        foreach ($this->request->get('query', ['route' => $this->config->get('root.action_default')]) as $key => $value) {
+            if (in_array($key, ['_route_', 'route'])) {
+                $class_body[] = str_replace(['/', '\\', '_'], '-', $value);
+            } else {
+                $class_body[] = str_replace(['/', '\\', '_'], '-', $key . '-' . $value);
+            }
+        }
+        $class_body = array_unique(array_merge($class_body, $this->document->getNode('class_body', [])));
+        $this->document->setNode('class_body', $class_body);
+
         $data = [];
 
         $data['logo'] = '';
