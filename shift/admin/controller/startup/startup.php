@@ -28,7 +28,7 @@ class Startup extends Mvc\Controller
         }
 
         $this->config->set($settings);
-        $this->config->set('env.limit', $this->config->getInt('system.setting.admin_limit', 25));
+        $this->config->set('env.limit', $this->config->getInt('system.setting.admin_limit', 36));
 
         // Apply DB setting
         $this->log->setConfig([

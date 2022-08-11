@@ -40,7 +40,7 @@ class Startup extends Mvc\Controller
             $this->config->set($settings);
         }
 
-        $this->config->set('env.limit', 25);
+        $this->config->set('env.limit', 36);
 
         // Apply DB setting
         $this->log->setConfig([

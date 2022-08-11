@@ -36,7 +36,7 @@ class Debug extends Mvc\Controller
         // $pagination = new \Shift\System\Library\Pagination();
         // $pagination->page  = 6;
         // $pagination->total = 300;
-        // $pagination->limit = 25;
+        // $pagination->limit = 36;
         // $pagination->url = $this->router->url('catalog/information', '&page={page}');
         // d($pagination);
         // echo $pagination->render();
