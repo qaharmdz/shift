@@ -20,8 +20,6 @@ class User
         $this->secure  = $registry->get('secure');
         $this->bags    = new Core\Bags();
 
-        $this->session->set('user_email', 'admin@example.com');
-
         if ($email = $this->session->getString('user_email')) {
             $user = $this->dbGetUserByMail($email);
 

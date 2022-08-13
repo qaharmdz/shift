@@ -12,23 +12,15 @@ class Maintenance extends Mvc\Controller
     {
         $this->load->language('common/maintenance');
 
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('page_title'));
 
-        $data['heading_title'] = $this->language->get('heading_title');
+        $data = [];
 
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_maintenance'),
-            'href' => $this->router->url('common/maintenance')
-        );
-
-        $data['message'] = $this->language->get('text_message');
-
-        $data['header'] = $this->load->controller('common/header');
-        $data['footer'] = $this->load->controller('common/footer');
+        $data['layouts'] = $this->load->controller('block/position');
+        $data['footer']  = $this->load->controller('common/footer');
+        $data['header']  = $this->load->controller('common/header');
 
         $this->response->setHeader('Retry-After', 3600);
-        $this->response->setOutput($this->load->view('common/maintenance', $data), 503);
+        $this->response->setOutput($this->load->view('page/maintenance', $data), 503);
     }
 }

@@ -3,5 +3,5 @@
 {% block content %}
 <h1>{{ app.language.get('page_title') }}</h1>
 
-<p>{{ app.language.get('content') }}</p>
+<p>{{ app.language.get('content')|raw }}</p>
 {% endblock %}
