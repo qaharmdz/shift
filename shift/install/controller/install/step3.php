@@ -30,7 +30,7 @@ class Step3 extends Mvc\Controller
             $output .= '// DIR' . "\n";
             $output .= 'define(\'PATH_APP\', \'' . PATH_SHIFT . 'catalog/\');' . "\n";
             $output .= 'define(\'PATH_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
-            $output .= 'define(\'DIR_MEDIA\', \'' . PATH_SHIFT . 'media/\');' . "\n";
+            $output .= 'define(\'PATH_MEDIA\', \'' . PATH_SHIFT . 'media/\');' . "\n";
             $output .= 'define(\'PATH_LANGUAGE\', \'' . PATH_SHIFT . 'catalog/language/\');' . "\n";
             $output .= 'define(\'PATH_TEMPLATE\', \'' . PATH_SHIFT . 'catalog/view/theme/\');' . "\n";
             // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";
@@ -66,7 +66,7 @@ class Step3 extends Mvc\Controller
             $output .= '// DIR' . "\n";
             $output .= 'define(\'PATH_APP\', \'' . PATH_SHIFT . 'admin/\');' . "\n";
             $output .= 'define(\'PATH_SYSTEM\', \'' . PATH_SHIFT . 'system/\');' . "\n";
-            $output .= 'define(\'DIR_MEDIA\', \'' . PATH_SHIFT . 'media/\');' . "\n";
+            $output .= 'define(\'PATH_MEDIA\', \'' . PATH_SHIFT . 'media/\');' . "\n";
             $output .= 'define(\'PATH_LANGUAGE\', \'' . PATH_SHIFT . 'admin/language/\');' . "\n";
             $output .= 'define(\'PATH_TEMPLATE\', \'' . PATH_SHIFT . 'admin/view/template/\');' . "\n";
             // $output .= 'define(\'DIR_CONFIG\', \'' . PATH_SHIFT . 'system/config/\');' . "\n";

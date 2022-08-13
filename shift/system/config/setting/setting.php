@@ -9,7 +9,7 @@ $_['form'] = [
 
     // Admin Options
     'admin_language'    => 'en',
-    'admin_limit'       => 25,
+    'admin_limit'       => 36,
 
     // Mail
     'mail_engine'       => 'mail',

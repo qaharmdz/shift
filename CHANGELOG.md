@@ -18,8 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Twig template engine.
+
 ### Fixed
 - Fixed library/document duplicate meta, link, style and script.
+
+### Removed
+- PHP template (replaced by Twig)
 
 ## [v0.2.0] - 2022-07-31
 ### Added

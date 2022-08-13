@@ -11,12 +11,14 @@ class Router extends Mvc\Controller
 {
     public function index()
     {
-        // Register URL rewriter
-        if ($this->config->get('system.setting.seo_url')) {
-            $this->router->addUrlRewrite($this);
-        }
+        $this->router->addUrlGenerator($this);
 
         $this->resolveAlias();
+
+        $this->request->set('query.route', $this->request->getString(
+            'query.route',
+            $this->config->get('root.action_default')
+        ));
     }
 
     protected function resolveAlias()
@@ -56,16 +58,16 @@ class Router extends Mvc\Controller
         }
     }
 
-    public function urlAlias(string $route, string $args = '', int $language_id = 0): string
+    public function generateAlias(string $route, string $args = '', int $language_id = 0): string
     {
         $language_id = $language_id ?: $this->config->getInt('env.language_id');
 
         parse_str($args, $urlParams);
 
         $alias     = '';
-        $paramList = [ // TODO: config(system.alias_*)
-            'distinct' => ['information_id'],
-            'multi'    => [],
+        $paramList = [
+            'distinct' => $this->config->get('system.alias_distinct'),
+            'multi'    => $this->config->get('system.alias_multi'),
         ];
 
         foreach ($urlParams as $param => $value) {

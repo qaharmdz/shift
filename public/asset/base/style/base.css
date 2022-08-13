@@ -1,0 +1,134 @@
+:root {
+    --id-navbar-top-height: 38px;
+    --id-navbar-main-height: 38px;
+}
+
+
+/* UIkit Sketsa override
+============================== */
+
+.uk-navbar-nav > li > a {
+    text-transform: none;
+}
+
+.uk-list-collapse>*>ul, .uk-list-collapse>:nth-child(n+2) {
+    margin-top: 3px;
+}
+
+
+/* Header
+============================== */
+
+.page-header {}
+
+.block-navbar-top {
+    background: var(--uk-gray-deep);
+}
+.block-navbar-top .uk-navbar-item,
+.block-navbar-top .uk-navbar-nav > li > a,
+.block-navbar-top .uk-navbar-toggle {
+    font-size: 1rem;
+    height: var(--id-navbar-top-height);
+    min-height: var(--id-navbar-top-height);
+}
+.block-navbar-top .uk-search-navbar {
+    width: 200px;
+}
+.block-navbar-top .uk-search-navbar .uk-search-icon {
+    width: 15px;
+    height: var(--id-navbar-top-height);
+}
+.block-navbar-top .uk-search-navbar .uk-search-input {
+    font-size: 1rem;
+    height: var(--id-navbar-top-height);
+    padding: 0;
+    padding-left: 25px !important;
+}
+
+.region-header {
+    padding: 40px 0 30px;
+}
+
+.navbar-main .uk-navbar-item,
+.navbar-main .uk-navbar-nav > li > a,
+.navbar-main .uk-navbar-toggle {
+    font-size: 15px;
+    padding: 0 25px;
+    border-radius: 3px;
+    color: inherit;
+    height: var(--id-navbar-main-height);
+    min-height: var(--id-navbar-main-height);
+    line-height: var(--id-navbar-main-height);
+}
+
+/* Middle
+============================== */
+
+.page-body {
+    padding: 30px 0 40px;
+}
+@media (min-width: 960px) {
+    .page-body {
+        padding: 40px 0 50px;
+    }
+}
+.region-middle {
+    min-height: 40vh;
+}
+
+
+/* Footer
+============================== */
+.page-footer {}
+
+
+/* Utilities
+============================== */
+
+.ut-m-0  { margin:        0 }
+.ut-mt-0 { margin-top:    0 }
+.ut-mr-0 { margin-right:  0 }
+.ut-mb-0 { margin-bottom: 0 }
+.ut-ml-0 { margin-left:   0 }
+.ut-mx-0 { margin-left:   0; margin-right:  0 }
+.ut-my-0 { margin-top:    0; margin-bottom: 0 }
+
+.ut-m-1  { margin:        0.25rem }
+.ut-mt-1 { margin-top:    0.25rem }
+.ut-mr-1 { margin-right:  0.25rem }
+.ut-mb-1 { margin-bottom: 0.25rem }
+.ut-ml-1 { margin-left:   0.25rem }
+.ut-mx-1 { margin-left:   0.25rem; margin-right:  0.25rem }
+.ut-my-1 { margin-top:    0.25rem; margin-bottom: 0.25rem }
+
+.ut-m-2  { margin:        0.5rem }
+.ut-mt-2 { margin-top:    0.5rem }
+.ut-mr-2 { margin-right:  0.5rem }
+.ut-mb-2 { margin-bottom: 0.5rem }
+.ut-ml-2 { margin-left:   0.5rem }
+.ut-mx-2 { margin-left:   0.5rem; margin-right:  0.5rem }
+.ut-my-2 { margin-top:    0.5rem; margin-bottom: 0.5rem }
+
+.ut-m-3  { margin:        1rem }
+.ut-mt-3 { margin-top:    1rem }
+.ut-mr-3 { margin-right:  1rem }
+.ut-mb-3 { margin-bottom: 1rem }
+.ut-ml-3 { margin-left:   1rem }
+.ut-mx-3 { margin-left:   1rem; margin-right:  1rem }
+.ut-my-3 { margin-top:    1rem; margin-bottom: 1rem }
+
+.ut-m-4  { margin:        1.5rem }
+.ut-mt-4 { margin-top:    1.5rem }
+.ut-mr-4 { margin-right:  1.5rem }
+.ut-mb-4 { margin-bottom: 1.5rem }
+.ut-ml-4 { margin-left:   1.5rem }
+.ut-mx-4 { margin-left:   1.5rem; margin-right:  1.5rem }
+.ut-my-4 { margin-top:    1.5rem; margin-bottom: 1.5rem }
+
+.ut-m-5  { margin:        2rem }
+.ut-mt-5 { margin-top:    2rem }
+.ut-mr-5 { margin-right:  2rem }
+.ut-mb-5 { margin-bottom: 2rem }
+.ut-ml-5 { margin-left:   2rem }
+.ut-mx-5 { margin-left:   2rem; margin-right:  2rem }
+.ut-my-5 { margin-top:    2rem; margin-bottom: 2rem }

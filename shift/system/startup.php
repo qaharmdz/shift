@@ -11,7 +11,7 @@ list($major, $minor, $patch, $pre) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 
 if (version_compare(PHP_VERSION, '8.1.0', '>=') === false) {
-    exit('Shift CMS require a PHP version 8.1.0+. You are running version ' . PHP_VERSION . '.');
+    exit('Shift CMS require a PHP version 8.1.0+. You are running ' . PHP_VERSION . '.');
 }
 
 mb_internal_encoding('UTF-8');
@@ -60,7 +60,7 @@ if (APP_FOLDER == 'site') {
 
 define('PATH_SYSTEM', PATH_SHIFT . 'system' . DS);
 define('PATH_TEMP', PATH_SHIFT . 'temp' . DS);
-define('DIR_MEDIA', PATH_PUBLIC . 'media' . DS);
+define('PATH_MEDIA', PATH_PUBLIC . 'media' . DS);
 
 // DB
 if ($rootConfig) {

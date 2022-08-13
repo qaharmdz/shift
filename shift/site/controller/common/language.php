@@ -10,58 +10,52 @@ class Language extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('common/language');
-
-        $data['text_language'] = $this->language->get('text_language');
-
-        $data['action'] = $this->router->url('common/language/language');
-
-        $data['code'] = $this->session->get('language');
-
         $this->load->model('extension/language');
 
-        $data['languages'] = array();
+        if ($this->model_extension_language->getTotalLanguages() > 1) {
+            $this->load->language('common/language');
 
-        $results = $this->model_extension_language->getLanguages();
+            $data['code'] = $this->session->get('language', $this->config->get('env.language_code'));
+            $data['languages'] = [];
 
-        foreach ($results as $result) {
-            if ($result['status']) {
-                $data['languages'][] = array(
+            $languages = $this->model_extension_language->getLanguages();
+            foreach ($languages as $result) {
+                $data['languages'][] = [
                     'name' => $result['name'],
-                    'code' => $result['code']
-                );
-            }
-        }
-
-        if (!$this->request->has('query.route')) {
-            $data['redirect'] = $this->router->url('common/home');
-        } else {
-            $url_data = $this->request->get('query');
-
-            unset($url_data['_route_']);
-
-            $route = $url_data['route'];
-
-            unset($url_data['route']);
-
-            $url = '';
-
-            if ($url_data) {
-                $url = '&' . urldecode(http_build_query($url_data, '', '&'));
+                    'code' => $result['code'],
+                    'flag' => $result['flag'],
+                ];
             }
 
-            $data['redirect'] = $this->router->url($route, $url);
-        }
+            $data['redirect'] = ['route' => 'common/home', 'args' => ''];
+            if ($this->request->has('query.route')) {
+                $url_data = $this->request->get('query');
+                $route = $url_data['route'];
+                unset($url_data['route']);
 
-        return $this->load->view('common/language', $data);
+                $args = '';
+                if ($url_data) {
+                    $args = '&' . urldecode(http_build_query($url_data, '', '&'));
+                }
+
+                $data['redirect'] = ['route' => $route, 'args' => $args];
+            }
+
+            return $this->load->view('common/language', $data);
+        }
     }
 
     public function language()
     {
-        if ($this->request->has('post.code')) {
-            $this->session->set('language', $this->request->get('post.code'));
-        }
+        $this->load->model('extension/language');
+        $languages = $this->model_extension_language->getLanguages();
 
-        $this->response->redirect($this->request->get('post.redirect', 'common/home'));
+        $this->session->set('language', $this->request->get('post.code'));
+
+        $this->response->redirect($this->router->url(
+            $this->request->get('post.redirect_route'),
+            $this->request->get('post.redirect_args'),
+            (int)$languages[$this->request->get('post.code')]['language_id'],
+        ));
     }
 }

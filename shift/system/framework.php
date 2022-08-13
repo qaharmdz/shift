@@ -106,17 +106,15 @@ class Framework
         $this->set('event', $event);
 
         // Event Register
-        if ($config->has('root.action_event')) {
-            foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
-                $event->addListener($eventName, new Http\Dispatch($listenerRoute));
-            }
+        foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
+            $event->addListener($eventName, new Http\Dispatch($listenerRoute));
         }
 
         // Loader
         $this->set('load', new Core\Loader($this->registry));
 
         // View
-        $this->set('view', new Mvc\View());
+        $this->set('view', new Mvc\View($config->get('root.template')));
 
         return $this;
     }
@@ -136,6 +134,9 @@ class Framework
         $language->load($config->get('root.locale'));
         $this->set('language', $language);
 
+        // Validate
+        $this->set('assert', new Library\Assert());
+
         // Document
         $this->set('document', new Library\Document());
 
@@ -151,8 +152,8 @@ class Framework
         // Image
         $this->set('image', new Library\Image([
             'quality'       => 100,
-            'path_image'    => DIR_MEDIA,
-            'path_cache'    => DIR_MEDIA . 'cache/',
+            'path_image'    => PATH_MEDIA,
+            'path_cache'    => PATH_MEDIA . 'cache/',
             'url'           => $config->get('env.url_media'),
         ]));
 
@@ -184,7 +185,22 @@ class Framework
         // 404 Not Found
         } catch (Exception\NotFoundHttpException | \InvalidArgumentException $e) {
             $logger->exceptionHandler($e);
-            exit('Exception: 404 not found');
+
+            $event = $this->get('event');
+            $request->set('query.route', $config->get('root.app_error'));
+
+            $route  = $request->get('query.route');
+            $params = [];
+            $output = null;
+
+            $event->emit($eventName = 'controller/' . $route . '::before', [$eventName, &$params, &$output]);
+
+            if (is_null($output)) {
+                $dispatch = (new Http\Dispatch($route))->execute($params);
+                $output   = $response->getOutput();
+            }
+
+            $event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
 
         // Fallback
         } catch (Exception $e) {

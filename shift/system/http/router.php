@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace Shift\System\Http;
 
-// TODO: Route schema: URL pattern and request method validation
 class Router
 {
-    protected $urlRewrite = [];
+    // TODO: Route schema: Validate $route request methods.
+    // Prevent access to all controller public method
+    protected $routeWhitelist = [];
+    protected $urlGenerators = [];
 
-    public function addUrlRewrite(object $urlRewrite)
+    public function addUrlGenerator(object $urlGenerator)
     {
-        if (method_exists($urlRewrite, 'urlAlias')) {
-            $this->urlRewrite[] = $urlRewrite;
+        if (method_exists($urlGenerator, 'generateAlias')) {
+            $this->urlGenerators[] = $urlGenerator;
         }
     }
 
     public function url(string $route, string $args = '', int $language_id = 0): string
     {
-        foreach ($this->urlRewrite as $rewriter) {
-            if ($url = $rewriter->urlAlias($route, $args, $language_id)) {
+        foreach ($this->urlGenerators as $generator) {
+            if ($url = $generator->generateAlias($route, $args, $language_id)) {
                 return $url;
             }
         }
 
-        return URL_APP . 'index.php?route=' . $route . ($args ? '&' . trim($args, '&') : '');
+        return URL_APP . 'r/' . $route . ($args ? '&' . trim($args, '&') : '');
     }
 }

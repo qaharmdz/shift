@@ -1,0 +1,91 @@
+{% extends 'document.tpl.twig' %}
+
+{% block base_body %}
+{{ layouts.alpha }}
+
+{% if layouts.topbar %}
+    <div class="position-topbar">
+        {{ layouts.topbar }}
+    </div>
+{% endif %}
+
+<div class="page-header">
+    {{ header }}
+
+    {% if app.document.getNode('breadcrumbs') %}
+        <div class="uk-container">
+            <ul class="uk-breadcrumb">
+                {% for breadcrumb in app.document.getNode('breadcrumbs') %}
+                    {% if breadcrumb.1 is defined %}
+                        <li class="breadcrumb-item"><a href="{{ breadcrumb.1 }}">{{ breadcrumb.0 }}</a></li>
+                    {% else %}
+                        <li class="breadcrumb-item active">{{ breadcrumb.0 }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+{% if layouts.top %}
+    <div class="position-top">
+        {{ layouts.top }}
+    </div>
+{% endif %}
+
+<div class="page-body uk-section">
+    <div class="region-middle uk-container">
+        <div class="uk-grid" uk-grid>
+            {% if layouts.sidebar_left %}
+                <aside class="position-sidebar-left uk-width-1-4 uk-width-1-5@m uk-visible@s">
+                    {{ layouts.sidebar_left }}
+                </aside>
+            {% endif %}
+
+            <div class="region-content uk-width-expand">
+                {% if layouts.content_top %}
+                    <div class="position-content-top">
+                        {{ layouts.content_top }}
+                    </div>
+                {% endif %}
+
+                <div class="main-content">
+                    {% block content %}{% endblock %}
+                </div>
+
+                {% if layouts.content_bottom %}
+                    <div class="position-content-top">
+                        {{ layouts.content_bottom }}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if layouts.sidebar_right %}
+                <aside class="position-sidebar-right uk-width-1-4 uk-width-1-5@m uk-visible@s">
+                    {{ layouts.sidebar_right }}
+                </aside>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if layouts.bottom %}
+    <div class="position-bottom">
+        {{ layouts.bottom }}
+    </div>
+{% endif %}
+
+<footer class="page-footer uk-section uk-section-secondary">
+    {% if layouts.footer %}
+        <div class="position-footer">
+            {{ layouts.footer }}
+        </div>
+    {% endif %}
+
+    <div class="uk-light">
+        {{ footer }}
+    </div>
+</footer>
+
+{{ layouts.omega }}
+{% endblock %}

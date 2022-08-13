@@ -13,7 +13,6 @@ class Search extends Mvc\Controller
         $this->load->language('common/search');
 
         $data['text_search'] = $this->language->get('text_search');
-
         $data['search'] = $this->request->getString('query.search', '');
 
         return $this->load->view('common/search', $data);

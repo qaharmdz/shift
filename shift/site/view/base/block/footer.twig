@@ -1,0 +1,22 @@
+<div class="uk-container">
+    <div class="uk-grid uk-child-width-expand@s uk-text-small" uk-grid>
+        {% if informations %}
+            <div>
+                <h4>{{ app.language.get('text_information') }}</h4>
+                <ul class="uk-list uk-list-disc uk-list-collapse uk-list-muted">
+                    {% for information in informations %}
+                        <li><a href="{{ information.href }}">{{ information.title|raw }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div>
+            <h4>{{ app.language.get('text_service') }}</h4>
+            <ul class="uk-list uk-list-disc uk-list-collapse uk-list-muted">
+                <li><a href="{{ app.router.url('information/contact') }}">{{ app.language.get('text_contact') }}</a></li>
+                <li><a href="{{ app.router.url('information/sitemap') }}">{{ app.language.get('text_sitemap') }}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

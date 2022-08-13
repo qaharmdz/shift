@@ -1,0 +1,18 @@
+{% extends 'main.tpl.twig' %}
+
+{% block content %}
+<h1>{{ app.language.get('page_title') }}</h1>
+
+<ul class="uk-list">
+    <li><a href="{{ app.router.url('account/account') }}">{{ app.language.get('text_account') }}</a></li>
+    <li><a href="{{ app.router.url('page/search') }}">{{ app.language.get('text_search') }}</a></li>
+    <li>{{ app.language.get('text_information') }}
+        <ul class="uk-list uk-margin-left">
+            {% for information in informations %}
+                <li><a href="{{ information.href }}">{{ information.title|raw }}</a></li>
+            {% endfor %}
+        </ul>
+    </li>
+    <li><a href="{{ app.router.url('information/contact') }}">{{ app.language.get('text_contact') }}</a></li>
+</ul>
+{% endblock %}

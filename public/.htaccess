@@ -11,7 +11,17 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} !^.*\.(ico|gif|jpg|jpeg|png|js|css|map)$ [NC]
 
-    RewriteRule ^(.*)$ index.php?_route_=$1 [L,QSA]
+    # Direct Route
+    # example.com/r/content/page?page_id=1 === example.com/index.php?route=content/page&page_id=1
+    RewriteRule ^r/(.*)$ index.php?route=$1 [L,QSA]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^.*\.(ico|gif|jpg|jpeg|png|js|css|map)$ [NC]
+
+    # Route Alias
+    # example.com/about_us === example.com/index.php?_route_=about_us
+    RewriteRule ^(index\.php)?(.*)$ index.php?_route_=$2 [L,QSA]
 </IfModule>
 
 # Block access to files that can expose sensitive information.

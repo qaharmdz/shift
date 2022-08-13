@@ -1,0 +1,53 @@
+{% extends 'main.tpl.twig' %}
+
+{% block content %}
+<h1>{{ app.language.get('page_title') }}</h1>
+
+<div class="uk-grid uk-grid-large" uk-grid>
+    <div class="uk-width-3-5@s">
+        <h3>{{ app.config.get('system.setting.name') }}</h3>
+        <address>{{ app.config.get('system.setting.address')|nl2br }}</address>
+
+        <ul class="uk-list uk-list-collapse">
+            <li><b>{{ app.language.get('text_telephone') }}</b> : {{ app.config.get('system.setting.telephone') }}</li>
+            <li><b>{{ app.language.get('text_fax') }}</b> : {{ app.config.get('system.setting.fax') }}</li>
+        </ul>
+
+        <div class="uk-panel uk-box-shadow-small uk-margin uk-width-4-5@m">
+            <iframe src="https://maps.google.com/maps?q={{ app.config.get('system.setting.geocode')|url_encode }}&hl={{ app.config.get('env.language_code') }}&t=m&z=15&output=embed" class="uk-width-1-1" height="250" frameborder="0" style="border:0;" allowfullscreen aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
+    <div class="uk-width-expand">
+        <form class="uk-form-stacked" action="{{ app.router.url('information/contact') }}" method="post">
+            <fieldset class="uk-fieldset">
+                <legend class="uk-legend">{{ app.language.get('text_contact') }}</legend>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="contact-name">{{ app.language.get('entry_name') }}</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input {{ error.name ? 'uk-form-danger' }}" id="contact-name" type="text" name="name" value="{{ input.name }}">
+                        {{ error.name ? ('<div class="uk-text-meta uk-text-danger">' ~ error.name  ~ '</div>')|raw }}
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="contact-email">{{ app.language.get('entry_email') }}</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input {{ error.email ? 'uk-form-danger' }}" id="contact-email" type="text" name="email" value="{{ input.email }}">
+                        {{ error.email ? ('<div class="uk-text-meta uk-text-danger">' ~ error.email  ~ '</div>')|raw }}
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="contact-enquiry">{{ app.language.get('entry_enquiry') }}</label>
+                    <div class="uk-form-controls">
+                        <textarea class="uk-textarea {{ error.enquiry ? 'uk-form-danger' }}" id="contact-enquiry" name="enquiry" rows="5">{{ input.enquiry }}</textarea>
+                        {{ error.enquiry ? ('<div class="uk-text-meta uk-text-danger">' ~ error.enquiry  ~ '</div>')|raw }}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="uk-margin uk-text-right">
+                <button class="uk-button uk-button-primary" type="submit">{{ app.language.get('button_submit') }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

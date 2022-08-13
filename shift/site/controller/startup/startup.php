@@ -40,12 +40,17 @@ class Startup extends Mvc\Controller
             $this->config->set($settings);
         }
 
-        $this->config->set('env.limit', 25);
+        $this->config->set('env.limit', 36);
 
         // Apply DB setting
         $this->log->setConfig([
             'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
+
+        //=== Cache
+        if ($this->config->getBool('system.setting.development')) {
+            $this->cache->setup('DevNull');
+        }
 
         //=== Language
         $this->load->model('extension/language');
@@ -115,5 +120,16 @@ class Startup extends Mvc\Controller
             'smtp_port'     => $this->config->getInt('system.setting.mail_smtp_port', 25),
             'smtp_timeout'  => $this->config->getInt('system.setting.mail_smtp_timeout', 300),
         ]);
+
+        //=== MVC View
+        $this->view->setConfig([
+            'debug'        => $this->config->getBool('system.setting.development'),
+            'theme_active' => $this->config->get('system.site.theme'),
+        ]);
+
+        $this->view->setGlobal('config', $this->config);
+        $this->view->setGlobal('document', $this->document);
+        $this->view->setGlobal('language', $this->language);
+        $this->view->setGlobal('router', $this->router);
     }
 }

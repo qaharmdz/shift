@@ -22,7 +22,7 @@ class Carousel extends Mvc\Controller
         $results = $this->model_design_banner->getBanner($setting['banner_id']);
 
         foreach ($results as $result) {
-            if (is_file(DIR_MEDIA . $result['image'])) {
+            if (is_file(PATH_MEDIA . $result['image'])) {
                 $data['banners'][] = array(
                     'title' => $result['title'],
                     'link'  => $result['link'],

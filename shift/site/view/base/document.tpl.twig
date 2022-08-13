@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ app.language.get('code') }}" dir="{{ app.language.get('direction') }}" class="{{ app.document.getNode('class_html')|join(' ') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ (app.document.getTitle() ? app.document.getTitle() ~ ' - ') ~ app.config.get('system.site.name') }}</title>
+    <base href="{{ app.config.get('env.url_site') }}">
+
+{% for meta in app.document.getMetas() %}
+    <meta {{ meta.attribute }}="{{ meta.value }}" content="{{ meta.content }}">
+{% endfor %}
+
+{% for link in app.document.getLinks() %}
+    <link rel="{{ link.rel }}" href="{{ link.href }}" {{ link.hreflang ? 'hreflang="' ~ link.hreflang ~ '"' }} {{ link.type ? 'type="' ~ link.type ~ '"' }} {{ link.media ? 'type="' ~ link.media ~ '"' }}>
+{% endfor %}
+
+    {% block base_head_meta %}{% endblock %}
+
+    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit.sketsa.min.css" />
+{% for style in app.document.getStyles() %}
+    <link rel="stylesheet" href="{{ style.href }}" media="{{ style.media }}">
+{% endfor %}
+    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/base/style/base.css" />
+
+    {% block base_head_asset %}{% endblock %}
+
+    <script src="{{ app.config.get('env.url_site') }}asset/script/jquery/jquery-3.6.0.min.js"></script>
+    <script src="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit.min.js"></script>
+    <script src="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit-icons.min.js"></script>
+{% for script in app.document.getScripts('header') %}
+    <script src="{{ script }}"></script>
+{% endfor %}
+    <script src="{{ app.config.get('env.url_site') }}asset/base/script/base.js"></script>
+
+    {% block base_head_omega %}{% endblock %}
+
+</head>
+
+<body class="{{ app.document.getNode('class_body')|join(' ') }}">
+
+{% block base_body %}{% endblock %}
+
+{% for script in app.document.getScripts('footer') %}
+    <script src="{{ script }}"></script>
+{% endfor %}
+</body>
+</html>
