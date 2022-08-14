@@ -1,20 +1,16 @@
 <?php
 
-// header
-$_['heading_title']  = 'Administration';
+$_['page_title']        = 'Administration';
 
-// Text
-$_['text_heading']   = 'Administration';
-$_['text_login']     = 'Please enter your login details.';
-$_['text_forgotten'] = 'Forgotten Password';
+$_['signin']            = 'Sign In';
+$_['forgotten']         = 'Forgotten Password';
 
-// Entry
-$_['entry_username'] = 'Username';
-$_['entry_password'] = 'Password';
+$_['email']             = 'E-mail';
+$_['password']          = 'Password';
+$_['button_login']      = "Let's Go";
 
-// Button
-$_['button_login']   = 'Login';
-
-// Error
-$_['error_login']    = 'No match for Username and/or Password.';
-$_['error_token']    = 'Invalid token session. Please login again.';
+$_['error_account']       = 'No match for E-mail and/or Password.';
+$_['error_require_login'] = 'Login required to access admin page!';
+$_['error_unauthorize']   = 'You not have permission to access admin pages!';
+$_['error_token']         = 'Invalid access token!';
+$_['error_inactive']      = 'Login session expired due to inactivity!';

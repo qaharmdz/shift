@@ -14,76 +14,57 @@ class Login extends Mvc\Controller
     {
         $this->load->language('common/login');
 
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('page_title'));
 
-        if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
-            $this->response->redirect($this->router->url('common/dashboard', 'token=' . $this->session->get('token')));
+        if ($this->request->is('post') && $this->validate($this->request->get('post'))) {
+            $route = $this->session->pull('flash.auth.after_login', $this->config->get('root.action_default'));
+
+            $this->session->delete('flash.auth');
+            $this->response->redirect($this->router->url($route, 'token=' . $this->session->get('token')));
         }
 
-        if ($this->request->is('POST') && $this->validate()) {
-            $this->session->set('token', $this->secure->token());
-
-            $this->response->redirect($this->router->url('common/dashboard', 'token=' . $this->session->get('token')));
+        // Hide require login alert if redirected from default route.
+        if ($this->request->is('get') && $this->session->get('flash.auth.after_login') == $this->config->get('root.action_default')) {
+            $this->session->pull('flash.auth.require_login');
         }
 
-        $data['heading_title'] = $this->language->get('heading_title');
-
-        $data['text_login'] = $this->language->get('text_login');
-        $data['text_forgotten'] = $this->language->get('text_forgotten');
-
-        $data['entry_username'] = $this->language->get('entry_username');
-        $data['entry_password'] = $this->language->get('entry_password');
-
-        $data['button_login'] = $this->language->get('button_login');
-
-        if (!$this->request->isEmpty('query.token') && $this->request->get('query.token') != $this->session->get('token')) {
-            $this->error['warning'] = $this->language->get('error_token');
+        if ($this->session->pull('flash.auth.require_login', false)) {
+            $this->session->push('flash.alert.warning', $this->language->get('error_require_login'));
+        }
+        if ($this->session->pull('flash.auth.unauthorize', false)) {
+            $this->session->push('flash.alert.warning', $this->language->get('error_unauthorize'));
+        }
+        if ($this->session->pull('flash.auth.inactive', false)) {
+            $this->session->push('flash.alert.warning', $this->language->get('error_inactive'));
+        }
+        if ($this->session->pull('flash.auth.invalid_token', false)) {
+            $this->session->push('flash.alert.warning', $this->language->get('error_token'));
         }
 
-        $data['action']        = $this->router->url('common/login');
-        $data['success']       = $this->session->pull('flash.success');
-        $data['error_warning'] = $this->error['warning'] ?? '';
+        $data = [];
 
-        $data['username']      = $this->request->getString('post.username');
-        $data['password']      = $this->request->getString('post.password');
+        $data['alerts']      = $this->session->pull('flash.alert');
+        $data['email']       = $this->request->get('post.email');
+        $data['password']    = $this->request->get('post.password');
 
-        $data['redirect']      = '';
-        if ($route = $this->request->get('query.route')) {
-            $this->request->delete('query.route');
-            $this->request->delete('query.token');
-
-            $url = '';
-            if ($this->request->get('query')) {
-                $url .= http_build_query($this->request->get('query'));
-            }
-
-            $data['redirect'] = $this->router->url($route, $url);
+        $data['backgrounds'] = [];
+        foreach (glob(PATH_PUBLIC . 'admin/media/login/' . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE) as $image) {
+            $data['backgrounds'][] = substr($image, strlen(PATH_PUBLIC . 'admin/'));
         }
 
-        $data['forgotten'] = '';
-        if ($this->config->get('system.setting.password')) {
-            $data['forgotten'] = $this->router->url('common/forgotten');
-        }
-
-        $data['header'] = $this->load->controller('common/header');
-        $data['footer'] = $this->load->controller('common/footer');
-
-        $this->response->setOutput($this->load->view('common/login', $data));
+        $this->response->setOutput($this->load->view('page/login', $data));
     }
 
-    protected function validate()
+    protected function validate(array $post): bool
     {
-        if (
-            !$this->request->has('post.username')
-            || !$this->request->has('post.password')
-            || !$this->user->login(
-                $this->request->get('post.username'),
-                html_entity_decode($this->request->get('post.password'), ENT_QUOTES, 'UTF-8')
-            )
-        ) {
-            $this->error['warning'] = $this->language->get('error_login');
+        $errors = [];
+
+        if (!isset($post['email']) || !isset($post['password']) || !$this->user->login($post['email'], $post['password'])) {
+            $errors['warning'][] = $this->language->get('error_account');
         }
 
-        return !$this->error;
+        $this->session->mergeRecursive('flash.alert', $errors);
+
+        return !$errors;
     }
 }

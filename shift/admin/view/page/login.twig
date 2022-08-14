@@ -1,0 +1,49 @@
+{% extends 'document.tpl.twig' %}
+
+{% block base_body %}
+<div class="uk-background-cover uk-height-viewport uk-panel uk-flex uk-flex-left uk-flex-middle uk-text-center" style="background-image: url({{ random(backgrounds) }});">
+    <div class="uk-width-400">
+        <div class="uk-card uk-card-default uk-card-body uk-height-viewport uk-box-shadow-small" style="background: rgba(0,0,0,.8);">
+            <h3 class="uk-margin-large-top uk-margin-medium-bottom uk-light">{{ app.language.get('signin')|upper }}</h3>
+
+            <form class="uk-width-250 uk-margin-auto" action="{{ app.router.url('common/login') }}" method="post">
+                <div class="uk-light">
+                    <div class="uk-margin">
+                        <div class="uk-inline uk-width-1-1">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            {# TODO username or email #}
+                            <input class="uk-input" type="text" name="email" value="{{ email }}" autocomplete="username" placeholder="{{ app.language.get('email') }}">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <div class="uk-inline uk-width-1-1">
+                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                            <input class="uk-input" type="password" name="password" value="{{ password }}" autocomplete="current-password" placeholder="{{ app.language.get('password') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-margin uk-margin-medium-top">
+                    <button class="uk-button uk-button-primary uk-width-1-2">{{ app.language.get('button_login') }}</button>
+                    <div class="uk-text-small ukt-mt-2">
+                        <a class="uk-link-muted" href="{{ app.router.url('common/forgotten') }}">{{ app.language.get('forgotten') }}</a>
+                    </div>
+                </div>
+            </form>
+
+            <div class="uk-position-small uk-position-bottom-center uk-text-meta uk-text-lighter">
+                {{ random([
+                    'Stay foolish to stay sane.',
+                    'What we think, we become.',
+                    'Everything you can imagine is real.',
+                    'Never regret anything that made you smile.',
+                    'I don`t need it to be easy, I need it to be worth.',
+                    'Take the risk or lose the chance.',
+                    'Problems are not stop signs, they are guidelines.',
+                    'Don’t tell people your plans. Show them your results.',
+                ]) }}
+            </div>
+            <div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
