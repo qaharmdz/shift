@@ -16,10 +16,6 @@ class Maintenance extends Mvc\Controller
 
         $data = [];
 
-        $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('common/footer');
-        $data['header']  = $this->load->controller('common/header');
-
         $this->response->setHeader('Retry-After', 3600);
         $this->response->setOutput($this->load->view('page/maintenance', $data), 503);
     }

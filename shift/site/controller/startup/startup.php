@@ -18,12 +18,13 @@ class Startup extends Mvc\Controller
             $site_id = (int)$query->row['site_id'];
         }
         $this->config->set('env.site_id', $site_id);
+        // $this->config->set('env.url_site', '...'); // TODO: multistore url_site
 
         //=== Settings
         foreach (['system', 'theme'] as $group) {
             $results = $this->db->get(
                 "SELECT * FROM `" . DB_PREFIX . "setting` WHERE (site_id = '0' OR site_id = ?i) AND `group` = ? ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
-                [$this->config->getInt('env.site_id'), $group]
+                [$site_id, $group]
             );
 
             $settings = [];
