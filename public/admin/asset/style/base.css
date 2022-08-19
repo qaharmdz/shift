@@ -1,0 +1,7 @@
+html {
+    background: #f8f9fa;
+}
+body {
+    min-width: 640px;
+    min-height: 100vh;
+}

@@ -1,0 +1,35 @@
+<div class="main-navigation">
+    <ul class="uk-nav uk-nav-default uk-nav-parent-icon" uk-nav="multiple:true">
+        {% for menu in menus %}
+            {% if not menu.subs %}
+                <li><a href="{{ menu.url }}">{{ menu.name }}</a></li>
+            {% else %}
+                <li class="uk-parent">
+                    <a href="{{ menu.url }}">{{ menu.name }}</a>
+                    <ul class="uk-nav uk-nav-sub uk-nav-parent-icon" uk-nav="multiple: true">
+                        {% for item in menu.subs %}
+                            {% if not item.subs %}
+                                {% if item.type == 'header' %}
+                                    <li class="uk-nav-header">{{ item.name }}</li>
+                                {% elseif item.type == 'divider' %}
+                                    <li class="uk-nav-divider"></li>
+                                {% else %}
+                                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                {% endif %}
+                            {% else %}
+                                <li class="uk-parent">
+                                    <a href="{{ item.url }}">{{ item.name }}</a>
+                                    <ul>
+                                        {% for subitem in item.subs %}
+                                            <li><a href="{{ subitem.url }}">{{ subitem.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

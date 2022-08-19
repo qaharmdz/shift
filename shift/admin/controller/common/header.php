@@ -10,6 +10,14 @@ class Header extends Mvc\Controller
 {
     public function index()
     {
+        $this->load->language('common/header');
+
+        if (is_file(PATH_MEDIA . $this->config->get('system.site.icon'))) {
+            $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'));
+        }
+
+        //======================================================================
+
         $data['base']        = $this->config->get('env.url_app');
         $data['title']       = $this->document->getTitle();
 
@@ -72,6 +80,6 @@ class Header extends Mvc\Controller
             }
         }
 
-        return $this->load->view('common/header', $data);
+        return $this->load->view('block/header', $data);
     }
 }

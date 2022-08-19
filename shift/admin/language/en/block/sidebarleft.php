@@ -1,5 +1,9 @@
 <?php
 
+$_['dashboard']             = 'Dashboard';
+$_['content']               = 'Content';
+
+
 // Text
 $_['text_affiliate']                 = 'Affiliates';
 $_['text_api']                       = 'API';
@@ -15,7 +19,6 @@ $_['text_currency']                  = 'Currencies';
 $_['text_customer']                  = 'Customers';
 $_['text_customer_group']            = 'Customer Groups';
 $_['text_custom_field']              = 'Custom Fields';
-$_['text_dashboard']                 = 'Dashboard';
 $_['text_design']                    = 'Design';
 $_['text_download']                  = 'Downloads';
 $_['text_log']                       = 'Error Logs';

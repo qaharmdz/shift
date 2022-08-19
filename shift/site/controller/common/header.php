@@ -13,7 +13,7 @@ class Header extends Mvc\Controller
         $this->load->language('common/header');
 
         if (is_file(PATH_MEDIA . $this->config->get('system.site.icon'))) {
-            $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'), type:'image/x-icon');
+            $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'));
         }
 
         $class_body = [];

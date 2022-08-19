@@ -1,0 +1,74 @@
+{% extends 'document.tpl.twig' %}
+
+{% block base_head_asset %}
+<script>
+const shift = {
+    'version'     : "{{ app.config.get('root.version') }}",
+    'version_id'  : {{ app.config.getInt('root.version_id') }},
+    'setting'     : {{ app.config.get('system.setting')|json_encode() }},
+    'i18n'        : {{ app.language.load(app.config.get('env.language_code'))|json_encode() }},
+    'formChanged' : {{ app.document.getNode('formChanged', 'false') }},
+};
+</script>
+{% endblock %}
+
+{% block base_body %}
+{% if header is defined %}
+    <div class="page-header">
+        {{ header }}
+    </div>
+{% endif %}
+
+<div class="page-body">
+    <div class="region-middle uk-grid-collapse" uk-grid>
+        {% if layouts.sidebar_left %}
+            <div class="block-sidebar-left">
+                {{ layouts.sidebar_left }}
+            </div>
+        {% endif %}
+
+        <div class="region-content uk-width-expand">
+            <div class="block-top">
+                <div class="uk-container uk-container-expand">
+                    <ul class="uk-breadcrumb">
+                        <li><a href="{{ app.router.url('page/home') }}">{{ app.language.get('home') }}</a></li>
+                        {% for breadcrumb in app.document.getNode('breadcrumbs') %}
+                            {% if breadcrumb.1 is defined %}
+                                <li><a href="{{ breadcrumb.1 }}" {{ breadcrumb.2 is defined ? 'title="' ~ breadcrumb.2 ~ '"' : '' }}>{{ breadcrumb.0 }}</a></li>
+                            {% else %}
+                                <li class="uk-disabled"><span>{{ breadcrumb.0 }}</span></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="uk-container">
+                    {% block main_content %}No content available!{% endblock %}
+                </div>
+            </div>
+
+            {% if footer is defined %}
+                <footer class="page-footer">
+                    {{ footer }}
+                <footer class="uk-light">
+            {% endif %}
+
+        </div>{# .region-content #}
+    </div>{# .region-middle #}
+</div>
+
+<a class="to-top uk-position-fixed uk-position-small uk-position-bottom-right js-scrolldown-visible" uk-totop uk-scroll style="display:none"></a>
+
+<script>
+let scrollDown = $('.js-scrolldown-visible');
+$(window).scroll(function() {
+    if ($(window).scrollTop() >= 200) {
+        scrollDown.fadeIn();
+    } else {
+        scrollDown.fadeOut();
+    }
+});
+</script>
+{% endblock %}

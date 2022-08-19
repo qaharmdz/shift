@@ -85,10 +85,10 @@ class Dashboard extends Mvc\Controller
             }
         }
 
-        $data['header'] = $this->load->controller('common/header');
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['footer'] = $this->load->controller('common/footer');
+        $data['layouts'] = $this->load->controller('block/position');
+        $data['footer']  = $this->load->controller('common/footer');
+        $data['header']  = $this->load->controller('common/header');
 
-        $this->response->setOutput($this->load->view('common/dashboard', $data));
+        $this->response->setOutput($this->load->view('page/dashboard', $data));
     }
 }

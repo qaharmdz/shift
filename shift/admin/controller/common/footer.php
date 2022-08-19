@@ -19,6 +19,6 @@ class Footer extends Mvc\Controller
             $data['text_version'] = sprintf($this->language->get('text_version'), VERSION);
         }
 
-        return $this->load->view('common/footer', $data);
+        return $this->load->view('block/footer', $data);
     }
 }
