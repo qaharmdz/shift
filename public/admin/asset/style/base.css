@@ -1,7 +1,231 @@
+/*
+ * Table of Content:
+ *
+ * # Block Layout
+ *   - Header Navbar
+ *   - Sidebar
+ *   - Middle Region
+ *
+ * # Specific Page
+ *   - ...
+ *
+ * # Misc
+ *   - Bootstrap Icons
+ *
+ * ======================================================================== */
+
 html {
-    background: #f8f9fa;
+    background: #f9f9f9;
 }
 body {
     min-width: 640px;
     min-height: 100vh;
+}
+
+/*
+ * Block Layout
+ * ======================================================================== */
+
+/* Header Navbar
+==================================== */
+:root {
+    --navbar-height: 40px;
+}
+
+.page-header {}
+
+.block-navbar .uk-navbar {
+    height: var(--navbar-height);
+    color: var(--uk-gray-light);
+    padding: 0;
+    background: #1223a5;
+}
+.block-navbar .uk-navbar-item,
+.block-navbar .uk-navbar-nav>li>a,
+.block-navbar .uk-navbar-toggle {
+    color: rgba(255, 255, 255, .75);
+    height: var(--navbar-height);
+    min-height: var(--navbar-height);
+    padding: 0 10px;
+}
+.block-navbar .uk-navbar-toggle.uk-open,
+.block-navbar .uk-navbar-toggle:focus,
+.block-navbar .uk-navbar-toggle:hover {
+    color: var(--uk-gray-light);
+    background-color: rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+}
+
+.navbar-main-icon {
+    height: var(--navbar-height);
+    padding: 0 8px;
+    color: #e4e4e4;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+.navbar-main-icon .bi {
+    font-size: 24px;
+    line-height: calc(var(--navbar-height) - 2);
+}
+.uk-offcanvas-page .navbar-main-icon,
+.navbar-main-icon:focus,
+.navbar-main-icon:hover {
+    color: #fbfbfb;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.block-navbar .logo {
+    color: #f1f2f3;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: var(--navbar-height);
+    margin-left: 10px;
+    cursor: default;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+
+.dropdown-caret {
+    content: "";
+    height: 0;
+    width: 0;
+    margin-top: 2px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    border: 4px solid transparent;
+    border-top-color: currentcolor;
+}
+
+/* Sidebar
+==================================== */
+:root {
+    --sidebar-width: 180px;
+}
+@media screen and (max-width: 960px) {
+    :root {
+        --sidebar-width: 160px;
+    }
+}
+
+.page-body {
+    z-index: 1;
+}
+
+.block-sidebar-left {
+    width: var(--sidebar-width);
+    background: #333;
+    overflow-x: hidden;
+    transition: width .25s ease-out;
+    position: relative;
+}
+.hide-sidebar > .block-sidebar-left {
+    width: 0 !important;
+}
+
+.main-navigation .uk-nav {
+    font-size: 0.9rem;
+    width: var(--sidebar-width);
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+.main-navigation .uk-nav a {
+    margin: 0;
+    color: #eee !important;
+    padding: 6px 12px;
+}
+.main-navigation .uk-nav a:hover {
+    color: #00aaeb !important;
+    background: rgba(0,0,0,.25);
+}
+.main-navigation .uk-nav .uk-parent > a::after {
+    opacity: .7;
+    margin-right: -5px;
+    background-size: 13px;
+}
+.main-navigation .uk-nav .uk-parent > a:hover::after {
+    opacity: 1;
+}
+.main-navigation .uk-nav-sub {
+    padding: 0;
+}
+.main-navigation .uk-nav-sub a,
+.main-navigation .uk-nav-sub .uk-nav-header {
+    font-size: 0.89rem;
+    padding: 5px 10px 5px 20px;
+}
+.main-navigation .uk-nav-sub .uk-nav-header {
+    color: rgba(255,255,255,.6) !important;
+}
+.main-navigation .uk-nav-sub .uk-nav-divider {
+    margin: 5px 12px;
+    border-top: 1px solid rgba(255,255,255,.2);
+}
+
+/* Middle Region
+==================================== */
+.region-middle {
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+.block-top {
+    padding: 2px 0 3px;
+    background: rgba(0,0,0,.045);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+}
+.block-top  .uk-breadcrumb > * > * {
+    font-size: 12.5px;
+}
+
+.main-content {
+    padding-top: 20px;
+}
+.content-header {
+    margin-bottom: 25px;
+}
+.content-body {}
+
+/* --uk-breakpoint-l */
+@media (min-width: 1200px) {
+    .uk-width-content-sidebar\@l {
+        width: 320px;
+    }
+}
+
+.to-top {
+    z-index: 2;
+    margin-bottom: 45px;
+}
+.page-footer {
+    color: #666;
+    font-size: 12.6px;
+    text-align: center;
+    padding: 40px 0 75px;
+}
+
+
+
+/*
+ * Misc
+ * ======================================================================== */
+
+/* Bootstrap Icons
+==================================== */
+
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+    line-height: 1em;
+}
+.bi {
+    font-size: 15px;
+}
+.uk-button .bi {
+    line-height: 1.2em;
+}
+.bi::before {
+    vertical-align: -.175em;
+}
+.bi-2x {
+    font-size: 20px;
+}
+.bi-3x {
+    font-size: 28px;
 }

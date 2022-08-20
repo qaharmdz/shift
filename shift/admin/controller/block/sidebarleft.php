@@ -16,7 +16,7 @@ class SidebarLeft extends Mvc\Controller
         $data['menus'][] = $this->nav([
             'id'   => 'menu-dashboard',
             'name' => $this->language->get('sidebarleft.dashboard'),
-            'url'  => $this->router->url('common/dashboard'),
+            'url'  => $this->router->url('common/dashboard', 'token=' . $this->session->get('token')),
         ]);
 
         // Content

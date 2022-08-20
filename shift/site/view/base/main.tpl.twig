@@ -17,9 +17,9 @@
             <ul class="uk-breadcrumb">
                 {% for breadcrumb in app.document.getNode('breadcrumbs') %}
                     {% if breadcrumb.1 is defined %}
-                        <li class="breadcrumb-item"><a href="{{ breadcrumb.1 }}">{{ breadcrumb.0 }}</a></li>
+                        <li><a href="{{ breadcrumb.1 }}" {{ breadcrumb.2 is defined ? 'title="' ~ breadcrumb.2 ~ '"' : '' }}>{{ breadcrumb.0 }}</a></li>
                     {% else %}
-                        <li class="breadcrumb-item active">{{ breadcrumb.0 }}</li>
+                        <li class="uk-disabled"><span>{{ breadcrumb.0 }}</span></li>
                     {% endif %}
                 {% endfor %}
             </ul>

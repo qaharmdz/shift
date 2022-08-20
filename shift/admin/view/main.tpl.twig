@@ -5,10 +5,9 @@
 const shift = {
     'version'     : "{{ app.config.get('root.version') }}",
     'version_id'  : {{ app.config.getInt('root.version_id') }},
-    'setting'     : {{ app.config.get('system.setting')|json_encode() }},
     'i18n'        : {{ app.language.load(app.config.get('env.language_code'))|json_encode() }},
-    'formChanged' : {{ app.document.getNode('formChanged', 'false') }},
 };
+console.log(shift);
 </script>
 {% endblock %}
 
@@ -19,11 +18,12 @@ const shift = {
     </div>
 {% endif %}
 
+<!-- TODO: Simplify and consistent terms admin-front: region, layouts, block or position -->
 <div class="page-body">
     <div class="region-middle uk-grid-collapse" uk-grid>
-        {% if layouts.sidebar_left %}
+        {% if layouts.sidebarleft %}
             <div class="block-sidebar-left">
-                {{ layouts.sidebar_left }}
+                {{ layouts.sidebarleft }}
             </div>
         {% endif %}
 
@@ -31,7 +31,7 @@ const shift = {
             <div class="block-top">
                 <div class="uk-container uk-container-expand">
                     <ul class="uk-breadcrumb">
-                        <li><a href="{{ app.router.url('page/home') }}">{{ app.language.get('home') }}</a></li>
+                        <li><a href="{{ app.router.url('page/home') }}">{{ app.language.get('text_home') }}</a></li>
                         {% for breadcrumb in app.document.getNode('breadcrumbs') %}
                             {% if breadcrumb.1 is defined %}
                                 <li><a href="{{ breadcrumb.1 }}" {{ breadcrumb.2 is defined ? 'title="' ~ breadcrumb.2 ~ '"' : '' }}>{{ breadcrumb.0 }}</a></li>

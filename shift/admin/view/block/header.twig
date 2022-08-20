@@ -1,1 +1,47 @@
-header
+<div class="block-navbar">
+    <nav class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="navbar-main-icon" title="Navigation" uk-toggle="target:.region-middle; cls:hide-sidebar;">
+                <i class="bi bi-list bi-2x"></i>
+            </a>
+
+            <div class="logo">Shift</div>
+        </div>{# .uk-navbar-left #}
+
+        <div class="uk-navbar-right">
+            {% if sites|length > 1 %}
+                <div class="uk-display-inline">
+                    <a class="uk-navbar-toggle uk-margin-small-right" title="Visit sites">
+                        <i class="bi bi-display bi-2x"></i>
+                        <span class="dropdown-caret"></span>
+                    </a>
+                    <div uk-dropdown="offset:0; pos:bottom-right;">
+                        <ul class="uk-nav uk-dropdown-nav uk-text-small">
+                            {% for site in sites %}
+                                <li><a href="{{ site.url }}" target="_blank">{{ site.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <a class="uk-navbar-toggle uk-visible@s" href="{{ app.config.get('env.url_site') }}" target="_blank" title="{{ app.config.get('system.setting.site_name') }}">
+                    <i class="bi bi-display bi-2x"></i>
+                </a>
+            {% endif %}
+
+            <div class="uk-display-inline">
+                <a class="uk-navbar-toggle uk-margin-small-right" title="Account">
+                    <i class="bi bi-person bi-2x"></i>
+                    <span class="dropdown-caret"></span>
+                </a>
+                <div uk-dropdown="offset:0; pos:bottom-right;">
+                    <ul class="uk-nav uk-dropdown-nav uk-text-small">
+                        <li><a href="{{ app.router.url('common/profile') }}">{{ app.language.get('header.edit_account') }}</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{{ app.router.url('logout') }}">{{ app.language.get('header.logout') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>{# .uk-navbar-right #}
+    </nav>
+</div>{# .block-navabr #}

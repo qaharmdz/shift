@@ -8,7 +8,7 @@ class Pagination
 {
     public $page       = 1;
     public $total      = 0;
-    public $limit      = 36 // items per page
+    public $limit      = 36; // items per page
     public $num_links  = 8;
     public $url        = '';
     public $text_first = '|&lt;';

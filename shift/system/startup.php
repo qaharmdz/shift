@@ -6,8 +6,8 @@ if (!is_array($rootConfig)) {
     exit('(╯°□°）╯︵ ┻━┻');
 }
 
-define('VERSION', '0.1.0-a.1'); // Staging: a.*, b.*, rc.*
-list($major, $minor, $patch, $pre) = array_map('intval', explode('.', VERSION));
+define('VERSION', '0.2.0-a.2'); // Staging: a.*, b.*, rc.*
+list($major, $minor, $patch) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 
 if (version_compare(PHP_VERSION, '8.1.0', '>=') === false) {
