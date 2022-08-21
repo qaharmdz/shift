@@ -5,9 +5,9 @@
 const shift = {
     'version'     : "{{ app.config.get('root.version') }}",
     'version_id'  : {{ app.config.getInt('root.version_id') }},
+    'env'         : {{ app.config.get('env')|json_encode() }},
     'i18n'        : {{ app.language.load(app.config.get('env.language_code'))|json_encode() }},
 };
-console.log(shift);
 </script>
 {% endblock %}
 

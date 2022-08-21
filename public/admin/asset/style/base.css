@@ -98,11 +98,11 @@ body {
 /* Sidebar
 ==================================== */
 :root {
-    --sidebar-width: 180px;
+    --sidebar-width: 200px;
 }
 @media screen and (max-width: 960px) {
     :root {
-        --sidebar-width: 160px;
+        --sidebar-width: 170px;
     }
 }
 
@@ -124,8 +124,7 @@ body {
 .main-navigation .uk-nav {
     font-size: 0.9rem;
     width: var(--sidebar-width);
-    padding-top: 10px;
-    padding-bottom: 20px;
+    padding: 10px 0;
 }
 .main-navigation .uk-nav a {
     margin: 0;

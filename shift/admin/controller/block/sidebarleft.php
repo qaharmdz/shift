@@ -13,7 +13,7 @@ class SidebarLeft extends Mvc\Controller
         $this->load->language('block/sidebarleft', 'sidebarleft');
 
         // Home
-        $data['menus'][] = $this->nav([
+        $data['menus'][0] = $this->nav([
             'id'   => 'menu-dashboard',
             'name' => $this->language->get('sidebarleft.dashboard'),
             'url'  => $this->router->url('common/dashboard', 'token=' . $this->session->get('token')),
@@ -30,165 +30,147 @@ class SidebarLeft extends Mvc\Controller
         }
 
         if ($content) {
-            $data['menus'][] = $this->nav([
-                'id'   => 'menu-catalog',
+            $data['menus'][100] = $this->nav([
+                'id'   => 'menu-content',
                 'name' => $this->language->get('sidebarleft.content'),
                 'subs' => $content
             ]);
         }
 
-        /*
         // Extension
-        $extension = array();
+        $extension = [];
 
         if ($this->user->hasPermission('access', 'extension/installer')) {
-            $extension[] = array(
-                'name'     => $this->language->get('text_installer'),
-                'url'     => $this->router->url('extension/installer', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.installer'),
+                'url'  => $this->router->url('extension/installer', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($this->user->hasPermission('access', 'extension/extension')) {
-            $extension[] = array(
-                'name'     => $this->language->get('text_extension'),
-                'url'     => $this->router->url('extension/extension', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.extension'),
+                'url'  => $this->router->url('extension/extension', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($this->user->hasPermission('access', 'extension/event')) {
-            $extension[] = array(
-                'name'     => $this->language->get('text_event'),
-                'url'     => $this->router->url('extension/event', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.event'),
+                'url'  => $this->router->url('extension/event', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($this->user->hasPermission('access', 'extension/language')) {
-            $extension[] = array(
-                'name'     => $this->language->get('text_language'),
-                'url'     => $this->router->url('extension/language', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.language'),
+                'url'  => $this->router->url('extension/language', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($extension) {
-            $data['menus'][] = array(
-                'id'       => 'menu-extension',
-                'name'     => $this->language->get('text_extension'),
-                'url'     => '',
-                'children' => $extension
-            );
+            $data['menus'][200] = $this->nav([
+                'id'   => 'menu-extension',
+                'name' => $this->language->get('sidebarleft.extension'),
+                'subs' => $extension
+            ]);
         }
 
         // Design
-        $design = array();
+        $design = [];
 
         if ($this->user->hasPermission('access', 'design/layout')) {
-            $design[] = array(
-                'name'     => $this->language->get('text_layout'),
-                'url'     => $this->router->url('design/layout', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $design[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.layout'),
+                'url'  => $this->router->url('design/layout', 'token=' . $this->session->get('token')),
+            ]);
         }
         if ($this->user->hasPermission('access', 'design/banner')) {
-            $design[] = array(
-                'name'     => $this->language->get('text_banner'),
-                'url'     => $this->router->url('design/banner', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $design[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.banner'),
+                'url'  => $this->router->url('design/banner', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($design) {
-            $data['menus'][] = array(
+            $data['menus'][300] = $this->nav([
                 'id'       => 'menu-design',
-                'name'     => $this->language->get('text_design'),
-                'url'     => '',
-                'children' => $design
-            );
+                'name'     => $this->language->get('sidebarleft.design'),
+                'subs' => $design
+            ]);
         }
 
         // System
-        $system = array();
+        $system = [];
 
         if ($this->user->hasPermission('access', 'setting/setting')) {
-            $system[] = array(
-                'name'     => $this->language->get('text_setting'),
-                'url'     => $this->router->url('setting/setting', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $system[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.setting'),
+                'url'  => $this->router->url('setting/setting', 'token=' . $this->session->get('token')),
+            ]);
         }
 
-        $system[] = array(
-            'name'     => $this->language->get('text_sites'),
-            'url'     => $this->router->url('setting/site', 'token=' . $this->session->get('token')),
-            'children' => array()
-        );
+        $system[] = $this->nav([
+            'name' => $this->language->get('sidebarleft.sites'),
+            'url'  => $this->router->url('setting/site', 'token=' . $this->session->get('token')),
+        ]);
 
         // Users
-        $user = array();
+        $user = [];
 
         if ($this->user->hasPermission('access', 'user/user')) {
-            $user[] = array(
-                'name'     => $this->language->get('text_users'),
-                'url'     => $this->router->url('user/user', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $user[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.users'),
+                'url'  => $this->router->url('user/user', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($this->user->hasPermission('access', 'user/userpermission')) {
-            $user[] = array(
-                'name'     => $this->language->get('text_user_group'),
-                'url'     => $this->router->url('user/userpermission', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $user[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.user_group'),
+                'url'  => $this->router->url('user/userpermission', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($user) {
-            $system[] = array(
-                'name'     => $this->language->get('text_users'),
-                'url'     => '',
-                'children' => $user
-            );
+            $system[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.users'),
+                'url'  => '',
+                'subs' => $user
+            ]);
         }
 
         // Tools
-        $tool = array();
+        $tool = [];
 
         if ($this->user->hasPermission('access', 'tool/backup')) {
-            $tool[] = array(
-                'name'     => $this->language->get('text_backup'),
-                'url'     => $this->router->url('tool/backup', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $tool[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.backup'),
+                'url'  => $this->router->url('tool/backup', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($this->user->hasPermission('access', 'tool/log')) {
-            $tool[] = array(
-                'name'     => $this->language->get('text_log'),
-                'url'     => $this->router->url('tool/log', 'token=' . $this->session->get('token')),
-                'children' => array()
-            );
+            $tool[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.log'),
+                'url'  => $this->router->url('tool/log', 'token=' . $this->session->get('token')),
+            ]);
         }
 
         if ($tool) {
-            $system[] = array(
-                'name'     => $this->language->get('text_tools'),
-                'url'     => '',
-                'children' => $tool
-            );
+            $system[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.tools'),
+                'subs' => $tool
+            ]);
         }
 
         if ($system) {
-            $data['menus'][] = array(
-                'id'       => 'menu-system',
-                'name'     => $this->language->get('text_system'),
-                'url'     => '',
-                'children' => $system
-            );
+            $data['menus'][1000] = $this->nav([
+                'id'   => 'menu-system',
+                'name' => $this->language->get('sidebarleft.system'),
+                'subs' => $system
+            ]);
         }
-        */
 
         return $this->load->view('block/sidebarleft', $data);
     }
