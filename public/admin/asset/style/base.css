@@ -15,7 +15,7 @@
  * ======================================================================== */
 
 html {
-    background: #f9f9f9;
+    background: #f6f6f6;
 }
 body {
     min-width: 640px;
@@ -38,7 +38,9 @@ body {
     height: var(--navbar-height);
     color: var(--uk-gray-light);
     padding: 0;
-    background: #1223a5;
+    background: #25339b;
+    background: #54057c;
+    background: #065578;
 }
 .block-navbar .uk-navbar-item,
 .block-navbar .uk-navbar-nav>li>a,
@@ -98,11 +100,11 @@ body {
 /* Sidebar
 ==================================== */
 :root {
-    --sidebar-width: 200px;
+    --sidebar-width: 180px;
 }
 @media screen and (max-width: 960px) {
     :root {
-        --sidebar-width: 170px;
+        --sidebar-width: 160px;
     }
 }
 
@@ -112,13 +114,16 @@ body {
 
 .block-sidebar-left {
     width: var(--sidebar-width);
-    background: #333;
+    /*background: rgba(0,0,0,.015);*/
+    border-right: 1px solid rgba(0,0,0,.07);
     overflow-x: hidden;
     transition: width .25s ease-out;
     position: relative;
 }
 .hide-sidebar > .block-sidebar-left {
-    width: 0 !important;
+    width: 8px;
+    /* border: 0; */
+    background: rgba(0,0,0,.08);
 }
 
 .main-navigation .uk-nav {
@@ -128,12 +133,11 @@ body {
 }
 .main-navigation .uk-nav a {
     margin: 0;
-    color: #eee !important;
+    color: #333;
     padding: 6px 12px;
 }
 .main-navigation .uk-nav a:hover {
-    color: #00aaeb !important;
-    background: rgba(0,0,0,.25);
+    background: rgba(0,0,0,.05);
 }
 .main-navigation .uk-nav .uk-parent > a::after {
     opacity: .7;
@@ -167,7 +171,7 @@ body {
 
 .block-top {
     padding: 2px 0 3px;
-    background: rgba(0,0,0,.045);
+    background: rgba(0,0,0,.02);
     border-bottom: 1px solid rgba(0,0,0,.05);
 }
 .block-top  .uk-breadcrumb > * > * {
