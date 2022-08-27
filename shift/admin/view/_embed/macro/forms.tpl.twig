@@ -1,0 +1,184 @@
+{% macro hidden(param) %}
+    {% set param = {'name':'', 'value':''}|merge(param) %}
+    <input type="hidden" name="{{ param.name }}" value="{{ param.value }}">
+{% endmacro %}
+
+{% macro input(param) %}
+    {% set param = {'type':'text', 'label':'', 'name':'', 'value':'', 'class':'uk-width-1-1', 'attribute':'', 'after':'', 'info':'', 'important':false, 'errors':[]}|merge(param) %}
+
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <div class="uk-form-controls">
+            <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}" value="{{ param.value }}" class="uk-input {{ param.class }}" {{ param.attribute }}>
+            {{ param.after }}
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro textarea(param) %}
+    {% set param = {
+        'label'     : '',
+        'name'      : '',
+        'value'     : '',
+        'rows'      : 5,
+        'class'     : 'uk-width-1-1',
+        'attribute' : '',
+        'info'      : '',
+        'important' : false,
+        'errors'    : [],
+    }|merge(param) %}
+
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <div class="uk-form-controls">
+            <textarea id="{{ param.label }}" name="{{ param.name }}" rows="{{ param.rows }}" class="uk-textarea {{ param.class }}" {{ param.attribute }}>{{ param.value }}</textarea>
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro select(param) %}
+    {% set param = {
+        'label'     : '',
+        'name'      : '',
+        'options'   : [],
+        'opt_text'  : 'text',
+        'opt_value' : 'value',
+        'selected'  : '',
+        'class'     : 'uk-width-250@m',
+        'attribute' : '',
+        'info'      : '',
+        'important' : false,
+        'errors'    : [],
+    }|merge(param) %}
+
+    {% if param.options is iterable %}
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <div class="uk-form-controls">
+            <select id="{{ param.label }}" name="{{ param.name }}" class="uk-select {{ param.class }}" {{ param.attribute }}>
+                {% for option in param.options %}
+                    <option value="{{ option[param.opt_value] }}" {{ option[param.opt_value] == param.selected ? 'selected' }}>{{ option[param.opt_text] }}</option>
+                {% endfor %}
+            </select>
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro radioButton(param) %}
+    {% set param = {
+        'mode'      : 'enable-disable',
+        'label'     : '',
+        'name'      : '',
+        'options'   : [],
+        'opt_text'  : 'text',
+        'opt_value' : 'value',
+        'opt_state' : 'state',
+        'checked'   : '',
+        'info'      : '',
+        'important' : false,
+        'errors'    : [],
+    }|merge(param) %}
+
+    {% if param.options is empty %}
+        {% if param.mode == 'yes-no' %}
+            {% set param = param|merge({
+                'options': [
+                    {'text':app.language.get('yes'), 'value':'1', 'state':'success'},
+                    {'text':app.language.get('no'), 'value':'0', 'state':'danger'},
+                ]
+            }) %}
+        {% else %}
+            {% set param = param|merge({
+                'options': [
+                    {'text':app.language.get('enabled'), 'value':'1', 'state':'success'},
+                    {'text':app.language.get('disabled'), 'value':'0', 'state':'danger'},
+                ]
+                }) %}
+        {% endif %}
+    {% endif %}
+
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <div class="uk-form-controls">
+            <div class="uk-button-group uk-button-radio">
+                {% for option in param.options %}
+                    <input type="radio" id="{{ param.label ~ '-' ~ loop.index }}" name="{{ param.name }}" value="{{ option[param.opt_value] }}" {{ option[param.opt_value] == param.checked ? 'checked' }} hidden>
+                    <label for="{{ param.label ~ '-' ~ loop.index }}" class="uk-button uk-button-default uk-button-active-{{ option[param.opt_state] }}">{{ option[param.opt_text] }}</label>
+                {% endfor %}
+            </div>
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro checkboxPanel(param) %}
+    {% set param = {
+        'mode'      : 'enable-disable',
+        'label'     : '',
+        'name'      : '',
+        'lists'     : [],
+        'checked'   : [],
+        'info'      : '',
+        'important' : false,
+        'errors'    : [],
+    }|merge(param) %}
+
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
+            <label class="uk-button uk-button-gray uk-button-small uk-button-narrow ut-mt-2">
+                <input class="uk-checkbox" type="checkbox" data-checkbox-toggle='{"toggle":".checkbox-toggle-{{ param.label }}"}'> {{ app.language.get('toggle_check') }}
+            </label>
+        </label>
+        <div class="uk-form-controls">
+            <div class="uk-panel uk-panel-scrollable">
+                <ul class="uk-list uk-list-striped uk-list-collapse">
+                    {% for list in param.lists %}
+                        <li><label><input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list }}" {{ list in param.checked ? 'checked' }}> {{ list }}</label></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro infoDate(param) %}
+    {% set param = {
+        'label'     : '',
+        'datetime'  : '',
+    }|merge(param) %}
+
+    <div class="uk-margin">
+        <label class="uk-form-label">{{ app.language.get(param.label) }}</label>
+        <div class="uk-form-controls uk-form-controls-text" data-format-date="{{ param.datetime }}">{{ param.datetime }}</div>
+    </div>
+{% endmacro %}

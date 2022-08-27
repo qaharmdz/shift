@@ -1,0 +1,86 @@
+{% macro input(param) %}
+    {% set param = {
+        'type'      : 'text',
+        'label'     : '',
+        'name'      : '',
+        'value'     : '',
+        'languages' : [],
+        'class'     : 'uk-width-1-1',
+        'attribute' : '',
+        'info'      : '',
+        'important' : false,
+        'errors'    : []
+    }|merge(param) %}
+    {% set total = param.languages|length %}
+
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ this.language.get(param.label) }}</label>
+        <div class="uk-form-controls">
+            {% for language in param.languages %}
+                <div class="uk-inline uk-width-1-1">
+                    {% if total > 1 %}
+                        <span class="uk-form-icon"><img src="{{ this.config.get('env.url_site') }}media/flag/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}"></span>
+                    {% endif %}
+                    <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}[{{ language.language_id }}]" value="{{ param.value[language.language_id] ?? '' }}" class="uk-input {{ param.class }}" title="{{ '[' ~ language.code ~ '] ' ~ language.name }}" {{ param.attribute }}>
+                </div>
+            {% endfor %}
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro textarea(param) %}
+    {% set param = {
+        'languages' : [],
+        'label'     : '',
+        'name'      : '',
+        'value'     : '',
+        'rows'      : '5',
+        'class'     : 'uk-width-1-1',
+        'attribute' : '',
+        'info'      : '',
+        'important' : false,
+        'errors'    : []
+    }|merge(param) %}
+    {% set total = param.languages|length %}
+
+    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ this.language.get(param.label) }}</label>
+        <div class="uk-form-controls">
+            {% if total > 1 %}
+                <ul class="uk-tab ut-mb-3" uk-tab="connect:#tab-{{ param.label }}">
+                {% for language in param.languages %}
+                    <li>
+                        <a href="#" title="{{ '[' ~ language.code ~ '] ' ~ language.name }}">
+                            <img src="{{ this.config.get('env.url_site') }}media/flag/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}">
+                            {{ language.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                <div id="tab-{{ param.label }}" class="uk-switcher">
+                {% for language in param.languages %}
+                    <div>
+                        <textarea id="{{ param.label }}" name="{{ param.name }}[{{ language.language_id }}]" rows="{{ param.rows }}" class="uk-textarea {{ param.class }}" title="{{ language.name }}" {{ param.attribute }}>{{ param.value[language.language_id] ?? '' }}</textarea>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                {% for language in param.languages %}
+                    <textarea id="{{ param.label }}" name="{{ param.name }}[{{ language.language_id }}]" rows="{{ param.rows }}" class="uk-textarea {{ param.class }}" title="{{ language.name }}" {{ param.attribute }}>{{ param.value[language.language_id] ?? '' }}</textarea>
+                {% endfor %}
+            {% endif %}
+            {% if param.info %}
+                <div class="uk-text-meta">{{ param.info }}</div>
+            {% endif %}
+            {% if param.errors[param.name] is defined %}
+                <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
