@@ -60,6 +60,10 @@ class Mail
                 }
                 break;
 
+            case 'sendmail':
+                $this->isSendmail();
+                break;
+
             case 'mail':
             default:
                 $mail->isMail();
