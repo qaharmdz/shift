@@ -15,7 +15,7 @@ class Setting extends Mvc\Controller
     {
         $this->load->language('setting/setting');
 
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('page_title'));
 
         $this->load->model('setting/setting');
 
@@ -27,7 +27,7 @@ class Setting extends Mvc\Controller
             $this->response->redirect($this->router->url('setting/setting', 'token=' . $this->session->get('token')));
         }
 
-        $data['heading_title'] = $this->language->get('heading_title');
+        $data['page_title'] = $this->language->get('page_title');
 
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
@@ -236,7 +236,7 @@ class Setting extends Mvc\Controller
             'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
         );
         $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
+            'text' => $this->language->get('page_title'),
             'href' => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
         );
 
@@ -255,9 +255,9 @@ class Setting extends Mvc\Controller
         $this->load->model('extension/language');
         $data['languages'] = $this->model_extension_language->getLanguages();
 
-        $data['header']      = $this->load->controller('common/header');
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['footer']      = $this->load->controller('common/footer');
+        $data['layouts'] = $this->load->controller('block/position');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('setting/setting', $data));
     }

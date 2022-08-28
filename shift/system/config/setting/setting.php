@@ -22,6 +22,6 @@ $_['form'] = [
     // Cache
 
     // Maintenance
-    'display_error'     => '',
+    'display_error'     => 0,
     'development'       => 0,
 ];

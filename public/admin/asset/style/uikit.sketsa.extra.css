@@ -2,19 +2,7 @@
  * UIkit Sketsa override
  * ======================================================================== */
 
-:root {
-    --container-padding: 20px;
-    --card-body-padding: 24px;
-}
-@media screen and (min-width: 960px) {
-    :root {
-        --container-padding: 30px;
-    }
-}
-
 .uk-container {
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
     max-width: 1500px
 }
 
@@ -69,6 +57,14 @@
 .uk-select:not([multiple]):not([size]) {
     line-height: 32px;
 }
+.uk-button-group.uk-button-radio input:first-child + .uk-button {
+    border-radius: 3px 0 0 3px;
+}
+.uk-button-group.uk-button-radio .uk-button:last-child {
+    border-radius: 0 3px 3px 0;
+}
+
+
 .uk-form-small:not(textarea):not([multiple]):not([size]) {
     line-height: 28px;
 }
@@ -81,6 +77,9 @@
     margin-top: 6px;
 }
 
+:root {
+    --card-body-padding: 24px;
+}
 .uk-form-margin-hover .uk-fieldset .uk-margin {
     padding: 12px var(--card-body-padding);
     margin: 0 calc(var(--card-body-padding) * -1) !important;
