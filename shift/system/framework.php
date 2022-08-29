@@ -134,7 +134,7 @@ class Framework
         $language->load($config->get('root.locale'));
         $this->set('language', $language);
 
-        // Validate
+        // Validaion assert
         $this->set('assert', new Library\Assert());
 
         // Document
