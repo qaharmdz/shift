@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Controller\Common;
+namespace Shift\Admin\Controller\Page;
 
 use Shift\System\Mvc;
 
@@ -10,40 +10,22 @@ class Dashboard extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('common/dashboard');
+        $this->load->language('page/dashboard');
 
-        $this->document->setTitle($this->language->get('heading_title'));
-
-        $data['heading_title'] = $this->language->get('heading_title');
-
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
-        );
+        $this->document->setTitle($this->language->get('page_title'));
 
         // Check install directory exists
+        $data['error_install'] = '';
         if (is_dir(dirname(PATH_APP) . '/install')) {
             $data['error_install'] = $this->language->get('error_install');
-        } else {
-            $data['error_install'] = '';
         }
 
         // Dashboard Extensions
-        $dashboards = array();
-
         $this->load->model('extension/extension');
 
-        // Get a list of installed modules
         $extensions = $this->model_extension_extension->getInstalled('dashboard');
+        $dashboards = [];
 
-        // Add all the modules which have multiple settings for each module
         foreach ($extensions as $code) {
             if ($this->config->get('dashboard_' . $code . '_status') && $this->user->hasPermission('access', 'extension/dashboard/' . $code)) {
                 $output = $this->load->controller('extension/dashboard/' . $code . '/dashboard');

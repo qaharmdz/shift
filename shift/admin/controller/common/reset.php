@@ -14,7 +14,7 @@ class Reset extends Mvc\Controller
     public function index()
     {
         if ($this->user->isLogged() && $this->request->get('query.token', time()) == $this->session->get('token')) {
-            $this->response->redirect($this->router->url('common/dashboard'));
+            $this->response->redirect($this->router->url('page/dashboard'));
         }
 
         if (!$this->config->get('system.setting.password')) {

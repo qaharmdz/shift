@@ -6,6 +6,7 @@ $_['direction']             = 'ltr';
 
 // Text
 $_['home']                  = 'Home';
+$_['dashboard']             = 'Dashboard';
 $_['general']               = 'General';
 $_['extension']             = 'Extensions';
 $_['system']                = 'System';

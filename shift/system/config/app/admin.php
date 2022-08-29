@@ -9,4 +9,4 @@ $_['app_startup'] = [
     'startup/permission'
 ];
 
-$_['action_default'] = 'common/dashboard';
+$_['action_default'] = 'page/dashboard';
