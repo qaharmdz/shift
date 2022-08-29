@@ -6,7 +6,8 @@ $_['app_startup'] = [
     'startup/startup',
     'startup/event',
     'startup/login',
-    'startup/permission'
+    'startup/permission',
+    'startup/router',
 ];
 
 $_['action_default'] = 'page/dashboard';

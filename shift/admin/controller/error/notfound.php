@@ -22,12 +22,12 @@ class NotFound extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('error/not_found', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('error/not_found')
         );
 
         $data['header'] = $this->load->controller('common/header');

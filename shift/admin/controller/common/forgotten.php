@@ -76,7 +76,7 @@ class Forgotten extends Mvc\Controller
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('common/forgotten', 'token=' . '')
+            'href' => $this->router->url('common/forgotten')
         );
 
         $data['action'] = $this->router->url('common/forgotten');

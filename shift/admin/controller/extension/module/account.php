@@ -23,7 +23,7 @@ class Account extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module'));
+            $this->response->redirect($this->router->url('extension/extension' . '&type=module'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -47,22 +47,22 @@ class Account extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module')
+            'href' => $this->router->url('extension/extension' . '&type=module')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('extension/module/account', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('extension/module/account')
         );
 
-        $data['action'] = $this->router->url('extension/module/account', 'token=' . $this->session->get('token'));
+        $data['action'] = $this->router->url('extension/module/account');
 
-        $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=module');
+        $data['cancel'] = $this->router->url('extension/extension' . '&type=module');
 
         if ($this->request->has('post.account_status')) {
             $data['account_status'] = $this->request->get('post.account_status');

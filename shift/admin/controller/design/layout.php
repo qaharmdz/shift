@@ -48,7 +48,7 @@ class Layout extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('design/layout', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('design/layout' . $url));
         }
 
         $this->getForm();
@@ -81,7 +81,7 @@ class Layout extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('design/layout', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('design/layout' . $url));
         }
 
         $this->getForm();
@@ -116,7 +116,7 @@ class Layout extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('design/layout', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('design/layout' . $url));
         }
 
         $this->getList();
@@ -160,16 +160,16 @@ class Layout extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('design/layout', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('design/layout' . $url)
         );
 
-        $data['add'] = $this->router->url('design/layout/add', 'token=' . $this->session->get('token') . $url);
-        $data['delete'] = $this->router->url('design/layout/delete', 'token=' . $this->session->get('token') . $url);
+        $data['add'] = $this->router->url('design/layout/add' . $url);
+        $data['delete'] = $this->router->url('design/layout/delete' . $url);
 
         $data['layouts'] = array();
 
@@ -188,7 +188,7 @@ class Layout extends Mvc\Controller
             $data['layouts'][] = array(
                 'layout_id' => $result['layout_id'],
                 'name'      => $result['name'],
-                'edit'      => $this->router->url('design/layout/edit', 'token=' . $this->session->get('token') . '&layout_id=' . $result['layout_id'] . $url)
+                'edit'      => $this->router->url('design/layout/edit' . '&layout_id=' . $result['layout_id'] . $url)
             );
         }
 
@@ -231,7 +231,7 @@ class Layout extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_name'] = $this->router->url('design/layout', 'token=' . $this->session->get('token') . '&sort=name' . $url);
+        $data['sort_name'] = $this->router->url('design/layout' . '&sort=name' . $url);
 
         $url = '';
 
@@ -247,7 +247,7 @@ class Layout extends Mvc\Controller
         $pagination->total = $layout_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');
-        $pagination->url = $this->router->url('design/layout', 'token=' . $this->session->get('token') . $url . '&page={page}');
+        $pagination->url = $this->router->url('design/layout' . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -320,21 +320,21 @@ class Layout extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('design/layout', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('design/layout' . $url)
         );
 
         if (!$this->request->has('query.layout_id')) {
-            $data['action'] = $this->router->url('design/layout/add', 'token=' . $this->session->get('token') . $url);
+            $data['action'] = $this->router->url('design/layout/add' . $url);
         } else {
-            $data['action'] = $this->router->url('design/layout/edit', 'token=' . $this->session->get('token') . '&layout_id=' . $this->request->get('query.layout_id') . $url);
+            $data['action'] = $this->router->url('design/layout/edit' . '&layout_id=' . $this->request->get('query.layout_id') . $url);
         }
 
-        $data['cancel'] = $this->router->url('design/layout', 'token=' . $this->session->get('token') . $url);
+        $data['cancel'] = $this->router->url('design/layout' . $url);
 
         $data['token'] = $this->session->get('token');
 
@@ -416,7 +416,7 @@ class Layout extends Mvc\Controller
                 $data['layout_modules'][] = array(
                     'name'       => strip_tags($this->language->get('heading_title')),
                     'code'       => $layout_module['code'],
-                    'edit'       => $this->router->url('extension/module/' . $part[0], 'token=' . $this->session->get('token')),
+                    'edit'       => $this->router->url('extension/module/' . $part[0]),
                     'position'   => $layout_module['position'],
                     'sort_order' => $layout_module['sort_order']
                 );
@@ -427,7 +427,7 @@ class Layout extends Mvc\Controller
                     $data['layout_modules'][] = array(
                         'name'       => strip_tags($module_info['name']),
                         'code'       => $layout_module['code'],
-                        'edit'       => $this->router->url('extension/module/' . $part[0], 'token=' . $this->session->get('token') . '&module_id=' . $part[1]),
+                        'edit'       => $this->router->url('extension/module/' . $part[0] . '&module_id=' . $part[1]),
                         'position'   => $layout_module['position'],
                         'sort_order' => $layout_module['sort_order']
                     );

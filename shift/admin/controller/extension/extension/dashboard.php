@@ -108,10 +108,10 @@ class Dashboard extends Mvc\Controller
                     'width'      => $this->config->get('dashboard_' . $extension . '_width'),
                     'status'     => $this->config->get('dashboard_' . $extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                     'sort_order' => $this->config->get('dashboard_' . $extension . '_sort_order'),
-                    'install'    => $this->router->url('extension/extension/dashboard/install', 'token=' . $this->session->get('token') . '&extension=' . $extension),
-                    'uninstall'  => $this->router->url('extension/extension/dashboard/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension),
+                    'install'    => $this->router->url('extension/extension/dashboard/install' . '&extension=' . $extension),
+                    'uninstall'  => $this->router->url('extension/extension/dashboard/uninstall' . '&extension=' . $extension),
                     'installed'  => in_array($extension, $extensions),
-                    'edit'       => $this->router->url('extension/dashboard/' . $extension, 'token=' . $this->session->get('token'))
+                    'edit'       => $this->router->url('extension/dashboard/' . $extension)
                 );
             }
         }

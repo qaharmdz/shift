@@ -48,7 +48,7 @@ class User extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('user/user', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('user/user' . $url));
         }
 
         $this->getForm();
@@ -81,7 +81,7 @@ class User extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('user/user', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('user/user' . $url));
         }
 
         $this->getForm();
@@ -116,7 +116,7 @@ class User extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('user/user', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('user/user' . $url));
         }
 
         $this->getList();
@@ -160,16 +160,16 @@ class User extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('user/user', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('user/user' . $url)
         );
 
-        $data['add'] = $this->router->url('user/user/add', 'token=' . $this->session->get('token') . $url);
-        $data['delete'] = $this->router->url('user/user/delete', 'token=' . $this->session->get('token') . $url);
+        $data['add'] = $this->router->url('user/user/add' . $url);
+        $data['delete'] = $this->router->url('user/user/delete' . $url);
 
         $data['users'] = array();
 
@@ -190,7 +190,7 @@ class User extends Mvc\Controller
                 'username'   => $result['username'],
                 'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-                'edit'       => $this->router->url('user/user/edit', 'token=' . $this->session->get('token') . '&user_id=' . $result['user_id'] . $url)
+                'edit'       => $this->router->url('user/user/edit' . '&user_id=' . $result['user_id'] . $url)
             );
         }
 
@@ -235,9 +235,9 @@ class User extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_username'] = $this->router->url('user/user', 'token=' . $this->session->get('token') . '&sort=username' . $url);
-        $data['sort_status'] = $this->router->url('user/user', 'token=' . $this->session->get('token') . '&sort=status' . $url);
-        $data['sort_date_added'] = $this->router->url('user/user', 'token=' . $this->session->get('token') . '&sort=date_added' . $url);
+        $data['sort_username'] = $this->router->url('user/user' . '&sort=username' . $url);
+        $data['sort_status'] = $this->router->url('user/user' . '&sort=status' . $url);
+        $data['sort_date_added'] = $this->router->url('user/user' . '&sort=date_added' . $url);
 
         $url = '';
 
@@ -253,7 +253,7 @@ class User extends Mvc\Controller
         $pagination->total = $user_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');
-        $pagination->url = $this->router->url('user/user', 'token=' . $this->session->get('token') . $url . '&page={page}');
+        $pagination->url = $this->router->url('user/user' . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -350,21 +350,21 @@ class User extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('user/user', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('user/user' . $url)
         );
 
         if (!$this->request->has('query.user_id')) {
-            $data['action'] = $this->router->url('user/user/add', 'token=' . $this->session->get('token') . $url);
+            $data['action'] = $this->router->url('user/user/add' . $url);
         } else {
-            $data['action'] = $this->router->url('user/user/edit', 'token=' . $this->session->get('token') . '&user_id=' . $this->request->get('query.user_id') . $url);
+            $data['action'] = $this->router->url('user/user/edit' . '&user_id=' . $this->request->get('query.user_id') . $url);
         }
 
-        $data['cancel'] = $this->router->url('user/user', 'token=' . $this->session->get('token') . $url);
+        $data['cancel'] = $this->router->url('user/user' . $url);
 
         if ($this->request->has('query.user_id') && !$this->request->is('POST')) {
             $user_info = $this->model_user_user->getUser($this->request->get('query.user_id'));

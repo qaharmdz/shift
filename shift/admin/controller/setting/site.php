@@ -41,7 +41,7 @@ class Site extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/site'));
         }
 
         $this->getForm();
@@ -64,7 +64,7 @@ class Site extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/site'));
         }
 
         $this->getForm();
@@ -89,7 +89,7 @@ class Site extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/site', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/site'));
         }
 
         $this->getList();
@@ -107,16 +107,16 @@ class Site extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('setting/site', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('setting/site')
         );
 
-        $data['add'] = $this->router->url('setting/site/add', 'token=' . $this->session->get('token'));
-        $data['delete'] = $this->router->url('setting/site/delete', 'token=' . $this->session->get('token'));
+        $data['add'] = $this->router->url('setting/site/add');
+        $data['delete'] = $this->router->url('setting/site/delete');
 
         $data['sites'] = array();
         $site_total    = $this->model_setting_site->getTotalSites();
@@ -127,7 +127,7 @@ class Site extends Mvc\Controller
                 'site_id' => $result['site_id'],
                 'name'    => $result['name'],
                 'url'     => $result['url_host'],
-                'edit'    => $this->router->url('setting/site/edit', 'token=' . $this->session->get('token') . '&site_id=' . $result['site_id'])
+                'edit'    => $this->router->url('setting/site/edit' . '&site_id=' . $result['site_id'])
             );
         }
 
@@ -206,34 +206,34 @@ class Site extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('setting/site', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('setting/site')
         );
 
         if (!$this->request->has('query.site_id')) {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_add'),
-                'href' => $this->router->url('setting/site/add', 'token=' . $this->session->get('token'))
+                'href' => $this->router->url('setting/site/add')
             );
         } else {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('text_edit') . ' #' . $this->request->get('query.site_id'),
-                'href' => $this->router->url('setting/site/edit', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'))
+                'href' => $this->router->url('setting/site/edit' . '&site_id=' . $this->request->get('query.site_id'))
             );
         }
 
         $data['success'] = $this->session->pull('flash.success');
 
         if (!$this->request->has('query.site_id')) {
-            $data['action'] = $this->router->url('setting/site/add', 'token=' . $this->session->get('token'));
+            $data['action'] = $this->router->url('setting/site/add');
         } else {
-            $data['action'] = $this->router->url('setting/site/edit', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'));
+            $data['action'] = $this->router->url('setting/site/edit' . '&site_id=' . $this->request->get('query.site_id'));
         }
 
-        $data['cancel'] = $this->router->url('setting/site', 'token=' . $this->session->get('token'));
+        $data['cancel'] = $this->router->url('setting/site');
 
         // TODO: add array_replace_recursive() before POST save add/ edit
         $this->load->config('setting/site');

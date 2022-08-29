@@ -20,11 +20,11 @@ class Permission extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url($this->request->get('query.route'), 'token=' . $this->session->get('token'))
+            'href' => $this->router->url($this->request->get('query.route'))
         );
 
         $data['header'] = $this->load->controller('common/header');

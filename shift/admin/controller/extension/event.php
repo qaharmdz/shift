@@ -48,7 +48,7 @@ class Event extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('extension/event', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('extension/event' . $url));
         }
 
         $this->getList();
@@ -81,7 +81,7 @@ class Event extends Mvc\Controller
                 $url .= '&page=' . $this->request->get('query.page');
             }
 
-            $this->response->redirect($this->router->url('extension/event', 'token=' . $this->session->get('token') . $url));
+            $this->response->redirect($this->router->url('extension/event' . $url));
         }
 
         $this->getList();
@@ -111,12 +111,12 @@ class Event extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('extension/event', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('extension/event' . $url)
         );
 
         $data['events'] = array();
@@ -140,8 +140,8 @@ class Event extends Mvc\Controller
                 'action'     => $result['action'],
                 'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'created'    => date($this->language->get('date_format_short'), strtotime($result['created'])),
-                'enable'     => $this->router->url('extension/event/enable', 'token=' . $this->session->get('token') . '&event_id=' . $result['event_id']),
-                'disable'    => $this->router->url('extension/event/disable', 'token=' . $this->session->get('token') . '&event_id=' . $result['event_id']),
+                'enable'     => $this->router->url('extension/event/enable' . '&event_id=' . $result['event_id']),
+                'disable'    => $this->router->url('extension/event/disable' . '&event_id=' . $result['event_id']),
                 'enabled'    => $result['status']
             );
         }
@@ -182,11 +182,11 @@ class Event extends Mvc\Controller
             $url .= '&page=' . $this->request->get('query.page');
         }
 
-        $data['sort_code'] = $this->router->url('extension/event', 'token=' . $this->session->get('token') . '&sort=code' . $url);
-        $data['sort_trigger'] = $this->router->url('extension/event', 'token=' . $this->session->get('token') . '&sort=trigger' . $url);
-        $data['sort_action'] = $this->router->url('extension/event', 'token=' . $this->session->get('token') . '&sort=action' . $url);
-        $data['sort_status'] = $this->router->url('extension/event', 'token=' . $this->session->get('token') . '&sort=status' . $url);
-        $data['sort_date_added'] = $this->router->url('extension/event', 'token=' . $this->session->get('token') . '&sort=date_added' . $url);
+        $data['sort_code'] = $this->router->url('extension/event' . '&sort=code' . $url);
+        $data['sort_trigger'] = $this->router->url('extension/event' . '&sort=trigger' . $url);
+        $data['sort_action'] = $this->router->url('extension/event' . '&sort=action' . $url);
+        $data['sort_status'] = $this->router->url('extension/event' . '&sort=status' . $url);
+        $data['sort_date_added'] = $this->router->url('extension/event' . '&sort=date_added' . $url);
 
         $url = '';
 
@@ -202,7 +202,7 @@ class Event extends Mvc\Controller
         $pagination->total = $event_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');
-        $pagination->url = $this->router->url('extension/event', 'token=' . $this->session->get('token') . $url . '&page={page}');
+        $pagination->url = $this->router->url('extension/event' . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 

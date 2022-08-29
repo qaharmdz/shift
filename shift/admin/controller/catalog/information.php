@@ -37,7 +37,7 @@ class Information extends Mvc\Controller
             $this->response->redirect(
                 $this->router->url(
                     'catalog/information',
-                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page'])
+                    $this->urlQueryList(['sort', 'order', 'page'])
                 )
             );
         }
@@ -61,7 +61,7 @@ class Information extends Mvc\Controller
             $this->response->redirect(
                 $this->router->url(
                     'catalog/information',
-                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page'])
+                    $this->urlQueryList(['sort', 'order', 'page'])
                 )
             );
         }
@@ -87,7 +87,7 @@ class Information extends Mvc\Controller
             $this->response->redirect(
                 $this->router->url(
                     'catalog/information',
-                    'token=' . $this->session->get('token') . $this->urlQueryList(['sort', 'order', 'page'])
+                    $this->urlQueryList(['sort', 'order', 'page'])
                 )
             );
         }
@@ -106,15 +106,15 @@ class Information extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('catalog/information' . $url)
         );
 
-        $data['add'] = $this->router->url('catalog/information/add', 'token=' . $this->session->get('token') . $url);
-        $data['delete'] = $this->router->url('catalog/information/delete', 'token=' . $this->session->get('token') . $url);
+        $data['add'] = $this->router->url('catalog/information/add' . $url);
+        $data['delete'] = $this->router->url('catalog/information/delete' . $url);
 
         $data['informations'] = array();
 
@@ -134,7 +134,7 @@ class Information extends Mvc\Controller
                 'information_id' => $result['information_id'],
                 'title'          => $result['title'],
                 'sort_order'     => $result['sort_order'],
-                'edit'           => $this->router->url('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $result['information_id'] . $url)
+                'edit'           => $this->router->url('catalog/information/edit' . '&information_id=' . $result['information_id'] . $url)
             );
         }
 
@@ -163,8 +163,8 @@ class Information extends Mvc\Controller
 
         $url = $this->urlQueryList(['page']) . '&order=' . ($order == 'ASC' ? 'DESC' : 'ASC');
 
-        $data['sort_title'] = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . '&sort=id.title' . $url);
-        $data['sort_sort_order'] = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . '&sort=i.sort_order' . $url);
+        $data['sort_title'] = $this->router->url('catalog/information' . '&sort=id.title' . $url);
+        $data['sort_sort_order'] = $this->router->url('catalog/information' . '&sort=i.sort_order' . $url);
 
         $url = $this->urlQueryList(['sort', 'order']);
 
@@ -172,7 +172,7 @@ class Information extends Mvc\Controller
         $pagination->total = $information_total;
         $pagination->page = $page;
         $pagination->limit = $this->config->get('env.limit');
-        $pagination->url = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url . '&page={page}');
+        $pagination->url = $this->router->url('catalog/information' . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 
@@ -254,20 +254,20 @@ class Information extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url)
+            'href' => $this->router->url('catalog/information' . $url)
         );
 
         if (!$this->request->has('query.information_id')) {
-            $data['action'] = $this->router->url('catalog/information/add', 'token=' . $this->session->get('token') . $url);
+            $data['action'] = $this->router->url('catalog/information/add' . $url);
         } else {
-            $data['action'] = $this->router->url('catalog/information/edit', 'token=' . $this->session->get('token') . '&information_id=' . $this->request->get('query.information_id', 0) . $url);
+            $data['action'] = $this->router->url('catalog/information/edit' . '&information_id=' . $this->request->get('query.information_id', 0) . $url);
         }
 
-        $data['cancel'] = $this->router->url('catalog/information', 'token=' . $this->session->get('token') . $url);
+        $data['cancel'] = $this->router->url('catalog/information' . $url);
 
         if ($this->request->has('query.information_id') && !$this->request->is('POST')) {
             $information_info = $this->model_catalog_information->getInformation($this->request->getInt('query.information_id'));

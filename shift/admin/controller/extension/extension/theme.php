@@ -110,15 +110,15 @@ class Theme extends Mvc\Controller
                 foreach ($sites as $site) {
                     $site_data[] = array(
                         'name'   => $site['name'],
-                        'edit'   => $this->router->url('extension/theme/' . $extension, 'token=' . $this->session->get('token') . '&site_id=' . $site['site_id']),
+                        'edit'   => $this->router->url('extension/theme/' . $extension . '&site_id=' . $site['site_id']),
                         'status' => $this->model_setting_setting->getSettingValue('theme', $extension, 'status', $site['site_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
                     );
                 }
 
                 $data['extensions'][] = array(
                     'name'      => $this->language->get('heading_title'),
-                    'install'   => $this->router->url('extension/extension/theme/install', 'token=' . $this->session->get('token') . '&extension=' . $extension),
-                    'uninstall' => $this->router->url('extension/extension/theme/uninstall', 'token=' . $this->session->get('token') . '&extension=' . $extension),
+                    'install'   => $this->router->url('extension/extension/theme/install' . '&extension=' . $extension),
+                    'uninstall' => $this->router->url('extension/extension/theme/uninstall' . '&extension=' . $extension),
                     'installed' => in_array($extension, $extensions),
                     'site'      => $site_data
                 );

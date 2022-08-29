@@ -16,7 +16,7 @@ class SidebarLeft extends Mvc\Controller
         $data['menus'][0] = $this->nav([
             'id'   => 'menu-dashboard',
             'name' => $this->language->get('sidebarleft.dashboard'),
-            'url'  => $this->router->url('common/dashboard', 'token=' . $this->session->get('token')),
+            'url'  => $this->router->url('page/dashboard'),
         ]);
 
         // Content
@@ -25,7 +25,7 @@ class SidebarLeft extends Mvc\Controller
         if ($this->user->hasPermission('access', 'catalog/information')) {
             $content[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.information'),
-                'url'  => $this->router->url('catalog/information', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('catalog/information'),
             ]);
         }
 
@@ -43,28 +43,28 @@ class SidebarLeft extends Mvc\Controller
         if ($this->user->hasPermission('access', 'extension/installer')) {
             $extension[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.installer'),
-                'url'  => $this->router->url('extension/installer', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('extension/installer'),
             ]);
         }
 
         if ($this->user->hasPermission('access', 'extension/extension')) {
             $extension[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.extension'),
-                'url'  => $this->router->url('extension/extension', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('extension/extension'),
             ]);
         }
 
         if ($this->user->hasPermission('access', 'extension/event')) {
             $extension[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.event'),
-                'url'  => $this->router->url('extension/event', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('extension/event'),
             ]);
         }
 
         if ($this->user->hasPermission('access', 'extension/language')) {
             $extension[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.language'),
-                'url'  => $this->router->url('extension/language', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('extension/language'),
             ]);
         }
 
@@ -82,13 +82,13 @@ class SidebarLeft extends Mvc\Controller
         if ($this->user->hasPermission('access', 'design/layout')) {
             $design[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.layout'),
-                'url'  => $this->router->url('design/layout', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('design/layout'),
             ]);
         }
         if ($this->user->hasPermission('access', 'design/banner')) {
             $design[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.banner'),
-                'url'  => $this->router->url('design/banner', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('design/banner'),
             ]);
         }
 
@@ -106,13 +106,13 @@ class SidebarLeft extends Mvc\Controller
         if ($this->user->hasPermission('access', 'setting/setting')) {
             $system[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.setting'),
-                'url'  => $this->router->url('setting/setting', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('setting/setting'),
             ]);
         }
 
         $system[] = $this->nav([
             'name' => $this->language->get('sidebarleft.sites'),
-            'url'  => $this->router->url('setting/site', 'token=' . $this->session->get('token')),
+            'url'  => $this->router->url('setting/site'),
         ]);
 
         // Users
@@ -121,14 +121,14 @@ class SidebarLeft extends Mvc\Controller
         if ($this->user->hasPermission('access', 'user/user')) {
             $user[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.users'),
-                'url'  => $this->router->url('user/user', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('user/user'),
             ]);
         }
 
         if ($this->user->hasPermission('access', 'user/userpermission')) {
             $user[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.user_group'),
-                'url'  => $this->router->url('user/userpermission', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('user/userpermission'),
             ]);
         }
 
@@ -146,14 +146,14 @@ class SidebarLeft extends Mvc\Controller
         if ($this->user->hasPermission('access', 'tool/backup')) {
             $tool[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.backup'),
-                'url'  => $this->router->url('tool/backup', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('tool/backup'),
             ]);
         }
 
         if ($this->user->hasPermission('access', 'tool/log')) {
             $tool[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.log'),
-                'url'  => $this->router->url('tool/log', 'token=' . $this->session->get('token')),
+                'url'  => $this->router->url('tool/log'),
             ]);
         }
 

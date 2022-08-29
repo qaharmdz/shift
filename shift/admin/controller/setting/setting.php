@@ -24,7 +24,7 @@ class Setting extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('setting/setting', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('setting/setting'));
         }
 
         $data['page_title'] = $this->language->get('page_title');
@@ -233,15 +233,15 @@ class Setting extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('page_title'),
-            'href' => $this->router->url('setting/setting', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('setting/setting')
         );
 
         $data['success'] = $this->session->pull('flash.success');
-        $data['action']  = $this->router->url('setting/setting', 'token=' . $this->session->get('token'));
+        $data['action']  = $this->router->url('setting/setting');
         $data['token']   = $this->session->get('token');
 
         $this->load->config('setting/setting');

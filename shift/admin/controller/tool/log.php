@@ -31,16 +31,16 @@ class Log extends Mvc\Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('tool/log', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('tool/log')
         );
 
-        $data['download'] = $this->router->url('tool/log/download', 'token=' . $this->session->get('token'));
-        $data['clear'] = $this->router->url('tool/log/clear', 'token=' . $this->session->get('token'));
+        $data['download'] = $this->router->url('tool/log/download');
+        $data['clear'] = $this->router->url('tool/log/clear');
 
         $data['log'] = '';
 
@@ -96,7 +96,7 @@ class Log extends Mvc\Controller
         } else {
             $this->session->set('flash.error', sprintf($this->language->get('error_warning'), basename($file), '0B'));
 
-            $this->response->redirect($this->router->url('tool/log', 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url('tool/log'));
         }
     }
 
@@ -116,6 +116,6 @@ class Log extends Mvc\Controller
             $this->session->set('flash.success', $this->language->get('text_success'));
         }
 
-        $this->response->redirect($this->router->url('tool/log', 'token=' . $this->session->get('token')));
+        $this->response->redirect($this->router->url('tool/log'));
     }
 }

@@ -78,7 +78,7 @@ class FileManager extends Mvc\Controller
                     'name'  => implode(' ', $name),
                     'type'  => 'directory',
                     'path'  => utf8_substr($image, utf8_strlen(PATH_MEDIA)),
-                    'href'  => $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(PATH_MEDIA . 'image/'))) . $url)
+                    'href'  => $this->router->url('common/filemanager' . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(PATH_MEDIA . 'image/'))) . $url)
                 );
             } elseif (is_file($image)) {
                 $data['images'][] = array(
@@ -153,7 +153,7 @@ class FileManager extends Mvc\Controller
             $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
-        $data['parent'] = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url);
+        $data['parent'] = $this->router->url('common/filemanager' . $url);
 
         // Refresh
         $url = '';
@@ -170,7 +170,7 @@ class FileManager extends Mvc\Controller
             $url .= '&thumb=' . $this->request->get('query.thumb');
         }
 
-        $data['refresh'] = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url);
+        $data['refresh'] = $this->router->url('common/filemanager' . $url);
 
         $url = '';
 
@@ -194,7 +194,7 @@ class FileManager extends Mvc\Controller
         $pagination->total = $image_total;
         $pagination->page = $page;
         $pagination->limit = 20;
-        $pagination->url = $this->router->url('common/filemanager', 'token=' . $this->session->get('token') . $url . '&page={page}');
+        $pagination->url = $this->router->url('common/filemanager' . $url . '&page={page}');
 
         $data['pagination'] = $pagination->render();
 

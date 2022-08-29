@@ -24,7 +24,7 @@ class Base extends Mvc\Controller
 
             $this->session->set('flash.success', $this->language->get('text_success'));
 
-            $this->response->redirect($this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme'));
+            $this->response->redirect($this->router->url('extension/extension' . '&type=theme'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -48,19 +48,19 @@ class Base extends Mvc\Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard', 'token=' . $this->session->get('token'))
+            'href' => $this->router->url('common/dashboard')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_extension'),
-            'href' => $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme')
+            'href' => $this->router->url('extension/extension' . '&type=theme')
         );
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url('extension/theme/base', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'))
+            'href' => $this->router->url('extension/theme/base' . '&site_id=' . $this->request->get('query.site_id'))
         );
 
-        $data['action'] = $this->router->url('extension/theme/base', 'token=' . $this->session->get('token') . '&site_id=' . $this->request->get('query.site_id'));
-        $data['cancel'] = $this->router->url('extension/extension', 'token=' . $this->session->get('token') . '&type=theme');
+        $data['action'] = $this->router->url('extension/theme/base' . '&site_id=' . $this->request->get('query.site_id'));
+        $data['cancel'] = $this->router->url('extension/extension' . '&type=theme');
 
         $theme_info = [];
         if ($this->request->has('query.site_id') && !$this->request->is('POST')) {

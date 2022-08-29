@@ -20,7 +20,7 @@ class Login extends Mvc\Controller
             $route = $this->session->pull('flash.auth.after_login', $this->config->get('root.action_default'));
 
             $this->session->delete('flash.auth');
-            $this->response->redirect($this->router->url($route, 'token=' . $this->session->get('token')));
+            $this->response->redirect($this->router->url($route));
         }
 
         // Hide require login alert if redirected from default route.
