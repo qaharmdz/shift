@@ -71,7 +71,7 @@ $_['redirecting']           = 'Redirecting.. please wait';
 $_['no_data']               = 'No data available!';
 $_['no_result']             = 'No results found!';
 
-$_['confirm_change']        = 'Change you made may not be saved';
+$_['confirm_change']        = 'Change you made may not be saved!';
 $_['confirm_delete']        = 'This action cannot be undone!<br>The item(s) will be deleted permanently.';
 
 $_['success']               = 'Success';
@@ -82,30 +82,18 @@ $_['success_enabled']       = 'Successfully enabled';
 $_['success_disabled']      = 'Successfully disabled';
 $_['success_delete']        = 'Successfully deleted';
 
-$_['error_general']         = 'Error occured, try again later';
-$_['error_permission']      = 'You not have permission to %s';
-$_['error_form']            = 'Please check required input';
-$_['error_no_empty']        = 'Input cannot be empty';
-$_['error_required']        = 'Input required';
-$_['error_length_between']  = 'Please check, length must be between %s - %s characters';
-$_['error_length_minimum']  = 'Please enter a minimum of %s characters';
-$_['error_length_maximum']  = 'Please enter a maximum of %s characters';
-$_['error_value_between']   = 'Please check, the value must be between %s - %s';
-$_['error_value_minimum']   = 'Please check, the minimum value allowed is %s';
-$_['error_value_maximum']   = 'Please check, the maximum value allowed is %s';
+$_['error_general']         = 'Error occured, try again later.';
+$_['error_permission']      = 'You not have permission to %s.';
+$_['error_form']            = 'Please check the invalid or required input.';
+$_['error_no_empty']        = 'Input cannot be empty.';
+$_['error_required']        = 'Input required.';
+$_['error_length_minimum']  = 'Please enter a minimum of %s characters.';
+$_['error_length_maximum']  = 'Please enter a maximum of %s characters.';
+$_['error_length_between']  = 'Length must be between %s - %s characters.';
+$_['error_value_between']   = 'The value must be between %s - %s.';
+$_['error_value_minimum']   = 'The minimum value allowed is %s.';
+$_['error_value_maximum']   = 'The maximum value allowed is %s.';
 
 $_['error_403']             = 'You not have permission to proceed!';
 $_['error_412']             = 'Precondition failed, please check your request!';
-$_['error_422']             = 'Error occured, try again later';
-
-// Error
-$_['error_exception']               = 'Error Code(%s): %s in %s on line %s';
-$_['error_upload_1']                = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';
-$_['error_upload_2']                = 'Warning: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form!';
-$_['error_upload_3']                = 'Warning: The uploaded file was only partially uploaded!';
-$_['error_upload_4']                = 'Warning: No file was uploaded!';
-$_['error_upload_6']                = 'Warning: Missing a temporary folder!';
-$_['error_upload_7']                = 'Warning: Failed to write file to disk!';
-$_['error_upload_8']                = 'Warning: File upload stopped by extension!';
-$_['error_upload_999']              = 'Warning: No error code available!';
-$_['error_curl']                    = 'CURL: Error Code(%s): %s';
+$_['error_422']             = 'Error occured, try again later.';
