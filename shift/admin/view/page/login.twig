@@ -2,12 +2,12 @@
 
 {% block base_body %}
 <div class="uk-background-cover uk-height-viewport uk-panel uk-flex uk-flex-center uk-flex-middle uk-text-center">
-    <div class="uk-width-400 uk-margin-xlarge-bottom">
-        <h1 class="uk-margin-top uk-margin-bottom">{{ app.language.get('signin')|upper }}</h1>
+    <div class="uk-width-350 uk-margin-xlarge-bottom">
+        <h1 class="uk-margin-bottom">{{ app.language.get('signin')|upper }}</h1>
 
         <div class="uk-card uk-card-default uk-card-body uk-box-shadow-small" style="background:#fff;">
-            <form class="uk-width-300 uk-margin-auto" action="{{ app.router.url('common/login') }}" method="post">
-                <div class="uk-margin-top uk-margin-bottom">
+            <form class="" action="{{ app.router.url('common/login') }}" method="post">
+                <div class="uk-margin-small-top">
                     <div class="uk-margin">
                         <div class="uk-inline uk-width-1-1">
                             <span class="uk-form-icon" uk-icon="icon: user"></span>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="uk-margin uk-margin-medium-top">
+                <div class="uk-margin-medium-top">
                     <button class="uk-button uk-button-primary uk-button-large uk-width-1-2">{{ app.language.get('button_login') }}</button>
                     <div class="uk-text-small ukt-mt-2">
                         <a class="uk-link-muted" href="{{ app.router.url('common/forgotten') }}">{{ app.language.get('forgotten') }}</a>
