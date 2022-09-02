@@ -17,6 +17,13 @@ class Setting extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
+        $this->document->addNode('breadcrumbs', [
+            [$this->language->get('system')],
+            [$this->language->get('page_title'), $this->router->url('setting/setting')],
+        ]);
+
+        $data = [];
+
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('setting.setting.form'),
             $this->model_setting_setting->getSetting('system', 'setting'),
