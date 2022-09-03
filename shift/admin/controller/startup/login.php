@@ -26,9 +26,12 @@ class Login extends Mvc\Controller
         }
 
         if (
-            $this->session->isEmpty('token')
-            || $this->request->isEmpty('query.token')
-            || ($this->request->get('query.token', time()) != $this->session->get('token'))
+            !in_array($route, $ignore)
+            && (
+                $this->session->isEmpty('token')
+                || $this->request->isEmpty('query.token')
+                || ($this->request->get('query.token', time()) != $this->session->get('token'))
+            )
         ) {
             return new Http\Dispatch('common/login');
         }
