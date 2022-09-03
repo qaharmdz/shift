@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Site\Controller\Startup;
 
 use Shift\System\Mvc;
+use Shift\System\Http\Dispatch;
 
 class Configuration extends Mvc\Controller
 {
@@ -51,6 +52,16 @@ class Configuration extends Mvc\Controller
         //=== Cache
         if ($this->config->getBool('system.setting.development')) {
             $this->cache->setup('DevNull');
+        }
+
+        //=== Event
+        $events = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "event` e WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.priority DESC, e.emitter ASC",
+            ['site/%']
+        )->rows;
+
+        foreach ($events as $event) {
+            $this->event->addListener($event['emitter'], new Dispatch($event['listener']), (int)$event['priority']);
         }
 
         //=== Language

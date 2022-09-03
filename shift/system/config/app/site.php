@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 $_['app_startup'] = [
     'startup/configuration',
-    'startup/event',
     'startup/maintenance',
     'startup/router',
 ];

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
+use Shift\System\Http\Dispatch;
+
 class Event
 {
     protected $events = [];
@@ -12,11 +14,11 @@ class Event
     /**
      * Add event listener
      *
-     * @param  string        $eventName
-     * @param  Http\Dispatch $listener
-     * @param  integer       $priority
+     * @param  string    $eventName
+     * @param  Dispatch  $listener
+     * @param  integer   $priority
      */
-    public function addListener(string $eventName, Http\Dispatch $listener, int $priority = 0)
+    public function addListener(string $eventName, Dispatch $listener, int $priority = 0)
     {
         $route = $listener->getRoute();
 

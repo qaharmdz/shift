@@ -106,8 +106,8 @@ class Framework
         $this->set('event', $event);
 
         // Event Register
-        foreach ($config->get('root.action_event') as $eventName => $listenerRoute) {
-            $event->addListener($eventName, new Http\Dispatch($listenerRoute));
+        foreach ($config->get('root.action_event') as $eventEmitter => $listenerRoute) {
+            $event->addListener($eventEmitter, new Http\Dispatch($listenerRoute));
         }
 
         // Loader

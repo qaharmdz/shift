@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Admin\Controller\Startup;
 
 use Shift\System\Mvc;
+use Shift\System\Http\Dispatch;
 
 class Configuration extends Mvc\Controller
 {
@@ -12,7 +13,7 @@ class Configuration extends Mvc\Controller
     {
         //=== Settings
         $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = '0' AND `group` = ? ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = '0' AND `group` = ?s ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
             ['system']
         );
 
@@ -37,12 +38,25 @@ class Configuration extends Mvc\Controller
             'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
 
-        //=== Language
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` WHERE code = '" . $this->db->escape($this->config->get('system.setting.admin_language')) . "'");
+        //=== Event
+        $events = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "event` e WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.priority DESC, e.emitter ASC",
+            ['admin/%']
+        )->rows;
 
-        if ($query->num_rows) {
-            $this->config->set('env.language_id', (int)$query->row['language_id']);
-            $this->config->set('env.language_code', $query->row['code']);
+        foreach ($events as $event) {
+            $this->event->addListener($event['emitter'], new Dispatch($event['listener']), (int)$event['priority']);
+        }
+
+        //=== Language
+        $language = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "language` WHERE code = ?s",
+            [$this->config->get('system.setting.admin_language', 'en')]
+        )->row;
+
+        if ($language) {
+            $this->config->set('env.language_id', (int)$language['language_id']);
+            $this->config->set('env.language_code', $language['code']);
         }
 
         $this->language->set('_param.active', $this->config->get('env.language_code'));
