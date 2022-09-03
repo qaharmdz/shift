@@ -7,7 +7,7 @@ namespace Shift\Site\Controller\Startup;
 use Shift\System\Mvc;
 use Shift\System\Http;
 
-class Kernel extends Mvc\Controller
+class Component extends Mvc\Controller
 {
     public function index()
     {

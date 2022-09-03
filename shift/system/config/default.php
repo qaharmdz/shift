@@ -7,9 +7,9 @@ $_['url_host']          = '';
 $_['locale']            = 'en';
 
 // Application
-$_['app_kernel']        = 'startup/kernel';
-$_['app_error']         = 'error/notfound';
+$_['app_component']     = 'startup/component';
 $_['app_startup']       = [];
+$_['app_error']         = 'error/notfound';
 
 $_['action_default']    = 'common/home'; // TODO: app_component
 $_['action_event']      = [];// TODO: app_event

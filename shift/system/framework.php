@@ -168,7 +168,7 @@ class Framework
         $response = $this->get('response');
 
         try {
-            $pageRoute = new Http\Dispatch($config->get('root.app_kernel'));
+            $pageRoute = new Http\Dispatch($config->get('root.app_component'));
 
             foreach ($config->get('root.app_startup') as $route) {
                 $dispatch = new Http\Dispatch($route);
