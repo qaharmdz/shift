@@ -8,7 +8,8 @@
  *
  * # Plugins
  *   - $.fn.shift.notify()
- *   - $.fn.shift.goNotify
+ *   - $.fn.shift.goNotify()
+ *   - $.fn.shift.confirm()
  *
  * # IIDE (Immediate Invoked Data Expressions)
  *   - data-form-monitor
@@ -159,6 +160,49 @@ UIkit.mixin({
                     clear   : true
                 });
         }
+    };
+
+    /**
+     * @depedency UIkit.modal
+     *
+     * # Usage
+     * $.fn.shift.confirm({
+     *     title        : 'Heading',
+     *     message      : 'Message here',
+     *     onConfirm    : function() { ... }
+     * });
+     *
+     * # Override global setter
+     * $.extend($.fn.shift.confirm.defaults, {
+     *     labelOk      : 'Yes, I'm sure',
+     *     labelCancel  : 'Cancel',
+     *     onConfirm    : function() {}
+     * });
+     * - or -
+     * $.fn.shift.confirm.defaults.onConfirm = function() {};
+     */
+    $.fn.shift.confirm = function(options) {
+        let opt     = $.extend({}, $.fn.shift.confirm.defaults, options),
+            content = '<div class="uk-text-center">' + (opt.title ? '<h2 class="uk-modal-title">' + opt.title + '</h2>' : '') + '<div>' + opt.message + '</div></div>';
+
+        UIkit.notification.closeAll();
+        UIkit.modal.confirm(content, {
+            bgClose     : false,
+            escClose    : false,
+            labels      : {
+                ok      : opt.labelOk,
+                cancel  : opt.labelCancel
+            }
+        }).then(opt.onConfirm, opt.onCancel);
+    };
+
+    $.fn.shift.confirm.defaults = {
+        title       : '',
+        message     : shift.i18n.are_you_sure,
+        labelOk     : shift.i18n.yes_sure,
+        labelCancel : shift.i18n.cancel,
+        onConfirm   : function() { return true },
+        onCancel    : function() { return false }
     };
 })(jQuery);
 

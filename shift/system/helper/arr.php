@@ -119,4 +119,28 @@ class Arr
 
         return true;
     }
+
+    /**
+     * @link https://www.php.net/manual/en/function.array-chunk.php#75022
+     *
+     * @param  array    $list
+     * @param  integer  $part
+     * @return array
+     */
+    public static function partition(array $list, int $part = 2): array
+    {
+        $listlen = count($list);
+        $partlen = floor($listlen / $part);
+        $partrem = $listlen % $part;
+        $partition = [];
+        $mark = 0;
+
+        for ($px = 0; $px < $part; $px++) {
+            $incr = ($px < $partrem) ? $partlen + 1 : $partlen;
+            $partition[$px] = array_slice($list, (int)$mark, (int)$incr);
+            $mark += $incr;
+        }
+
+        return $partition;
+    }
 }

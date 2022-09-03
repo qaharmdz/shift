@@ -1,0 +1,10 @@
+{% if alerts is defined and alerts is iterable %}
+    {% for type, alert in alerts %}
+        {% for message in alert %}
+            <div class="uk-alert-{{ type }} uk-alert-small" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}

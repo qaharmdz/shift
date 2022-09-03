@@ -11,6 +11,11 @@ class Logger
     public function __construct(array $config = [])
     {
         $this->setConfig($config);
+
+        $logfile = $this->config['path'] . $this->config['logfile'];
+        if (!is_file($logfile)) {
+            file_put_contents($logfile, '');
+        }
     }
 
     public function setConfig(array $configuration = [])
