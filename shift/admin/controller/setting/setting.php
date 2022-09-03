@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shift\Admin\Controller\Setting;
 
 use Shift\System\Mvc;
-use Shift\System\Helper\Arr;
 
 class Setting extends Mvc\Controller
 {
@@ -44,6 +43,9 @@ class Setting extends Mvc\Controller
     {
         if (!$this->user->hasPermission('modify', 'setting/setting')) {
             return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
         $this->load->model('setting/setting');

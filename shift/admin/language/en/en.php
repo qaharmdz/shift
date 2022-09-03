@@ -83,6 +83,8 @@ $_['success_delete']        = 'Successfully deleted';
 
 $_['error_general']         = 'Error occured, try again later.';
 $_['error_permission']      = 'You not have permission to %s.';
+$_['error_request_method']  = 'Requet method not allowed!';
+
 $_['error_form']            = 'Please check the invalid or required input.';
 $_['error_no_empty']        = 'Input cannot be empty.';
 $_['error_required']        = 'Input required.';
