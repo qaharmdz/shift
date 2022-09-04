@@ -202,14 +202,18 @@ class Framework
             $params = [];
             $output = null;
 
+            $event->emit($eventName = 'shift/error/notfound::before', [$eventName, &$params, &$output]);
             $event->emit($eventName = 'controller/' . $route . '::before', [$eventName, &$params, &$output]);
 
             if (is_null($output)) {
-                $dispatch = (new Http\Dispatch($route))->execute($params);
-                $output   = $response->getOutput();
+                $dispatch = new Http\Dispatch($route);
+                $dispatch->execute($params);
+
+                $output = $response->getOutput();
             }
 
             $event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
+            $event->emit($eventName = 'shift/error/notfound::after', [$eventName, &$params, &$output]);
 
         // Fallback
         } catch (\Exception $e) {
