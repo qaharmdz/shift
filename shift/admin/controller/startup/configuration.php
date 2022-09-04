@@ -81,17 +81,5 @@ class Configuration extends Mvc\Controller
         $this->view->setGlobal('document', $this->document);
         $this->view->setGlobal('language', $this->language);
         $this->view->setGlobal('router', $this->router);
-
-        $this->assets(); // TODO: separate startup/asset
-        $this->document->loadAsset('form');
-    }
-
-    protected function assets()
-    {
-        $this->document->addAsset('form', [
-            'script' => [
-                $this->config->get('env.url_app') . 'asset/script/form/jquery.form.min.js',
-            ]
-        ]);
     }
 }

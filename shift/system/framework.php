@@ -168,6 +168,11 @@ class Framework
         $response = $this->get('response');
 
         try {
+            $request->set('query.route', $request->getString(
+                'query.route',
+                $config->get('root.action_default')
+            ));
+
             $pageRoute = new Http\Dispatch($config->get('root.app_component'));
 
             foreach ($config->get('root.app_startup') as $route) {
