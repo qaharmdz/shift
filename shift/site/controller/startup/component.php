@@ -13,10 +13,6 @@ class Component extends Mvc\Controller
     {
         $route = $this->request->get('query.route');
 
-        if (str_starts_with($route, 'startup/')) {
-            throw new \InvalidArgumentException('Oops!');
-        }
-
         // Sanitize the call
         $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
 

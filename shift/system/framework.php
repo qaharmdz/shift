@@ -65,7 +65,7 @@ class Framework
         $this->set('config', $config);
 
         //=== Logger
-        $logger = new Core\Logger(['display' => true]);
+        $logger = new Core\Logger();
         set_error_handler([$logger, 'errorHandler']);
         set_exception_handler([$logger, 'exceptionHandler']);
         register_shutdown_function([$logger, 'shutdownHandler']);
@@ -167,11 +167,15 @@ class Framework
         $request  = $this->get('request');
         $response = $this->get('response');
 
+        $request->set('query.route', $request->getString(
+            'query.route',
+            $config->get('root.action_default')
+        ));
+
         try {
-            $request->set('query.route', $request->getString(
-                'query.route',
-                $config->get('root.action_default')
-            ));
+            if (str_starts_with($request->get('query.route'), 'startup/')) {
+                throw new \LogicException('Oops!');
+            }
 
             $pageRoute = new Http\Dispatch($config->get('root.app_component'));
 
@@ -191,8 +195,8 @@ class Framework
         } catch (Exception\NotFoundHttpException | \InvalidArgumentException $e) {
             $logger->exceptionHandler($e);
 
-            $event = $this->get('event');
             $request->set('query.route', $config->get('root.app_error'));
+            $event = $this->get('event');
 
             $route  = $request->get('query.route');
             $params = [];
@@ -208,7 +212,7 @@ class Framework
             $event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
 
         // Fallback
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $logger->exceptionHandler($e);
             exit('The site temporarily unavailable!');
         }
