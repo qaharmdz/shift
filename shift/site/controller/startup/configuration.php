@@ -68,7 +68,7 @@ class Configuration extends Mvc\Controller
         $this->load->model('extension/language');
 
         $languages = $this->model_extension_language->getLanguages();
-        $code = $this->session->get('language');
+        $code = $this->session->get('language', $this->config->get('system.site.language'));
 
         if ($this->request->has('cookie.language') && !array_key_exists($code, $languages)) {
             $code = $this->request->get('cookie.language');
@@ -105,7 +105,7 @@ class Configuration extends Mvc\Controller
                 }
             }
 
-            $code = $detect ? $detect : '';
+            $code = $detect ?: $code;
         }
 
         if (!array_key_exists($code, $languages)) {
