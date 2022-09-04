@@ -13,6 +13,8 @@ class Request extends Core\Bags
 {
     public function __construct()
     {
+        $_SERVER['REMOTE_ADDR'] = $this->getIp();
+
         $this->set([
             'query'   => $_GET     = $this->clean($_GET),
             'post'    => $_POST    = $this->clean($_POST),
@@ -105,7 +107,7 @@ class Request extends Core\Bags
                 getenv('HTTP_X_FORWARDED') ?: (
                     getenv('HTTP_FORWARDED_FOR') ?: (
                         getenv('HTTP_FORWARDED') ?: (
-                            getenv('REMOTE_ADDR') ?: $this->get('server.REMOTE_ADDR')
+                            getenv('REMOTE_ADDR') ?: $this->get('server.REMOTE_ADDR', $_SERVER['REMOTE_ADDR'])
                         )
                     )
                 )
