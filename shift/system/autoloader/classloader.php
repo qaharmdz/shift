@@ -6,6 +6,7 @@ namespace Shift\System\Autoloader;
 
 class ClassLoader
 {
+    private $includeFile;
     protected $classMap = [];
 
     public function __construct(
@@ -18,6 +19,18 @@ class ClassLoader
         if (!empty($composerClassMap['psr4lower'])) {
             $this->classMap = array_diff_ukey($composerClassMap, $composerClassMap['psr4lower'], 'strcasecmp');
         }
+
+        /**
+         * Scope isolated include.
+         *
+         * Prevents access to $this/self from included files.
+         *
+         * @param  string $file
+         * @return void
+         */
+        $this->includeFile = static function($file) {
+            include $file;
+        };
     }
 
     /**
@@ -48,7 +61,7 @@ class ClassLoader
     public function loadClass(string $class)
     {
         if ($file = $this->findFile($class)) {
-            \Composer\Autoload\includeFile($file);
+            ($this->includeFile)($file);
 
             return true;
         }
