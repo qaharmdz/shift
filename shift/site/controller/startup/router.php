@@ -14,11 +14,6 @@ class Router extends Mvc\Controller
         $this->router->addUrlGenerator($this);
 
         $this->resolveAlias();
-
-        $this->request->set('query.route', $this->request->getString(
-            'query.route',
-            $this->config->get('root.action_default')
-        ));
     }
 
     protected function resolveAlias()
@@ -72,7 +67,10 @@ class Router extends Mvc\Controller
 
         foreach ($urlParams as $param => $value) {
             if (in_array($param, $paramList['distinct'])) {
-                $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "url_alias` WHERE `language_id` = " . $language_id . " AND `param` = ?s AND `value` = ?s", [$param, $value]);
+                $query = $this->db->get(
+                    "SELECT * FROM `" . DB_PREFIX . "url_alias` WHERE `language_id` = ?i AND `param` = ?s AND `value` = ?s",
+                    [$language_id, $param, $value]
+                );
 
                 if ($query->num_rows && $query->row['alias']) {
                     $alias .= '/' . $query->row['alias'];
@@ -85,7 +83,10 @@ class Router extends Mvc\Controller
         }
 
         if (!$alias) {
-            $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "url_alias` WHERE `language_id` = " . $language_id . " AND `route` = ?s AND `param` = ''", [$route]);
+            $query = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "url_alias` WHERE `language_id` = ?i AND `route` = ?s AND `param` = ''",
+                [$language_id, $route]
+            );
 
             if ($query->num_rows && $query->row['alias']) {
                 $alias .= '/' . rtrim($query->row['alias'], '/');
