@@ -118,8 +118,9 @@ class Logger
     protected function contextInfo()
     {
         return [
-            'method' => $_SERVER['REQUEST_METHOD'],
-            'url'    => $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
+            'method'     => $_SERVER['REQUEST_METHOD'],
+            'url'        => $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+            'ip_address' => $_SERVER['REMOTE_ADDR'],
         ];
     }
 
