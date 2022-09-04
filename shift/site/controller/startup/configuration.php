@@ -49,7 +49,6 @@ class Configuration extends Mvc\Controller
             'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
 
-        //=== Cache
         if ($this->config->getBool('system.setting.development')) {
             $this->cache->setup('DevNull');
         }
@@ -68,57 +67,26 @@ class Configuration extends Mvc\Controller
         $this->load->model('extension/language');
 
         $languages = $this->model_extension_language->getLanguages();
-        $code = $this->session->get('language', $this->config->get('system.site.language'));
+        $code = $this->config->get('system.site.language', 'en');
 
-        if ($this->request->has('cookie.language') && !array_key_exists($code, $languages)) {
-            $code = $this->request->get('cookie.language');
-        }
+        if (count($languages) > 1) {
+            $code = $this->session->get('language', $code);
 
-        // Language Detection
-        if (!$this->request->isEmpty('server.HTTP_ACCEPT_LANGUAGE') && !array_key_exists($code, $languages)) {
-            $detect = '';
-
-            $browser_languages = explode(',', $this->request->get('server.HTTP_ACCEPT_LANGUAGE'));
-
-            // Try using local to detect the language
-            foreach ($browser_languages as $browser_language) {
-                foreach ($languages as $key => $value) {
-                    if ($value['status']) {
-                        $locale = explode(',', $value['locale']);
-
-                        if (in_array($browser_language, $locale)) {
-                            $detect = $key;
-                            break 2;
-                        }
-                    }
-                }
+            if ($this->request->has('cookie.language') && !array_key_exists($code, $languages)) {
+                $code = $this->request->get('cookie.language');
             }
 
-            if (!$detect) {
-                // Try using language folder to detect the language
-                foreach ($browser_languages as $browser_language) {
-                    if (array_key_exists(strtolower($browser_language), $languages)) {
-                        $detect = strtolower($browser_language);
-
-                        break;
-                    }
-                }
+            if (!$this->session->has('language') || $this->session->get('language') != $code) {
+                $this->session->set('language', $code);
             }
 
-            $code = $detect ?: $code;
-        }
-
-        if (!array_key_exists($code, $languages)) {
-            $code = $this->config->get('system.site.language');
+            if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
+                setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->get('server.HTTP_HOST'));
+            }
         }
 
         $this->config->set('env.language_id', (int)$languages[$code]['language_id']);
         $this->config->set('env.language_code', $code);
-        $this->session->set('language', $code);
-
-        if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
-            setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->get('server.HTTP_HOST'));
-        }
 
         $this->language->set('_param.active', $code);
         $this->language->load($code);
