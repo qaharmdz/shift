@@ -14,8 +14,6 @@ class Authentication extends Mvc\Controller
         $whitelist = [
             'common/login',
             'common/logout',
-            'common/forgotten',
-            'common/reset',
         ];
 
         // Prevent loop
@@ -107,8 +105,6 @@ class Authentication extends Mvc\Controller
         $whitelist = [
             'common/login',
             'common/logout',
-            'common/forgotten',
-            'common/reset',
             'page/dashboard',
             'error/notfound',
             'error/permission'
