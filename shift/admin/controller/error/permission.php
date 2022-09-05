@@ -12,24 +12,18 @@ class Permission extends Mvc\Controller
     {
         $this->load->language('error/permission');
 
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('page_title'));
 
-        $data['heading_title']   = $this->language->get('heading_title');
-        $data['text_permission'] = $this->language->get('text_permission');
+        $this->document->addNode('class_body', 'error-403');
+        $this->document->addNode('breadcrumbs', [
+            [$this->language->get('page_title'), $this->router->url($this->request->get('query.route'))],
+        ]);
 
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->router->url('common/dashboard')
-        );
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
-            'href' => $this->router->url($this->request->get('query.route'))
-        );
+        $data = [];
 
-        $data['header'] = $this->load->controller('common/header');
-        $data['column_left'] = $this->load->controller('common/column_left');
-        $data['footer'] = $this->load->controller('common/footer');
+        $data['layouts'] = $this->load->controller('block/position');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('error/permission', $data));
     }
