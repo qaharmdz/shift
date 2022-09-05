@@ -6,22 +6,31 @@ namespace Shift\Install\Controller\Startup;
 
 use Shift\System\Mvc;
 use Shift\System\Http;
+use Shift\System\Exception;
 
 class Component extends Mvc\Controller
 {
     public function index()
     {
-        $route = $this->request->getString(
-            'query.route',
-            $this->config->get('root.action_default')
-        );
+        $route  = $this->request->get('query.route');
+        $params = [];
+        $output = null;
 
-        // Sanitize the call
-        $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
+        $this->event->emit($eventName = 'shift/component::before', [$eventName, &$params, &$output]);
+        $this->event->emit($eventName = 'controller/' . $route . '::before', [$eventName, &$params, &$output]);
 
-        $dispatch = new Http\Dispatch($route);
-        $output = $dispatch->execute();
+        if (is_null($output)) {
+            $dispatch = new Http\Dispatch($route);
+            $dispatch->execute($params);
 
-        return $output;
+            $output = $this->response->getOutput();
+        }
+
+        if (!$output) {
+            throw new Exception\NotFoundHttpException();
+        }
+
+        $this->event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
+        $this->event->emit($eventName = 'shift/component::after', [$eventName, &$params, &$output]);
     }
 }

@@ -41,6 +41,8 @@ class Debug extends Mvc\Controller
         // d($pagination);
         // echo $pagination->render();
         // echo '<pre><code>' . $this->router->url('catalog/information', '&page={page}') . '</code></pre>';
+
+        $this->response->setOutput('o_O');
     }
 
     private function testImage()
