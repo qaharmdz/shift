@@ -1,8 +1,8 @@
 <?php
 
 // Locale
-$_['code']                  = 'en';
-$_['direction']             = 'ltr';
+$_['lang_code']             = 'en';
+$_['lang_dir']              = 'ltr';
 
 // Text
 $_['home']                  = 'Home';
