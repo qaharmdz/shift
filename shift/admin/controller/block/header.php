@@ -17,7 +17,7 @@ class Header extends Mvc\Controller
         }
 
         $class_body = [];
-        foreach ($this->request->get('query', ['route' => $this->config->get('root.action_default')]) as $key => $value) {
+        foreach ($this->request->get('query', ['route' => $this->config->get('root.route_default')]) as $key => $value) {
             if (in_array($key, ['token'])) {
                 continue;
             }

@@ -9,4 +9,4 @@ $_['app_startup'] = [
     'startup/asset',
 ];
 
-$_['action_default'] = 'page/dashboard';
+$_['route_default'] = 'page/dashboard';

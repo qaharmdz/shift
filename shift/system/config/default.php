@@ -10,9 +10,9 @@ $_['locale']            = 'en';
 $_['app_component']     = 'startup/component';
 $_['app_startup']       = [];
 $_['app_error']         = 'error/notfound';
+$_['app_event']         = [];
 
-$_['action_default']    = 'common/home'; // TODO: app_component
-$_['action_event']      = [];// TODO: app_event
+$_['route_default']     = 'common/home';
 
 $_['cache_driver']      = 'Files';
 $_['cache_ttl']         = 1800; // in seconds

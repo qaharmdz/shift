@@ -106,7 +106,7 @@ class Framework
         $this->set('event', $event);
 
         // Event Register
-        foreach ($config->get('root.action_event') as $eventEmitter => $listenerRoute) {
+        foreach ($config->get('root.app_event') as $eventEmitter => $listenerRoute) {
             $event->addListener($eventEmitter, new Http\Dispatch($listenerRoute));
         }
 
@@ -169,7 +169,7 @@ class Framework
 
         $request->set('query.route', $request->getString(
             'query.route',
-            $config->get('root.action_default')
+            $config->get('root.route_default')
         ));
 
         try {

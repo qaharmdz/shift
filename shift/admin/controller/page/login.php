@@ -17,14 +17,14 @@ class Login extends Mvc\Controller
         $this->document->setTitle($this->language->get('page_title'));
 
         if ($this->request->is('POST') && $this->validate($this->request->getArray('post'))) {
-            $route = $this->session->pull('flash.auth.after_login', $this->config->get('root.action_default'));
+            $route = $this->session->pull('flash.auth.after_login', $this->config->get('root.route_default'));
 
             $this->session->delete('flash.auth');
             $this->response->redirect($this->router->url($route));
         }
 
         // Hide require login alert if redirected from default route.
-        if ($this->request->is('get') && $this->session->get('flash.auth.after_login') == $this->config->get('root.action_default')) {
+        if ($this->request->is('get') && $this->session->get('flash.auth.after_login') == $this->config->get('root.route_default')) {
             $this->session->pull('flash.auth.require_login');
         }
 
