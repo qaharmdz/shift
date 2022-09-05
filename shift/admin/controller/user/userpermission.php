@@ -337,15 +337,12 @@ class UserPermission extends Mvc\Controller
         }
 
         $ignore = array(
-            'common/dashboard',
-            'common/startup',
-            'common/login',
-            'common/logout',
-            'common/forgotten',
-            'common/reset',
-            'common/footer',
-            'common/header',
-            'error/not_found',
+            'page/dashboard',
+            'page/login',
+            'page/logout',
+            'block/header',
+            'block/footer',
+            'error/notfound',
             'error/permission'
         );
 

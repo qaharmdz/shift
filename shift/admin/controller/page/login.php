@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Controller\Common;
+namespace Shift\Admin\Controller\Page;
 
 use Shift\System\Mvc;
 
@@ -12,7 +12,7 @@ class Login extends Mvc\Controller
 
     public function index()
     {
-        $this->load->language('common/login');
+        $this->load->language('page/login');
 
         $this->document->setTitle($this->language->get('page_title'));
 
@@ -46,11 +46,6 @@ class Login extends Mvc\Controller
         $data['alerts']      = $this->session->pull('flash.alert');
         $data['email']       = $this->request->get('post.email');
         $data['password']    = $this->request->get('post.password');
-
-        $data['backgrounds'] = [];
-        foreach (glob(PATH_PUBLIC . 'admin/media/login/' . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE) as $image) {
-            $data['backgrounds'][] = substr($image, strlen(PATH_PUBLIC . 'admin/'));
-        }
 
         $this->response->setOutput($this->load->view('page/login', $data));
     }

@@ -6,7 +6,9 @@
         <h1 class="uk-margin-bottom">{{ app.language.get('signin')|upper }}</h1>
 
         <div class="uk-card uk-card-default uk-card-body uk-box-shadow-small" style="background:#fff;">
-            <form class="" action="{{ app.router.url('common/login') }}" method="post">
+            {% include '_embed/partial/alerts.tpl.twig' %}
+
+            <form class="" action="{{ app.router.url('page/login') }}" method="post">
                 <div class="uk-margin-small-top">
                     <div class="uk-margin">
                         <div class="uk-inline uk-width-1-1">

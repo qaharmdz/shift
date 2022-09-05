@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Controller\Common;
+namespace Shift\Admin\Controller\Page;
 
 use Shift\System\Mvc;
 
@@ -13,6 +13,6 @@ class Logout extends Mvc\Controller
         $this->user->logout();
         $this->session->delete('token');
 
-        $this->response->redirect($this->router->url('common/login'));
+        $this->response->redirect($this->router->url('page/login'));
     }
 }

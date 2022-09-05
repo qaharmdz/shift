@@ -104,7 +104,7 @@ class Reset extends Mvc\Controller
 
             $this->session->set('flash.error', $this->language->get('error_code'));
 
-            return new Http\Dispatch('common/login');
+            return new Http\Dispatch('account/login');
         }
     }
 

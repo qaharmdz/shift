@@ -12,8 +12,8 @@ class Authentication extends Mvc\Controller
     public function index()
     {
         $whitelist = [
-            'common/login',
-            'common/logout',
+            'page/login',
+            'page/logout',
         ];
 
         // Prevent loop
@@ -71,9 +71,9 @@ class Authentication extends Mvc\Controller
         $this->user->logout();
 
         if ($this->request->is('ajax')) {
-            $this->response->setOutputJson(['redirect' => $this->router->url('common/login')]);
+            $this->response->setOutputJson(['redirect' => $this->router->url('page/login')]);
         } else {
-            $this->response->redirect($this->router->url('common/login'));
+            $this->response->redirect($this->router->url('page/login'));
         }
     }
 
@@ -103,8 +103,8 @@ class Authentication extends Mvc\Controller
         }
 
         $whitelist = [
-            'common/login',
-            'common/logout',
+            'page/login',
+            'page/logout',
             'page/dashboard',
             'error/notfound',
             'error/permission'
