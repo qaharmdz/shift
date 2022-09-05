@@ -53,18 +53,20 @@ INSERT INTO `{DB_PREFIX}banner_image` (`banner_image_id`, `banner_id`, `language
 DROP TABLE IF EXISTS `{DB_PREFIX}event`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}event` (
   `event_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `trigger` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `action` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `created` datetime DEFAULT NULL,
-  `updated` datetime DEFAULT NULL,
+  `group` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `info` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `app` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `emitter` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `listener` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `priority` int(3) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}event` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}event` (`event_id`, `code`, `trigger`, `action`, `status`, `created`, `updated`) VALUES
-	(1, 'test', 'admin/test', 'admin/test/check', 0, '2022-05-20 23:53:20', '2022-05-21 21:53:25');
+INSERT INTO `{DB_PREFIX}event` (`event_id`, `group`, `info`, `app`, `emitter`, `listener`, `priority`, `status`) VALUES
+	(1, 'test', '', 'admin', 'page/dashboard::before', 'extension/module/method', 0, 1),
+	(2, 'test', '', 'admin', 'page/dashboard::after', 'extension/module/myMethod', 2, 1);
 /*!40000 ALTER TABLE `{DB_PREFIX}event` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}extension`;
@@ -123,7 +125,7 @@ INSERT INTO `{DB_PREFIX}information_description` (`information_id`, `language_id
 	(4, 1, 'About Us', '&lt;p&gt;\r\n	About Us 2&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 170px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/logo.png&quot;&gt;&lt;/p&gt;&lt;p&gt;Test&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 130px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/demo/manufacturer/disney.png&quot;&gt;&lt;/p&gt;&lt;p&gt;test&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 799.359px; height: 266.453px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/demo/banners/MacBookAir.jpg&quot;&gt;&lt;br&gt;&lt;/p&gt;', 'About Us', '', ''),
 	(5, 1, 'Terms &amp; Conditions', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', 'Terms &amp; Conditions', '', ''),
 	(6, 1, 'Delivery Information', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;', 'Delivery Information', '', ''),
-	(9, 1, 'New Information', '&lt;p&gt;Info Desc&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 170px;&quot; src=&quot;http://localhost/mdzGit/shift/public/image/catalog/logo.png&quot;&gt;&lt;br&gt;&lt;/p&gt;', 'New Info', '', '');
+	(9, 1, 'New Information', '&lt;p&gt;Info Desc&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img style=&quot;width: 170px;&quot; src=&quot;http://localhost/mdzGit/shift/public/media/image/logo.png&quot;&gt;&lt;br&gt;&lt;/p&gt;', 'New Info', '', '');
 /*!40000 ALTER TABLE `{DB_PREFIX}information_description` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}information_to_layout`;
@@ -166,8 +168,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}language` (
   `name` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `code` varchar(5) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `locale` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `image` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `directory` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `flag` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`language_id`),
@@ -175,8 +176,9 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}language` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}language` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-	(1, 'English', 'en-gb', 'en-US,en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
+INSERT INTO `{DB_PREFIX}language` (`language_id`, `name`, `code`, `locale`, `flag`, `sort_order`, `status`) VALUES
+	(1, 'English', 'en', 'en-US,en_US.UTF-8,en_US,en-gb,english', 'uk.png', 1, 1),
+	(2, 'Indonesia', 'id', 'ID, en-ID,en_ID.UTF-8,indonesia', 'id.png', 1, 1);
 /*!40000 ALTER TABLE `{DB_PREFIX}language` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}layout`;
@@ -293,17 +295,6 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1297, 0, 'system', 'alias_distinct', 'content/post', 'post_id', 0),
 	(1298, 0, 'system', 'alias_multi', 'content/category', 'category_id', 0),
 	(1879, 0, 'theme', 'base', 'status', '1', 0),
-	(1949, 0, 'system', 'setting', 'compression', '0', 0),
-	(1950, 0, 'system', 'setting', 'admin_language', 'en-gb', 0),
-	(1951, 0, 'system', 'setting', 'admin_limit', '25', 0),
-	(1952, 0, 'system', 'setting', 'mail_engine', 'mail', 0),
-	(1953, 0, 'system', 'setting', 'mail_smtp_hostname', 'test', 0),
-	(1954, 0, 'system', 'setting', 'mail_smtp_username', 'test', 0),
-	(1955, 0, 'system', 'setting', 'mail_smtp_password', 'test', 0),
-	(1956, 0, 'system', 'setting', 'mail_smtp_port', '123456', 0),
-	(1957, 0, 'system', 'setting', 'mail_smtp_timeout', '300', 0),
-	(1958, 0, 'system', 'setting', 'error_display', '1', 0),
-	(1959, 0, 'system', 'setting', 'development', '1', 0),
 	(1960, 0, 'system', 'site', 'name', 'Your Site', 0),
 	(1961, 0, 'system', 'site', 'url_host', 'https://localhost/mdzGit/shift/public/', 0),
 	(1962, 0, 'system', 'site', 'email', 'admin@example.com', 0),
@@ -312,9 +303,9 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1965, 0, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
 	(1966, 0, 'system', 'site', 'logo', 'image/logo.png', 0),
 	(1967, 0, 'system', 'site', 'icon', 'image/favicon.png', 0),
-	(1968, 0, 'system', 'site', 'language', 'en-gb', 0),
+	(1968, 0, 'system', 'site', 'language', 'en', 0),
 	(1969, 0, 'system', 'site', 'layout_id', '4', 0),
-	(1970, 0, 'system', 'site', 'maintenance', '0', 0),
+	(1970, 0, 'system', 'site', 'maintenance', '1', 0),
 	(1971, 0, 'system', 'site', 'theme', 'base', 0),
 	(1984, 1, 'system', 'site', 'name', 'Site Name 1', 0),
 	(1985, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
@@ -324,10 +315,22 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1989, 1, 'system', 'site', 'meta_keyword', 'Meta Tag Keywords', 0),
 	(1990, 1, 'system', 'site', 'logo', 'image/logo.png', 0),
 	(1991, 1, 'system', 'site', 'icon', 'image/favicon.png', 0),
-	(1992, 1, 'system', 'site', 'language', 'en-gb', 0),
+	(1992, 1, 'system', 'site', 'language', 'en', 0),
 	(1993, 1, 'system', 'site', 'layout_id', '4', 0),
 	(1994, 1, 'system', 'site', 'maintenance', '1', 0),
-	(1995, 1, 'system', 'site', 'theme', 'base', 0);
+	(1995, 1, 'system', 'site', 'theme', 'base', 0),
+	(2065, 0, 'system', 'setting', 'compression', '0', 0),
+	(2066, 0, 'system', 'setting', 'admin_language', 'en', 0),
+	(2067, 0, 'system', 'setting', 'admin_limit', '25', 0),
+	(2068, 0, 'system', 'setting', 'mail_engine', 'mail', 0),
+	(2069, 0, 'system', 'setting', 'mail_smtp_hostname', 'hostname.example', 0),
+	(2070, 0, 'system', 'setting', 'mail_smtp_username', 'john', 0),
+	(2071, 0, 'system', 'setting', 'mail_smtp_password', 'password', 0),
+	(2072, 0, 'system', 'setting', 'mail_smtp_port', '25', 0),
+	(2073, 0, 'system', 'setting', 'mail_smtp_timeout', '300', 0),
+	(2074, 0, 'system', 'setting', 'error_display', '1', 0),
+	(2075, 0, 'system', 'setting', 'development', '1', 0),
+	(2076, 0, 'system', 'setting', 'timezone', 'Asia/Jakarta', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}site`;
@@ -354,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}url_alias` (
   `value` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `alias` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`url_alias_id`) USING BTREE,
-  UNIQUE KEY `alias` (`site_id`,`language_id`,`alias`) USING BTREE,
+  UNIQUE KEY `alias` (`site_id`,`alias`) USING BTREE,
   KEY `route_param_value` (`route`,`param`,`value`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -365,7 +368,10 @@ INSERT INTO `{DB_PREFIX}url_alias` (`url_alias_id`, `site_id`, `language_id`, `r
 	(5, 0, 1, 'information/information', 'information_id', '6', 'delivery'),
 	(6, 0, 1, 'information/contact', '', '', 'contact-us'),
 	(7, 0, 1, 'common/home', '', '', '/'),
-	(14, 0, 1, 'information/information', 'information_id', '4', 'about-us');
+	(14, 0, 1, 'information/information', 'information_id', '4', 'about-us'),
+	(15, 0, 2, 'information/information', 'information_id', '3', 'privacy2'),
+	(16, 1, 2, 'information/information', 'information_id', '3', 'privacy2'),
+	(17, 1, 1, 'information/information', 'information_id', '3', 'privacy');
 /*!40000 ALTER TABLE `{DB_PREFIX}url_alias` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user`;
@@ -389,7 +395,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `code`, `status`, `created`, `updated`, `last_login`) VALUES
-	(1, 1, 'admin@example.com', '$2y$10$m0eY.aYEMndUDAbmzRrupeZI0qTSUa4WaUiUjbj6h32TQ/miXuzFC', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-08-01 17:03:02');
+	(1, 1, 'admin@example.com', '$2y$10$Hln48QY2YgB.3N3EWmZfKe6EYKV7vdIheCDcPCqq6JxX//J4p5v2C', 'admin', 'John', 'Doe', '', 1, '2022-01-30 16:17:31', NULL, '2022-09-05 15:00:30');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user_group`;
