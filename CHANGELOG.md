@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed library/document duplicate meta, link, style and script.
 
+### Changed
+- Rewrite admin controller, language and template.
+- Database schema.
+
 ### Removed
 - PHP template (replaced by Twig)
 
