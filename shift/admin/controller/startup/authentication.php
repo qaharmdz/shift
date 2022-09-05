@@ -14,6 +14,9 @@ class Authentication extends Mvc\Controller
         $whitelist = [
             'page/login',
             'page/logout',
+            'page/dashboard',
+            'error/notfound',
+            'error/permission'
         ];
 
         // Prevent loop
@@ -22,7 +25,10 @@ class Authentication extends Mvc\Controller
         }
 
         $this->verifyAccess();
-        $this->verifyPermission();
+
+        if ($result = $this->verifyPermission()) {
+            return $result;
+        };
     }
 
     protected function verifyAccess()
@@ -102,15 +108,7 @@ class Authentication extends Mvc\Controller
             $route .= '/' . $parts[2];
         }
 
-        $whitelist = [
-            'page/login',
-            'page/logout',
-            'page/dashboard',
-            'error/notfound',
-            'error/permission'
-        ];
-
-        if (!in_array($route, $whitelist) && !$this->user->hasPermission('access', $route)) {
+        if (!$this->user->hasPermission('access', $route)) {
             return new Http\Dispatch('error/permission');
         }
     }

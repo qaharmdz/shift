@@ -14,7 +14,7 @@ class Permission extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
-        $this->document->addNode('class_body', 'error-403');
+        $this->document->addNode('class_body', ['error-403']);
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('page_title'), $this->router->url($this->request->get('query.route'))],
         ]);
