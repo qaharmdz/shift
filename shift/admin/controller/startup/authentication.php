@@ -14,7 +14,6 @@ class Authentication extends Mvc\Controller
         $whitelist = [
             'page/login',
             'page/logout',
-            'page/dashboard',
             'error/notfound',
             'error/permission'
         ];
