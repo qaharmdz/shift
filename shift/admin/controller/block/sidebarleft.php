@@ -76,44 +76,29 @@ class SidebarLeft extends Mvc\Controller
             ]);
         }
 
-        // Design
-        $design = [];
+        // Tools
+        $tool = [];
 
         if ($this->user->hasPermission('access', 'design/layout')) {
-            $design[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.layout'),
+            $tool[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.module_layout'),
                 'url'  => $this->router->url('design/layout'),
             ]);
         }
         if ($this->user->hasPermission('access', 'design/banner')) {
-            $design[] = $this->nav([
+            $tool[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.banner'),
                 'url'  => $this->router->url('design/banner'),
             ]);
         }
 
-        if ($design) {
+        if ($tool) {
             $data['menus'][300] = $this->nav([
-                'id'       => 'menu-design',
-                'name'     => $this->language->get('sidebarleft.design'),
-                'subs' => $design
+                'id'   => 'menu-tool',
+                'name' => $this->language->get('sidebarleft.tools'),
+                'subs' => $tool
             ]);
         }
-
-        // System
-        $system = [];
-
-        if ($this->user->hasPermission('access', 'setting/setting')) {
-            $system[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.setting'),
-                'url'  => $this->router->url('setting/setting'),
-            ]);
-        }
-
-        $system[] = $this->nav([
-            'name' => $this->language->get('sidebarleft.sites'),
-            'url'  => $this->router->url('setting/site'),
-        ]);
 
         // Users
         $user = [];
@@ -133,34 +118,48 @@ class SidebarLeft extends Mvc\Controller
         }
 
         if ($user) {
-            $system[] = $this->nav([
+            $data['menus'][400] = $this->nav([
+                'id'       => 'menu-design',
                 'name' => $this->language->get('sidebarleft.users'),
-                'url'  => '',
                 'subs' => $user
             ]);
         }
 
-        // Tools
-        $tool = [];
+        // System
+        $system = [];
+
+        if ($this->user->hasPermission('access', 'setting/setting')) {
+            $system[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.setting'),
+                'url'  => $this->router->url('setting/setting'),
+            ]);
+        }
+
+        if ($this->user->hasPermission('access', 'setting/site')) {
+            $system[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.sites'),
+                'url'  => $this->router->url('setting/site'),
+            ]);
+        }
+
+        if ($this->user->hasPermissions('access', ['tool/backup', 'tool/log'])) {
+            $system[] = $this->nav([
+                'type' => 'header',
+                'name' => $this->language->get('sidebarleft.maintenance'),
+            ]);
+        }
 
         if ($this->user->hasPermission('access', 'tool/backup')) {
-            $tool[] = $this->nav([
+            $system[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.backup'),
                 'url'  => $this->router->url('tool/backup'),
             ]);
         }
 
         if ($this->user->hasPermission('access', 'tool/log')) {
-            $tool[] = $this->nav([
+            $system[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.log'),
                 'url'  => $this->router->url('tool/log'),
-            ]);
-        }
-
-        if ($tool) {
-            $system[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.tools'),
-                'subs' => $tool
             ]);
         }
 
