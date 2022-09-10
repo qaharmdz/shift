@@ -42,6 +42,8 @@ class Debug extends Mvc\Controller
         // echo $pagination->render();
         // echo '<pre><code>' . $this->router->url('catalog/information', '&page={page}') . '</code></pre>';
 
+        // $this->log->write(['foo' => 'bar', 'baz' => [1, 2, 3]]);
+
         $this->response->setOutput('o_O');
     }
 
