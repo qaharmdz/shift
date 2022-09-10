@@ -27,7 +27,7 @@ class Component extends Mvc\Controller
         }
 
         if (!$output) {
-            throw new Exception\NotFoundHttpException();
+            throw new Exception\NotFoundHttpException(sprintf('Component "%s" do not have a response output', $route));
         }
 
         $this->event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
