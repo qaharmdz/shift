@@ -23,7 +23,7 @@
 {% for style in app.document.getStyles() %}
     <link rel="stylesheet" href="{{ style.href }}" media="{{ style.media }}">
 {% endfor %}
-    <link rel="stylesheet" href="{{ app.config.get('env.url_app') }}asset/style/base.css" />
+    <link rel="stylesheet" href="{{ app.config.get('env.url_app') }}asset/style/shift.css" />
 
     {% block base_head_asset %}{% endblock %}
 
@@ -33,7 +33,7 @@
 {% for script in app.document.getScripts('header') %}
     <script src="{{ script }}"></script>
 {% endfor %}
-    <script src="{{ app.config.get('env.url_app') }}asset/script/base.js"></script>
+    <script src="{{ app.config.get('env.url_app') }}asset/script/shift.js"></script>
 
     {% block base_head_omega %}{% endblock %}
 
