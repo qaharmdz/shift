@@ -8,6 +8,7 @@ use Shift\System\Mvc;
 
 class Site extends Mvc\Model
 {
+    /*
     public function addSite($data)
     {
         $this->db->query("INSERT INTO " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['name']) . "', `url_host` = '" . $this->db->escape($data['url_host']) . "', `ssl` = '" . $this->db->escape($data['ssl']) . "'");
@@ -47,14 +48,14 @@ class Site extends Mvc\Model
 
         return $query->row;
     }
+    */
 
-    public function getSites($data = array())
+    public function getSites()
     {
         $site_data = $this->cache->get('site');
 
         if (!$site_data) {
             $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY site_id ASC");
-
             $site_data = $query->rows;
 
             $this->cache->set('site', $site_data);
@@ -63,6 +64,7 @@ class Site extends Mvc\Model
         return $site_data;
     }
 
+    /*
     public function getTotalSites()
     {
         $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "site");
@@ -127,4 +129,5 @@ class Site extends Mvc\Model
 
         return $query->row['total'];
     }
+    */
 }

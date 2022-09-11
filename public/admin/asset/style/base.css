@@ -121,9 +121,9 @@ body {
     position: relative;
 }
 .hide-sidebar > .block-sidebar-left {
-    width: 8px;
+    width: 5px;
     /* border: 0; */
-    background: rgba(0,0,0,.08);
+    background: rgba(0,0,0,.1);
 }
 
 .main-navigation .uk-nav {
