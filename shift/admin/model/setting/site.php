@@ -5,9 +5,69 @@ declare(strict_types=1);
 namespace Shift\Admin\Model\Setting;
 
 use Shift\System\Mvc;
+use Shift\System\Helper;
 
 class Site extends Mvc\Model
 {
+    // List
+    // ================================================
+
+    /**
+     * DataTables records
+     *
+     * @param  array  $params
+     */
+    public function dtRecords(array $params)
+    {
+        $columnMap = [
+            'site_id'  => 's.site_id',
+            'name'     => 's.name',
+            'url_host' => 's.url_host',
+        ];
+        $filterMap = $columnMap;
+
+        $dataTables = (new Helper\Datatables($params))->parse($params)->sqlQuery($filterMap)->pullData();
+
+        $query = "SELECT " . implode(', ', $columnMap)
+            . " FROM `" . DB_PREFIX . "site` s"
+            . ($dataTables['sql']['query']['where'] ? " WHERE " . $dataTables['sql']['query']['where'] : "")
+            . " ORDER BY " . $dataTables['sql']['query']['order']
+            . " LIMIT " . $dataTables['sql']['query']['limit'];
+
+        return $this->db->get($query, $dataTables['sql']['params']);
+    }
+
+    public function dtAction(string $type, array $items): array
+    {
+        $_items = [];
+
+        if (in_array($type, ['enabled', 'disabled'])) {
+            $status = $type == 'enabled' ? 1 : 0;
+
+            foreach ($items as $item) {
+                $updated = $this->db->rawQuery(
+                    "UPDATE `" . DB_PREFIX . "term`
+                    SET status = " . (int)$status . ",
+                        updated = NOW()
+                    WHERE term_id = " . (int)$item . "
+                        AND taxonomy = '" . $this->taxonomy . "'"
+                );
+
+                if ($updated) {
+                    $_items[] = $item;
+                }
+            }
+        }
+
+        if ($type == 'delete') {
+            $this->deleteCategories($items);
+        }
+
+        return $_items;
+    }
+
+    // Form CRUD
+    // ================================================
     /*
     public function addSite($data)
     {
@@ -55,7 +115,7 @@ class Site extends Mvc\Model
         $site_data = $this->cache->get('site');
 
         if (!$site_data) {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY site_id ASC");
+            $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC");
             $site_data = $query->rows;
 
             $this->cache->set('site', $site_data);
@@ -64,14 +124,14 @@ class Site extends Mvc\Model
         return $site_data;
     }
 
-    /*
-    public function getTotalSites()
+    public function getTotal()
     {
-        $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "site");
+        $query = $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "site`");
 
         return $query->row['total'];
     }
 
+    /*
     public function getTotalSitesByLayoutId($layout_id)
     {
         $query = $this->db->get("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "setting WHERE `key` = 'layout_id' AND `value` = '" . (int)$layout_id . "' AND site_id != '0'");

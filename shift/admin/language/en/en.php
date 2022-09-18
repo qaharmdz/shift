@@ -61,6 +61,19 @@ $_['toggle_check']          = 'Toggle check';
 $_['pagination']            = 'Showing %d to %d of %d (%d Pages)';
 $_['no_results']            = 'No results!';
 
+// DataTables
+$_['columns']               = 'Columns';
+$_['search_']               = 'Search..';
+$_['search_all']            = 'Search all';
+$_['search_clear']          = 'Clear search';
+$_['reload_data']           = 'Reload data';
+$_['show_x_data']           = 'Show _START_ to _END_ of _TOTAL_ data'; // Tags: _START_, _END_, _TOTAL_
+$_['filter_x_data']         = '(filtered from _MAX_ total data)'; // Tags: _MAX_
+$_['select_min_one']        = 'Select minimum one item to continue.';
+$_['reset_order']           = 'Reset column order';
+$_['reset_state']           = 'Reset table state';
+$_['reset_info']            = 'Clear search, reset item per page, column order and column visibility';
+
 // Notification
 $_['saving']                = 'Saving..';
 $_['loading']               = 'Loading...';
@@ -95,6 +108,6 @@ $_['error_value_between']   = 'The value must be between %s - %s.';
 $_['error_value_minimum']   = 'The minimum value allowed is %s.';
 $_['error_value_maximum']   = 'The maximum value allowed is %s.';
 
-$_['error_403']             = 'You not have permission to proceed!';
-$_['error_412']             = 'Precondition failed, please check your request!';
-$_['error_422']             = 'Error occured, try again later.';
+$_['error_forbidden']       = 'Forbidden, you not have permission to proceed!'; // 403
+$_['error_precondition']    = 'Precondition failed, please check your request!'; // 412
+$_['error_unprocessable']   = 'Unprocessable entity, try again later, .'; // 422

@@ -1,4 +1,157 @@
 {% extends 'main.tpl.twig' %}
 
 {% block main_content %}
+<div class="content-header">
+    <div class="uk-child-width-expand" uk-grid>
+        <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+        <div class="uk-flex uk-flex-middle uk-flex-right">
+            <a href="{{ app.router.url('setting/site/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+        </div>
+    </div>
+</div>
+
+<div class="content-body uk-card-panel uk-card-body">
+    <table id="settingSite-list" class="uk-table uk-table-striped uk-table-hover">
+        <thead>
+            <tr>
+                <th class="ukt-px-0" style="width:30px;">
+                    <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                        </ul>
+                    </div>
+                </th>
+                <th style="width:60px;">{{ app.language.get('id') }}</th>
+                <th style="width:300px">{{ app.language.get('name') }}</th>
+                <th>{{ app.language.get('site_url') }}</th>
+                <th style="width:80px;">{{ app.language.get('action') }}</th>
+            </tr>
+            <tr class="dt-column-filter">
+                <td></td>
+                <td data-filter='{"type":"number", "mode":"range"}'>
+                    <input type="text" value="" data-index="1" class="uk-input">
+                </td>
+                <td data-filter='{"type":"string", "mode":"like"}'>
+                    <input type="text" value="" data-index="2" class="uk-input">
+                </td>
+                <td data-filter='{"type":"string", "mode":"like"}'>
+                    <input type="text" value="" data-index="3" class="uk-input">
+                </td>
+                <td class="uk-text-center">
+                    <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="5" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+$(document).ready(function() {
+let tableId    = 'settingSite-list',
+    sortingCol = [[1, 'asc']], // site_id
+    dtTable    = $('#' + tableId).DataTable({
+        ajax : $.fn.dataTable.pipeline({
+            url  : "{{ app.router.url('setting/site/list')|raw }}",
+            data : function(d) {
+                $('.dt-column-filter td').each(function(i) {
+                    let dataFilter = $(this).data('filter');
+                    if (dataFilter != undefined) {
+                        $.extend(d.columns[i]['search'], dataFilter || []);
+
+                        if (d.draw > 1) {
+                            let forms = $('input, select', this);
+                            if (forms.length == 1) {
+                                d.columns[i]['search']['value'] = $('input, select', this).val() || '';
+                            } else if (forms.length == 2) {
+                                forms.each(function(ci, el) {
+                                    if (ci > 0) {
+                                        d.columns[i]['search']['value'] += '~';
+                                    }
+                                    d.columns[i]['search']['value'] += $(el).val() || '';
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }),
+        initComplete: function () {
+            this.api().columns().every(function(i) {
+                $('[data-index=' + i + ']').val(this.search());
+            });
+        },
+        sorting : sortingCol,
+        columnDefs : [
+            { searchable: false, targets : [0, -1] },
+            { orderable : false, targets : [0, -1] },
+            { createdCell : function(nTd) {
+                $(nTd).addClass('uk-text-center'); },
+                targets : [0, -1]
+            },
+        ],
+        columns : [
+            { data : 'site_id',
+                className : 'noVisualColumn',
+                render : function(data, type, full) {
+                    return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                }
+            },
+            { data : 'site_id' },
+            { data : 'name'},
+            { data : 'url_host' },
+            { data : 'site_id',
+                className : 'noVisualColumn ukt-p-2',
+                render : function(data, type, full) {
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
+                    output += '<div class="uk-inline ukt-ml-2">';
+                    output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                    output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                    output += '        <ul class="uk-nav uk-dropdown-nav">';
+                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.site_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                    output += '        </ul>';
+                    output += '    </div>';
+                    output += '</div>';
+
+                    return output;
+                }
+            }
+        ]
+    });
+
+    // console.log(dtTable.state.loaded());
+
+    // Typewatch for "search all" input
+    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.search(value).draw();
+        },
+    });
+    // Typewatch for column filter input
+    $('.dt-column-filter input, .dt-column-filter select').off('keypress keyup search input paste cut').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.column($(this).data('index')).search(value).draw();
+        },
+    });
+
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Table state options
+    $('[data-dtClearSearch]').on('click', function() {
+        dtTable.clearSearch().draw();
+    });
+});
+</script>
 {% endblock %}

@@ -21,10 +21,12 @@ class Debug extends Mvc\Controller
             '----------------------------',
             $this->user->get(),
             $this->language->all(),
-            '----------------------------',
-            $this->view->getConfig(),
-            $this->view->getTemplatePath(),
+            // '----------------------------',
+            // $this->view->getConfig(),
+            // $this->view->getTemplatePath(),
         );
+
+        // d($this->db->get($this->session->get('dataTables_query'), $this->session->get('dataTables.sql.params')));
 
         // $mail = $this->mail->getInstance();
         // d($this->mail, $mail);
