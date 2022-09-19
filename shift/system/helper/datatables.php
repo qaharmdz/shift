@@ -62,19 +62,23 @@ class Datatables
                 if (!$columnSearch['mode']) {
                     switch ($columnSearch['type']) {
                         case 'number':
+                            $columnSearch['mode'] = 'match';
+                            break;
+
                         case 'date':
-                            $columnSearch['type'] = 'range';
+                            $columnSearch['mode'] = 'range';
                             break;
 
                         case 'string':
                         default:
-                            $columnSearch['type'] = 'like';
+                            $columnSearch['mode'] = 'like';
                             break;
                     }
                 }
 
-                if ($columnSearch['mode'] == 'range' && str_contains($columnSearch['keyword'], $this->rangeSeparator)) {
+                if (in_array($columnSearch['mode'], ['match', 'range']) && str_contains($columnSearch['keyword'], $this->rangeSeparator)) {
                     $range = array_map('trim', explode($this->rangeSeparator, $columnSearch['keyword']));
+                    $columnSearch['mode'] = 'range';
 
                     if ($columnSearch['type'] == 'number') {
                         $columnSearch['keyword'] = [
@@ -154,13 +158,13 @@ class Datatables
             if ($this->data['params']['search']['columns']) {
                 foreach ($this->data['params']['search']['columns'] as $key => $filter) {
                     switch ($filter['mode']) {
-                        case 'equal':
+                        case 'match':
                             $search[] = $filterMap[$key] . ' ' . ($filter['negate'] ? '!=' : '=') . ' :' . $key . '?s';
                             $params[$key] = $filter['keyword'];
                             break;
 
                         case 'range':
-                            if (in_array($filter['type'], ['number', 'number-range'])) {
+                            if ($filter['type'] = 'number') {
                                 if (!is_null($filter['keyword']['min']) && is_null($filter['keyword']['max'])) {
                                     $search[] = $filterMap[$key] . ' >= :' . $key . '?i';
                                     $params[$key] = (int)$filter['keyword']['min'];

@@ -26,6 +26,9 @@ class Site extends Mvc\Model
         ];
         $filterMap = $columnMap;
 
+        $this->session->set('dtRecordsParams', $params);
+        $this->session->set('datables_params', (new Helper\Datatables($params))->parse($params)->data());
+
         $dataTables = (new Helper\Datatables($params))->parse($params)->sqlQuery($filterMap)->pullData();
 
         $query = "SELECT " . implode(', ', $columnMap)
