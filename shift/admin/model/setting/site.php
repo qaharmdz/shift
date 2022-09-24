@@ -24,12 +24,8 @@ class Site extends Mvc\Model
             'name'     => 's.name',
             'url_host' => 's.url_host',
         ];
-        $filterMap = $columnMap;
-
-        $this->session->set('dtRecordsParams', $params);
-        $this->session->set('datables_params', (new Helper\Datatables($params))->parse($params)->data());
-
-        $dataTables = (new Helper\Datatables($params))->parse($params)->sqlQuery($filterMap)->pullData();
+        $filterMap  = $columnMap;
+        $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "site` s"

@@ -68,8 +68,8 @@ $.extend($.fn.dataTableExt.oStdClasses, {
 // Pipelining function for DataTables. To be used to the `ajax` option of DataTables
 // ================================================
 $.fn.dataTable.pipeline = function (opts) {
-    // Configuration options
-    let conf = $.extend({
+    // configiguration options
+    let config = $.extend({
         url    : '',     // script url
         method : 'POST', // Ajax HTTP method
         pages  : 5,      // number of pages to cache
@@ -111,7 +111,7 @@ $.fn.dataTable.pipeline = function (opts) {
         if (ajax) {
             // Need data from the server
             if (requestStart < cacheLower) {
-                requestStart = requestStart - (requestLength * (conf.pages - 1));
+                requestStart = requestStart - (requestLength * (config.pages - 1));
 
                 if (requestStart < 0) {
                     requestStart = 0;
@@ -119,27 +119,27 @@ $.fn.dataTable.pipeline = function (opts) {
             }
 
             cacheLower = requestStart;
-            cacheUpper = requestStart + (requestLength * conf.pages);
+            cacheUpper = requestStart + (requestLength * config.pages);
 
             request.start = requestStart;
-            request.length = requestLength * conf.pages;
+            request.length = requestLength * config.pages;
 
             // Provide the same `data` options as DataTables.
-            if (typeof conf.data === 'function') {
+            if (typeof config.data === 'function') {
                 // As a function it is executed with the data object as an arg for manipulation.
                 // If an object is returned, it is used as the data object to submit
-                let d = conf.data(request);
+                let d = config.data(request);
                 if (d) {
                     $.extend(request, d);
                 }
-            } else if ($.isPlainObject(conf.data )) {
+            } else if ($.isPlainObject(config.data )) {
                 // As an object, the data given extends the default
-                $.extend(request, conf.data);
+                $.extend(request, config.data);
             }
 
             settings.jqXHR = $.ajax({
-                'type'      : conf.method,
-                'url'       : conf.url,
+                'type'      : config.method,
+                'url'       : config.url,
                 'data'      : request,
                 'dataType'  : 'json',
                 'cache'     : false,

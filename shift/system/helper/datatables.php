@@ -37,6 +37,10 @@ class Datatables
             'limit'   => [],
         ];
 
+        if ($params['search']['value']) {
+            $data['search']['all'] = trim($params['search']['value']);
+        }
+
         foreach ($params['columns'] as $key => $column) {
             if (filter_var($column['searchable'], FILTER_VALIDATE_BOOLEAN)) {
                 $data['columns'][$key] = $column['data'];
@@ -101,10 +105,6 @@ class Datatables
 
                 $data['search']['columns'][$column['data']] = $columnSearch;
             }
-        }
-
-        if ($params['search']['value']) {
-            $data['search']['all'] = trim($params['search']['value']);
         }
 
         foreach ($params['order'] as $order) {

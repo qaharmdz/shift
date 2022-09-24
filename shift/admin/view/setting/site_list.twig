@@ -82,8 +82,11 @@ let tableId    = 'settingSite-list',
             }
         }),
         initComplete: function () {
-            this.api().columns().every(function(i) {
-                $('[data-index=' + i + ']').val(this.search());
+            // Add the search value to column-filter after page reload
+            let table = this;
+            table.api().columns().every(function(i) {
+                let column = this;
+                $('[data-index=' + i + ']').val(column.search());
             });
         },
         sorting : sortingCol,
