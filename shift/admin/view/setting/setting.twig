@@ -31,9 +31,9 @@
             <legend class="uk-legend">{{ app.language.get('mail') }}</legend>
 
             {{ forms.select({'label':'mail_engine', 'name':'mail_engine', 'options':[{'text':'SMTP', 'value':'smtp'}, {'text':'PHP Mail', 'value':'mail'}, {'text':'Sendmail', 'value':'sendmail'}], 'selected':setting.mail_engine}) }}
-            {{ forms.input({'label':'mail_smtp_hostname', 'name':'mail_smtp_hostname', 'value':setting.mail_smtp_hostname, 'class':'uk-width-250@m'}) }}
-            {{ forms.input({'label':'mail_smtp_username', 'name':'mail_smtp_username', 'value':setting.mail_smtp_username, 'class':'uk-width-250@m'}) }}
-            {{ forms.input({'label':'mail_smtp_password', 'name':'mail_smtp_password', 'value':setting.mail_smtp_password, 'class':'uk-width-250@m'}) }}
+            {{ forms.input({'type':'text', 'label':'mail_smtp_hostname', 'name':'mail_smtp_hostname', 'value':setting.mail_smtp_hostname, 'class':'uk-width-250@m'}) }}
+            {{ forms.input({'type':'text', 'label':'mail_smtp_username', 'name':'mail_smtp_username', 'value':setting.mail_smtp_username, 'class':'uk-width-250@m'}) }}
+            {{ forms.input({'type':'text', 'label':'mail_smtp_password', 'name':'mail_smtp_password', 'value':setting.mail_smtp_password, 'class':'uk-width-250@m'}) }}
             {{ forms.input({'type':'number', 'label':'mail_smtp_port', 'name':'mail_smtp_port', 'value':setting.mail_smtp_port, 'class':'uk-width-100@m'}) }}
             {{ forms.input({'type':'number', 'label':'mail_smtp_timeout', 'name':'mail_smtp_timeout', 'value':setting.mail_smtp_timeout, 'class':'uk-width-100@m'}) }}
         </fieldset>

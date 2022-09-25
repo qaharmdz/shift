@@ -5,7 +5,6 @@ $_['page_title']         = 'Settings';
 $_['general']            = 'General';
 $_['compression']        = 'Compression';
 
-$_['option']             = 'Options';
 $_['admin_language']     = 'Admin Language';
 $_['admin_limit']        = 'Admin Limit';
 
