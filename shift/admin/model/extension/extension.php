@@ -12,7 +12,7 @@ class Extension extends Mvc\Model
     {
         $extension_data = array();
 
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY code");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY code");
 
         foreach ($query->rows as $result) {
             $extension_data[] = $result['code'];
@@ -26,7 +26,7 @@ class Extension extends Mvc\Model
         $extensions = $this->getInstalled($type);
 
         if (!in_array($code, $extensions)) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "extension SET `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
+            $this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = '" . $this->db->escape($type) . "', `code` = '" . $this->db->escape($code) . "'");
         }
     }
 

@@ -39,7 +39,9 @@ class Registry
     public function get(string $key): object
     {
         if (!$this->has($key)) {
-            throw new \InvalidArgumentException('Call to undefined registry key "' . $key . '".');
+            $trace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+
+            throw new \InvalidArgumentException(sprintf('Call to undefined registry key "%s" in %s line %s.', $key, $trace[1]['file'], $trace[1]['line']));
         }
 
         return $this->storage[$key];
