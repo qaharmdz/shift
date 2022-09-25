@@ -117,6 +117,7 @@ body {
 .block-sidebar-left {
     width: var(--sidebar-width);
     /*background: rgba(0,0,0,.015);*/
+    background: #fff;
     border-right: 1px solid rgba(0,0,0,.07);
     overflow-x: hidden;
     transition: width .25s ease-out;

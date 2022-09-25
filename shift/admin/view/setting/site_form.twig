@@ -1,4 +1,51 @@
 {% extends 'main.tpl.twig' %}
 
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+{% import '_embed/macro/forms_language.tpl.twig' as forms_language %}
+
 {% block main_content %}
+<div class="content-header">
+    <div class="uk-child-width-expand" uk-grid>
+        <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+        <div class="uk-flex uk-flex-middle uk-flex-right">
+            <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-site"}'>{{ app.language.get('save') }}</button>
+        </div>
+    </div>
+</div>
+
+<div class="content-body uk-card-panel uk-card-body">
+    <form id="form-site" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('setting/site/save') }}" method="post" data-form-monitor>
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">{{ app.language.get('general') }}</legend>
+
+            {{ forms.input({'type':'text', 'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-350@m'}) }}
+            {{ forms.input({'type':'text', 'label':'site_url', 'name':'url_host', 'value':setting.url_host, 'class':'uk-width-350@m'}) }}
+            {{ forms.input({'type':'text', 'label':'email', 'name':'email', 'value':setting.email, 'class':'uk-width-350@m'}) }}
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">{{ app.language.get('meta') }}</legend>
+
+            {{ forms_language.input({'type':'text', 'languages':languages, 'label':'meta_title', 'name':'meta_title', 'value':setting.meta_title, 'class':'uk-width-600@m'}) }}
+            {{ forms_language.textarea({'languages':languages, 'label':'meta_description', 'name':'meta_description', 'value':setting.meta_description, 'rows':'5', 'class':'uk-width-600@m'}) }}
+            {{ forms_language.input({'type':'text', 'languages':languages, 'label':'meta_keyword', 'name':'meta_keyword', 'value':setting.meta_keyword}) }}
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">{{ app.language.get('media') }}</legend>
+
+            {{ forms.input({'type':'text', 'label':'logo', 'name':'logo', 'value':setting.logo }) }}
+            {{ forms.input({'type':'text', 'label':'favicon', 'name':'favicon', 'value':setting.favicon }) }}
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">{{ app.language.get('configuration') }}</legend>
+
+            {{ forms.select({'label':'language', 'name':'language', 'options':languages, 'opt_text': 'name', 'opt_value': 'code', 'selected':setting.language}) }}
+            {{ forms.select({'label':'layout', 'name':'layout_id', 'options':layoutList, 'opt_text': 'name', 'opt_value': 'layout_id', 'selected':setting.layout_id}) }}
+            {{ forms.radioButton({'label':'maintenance', 'name':'maintenance', 'checked':setting.maintenance}) }}
+            {{ forms.select({'label':'layout', 'name':'theme', 'options':themes, 'selected':setting.theme}) }}
+        </fieldset>
+    </form>
+</div>
 {% endblock %}

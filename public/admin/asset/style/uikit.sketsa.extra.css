@@ -12,7 +12,7 @@
 /* Breadcrumbs
 ==================================== */
 .uk-breadcrumb>*>* {
-    color: #949494;
+    color: #999;
 }
 .uk-breadcrumb>*>a {
     color: var(--uk-gray-blue);
@@ -92,6 +92,12 @@
 }
 .uk-form-margin-hover .uk-fieldset .uk-form-danger:hover {
     background: rgba(251, 232, 239, .8);
+}
+.uk-form-icon {
+    top: 2px;
+    bottom: 1px;
+    left: 1px;
+    background: #f2f2f2;
 }
 
 
