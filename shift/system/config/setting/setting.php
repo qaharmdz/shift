@@ -6,6 +6,7 @@ declare(strict_types=1);
 $_['form'] = [
     // General
     'compression'       => 0,
+    // 'login_session'     => 180,
 
     // Admin Options
     'admin_language'    => 'en',
