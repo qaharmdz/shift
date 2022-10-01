@@ -4,10 +4,21 @@
 {% endmacro %}
 
 {% macro input(param) %}
-    {% set param = {'type':'text', 'label':'', 'name':'', 'value':'', 'class':'uk-width-1-1', 'attribute':'', 'after':'', 'info':'', 'important':false, 'errors':[]}|merge(param) %}
+    {% set param = {
+        'type'      : 'text',
+        'label'     : '',
+        'name'      : '',
+        'value'     : '',
+        'class'     : 'uk-width-1-1',
+        'attribute' : '',
+        'after'     : '',
+        'info'      : '',
+        'required'  : false,
+        'errors'    : [],
+    }|merge(param) %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}" value="{{ param.value }}" class="uk-input {{ param.class }}" {{ param.attribute }}>
             {{ param.after }}
@@ -30,12 +41,12 @@
         'class'     : 'uk-width-1-1',
         'attribute' : '',
         'info'      : '',
-        'important' : false,
+        'required'  : false,
         'errors'    : [],
     }|merge(param) %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             <textarea id="{{ param.label }}" name="{{ param.name }}" rows="{{ param.rows }}" class="uk-textarea {{ param.class }}" {{ param.attribute }}>{{ param.value }}</textarea>
             {% if param.info %}
@@ -59,13 +70,13 @@
         'class'     : 'uk-width-250@m',
         'attribute' : '',
         'info'      : '',
-        'important' : false,
+        'required'  : false,
         'errors'    : [],
     }|merge(param) %}
 
     {% if param.options is iterable %}
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             <select id="{{ param.label }}" name="{{ param.name }}" class="uk-select {{ param.class }}" {{ param.attribute }}>
                 {% for option in param.options %}
@@ -94,7 +105,7 @@
         'opt_state' : 'state',
         'checked'   : '',
         'info'      : '',
-        'important' : false,
+        'required'  : false,
         'errors'    : [],
     }|merge(param) %}
 
@@ -117,7 +128,7 @@
     {% endif %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             <div class="uk-button-group uk-button-radio">
                 {% for option in param.options %}
@@ -143,12 +154,12 @@
         'lists'     : [],
         'checked'   : [],
         'info'      : '',
-        'important' : false,
+        'required'  : false,
         'errors'    : [],
     }|merge(param) %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
             <label class="uk-button uk-button-gray uk-button-small uk-button-narrow ukt-mt-2">
                 <input class="uk-checkbox" type="checkbox" data-checkbox-toggle='{"toggle":".checkbox-toggle-{{ param.label }}"}'> {{ app.language.get('toggle_check') }}
             </label>

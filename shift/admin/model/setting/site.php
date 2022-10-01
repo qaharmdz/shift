@@ -67,25 +67,36 @@ class Site extends Mvc\Model
 
     // Form CRUD
     // ================================================
-    /*
     public function addSite($data)
     {
-        $this->db->query("INSERT INTO " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['name']) . "', `url_host` = '" . $this->db->escape($data['url_host']) . "', `ssl` = '" . $this->db->escape($data['ssl']) . "'");
+        $this->db->add(
+            DB_PREFIX . 'site',
+            [
+                'name'     => $data['name'],
+                'url_host' => $data['url_host'],
+            ]
+        );
 
-        $site_id = $this->db->getLastId();
+        $site_id = $this->db->insertId();
 
         // Layout Route
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "layout_route WHERE site_id = '0'");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE site_id = 0");
 
         foreach ($query->rows as $layout_route) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_route['layout_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "', site_id = '" . (int)$site_id . "'");
+            $this->db->add(
+                DB_PREFIX . 'layout_route',
+                [
+                    'layout_id' => $layout_route['layout_id'],
+                    'route'     => $layout_route['route'],
+                    'site_id'   => $site_id,
+                ]
+            );
         }
 
         $this->cache->delete('site');
 
         return $site_id;
     }
-    */
 
     public function editSite($site_id, $data)
     {

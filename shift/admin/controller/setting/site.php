@@ -71,7 +71,7 @@ class Site extends Mvc\Controller
 
     public function form()
     {
-        $site_id = $this->request->has('query.site_id') ? $this->request->getInt('query.site_id', 0) : PHP_INT_MAX;
+        $site_id = $this->request->has('query.site_id') ? $this->request->getInt('query.site_id', 0) : -1;
         $mode    = is_null($site_id) ? 'add' : 'edit';
 
         $this->load->config('setting/site');
@@ -124,6 +124,7 @@ class Site extends Mvc\Controller
 
     public function save()
     {
+        $this->load->config('setting/site');
         $this->load->model('setting/setting');
         $this->load->model('setting/site');
         $this->load->language('setting/site');
@@ -139,19 +140,31 @@ class Site extends Mvc\Controller
         }
 
         $output  = [];
-        $post    = $this->request->getArray('post');
-        $site_id = $post['site_id'];
-
-        unset($post['form']);
-        unset($post['action']);
-        unset($post['site_id']);
+        $post    = array_replace_recursive(
+            $this->config->getArray('setting.site.form'),
+            $this->request->getArray('post', [])
+        );
+        $site_id = (int)$post['site_id'];
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);
         }
 
-        // $this->model_setting_site->editSite($site_id, $post);
-        // $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
+        if (-1 == $site_id) {
+            $output['new_id'] = $site_id = $this->model_setting_site->addSite($post);
+        } else {
+            $this->model_setting_site->editSite($site_id, $post);
+        }
+
+        if (isset($output['new_id']) && empty($output['redirect'])) {
+            $output['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $output['new_id']);
+        }
+
+        unset($post['form']);
+        unset($post['action']);
+        unset($post['site_id']);
+
+        $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 
         $this->response->setOutputJson($output);
     }
@@ -159,10 +172,6 @@ class Site extends Mvc\Controller
     protected function validate(array $post): array
     {
         $errors = [];
-
-        if (!$this->assert->range(0, 10)->check($post['compression'])) {
-            $errors['items']['compression'] = sprintf($this->language->get('error_value_between'), 0, 10);
-        }
 
         if (!$this->assert->stringNotEmpty()->check($post['name'])) {
             $errors['items']['name'] = $this->language->get('error_no_empty');

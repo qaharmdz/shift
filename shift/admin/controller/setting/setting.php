@@ -26,7 +26,7 @@ class Setting extends Mvc\Controller
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('setting.setting.form'),
             $this->model_setting_setting->getSetting('system', 'setting'),
-            $this->request->get('post', [])
+            $this->request->getArray('post', [])
         );
 
         $this->load->model('extension/language');
@@ -41,6 +41,7 @@ class Setting extends Mvc\Controller
 
     public function save()
     {
+        $this->load->config('setting/setting');
         $this->load->model('setting/setting');
         $this->load->language('setting/setting');
 
@@ -53,13 +54,17 @@ class Setting extends Mvc\Controller
 
         $output = [];
         $post   = $this->request->getArray('post');
-
-        unset($post['form']);
-        unset($post['action']);
+        $post   = array_replace_recursive(
+            $this->config->getArray('setting.setting.form'),
+            $this->request->getArray('post', [])
+        );
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);
         }
+
+        unset($post['form']);
+        unset($post['action']);
 
         $this->model_setting_setting->editSetting('system', 'setting', $post);
 

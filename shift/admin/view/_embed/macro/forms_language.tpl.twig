@@ -8,13 +8,13 @@
         'class'     : 'uk-width-1-1',
         'attribute' : '',
         'info'      : '',
-        'important' : false,
+        'required'  : false,
         'errors'    : []
     }|merge(param) %}
     {% set total = param.languages|length %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% for language in param.languages %}
                 <div class="uk-inline uk-width-1-1">
@@ -44,13 +44,13 @@
         'class'     : 'uk-width-1-1',
         'attribute' : '',
         'info'      : '',
-        'important' : false,
+        'required'  : false,
         'errors'    : []
     }|merge(param) %}
     {% set total = param.languages|length %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% if total > 1 %}
                 <ul class="uk-tab ukt-mb-3" uk-tab="connect:#tab-{{ param.label }}; animation:uk-animation-fade uk-animation-fast">
