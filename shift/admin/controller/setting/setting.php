@@ -41,15 +41,15 @@ class Setting extends Mvc\Controller
 
     public function save()
     {
+        $this->load->model('setting/setting');
+        $this->load->language('setting/setting');
+
         if (!$this->user->hasPermission('modify', 'setting/setting')) {
             return $this->response->setOutputJson($this->language->get('error_permission'), 403);
         }
         if (!$this->request->is(['post', 'ajax'])) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
-
-        $this->load->model('setting/setting');
-        $this->load->language('setting/setting');
 
         $output = [];
         $post   = $this->request->getArray('post');

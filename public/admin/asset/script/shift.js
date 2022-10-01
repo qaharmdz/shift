@@ -254,7 +254,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
         let el  = this,
             opt = $.extend({
                 form : '',
-                action: 'apply',
+                action: 'save',
             }, $(el).data('formSubmit')),
             form = $(opt.form);
 

@@ -85,14 +85,23 @@ class Site extends Mvc\Model
 
         return $site_id;
     }
+    */
 
     public function editSite($site_id, $data)
     {
-        $this->db->query("UPDATE " . DB_PREFIX . "site SET name = '" . $this->db->escape($data['name']) . "', `url_host` = '" . $this->db->escape($data['url_host']) . "' WHERE site_id = '" . (int)$site_id . "'");
+        $this->db->set(
+            DB_PREFIX . 'site',
+            [
+                'name'     => $data['name'],
+                'url_host' => $data['url_host'],
+            ],
+            ['site_id' => (int)$site_id]
+        );
 
         $this->cache->delete('site');
     }
 
+    /*
     public function deleteSite($site_id)
     {
         $this->db->query("DELETE FROM " . DB_PREFIX . "site WHERE site_id = '" . (int)$site_id . "'");

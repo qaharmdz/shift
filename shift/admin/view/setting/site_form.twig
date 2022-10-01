@@ -8,7 +8,7 @@
     <div class="uk-child-width-expand" uk-grid>
         <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
         <div class="uk-flex uk-flex-middle uk-flex-right">
-            <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-site"}'>{{ app.language.get('save') }}</button>
+            <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-site", "site_id":{{ site_id }}}'>{{ app.language.get('save') }}</button>
         </div>
     </div>
 </div>
@@ -18,9 +18,9 @@
         <fieldset class="uk-fieldset">
             <legend class="uk-legend">{{ app.language.get('general') }}</legend>
 
-            {{ forms.input({'type':'text', 'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-350@m'}) }}
-            {{ forms.input({'type':'text', 'label':'site_url', 'name':'url_host', 'value':setting.url_host, 'class':'uk-width-350@m'}) }}
-            {{ forms.input({'type':'text', 'label':'email', 'name':'email', 'value':setting.email, 'class':'uk-width-350@m'}) }}
+            {{ forms.input({'type':'text', 'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-350@m', 'required': true}) }}
+            {{ forms.input({'type':'text', 'label':'site_url', 'name':'url_host', 'value':setting.url_host, 'class':'uk-width-350@m', 'required': true}) }}
+            {{ forms.input({'type':'text', 'label':'email', 'name':'email', 'value':setting.email, 'class':'uk-width-350@m', 'required': true}) }}
         </fieldset>
 
         <fieldset class="uk-fieldset">
@@ -43,8 +43,8 @@
 
             {{ forms.select({'label':'language', 'name':'language', 'options':languages, 'opt_text': 'name', 'opt_value': 'code', 'selected':setting.language}) }}
             {{ forms.select({'label':'layout', 'name':'layout_id', 'options':layoutList, 'opt_text': 'name', 'opt_value': 'layout_id', 'selected':setting.layout_id}) }}
+            {{ forms.select({'label':'theme', 'name':'theme', 'options':themes, 'selected':setting.theme}) }}
             {{ forms.radioButton({'label':'maintenance', 'name':'maintenance', 'checked':setting.maintenance}) }}
-            {{ forms.select({'label':'layout', 'name':'theme', 'options':themes, 'selected':setting.theme}) }}
         </fieldset>
     </form>
 </div>

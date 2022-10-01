@@ -71,7 +71,7 @@ class Site extends Mvc\Controller
 
     public function form()
     {
-        $site_id = $this->request->has('query.site_id') ? $this->request->getInt('query.site_id', 0) : null;
+        $site_id = $this->request->has('query.site_id') ? $this->request->getInt('query.site_id', 0) : PHP_INT_MAX;
         $mode    = is_null($site_id) ? 'add' : 'edit';
 
         $this->load->config('setting/site');
@@ -90,6 +90,7 @@ class Site extends Mvc\Controller
 
         $data = [];
 
+        $data['site_id'] = $site_id;
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('setting.site.form'),
             $this->model_setting_setting->getSetting('system', 'site', (int)$site_id),
@@ -123,8 +124,62 @@ class Site extends Mvc\Controller
 
     public function save()
     {
-        $output = [];
+        $this->load->model('setting/setting');
+        $this->load->model('setting/site');
+        $this->load->language('setting/site');
+
+        if (!$this->user->hasPermission('modify', 'setting/site')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+        if (!$this->request->has('post.site_id')) {
+            return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
+        }
+
+        $output  = [];
+        $post    = $this->request->getArray('post');
+        $site_id = $post['site_id'];
+
+        unset($post['form']);
+        unset($post['action']);
+        unset($post['site_id']);
+
+        if ($errors = $this->validate($post)) {
+            return $this->response->setOutputJson($errors, 422);
+        }
+
+        // $this->model_setting_site->editSite($site_id, $post);
+        // $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 
         $this->response->setOutputJson($output);
+    }
+
+    protected function validate(array $post): array
+    {
+        $errors = [];
+
+        if (!$this->assert->range(0, 10)->check($post['compression'])) {
+            $errors['items']['compression'] = sprintf($this->language->get('error_value_between'), 0, 10);
+        }
+
+        if (!$this->assert->stringNotEmpty()->check($post['name'])) {
+            $errors['items']['name'] = $this->language->get('error_no_empty');
+        }
+
+        if (false === \filter_var($post['url_host'], \FILTER_VALIDATE_URL)) {
+            $errors['items']['url_host'] = $this->language->get('error_no_empty');
+        }
+
+        if (!$this->assert->email()->check($post['email'])) {
+            $errors['items']['email'] = $this->language->get('error_email');
+        }
+
+        if (isset($errors['items'])) {
+            $errors['response'] = $this->language->get('error_form');
+        }
+
+        return $errors;
     }
 }
