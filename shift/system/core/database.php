@@ -435,7 +435,7 @@ class Database
      *
      * @return \mysqli_stmt|bool
      */
-    public function add(string $table, array $data)
+    public function add(string $table, array $data): \mysqli_stmt|bool
     {
         $sets   = [];
         $params = [];
@@ -462,7 +462,7 @@ class Database
      *
      * @return \mysqli_stmt|bool
      */
-    public function set(string $table, array $data, array $where)
+    public function set(string $table, array $data, array $where): \mysqli_stmt|bool
     {
         $sets   = [];
         $wheres = [];
@@ -499,9 +499,10 @@ class Database
      * @param  string $table
      * @param  array  $where
      */
-    public function delete(string $table, array $where)
+    public function delete(string $table, array $where): void
     {
         $wheres = [];
+        $params = [];
         $types  = '';
 
         foreach ($where as $key => $value) {
@@ -517,7 +518,11 @@ class Database
         }
 
         if ($wheres) {
-            $this->db->query("DELETE FROM `" . $table . "` WHERE " . implode(' AND ', $wheres));
+            $this->db->query(
+                "DELETE FROM `" . $table . "` WHERE " . implode(' AND ', $wheres),
+                $params,
+                $types
+            );
         }
     }
 }
