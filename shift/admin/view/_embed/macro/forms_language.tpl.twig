@@ -19,7 +19,7 @@
             {% for language in param.languages %}
                 <div class="uk-inline uk-width-1-1">
                     {% if total > 1 %}
-                        <span class="uk-form-icon"><img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}"></span>
+                        <span class="uk-form-icon uk-form-icon-background"><img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}"></span>
                     {% endif %}
                     <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}[{{ language.language_id }}]" value="{{ param.value[language.language_id] ?? '' }}" class="uk-input {{ param.class }}" title="{{ '[' ~ language.code ~ '] ' ~ language.name }}" {{ param.attribute }}>
                 </div>
@@ -53,7 +53,7 @@
         <label class="uk-form-label" for="{{ param.label }}">{{ param.important ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% if total > 1 %}
-                <ul class="uk-tab ukt-mb-3" uk-tab="connect:#tab-{{ param.label }}">
+                <ul class="uk-tab ukt-mb-3" uk-tab="connect:#tab-{{ param.label }}; animation:uk-animation-fade uk-animation-fast">
                 {% for language in param.languages %}
                     <li>
                         <a href="#" title="{{ '[' ~ language.code ~ '] ' ~ language.name }}">
