@@ -136,10 +136,10 @@ th.uk-text-break {
     padding: 0 10px;
 }
 .uk-button-narrow {
-    padding: 0 12px;
+    padding: 0 12px !important;
 }
 .uk-button-group .uk-button-narrow {
-    padding: 0 7px;
+    padding: 0 7px !important;
 }
 
 .uk-button-narrow.uk-button-small {

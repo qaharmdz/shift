@@ -156,6 +156,13 @@ class Site extends Mvc\Controller
             $this->model_setting_site->editSite($site_id, $post);
         }
 
+        // Redirect
+        if ($post['action'] === 'close') {
+            $output['redirect'] = $this->router->url('setting/site');
+        }
+        if ($post['action'] === 'new') {
+            $output['redirect'] = $this->router->url('setting/site/form');
+        }
         if (isset($output['new_id']) && empty($output['redirect'])) {
             $output['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $output['new_id']);
         }

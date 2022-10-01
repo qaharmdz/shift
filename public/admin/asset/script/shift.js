@@ -147,7 +147,8 @@ UIkit.mixin({
                     message : message !== undefined ? message : shift.i18n.redirecting,
                     icon    : '<span uk-icon="icon:link;ratio:1.5"></span>',
                     status  : 'primary',
-                    timeout : 15000
+                    timeout : 15000,
+                    clear   : false
                 });
                 break;
             case 'process':
@@ -276,15 +277,15 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
 
                     setTimeout(function() {
                         $.fn.shift.goNotify('success', data.message);
+
+                        if (data.redirect) {
+                            $.fn.shift.goNotify('redirect');
+
+                            setTimeout(function() {
+                                window.location.replace(data.redirect);
+                            }, 1000);
+                        }
                     }, 200);
-
-                    if (data.redirect) {
-                        $.fn.shift.goNotify('redirect');
-
-                        setTimeout(function() {
-                            window.location.replace(data.redirect);
-                        }, 1000);
-                    }
                 },
                 error : function(xhr) {
                     let data = xhr.responseJSON;

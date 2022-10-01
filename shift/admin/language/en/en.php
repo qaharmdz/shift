@@ -82,7 +82,7 @@ $_['loading']               = 'Loading...';
 $_['processing']            = 'Processing..';
 $_['are_you_sure']          = 'Are you sure?';
 $_['yes_sure']              = 'Yes, I\'m sure';
-$_['redirecting']           = 'Redirecting.. please wait';
+$_['redirecting']           = 'Redirecting..';
 $_['no_data']               = 'No data available!';
 $_['no_result']             = 'No results found!';
 
