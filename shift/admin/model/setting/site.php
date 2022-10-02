@@ -67,7 +67,7 @@ class Site extends Mvc\Model
 
     // Form CRUD
     // ================================================
-    public function addSite($data)
+    public function addSite(array $data)
     {
         $this->db->add(
             DB_PREFIX . 'site',
@@ -93,12 +93,12 @@ class Site extends Mvc\Model
             );
         }
 
-        $this->cache->delete('site');
+        $this->cache->delete('sites');
 
         return $site_id;
     }
 
-    public function editSite($site_id, $data)
+    public function editSite(int $site_id, array $data)
     {
         $this->db->set(
             DB_PREFIX . 'site',
@@ -109,10 +109,9 @@ class Site extends Mvc\Model
             ['site_id' => (int)$site_id]
         );
 
-        $this->cache->delete('site');
+        $this->cache->delete('sites');
     }
 
-    /*
     public function deleteSite($site_id)
     {
         $this->db->query("DELETE FROM " . DB_PREFIX . "site WHERE site_id = '" . (int)$site_id . "'");
@@ -121,23 +120,23 @@ class Site extends Mvc\Model
         $this->cache->delete('site');
     }
 
-    public function getSite($site_id)
+    public function getSite(int $site_id)
     {
-        $query = $this->db->get("SELECT DISTINCT * FROM " . DB_PREFIX . "site WHERE site_id = '" . (int)$site_id . "'");
-
-        return $query->row;
+        return $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "site` WHERE site_id = ?i",
+            [$site_id]
+        )->row;
     }
-    */
 
     public function getSites()
     {
-        $site_data = $this->cache->get('site');
+        $site_data = $this->cache->get('sites');
 
         if (!$site_data) {
             $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC");
             $site_data = $query->rows;
 
-            $this->cache->set('site', $site_data);
+            $this->cache->set('sites', $site_data);
         }
 
         return $site_data;
@@ -145,9 +144,7 @@ class Site extends Mvc\Model
 
     public function getTotal()
     {
-        $query = $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "site`");
-
-        return $query->row['total'];
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "site`")->row['total'];
     }
 
     /*
