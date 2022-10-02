@@ -52,9 +52,8 @@ class Setting extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $output = [];
-        $post   = $this->request->getArray('post');
-        $post   = array_replace_recursive(
+        $data = [];
+        $post = array_replace_recursive(
             $this->config->getArray('setting.setting.form'),
             $this->request->getArray('post', [])
         );
@@ -68,7 +67,7 @@ class Setting extends Mvc\Controller
 
         $this->model_setting_setting->editSetting('system', 'setting', $post);
 
-        $this->response->setOutputJson($output);
+        $this->response->setOutputJson($data);
     }
 
     protected function validate(array $post): array

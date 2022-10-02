@@ -518,7 +518,7 @@ class Database
         }
 
         if ($wheres) {
-            $this->db->query(
+            $this->query(
                 "DELETE FROM `" . $table . "` WHERE " . implode(' AND ', $wheres),
                 $params,
                 $types

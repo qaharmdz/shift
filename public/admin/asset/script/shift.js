@@ -202,8 +202,85 @@ UIkit.mixin({
         message     : shift.i18n.are_you_sure,
         labelOk     : shift.i18n.yes_sure,
         labelCancel : shift.i18n.cancel,
-        onConfirm   : function() { return true },
-        onCancel    : function() { return false }
+        onConfirm   : function() { return true; },
+        onCancel    : function() { return false; }
+    };
+
+    /**
+     * Bulk action AJAX processing (designed for dataTables)
+     *
+     * # Usage
+     * # Override global setter
+     * $.extend($.fn.shift.dtaction.defaults, {
+     *     msgValidate : 'Select min 1 item to continue!',
+     *     msgBefore   : 'Processing..',
+     *     msgSuccess  : 'Successfully executed!',
+     *     msgError    : 'Error occured, try again later!',
+     * });
+     */
+    $.fn.shift.dtaction = function(options) {
+        let opt = $.extend({}, $.fn.shift.dtaction.defaults, options);
+
+        if (!opt.url) { return; }
+        if (!opt.data.item) {
+            opt.data.item = $('input:checkbox[name="' + opt.target + '"]:checked').map(function() {
+                if ($(this).is(':checked')) {
+                    return $(this).val();
+                }
+            }).get().join(',');
+        }
+
+        // Check items
+        if (!opt.data.item) {
+            $.fn.shift.goNotify('warning', opt.msgValidate);
+            return false;
+        }
+
+        opt.validate(dtActionProceed);
+
+        function dtActionProceed() {
+            $.ajax({
+                type    : 'POST',
+                url     : opt.url,
+                data    : opt.data,
+                dataType: 'json',
+                beforeSend: function() {
+                    $.fn.shift.goNotify('process', opt.msgBefore);
+                },
+                success: function(data) {
+                    opt.data.item = ''; // reset
+                    $.fn.shift.goNotify('success', data.message ? data.message : opt.msgSuccess);
+
+                    opt.onSuccess(this, data);
+
+                    // changed row glow effect
+                    if (opt.glow) {
+                        setTimeout(function() {
+                            $.each(data.items, function(i) {
+                                $('.dt-row-' + data.items[i]).addClass(opt.glowClass);
+                                setTimeout(function () {
+                                    $('.dt-row-' + data.items[i]).removeClass(opt.glowClass);
+                                }, 1000);
+                            });
+                        }, 750);
+                    }
+                }
+            });
+        }
+    };
+
+    $.fn.shift.dtaction.defaults = {
+        url         : '',
+        data        : [],
+        target      : 'dtaction[]', // input:checkbox name
+        msgValidate : shift.i18n.select_min_one,
+        msgBefore   : shift.i18n.processing,
+        msgSuccess  : shift.i18n.success_update,
+        msgError    : shift.i18n.error_general,
+        glow        : true,
+        glowClass   : 'uk-active',
+        validate    : function(dtActionProceed) { dtActionProceed(); },
+        onSuccess   : function() {}
     };
 })(jQuery);
 

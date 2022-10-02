@@ -18,7 +18,7 @@
                     <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                     <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                         <ul class="uk-nav uk-dropdown-nav">
-                            <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            <li><a data-dtaction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
                         </ul>
                     </div>
                 </th>
@@ -102,7 +102,13 @@ let tableId    = 'settingSite-list',
             { data : 'site_id',
                 className : 'noVisualColumn',
                 render : function(data, type, full) {
-                    return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                    let output  = '';
+
+                    if (data != '0') {
+                        output = '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                    }
+
+                    return output;
                 }
             },
             { data : 'site_id' },
@@ -111,23 +117,25 @@ let tableId    = 'settingSite-list',
             { data : 'site_id',
                 className : 'noVisualColumn ukt-p-2',
                 render : function(data, type, full) {
+                    let output  = '';
+
                     output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
-                    output += '<div class="uk-inline ukt-ml-2">';
-                    output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
-                    output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
-                    output += '        <ul class="uk-nav uk-dropdown-nav">';
-                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.site_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
-                    output += '        </ul>';
-                    output += '    </div>';
-                    output += '</div>';
+                    if (data != '0') {
+                        output += '<div class="uk-inline ukt-ml-2">';
+                        output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                        output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                        output += '        <ul class="uk-nav uk-dropdown-nav">';
+                        output += '           <li><a data-dtaction=\'{"type":"delete", "item":"' + full.site_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                        output += '        </ul>';
+                        output += '    </div>';
+                        output += '</div>';
+                    }
 
                     return output;
                 }
             }
         ]
     });
-
-    // console.log(dtTable.state.loaded());
 
     // Typewatch for "search all" input
     $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
@@ -154,6 +162,32 @@ let tableId    = 'settingSite-list',
     // Table state options
     $('[data-dtClearSearch]').on('click', function() {
         dtTable.clearSearch().draw();
+    });
+
+    // Action quick-edit
+    $('.main-content').on('click', '[data-dtaction]', function(e) {
+        e.preventDefault();
+
+        let data = $(this).data('dtaction');
+
+        $.fn.shift.dtaction({
+            url  : "{{ app.router.url('setting/site/dtaction')|raw }}",
+            data : data,
+            validate : function(dtactionProceed) {
+                if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
+                        onConfirm : function() { dtactionProceed(); }
+                    });
+                } else {
+                    dtactionProceed();
+                }
+            },
+            onSuccess : function() {
+                dtTable.clearPipeline().draw();
+            }
+        });
     });
 });
 </script>

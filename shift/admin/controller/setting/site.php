@@ -63,7 +63,34 @@ class Site extends Mvc\Controller
 
     public function dtaction()
     {
-        // TODO: DataTables quick action - delete
+        $this->load->model('setting/site');
+        $this->load->language('setting/site');
+
+        if (!$this->user->hasPermission('modify', 'setting/site')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+
+        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $types = ['delete'];
+        $items = explode(',', $post['item']);
+
+        $data  = [
+            'items'     => $items,
+            'message'   => '',
+            'updated'   => [],
+        ];
+
+        if (empty($items) || !in_array($post['type'], $types) || in_array(0, $items)) {
+            return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
+        }
+
+        $data['updated'] = $this->model_setting_site->dtAction($post['type'], $items);
+        $data['message'] = $post['message'] ?? $this->language->get('success_' . $post['type']);
+
+        $this->response->setOutputJson($data);
     }
 
     // Form
@@ -139,10 +166,10 @@ class Site extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
 
-        $output  = [];
-        $post    = array_replace_recursive(
+        $data = [];
+        $post = array_replace_recursive(
             $this->config->getArray('setting.site.form'),
-            $this->request->getArray('post', [])
+            $this->request->get('post', [])
         );
         $site_id = (int)$post['site_id'];
 
@@ -151,20 +178,20 @@ class Site extends Mvc\Controller
         }
 
         if (-1 == $site_id) {
-            $output['new_id'] = $site_id = $this->model_setting_site->addSite($post);
+            $data['new_id'] = $site_id = $this->model_setting_site->addSite($post);
         } else {
             $this->model_setting_site->editSite($site_id, $post);
         }
 
         // Redirect
         if ($post['action'] === 'close') {
-            $output['redirect'] = $this->router->url('setting/site');
+            $data['redirect'] = $this->router->url('setting/site');
         }
         if ($post['action'] === 'new') {
-            $output['redirect'] = $this->router->url('setting/site/form');
+            $data['redirect'] = $this->router->url('setting/site/form');
         }
         if (isset($output['new_id']) && empty($output['redirect'])) {
-            $output['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $output['new_id']);
+            $data['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $output['new_id']);
         }
 
         unset($post['form']);
@@ -173,7 +200,7 @@ class Site extends Mvc\Controller
 
         $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 
-        $this->response->setOutputJson($output);
+        $this->response->setOutputJson($data);
     }
 
     protected function validate(array $post): array

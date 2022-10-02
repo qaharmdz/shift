@@ -40,26 +40,8 @@ class Site extends Mvc\Model
     {
         $_items = [];
 
-        if (in_array($type, ['enabled', 'disabled'])) {
-            $status = $type == 'enabled' ? 1 : 0;
-
-            foreach ($items as $item) {
-                $updated = $this->db->rawQuery(
-                    "UPDATE `" . DB_PREFIX . "term`
-                    SET status = " . (int)$status . ",
-                        updated = NOW()
-                    WHERE term_id = " . (int)$item . "
-                        AND taxonomy = '" . $this->taxonomy . "'"
-                );
-
-                if ($updated) {
-                    $_items[] = $item;
-                }
-            }
-        }
-
         if ($type == 'delete') {
-            $this->deleteCategories($items);
+            $this->deleteSites($items);
         }
 
         return $_items;
@@ -112,14 +94,6 @@ class Site extends Mvc\Model
         $this->cache->delete('sites');
     }
 
-    public function deleteSite($site_id)
-    {
-        $this->db->query("DELETE FROM " . DB_PREFIX . "site WHERE site_id = '" . (int)$site_id . "'");
-        $this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE site_id = '" . (int)$site_id . "'");
-
-        $this->cache->delete('site');
-    }
-
     public function getSite(int $site_id)
     {
         return $this->db->get(
@@ -145,6 +119,17 @@ class Site extends Mvc\Model
     public function getTotal()
     {
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "site`")->row['total'];
+    }
+
+    public function deleteSites(array $site_ids)
+    {
+        if (!in_array(0, $site_ids)) {
+            $this->db->delete(DB_PREFIX . 'site', ['site_id' => $site_ids]);
+            $this->db->delete(DB_PREFIX . 'layout_route', ['site_id' => $site_ids]);
+            $this->db->delete(DB_PREFIX . 'setting', ['site_id' => $site_ids]);
+        }
+
+        $this->cache->delete('sites');
     }
 
     /*
