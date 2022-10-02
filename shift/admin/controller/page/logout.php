@@ -11,7 +11,6 @@ class Logout extends Mvc\Controller
     public function index()
     {
         $this->user->logout();
-        $this->session->delete('token');
 
         $this->response->redirect($this->router->url('page/login'));
     }

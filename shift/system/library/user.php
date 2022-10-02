@@ -48,7 +48,7 @@ class User
             $this->session->regenerateId();
             $this->session->set('user_email', $this->bags->get('email'));
             $this->session->set('user_activity', time());
-            $this->session->set('token', $this->secure->token('hash', rand(24, 32)));
+            $this->session->set('access_token', $this->secure->token('hash', rand(24, 32)));
 
             return true;
         }
@@ -62,7 +62,7 @@ class User
 
         $this->session->delete('user_email');
         $this->session->delete('user_activity');
-        $this->session->delete('token');
+        $this->session->delete('access_token');
         $this->session->regenerateId(true);
     }
 

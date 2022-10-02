@@ -29,7 +29,7 @@ class Configuration extends Mvc\Controller
         }
 
         $this->config->set($settings);
-        $this->config->set('env.accessToken', $this->session->getString('token'));
+        $this->config->set('env.access_token', $this->session->getString('access_token'));
         $this->config->set('env.limit', $this->config->getInt('system.setting.admin_limit', 36));
         $this->config->set('env.development', $this->config->getInt('system.setting.development', 36));
 

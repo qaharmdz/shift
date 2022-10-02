@@ -15,8 +15,8 @@ class Router extends Mvc\Controller
 
     public function generateAlias(string $route, string $args = '', int $language_id = 0): string
     {
-        if ($this->session->get('token')) {
-            $args = $args . '&token=' . $this->session->getString('token');
+        if ($this->session->get('access_token')) {
+            $args = $args . '&access_token=' . $this->session->getString('access_token');
         }
 
         return URL_APP . 'r/' . $route . ($args ? '&' . trim($args, '&') : '');
