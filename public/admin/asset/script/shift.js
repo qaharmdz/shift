@@ -6,7 +6,7 @@
  *   - AJAX setup
  *   - UIkit components
  *
- * # Plugins
+ * # jQuery Plugins - IIFE (Immediately Invoked Function Expression)
  *   - $.fn.shift.notify()
  *   - $.fn.shift.goNotify()
  *   - $.fn.shift.confirm()
@@ -34,6 +34,9 @@ window.onbeforeunload = function() {
 };
 
 //=== AJAX Setup
+$.ajaxSetup({
+    cache: false,
+});
 $(document).ajaxComplete(function(event, jqxhr, options) {
     let data = jqxhr.responseJSON ? jqxhr.responseJSON : JSON.parse(jqxhr.responseText);
 
@@ -71,7 +74,7 @@ UIkit.mixin({
 
 
 /*
- * Plugins
+ * jQuery Plugins - IIFE (Immediately Invoked Function Expression)
  * ======================================================================== */
 
 (function($) {
