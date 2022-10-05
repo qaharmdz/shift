@@ -76,8 +76,7 @@ class Dispatch
         if ($this->class && class_exists($this->class)) {
             $controller = new $this->class();
         } else {
-            $class = $this->class ?: '???';
-            throw new \InvalidArgumentException(sprintf('Unable to locate class "%s" for route "%s".', $class, $this->route));
+            throw new \InvalidArgumentException(sprintf('Unable to locate class for route "%s".', $this->route));
         }
 
         if (!is_callable([$controller, $this->method])) {
