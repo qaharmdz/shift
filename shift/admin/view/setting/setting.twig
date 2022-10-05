@@ -3,6 +3,7 @@
 {% import '_embed/macro/forms.tpl.twig' as forms %}
 
 {% block main_content %}
+<div class="uk-container uk-container-small ukt-pt-4">
 <div class="content-header">
     <div class="uk-child-width-expand" uk-grid>
         <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
@@ -45,5 +46,6 @@
             {{ forms.radioButton({'label':'development', 'name':'development', 'checked':setting.development, 'info':app.language.get('development_info')}) }}
         </fieldset>
     </form>
+</div>
 </div>
 {% endblock %}
