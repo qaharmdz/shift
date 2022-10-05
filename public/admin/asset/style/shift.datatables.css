@@ -8,15 +8,15 @@
 }
 
 .uk-table.dataTable th {
-    height: 38px;
-    padding: 8px 12px 8px 4px;
+    height: 34px;
+    padding: 6px 12px 6px 4px;
     text-align: center;
     vertical-align: middle;
     cursor: default;
 }
 .uk-table.dataTable td:first-child,
 .uk-table.dataTable th:first-child {
-    padding: 8px;
+    padding: 6px;
 }
 .uk-table.dataTable thead th:not(.sorting_disabled):hover {
     background-color: #e7efff;
@@ -122,14 +122,18 @@
 .uk-table.dataTable .uk-checkbox {
     margin-top: 1px;
 }
+.uk-table.dataTable .dt-column-filter td {
+    padding: 4px 4px 6px;
+}
 .uk-table.dataTable .uk-input {
     font-size: 12px;
-    height: 26px;
     height: 24px;
-    line-height: 25px;
+    height: 20px;
     line-height: 23px;
+    line-height: 20px;
     padding-left: 5px;
     padding-right: 5px;
+    border-bottom: 1px solid #e4e4e4;
 }
 .uk-table.dataTable thead .uk-button {
     line-height: 18px;
