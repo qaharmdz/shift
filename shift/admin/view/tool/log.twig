@@ -1,54 +1,55 @@
 {% extends 'main.tpl.twig' %}
 
 {% block main_content %}
-<div class="uk-container ukt-pt-4">
-<div class="content-header">
-    <div class="uk-child-width-expand" uk-grid>
-        <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-        <div class="uk-margin-small-top uk-text-right">
-            <div class="uk-inline">
-                <button class="uk-button uk-button-default uk-button-narrow" type="button">
-                    {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small uk-margin-small-left">{{ fileinfo.size }}</div>
-                    <span class="dropdown-caret"></span>
-                </button>
-                <div class="uk-width-{{ partition.width }}" style="max-width:none" uk-dropdown="pos:bottom-right;">
-                    <div class="uk-dropdown-grid uk-grid-small uk-child-width-1-{{ partition.column }}@m" uk-grid>
-                        {% for column in partition.files %}
-                            <div>
-                                <ul class="uk-nav uk-dropdown-nav">
-                                    {% for item in column %}
-                                        <li><a href="{{ item.url_view }}"><div class="uk-label uk-label-{{ item.label }} uk-label-small uk-label-fixed-width"> {{ item.size }}</div> {{ item.file}}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endfor %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-margin-small-top uk-text-right">
+                <div class="uk-inline">
+                    <button class="uk-button uk-button-default uk-button-narrow" type="button">
+                        {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small uk-margin-small-left">{{ fileinfo.size }}</div>
+                        <span class="dropdown-caret"></span>
+                    </button>
+                    <div class="uk-width-{{ partition.width }}" style="max-width:none" uk-dropdown="pos:bottom-right;">
+                        <div class="uk-dropdown-grid uk-grid-small uk-child-width-1-{{ partition.column }}@m" uk-grid>
+                            {% for column in partition.files %}
+                                <div>
+                                    <ul class="uk-nav uk-dropdown-nav">
+                                        {% for item in column %}
+                                            <li><a href="{{ item.url_view }}"><div class="uk-label uk-label-{{ item.label }} uk-label-small uk-label-fixed-width"> {{ item.size }}</div> {{ item.file}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="uk-button uk-button-default uk-button-narrow uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill uk-text-warning ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
-            <button type="submit" class="uk-button uk-button-default uk-button-narrow" data-log-delete><i class="bi bi-trash uk-text-danger ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
-            <button type="submit" class="uk-button uk-button-primary uk-button-narrow uk-margin-small-left" form="form-log"><i class="bi bi-download uk-text-light ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-default uk-button-narrow uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill uk-text-warning ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
+                <button type="submit" class="uk-button uk-button-default uk-button-narrow" data-log-delete><i class="bi bi-trash uk-text-danger ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
+                <button type="submit" class="uk-button uk-button-primary uk-button-narrow uk-margin-small-left" form="form-log"><i class="bi bi-download uk-text-light ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+            </div>
         </div>
     </div>
-</div>
 
-{% include '_embed/partial/alerts.tpl.twig' %}
+    {% include '_embed/partial/alerts.tpl.twig' %}
 
-<div class="content-body uk-card-panel uk-card-body">
-    {% if fileinfo.state == 2 %}
-        <div class="uk-alert-{{ type }} uk-alert-small" uk-alert>
-            <a class="uk-alert-close" uk-close></a>
-            <p>{{ log }}</p>
+    <div class="content-body uk-card-panel uk-card-body">
+        {% if fileinfo.state == 2 %}
+            <div class="uk-alert-{{ type }} uk-alert-small" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ log }}</p>
+            </div>
+        {% else %}
+            <pre class="uk-resize-vertical" style="height:500px;"><code>{{ log }}</code></pre>
+        {% endif %}
+
+        <div class="uk-hidden">
+            <form id="form-log" action="{{ app.router.url('tool/log/action', 'submit=download') }}" method="post">
+                <input type="text" name="file" value="{{ fileinfo.file }}">
+            </form>
         </div>
-    {% else %}
-        <pre class="uk-resize-vertical" style="height:500px;"><code>{{ log }}</code></pre>
-    {% endif %}
-
-    <div class="uk-hidden">
-        <form id="form-log" action="{{ app.router.url('tool/log/action', 'submit=download') }}" method="post">
-            <input type="text" name="file" value="{{ fileinfo.file }}">
-        </form>
     </div>
 </div>
 
@@ -73,5 +74,4 @@ $(document).ready(function() {
     });
 });
 </script>
-</div>
 {% endblock %}

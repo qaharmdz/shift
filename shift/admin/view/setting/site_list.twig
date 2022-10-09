@@ -1,55 +1,56 @@
 {% extends 'main.tpl.twig' %}
 
 {% block main_content %}
-<div class="uk-container ukt-pt-4">
-<div class="content-header">
-    <div class="uk-child-width-expand" uk-grid>
-        <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-        <div class="uk-flex uk-flex-middle uk-flex-right">
-            <a href="{{ app.router.url('setting/site/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <a href="{{ app.router.url('setting/site/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="content-body uk-card-panel uk-card-body">
-    <table id="settingSite-list" class="uk-table uk-table-striped uk-table-hover">
-        <thead>
-            <tr>
-                <th class="ukt-px-0" style="width:30px;">
-                    <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
-                    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
-                        <ul class="uk-nav uk-dropdown-nav">
-                            <li><a data-dtaction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
-                        </ul>
-                    </div>
-                </th>
-                <th style="width:60px;">{{ app.language.get('id') }}</th>
-                <th style="width:300px">{{ app.language.get('name') }}</th>
-                <th>{{ app.language.get('site_url') }}</th>
-                <th style="width:80px;">{{ app.language.get('action') }}</th>
-            </tr>
-            <tr class="dt-column-filter">
-                <td></td>
-                <td data-filter='{"type":"number", "mode":"match"}'>
-                    <input type="text" value="" data-index="1" class="uk-input">
-                </td>
-                <td data-filter='{"type":"string", "mode":"like"}'>
-                    <input type="text" value="" data-index="2" class="uk-input">
-                </td>
-                <td data-filter='{"type":"string", "mode":"like"}'>
-                    <input type="text" value="" data-index="3" class="uk-input">
-                </td>
-                <td class="uk-text-center">
-                    <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="5" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="content-body uk-card-panel uk-card-body">
+        <table id="settingSite-list" class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th class="ukt-px-0" style="width:30px;">
+                        <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                        <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtaction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width:60px;">{{ app.language.get('id') }}</th>
+                    <th style="width:300px">{{ app.language.get('name') }}</th>
+                    <th>{{ app.language.get('site_url') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                </tr>
+                <tr class="dt-column-filter">
+                    <td></td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <input type="text" value="" data-index="1" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string", "mode":"like"}'>
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string", "mode":"like"}'>
+                        <input type="text" value="" data-index="3" class="uk-input">
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
@@ -192,5 +193,4 @@ let tableId    = 'settingSite-list',
     });
 });
 </script>
-</div>
 {% endblock %}
