@@ -24,6 +24,9 @@ class Cache extends Psr16Adapter
         $this->setup($driver, $config);
     }
 
+    /**
+     * Quick setup helper
+     */
     public function setup(string|ExtendedCacheItemPoolInterface $driver, array|ConfigurationOptionInterface $config = null)
     {
         if (\is_array($config)) {
@@ -49,11 +52,19 @@ class Cache extends Psr16Adapter
         parent::__construct($driver, $config);
     }
 
+    /**
+     * Instance to access all API
+     *
+     * @return [type] [description]
+     */
     public function getInstance()
     {
         return $this->internalCacheInstance;
     }
 
+    /**
+     * Set cache with "tags" parameter
+     */
     public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null, array $tags = []): bool
     {
         try {

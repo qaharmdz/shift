@@ -151,7 +151,7 @@ class SidebarLeft extends Mvc\Controller
 
         if ($this->user->hasPermission('access', 'tool/backup')) {
             $system[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.backup'),
+                'name' => $this->language->get('sidebarleft.backup_restore'),
                 'url'  => $this->router->url('tool/backup'),
             ]);
         }
