@@ -134,16 +134,6 @@ th.uk-text-break {
     line-height: 26px;
     padding: 0 10px;
 }
-.uk-button-narrow {
-    padding: 0 12px !important;
-}
-.uk-button-group .uk-button-narrow {
-    padding: 0 7px !important;
-}
-
-.uk-button-narrow.uk-button-small {
-    padding: 0 6px;
-}
 
 .uk-button-group.uk-button-radio {
     padding-top: 4px;
@@ -151,6 +141,14 @@ th.uk-text-break {
 .uk-button-group.uk-button-radio .uk-button {
     line-height: 26px;
     padding: 0 14px;
+}
+
+.uk-button-secondary {
+    background-color: #555;
+    color: #fff;
+}
+.uk-button-secondary:hover {
+    background-color: #333;
 }
 
 /* Tab

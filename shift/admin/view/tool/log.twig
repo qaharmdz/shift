@@ -7,7 +7,7 @@
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-margin-small-top uk-text-right">
                 <div class="uk-inline">
-                    <button class="uk-button uk-button-default uk-button-narrow" type="button">
+                    <button class="uk-button uk-button-default ukt-px-2" type="button">
                         {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small uk-margin-small-left">{{ fileinfo.size }}</div>
                         <span class="dropdown-caret"></span>
                     </button>
@@ -26,9 +26,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="uk-button uk-button-default uk-button-narrow uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill uk-text-warning ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
-                <button type="submit" class="uk-button uk-button-default uk-button-narrow" data-log-delete><i class="bi bi-trash uk-text-danger ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
-                <button type="submit" class="uk-button uk-button-primary uk-button-narrow uk-margin-small-left" form="form-log"><i class="bi bi-download uk-text-light ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill uk-text-warning ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
+                <button type="submit" class="uk-button uk-button-default ukt-px-3" form="form-log"><i class="bi bi-download uk-text-primary ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-danger ukt-px-3 uk-margin-small-left" data-log-delete><i class="bi bi-trash uk-text-light ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
             </div>
         </div>
     </div>

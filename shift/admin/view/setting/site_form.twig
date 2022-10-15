@@ -14,7 +14,7 @@
                 <div class="uk-button-group">
                     <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-site", "site_id":"{{ site_id }}"}'>{{ app.language.get('save') }}</button>
                     <div class="uk-inline">
-                        <button class="uk-button uk-button-success uk-button-narrow"><span uk-icon="icon:chevron-down"></span></button>
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
                                 <li><a data-form-submit='{"form":"#form-site", "action":"close", "site_id":"{{ site_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('setting/site') }}" class="uk-button uk-button-default uk-button-narrow uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(site_id != -1 ? 'close' : 'cancel') }}</a>
+                <a href="{{ app.router.url('setting/site') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(site_id != -1 ? 'close' : 'cancel') }}</a>
             </div>
         </div>
     </div>
