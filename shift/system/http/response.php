@@ -302,19 +302,21 @@ class Response
     {
         $filename = $filename ?: basename(html_entity_decode($filepath, ENT_QUOTES, 'UTF-8'));
 
+        header('Pragma: public');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
+        header('Content-Transfer-Encoding: binary');
 
         if (is_file($filepath)) {
             header('Content-Length: ' . filesize($filepath));
 
             readfile($filepath);
         } else {
-            return $filepath;
+            return $this->setOutput($filepath);
         }
 
         $this->terminate();
