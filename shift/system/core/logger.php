@@ -43,8 +43,14 @@ class Logger
     public function write($message, string $level = 'Debug', array $context = [], string $logfile = '')
     {
         $context = $context ?: $this->contextInfo();
-        $message = sprintf('%s | %s ' . PHP_EOL . '    | %s ' . PHP_EOL . '    | %s', date('Y-m-d H:i:s e'), $level, print_r($message, true), json_encode($context)) . PHP_EOL;
         $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
+        $message = sprintf(
+            '%s | %s ' . PHP_EOL . '    | %s ' . PHP_EOL . '    | %s',
+            date('Y-m-d H:i:s e'),
+            $level,
+            print_r($message, true),
+            json_encode($context)
+        ) . PHP_EOL;
 
         $handle = fopen($output, 'a');
         fwrite($handle, $message);
