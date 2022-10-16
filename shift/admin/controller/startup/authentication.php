@@ -39,7 +39,12 @@ class Authentication extends Mvc\Controller
         switch (true) {
             case (!$this->user->isLogged() || !$this->request->has('query.access_token')):
                 $this->session->set('flash.auth.require_login', true);
-                $this->user->logout();
+                $this->toLogin();
+                break;
+
+            // Validate token
+            case ($this->session->getString('access_token', time()) !== $this->request->getString('query.access_token', 'o_O')):
+                $this->session->set('flash.auth.invalid_token', true);
                 $this->toLogin();
                 break;
 
@@ -47,12 +52,6 @@ class Authentication extends Mvc\Controller
             case !$this->user->get('backend'):
                 $this->session->set('flash.auth.unauthorize', true);
                 $this->user->logout();
-                $this->toLogin();
-                break;
-
-            // Validate token
-            case ($this->session->getString('access_token', time()) !== $this->request->getString('query.access_token', 'o_O')):
-                $this->session->set('flash.auth.invalid_token', true);
                 $this->toLogin();
                 break;
 
