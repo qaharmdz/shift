@@ -18,10 +18,10 @@ class Backup extends Mvc\Model
             }
         }
 
-        $this->cache->delete('*');
+        $this->cache->clear();
     }
 
-    public function getTables()
+    public function getTables(): array
     {
         $table_data = array();
         $dbDatabase = $this->config->get('root.database.config.database');
@@ -39,7 +39,7 @@ class Backup extends Mvc\Model
         return $table_data;
     }
 
-    public function backup($tables)
+    public function export(array $tables)
     {
         $output = '';
 
@@ -54,10 +54,12 @@ class Backup extends Mvc\Model
                 $status = true;
             }
 
-            if ($status) {
-                $output .= 'TRUNCATE TABLE `' . $table . '`;' . "\n\n";
 
+            if ($status) {
                 $query = $this->db->get("SELECT * FROM `" . $table . "`");
+                $table = str_replace(DB_PREFIX, '{db_prefix}', $table);
+
+                $output .= 'TRUNCATE TABLE `' . $table . '`;' . "\n\n";
 
                 foreach ($query->rows as $result) {
                     $fields = '';
@@ -71,11 +73,11 @@ class Backup extends Mvc\Model
                     foreach (array_values($result) as $value) {
                         $value = str_replace(array("\x00", "\x0a", "\x0d", "\x1a"), array('\0', '\n', '\r', '\Z'), (string)$value);
                         $value = str_replace(array("\n", "\r", "\t"), array('\n', '\r', '\t'), $value);
-                        $value = str_replace('\\', '\\\\',  $value);
-                        $value = str_replace('\'', '\\\'',  $value);
-                        $value = str_replace('\\\n', '\n',  $value);
-                        $value = str_replace('\\\r', '\r',  $value);
-                        $value = str_replace('\\\t', '\t',  $value);
+                        $value = str_replace('\\', '\\\\', $value);
+                        $value = str_replace('\'', '\\\'', $value);
+                        $value = str_replace('\\\n', '\n', $value);
+                        $value = str_replace('\\\r', '\r', $value);
+                        $value = str_replace('\\\t', '\t', $value);
 
                         $values .= '\'' . $value . '\', ';
                     }

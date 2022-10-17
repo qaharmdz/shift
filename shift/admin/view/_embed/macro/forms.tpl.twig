@@ -148,7 +148,6 @@
 
 {% macro checkboxPanel(param) %}
     {% set param = {
-        'mode'      : 'enable-disable',
         'label'     : '',
         'name'      : '',
         'lists'     : [],
@@ -156,19 +155,22 @@
         'info'      : '',
         'required'  : false,
         'errors'    : [],
+        'extraHtml' : '',
     }|merge(param) %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
-            <label class="uk-button uk-button-gray uk-button-small uk-button-narrow ukt-mt-2">
-                <input class="uk-checkbox" type="checkbox" data-checkbox-toggle='{"toggle":".checkbox-toggle-{{ param.label }}"}'> {{ app.language.get('toggle_check') }}
-            </label>
+        <label class="uk-form-label" for="{{ param.label }}">
+            {{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
         </label>
         <div class="uk-form-controls">
             <div class="uk-panel uk-panel-scrollable">
                 <ul class="uk-list uk-list-striped uk-list-collapse">
                     {% for list in param.lists %}
-                        <li><label><input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list }}" {{ list in param.checked ? 'checked' }}> {{ list }}</label></li>
+                        <li>
+                            <label style="display:block;">
+                                <input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list }}" {{ list in param.checked ? 'checked' }}> {{ list }}
+                            </label>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -178,6 +180,7 @@
             {% if param.errors[param.name] is defined %}
                 <div class="uk-text-meta uk-text-danger">{{ param.errors[param.name] }}</div>
             {% endif %}
+            {{ param.extraHtml|raw }}
         </div>
     </div>
 {% endmacro %}

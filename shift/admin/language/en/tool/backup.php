@@ -1,16 +1,19 @@
 <?php
 
-// Heading
-$_['heading_title']    = 'Backup &amp; Restore';
+$_['page_title']        = 'Database Backup & Restore';
 
-// Text
-$_['text_success']     = 'Success: You have successfully imported your database!';
+$_['maintenance']       = 'Maintenance';
+$_['backup']            = 'Backup';
+$_['export']            = 'Export';
+$_['db_table']          = 'Database Tables';
+$_['select_all']        = 'Select All';
+$_['unselect_all']      = 'Unselect All';
 
-// Entry
-$_['entry_import']     = 'Import';
-$_['entry_export']     = 'Export';
+$_['restore']           = 'Restore';
+$_['import']            = 'Import';
 
-// Error
-$_['error_permission'] = 'Warning: You do not have permission to modify Backup &amp; Restore!';
-$_['error_export']     = 'Warning: You must select at least one table to export!';
-$_['error_empty']      = 'Warning: The file you uploaded was empty!';
+$_['error_permission']  = 'You not have permission to modify Database Backup & Restore!';
+$_['error_export']      = 'You must select at least one table to export!';
+$_['error_file']        = 'Failed to upload or uploaded file could not be found!';
+
+$_['success_import']    = 'File successfully imported!';
