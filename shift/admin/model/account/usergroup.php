@@ -2,12 +2,56 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Model\User;
+namespace Shift\Admin\Model\Account;
 
 use Shift\System\Mvc;
+use Shift\System\Helper;
 
 class UserGroup extends Mvc\Model
 {
+    // List
+    // ================================================
+
+    /**
+     * DataTables records
+     *
+     * @param  array  $params
+     */
+    public function dtRecords(array $params)
+    {
+        $columnMap = [
+            'user_group_id' => 'ug.user_group_id',
+            'name'          => 'ug.name',
+            'backend'       => 'ug.backend',
+            'status'        => 'ug.status',
+        ];
+        $filterMap  = $columnMap;
+        $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
+
+        $query = "SELECT " . implode(', ', $columnMap)
+            . " FROM `" . DB_PREFIX . "user_group` ug"
+            . ($dataTables['sql']['query']['where'] ? " WHERE " . $dataTables['sql']['query']['where'] : "")
+            . " ORDER BY " . $dataTables['sql']['query']['order']
+            . " LIMIT " . $dataTables['sql']['query']['limit'];
+
+        return $this->db->get($query, $dataTables['sql']['params']);
+    }
+
+    public function dtAction(string $type, array $items): array
+    {
+        //
+    }
+
+    // Form CRUD
+    // ================================================
+
+    public function getTotal()
+    {
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_group`")->row['total'];
+    }
+
+    /*
+
     public function addUserGroup($data)
     {
         $this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
@@ -98,4 +142,5 @@ class UserGroup extends Mvc\Model
             $this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(json_encode($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
         }
     }
+    */
 }

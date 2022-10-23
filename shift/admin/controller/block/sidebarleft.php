@@ -95,7 +95,7 @@ class SidebarLeft extends Mvc\Controller
         if ($tool) {
             $data['menus'][300] = $this->nav([
                 'id'   => 'menu-tool',
-                'name' => $this->language->get('sidebarleft.tools'),
+                'name' => $this->language->get('sidebarleft.tool'),
                 'subs' => $tool
             ]);
         }
@@ -103,24 +103,24 @@ class SidebarLeft extends Mvc\Controller
         // Users
         $user = [];
 
-        if ($this->user->hasPermission('access', 'user/user')) {
+        if ($this->user->hasPermission('access', 'account/user')) {
             $user[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.users'),
-                'url'  => $this->router->url('user/user'),
+                'name' => $this->language->get('sidebarleft.user'),
+                'url'  => $this->router->url('account/user'),
             ]);
         }
 
-        if ($this->user->hasPermission('access', 'user/userpermission')) {
+        if ($this->user->hasPermission('access', 'account/usergroup')) {
             $user[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.user_group'),
-                'url'  => $this->router->url('user/userpermission'),
+                'url'  => $this->router->url('account/usergroup'),
             ]);
         }
 
         if ($user) {
             $data['menus'][400] = $this->nav([
-                'id'       => 'menu-design',
-                'name' => $this->language->get('sidebarleft.users'),
+                'id'   => 'menu-design',
+                'name' => $this->language->get('sidebarleft.account'),
                 'subs' => $user
             ]);
         }

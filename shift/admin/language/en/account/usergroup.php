@@ -1,7 +1,9 @@
 <?php
 
-// Heading
-$_['heading_title']    = 'User Groups';
+$_['page_title']        = 'User Groups';
+
+$_['account']           = 'Accounts';
+$_['backend']           = 'Admin Access';
 
 // Text
 $_['text_success']     = 'Success: You have modified user groups!';

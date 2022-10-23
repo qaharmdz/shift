@@ -2,7 +2,7 @@
 
 $_['dashboard']      = 'Dashboard';
 
-$_['content']        = 'Content';
+$_['content']        = 'Contents';
 $_['information']    = 'Information';
 
 $_['extension']      = 'Extensions';
@@ -10,12 +10,12 @@ $_['installer']      = 'Installer';
 $_['event']          = 'Events';
 $_['language']       = 'Languages';
 
-$_['tools']          = 'Tools';
+$_['tool']           = 'Tools';
 $_['module_layout']  = 'Module Layouts';
 $_['banner']         = 'Banners';
 
-
-$_['users']          = 'Users';
+$_['account']        = 'Accounts';
+$_['user']           = 'Users';
 $_['user_group']     = 'User Groups';
 
 $_['system']         = 'System';
