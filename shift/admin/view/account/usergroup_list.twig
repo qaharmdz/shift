@@ -195,18 +195,18 @@ let tableId    = 'accountUserGroup-list',
 
         let data = $(this).data('dtaction');
 
-        $.fn.shift.dtaction({
+        $.fn.shift.dtAction({
             url  : "{{ app.router.url('account/usergroup/dtaction')|raw }}",
             data : data,
-            validate : function(dtactionProceed) {
+            validate : function(dtActionProceed) {
                 if (data.type === 'delete') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_delete,
-                        onConfirm : function() { dtactionProceed(); }
+                        onConfirm : function() { dtActionProceed(); }
                     });
                 } else {
-                    dtactionProceed();
+                    dtActionProceed();
                 }
             },
             onSuccess : function() {

@@ -10,6 +10,7 @@
  *   - $.fn.shift.notify()
  *   - $.fn.shift.goNotify()
  *   - $.fn.shift.confirm()
+ *   - $.fn.shift.dtAction()
  *
  * # IIDE (Immediate Invoked Data Expressions)
  *   - data-form-monitor
@@ -214,15 +215,15 @@ UIkit.mixin({
      *
      * # Usage
      * # Override global setter
-     * $.extend($.fn.shift.dtaction.defaults, {
+     * $.extend($.fn.shift.dtAction.defaults, {
      *     msgValidate : 'Select min 1 item to continue!',
      *     msgBefore   : 'Processing..',
      *     msgSuccess  : 'Successfully executed!',
      *     msgError    : 'Error occured, try again later!',
      * });
      */
-    $.fn.shift.dtaction = function(options) {
-        let opt = $.extend({}, $.fn.shift.dtaction.defaults, options);
+    $.fn.shift.dtAction = function(options) {
+        let opt = $.extend({}, $.fn.shift.dtAction.defaults, options);
 
         if (!opt.url) { return; }
         if (!opt.data.item) {
@@ -272,7 +273,7 @@ UIkit.mixin({
         }
     };
 
-    $.fn.shift.dtaction.defaults = {
+    $.fn.shift.dtAction.defaults = {
         url         : '',
         data        : [],
         target      : 'dtaction[]', // input:checkbox name
