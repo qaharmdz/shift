@@ -19,7 +19,7 @@
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-dtaction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
                             </ul>
                         </div>
                     </th>
@@ -28,7 +28,7 @@
                     <th>{{ app.language.get('site_url') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
-                <tr class="dt-column-filter">
+                <tr class="js-dtColumnFilter">
                     <td></td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
@@ -61,7 +61,7 @@ let tableId    = 'settingSite-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('setting/site/list')|raw }}",
             data : function(d) {
-                $('.dt-column-filter td').each(function(i) {
+                $('.js-dtColumnFilter td').each(function(i) {
                     let dataFilter = $(this).data('filter');
                     if (dataFilter != undefined) {
                         $.extend(d.columns[i]['search'], dataFilter || []);
@@ -121,13 +121,13 @@ let tableId    = 'settingSite-list',
                 render : function(data, type, full) {
                     let output  = '';
 
-                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="' + shift.i18n.edit + '"><i class="bi bi-pencil"></i></span></a>';
                     if (data != '0') {
                         output += '<div class="uk-inline ukt-ml-2">';
                         output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                         output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                         output += '        <ul class="uk-nav uk-dropdown-nav">';
-                        output += '           <li><a data-dtaction=\'{"type":"delete", "item":"' + full.site_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                        output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.site_id + '"}\'> ' + shift.i18n.delete + '</a></li>';
                         output += '        </ul>';
                         output += '    </div>';
                         output += '</div>';
@@ -148,7 +148,7 @@ let tableId    = 'settingSite-list',
         },
     });
     // Typewatch for column filter input
-    $('.dt-column-filter input, .dt-column-filter select').off('keypress keyup search input paste cut').typeWatch({
+    $('.js-dtColumnFilter input, .js-dtColumnFilter select').off('keypress keyup search input paste cut').typeWatch({
         allowSubmit: true,
         captureLength: 0,
         callback: function(value) {
@@ -167,7 +167,7 @@ let tableId    = 'settingSite-list',
     });
 
     // Action quick-edit
-    $('.main-content').on('click', '[data-dtaction]', function(e) {
+    $('.main-content').on('click', '[data-dtAction]', function(e) {
         e.preventDefault();
 
         let data = $(this).data('dtaction');

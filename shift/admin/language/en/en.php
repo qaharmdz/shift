@@ -87,6 +87,7 @@ $_['no_data']               = 'No data available!';
 $_['no_result']             = 'No results found!';
 
 $_['confirm_change']        = 'Change you made may not be saved!';
+$_['confirm_delete']        = 'This action cannot be undone!<br>The item(s) will be deleted permanently.';
 
 $_['success']               = 'Success';
 $_['success_x']             = 'Successfully %s';
