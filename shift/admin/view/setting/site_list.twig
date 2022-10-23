@@ -139,7 +139,12 @@ let tableId    = 'settingSite-list',
         ]
     });
 
-    // Typewatch for "search all" input
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Search inputs
     $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
         allowSubmit: true,
         captureLength: 0,
@@ -147,22 +152,21 @@ let tableId    = 'settingSite-list',
             dtTable.search(value).draw();
         },
     });
-    // Typewatch for column filter input
-    $('.js-dtColumnFilter input, .js-dtColumnFilter select').off('keypress keyup search input paste cut').typeWatch({
+    $('.js-dtColumnFilter input').typeWatch({
         allowSubmit: true,
         captureLength: 0,
         callback: function(value) {
             dtTable.column($(this).data('index')).search(value).draw();
         },
     });
-
-    // Refresh record results
-    $('.main-content').on('click', '[data-dtReload]', function() {
-        dtTable.clearPipeline().draw();
+    $('.js-dtColumnFilter select').on('change', function() {
+        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
     });
 
-    // Table state options
+    // Clear all search
     $('[data-dtClearSearch]').on('click', function() {
+        $('.js-dtColumnFilter input').val('');
+        $('.js-dtColumnFilter select').find('option:first').prop('selected', true);
         dtTable.clearSearch().draw();
     });
 

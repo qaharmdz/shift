@@ -49,14 +49,15 @@
     }
 }
 
+/*
 .uk-input, .uk-select, .uk-textarea {
     background: #fbfbfb;
-    /*background: transparent;*/
     border: 0;
     border-bottom: 1px solid #ddd;
     box-shadow: none;
     border-radius: 0;
 }
+*/
 .uk-checkbox, .uk-radio {
     background-color: #fdfdfd;
 }

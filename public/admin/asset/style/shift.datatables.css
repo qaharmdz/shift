@@ -107,7 +107,8 @@
 }
 
 /* === Datatables Head  */
-.uk-table.dataTable .uk-input {
+.uk-table.dataTable .uk-input,
+.uk-table.dataTable .uk-select {
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
@@ -118,15 +119,13 @@
 .uk-table.dataTable .dt-column-filter td {
     padding: 4px 4px 6px;
 }
-.uk-table.dataTable .uk-input {
+.uk-table.dataTable .uk-input,
+.uk-table.dataTable .uk-select {
     font-size: 12px;
     height: 24px;
-    height: 20px;
     line-height: 23px;
-    line-height: 20px;
     padding-left: 5px;
     padding-right: 5px;
-    border-bottom: 1px solid #e4e4e4;
 }
 .uk-table.dataTable thead .uk-button {
     line-height: 18px;

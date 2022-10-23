@@ -37,11 +37,19 @@
                     <td data-filter='{"type":"string", "mode":"like"}'>
                         <input type="text" value="" data-index="2" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string", "mode":"like"}'>
-                        <input type="text" value="" data-index="3" class="uk-input">
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <select data-index="3" class="uk-select">
+                            <option value="">{{ app.language.get('all') }}</option>
+                            <option value="0">{{ app.language.get('no') }}</option>
+                            <option value="1">{{ app.language.get('yes') }}</option>
+                        </select>
                     </td>
-                    <td data-filter='{"type":"string", "mode":"like"}'>
-                        <input type="text" value="" data-index="4" class="uk-input">
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <select data-index="4" class="uk-select">
+                            <option value="">{{ app.language.get('all') }}</option>
+                            <option value="0">{{ app.language.get('no') }}</option>
+                            <option value="1">{{ app.language.get('yes') }}</option>
+                        </select>
                     </td>
                     <td class="uk-text-center">
                         <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
@@ -60,7 +68,7 @@
 <script>
 $(document).ready(function() {
 let tableId    = 'accountUserGroup-list',
-    sortingCol = [[2, 'asc']], // name
+    sortingCol = [[3, 'desc'], [2, 'asc']], // admin access, name
     dtTable    = $('#' + tableId).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('account/usergroup/list')|raw }}",
@@ -108,13 +116,7 @@ let tableId    = 'accountUserGroup-list',
             { data : 'user_group_id',
                 className : 'noVisualColumn',
                 render : function(data, type, full) {
-                    let output  = '';
-
-                    if (data != '0') {
-                        output = '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
-                    }
-
-                    return output;
+                    return '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
                 }
             },
             { data : 'user_group_id' },
@@ -156,7 +158,12 @@ let tableId    = 'accountUserGroup-list',
         ]
     });
 
-    // Typewatch for "search all" input
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Search inputs
     $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
         allowSubmit: true,
         captureLength: 0,
@@ -164,23 +171,21 @@ let tableId    = 'accountUserGroup-list',
             dtTable.search(value).draw();
         },
     });
-    // Typewatch for column filter input
-    $('.js-dtColumnFilter input, .js-dtColumnFilter select').off('keypress keyup search input paste cut').typeWatch({
+    $('.js-dtColumnFilter input').typeWatch({
         allowSubmit: true,
         captureLength: 0,
         callback: function(value) {
             dtTable.column($(this).data('index')).search(value).draw();
         },
     });
-
-    // Refresh record results
-    $('.main-content').on('click', '[data-dtReload]', function() {
-        console.log('[data-dtReload]');
-        dtTable.clearPipeline().draw();
+    $('.js-dtColumnFilter select').on('change', function() {
+        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
     });
 
-    // Table state options
+    // Clear all search
     $('[data-dtClearSearch]').on('click', function() {
+        $('.js-dtColumnFilter input').val('');
+        $('.js-dtColumnFilter select').find('option:first').prop('selected', true);
         dtTable.clearSearch().draw();
     });
 
