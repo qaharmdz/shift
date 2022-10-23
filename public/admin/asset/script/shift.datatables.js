@@ -1,7 +1,7 @@
 // Default dataTables initialisation
 // ================================================
 $.extend($.fn.dataTable.defaults, {
-    dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-2-3'fi<'dt-top-info'>>'<'uk-width-1-3 dt-top-right'lB>>><'dataTables-content uk-overflow-auto't><'dataTables-bottom'<'uk-grid'<'uk-width-1-3'i><'uk-width-2-3 uk-text-right'p>>>r",
+    dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-2-3'fi>'<'uk-width-1-3 dt-top-right'lB>>><'dataTables-content uk-overflow-auto't><'dataTables-bottom'<'uk-grid'<'uk-width-1-3'i><'uk-width-2-3 uk-text-right'p>>>r",
     serverSide      : true,
     processing      : true,
     stateSave       : true,
@@ -59,7 +59,7 @@ $.extend($.fn.dataTable.defaults, {
 // ================================================
 $.extend($.fn.dataTableExt.oStdClasses, {
     sWrapper        : 'dataTables_wrapper',
-    sFilter         : 'dataTables_filter uk-width-1-2',
+    sFilter         : 'dataTables_filter uk-width-2-5',
     sInfo           : 'dataTables_info',
     sFilterInput    : 'uk-input uk-form-small',
     sLengthSelect   : 'dataTables_length_select uk-select uk-form-small'
