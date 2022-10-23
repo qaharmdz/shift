@@ -1,7 +1,7 @@
 // Default dataTables initialisation
 // ================================================
 $.extend($.fn.dataTable.defaults, {
-    dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-2-3'fi>'<'uk-width-1-3 dt-top-right'lB>>><'dataTables-content uk-overflow-auto't><'dataTables-bottom'<'uk-grid'<'uk-width-1-3'i><'uk-width-2-3 uk-text-right'p>>>r",
+    dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-2-3'fi>'<'uk-width-1-3 dt-top-right'lB>>><'dataTables-content't><'dataTables-bottom'<'uk-grid'<'uk-width-1-3'i><'uk-width-2-3 uk-text-right'p>>>r",
     serverSide      : true,
     processing      : true,
     stateSave       : true,
