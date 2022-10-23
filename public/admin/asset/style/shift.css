@@ -114,18 +114,22 @@ body {
     z-index: 1;
 }
 
-.block-sidebar-left {
-    width: var(--sidebar-width);
-    /*background: rgba(0,0,0,.015);*/
-    background: #fff;
-    border-right: 1px solid rgba(0,0,0,.07);
+.block-sidebar {
+    background: rgba(255,255,255,.5);
     overflow-x: hidden;
     transition: width .25s ease-out;
     position: relative;
 }
-.hide-sidebar > .block-sidebar-left {
+.block-sidebar-left {
+    width: var(--sidebar-width);
+    background: #fff;
+    border-right: 1px solid rgba(0,0,0,.07);
+}
+.block-sidebar-right {
+    border-left: 1px solid rgba(0,0,0,.07);
+}
+.hide-sidebar-left > .block-sidebar-left {
     width: 5px;
-    /* border: 0; */
     background: rgba(0,0,0,.1);
 }
 
