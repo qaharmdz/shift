@@ -76,7 +76,6 @@ class Site extends Mvc\Controller
         $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['delete'];
         $items = explode(',', $post['item']);
-
         $data  = [
             'items'     => $items,
             'message'   => '',

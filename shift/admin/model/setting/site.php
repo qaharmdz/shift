@@ -49,6 +49,7 @@ class Site extends Mvc\Model
 
     // Form CRUD
     // ================================================
+
     public function addSite(array $data)
     {
         $this->db->add(

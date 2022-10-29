@@ -39,7 +39,25 @@ class UserGroup extends Mvc\Model
 
     public function dtAction(string $type, array $items): array
     {
-        //
+        $_items = [];
+
+        if (in_array($type, ['enabled', 'disabled'])) {
+            $status = $type == 'enabled' ? 1 : 0;
+
+            foreach ($items as $item) {
+                $this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `status` = ?i, updated = NOW() WHERE `user_group_id` = ?i", [$status, (int)$item]);
+
+                if ($this->db->affectedRows()) {
+                    $_items[] = $item;
+                }
+            }
+        }
+
+        if ($type == 'delete') {
+            $this->deleteUserGroups($items);
+        }
+
+        return $_items;
     }
 
     // Form CRUD
@@ -50,8 +68,14 @@ class UserGroup extends Mvc\Model
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_group`")->row['total'];
     }
 
-    /*
+    public function deleteUserGroups(array $userGroups)
+    {
+        $this->db->delete(DB_PREFIX . 'user_group', ['user_group_id' => $userGroups]);
 
+        $this->cache->delete('user_groups');
+    }
+
+    /*
     public function addUserGroup($data)
     {
         $this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
