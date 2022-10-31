@@ -144,14 +144,14 @@ class Log extends Mvc\Controller
 
             /**
              * State:
-             * - x < 2 MB = 0
-             * - x > 2 MB = 1
+             * - x < 15 MB = 0
+             * - x > 15 MB = 1
              * - x > 50 MB = 2
              */
             if ($bytes > 52428800) {  // 50 MB
                 $data['state'] = 2;
                 $data['label'] = 'danger';
-            } elseif ($bytes > 2097152) { // 2 MB
+            } elseif ($bytes > 15728640) { // 15 MB
                 $data['state'] = 1;
                 $data['label'] = 'warning';
             }
