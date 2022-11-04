@@ -97,8 +97,8 @@ class Site extends Mvc\Controller
 
     public function form()
     {
-        $site_id = $this->request->has('query.site_id') ? $this->request->getInt('query.site_id', 0) : -1;
-        $mode    = is_null($site_id) ? 'add' : 'edit';
+        $site_id = $this->request->getInt('query.site_id', -1);
+        $mode    = $site_id == -1 ? 'add' : 'edit';
 
         $this->load->config('setting/site');
         $this->load->model('setting/setting');
@@ -119,7 +119,7 @@ class Site extends Mvc\Controller
         $data['site_id'] = $site_id;
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('setting.site.form'),
-            $this->model_setting_setting->getSetting('system', 'site', (int)$site_id),
+            $this->model_setting_setting->getSetting('system', 'site', $site_id),
             $this->request->get('post', [])
         );
 
