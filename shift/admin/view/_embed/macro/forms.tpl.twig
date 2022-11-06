@@ -11,7 +11,6 @@
         'value'     : '',
         'class'     : 'uk-width-1-1',
         'attribute' : '',
-        'after'     : '',
         'info'      : '',
         'required'  : false,
         'errors'    : [],
@@ -21,7 +20,6 @@
         <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}" value="{{ param.value }}" class="uk-input {{ param.class }}" {{ param.attribute }}>
-            {{ param.after }}
             {% if param.info %}
                 <div class="uk-text-meta">{{ param.info }}</div>
             {% endif %}

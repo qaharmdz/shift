@@ -20,9 +20,9 @@
                 {{ forms.checkboxPanel({'label':'db_table', 'name':'export[]', lists:dbTables, checked:dbTables, extraHtml:'
 <div class="uk-child-width-1-2 ukt-mt-3" uk-grid>
     <div class="uk-text-small">
-        <a id="js-select-all">' ~ app.language.get('select_all') ~ '</a>
+        <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
         <span class="ukt-mx-2">|</span>
-        <a id="js-unselect-all">' ~ app.language.get('unselect_all') ~ '</a>
+        <a class="js-unselect-all">' ~ app.language.get('unselect_all') ~ '</a>
     </div>
     <div>
         <button type="submit" class="uk-button uk-button-secondary ukt-px-3 uk-align-right" form="form-export">
@@ -51,10 +51,10 @@
 
 <script>
 $(document).ready(function() {
-    $('#js-select-all').on('click', function () {
+    $('.js-select-all').on('click', function () {
         $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', true);
     });
-    $('#js-unselect-all').on('click', function () {
+    $('.js-unselect-all').on('click', function () {
         $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', false);
     });
 

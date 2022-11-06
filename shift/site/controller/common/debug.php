@@ -14,6 +14,7 @@ class Debug extends Mvc\Controller
         echo '<a href="http://localhost/mdzGit/shift/public/" target="_blank">Home</a>';
 
         d(
+            $documentRoot = $_SERVER['DOCUMENT_ROOT'],
             $userDefinedConstants = get_defined_constants(true)['user'],
             $_SESSION === $this->session->all(),
             $this->session->all(),

@@ -6,9 +6,9 @@ $_['maintenance']       = 'Maintenance';
 $_['backup']            = 'Backup';
 $_['export']            = 'Export';
 $_['db_table']          = 'Database Tables';
+
 $_['select_all']        = 'Select All';
 $_['unselect_all']      = 'Unselect All';
-
 $_['restore']           = 'Restore';
 $_['import']            = 'Import';
 
