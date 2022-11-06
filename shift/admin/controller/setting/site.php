@@ -189,8 +189,8 @@ class Site extends Mvc\Controller
         if ($post['action'] === 'new') {
             $data['redirect'] = $this->router->url('setting/site/form');
         }
-        if (isset($output['new_id']) && empty($output['redirect'])) {
-            $data['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $output['new_id']);
+        if (isset($data['new_id']) && empty($data['redirect'])) {
+            $data['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $data['new_id']);
         }
 
         unset($post['form']);

@@ -2,19 +2,26 @@
  * UIkit Sketsa override
  * ======================================================================== */
 
+.uk-container-small {
+    max-width: 960px;
+}
+
 @media (min-width: 960px) {
     .uk-container {
         padding-left: 30px;
         padding-right: 30px;
     }
+    .uk-h1, h1 {
+        font-size: 2.325rem;
+    }
 }
 
 /* Breadcrumbs
 ==================================== */
-.uk-breadcrumb>*>* {
+.uk-breadcrumb > * > * {
     color: #999;
 }
-.uk-breadcrumb>*>a {
+.uk-breadcrumb > * > a {
     color: var(--uk-gray-blue);
 }
 
@@ -88,7 +95,7 @@
     --card-body-padding: 24px;
 }
 .uk-form-margin-hover .uk-fieldset .uk-margin {
-    padding: 12px var(--card-body-padding);
+    padding: 8px var(--card-body-padding);
     margin: 0 calc(var(--card-body-padding) * -1) !important;
 }
 .uk-form-margin-hover .uk-fieldset .uk-margin:hover {

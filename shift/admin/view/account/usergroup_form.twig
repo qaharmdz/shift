@@ -1,0 +1,95 @@
+{% extends 'main.tpl.twig' %}
+
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
+{% block main_content %}
+<div class="uk-container uk-container-small container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <div class="uk-button-group">
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-usergroup", "user_group_id":"{{ user_group_id }}"}'>{{ app.language.get('save') }}</button>
+                    <div class="uk-inline">
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
+                        <div uk-dropdown="pos:bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-form-submit='{"form":"#form-usergroup", "action":"close", "user_group_id":"{{ user_group_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-usergroup", "action":"new", "user_group_id":"{{ user_group_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ app.router.url('account/usergroup') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(user_group_id != -1 ? 'close' : 'cancel') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <form id="form-usergroup" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('account/usergroup/save') }}" method="post" data-form-monitor>
+            <div uk-grid>
+                <div class="uk-width-expand">
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal">
+                        <fieldset class="uk-fieldset">
+                            {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'required': true}) }}
+                            {{ forms.checkboxPanel({'label':'access', 'name':'permission[access][]', lists:permissions, checked:setting.permission.access, extraHtml:'
+<div class="uk-text-small uk-text-right ukt-mt-2 ukt-mb-2">
+    <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
+    <span class="ukt-mx-2">|</span>
+    <a class="js-unselect-all">' ~ app.language.get('unselect_all') ~ '</a>
+</div>
+                            '}) }}
+
+                            {{ forms.checkboxPanel({'label':'modify', 'name':'permission[modify][]', lists:permissions, checked:setting.permission.modify, extraHtml:'
+<div class="uk-text-small uk-text-right ukt-mt-2">
+    <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
+    <span class="ukt-mx-2">|</span>
+    <a class="js-unselect-all">' ~ app.language.get('unselect_all') ~ '</a>
+</div>
+                            '}) }}
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="uk-width-content-sidebar@l">
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+
+                            {{ forms.select({'label':'backend', 'name':'backend', 'selected':setting.backend, 'class':'uk-width-150@m', 'options':[
+                                {'text': app.language.get('yes'), 'value': 1},
+                                {'text': app.language.get('no'),  'value': 0}
+                            ]}) }}
+                            {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
+                                {'text': app.language.get('enabled'),  'value': 1},
+                                {'text': app.language.get('disabled'), 'value': 0}
+                            ]}) }}
+                        </fieldset>
+                    </div>
+
+                    {% if mode == 'edit' %}
+                        <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                            <fieldset class="uk-fieldset">
+                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+
+                                {{ forms.infoDate({'label':'created','datetime':setting.created}) }}
+                                {{ forms.infoDate({'label':'updated','datetime':setting.updated}) }}
+                            </fieldset>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('.js-select-all').on('click', function () {
+        $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', true).trigger('change');
+    });
+    $('.js-unselect-all').on('click', function () {
+        $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', false).trigger('change');
+    });
+});
+</script>
+{% endblock %}

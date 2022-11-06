@@ -83,7 +83,7 @@ class User
 
     public function isSuperAdmin(): bool
     {
-        return $this->bags->getBool('super_admin', false);
+        return $this->bags->getInt('user_group_id', -1) === 0;
     }
 
     public function hasPermission(string $type, string $route): bool
@@ -108,7 +108,7 @@ class User
     protected function dbGetUserByMail(string $email)
     {
         $user = $this->db->get(
-            "SELECT u.*, ug.name AS usergroup, ug.super_admin, ug.backend, ug.permission
+            "SELECT u.*, ug.name AS usergroup, ug.backend, ug.permission
             FROM `" . DB_PREFIX . "user` u
                 LEFT JOIN `" . DB_PREFIX . "user_group` ug ON (u.user_group_id = ug.user_group_id)
             WHERE u.email = ?s AND u.status = ?i AND ug.status = ?i",

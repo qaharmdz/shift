@@ -52,10 +52,10 @@
 <script>
 $(document).ready(function() {
     $('.js-select-all').on('click', function () {
-        $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', true);
+        $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', true).trigger('change');
     });
     $('.js-unselect-all').on('click', function () {
-        $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', false);
+        $(this).closest('.uk-form-controls').find(':checkbox').prop('checked', false).trigger('change');
     });
 
     $('#button-import').on('click', function() {

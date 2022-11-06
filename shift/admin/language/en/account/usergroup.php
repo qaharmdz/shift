@@ -4,7 +4,13 @@ $_['page_title']        = 'User Groups';
 
 $_['account']           = 'Accounts';
 $_['backend']           = 'Admin Access';
+$_['access']            = 'Access Permission';
+$_['modify']            = 'Modify Permission';
 
+$_['select_all']        = 'Select All';
+$_['unselect_all']      = 'Unselect All';
+
+/*
 // Text
 $_['text_success']     = 'Success: You have modified user groups!';
 $_['text_list']        = 'User Group';
@@ -24,3 +30,4 @@ $_['entry_modify']     = 'Modify Permission';
 $_['error_permission'] = 'Warning: You do not have permission to modify user groups!';
 $_['error_name']       = 'User Group Name must be between 3 and 64 characters!';
 $_['error_user']       = 'Warning: This user group cannot be deleted as it is currently assigned to %s users!';
+*/

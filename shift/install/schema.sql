@@ -402,7 +402,6 @@ DROP TABLE IF EXISTS `{DB_PREFIX}user_group`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_group` (
   `user_group_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `super_admin` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `backend` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `permission` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',

@@ -196,7 +196,7 @@ body {
 /* --uk-breakpoint-l */
 @media (min-width: 1200px) {
     .uk-width-content-sidebar\@l {
-        width: 320px;
+        width: 300px;
     }
 }
 

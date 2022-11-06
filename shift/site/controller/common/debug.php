@@ -22,6 +22,7 @@ class Debug extends Mvc\Controller
             '----------------------------',
             $this->user->get(),
             $this->language->all(),
+            date('Y-m-d H:i:s'),
             // '----------------------------',
             // $this->view->getConfig(),
             // $this->view->getTemplatePath(),
