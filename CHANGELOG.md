@@ -2,34 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-#### Types of changes
-- **Security** in case of vulnerabilities.
-- **Added** for new features.
-- **Improved** for any improvements.
-- **Fixed** for any bug fixes.
-- **Changed** for any changes not covered in the other Type of Changes.
-- **Deprecated** for soon-to-be removed features.
-- **Removed** for now removed features.
-
----
 
 ## [Unreleased]
 
 ### Added
 - Twig template engine.
 
-### Fixed
-- Fixed library/document duplicate meta, link, style and script.
-
 ### Changed
 - Rewrite admin controller, language and template.
 - Database schema.
 
+### Deprecated
+- n/a
+
 ### Removed
 - PHP template (replaced by Twig)
+
+### Fixed
+- Fixed library/document duplicate meta, link, style and script.
 
 ## [v0.2.0] - 2022-07-31
 ### Added
