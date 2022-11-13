@@ -23,6 +23,9 @@ class User extends Mvc\Controller
 
         $data = [];
 
+        $this->load->model('account/usergroup');
+        $data['usergroups'] = $this->model_account_usergroup->getUserGroups();
+
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');

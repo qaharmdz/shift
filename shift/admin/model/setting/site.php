@@ -105,16 +105,16 @@ class Site extends Mvc\Model
 
     public function getSites()
     {
-        $site_data = $this->cache->get('sites');
+        $sites = $this->cache->get('sites');
 
-        if (!$site_data) {
+        if (!$sites) {
             $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC");
-            $site_data = $query->rows;
+            $sites = $query->rows;
 
-            $this->cache->set('sites', $site_data);
+            $this->cache->set('sites', $sites);
         }
 
-        return $site_data;
+        return $sites;
     }
 
     public function getTotal()

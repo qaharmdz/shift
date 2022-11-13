@@ -84,7 +84,7 @@ class UserGroup extends Mvc\Model
             ]
         );
 
-        $this->cache->delete('usergroup');
+        $this->cache->delete('usergroups');
 
         return $this->db->insertId();
     }
@@ -103,7 +103,7 @@ class UserGroup extends Mvc\Model
             ['user_group_id' => (int)$user_group_id]
         );
 
-        $this->cache->delete('usergroup');
+        $this->cache->delete('usergroups');
     }
 
     public function getUserGroup(int $user_group_id)
@@ -120,6 +120,20 @@ class UserGroup extends Mvc\Model
         return $result;
     }
 
+    public function getUserGroups()
+    {
+        $userGroups = $this->cache->get('usergroups');
+
+        if (!$userGroups) {
+            $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_group` ORDER BY name ASC");
+            $userGroups = $query->rows;
+
+            $this->cache->set('usergroups', $userGroups);
+        }
+
+        return $userGroups;
+    }
+
     public function getTotal()
     {
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user_group`")->row['total'];
@@ -129,6 +143,6 @@ class UserGroup extends Mvc\Model
     {
         $this->db->delete(DB_PREFIX . 'user_group', ['user_group_id' => $userGroups]);
 
-        $this->cache->delete('user_groups');
+        $this->cache->delete('usergroups');
     }
 }
