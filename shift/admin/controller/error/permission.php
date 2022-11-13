@@ -12,6 +12,10 @@ class Permission extends Mvc\Controller
     {
         $this->load->language('error/permission');
 
+        if ($this->request->is('ajax')) {
+            return $this->response->setOutputJson($this->language->get('page_title'), 403);
+        }
+
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('class_body', ['error-403']);
@@ -25,6 +29,6 @@ class Permission extends Mvc\Controller
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');
 
-        $this->response->setOutput($this->load->view('error/permission', $data));
+        $this->response->setOutput($this->load->view('error/permission', $data), 403);
     }
 }

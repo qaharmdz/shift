@@ -12,6 +12,10 @@ class NotFound extends Mvc\Controller
     {
         $this->load->language('error/notfound');
 
+        if ($this->request->is('ajax')) {
+            return $this->response->setOutputJson($this->language->get('page_title'), 404);
+        }
+
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('class_body', ['error-404']);
@@ -25,6 +29,6 @@ class NotFound extends Mvc\Controller
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');
 
-        $this->response->setOutput($this->load->view('error/notfound', $data));
+        $this->response->setOutput($this->load->view('error/notfound', $data), 404);
     }
 }
