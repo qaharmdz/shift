@@ -110,7 +110,7 @@ let tableId    = 'accountUser-list',
             }
         }),
         initComplete: function () {
-            // Add the search value to column-filter after page reload
+            // Add localStorage search value to column-filter after page reload
             let table = this;
             table.api().columns().every(function(i) {
                 let column = this;

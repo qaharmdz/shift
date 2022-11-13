@@ -25,11 +25,11 @@
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
                     <th style="width:300px">{{ app.language.get('name') }}</th>
-                    <th>{{ app.language.get('site_url') }}</th>
+                    <th style="min-width:300px">{{ app.language.get('site_url') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr class="js-dtColumnFilter">
-                    <td></td>
+                    <td data-index="0"></td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
                     </td>
@@ -84,7 +84,7 @@ let tableId    = 'settingSite-list',
             }
         }),
         initComplete: function () {
-            // Add the search value to column-filter after page reload
+            // Add localStorage search value to column-filter after page reload
             let table = this;
             table.api().columns().every(function(i) {
                 let column = this;
