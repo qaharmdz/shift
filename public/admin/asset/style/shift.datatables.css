@@ -97,8 +97,12 @@
     margin: 2px 0;
     text-align: left;
 }
-.buttons-columnVisibility.uk-button-default.active {
+.buttons-columnVisibility.uk-button-default {
     background-color: #e7e7e7;
+    color: #666;
+}
+.buttons-columnVisibility.uk-button-default.active {
+    background-color: #fff;
     color: #222;
 }
 

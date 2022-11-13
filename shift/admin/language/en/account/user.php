@@ -1,5 +1,13 @@
 <?php
 
+$_['page_title']        = 'Users';
+
+$_['account']           = 'Accounts';
+$_['user_group']        = 'User Group';
+$_['last_login']        = 'Last Login';
+
+
+/*
 // Heading
 $_['heading_title']         = 'Users';
 
@@ -37,3 +45,4 @@ $_['error_firstname']       = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']        = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']           = 'E-Mail Address does not appear to be valid!';
 $_['error_exists_email']    = 'Warning: E-Mail Address is already registered!';
+*/

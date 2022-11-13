@@ -1,0 +1,241 @@
+{% extends 'main.tpl.twig' %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <a href="{{ app.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body uk-card-panel uk-card-body">
+        <table id="accountUser-list" class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th class="ukt-px-0" style="width:30px;">
+                        <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                        <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width:60px;">{{ app.language.get('id') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="width:200px;">{{ app.language.get('email') }}</th>
+                    <th style="width:150px;">{{ app.language.get('user_group') }}</th>
+                    <th style="width:200px;">{{ app.language.get('last_login') }}</th>
+                    <th style="width:200px;">{{ app.language.get('created') }}</th>
+                    <th style="width:200px;">{{ app.language.get('updated') }}</th>
+                    <th style="width:110px">{{ app.language.get('status') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                </tr>
+                <tr class="js-dtColumnFilter">
+                    <td data-index="0"></td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <input type="text" value="" data-index="1" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string", "mode":"like"}'>
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string", "mode":"like"}'>
+                        <input type="text" value="" data-index="3" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <select data-index="4" class="uk-select">
+                            <option value="">{{ app.language.get('all') }}</option>
+                        </select>
+                    </td>
+                    <td data-filter='{"type":"date", "mode":"match"}'>
+                        <input type="text" value="" data-index="5" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"date", "mode":"match"}'>
+                        <input type="text" value="" data-index="6" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"date", "mode":"match"}'>
+                        <input type="text" value="" data-index="7" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <select data-index="8" class="uk-select">
+                            <option value="">{{ app.language.get('all') }}</option>
+                            <option value="0">{{ app.language.get('disabled') }}</option>
+                            <option value="1">{{ app.language.get('enabled') }}</option>
+                        </select>
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="10" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+let tableId    = 'accountUser-list',
+    sortingCol = [[5, 'desc'], [2, 'asc']], // last_login, name
+    dtTable    = $('#' + tableId).DataTable({
+        ajax : $.fn.dataTable.pipeline({
+            url  : "{{ app.router.url('account/user/list')|raw }}",
+            data : function(d) {
+                $('.js-dtColumnFilter td').each(function(i) {
+                    let dataFilter = $(this).data('filter');
+                    if (dataFilter != undefined) {
+                        $.extend(d.columns[i]['search'], dataFilter || []);
+
+                        if (d.draw > 1) {
+                            let forms = $('input, select', this);
+                            if (forms.length == 1) {
+                                d.columns[i]['search']['value'] = $('input, select', this).val() || '';
+                            } else if (forms.length == 2) {
+                                forms.each(function(ci, el) {
+                                    if (ci > 0) {
+                                        d.columns[i]['search']['value'] += '~';
+                                    }
+                                    d.columns[i]['search']['value'] += $(el).val() || '';
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }),
+        initComplete: function () {
+            // Add the search value to column-filter after page reload
+            let table = this;
+            table.api().columns().every(function(i) {
+                let column = this;
+                $('[data-index=' + i + ']').val(column.search());
+            });
+        },
+        sorting : sortingCol,
+        columnDefs : [
+            { searchable: false, targets : [0, -1] },
+            { orderable : false, targets : [0, -1] },
+            { visible   : false, targets : [6, 7] }, // Hide column
+            { createdCell : function(nTd) {
+                $(nTd).addClass('uk-text-center'); },
+                targets : [ 0, 1, -3, -2, -1 ]
+            },
+        ],
+        columns : [
+            { data : 'user_id',
+                className : 'noVisualColumn',
+                render : function(data, type, full) {
+                    return '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                }
+            },
+            { data : 'user_id' },
+            { data : 'fullname'},
+            { data : 'email'},
+            { data : 'user_group'},
+            { data : 'last_login'},
+            { data : 'created'},
+            { data : 'updated'},
+            { data : 'status',
+                render : function(data, type, full) {
+                    output = shift.i18n['status_' + data];
+                    if (!full.status) {
+                        output  = '<div class="uk-label uk-label-warning">' + output + '</div>';
+                    }
+                    return output;
+                }
+            },
+            { data : 'user_id',
+                className : 'noVisualColumn ukt-p-2',
+                render : function(data, type, full) {
+                    let output  = '';
+
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="' + shift.i18n.edit + '"><i class="bi bi-pencil"></i></span></a>';
+                    if (data != '0') {
+                        output += '<div class="uk-inline ukt-ml-2">';
+                        output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                        output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                        output += '        <ul class="uk-nav uk-dropdown-nav">';
+                        if (!full.status) {
+                            output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.user_id + '"}\'>' + shift.i18n.enabled + '</a></li>';
+                        }
+                        if (full.status) {
+                            output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.user_id + '"}\'>' + shift.i18n.disabled + '</a></li>';
+                        }
+                        output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.user_id + '"}\'> ' + shift.i18n.delete + '</a></li>';
+                        output += '        </ul>';
+                        output += '    </div>';
+                        output += '</div>';
+                    }
+
+                    return output;
+                }
+            }
+        ]
+    });
+
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Search inputs
+    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.search(value).draw();
+        },
+    });
+    $('.js-dtColumnFilter input').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.column($(this).data('index')).search(value).draw();
+        },
+    });
+    $('.js-dtColumnFilter select').on('change', function() {
+        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
+    });
+
+    // Clear all search
+    $('[data-dtClearSearch]').on('click', function() {
+        $('.js-dtColumnFilter input').val('');
+        $('.js-dtColumnFilter select').find('option:first').prop('selected', true);
+        dtTable.clearSearch().draw();
+    });
+
+    // Action quick-edit
+    $('.main-content').on('click', '[data-dtAction]', function(e) {
+        e.preventDefault();
+
+        let data = $(this).data('dtaction');
+
+        $.fn.shift.dtAction({
+            url  : "{{ app.router.url('account/user/dtaction')|raw }}",
+            data : data,
+            validate : function(dtActionProceed) {
+                if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else {
+                    dtActionProceed();
+                }
+            },
+            onSuccess : function() {
+                dtTable.clearPipeline().draw();
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

@@ -5,9 +5,60 @@ declare(strict_types=1);
 namespace Shift\Admin\Model\Account;
 
 use Shift\System\Mvc;
+use Shift\System\Helper;
 
 class User extends Mvc\Model
 {
+    // List
+    // ================================================
+
+    /**
+     * DataTables records
+     *
+     * @param  array  $params
+     */
+    public function dtRecords(array $params)
+    {
+        $columnMap = [
+            'user_id'       => 'u.user_id',
+            'user_group_id' => 'u.user_group_id',
+            'user_group'    => 'ug.name AS user_group',
+            'username'      => 'u.username',
+            'email'         => 'u.email',
+            'password'      => 'u.password',
+            'firstname'     => 'u.firstname',
+            'lastname'      => 'u.lastname',
+            'fullname'      => 'CONCAT(u.firstname, " ", u.lastname) AS fullname',
+            'status'        => 'u.status',
+            'created'       => 'u.created',
+            'updated'       => 'u.updated',
+            'last_login'    => 'u.last_login',
+        ];
+        $filterMap  = $columnMap;
+        $filterMap['fullname']   = 'CONCAT(u.firstname, " ", u.lastname, " ", u.username)';
+        $filterMap['user_group'] = 'u.user_group_id';
+
+        $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
+
+        $query = "SELECT " . implode(', ', $columnMap)
+            . " FROM `" . DB_PREFIX . "user` u
+                LEFT JOIN `" . DB_PREFIX . "user_group` ug ON (u.user_group_id = ug.user_group_id)"
+            . ($dataTables['sql']['query']['where'] ? " WHERE " . $dataTables['sql']['query']['where'] : "")
+            . " ORDER BY " . $dataTables['sql']['query']['order']
+            . " LIMIT " . $dataTables['sql']['query']['limit'];
+
+        return $this->db->get($query, $dataTables['sql']['params']);
+    }
+
+    // Form CRUD
+    // ================================================
+
+
+    public function getTotal()
+    {
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`")->row['total'];
+    }
+
     /*
     public function addUser($data)
     {
