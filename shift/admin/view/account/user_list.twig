@@ -141,9 +141,21 @@ let tableId    = 'accountUser-list',
             { data : 'fullname'},
             { data : 'email'},
             { data : 'user_group'},
-            { data : 'last_login'},
-            { data : 'created'},
-            { data : 'updated'},
+            { data : 'last_login',
+                render : function(data, type, full) {
+                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
+                }
+            },
+            { data : 'created',
+                render : function(data, type, full) {
+                    return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
+                }
+            },
+            { data : 'updated',
+                render : function(data, type, full) {
+                    return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
+                }
+            },
             { data : 'status',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];

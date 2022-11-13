@@ -15,6 +15,10 @@
  * # IIDE (Immediate Invoked Data Expressions)
  *   - data-form-monitor
  *   - data-form-submit
+ *   - data-format-date
+ *
+ * # Functions
+ *   - formatDate()
  *
  * ======================================================================== */
 
@@ -386,3 +390,42 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
         });
     });
 });
+
+$(document).on('IIDE.init IIDE.format_date', function(event)
+{
+    /**
+     * Format date from UTC to local browser timezone
+     *
+     * @usage
+     * data-format-date='Y-m-d H:i:s'
+     */
+    $('[data-format-date]').each(function() {
+        let el   = this,
+            date = $(el).data('formatDate');
+
+        $html = date  ? '<span title="' + date + ' UTC">' + formatDate(date) + '</span>' : '<i>n/a</i>';
+        $(el).html($html);
+    });
+});
+
+
+/*
+ * Functions
+ * ======================================================================== */
+
+ /**
+ * Database UTC Y-m-d H:i:s to local timezone
+ *
+ * @param  string   datetime  Y-m-d H:i:s UTC
+ * @return string
+ */
+function formatDate(datetime) {
+    let dateUTC = new Date(datetime + ' UTC'),
+        options = {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', hour12: false,
+            timeZoneName: 'short'
+        };
+
+    return new Intl.DateTimeFormat('en-GB', options).format(dateUTC).replace (/,/g, '');
+}
