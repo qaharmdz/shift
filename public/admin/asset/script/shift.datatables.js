@@ -11,7 +11,7 @@ $.extend($.fn.dataTable.defaults, {
     orderMulti      : true, // use "shift+"
     autoWidth       : false,
     orderClasses    : true, // addition of the "sorting" classes to column cell vertically
-    lengthMenu      : [ [25, 50, 100, 150, -1], [25, 50, 100, 150, shift.i18n.all] ],
+    lengthMenu      : [ [25, 50, 100, 250, -1], [25, 50, 100, 250, shift.i18n.all] ],
     pageLength      : 25,
     pagingType      : 'full_numbers',
     renderer        : { 'pageButton' : 'uikit' }, // custom pagination

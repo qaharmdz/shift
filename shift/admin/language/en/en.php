@@ -33,7 +33,7 @@ $_['updated']               = 'Updated';
 $_['status']                = 'Status';
 $_['action']                = 'Action';
 
-$_['id']                    = 'Id';
+$_['id']                    = 'ID';
 $_['all']                   = 'All';
 $_['list']                  = 'List';
 $_['default']               = 'Default';

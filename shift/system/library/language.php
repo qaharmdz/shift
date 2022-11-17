@@ -13,8 +13,8 @@ use Shift\System\Core;
  * Geographical language:
  * - Language code "ISO 639-1" as prefix
  * - "ISO 3166-1 Alpha-2" country code as suffix https://en.wikipedia.org/wiki/ISO_3166-1
- *   - Filename: en_gb, en_sg
- *   - Language code: en-GB, en-SG
+ *   - Filename: en_us, en_sg
+ *   - Language code: en-US, en-SG
  */
 class Language extends Core\Bags
 {

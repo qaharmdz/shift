@@ -427,5 +427,5 @@ function formatDate(datetime) {
             timeZoneName: 'short'
         };
 
-    return new Intl.DateTimeFormat('en-GB', options).format(dateUTC).replace (/,/g, '');
+    return new Intl.DateTimeFormat('en-US', options).format(dateUTC).replace (/,/g, '');
 }
