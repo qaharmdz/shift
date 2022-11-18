@@ -50,6 +50,36 @@ class User extends Mvc\Model
         return $this->db->get($query, $dataTables['sql']['params']);
     }
 
+    public function dtAction(string $type, array $items): array
+    {
+        $_items = [];
+
+        if (in_array($type, ['enabled', 'disabled'])) {
+            $status = $type == 'enabled' ? 1 : 0;
+
+            foreach ($items as $item) {
+                $this->db->set(
+                    DB_PREFIX . 'user',
+                    [
+                        'status'  => $status,
+                        'updated' => date('Y-m-d H:i:s'),
+                    ],
+                    ['user_id' => (int)$item]
+                );
+
+                if ($this->db->affectedRows()) {
+                    $_items[] = $item;
+                }
+            }
+        }
+
+        if ($type == 'delete') {
+            $this->deleteUsers($items);
+        }
+
+        return $_items;
+    }
+
     // Form CRUD
     // ================================================
 
@@ -57,6 +87,13 @@ class User extends Mvc\Model
     public function getTotal()
     {
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`")->row['total'];
+    }
+
+    public function deleteUsers(array $users)
+    {
+        $this->db->delete(DB_PREFIX . 'user', ['user_id' => $users]);
+
+        $this->cache->delete('users');
     }
 
     /*
