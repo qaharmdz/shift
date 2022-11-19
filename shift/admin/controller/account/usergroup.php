@@ -96,8 +96,8 @@ class UserGroup extends Mvc\Controller
 
     public function form()
     {
-        $user_group_id = $this->request->getInt('query.user_group_id', -1);
-        $mode = $user_group_id == -1 ? 'add' : 'edit';
+        $user_group_id = $this->request->getInt('query.user_group_id', 0);
+        $mode = !$user_group_id ? 'add' : 'edit';
 
         $this->load->config('account/usergroup');
         $this->load->model('account/usergroup');
@@ -203,7 +203,7 @@ class UserGroup extends Mvc\Controller
             return $this->response->setOutputJson($errors, 422);
         }
 
-        if (-1 == $user_group_id) {
+        if (!$user_group_id) {
             $data['new_id'] = $user_group_id = $this->model_account_usergroup->addUserGroup($post);
         } else {
             $this->model_account_usergroup->editUserGroup($user_group_id, $post);

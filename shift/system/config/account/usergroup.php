@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// Default admin form key-value
+// Default admin setting key-value
 $_['form'] = [
     'name'        => '',
     'backend'     => 0,

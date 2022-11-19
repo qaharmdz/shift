@@ -83,7 +83,7 @@ class User
 
     public function isSuperAdmin(): bool
     {
-        return $this->bags->getInt('user_group_id', -1) === 0;
+        return $this->bags->getInt('user_group_id', 0) === 1;
     }
 
     public function hasPermission(string $type, string $route): bool

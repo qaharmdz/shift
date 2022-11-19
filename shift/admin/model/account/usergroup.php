@@ -141,7 +141,9 @@ class UserGroup extends Mvc\Model
 
     public function deleteUserGroups(array $userGroups)
     {
-        $this->db->delete(DB_PREFIX . 'user_group', ['user_group_id' => $userGroups]);
+        if (!in_array(1, $items)) {
+            $this->db->delete(DB_PREFIX . 'user_group', ['user_group_id' => $userGroups]);
+        }
 
         $this->cache->delete('usergroups');
     }
