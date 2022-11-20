@@ -83,6 +83,26 @@ class User extends Mvc\Model
     // Form CRUD
     // ================================================
 
+    public function getUser(int $user_id)
+    {
+        $result = $this->db->get(
+            "SELECT *, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group
+            FROM `" . DB_PREFIX . "user` u
+            WHERE u.user_id = ?i",
+            [$user_id]
+        )->row;
+
+        if (!empty($result['user_id'])) {
+            $result['meta'] = [];
+            $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_meta` um WHERE um.user_id = ?i", [$user_id]);
+
+            foreach ($metas as $meta) {
+                $result['meta'][$meta['key']] = $meta['encoded'] ? json_encode($meta['value'], true) : $meta['value'];
+            }
+        }
+
+        return $result;
+    }
 
     public function getTotal()
     {

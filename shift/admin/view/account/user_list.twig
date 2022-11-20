@@ -47,7 +47,7 @@
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
                             <option value="">{{ app.language.get('all') }}</option>
-                            {% for usergroup in usergroups %}
+                            {% for usergroup in user_groups %}
                                 <option value="{{ usergroup.user_group_id }}">{{ usergroup.name }}</option>
                             {% endfor %}
                         </select>

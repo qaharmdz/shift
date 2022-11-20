@@ -3,9 +3,21 @@
 $_['page_title']        = 'Users';
 
 $_['account']           = 'Accounts';
-$_['user_group']        = 'User Group';
+$_['user_group']        = 'User Groups';
 $_['last_login']        = 'Last Login';
 
+$_['account']           = 'Account';
+$_['profile']           = 'Profile';
+
+$_['password']          = 'Password';
+$_['password_confirm']  = 'Confirm Password';
+$_['firstname']         = 'Firts Name';
+$_['lastname']          = 'Last Name';
+$_['username']          = 'Username';
+$_['bio']               = 'Bio';
+$_['last_login']        = 'Last Login';
+
+$_['error_permission'] = 'Warning: You do not have permission to modify Users!';
 
 /*
 // Heading
@@ -25,7 +37,7 @@ $_['column_action']         = 'Action';
 
 // Entry
 $_['entry_username']        = 'Username';
-$_['entry_user_group']      = 'User Group';
+$_['entry_usergroup']      = 'User Group';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';
 $_['entry_firstname']       = 'First Name';

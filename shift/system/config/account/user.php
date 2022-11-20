@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 // Default admin setting key-value
 $_['form'] = [
-    'name'        => '',
-    'backend'     => 0,
-    'permission'  => ['access' => [], 'modify' => []],
-    'status'      => 0,
-    'created'     => null,
-    'updated'     => null,
+    'user_id'       => 0,
+    'user_group_id' => 0,
+    'email'         => '',
+    'password'      => '',
+    'username'      => '',
+    'firstname'     => '',
+    'lastname'      => '',
+    'status'        => 0,
+    'last_login'    => null,
+    'created'       => null,
+    'updated'       => null,
+
+    'meta'          => [
+        'bio' => '',
+    ],
 ];

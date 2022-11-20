@@ -20,6 +20,24 @@
         <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}" value="{{ param.value }}" class="uk-input {{ param.class }}" {{ param.attribute }}>
+            {% if param.type == 'password' %}
+                <a class="uk-link-text" style="margin-left:-30px;" onclick="
+                    let el = $(this).prev(),
+                        elToggle = el.attr('type') == 'password' ? 'text' : 'password';
+                    el.attr('type', elToggle);
+                    if (elToggle == 'password') {
+                        $(this).find('i.bi-eye').hide();
+                        $(this).find('i.bi-eye-slash').show();
+                    } else {
+                        $(this).find('i.bi-eye').show();
+                        $(this).find('i.bi-eye-slash').hide();
+                    }
+                    return false;
+                ">
+                    <i class="bi bi-eye ukt-ml-1" style="display:none"></i>
+                    <i class="bi bi-eye-slash ukt-ml-1"></i>
+                </a>
+            {% endif %}
             {% if param.info %}
                 <div class="uk-text-meta">{{ param.info }}</div>
             {% endif %}
