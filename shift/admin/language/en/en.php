@@ -98,7 +98,7 @@ $_['success_disabled']      = 'Successfully disabled';
 $_['success_delete']        = 'Successfully deleted';
 
 $_['error_general']         = 'Error occured, try again later.';
-$_['error_permission']      = 'You not have permission to %s.';
+$_['error_permission']      = 'You not have permission to proceed.';
 $_['error_request_method']  = 'Requet method not allowed!';
 
 $_['error_form']            = 'Please check the required or invalid input.';

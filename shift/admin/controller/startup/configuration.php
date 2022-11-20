@@ -74,7 +74,7 @@ class Configuration extends Mvc\Controller
 
         //=== MVC View
         $this->view->setConfig([
-            'debug'        => $this->config->getBool('system.setting.development'),
+            'debug' => $this->config->getBool('system.setting.development'),
         ]);
 
         $this->view->setGlobal('config', $this->config);

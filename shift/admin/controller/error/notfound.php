@@ -8,12 +8,15 @@ use Shift\System\Mvc;
 
 class NotFound extends Mvc\Controller
 {
-    public function index()
+    public function index($params = [])
     {
         $this->load->language('error/notfound');
 
         if ($this->request->is('ajax')) {
-            return $this->response->setOutputJson($this->language->get('page_title'), 404);
+            return $this->response->setOutputJson([
+                'title'   => $params['title'] ?? $this->language->get('page_title'),
+                'message' => $params['message'] ?? '',
+            ], 404);
         }
 
         $this->document->setTitle($this->language->get('page_title'));

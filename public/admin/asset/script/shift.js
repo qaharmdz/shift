@@ -58,12 +58,20 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
 
     if ('redirect' in data) {
         window.location.replace(data.redirect);
-    } else if ('response' in data) {
-        if (jqxhr.status === 404) {
-            data.response += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
-        }
+    } else if ('title' in data) {
+        let output = '<div>' + data.title + '</div>';
 
-        $.fn.shift.goNotify('danger', data.response);
+        if (data.message) {
+            output += '<div class="uk-text-base-color uk-text-break uk-margin-small-top">' + data.message + '</div>';
+        }
+        output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
+
+        $.fn.shift.goNotify('danger', output);
+    } else if ('response' in data) {
+        let output = '<div>' + data.response + '</div>';
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
+
+        $.fn.shift.goNotify('danger', output);
     } else {
         $.fn.shift.goNotify('danger', '<span style="font-size:20px;line-height:1em;margin: 0 5px;display:block;">' + jqxhr.status + ' ' + exception + '</span>');
     }

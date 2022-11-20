@@ -199,7 +199,9 @@ class Framework
             $event = $this->get('event');
 
             $route  = $request->get('query.route');
-            $params = [];
+            $params = [[
+                'message' => $e->getMessage() . '.',
+            ]];
             $output = null;
 
             $event->emit($eventName = 'shift/error/notfound::before', [$eventName, &$params, &$output]);
