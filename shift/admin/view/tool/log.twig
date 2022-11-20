@@ -7,7 +7,7 @@
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-margin-small-top uk-text-right">
                 <div class="uk-inline">
-                    <button class="uk-button uk-button-default ukt-px-2" type="button">
+                    <button class="uk-button uk-button-default ukt-px-2 ukt-pl-3" type="button">
                         {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small uk-margin-small-left">{{ fileinfo.size }}</div>
                         <span class="dropdown-caret"></span>
                     </button>
@@ -17,7 +17,7 @@
                                 <div>
                                     <ul class="uk-nav uk-dropdown-nav">
                                         {% for item in column %}
-                                            <li><a href="{{ item.url_view }}"><div class="uk-label uk-label-{{ item.label }} uk-label-small uk-label-fixed-width"> {{ item.size }}</div> {{ item.file}}</a></li>
+                                            <li><a href="{{ item.url_view }}"><div class="uk-label uk-label-{{ item.label }} uk-label-small uk-label-fixed-width ukt-mr-1"> {{ item.size }}</div> {{ item.file}}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
