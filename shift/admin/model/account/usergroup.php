@@ -78,7 +78,7 @@ class UserGroup extends Mvc\Model
                 'name'       => $data['name'],
                 'backend'    => $data['backend'],
                 'permission' => json_encode($data['permission']),
-                'status'     => $data['status'],
+                'status'     => (int)$data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
             ]
@@ -97,10 +97,10 @@ class UserGroup extends Mvc\Model
                 'name'       => $data['name'],
                 'backend'    => $data['backend'],
                 'permission' => json_encode($data['permission']),
-                'status'     => $user_group_id ? $data['status'] : 1,
+                'status'     => (int)$data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
             ],
-            ['user_group_id' => (int)$user_group_id]
+            ['user_group_id' => $user_group_id]
         );
 
         $this->cache->delete('usergroups');

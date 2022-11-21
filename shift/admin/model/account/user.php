@@ -35,7 +35,7 @@ class User extends Mvc\Model
             'last_login'    => 'u.last_login',
         ];
         $filterMap  = $columnMap;
-        $filterMap['fullname']   = 'CONCAT(u.firstname, " ", u.lastname, " ", u.username)';
+        $filterMap['fullname']   = 'CONCAT_WS(" ", u.firstname, u.lastname, u.username)';
         $filterMap['user_group'] = 'u.user_group_id';
 
         $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
@@ -83,6 +83,40 @@ class User extends Mvc\Model
     // Form CRUD
     // ================================================
 
+    public function editUser(int $user_id, array $data)
+    {
+        $updates = [
+            'user_group_id' => $data['user_group_id'],
+            'email'     => $data['email'],
+            'username'  => $data['username'],
+            'firstname' => $data['firstname'],
+            'lastname'  => $data['lastname'],
+            'status'    => (int)$data['status'],
+            'updated'   => date('Y-m-d H:i:s'),
+        ];
+
+        if ($data['password']) {
+            $data['password'] = $this->secure->passwordHash($data['password']);
+        }
+
+        $this->db->set(DB_PREFIX . 'user', $updates, ['user_id' => $user_id]);
+
+        // User meta
+        $this->db->delete(DB_PREFIX . 'user_meta', ['user_id' => $user_id]);
+
+        $params = [];
+        foreach ($data['meta'] as $key => $value) {
+            $params[] = [$user_id, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
+        }
+
+        $this->db->transaction(
+            "INSERT INTO `" . DB_PREFIX . "user_meta` (`user_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
+            $params
+        );
+
+        $this->cache->delete('user.' . $user_id);
+    }
+
     public function getUser(int $user_id)
     {
         $result = $this->db->get(
@@ -112,6 +146,7 @@ class User extends Mvc\Model
     public function deleteUsers(array $users)
     {
         $this->db->delete(DB_PREFIX . 'user', ['user_id' => $users]);
+        $this->db->delete(DB_PREFIX . 'user_meta', ['user_id' => $users]);
 
         $this->cache->delete('users');
     }

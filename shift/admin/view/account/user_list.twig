@@ -138,7 +138,11 @@ let tableId    = 'accountUser-list',
                 }
             },
             { data : 'user_id' },
-            { data : 'fullname'},
+            { data : 'fullname',
+                render : function(data, type, full) {
+                    return data + '<div class="uk-text-meta">' + full.username + '</div>';
+                }
+            },
             { data : 'email'},
             { data : 'user_group'},
             { data : 'last_login',

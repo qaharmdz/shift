@@ -17,7 +17,10 @@ $_['username']          = 'Username';
 $_['bio']               = 'Bio';
 $_['last_login']        = 'Last Login';
 
-$_['error_permission'] = 'Warning: You do not have permission to modify Users!';
+$_['error_permission']       = 'Warning: You do not have permission to modify Users!';
+$_['error_email']            = 'E-Mail Address does not appear to be valid!';
+$_['error_password']         = 'Password minimum length is 6 alphanumeric characters';
+$_['error_password_confirm'] = 'Password confirmation does not match';
 
 /*
 // Heading

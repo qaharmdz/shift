@@ -89,7 +89,7 @@ class Site extends Mvc\Model
                 'name'     => $data['name'],
                 'url_host' => $data['url_host'],
             ],
-            ['site_id' => (int)$site_id]
+            ['site_id' => $site_id]
         );
 
         $this->cache->delete('sites');

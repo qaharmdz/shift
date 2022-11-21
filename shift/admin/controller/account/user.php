@@ -142,7 +142,7 @@ class User extends Mvc\Controller
         $this->load->model('account/user');
         $this->load->language('account/user');
 
-        if (!$this->user->hasPermission('modify', 'account/usergroup')) {
+        if (!$this->user->hasPermission('modify', 'account/user')) {
             return $this->response->setOutputJson($this->language->get('error_permission'), 403);
         }
         if (!$this->request->is(['post', 'ajax'])) {
@@ -151,5 +151,69 @@ class User extends Mvc\Controller
         if (!$this->request->has('post.user_id')) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
+
+        $data = [];
+        $post = array_replace_recursive(
+            $this->config->getArray('account.user.form'),
+            $this->request->get('post', [])
+        );
+        $user_id = (int)$post['user_id'];
+
+        if ($errors = $this->validate($post)) {
+            return $this->response->setOutputJson($errors, 422);
+        }
+
+        if (!$user_id) {
+            // $data['new_id'] = $user_id = $this->model_account_user->addUser($post);
+        } else {
+            $this->model_account_user->editUser($user_id, $post);
+        }
+
+        // Redirect
+        if ($post['action'] === 'close') {
+            $data['redirect'] = $this->router->url('account/user');
+        }
+        if ($post['action'] === 'new') {
+            $data['redirect'] = $this->router->url('account/user/form');
+        }
+        if (isset($data['new_id']) && empty($data['redirect'])) {
+            $data['redirect'] = $this->router->url('account/user/form', 'user_group_id=' . $data['new_id']);
+        }
+
+        $this->response->setOutputJson($data);
+    }
+
+    protected function validate(array $post): array
+    {
+        $errors = [];
+
+        if (!$this->assert->minLength(6)->check($post['username'])) {
+            $errors['items']['username'] = sprintf($this->language->get('error_length_minimum'), 6);
+        }
+        if (!$this->assert->email(6)->check($post['email'])) {
+            $errors['items']['email'] = $this->language->get('error_email');
+        }
+        if (!$this->assert->stringNotEmpty()->check($post['firstname'])) {
+            $errors['items']['firstname'] = $this->language->get('error_no_empty');
+        }
+        if (!$this->assert->stringNotEmpty()->check($post['lastname'])) {
+            $errors['items']['lastname'] = $this->language->get('error_no_empty');
+        }
+
+        if (!$post['user_id'] || $post['password']) {
+            if (!$this->assert->minLength(6)->alnum()->check($post['password'])) {
+                $errors['items']['password'] = $this->language->get('error_password');
+            }
+
+            if (!$this->assert->same($post['password_confirm'])->check($post['password'])) {
+                $errors['items']['password_confirm'] = $this->language->get('error_password_confirm');
+            }
+        }
+
+        if (isset($errors['items'])) {
+            $errors['response'] = $this->language->get('error_form');
+        }
+
+        return $errors;
     }
 }
