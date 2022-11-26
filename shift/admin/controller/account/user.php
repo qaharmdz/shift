@@ -164,7 +164,7 @@ class User extends Mvc\Controller
         }
 
         if (!$user_id) {
-            // $data['new_id'] = $user_id = $this->model_account_user->addUser($post);
+            $data['new_id'] = $user_id = $this->model_account_user->addUser($post);
         } else {
             $this->model_account_user->editUser($user_id, $post);
         }
@@ -177,7 +177,7 @@ class User extends Mvc\Controller
             $data['redirect'] = $this->router->url('account/user/form');
         }
         if (isset($data['new_id']) && empty($data['redirect'])) {
-            $data['redirect'] = $this->router->url('account/user/form', 'user_group_id=' . $data['new_id']);
+            $data['redirect'] = $this->router->url('account/user/form', 'user_id=' . $data['new_id']);
         }
 
         $this->response->setOutputJson($data);

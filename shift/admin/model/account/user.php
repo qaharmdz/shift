@@ -83,16 +83,49 @@ class User extends Mvc\Model
     // Form CRUD
     // ================================================
 
+    public function addUser(array $data)
+    {
+        $this->db->add(
+            DB_PREFIX . 'user',
+            [
+                'user_group_id' => $data['user_group_id'],
+                'email'         => $data['email'],
+                'password'      => $this->secure->passwordHash($data['password']),
+                'username'      => $data['username'],
+                'firstname'     => $data['firstname'],
+                'lastname'      => $data['lastname'],
+                'status'        => (int)$data['status'],
+                'created'       => date('Y-m-d H:i:s'),
+                'updated'       => date('Y-m-d H:i:s'),
+            ]
+        );
+
+        $user_id = $this->db->insertId();
+
+        // User meta
+        $params = [];
+        foreach ($data['meta'] as $key => $value) {
+            $params[] = [$user_id, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
+        }
+
+        $this->db->transaction(
+            "INSERT INTO `" . DB_PREFIX . "user_meta` (`user_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
+            $params
+        );
+
+        return $user_id;
+    }
+
     public function editUser(int $user_id, array $data)
     {
         $updates = [
             'user_group_id' => $data['user_group_id'],
-            'email'     => $data['email'],
-            'username'  => $data['username'],
-            'firstname' => $data['firstname'],
-            'lastname'  => $data['lastname'],
-            'status'    => (int)$data['status'],
-            'updated'   => date('Y-m-d H:i:s'),
+            'email'         => $data['email'],
+            'username'      => $data['username'],
+            'firstname'     => $data['firstname'],
+            'lastname'      => $data['lastname'],
+            'status'        => (int)$data['status'],
+            'updated'       => date('Y-m-d H:i:s'),
         ];
 
         if ($data['password']) {
