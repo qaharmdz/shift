@@ -33,7 +33,7 @@
                     <th style="width:110px">{{ app.language.get('status') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
-                <tr class="js-dtColumnFilter">
+                <tr data-dtColumnFilter>
                     <td data-index="0"></td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
@@ -53,7 +53,7 @@
                         </select>
                     </td>
                     <td data-filter='{"type":"date", "mode":"match"}'>
-                        <input type="text" value="" data-index="5" class="uk-input">
+                        <input type="text" value="" data-index="5" class="uk-input" placeholder="TODO">
                     </td>
                     <td data-filter='{"type":"date", "mode":"match"}'>
                         <input type="text" value="" data-index="6" class="uk-input">
@@ -90,9 +90,11 @@ let tableId    = 'accountUser-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('account/user/list')|raw }}",
             data : function(d) {
-                $('.js-dtColumnFilter td').each(function(i) {
+                $('[data-dtColumnFilter] td').each(function(i) {
                     let dataFilter = $(this).data('filter');
-                    if (dataFilter != undefined) {
+
+                    if (dataFilter) {
+                        console.log(dataFilter);
                         $.extend(d.columns[i]['search'], dataFilter || []);
 
                         if (d.draw > 1) {
@@ -110,6 +112,8 @@ let tableId    = 'accountUser-list',
                         }
                     }
                 });
+
+                console.log(d)
             }
         }),
         initComplete: function () {
@@ -117,7 +121,8 @@ let tableId    = 'accountUser-list',
             let table = this;
             table.api().columns().every(function(i) {
                 let column = this;
-                $('[data-index=' + i + ']').val(column.search());
+                // $('[data-index=' + i + ']').val(column.search());
+                $('input, select', '[data-dtColumnFilter] td:eq(' + i + ')').val(column.search());
             });
         },
         sorting : sortingCol,
@@ -211,21 +216,21 @@ let tableId    = 'accountUser-list',
             dtTable.search(value).draw();
         },
     });
-    $('.js-dtColumnFilter input').typeWatch({
+    $('[data-dtColumnFilter] input').typeWatch({
         allowSubmit: true,
         captureLength: 0,
         callback: function(value) {
             dtTable.column($(this).data('index')).search(value).draw();
         },
     });
-    $('.js-dtColumnFilter select').on('change', function() {
+    $('[data-dtColumnFilter] select').on('change', function() {
         dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
     });
 
     // Clear all search
     $('[data-dtClearSearch]').on('click', function() {
-        $('.js-dtColumnFilter input').val('');
-        $('.js-dtColumnFilter select').find('option:first').prop('selected', true);
+        $('[data-dtColumnFilter] input').val('');
+        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
         dtTable.clearSearch().draw();
     });
 

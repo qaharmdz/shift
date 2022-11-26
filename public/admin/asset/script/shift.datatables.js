@@ -97,9 +97,10 @@ $.fn.dataTable.pipeline = function (opts) {
         } else if (cacheLower < 0 || requestStart < cacheLower || requestEnd > cacheUpper) {
             // outside cached data - need to make a request
             ajax = true;
-        } else if (JSON.stringify(request.order) !== JSON.stringify(cacheLastRequest.order) ||
-                 JSON.stringify(request.columns) !== JSON.stringify(cacheLastRequest.columns) ||
-                 JSON.stringify(request.search)  !== JSON.stringify(cacheLastRequest.search)
+        } else if (
+            JSON.stringify(request.order) !== JSON.stringify(cacheLastRequest.order) ||
+            JSON.stringify(request.columns) !== JSON.stringify(cacheLastRequest.columns) ||
+            JSON.stringify(request.search) !== JSON.stringify(cacheLastRequest.search)
         ) {
             // properties changed (ordering, columns, searching)
             ajax = true;
@@ -181,7 +182,6 @@ $.fn.dataTable.Api.register('clearPipeline()', function () {
 // ================================================
 $.fn.dataTable.Api.register('clearSearch()', function () {
     return this.iterator('table', function (settings) {
-
         // clear pre-search
         settings.oPreviousSearch.sSearch = '';
         for (iCol = 0; iCol < settings.aoPreSearchCols.length; iCol++) {

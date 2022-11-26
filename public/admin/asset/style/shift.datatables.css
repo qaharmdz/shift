@@ -144,13 +144,20 @@
     border-radius: 3px;
 }
 
-.sorting {
+.uk-table.dataTable .filter-range .uk-input {
+    display: inline-block;
+}
+.uk-table.dataTable .filter-range .uk-input[type=date] {
+    width: 85px;
+}
+
+.uk-table.dataTable .sorting {
     background: url('./../../media/sort_na.png') no-repeat center right;
 }
-.sorting_asc {
+.uk-table.dataTable .sorting_asc {
     background: url('./../../media/sort_asc.png') no-repeat center right;
 }
-.sorting_desc {
+.uk-table.dataTable .sorting_desc {
     background: url('./../../media/sort_desc.png') no-repeat center right;
 }
 

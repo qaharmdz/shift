@@ -79,8 +79,9 @@ body {
 
 .block-navbar .logo {
     color: #f1f2f3;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 400;
+    font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: var(--navbar-height);
     margin-left: 10px;
     cursor: default;
