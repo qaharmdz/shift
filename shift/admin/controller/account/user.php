@@ -40,7 +40,6 @@ class User extends Mvc\Controller
         }
 
         $this->load->model('account/user');
-        $this->load->language('account/user');
 
         $params  = $this->request->get('post');
         $results = $this->model_account_user->dtRecords($params);

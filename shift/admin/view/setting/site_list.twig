@@ -55,9 +55,9 @@
 
 <script>
 $(document).ready(function() {
-let tableId    = 'settingSite-list',
+let tableEl    = '#settingSite-list',
     sortingCol = [[1, 'asc']], // site_id
-    dtTable    = $('#' + tableId).DataTable({
+    dtTable    = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('setting/site/list')|raw }}",
             data : function(d) {

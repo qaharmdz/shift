@@ -2,7 +2,7 @@
 
 $_['page_title']            = 'Logs Viewer';
 
-$_['tools']                 = 'Tools';
+$_['maintenance']           = 'Maintenance';
 $_['download']              = 'Download';
 
 $_['confirm_clear']         = 'This action cannot be undone!<br>The log content will be cleared.';

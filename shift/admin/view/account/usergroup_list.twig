@@ -67,9 +67,9 @@
 
 <script>
 $(document).ready(function() {
-let tableId    = 'accountUserGroup-list',
+let tableEl    = '#accountUserGroup-list',
     sortingCol = [[3, 'desc'], [2, 'asc']], // admin access, name
-    dtTable    = $('#' + tableId).DataTable({
+    dtTable    = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('account/usergroup/list')|raw }}",
             data : function(d) {

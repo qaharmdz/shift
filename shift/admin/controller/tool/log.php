@@ -16,7 +16,8 @@ class Log extends Mvc\Controller
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('tools')],
+            [$this->language->get('system')],
+            [$this->language->get('maintenance')],
             [$this->language->get('page_title'), $this->router->url('tool/log')],
         ]);
 

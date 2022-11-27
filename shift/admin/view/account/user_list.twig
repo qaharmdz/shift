@@ -84,9 +84,9 @@
 
 <script>
 $(document).ready(function() {
-let tableId    = 'accountUser-list',
+let tableEl    = '#accountUser-list',
     sortingCol = [[5, 'desc'], [2, 'asc']], // last_login, name
-    dtTable    = $('#' + tableId).DataTable({
+    dtTable    = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('account/user/list')|raw }}",
             data : function(d) {

@@ -37,7 +37,6 @@ class Site extends Mvc\Controller
         }
 
         $this->load->model('setting/site');
-        $this->load->language('setting/site');
 
         $params  = $this->request->get('post');
         $results = $this->model_setting_site->dtRecords($params);
@@ -125,8 +124,8 @@ class Site extends Mvc\Controller
         $this->load->model('extension/language');
         $data['languages'] = $this->model_extension_language->getLanguages();
 
-        $this->load->model('design/layout');
-        $data['layoutList'] = $this->model_design_layout->getLayouts();
+        $this->load->model('tool/layout');
+        $data['layoutList'] = $this->model_tool_layout->getLayouts();
 
         $this->load->model('extension/extension');
         $extensions = $this->model_extension_extension->getInstalled('theme');

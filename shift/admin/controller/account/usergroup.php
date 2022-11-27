@@ -37,7 +37,6 @@ class UserGroup extends Mvc\Controller
         }
 
         $this->load->model('account/usergroup');
-        $this->load->language('account/usergroup');
 
         $params  = $this->request->get('post');
         $results = $this->model_account_usergroup->dtRecords($params);
