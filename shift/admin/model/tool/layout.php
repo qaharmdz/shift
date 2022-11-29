@@ -168,7 +168,7 @@ class Layout extends Mvc\Model
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "layout`")->row['total'];
     }
 
-    public function deleteSites(array $layout_ids)
+    public function deleteLayouts(array $layout_ids)
     {
         $this->db->delete(DB_PREFIX . 'layout', ['layout_id' => $layout_ids]);
         $this->db->delete(DB_PREFIX . 'layout_module', ['layout_id' => $layout_ids]);

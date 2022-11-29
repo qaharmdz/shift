@@ -210,6 +210,9 @@ th.uk-text-break {
 
 /* Modal
 ==================================== */
+.uk-modal {
+    z-index: 1100;
+}
 .uk-modal-body {
     font-size: 15px;
     padding: 20px 25px;

@@ -46,8 +46,8 @@ class Layout extends Mvc\Controller
         for ($i = 0; $i < $results->num_rows; $i++) {
             $items[$i] = $results->rows[$i];
 
-            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['site_id'];
-            $items[$i]['url_edit']    = $this->router->url('tool/layout/form', 'site_id=' . $items[$i]['site_id']);
+            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['layout_id'];
+            $items[$i]['url_edit']    = $this->router->url('tool/layout/form', 'layout_id=' . $items[$i]['layout_id']);
         }
 
         $data = [

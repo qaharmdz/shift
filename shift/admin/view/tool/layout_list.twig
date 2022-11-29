@@ -38,8 +38,8 @@
                     </td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
-                            <option value="">{{ app.language.get('all') }}</option>
-                            <option value="base">{{ app.language.get('base') }}</option>
+                            <option value="">{{ app.language.get('-select-') }}</option>
+                            <option value="all">{{ app.language.get('all') }}</option>
                             <option value="route">{{ app.language.get('route') }}</option>
                             <option value="specific">{{ app.language.get('specific') }}</option>
                         </select>
@@ -60,6 +60,8 @@
 
 <script>
 $(document).ready(function() {
+shift.i18n = {{ app.language.all()|json_encode()|raw }};
+
 let tableEl    = '#toolLayout-list',
     sortingCol = [[1, 'asc']], // layout_id
     dtTable    = $(tableEl).DataTable({
@@ -120,7 +122,11 @@ let tableEl    = '#toolLayout-list',
             },
             { data : 'layout_id' },
             { data : 'name'},
-            { data : 'type'},
+            { data : 'type',
+                render : function(data, type, full) {
+                    return shift['i18n'][full.type];
+                }
+            },
             { data : 'layout_id',
                 className : 'noVisualColumn ukt-p-2',
                 render : function(data, type, full) {
@@ -144,6 +150,63 @@ let tableEl    = '#toolLayout-list',
         ]
     });
 
+
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Search inputs
+    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.search(value).draw();
+        },
+    });
+    $('[data-dtColumnFilter] input').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.column($(this).data('index')).search(value).draw();
+        },
+    });
+    $('[data-dtColumnFilter] select').on('change', function() {
+        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
+    });
+
+    // Clear all search
+    $('[data-dtClearSearch]').on('click', function() {
+        $('[data-dtColumnFilter] input').val('');
+        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
+        dtTable.clearSearch().draw();
+    });
+
+    // Action quick-edit
+    $('.main-content').on('click', '[data-dtAction]', function(e) {
+        e.preventDefault();
+
+        let data = $(this).data('dtaction');
+
+        $.fn.shift.dtAction({
+            url  : "{{ app.router.url('tool/layout/dtaction')|raw }}",
+            data : data,
+            validate : function(dtActionProceed) {
+                if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else {
+                    dtActionProceed();
+                }
+            },
+            onSuccess : function() {
+                dtTable.clearPipeline().draw();
+            }
+        });
+    });
 });
 </script>
 {% endblock %}

@@ -3,7 +3,11 @@
 $_['page_title']        = 'Layouts';
 
 $_['tool']              = 'Tools';
+
 $_['type']              = 'Type';
+$_['all']               = 'All';
+$_['route']             = 'Route';
+$_['specific']          = 'Specific';
 
 /*
 // Heading
