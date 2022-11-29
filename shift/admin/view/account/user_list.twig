@@ -46,7 +46,7 @@
                     </td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
-                            <option value="">{{ app.language.get('all') }}</option>
+                            <option value="">{{ app.language.get('-select-') }}</option>
                             {% for usergroup in user_groups %}
                                 <option value="{{ usergroup.user_group_id }}">{{ usergroup.name }}</option>
                             {% endfor %}
@@ -63,7 +63,7 @@
                     </td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <select data-index="8" class="uk-select">
-                            <option value="">{{ app.language.get('all') }}</option>
+                            <option value="">{{ app.language.get('-select-') }}</option>
                             <option value="0">{{ app.language.get('disabled') }}</option>
                             <option value="1">{{ app.language.get('enabled') }}</option>
                         </select>

@@ -28,7 +28,7 @@
                     <th style="min-width:300px">{{ app.language.get('site_url') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
-                <tr class="js-dtColumnFilter">
+                <tr data-dtColumnFilter>
                     <td data-index="0"></td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
@@ -61,7 +61,7 @@ let tableEl    = '#settingSite-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('setting/site/list')|raw }}",
             data : function(d) {
-                $('.js-dtColumnFilter td').each(function(i) {
+                $('[data-dtColumnFilter] td').each(function(i) {
                     let dataFilter = $(this).data('filter');
                     if (dataFilter != undefined) {
                         $.extend(d.columns[i]['search'], dataFilter || []);
@@ -152,21 +152,21 @@ let tableEl    = '#settingSite-list',
             dtTable.search(value).draw();
         },
     });
-    $('.js-dtColumnFilter input').typeWatch({
+    $('[data-dtColumnFilter] input').typeWatch({
         allowSubmit: true,
         captureLength: 0,
         callback: function(value) {
             dtTable.column($(this).data('index')).search(value).draw();
         },
     });
-    $('.js-dtColumnFilter select').on('change', function() {
+    $('[data-dtColumnFilter] select').on('change', function() {
         dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
     });
 
     // Clear all search
     $('[data-dtClearSearch]').on('click', function() {
-        $('.js-dtColumnFilter input').val('');
-        $('.js-dtColumnFilter select').find('option:first').prop('selected', true);
+        $('[data-dtColumnFilter] input').val('');
+        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
         dtTable.clearSearch().draw();
     });
 
