@@ -94,7 +94,6 @@ let tableEl    = '#accountUser-list',
                     let dataFilter = $(this).data('filter');
 
                     if (dataFilter) {
-                        console.log(dataFilter);
                         $.extend(d.columns[i]['search'], dataFilter || []);
 
                         if (d.draw > 1) {
@@ -112,8 +111,6 @@ let tableEl    = '#accountUser-list',
                         }
                     }
                 });
-
-                console.log(d)
             }
         }),
         initComplete: function () {

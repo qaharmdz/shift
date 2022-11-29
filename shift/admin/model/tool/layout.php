@@ -2,12 +2,74 @@
 
 declare(strict_types=1);
 
-namespace Shift\Admin\Model\Design;
+namespace Shift\Admin\Model\Tool;
 
 use Shift\System\Mvc;
+use Shift\System\Helper;
 
 class Layout extends Mvc\Model
 {
+    // List
+    // ================================================
+
+    /**
+     * DataTables records
+     *
+     * @param  array  $params
+     */
+    public function dtRecords(array $params)
+    {
+        $columnMap = [
+            'layout_id' => 'l.layout_id',
+            'type'      => 'l.type',
+            'name'      => 'l.name',
+            'status'    => 'l.status',
+        ];
+        $filterMap  = $columnMap;
+        $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
+
+        $query = "SELECT " . implode(', ', $columnMap)
+            . " FROM `" . DB_PREFIX . "layout` l"
+            . ($dataTables['sql']['query']['where'] ? " WHERE " . $dataTables['sql']['query']['where'] : "")
+            . " ORDER BY " . $dataTables['sql']['query']['order']
+            . " LIMIT " . $dataTables['sql']['query']['limit'];
+
+        return $this->db->get($query, $dataTables['sql']['params']);
+    }
+
+    public function dtAction(string $type, array $items): array
+    {
+        $_items = [];
+
+        if (in_array($type, ['enabled', 'disabled'])) {
+            $status = $type == 'enabled' ? 1 : 0;
+
+            foreach ($items as $item) {
+                $this->db->set(
+                    DB_PREFIX . 'layout',
+                    [
+                        'status'  => $status,
+                    ],
+                    ['layout_id' => (int)$item]
+                );
+
+                if ($this->db->affectedRows()) {
+                    $_items[] = $item;
+                }
+            }
+        }
+
+        if ($type == 'delete') {
+            $this->deleteLayouts($items);
+        }
+
+        return $_items;
+    }
+
+    // Form CRUD
+    // ================================================
+
+    /*
     public function addLayout($data)
     {
         $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
@@ -64,6 +126,7 @@ class Layout extends Mvc\Model
 
         return $query->row;
     }
+    */
 
     public function getLayouts($data = array())
     {
@@ -100,6 +163,21 @@ class Layout extends Mvc\Model
         return $query->rows;
     }
 
+    public function getTotal()
+    {
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "layout`")->row['total'];
+    }
+
+    public function deleteSites(array $layout_ids)
+    {
+        $this->db->delete(DB_PREFIX . 'layout', ['layout_id' => $layout_ids]);
+        $this->db->delete(DB_PREFIX . 'layout_module', ['layout_id' => $layout_ids]);
+        $this->db->delete(DB_PREFIX . 'layout_route', ['layout_id' => $layout_ids]);
+
+        $this->cache->delete('layouts');
+    }
+
+    /*
     public function getLayoutRoutes($layout_id)
     {
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
@@ -120,4 +198,5 @@ class Layout extends Mvc\Model
 
         return $query->row['total'];
     }
+    */
 }

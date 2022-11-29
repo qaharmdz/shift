@@ -13,6 +13,7 @@ class UserGroup extends Mvc\Controller
         $this->load->language('account/usergroup');
 
         $this->document->setTitle($this->language->get('page_title'));
+
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
@@ -50,8 +51,8 @@ class UserGroup extends Mvc\Controller
         }
 
         $data = [
-            'draw'            => (int)$params['draw'] ?? 1,
-            'data'            => $items,
+            'draw' => (int)$params['draw'] ?? 1,
+            'data' => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_account_usergroup->getTotal(),
         ];

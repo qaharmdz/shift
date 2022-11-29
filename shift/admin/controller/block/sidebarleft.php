@@ -79,10 +79,10 @@ class SidebarLeft extends Mvc\Controller
         // Tools
         $tool = [];
 
-        if ($this->user->hasPermission('access', 'design/layout')) {
+        if ($this->user->hasPermission('access', 'tool/layout')) {
             $tool[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.module_layout'),
-                'url'  => $this->router->url('design/layout'),
+                'name' => $this->language->get('sidebarleft.layout'),
+                'url'  => $this->router->url('tool/layout'),
             ]);
         }
         if ($this->user->hasPermission('access', 'design/banner')) {

@@ -13,6 +13,7 @@ class User extends Mvc\Controller
         $this->load->language('account/user');
 
         $this->document->setTitle($this->language->get('page_title'));
+
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
@@ -53,8 +54,8 @@ class User extends Mvc\Controller
         }
 
         $data = [
-            'draw'            => (int)$params['draw'] ?? 1,
-            'data'            => $items,
+            'draw' => (int)$params['draw'] ?? 1,
+            'data' => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_account_user->getTotal(),
         ];

@@ -1,0 +1,149 @@
+{% extends 'main.tpl.twig' %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <a href="{{ app.router.url('tool/layout/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body uk-card-panel uk-card-body">
+        <table id="toolLayout-list" class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th class="ukt-px-0" style="width:30px;">
+                        <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                        <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width:60px;">{{ app.language.get('id') }}</th>
+                    <th style="width:300px">{{ app.language.get('name') }}</th>
+                    <th style="width:300px">{{ app.language.get('type') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                </tr>
+                <tr data-dtColumnFilter>
+                    <td data-index="0"></td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <input type="text" value="" data-index="1" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string", "mode":"like"}'>
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
+                        <select data-index="4" class="uk-select">
+                            <option value="">{{ app.language.get('all') }}</option>
+                            <option value="base">{{ app.language.get('base') }}</option>
+                            <option value="route">{{ app.language.get('route') }}</option>
+                            <option value="specific">{{ app.language.get('specific') }}</option>
+                        </select>
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+let tableEl    = '#toolLayout-list',
+    sortingCol = [[1, 'asc']], // layout_id
+    dtTable    = $(tableEl).DataTable({
+        ajax : $.fn.dataTable.pipeline({
+            url  : "{{ app.router.url('tool/layout/list')|raw }}",
+            data : function(d) {
+                $('[data-dtColumnFilter] td').each(function(i) {
+                    let dataFilter = $(this).data('filter');
+                    if (dataFilter != undefined) {
+                        $.extend(d.columns[i]['search'], dataFilter || []);
+
+                        if (d.draw > 1) {
+                            let forms = $('input, select', this);
+                            if (forms.length == 1) {
+                                d.columns[i]['search']['value'] = $('input, select', this).val() || '';
+                            } else if (forms.length == 2) {
+                                forms.each(function(ci, el) {
+                                    if (ci > 0) {
+                                        d.columns[i]['search']['value'] += '~';
+                                    }
+                                    d.columns[i]['search']['value'] += $(el).val() || '';
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }),
+        initComplete: function () {
+            // Add localStorage search value to column-filter after page reload
+            let table = this;
+            table.api().columns().every(function(i) {
+                let column = this;
+                $('input, select', '[data-dtColumnFilter] td:eq(' + i + ')').val(column.search());
+            });
+        },
+        sorting : sortingCol,
+        columnDefs : [
+            { searchable: false, targets : [0, -1] },
+            { orderable : false, targets : [0, -1] },
+            { createdCell : function(nTd) {
+                $(nTd).addClass('uk-text-center'); },
+                targets : [0, -1]
+            },
+        ],
+        columns : [
+            { data : 'layout_id',
+                className : 'noVisualColumn',
+                render : function(data, type, full) {
+                    let output  = '';
+
+                    if (data != '0') {
+                        output = '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                    }
+
+                    return output;
+                }
+            },
+            { data : 'layout_id' },
+            { data : 'name'},
+            { data : 'type'},
+            { data : 'layout_id',
+                className : 'noVisualColumn ukt-p-2',
+                render : function(data, type, full) {
+                    let output  = '';
+
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="' + shift.i18n.edit + '"><i class="bi bi-pencil"></i></span></a>';
+                    if (data != '0') {
+                        output += '<div class="uk-inline ukt-ml-2">';
+                        output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                        output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                        output += '        <ul class="uk-nav uk-dropdown-nav">';
+                        output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.layout_id + '"}\'> ' + shift.i18n.delete + '</a></li>';
+                        output += '        </ul>';
+                        output += '    </div>';
+                        output += '</div>';
+                    }
+
+                    return output;
+                }
+            }
+        ]
+    });
+
+});
+</script>
+{% endblock %}

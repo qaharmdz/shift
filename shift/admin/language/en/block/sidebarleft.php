@@ -11,7 +11,7 @@ $_['event']          = 'Events';
 $_['language']       = 'Languages';
 
 $_['tool']           = 'Tools';
-$_['module_layout']  = 'Module Layouts';
+$_['layout']         = 'Layouts';
 $_['banner']         = 'Banners';
 
 $_['account']        = 'Accounts';

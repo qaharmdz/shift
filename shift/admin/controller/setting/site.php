@@ -13,6 +13,7 @@ class Site extends Mvc\Controller
         $this->load->language('setting/site');
 
         $this->document->setTitle($this->language->get('page_title'));
+
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
@@ -50,8 +51,8 @@ class Site extends Mvc\Controller
         }
 
         $data = [
-            'draw'            => (int)$params['draw'] ?? 1,
-            'data'            => $items,
+            'draw' => (int)$params['draw'] ?? 1,
+            'data' => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_setting_site->getTotal(),
         ];

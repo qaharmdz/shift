@@ -1,5 +1,11 @@
 <?php
 
+$_['page_title']        = 'Layouts';
+
+$_['tool']              = 'Tools';
+$_['type']              = 'Type';
+
+/*
 // Heading
 $_['heading_title']       = 'Layouts';
 
@@ -35,3 +41,4 @@ $_['error_site']         = 'Warning: This layout cannot be deleted as it is curr
 $_['error_product']       = 'Warning: This layout cannot be deleted as it is currently assigned to %s products!';
 $_['error_category']      = 'Warning: This layout cannot be deleted as it is currently assigned to %s categories!';
 $_['error_information']   = 'Warning: This layout cannot be deleted as it is currently assigned to %s information pages!';
+*/
