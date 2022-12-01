@@ -132,7 +132,6 @@ class User extends Mvc\Controller
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');
 
-
         $this->response->setOutput($this->load->view('account/user_form', $data));
     }
 
