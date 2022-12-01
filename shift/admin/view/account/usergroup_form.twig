@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('account/usergroup') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(user_group_id != -1 ? 'close' : 'cancel') }}</a>
+                <a href="{{ app.router.url('account/usergroup') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(user_group_id ? 'close' : 'cancel') }}</a>
             </div>
         </div>
     </div>
