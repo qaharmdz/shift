@@ -352,10 +352,13 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
             }, $(el).data('formSubmit')),
             form = $(opt.form);
 
+        if (!form.length) { return; }
+
         opt.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
         $(el).on('click', function() {
             $(document).trigger('IIDE.form_submit.before');
+            $(el).prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-data-form-submit" style="margin-left:-5px;margin-right:8px;"></span>');
 
             $(form).ajaxSubmit({
                 dataType : 'json',
@@ -364,6 +367,10 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                     $('.main-content *').removeClass('uk-form-danger');
                     $('.uk-text-meta.uk-text-danger').remove();
                     $.fn.shift.goNotify('process', shift.i18n.saving);
+                },
+                complete: function() {
+                    $(el).prop('disabled', false);
+                    $('.js-data-form-submit').remove();
                 },
                 success : function(data) {
                     shift.formChanged = false;
