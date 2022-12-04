@@ -5,9 +5,12 @@ $_['page_title']        = 'Layouts';
 $_['tool']              = 'Tools';
 
 $_['type']              = 'Type';
-$_['all']               = 'All';
-$_['route']             = 'Route';
-$_['specific']          = 'Specific';
+$_['all']               = 'All Page';
+$_['route']             = 'Route Match';
+$_['specific']          = 'Specific Assignment';
+
+$_['module_placement']  = 'Module Placement';
+$_['css_style']         = 'Custom CSS';
 
 /*
 // Heading

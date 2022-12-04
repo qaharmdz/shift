@@ -1,0 +1,165 @@
+{% extends 'main.tpl.twig' %}
+
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <div class="uk-button-group">
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-layout", "layout_id":"{{ layout_id }}"}'>{{ app.language.get('save') }}</button>
+                    <div class="uk-inline">
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
+                        <div uk-dropdown="pos:bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-form-submit='{"form":"#form-layout", "action":"close", "layout_id":"{{ layout_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-layout", "action":"new", "layout_id":"{{ layout_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ app.router.url('tool/layout') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(layout_id ? 'close' : 'cancel') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <form id="form-user" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('tool/layout/save') }}" method="post" data-form-monitor>
+            <div class="uk-card-panel uk-card-body">
+                <fieldset class="uk-fieldset">
+                    <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+
+                    {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-1-2@m', 'required':true}) }}
+                    {{ forms.select({'label':'type', 'name':'type', 'selected':setting.type, 'class':'uk-width-200@m', 'options':[
+                        {'text': app.language.get('all'),  'value': 'all'},
+                        {'text': app.language.get('route'), 'value': 'route'},
+                        {'text': app.language.get('specific'), 'value': 'specific'},
+                    ]}) }}
+                    {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
+                        {'text': app.language.get('enabled'),  'value': 1},
+                        {'text': app.language.get('disabled'), 'value': 0}
+                    ]}) }}
+                    {{ forms.textarea({'label':'css_style', 'name':'style', 'value':setting.style, 'class':'uk-width-2-3@m'}) }}
+                </fieldset>
+            </div>
+            <div class="uk-card-panel uk-card-body">
+                <h3 class="uk-legend">{{ app.language.get('module_placement') }}</h3>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Alpha
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Top Bar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Header
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Top
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-1-6">
+                        <div class="section-wrapper" style="height:100%">
+                            Sidebar Left
+                        </div>
+                    </div>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Content Top
+                        </div>
+
+                        <div class="uk-grid-small ukt-py-3" uk-grid>
+                            <div class="uk-width-1-5">
+                                <div class="section-wrapper" style="height:100%">
+                                    Content Left
+                                </div>
+                            </div>
+                            <div class="uk-width-expand">
+                                <h2>Content</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta eos culpa, alias porro. Adipisci ipsa laborum suscipit cupiditate vero ut inventore consequuntur quos, placeat officia modi non dolore veritatis omnis.</p>
+                            </div>
+                            <div class="uk-width-1-5">
+                                <div class="section-wrapper" style="height:100%">
+                                    Content Right
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="section-wrapper">
+                            Content Bottom
+                        </div>
+                    </div>
+                    <div class="uk-width-1-6">
+                        <div class="section-wrapper" style="height:100%">
+                            Sidebar Right
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Bottom
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Footer
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-grid-small" uk-grid>
+                    <div class="uk-width-expand">
+                        <div class="section-wrapper">
+                            Omega
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+.section-wrapper {
+    padding: 10px;
+    background: #f5fdff;
+    border: 1px dashed #b6d3db;
+}
+.block-wrapper {
+    padding: 10px;
+    background: #dd0;
+    border: 1px solid #d00;
+}
+</style>
+<script>
+$(document).ready(function() {
+
+});
+</script>
+{% endblock %}

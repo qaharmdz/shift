@@ -6,5 +6,6 @@ declare(strict_types=1);
 $_['form'] = [
     'name'        => '',
     'type'        => 'route',
+    'style'       => '',
     'status'      => 0,
 ];

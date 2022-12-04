@@ -69,6 +69,70 @@ class Layout extends Mvc\Model
     // Form CRUD
     // ================================================
 
+    public function addLayout(array $data): int
+    {
+        return (int)0;
+    }
+
+    public function editLayout(int $layout_id, array $data): void
+    {
+        //
+    }
+
+    public function getLayout(int $layout_id): array
+    {
+        return [];
+    }
+
+    public function getLayouts($data = array()): array
+    {
+        $sql = "SELECT * FROM " . DB_PREFIX . "layout";
+
+        $sort_data = array('name');
+
+        if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+            $sql .= " ORDER BY " . $data['sort'];
+        } else {
+            $sql .= " ORDER BY name";
+        }
+
+        if (isset($data['order']) && ($data['order'] == 'DESC')) {
+            $sql .= " DESC";
+        } else {
+            $sql .= " ASC";
+        }
+
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+
+            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+        }
+
+        $query = $this->db->get($sql);
+
+        return $query->rows;
+    }
+
+    public function getTotal(): int
+    {
+        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "layout`")->row['total'];
+    }
+
+    public function deleteLayouts(array $layout_ids): void
+    {
+        $this->db->delete(DB_PREFIX . 'layout', ['layout_id' => $layout_ids]);
+        $this->db->delete(DB_PREFIX . 'layout_module', ['layout_id' => $layout_ids]);
+        $this->db->delete(DB_PREFIX . 'layout_route', ['layout_id' => $layout_ids]);
+
+        $this->cache->delete('layouts');
+    }
+
     /*
     public function addLayout($data)
     {
@@ -126,58 +190,7 @@ class Layout extends Mvc\Model
 
         return $query->row;
     }
-    */
 
-    public function getLayouts($data = array())
-    {
-        $sql = "SELECT * FROM " . DB_PREFIX . "layout";
-
-        $sort_data = array('name');
-
-        if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-            $sql .= " ORDER BY " . $data['sort'];
-        } else {
-            $sql .= " ORDER BY name";
-        }
-
-        if (isset($data['order']) && ($data['order'] == 'DESC')) {
-            $sql .= " DESC";
-        } else {
-            $sql .= " ASC";
-        }
-
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-
-            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-        }
-
-        $query = $this->db->get($sql);
-
-        return $query->rows;
-    }
-
-    public function getTotal()
-    {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "layout`")->row['total'];
-    }
-
-    public function deleteLayouts(array $layout_ids)
-    {
-        $this->db->delete(DB_PREFIX . 'layout', ['layout_id' => $layout_ids]);
-        $this->db->delete(DB_PREFIX . 'layout_module', ['layout_id' => $layout_ids]);
-        $this->db->delete(DB_PREFIX . 'layout_route', ['layout_id' => $layout_ids]);
-
-        $this->cache->delete('layouts');
-    }
-
-    /*
     public function getLayoutRoutes($layout_id)
     {
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
