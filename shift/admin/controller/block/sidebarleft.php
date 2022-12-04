@@ -45,14 +45,19 @@ class SidebarLeft extends Mvc\Controller
                 'name' => $this->language->get('sidebarleft.installer'),
                 'url'  => $this->router->url('extension/installer'),
             ]);
-        }
-
-        if ($this->user->hasPermission('access', 'extension/extension')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.extension'),
-                'url'  => $this->router->url('extension/extension'),
+                'type' => 'divider',
             ]);
         }
+
+        $extension[] = $this->nav([
+            'name' => $this->language->get('sidebarleft.module'),
+            'url'  => $this->router->url('extension/module'),
+        ]);
+        $extension[] = $this->nav([
+            'name' => $this->language->get('sidebarleft.theme'),
+            'url'  => $this->router->url('extension/theme'),
+        ]);
 
         if ($this->user->hasPermission('access', 'extension/event')) {
             $extension[] = $this->nav([
@@ -83,12 +88,6 @@ class SidebarLeft extends Mvc\Controller
             $tool[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.layout'),
                 'url'  => $this->router->url('tool/layout'),
-            ]);
-        }
-        if ($this->user->hasPermission('access', 'design/banner')) {
-            $tool[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.banner'),
-                'url'  => $this->router->url('design/banner'),
             ]);
         }
 

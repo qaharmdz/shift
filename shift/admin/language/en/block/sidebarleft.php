@@ -7,12 +7,13 @@ $_['information']    = 'Information';
 
 $_['extension']      = 'Extensions';
 $_['installer']      = 'Installer';
+$_['module']         = 'Modules';
+$_['theme']          = 'Themes';
 $_['event']          = 'Events';
 $_['language']       = 'Languages';
 
 $_['tool']           = 'Tools';
 $_['layout']         = 'Layouts';
-$_['banner']         = 'Banners';
 
 $_['account']        = 'Accounts';
 $_['user']           = 'Users';
