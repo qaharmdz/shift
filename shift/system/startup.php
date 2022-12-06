@@ -10,8 +10,8 @@ define('VERSION', '0.2.0+a.3'); // Staging: a.*, b.*, rc.*
 list($major, $minor, $patch) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 
-if (version_compare(PHP_VERSION, '8.1.0', '>=') === false) {
-    exit('Shift CMS require a PHP version 8.1.0+. You are running ' . PHP_VERSION . '.');
+if (!(PHP_VERSION_ID >= 80100)) {
+    exit('Shift CMS require a PHP version ">= 8.1.0". You are running ' . PHP_VERSION . '.');
 }
 
 mb_internal_encoding('UTF-8');
