@@ -74,8 +74,8 @@ class Logger
             echo '<div style="font-size:14px; color:#444; line-height:1.5em; padding:10px 15px; margin:15px; background:#fee8e6; border-left:4px solid #db180a;">
                 <h3 style="font-size:1.6em; color:#c00; font-weight:600; margin:0 0 5px;">' . ucfirst($level) . '</h3>'
                 . ($errcode ? '<p style="margin:0;"><b style="width:100px; display:inline-block;">Error Code</b> : ' . $errcode . '</p>' : '')
-                . '<p style="margin:0;"><b style="width:100px; display:inline-block;">Message</b> : ' . str_replace(PATH_SHIFT, '', $errstr) . '</p>'
-                . '<p style="margin:0;"><b style="width:100px; display:inline-block;">File</b> : ' . str_replace(PATH_SHIFT, '', $errfile) . '</p>'
+                . '<p style="margin:0;"><b style="width:100px; display:inline-block;">Message</b> : ' . $errstr . '</p>'
+                . '<p style="margin:0;"><b style="width:100px; display:inline-block;">File</b> : ' . $errfile . '</p>'
                 . '<p style="margin:0;"><b style="width:100px; display:inline-block;">Line</b> : ' . $errline . '</p>'
             . '</div>';
         }

@@ -72,7 +72,7 @@ class Database
         } catch (\Mysqli_sql_exception $e) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    '<br>- <b>\Mysqli_sql_exception</b>: %s<br>- <b>Error query</b>: <i>%s</i>',
+                    '\Mysqli_sql_exception: %s. Error query: %s',
                     $e->getMessage(),
                     $query
                 ),
@@ -135,7 +135,7 @@ class Database
         } catch (\Mysqli_sql_exception $e) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    '<br>- <b>\Mysqli_sql_exception</b>: %s<br>- <b>Error query</b>: <i>%s</i>',
+                    '\Mysqli_sql_exception: %s. Error query: %s',
                     $e->getMessage(),
                     $query
                 ),
@@ -289,7 +289,7 @@ class Database
         }
         if (count(array_unique($tokenParam)) !== count(array_intersect_key(array_flip($tokenParam), $params))) {
             throw new \InvalidArgumentException(
-                sprintf('The number of given parameters not match named-parameter for query: <i>%s</i>', $query)
+                sprintf('The number of given parameters not match named-parameter for query: %s', $query)
             );
         }
 
@@ -414,7 +414,7 @@ class Database
         $stmt_result = $params ? $this->query($query, $params, $types) : $this->raw($query);
 
         if (!$stmt_result instanceof \mysqli_result) {
-            throw new \InvalidArgumentException(sprintf('Invalid \mysqli_result instance for "SELECT" query: <i>%s</i>', $query));
+            throw new \InvalidArgumentException(sprintf('Invalid \mysqli_result instance for "SELECT" query: %s', $query));
         }
 
         $result = new \stdClass();
