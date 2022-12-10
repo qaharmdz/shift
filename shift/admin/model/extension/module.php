@@ -75,6 +75,17 @@ class Module extends Mvc\Model
     // Form CRUD
     // ================================================
 
+    public function getModule($module_id)
+    {
+        $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = ?i", [$module_id])->row;
+
+        if (!empty($result['user_id'])) {
+            $result['setting'] = json_decode($result['setting'], true);
+        }
+
+        return $result;
+    }
+
     public function getTotal()
     {
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "module`")->row['total'];
@@ -95,17 +106,6 @@ class Module extends Mvc\Model
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` LIKE '%." . (int)$module_id . "'");
-    }
-
-    public function getModule($module_id)
-    {
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
-
-        if ($query->row) {
-            return json_decode($query->row['setting'], true);
-        } else {
-            return array();
-        }
     }
 
     public function getModules()

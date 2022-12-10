@@ -45,7 +45,7 @@ class Logger
         $context = $context ?: $this->contextInfo();
         $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
         $message = sprintf(
-            '%s | %s ' . PHP_EOL . '    | %s ' . PHP_EOL . '    | %s',
+            '%s | %s' . PHP_EOL . '    | %s' . PHP_EOL . '    | %s',
             date('Y-m-d H:i:s e'),
             $level,
             print_r($message, true),
