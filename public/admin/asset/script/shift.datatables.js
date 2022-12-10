@@ -320,7 +320,7 @@ function dtShiftColumnFilter(d) {
     return d;
 }
 
-function dtShiftUtility(dtTable) {
+function dtShiftUtility(dtTable, colsHide) {
     // Refresh record results
     $('.main-content').on('click', '[data-dtReload]', function() {
         dtTable.clearPipeline().draw();
@@ -370,7 +370,5 @@ function dtShiftUtility(dtTable) {
     });
 
     // Hide columns after all event delegated
-    setTimeout(function() {
-        dtTable.columns([6, 7]).visible(false);
-    }, 100);
+    dtTable.columns(colsHide).visible(false);
 }

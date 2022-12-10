@@ -147,6 +147,9 @@ body {
 .main-navigation .uk-nav a:hover {
     background: rgba(0,0,0,.05);
 }
+.main-navigation .uk-nav .uk-parent:not(.uk-open) > ul {
+    display: none;
+}
 .main-navigation .uk-nav .uk-parent > a::after {
     opacity: .7;
     margin-right: -5px;
