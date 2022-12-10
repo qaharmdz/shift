@@ -29,14 +29,16 @@
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
-                    <td data-index="0"></td>
-                    <td data-filter='{"type":"number", "mode":"match"}'>
+                    <td class="ukt-pt-1">
+                        <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
+                    </td>
+                    <td data-filter='{"type":"number"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string", "mode":"like"}'>
+                    <td data-filter='{"type":"string"}'>
                         <input type="text" value="" data-index="2" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string", "mode":"like"}'>
+                    <td data-filter='{"type":"string"}'>
                         <input type="text" value="" data-index="3" class="uk-input">
                     </td>
                     <td class="uk-text-center">
@@ -55,43 +57,20 @@
 
 <script>
 $(document).ready(function() {
-let tableEl    = '#settingSite-list',
-    sortingCol = [[1, 'asc']], // site_id
-    dtTable    = $(tableEl).DataTable({
+let tableEl     = '#settingSite-list',
+    columnsHide = [],
+    dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('setting/site/list')|raw }}",
-            data : function(d) {
-                $('[data-dtColumnFilter] td').each(function(i) {
-                    let dataFilter = $(this).data('filter');
-                    if (dataFilter != undefined) {
-                        $.extend(d.columns[i]['search'], dataFilter || []);
-
-                        if (d.draw > 1) {
-                            let forms = $('input, select', this);
-                            if (forms.length == 1) {
-                                d.columns[i]['search']['value'] = $('input, select', this).val() || '';
-                            } else if (forms.length == 2) {
-                                forms.each(function(ci, el) {
-                                    if (ci > 0) {
-                                        d.columns[i]['search']['value'] += '~';
-                                    }
-                                    d.columns[i]['search']['value'] += $(el).val() || '';
-                                });
-                            }
-                        }
-                    }
-                });
+            data : function(d, s) {
+                d.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                d = dtShiftColumnFilter(d);
             }
         }),
-        initComplete: function () {
-            // Add localStorage search value to column-filter after page reload
-            let table = this;
-            table.api().columns().every(function(i) {
-                let column = this;
-                $('[data-index=' + i + ']').val(column.search());
-            });
+        initComplete: function() {
+            dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : sortingCol,
+        sorting : [[1, 'asc']], // site_id
         columnDefs : [
             { searchable: false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -137,37 +116,6 @@ let tableEl    = '#settingSite-list',
                 }
             }
         ]
-    });
-
-    // Refresh record results
-    $('.main-content').on('click', '[data-dtReload]', function() {
-        dtTable.clearPipeline().draw();
-    });
-
-    // Search inputs
-    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
-        allowSubmit: true,
-        captureLength: 0,
-        callback: function(value) {
-            dtTable.search(value).draw();
-        },
-    });
-    $('[data-dtColumnFilter] input').typeWatch({
-        allowSubmit: true,
-        captureLength: 0,
-        callback: function(value) {
-            dtTable.column($(this).data('index')).search(value).draw();
-        },
-    });
-    $('[data-dtColumnFilter] select').on('change', function() {
-        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
-    });
-
-    // Clear all search
-    $('[data-dtClearSearch]').on('click', function() {
-        $('[data-dtColumnFilter] input').val('');
-        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
-        dtTable.clearSearch().draw();
     });
 
     // Action quick-edit

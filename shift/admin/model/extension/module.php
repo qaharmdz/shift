@@ -29,8 +29,8 @@ class Module extends Mvc\Model
             'publish'      => 'm.publish',
             'unpublish'    => 'm.unpublish',
         ];
-        $filterMap  = $columnMap;
-        $dtResult = Helper\DataTables::parse($params, $filterMap);
+        $filterMap = $columnMap;
+        $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "module` m

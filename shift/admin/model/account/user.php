@@ -34,7 +34,7 @@ class User extends Mvc\Model
             'updated'       => 'u.updated',
             'last_login'    => 'u.last_login',
         ];
-        $filterMap  = $columnMap;
+        $filterMap = $columnMap;
         $filterMap['fullname']   = 'CONCAT_WS(" ", u.firstname, u.lastname, u.username)';
         $filterMap['user_group'] = 'u.user_group_id';
 
