@@ -8,15 +8,7 @@
                     <a href="{{ menu.url }}">{{ menu.name }}</a>
                     <ul class="uk-nav uk-nav-sub uk-nav-parent-icon">
                         {% for item in menu.subs %}
-                            {% if not item.subs %}
-                                {% if item.type == 'header' %}
-                                    <li class="uk-nav-header">{{ item.name }}</li>
-                                {% elseif item.type == 'divider' %}
-                                    <li class="uk-nav-divider"></li>
-                                {% else %}
-                                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
-                                {% endif %}
-                            {% else %}
+                            {% if item.subs %}
                                 <li class="uk-parent">
                                     <a href="{{ item.url }}">{{ item.name }}</a>
                                     <ul>
@@ -25,6 +17,14 @@
                                         {% endfor %}
                                     </ul>
                                 </li>
+                            {% else %}
+                                {% if item.type == 'header' %}
+                                    <li class="uk-nav-header">{{ item.name }}</li>
+                                {% elseif item.type == 'divider' %}
+                                    <li class="uk-nav-divider"></li>
+                                {% else %}
+                                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </ul>

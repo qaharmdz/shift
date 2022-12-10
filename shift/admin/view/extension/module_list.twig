@@ -1,0 +1,225 @@
+{% extends 'main.tpl.twig' %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <a href="{{ app.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body uk-card-panel uk-card-body">
+        <table id="extensionModule-list" class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th class="ukt-px-0" style="width:30px;">
+                        <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                        <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width:60px;">{{ app.language.get('id') }}</th>
+                    <th style="width:140px">{{ app.language.get('codename') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="width:200px;">{{ app.language.get('publish') }}</th>
+                    <th style="width:200px;">{{ app.language.get('unpublish') }}</th>
+                    <th style="width:110px">{{ app.language.get('status') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                </tr>
+                <tr>
+                    <td class="ukt-pt-1">
+                        <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
+                    </td>
+                    <td data-filter='{"type":"number"}'>
+                        <input type="text" value="" data-index="1" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="3" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"date"}'>
+                        <input type="input" value="" data-index="4" data-datepicker class="uk-input"> -
+                        <input type="input" value="" data-index="4" data-datepicker class="uk-input">
+                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
+                    </td>
+                    <td data-filter='{"type":"date"}'>
+                        <input type="input" value="" data-index="5" data-datepicker class="uk-input"> -
+                        <input type="input" value="" data-index="5" data-datepicker class="uk-input">
+                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
+                    </td>
+                    <td data-filter='{"type":"number"}'>
+                        <select data-index="8" class="uk-select">
+                            <option value=""></option>
+                            <option value="1">{{ app.language.get('enabled') }}</option>
+                            <option value="0">{{ app.language.get('disabled') }}</option>
+                        </select>
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="8" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+let tableEl     = '#extensionModule-list',
+    columnsHide = [4, 5], // publish, unpublish
+    dtTable = $(tableEl).DataTable({
+        ajax : $.fn.dataTable.pipeline({
+            url  : "{{ app.router.url('extension/module/list')|raw }}",
+            data : function(d, s) {
+                d.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                d = dtShiftColumnFilter(d);
+            }
+        }),
+        initComplete: function() {
+            dtShiftUtility(dtTable, columnsHide);
+        },
+        sorting : [[2, 'asc']], // codename
+        columnDefs : [
+            { searchable : false, targets : [0, -1] },
+            { orderable : false, targets : [0, -1] },
+            { createdCell : function(nTd) {
+                $(nTd).addClass('uk-text-center'); },
+                targets : [ 0, 1, -2, -1 ]
+            },
+        ],
+        columns : [
+            { data : 'module_id',
+                className : 'noVisualColumn',
+                render : function(data, type, full) {
+                    return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                }
+            },
+            { data : 'module_id' },
+            { data : 'codename' },
+            { data : 'name' },
+            { data : 'publish',
+                render : function(data, type, full) {
+                    return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
+                }
+            },
+            { data : 'unpublish',
+                render : function(data, type, full) {
+                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
+                }
+            },
+            { data : 'status',
+                render : function(data, type, full) {
+                    output = '<div class="uk-label uk-label-success">' + shift.i18n['status_' + data] + '</div>';
+                    if (!full.status) {
+                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
+                    }
+                    return output;
+                }
+            },
+            { data : 'module_id',
+                className : 'noVisualColumn ut-p-2',
+                render : function(data, type, full) {
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
+                    output += '<div class="uk-inline ut-ml-2">';
+                    output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                    output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                    output += '        <ul class="uk-nav uk-dropdown-nav">';
+                    if (!full.status) {
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                    }
+                    if (full.status) {
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                    }
+                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.module_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                    output += '        </ul>';
+                    output += '    </div>';
+                    output += '</div>';
+
+                    return output;
+                }
+            }
+        ]
+    });
+
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Search inputs
+    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.search(value).draw();
+        },
+    });
+    $('[data-dtColumnFilter] input:not([data-datepicker])').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.column($(this).data('index')).search(value).draw();
+        },
+    });
+    $('[data-dtColumnFilter] input[data-datepicker]').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-6:+3',
+        prevText: '<',
+        nextText: '>',
+        onSelect: function(formattedDate, date, inst) {
+            dtTable.column($(this).data('index')).search(formattedDate).draw();
+        }
+    });
+    $('[data-dtColumnFilter] select').on('change', function() {
+        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
+    });
+
+    // Clear all search
+    $('[data-dtClearSearch]').on('click', function() {
+        $('[data-dtColumnFilter] input').val('');
+        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
+        dtTable.clearSearch().draw();
+    });
+
+    // Action quick-edit
+    $('.main-content').on('click', '[data-dtAction]', function(e) {
+        e.preventDefault();
+
+        let data = $(this).data('dtaction');
+
+        $.fn.shift.dtAction({
+            url  : "{{ app.router.url('extension/module/dtaction')|raw }}",
+            data : data,
+            validate : function(dtActionProceed) {
+                if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else {
+                    dtActionProceed();
+                }
+            },
+            onSuccess : function() {
+                dtTable.clearPipeline().draw();
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
