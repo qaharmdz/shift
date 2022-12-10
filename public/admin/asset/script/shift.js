@@ -429,12 +429,14 @@ $(document).on('IIDE.init IIDE.format_date', function(event)
  * ======================================================================== */
 
  /**
- * Database UTC Y-m-d H:i:s to local timezone
+ * Datetime UTC to local timezone
  *
  * @param  string   datetime  Y-m-d H:i:s UTC
  * @return string
  */
 function formatDate(datetime) {
+    if (!datetime) { return ''; }
+
     let dateUTC = new Date(datetime + ' UTC'),
         options = {
             day: '2-digit', month: 'short', year: 'numeric',

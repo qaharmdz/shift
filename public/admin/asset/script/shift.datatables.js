@@ -4,8 +4,6 @@ $.extend($.fn.dataTable.defaults, {
     dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-2-3'fi>'<'uk-width-1-3 dt-top-right'lB>>><'dataTables-content't><'dataTables-bottom'<'uk-grid'<'uk-width-1-3'i><'uk-width-2-3 uk-text-right'p>>>r",
     serverSide      : true,
     processing      : true,
-    stateSave       : true,
-    stateDuration   : 60 * 60 * 24 * 14, // 14 day
     searchDelay     : 1000,
     orderCellsTop   : true,
     orderMulti      : true, // use "shift+"
@@ -129,7 +127,7 @@ $.fn.dataTable.pipeline = function (opts) {
             if (typeof config.data === 'function') {
                 // As a function it is executed with the data object as an arg for manipulation.
                 // If an object is returned, it is used as the data object to submit
-                let d = config.data(request);
+                let d = config.data(request, settings);
                 if (d) {
                     $.extend(request, d);
                 }
@@ -192,9 +190,9 @@ $.fn.dataTable.Api.register('clearSearch()', function () {
             }
         }
 
-        // clear global search
-        $('#'+settings.nTable.id+'_filter, #'+settings.nTable.id+' .dt-column-filter input').val('');
-        $('#'+settings.nTable.id+' .dt-column-filter select').prop('selectedIndex', 0);
+        // clear search inputs
+        $('#'+settings.nTable.id+'_filter, #'+settings.nTable.id+' thead input').val('');
+        $('#'+settings.nTable.id+' .thead select').prop('selectedIndex', 0);
 
         // clear pipeline cache
         settings.clearCache = true;
@@ -291,3 +289,88 @@ $.fn.dataTable.ext.renderer.pageButton.uikit = function (settings, host, idx, bu
         buttons
    );
 };
+
+// Shift DataTables utilities
+// ================================================
+
+function dtShiftColumnFilter(d) {
+    $('[data-dtColumnFilter] td').each(function(i) {
+        let colFilter = $(this).data('filter');
+        if (colFilter) {
+            let forms = $('input, select', this),
+                index = forms.data('index');
+
+            $.extend(d.columns[index]['search'], colFilter || []);
+
+            if (forms.length == 1) {
+                d.columns[index]['search']['value'] = $('input, select', this).val() || '';
+            } else if (forms.length == 2) {
+                forms.each(function(ci, el) {
+                    if (ci == 0) {
+                        d.columns[index]['search']['value'] = $(el).val() || '';
+                        d.columns[index]['search']['value'] += '~';
+                    } else {
+                        d.columns[index]['search']['value'] += $(el).val() || '';
+                    }
+                });
+            }
+        }
+    });
+
+    return d;
+}
+
+function dtShiftUtility(dtTable) {
+    // Refresh record results
+    $('.main-content').on('click', '[data-dtReload]', function() {
+        dtTable.clearPipeline().draw();
+    });
+
+    // Search inputs
+    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.search(value).draw();
+        },
+    });
+    $('[data-dtColumnFilter] input:not([data-datepicker])').typeWatch({
+        allowSubmit: true,
+        captureLength: 0,
+        callback: function(value) {
+            dtTable.column($(this).data('index')).search(value).draw();
+        },
+    });
+    $('[data-dtColumnFilter] input[data-datepicker]').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-6:+3',
+        prevText: '<',
+        nextText: '>',
+        onSelect: function(formattedDate, date, inst) {
+            dtTable.column($(this).data('index')).search(formattedDate).draw();
+        }
+    });
+    $('[data-dtColumnFilter] select').on('change', function() {
+        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
+    });
+
+    // Clear all search
+    $('[data-dtClearSearch]').on('click', function() {
+        $('[data-dtColumnFilter] input').val('');
+        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
+        dtTable.clearSearch().draw();
+    });
+    // Clear datepicker column
+    $('[data-datepicker-clear]').on('click', function() {
+        let el = $(this).parent().find('input');
+        el.val('');
+        dtTable.column(el.data('index')).search('').draw();
+    });
+
+    // Hide columns after all event delegated
+    setTimeout(function() {
+        dtTable.columns([6, 7]).visible(false);
+    }, 100);
+}

@@ -4,28 +4,43 @@ declare(strict_types=1);
 
 namespace Shift\System\Helper;
 
-class Datatables
+/**
+ * DataTables query builder.
+ */
+class DataTables
 {
-    protected $params;
-    protected $rangeSeparator = '~';
     protected $data = [];
+    protected $charNot = '~';
+    protected $charSeparator = '~';
+    protected static $instance = null;
 
-    public function data()
+    /**
+     * @param  array  $params       DataTables request parameter
+     * @param  array  $filterMap
+     * @param  array  $dateColumns  Date datatype DB table column
+     *
+     * @return array
+     */
+    public static function parse(array $params, array $filterMap, array $dateColumns = []): array
     {
-        return $this->data;
+        self::$instance = new self();
+
+        $dateColumns = array_unique(array_merge(
+            ['created', 'updated', 'publish', 'unpublish'],
+            $dateColumns
+        ));
+
+        return self::$instance->request($params)->query($filterMap, $dateColumns)->data;
     }
 
-    public function pullData()
-    {
-        $data = $this->data;
-
-        $this->params = [];
-        $this->data   = [];
-
-        return $data;
-    }
-
-    public function parse(array $params)
+    /**
+     * Extract DataTables request parameter
+     *
+     * @param  array  $params   Request parameter
+     *
+     * @return \DataTables
+     */
+    protected function request(array $params)
     {
         $data = [
             'columns' => [],
@@ -46,25 +61,23 @@ class Datatables
                 $data['columns'][$key] = $column['data'];
 
                 $columnSearch = [
-                    'keyword'  => trim($column['search']['value']),
-                    'type'     => 'string',
-                    'mode'     => null,
-                    'negate'   => false
+                    'keyword'    => trim($column['search']['value']),
+                    'type'       => 'string',
+                    'mode'       => null,
+                    'negate' => false
                 ];
 
-                if (in_array($columnSearch['keyword'], ['', '!', $this->rangeSeparator])) {
+                if (in_array($columnSearch['keyword'], ['', $this->charNot, $this->charSeparator])) {
                     continue;
                 }
-                if (isset($column['search']['type']) && in_array($column['search']['type'], ['string', 'number', 'date'])) {
+                if (isset($column['search']['type']) && in_array($column['search']['type'], ['text', 'string', 'number', 'date'])) {
                     $columnSearch['type'] = $column['search']['type'];
-                }
-                if (isset($column['search']['mode']) && in_array($column['search']['mode'], ['match', 'range', 'like'])) {
-                    $columnSearch['mode'] = $column['search']['mode'];
                 }
 
                 // Default mode default by type
                 if (!$columnSearch['mode']) {
                     switch ($columnSearch['type']) {
+                        case 'text':
                         case 'number':
                             $columnSearch['mode'] = 'match';
                             break;
@@ -80,27 +93,26 @@ class Datatables
                     }
                 }
 
-                if (in_array($columnSearch['mode'], ['match', 'range']) && str_contains($columnSearch['keyword'], $this->rangeSeparator)) {
-                    $range = array_map('trim', explode($this->rangeSeparator, $columnSearch['keyword']));
+                if (str_contains($columnSearch['keyword'], $this->charSeparator) && in_array($columnSearch['type'], ['number', 'date'])) {
+                    $range = array_map('trim', explode($this->charSeparator, $columnSearch['keyword']));
                     $columnSearch['mode'] = 'range';
 
                     if ($columnSearch['type'] == 'number') {
                         $columnSearch['keyword'] = [
-                            'min' => isset($range[0]) ? (int)$range[0] : null,
-                            'max' => isset($range[1]) ? (int)$range[1] : null
+                            'min' => isset($range[0]) && $range[0] != '' ? $range[0] : null,
+                            'max' => isset($range[1]) && $range[1] != '' ? $range[1] : null,
                         ];
                     } elseif ($columnSearch['type'] == 'date') {
-                        // TODO: further test, convert to UTC
                         $columnSearch['keyword'] = [
-                            'from' => !empty($range[0]) ? $range[0] : null,
-                            'to'   => !empty($range[1]) ? $range[0] : null,
+                            'from' => !empty($range[0]) ? Date::toUtc($range[0] . ' 00:00:00', $params['timezone']) : null,
+                            'to'   => !empty($range[1]) ? Date::toUtc($range[1] . ' 23:59:59', $params['timezone']) : null,
                         ];
                     }
                 }
 
-                if (!is_array($columnSearch['keyword']) && str_starts_with($columnSearch['keyword'], '!')) {
-                    $columnSearch['keyword']  = trim(substr($columnSearch['keyword'], 1));
-                    $columnSearch['negate'] = true;
+                if (!is_array($columnSearch['keyword']) && str_starts_with($columnSearch['keyword'], $this->charNot)) {
+                    $columnSearch['keyword'] = trim(substr($columnSearch['keyword'], 1));
+                    $columnSearch['negate']  = true;
                 }
 
                 $data['search']['columns'][$column['data']] = $columnSearch;
@@ -118,33 +130,39 @@ class Datatables
 
         $this->data['params'] = $data;
 
-        return $this;
+        return self::$instance;
     }
 
-    public function sqlQuery(array $filterMap, array $dateMap = [])
+    /**
+     * SQL query builder
+     *
+     * @param  array  $filterMap
+     * @param  array  $dateColumns  Date datatype DB table column
+     *
+     * @return \DataTables
+     */
+    protected function query(array $filterMap, array $dateColumns = [])
     {
-        if (empty($this->data['params'])) {
-            return null;
-        }
+        $data = array_merge(
+            $this->data,
+            [
+                'query' => [
+                    'where' => '',
+                    'order' => '',
+                    'limit' => ',',
+                    'params' => [],
+                ],
+            ]
+        );
 
-        $dateMap = array_unique(array_merge(['created', 'updated', 'publish', 'unpublish'], $dateMap));
-        $data    = [
-            'query' => [
-                'where' => '',
-                'order' => '',
-                'limit' => ',',
-            ],
-            'params' => [],
-        ];
-
-        if ($this->data['params']) {
+        if ($data['params']) {
             $search = [];
             $params = [];
 
-            if ($searchAllKeyword = $this->data['params']['search']['all']) {
+            if ($searchAllKeyword = $data['params']['search']['all']) {
                 $search_all = [];
-                foreach ($filterMap as $filterKey => $dbColumn) {
-                    if (!in_array($filterKey, $dateMap)) {
+                foreach ($filterMap as $key => $dbColumn) {
+                    if (!in_array($key, $dateColumns)) {
                         $search_all[$dbColumn] = $dbColumn . ' LIKE :search_all?s';
                     }
                 }
@@ -155,8 +173,8 @@ class Datatables
                 }
             }
 
-            if ($this->data['params']['search']['columns']) {
-                foreach ($this->data['params']['search']['columns'] as $key => $filter) {
+            if ($data['params']['search']['columns']) {
+                foreach ($data['params']['search']['columns'] as $key => $filter) {
                     switch ($filter['mode']) {
                         case 'match':
                             $search[] = $filterMap[$key] . ' ' . ($filter['negate'] ? '!=' : '=') . ' :' . $key . '?s';
@@ -164,7 +182,7 @@ class Datatables
                             break;
 
                         case 'range':
-                            if ($filter['type'] = 'number') {
+                            if ($filter['type'] == 'number') {
                                 if (!is_null($filter['keyword']['min']) && is_null($filter['keyword']['max'])) {
                                     $search[] = $filterMap[$key] . ' >= :' . $key . '?i';
                                     $params[$key] = (int)$filter['keyword']['min'];
@@ -180,7 +198,21 @@ class Datatables
                                 }
                             }
 
-                            // TODO: date range
+                            if ($filter['type'] == 'date' && in_array($key, $dateColumns)) {
+                                if (!is_null($filter['keyword']['from']) && is_null($filter['keyword']['to'])) {
+                                    $search[] = $filterMap[$key] . ' >= :' . $key . '?s';
+                                    $params[$key] = $filter['keyword']['from'];
+                                }
+                                if (is_null($filter['keyword']['from']) && !is_null($filter['keyword']['to'])) {
+                                    $search[] = $filterMap[$key] . ' <= :' . $key . '?s';
+                                    $params[$key] = $filter['keyword']['to'];
+                                }
+                                if (!is_null($filter['keyword']['from']) && !is_null($filter['keyword']['to'])) {
+                                    $search[] = '(' . $filterMap[$key] . ' BETWEEN :' . $key . '_min?s AND :' . $key . '_max?s)';
+                                    $params[$key . '_min'] = $filter['keyword']['from'];
+                                    $params[$key . '_max'] = $filter['keyword']['to'];
+                                }
+                            }
                             break;
 
                         case 'like':
@@ -194,14 +226,14 @@ class Datatables
 
             if ($search) {
                 $data['query']['where'] = implode(' AND ', $search);
-                $data['params'] = $params;
+                $data['query']['params'] = $params;
             }
         }
 
-        if ($this->data['params']['order']) {
+        if ($data['params']['order']) {
             $orders = [];
 
-            foreach ($this->data['params']['order'] as $key => $value) {
+            foreach ($data['params']['order'] as $key => $value) {
                 if (isset($filterMap[$key])) {
                     $orders[] = $filterMap[$key] . ' ' . $value;
                 }
@@ -214,11 +246,11 @@ class Datatables
 
         // Limit
         $data['query']['limit'] = ':_offset?i, :_limit?i';
-        $data['params']['_offset'] = (int)$this->data['params']['limit']['offset'];
-        $data['params']['_limit']  = (int)$this->data['params']['limit']['length'];
+        $data['query']['params']['_offset'] = (int)$data['params']['limit']['offset'];
+        $data['query']['params']['_limit']  = (int)$data['params']['limit']['length'];
 
-        $this->data['sql'] = $data;
+        $this->data = $data;
 
-        return $this;
+        return self::$instance;
     }
 }

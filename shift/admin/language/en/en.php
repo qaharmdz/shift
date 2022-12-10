@@ -24,7 +24,6 @@ $_['media']                 = 'Media';
 $_['code']                  = 'Code';
 $_['type']                  = 'Type';
 $_['group']                 = 'Group';
-$_['codename']              = 'Codename';
 $_['priority']              = 'Priority';
 $_['order']                 = 'Order';
 $_['sort_order']            = 'Sort Order';
@@ -72,9 +71,6 @@ $_['reload_data']           = 'Reload data';
 $_['show_x_data']           = 'Show _START_ to _END_ of _TOTAL_ data'; // Tags: _START_, _END_, _TOTAL_
 $_['filter_x_data']         = '(filtered from _MAX_ total data)'; // Tags: _MAX_
 $_['select_min_one']        = 'Select minimum one item to continue.';
-$_['reset_order']           = 'Reset column order';
-$_['reset_state']           = 'Reset table state';
-$_['reset_info']            = 'Clear search, reset item per page, column order and column visibility';
 
 // Notification
 $_['saving']                = 'Saving..';

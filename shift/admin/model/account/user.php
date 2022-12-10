@@ -38,16 +38,16 @@ class User extends Mvc\Model
         $filterMap['fullname']   = 'CONCAT_WS(" ", u.firstname, u.lastname, u.username)';
         $filterMap['user_group'] = 'u.user_group_id';
 
-        $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
+        $dtResult = Helper\DataTables::parse($params, $filterMap, ['last_login']);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "user` u
                 LEFT JOIN `" . DB_PREFIX . "user_group` ug ON (u.user_group_id = ug.user_group_id)"
-            . ($dataTables['sql']['query']['where'] ? " WHERE " . $dataTables['sql']['query']['where'] : "")
-            . " ORDER BY " . $dataTables['sql']['query']['order']
-            . " LIMIT " . $dataTables['sql']['query']['limit'];
+            . ($dtResult['query']['where'] ? " WHERE " . $dtResult['query']['where'] : "")
+            . " ORDER BY " . $dtResult['query']['order']
+            . " LIMIT " . $dtResult['query']['limit'];
 
-        return $this->db->get($query, $dataTables['sql']['params']);
+        return $this->db->get($query, $dtResult['query']['params']);
     }
 
     public function dtAction(string $type, array $items): array
