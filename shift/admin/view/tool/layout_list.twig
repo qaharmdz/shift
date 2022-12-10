@@ -113,7 +113,7 @@ let tableEl    = '#toolLayout-list',
             { data : 'name'},
             { data : 'type',
                 render : function(data, type, full) {
-                    return shift.i18n['type_' + full.type];
+                    return shift.i18n['type_' + data];
                 }
             },
             { data : 'status',
@@ -136,6 +136,12 @@ let tableEl    = '#toolLayout-list',
                         output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                         output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                         output += '        <ul class="uk-nav uk-dropdown-nav">';
+                        if (!full.status) {
+                            output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.layout_id + '"}\'>' + shift.i18n.enabled + '</a></li>';
+                        }
+                        if (full.status) {
+                            output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.layout_id + '"}\'>' + shift.i18n.disabled + '</a></li>';
+                        }
                         output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.layout_id + '"}\'> ' + shift.i18n.delete + '</a></li>';
                         output += '        </ul>';
                         output += '    </div>';

@@ -73,7 +73,7 @@ class Layout extends Mvc\Controller
         }
 
         $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
-        $types = ['delete'];
+        $types = ['enabled', 'disabled', 'delete'];
         $items = explode(',', $post['item']);
         $data  = [
             'items'     => $items,
