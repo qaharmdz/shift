@@ -25,8 +25,8 @@ class UserGroup extends Mvc\Model
             'backend'       => 'ug.backend',
             'status'        => 'ug.status',
         ];
-        $filterMap  = $columnMap;
-        $dtResult = Helper\DataTables::parse($params, $filterMap);
+        $filterMap = $columnMap;
+        $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "user_group` ug"

@@ -24,8 +24,9 @@
                         </div>
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="width:300px">{{ app.language.get('name') }}</th>
-                    <th style="width:300px">{{ app.language.get('type') }}</th>
+                    <th style="min-width:300px">{{ app.language.get('name') }}</th>
+                    <th style="width:160px">{{ app.language.get('type') }}</th>
+                    <th style="width:140px">{{ app.language.get('status') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
@@ -37,11 +38,18 @@
                         <input type="text" value="" data-index="2" class="uk-input">
                     </td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
+                        <select data-index="3" class="uk-select">
+                            <option value=""></option>
+                            <option value="all">{{ app.language.get('type_all') }}</option>
+                            <option value="route">{{ app.language.get('type_route') }}</option>
+                            <option value="specific">{{ app.language.get('type_specific') }}</option>
+                        </select>
+                    </td>
+                    <td data-filter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
-                            <option value="">{{ app.language.get('-select-') }}</option>
-                            <option value="all">{{ app.language.get('all') }}</option>
-                            <option value="route">{{ app.language.get('route') }}</option>
-                            <option value="specific">{{ app.language.get('specific') }}</option>
+                            <option value=""></option>
+                            <option value="1">{{ app.language.get('enabled') }}</option>
+                            <option value="0">{{ app.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td class="uk-text-center">
@@ -60,51 +68,32 @@
 
 <script>
 $(document).ready(function() {
-shift.i18n = {{ app.language.all()|json_encode()|raw }};
+$.extend(shift.i18n, {
+    type_all : '{{ app.language.get("type_all") }}',
+    type_route : '{{ app.language.get("type_route") }}',
+    type_specific : '{{ app.language.get("type_specific") }}',
+});
 
 let tableEl    = '#toolLayout-list',
-    sortingCol = [[1, 'asc']], // layout_id
+    columnsHide = [],
     dtTable    = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('tool/layout/list')|raw }}",
-            data : function(d) {
-                $('[data-dtColumnFilter] td').each(function(i) {
-                    let dataFilter = $(this).data('filter');
-                    if (dataFilter != undefined) {
-                        $.extend(d.columns[i]['search'], dataFilter || []);
-
-                        if (d.draw > 1) {
-                            let forms = $('input, select', this);
-                            if (forms.length == 1) {
-                                d.columns[i]['search']['value'] = $('input, select', this).val() || '';
-                            } else if (forms.length == 2) {
-                                forms.each(function(ci, el) {
-                                    if (ci > 0) {
-                                        d.columns[i]['search']['value'] += '~';
-                                    }
-                                    d.columns[i]['search']['value'] += $(el).val() || '';
-                                });
-                            }
-                        }
-                    }
-                });
+            data : function(d, s) {
+                d.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                d = dtShiftColumnFilter(d);
             }
         }),
-        initComplete: function () {
-            // Add localStorage search value to column-filter after page reload
-            let table = this;
-            table.api().columns().every(function(i) {
-                let column = this;
-                $('input, select', '[data-dtColumnFilter] td:eq(' + i + ')').val(column.search());
-            });
+        initComplete: function() {
+            dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : sortingCol,
+        sorting : [[3, 'asc'], [2, 'asc']], // type, name
         columnDefs : [
             { searchable: false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
             { createdCell : function(nTd) {
                 $(nTd).addClass('uk-text-center'); },
-                targets : [0, -1]
+                targets : [0, -2, -1]
             },
         ],
         columns : [
@@ -124,7 +113,16 @@ let tableEl    = '#toolLayout-list',
             { data : 'name'},
             { data : 'type',
                 render : function(data, type, full) {
-                    return shift['i18n'][full.type];
+                    return shift.i18n['type_' + full.type];
+                }
+            },
+            { data : 'status',
+                render : function(data, type, full) {
+                    output = shift.i18n['status_' + data];
+                    if (!full.status) {
+                        output  = '<div class="uk-label uk-label-warning">' + output + '</div>';
+                    }
+                    return output;
                 }
             },
             { data : 'layout_id',
@@ -148,38 +146,6 @@ let tableEl    = '#toolLayout-list',
                 }
             }
         ]
-    });
-
-
-    // Refresh record results
-    $('.main-content').on('click', '[data-dtReload]', function() {
-        dtTable.clearPipeline().draw();
-    });
-
-    // Search inputs
-    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
-        allowSubmit: true,
-        captureLength: 0,
-        callback: function(value) {
-            dtTable.search(value).draw();
-        },
-    });
-    $('[data-dtColumnFilter] input').typeWatch({
-        allowSubmit: true,
-        captureLength: 0,
-        callback: function(value) {
-            dtTable.column($(this).data('index')).search(value).draw();
-        },
-    });
-    $('[data-dtColumnFilter] select').on('change', function() {
-        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
-    });
-
-    // Clear all search
-    $('[data-dtClearSearch]').on('click', function() {
-        $('[data-dtColumnFilter] input').val('');
-        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
-        dtTable.clearSearch().draw();
     });
 
     // Action quick-edit

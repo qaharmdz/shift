@@ -25,16 +25,16 @@ class Layout extends Mvc\Model
             'name'      => 'l.name',
             'status'    => 'l.status',
         ];
-        $filterMap  = $columnMap;
-        $dataTables = (new Helper\Datatables())->parse($params)->sqlQuery($filterMap)->pullData();
+        $filterMap = $columnMap;
+        $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "layout` l"
-            . ($dataTables['sql']['query']['where'] ? " WHERE " . $dataTables['sql']['query']['where'] : "")
-            . " ORDER BY " . $dataTables['sql']['query']['order']
-            . " LIMIT " . $dataTables['sql']['query']['limit'];
+            . ($dtResult['query']['where'] ? " WHERE " . $dtResult['query']['where'] : "")
+            . " ORDER BY " . $dtResult['query']['order']
+            . " LIMIT " . $dtResult['query']['limit'];
 
-        return $this->db->get($query, $dataTables['sql']['params']);
+        return $this->db->get($query, $dtResult['query']['params']);
     }
 
     public function dtAction(string $type, array $items): array
