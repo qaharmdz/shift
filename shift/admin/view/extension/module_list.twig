@@ -107,7 +107,11 @@ let tableEl     = '#extensionModule-list',
                 }
             },
             { data : 'module_id' },
-            { data : 'codename' },
+            { data : 'codename',
+                render : function(data, type, full) {
+                    return '<code>' + data + '</code>';
+                }
+            },
             { data : 'name' },
             { data : 'publish',
                 render : function(data, type, full) {

@@ -2,6 +2,18 @@
  * UIkit Sketsa override
  * ======================================================================== */
 
+/* Base HTML
+==================================== */
+ :not(pre)>code, :not(pre)>kbd, :not(pre)>samp {
+    font-size: 0.85rem;
+    color: #d80f0b;
+    background: rgba(0,0,0,.04);
+}
+
+
+/* Container & Grid
+==================================== */
+
 .uk-container-small {
     max-width: 960px;
 }

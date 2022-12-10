@@ -47,7 +47,7 @@ class Module extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['module_id'];
-            $items[$i]['url_edit']    = $this->router->url('extension/module/form', 'module_id=' . $items[$i]['module_id']);
+            $items[$i]['url_edit']    = $this->router->url('extension/module/' . $items[$i]['codename'], 'module_id=' . $items[$i]['module_id']);
         }
 
         $data = [
@@ -56,6 +56,37 @@ class Module extends Mvc\Controller
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_extension_module->getTotal(),
         ];
+
+        $this->response->setOutputJson($data);
+    }
+
+    public function dtaction()
+    {
+        $this->load->model('extension/module');
+        $this->load->language('extension/module');
+
+        if (!$this->user->hasPermission('modify', 'extension/module')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+
+        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $types = ['enabled', 'disabled', 'delete'];
+        $items = explode(',', $post['item']);
+        $data  = [
+            'items'     => $items,
+            'message'   => '',
+            'updated'   => [],
+        ];
+
+        if (empty($items) || !in_array($post['type'], $types) || in_array(0, $items)) {
+            return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
+        }
+
+        $data['updated'] = $this->model_extension_module->dtAction($post['type'], $items);
+        $data['message'] = $post['message'] ?? $this->language->get('success_' . $post['type']);
 
         $this->response->setOutputJson($data);
     }
