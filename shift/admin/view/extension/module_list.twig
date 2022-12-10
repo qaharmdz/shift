@@ -79,7 +79,7 @@
 $(document).ready(function() {
 let tableEl     = '#extensionModule-list',
     columnsHide = [4, 5], // publish, unpublish
-    dtTable = $(tableEl).DataTable({
+    dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('extension/module/list')|raw }}",
             data : function(d, s) {
@@ -151,48 +151,6 @@ let tableEl     = '#extensionModule-list',
                 }
             }
         ]
-    });
-
-    // Refresh record results
-    $('.main-content').on('click', '[data-dtReload]', function() {
-        dtTable.clearPipeline().draw();
-    });
-
-    // Search inputs
-    $('.dataTables_filter input').off('keypress keyup search input paste cut').typeWatch({
-        allowSubmit: true,
-        captureLength: 0,
-        callback: function(value) {
-            dtTable.search(value).draw();
-        },
-    });
-    $('[data-dtColumnFilter] input:not([data-datepicker])').typeWatch({
-        allowSubmit: true,
-        captureLength: 0,
-        callback: function(value) {
-            dtTable.column($(this).data('index')).search(value).draw();
-        },
-    });
-    $('[data-dtColumnFilter] input[data-datepicker]').datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '-6:+3',
-        prevText: '<',
-        nextText: '>',
-        onSelect: function(formattedDate, date, inst) {
-            dtTable.column($(this).data('index')).search(formattedDate).draw();
-        }
-    });
-    $('[data-dtColumnFilter] select').on('change', function() {
-        dtTable.column($(this).data('index')).search($(this).find(':selected').val()).draw();
-    });
-
-    // Clear all search
-    $('[data-dtClearSearch]').on('click', function() {
-        $('[data-dtColumnFilter] input').val('');
-        $('[data-dtColumnFilter] select').find('option:first').prop('selected', true);
-        dtTable.clearSearch().draw();
     });
 
     // Action quick-edit
