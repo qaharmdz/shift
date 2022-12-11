@@ -125,7 +125,7 @@ let tableEl     = '#extensionModule-list',
             },
             { data : 'status',
                 render : function(data, type, full) {
-                    output = '<div class="uk-label uk-label-success">' + shift.i18n['status_' + data] + '</div>';
+                    output = shift.i18n['status_' + data];
                     if (!full.status) {
                         output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
                     }
