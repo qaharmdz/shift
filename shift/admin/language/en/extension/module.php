@@ -2,4 +2,4 @@
 
 $_['page_title']        = 'Modules';
 
-$_['codename']              = 'Codename';
+$_['codename']          = 'Codename';
