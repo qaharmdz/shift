@@ -48,7 +48,7 @@ class Event extends Mvc\Model
         $sql = "SELECT * FROM `" . DB_PREFIX . "event`";
 
         $sort_data = array(
-            'code',
+            'group',
             'trigger',
             'action',
             'status',
@@ -58,7 +58,7 @@ class Event extends Mvc\Model
         if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
             $sql .= " ORDER BY `" . $data['sort'] . "`";
         } else {
-            $sql .= " ORDER BY `code`";
+            $sql .= " ORDER BY `group`";
         }
 
         if (isset($data['order']) && ($data['order'] == 'DESC')) {

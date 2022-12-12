@@ -110,7 +110,7 @@ class Module extends Mvc\Model
 
     public function getModules()
     {
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `code`");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `codename`");
 
         return $query->rows;
     }
