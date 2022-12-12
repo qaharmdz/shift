@@ -8,10 +8,11 @@ $_['information']    = 'Information';
 $_['extension']      = 'Extensions';
 $_['installer']      = 'Installer';
 $_['manage']         = 'Manage';
+$_['plugin']         = 'Plugins';
 $_['module']         = 'Modules';
 $_['theme']          = 'Themes';
-$_['event']          = 'Events';
 $_['language']       = 'Languages';
+$_['event']          = 'Events';
 
 $_['tool']           = 'Tools';
 $_['layout']         = 'Layouts';

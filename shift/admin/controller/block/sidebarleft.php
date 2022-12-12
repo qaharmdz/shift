@@ -61,26 +61,39 @@ class SidebarLeft extends Mvc\Controller
             ]);
         }
 
-        $extension[] = $this->nav([
-            'name' => $this->language->get('sidebarleft.module'),
-            'url'  => $this->router->url('extension/module'),
-        ]);
-        $extension[] = $this->nav([
-            'name' => $this->language->get('sidebarleft.theme'),
-            'url'  => $this->router->url('extension/theme'),
-        ]);
 
-        if ($this->user->hasPermission('access', 'extension/event')) {
+        if ($this->user->hasPermission('access', 'extension/plugin')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.event'),
-                'url'  => $this->router->url('extension/event'),
+                'name' => $this->language->get('sidebarleft.plugin'),
+                'url'  => $this->router->url('extension/plugin'),
             ]);
         }
-
+        if ($this->user->hasPermission('access', 'extension/module')) {
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.module'),
+                'url'  => $this->router->url('extension/module'),
+            ]);
+        }
+        if ($this->user->hasPermission('access', 'extension/theme')) {
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.theme'),
+                'url'  => $this->router->url('extension/theme'),
+            ]);
+        }
         if ($this->user->hasPermission('access', 'extension/language')) {
             $extension[] = $this->nav([
                 'name' => $this->language->get('sidebarleft.language'),
                 'url'  => $this->router->url('extension/language'),
+            ]);
+        }
+
+        if ($this->user->hasPermission('access', 'extension/event')) {
+            $extension[] = $this->nav([
+                'type' => 'divider',
+            ]);
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.event'),
+                'url'  => $this->router->url('extension/event'),
             ]);
         }
 
