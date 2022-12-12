@@ -45,6 +45,17 @@ class SidebarLeft extends Mvc\Controller
                 'name' => $this->language->get('sidebarleft.installer'),
                 'url'  => $this->router->url('extension/installer'),
             ]);
+        }
+        if ($this->user->hasPermission('access', 'extension/manage')) {
+            $extension[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.manage'),
+                'url'  => $this->router->url('extension/manage'),
+            ]);
+        }
+        if (
+            $this->user->hasPermission('access', 'extension/installer')
+            || $this->user->hasPermission('access', 'extension/manage')
+        ) {
             $extension[] = $this->nav([
                 'type' => 'divider',
             ]);

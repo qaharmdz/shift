@@ -1,0 +1,28 @@
+{% extends 'main.tpl.twig' %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right"></div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <div class="uk-card-panel uk-card-body">
+<pre><code>Extension Manage:
+- Show all extension type: plugin, module, theme, language
+    - Plugins: Covers all non-specific extension that extends the website features and functions.
+    - Module: Specific extension assigned to Section Positions through Tools > Module Layout.
+    - Themes: Specific extension that change the Shift appearance and templates.
+    - Language: Specific extension to provide an additional language.
+- Per row buttons: info, edit, install/uninstall.
+- For button info and edit link, get method metaInfo() for each extension. Possible scenario:
+    - Info button is the extension information, while the edit button is for extension setting, where the edit URL depend on the extension type/ custom URL provided by the method metaInfo().
+    - Plugin "Content" can have module "Content - Lastest Post". On the Install button, show title: Install Content plugin + 5 Content module
+</code></pre>
+        </div>
+    </div>
+</div>
+{% endblock %}

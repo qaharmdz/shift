@@ -7,6 +7,7 @@ $_['information']    = 'Information';
 
 $_['extension']      = 'Extensions';
 $_['installer']      = 'Installer';
+$_['manage']         = 'Manage';
 $_['module']         = 'Modules';
 $_['theme']          = 'Themes';
 $_['event']          = 'Events';
