@@ -1,0 +1,20 @@
+{% extends 'main.tpl.twig' %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right"></div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <div class="uk-card-panel uk-card-body">
+<pre><code>Themes: Specific extension that change the Shift appearance and templates.
+    - "Add New" button will open a modal of listed installed theme to create a new theme style
+</code></pre>
+        </div>
+    </div>
+</div>
+{% endblock %}

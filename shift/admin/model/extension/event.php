@@ -8,6 +8,7 @@ use Shift\System\Mvc;
 
 class Event extends Mvc\Model
 {
+    /*
     public function addEvent($code, $trigger, $action, $status = 1)
     {
         $this->db->query("INSERT INTO `" . DB_PREFIX . "event` SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = now()");
@@ -90,4 +91,5 @@ class Event extends Mvc\Model
 
         return $query->row['total'];
     }
+    */
 }
