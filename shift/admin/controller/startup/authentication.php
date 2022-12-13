@@ -98,7 +98,6 @@ class Authentication extends Mvc\Controller
         // Routes under extensions folder
         $extension = [
             'extension/dashboard',
-            'extension/extension',
             'extension/module',
             'extension/theme',
         ];
