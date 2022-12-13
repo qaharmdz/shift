@@ -23,6 +23,6 @@ $_['form'] = [
     // Cache
 
     // Maintenance
-    'display_error'     => 0,
+    'error_display'     => 0,
     'development'       => 0,
 ];
