@@ -24,7 +24,7 @@ class Position extends Mvc\Controller
         foreach ($blocks as $position) {
             $data[$position] = ''; // TODO: getModulesByPosition($position);
 
-            if ($position = 'sidebarleft') {
+            if ($position == 'sidebarleft') {
                 $data[$position] = $this->load->controller('block/sidebarleft');
             }
         }
