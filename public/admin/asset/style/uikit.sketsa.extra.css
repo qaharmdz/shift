@@ -28,6 +28,14 @@
     }
 }
 
+/* Navbar
+==================================== */
+.uk-navbar-left,
+.uk-navbar-right,
+[class*=uk-navbar-center] {
+    gap: 0;
+}
+
 /* Breadcrumbs
 ==================================== */
 .uk-breadcrumb > * > * {
