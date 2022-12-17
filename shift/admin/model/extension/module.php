@@ -66,7 +66,7 @@ class Module extends Mvc\Model
         }
 
         if ($type == 'delete') {
-            // $this->deleteUsers($items);
+            $this->deleteModules($items);
         }
 
         return $_items;
@@ -75,7 +75,7 @@ class Module extends Mvc\Model
     // Form CRUD
     // ================================================
 
-    public function getModule($module_id)
+    public function getModule($module_id): array
     {
         $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = ?i", [$module_id])->row;
 
@@ -86,9 +86,17 @@ class Module extends Mvc\Model
         return $result;
     }
 
-    public function getTotal()
+    public function getTotal(): int
     {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "module`")->row['total'];
+        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "module`")->row['total'];
+    }
+
+    public function deleteModules(array $modules): void
+    {
+        $this->db->delete(DB_PREFIX . 'module', ['module_id' => $modules]);
+        $this->db->delete(DB_PREFIX . 'module_meta', ['module_id' => $modules]);
+
+        $this->cache->delete('modules');
     }
 
     /*
@@ -108,24 +116,11 @@ class Module extends Mvc\Model
         $this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` LIKE '%." . (int)$module_id . "'");
     }
 
-    public function getModules()
-    {
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `codename`");
-
-        return $query->rows;
-    }
-
     public function getModulesByCode($code)
     {
         $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");
 
         return $query->rows;
-    }
-
-    public function deleteModulesByCode($code)
-    {
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` LIKE '" . $this->db->escape($code) . "' OR `code` LIKE '" . $this->db->escape($code . '.%') . "'");
     }
     */
 }

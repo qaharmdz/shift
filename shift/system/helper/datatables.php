@@ -61,10 +61,10 @@ class DataTables
                 $data['columns'][$key] = $column['data'];
 
                 $columnSearch = [
-                    'keyword'    => trim($column['search']['value']),
-                    'type'       => 'string',
-                    'mode'       => null,
-                    'negate' => false
+                    'keyword' => trim($column['search']['value']),
+                    'type'    => 'string',
+                    'mode'    => null,
+                    'negate'  => false
                 ];
 
                 if (in_array($columnSearch['keyword'], ['', $this->charNot, $this->charSeparator])) {
@@ -77,7 +77,7 @@ class DataTables
                 // Default mode default by type
                 if (!$columnSearch['mode']) {
                     switch ($columnSearch['type']) {
-                        case 'text':
+                        case 'text': // type string, mode match
                         case 'number':
                             $columnSearch['mode'] = 'match';
                             break;
