@@ -7,8 +7,22 @@
         </div>{# .uk-navbar-left #}
 
         <div class="uk-navbar-right">
+            <div class="uk-display-inline el-bookmarks">
+                <a class="uk-navbar-toggle" title="Account">
+                    <i class="bi bi-bookmarks bi-2x"></i>
+                    <span class="dropdown-caret"></span>
+                </a>
+                <div uk-dropdown="offset:0; pos:bottom-right;">
+                    <ul class="uk-nav uk-dropdown-nav uk-text-small">
+                        <li><a href="#">URL name</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">{{ app.language.get('header.bookmark_add') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+
             {% if sites|length > 1 %}
-                <div class="uk-display-inline">
+                <div class="uk-display-inline el-sites">
                     <a class="uk-navbar-toggle" title="Visit sites">
                         <i class="bi bi-display bi-2x"></i>
                         <span class="dropdown-caret"></span>
@@ -22,12 +36,12 @@
                     </div>
                 </div>
             {% else %}
-                <a class="uk-navbar-toggle uk-visible@s" href="{{ app.config.get('env.url_site') }}" target="_blank" title="{{ app.config.get('system.setting.site_name') }}">
+                <a class="uk-navbar-toggle uk-visible@s el-sites" href="{{ app.config.get('env.url_site') }}" target="_blank" title="{{ app.config.get('system.setting.site_name') }}">
                     <i class="bi bi-display bi-2x"></i>
                 </a>
             {% endif %}
 
-            <div class="uk-display-inline">
+            <div class="uk-display-inline el-account">
                 <a class="uk-navbar-toggle uk-margin-small-right" title="Account">
                     <i class="bi bi-person bi-2x"></i>
                     <span class="dropdown-caret"></span>
