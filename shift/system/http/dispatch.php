@@ -11,23 +11,23 @@ class Dispatch
 {
     protected string $route;
     protected string $routeMap;
+    protected string $basePath;
+    protected string $namespace;
     protected null|string $file = null;
     protected null|string $class = null;
     protected string $method = 'index';
 
     public function __construct(string $route)
     {
-        $parts     = $this->routeMap($route);
-        $namespace = 'Shift\\' . APP_FOLDER . '\\';
-        $method    = $this->method;
+        $parts  = $this->routeMap($route);
+        $method = $this->method;
 
         while ($parts) {
-            $file = PATH_APP . implode('/', $parts) . '.php';
+            $file = $this->basePath . implode('/', $parts) . '.php';
 
             if (is_file($file)) {
                 $this->file  = $file;
-                $this->class = strtolower($namespace . implode('\\', $parts));
-
+                $this->class = strtolower($this->namespace . implode('\\', $parts));
                 break;
             }
 
@@ -42,15 +42,37 @@ class Dispatch
     protected function routeMap(string $route): array
     {
         $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
-        $parts = array_map('strtolower', array_filter(explode('/', $route)));
+        $parts = $extParts = array_map('strtolower', array_filter(explode('/', $route)));
 
         $routeMap = strtr('controller/:folder/:file', [
             ':file'     => array_pop($parts),
             ':folder'   => implode('/', $parts),
         ]);
 
-        $this->route    = $route;
-        $this->routeMap = $routeMap;
+        $this->route     = $route;
+        $this->routeMap  = $routeMap;
+        $this->basePath  = PATH_APP;
+        $this->namespace = 'Shift\\' . APP_FOLDER . '\\';
+
+        if ($extParts[0] === 'extensions') {
+            list($ext, $extType, $extCodename) = $extParts;
+
+            if (count($extParts) === 3) {
+                $extParts[] = $extCodename;
+            }
+            $extFile = implode('/', array_slice($extParts, 3));
+
+            $routeMap = strtr('extensions/:type/:codename/:app_folder/controller/:file', [
+                ':type'       => $extType,
+                ':codename'   => $extCodename,
+                ':app_folder' => APP_FOLDER,
+                ':file'       => $extFile,
+            ]);
+
+            $this->routeMap  = $routeMap;
+            $this->basePath  = PATH_SHIFT;
+            $this->namespace = 'Shift\\';
+        }
 
         return explode('/', $this->routeMap);
     }
@@ -64,8 +86,10 @@ class Dispatch
     {
         return [
             'route'     => $this->route,
-            'route_map' => $this->routeMap,
+            'routemap'  => $this->routeMap,
+            'basepath'  => $this->basePath,
             'file'      => $this->file,
+            'namespace' => $this->namespace,
             'class'     => $this->class,
             'method'    => $this->method,
         ];

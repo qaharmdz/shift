@@ -65,6 +65,7 @@ class View
             $this->config['path_view'] . ($this->config['theme_active'] ? $this->config['theme_active'] . DS : ''),
             $this->config['path_view'] . ($this->config['theme_default'] ? $this->config['theme_default'] . DS : ''),
             $this->config['path_view'],
+            PATH_EXTENSIONS,
         ]);
     }
 

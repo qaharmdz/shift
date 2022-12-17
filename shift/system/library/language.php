@@ -48,6 +48,27 @@ class Language extends Core\Bags
             PATH_APP . 'language/' . $this->get('_param.active') . '/' . $path . '.php'
         ]);
 
+        if (str_starts_with($path, 'extensions/')) {
+            $parts = array_map('strtolower', array_filter(explode('/', $path)));
+            list($ext, $extType, $extCodename) = $parts;
+
+            if (count($parts) === 3) {
+                $parts[] = $extCodename;
+            }
+            $extFile = implode('/', array_slice($parts, 3));
+
+            $extPath = strtr('extensions/:type/:codename/:app_folder/language/', [
+                ':type'       => $extType,
+                ':codename'   => $extCodename,
+                ':app_folder' => APP_FOLDER,
+            ]);
+
+            $paths = array_unique(array_merge($paths, [
+                PATH_SHIFT . $extPath . $this->get('_param.default') . '/' . $extFile . '.php',
+                PATH_SHIFT . $extPath . $this->get('_param.active') . '/' . $extFile . '.php'
+            ]));
+        }
+
         $data = [];
         foreach ($paths as $path) {
             if (is_file($path)) {

@@ -40,6 +40,22 @@ class Loader
             $parts = array_filter(explode('/', $path));
             $class = strtolower('Shift\\' . APP_FOLDER . '\Model\\' . implode('\\', $parts));
 
+            if (str_starts_with($path, 'extensions/')) {
+                list($ext, $extType, $extCodename) = $parts;
+
+                if (count($parts) === 3) {
+                    $parts[] = $extCodename;
+                }
+                $extFile = implode('/', array_slice($parts, 3));
+
+                $class = strtr('Shift\Extensions\:type\:codename\:app_folder\model\:file', [
+                    ':type'       => $extType,
+                    ':codename'   => $extCodename,
+                    ':app_folder' => APP_FOLDER,
+                    ':file'       => $extFile,
+                ]);
+            }
+
             if (class_exists($class)) {
                 $proxy  = new Proxy();
                 $object = new $class();
@@ -86,8 +102,26 @@ class Loader
 
         $this->event->emit($eventName = 'view/' . $template . '::before', [$eventName, &$vars, &$output]);
 
+        $templateFile = $template;
+        if (str_starts_with($template, 'extensions/')) {
+            $parts = array_map('strtolower', array_filter(explode('/', $template)));
+            list($ext, $extType, $extCodename) = $parts;
+
+            if (count($parts) === 3) {
+                $parts[] = $extCodename;
+            }
+            $extFile = implode('/', array_slice($parts, 3));
+
+            $templateFile = strtr(':type/:codename/:app_folder/view/:file', [
+                ':type'       => $extType,
+                ':codename'   => $extCodename,
+                ':app_folder' => APP_FOLDER,
+                ':file'       => $extFile,
+            ]);
+        }
+
         if (is_null($output)) {
-            $output = $this->registry->get('view')->render($template, $vars);
+            $output = $this->registry->get('view')->render($templateFile, $vars);
         }
 
         $this->event->emit($eventName = 'view/' . $template . '::after', [$eventName, &$vars, &$output]);
