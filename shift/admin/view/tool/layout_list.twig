@@ -30,7 +30,9 @@
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
-                    <td data-index="0"></td>
+                    <td class="ukt-pt-1">
+                        <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
+                    </td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
                     </td>

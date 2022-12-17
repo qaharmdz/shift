@@ -25,6 +25,7 @@ $_['email']                 = 'Email';
 $_['media']                 = 'Media';
 $_['type']                  = 'Type';
 $_['group']                 = 'Group';
+$_['codename']              = 'Codename';
 $_['priority']              = 'Priority';
 $_['order']                 = 'Order';
 $_['sort_order']            = 'Sort Order';
