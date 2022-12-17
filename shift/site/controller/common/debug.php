@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Site\Controller\Common;
 
 use Shift\System\Mvc;
+use Shift\System\Http;
 use Shift\System\Helper\Arr;
 
 class Debug extends Mvc\Controller
@@ -33,6 +34,7 @@ class Debug extends Mvc\Controller
         // $mail = $this->mail->getInstance();
         // d($this->mail, $mail);
 
+        $this->testExtensions();
         // $this->testImage();
         // $this->testCache();
         // $this->testHelperArr();
@@ -49,6 +51,22 @@ class Debug extends Mvc\Controller
         // $this->log->write(['foo' => 'bar', 'baz' => [1, 2, 3]]);
 
         $this->response->setOutput('o_O');
+    }
+
+    private function testExtensions()
+    {
+
+        $dispatch = new Http\Dispatch('extensions/plugin/architect');
+
+        d(
+            $dispatch->getData(),
+        );
+
+        try {
+            $this->load->controller('its/not/exist');
+        } catch (\Exception $e) {
+            d($e->getMessage());
+        }
     }
 
     private function testImage()

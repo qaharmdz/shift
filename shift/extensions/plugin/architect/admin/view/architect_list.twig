@@ -1,0 +1,23 @@
+{% extends 'main.tpl.twig' %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <a href="{{ app.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body uk-card-panel uk-card-body">
+        ...
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+});
+</script>
+{% endblock %}

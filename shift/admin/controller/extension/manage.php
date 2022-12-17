@@ -24,10 +24,25 @@ class Manage extends Mvc\Controller
             $extensions[basename($ext)] = [];
 
             foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
-                $extensions[basename($ext)][] = [
-                    'codename' => basename($node),
-                    'path'     => $node,
-                ];
+                if (is_file($node . DS . 'meta.json')) {
+                    $codename = basename($node);
+                    $metaInfo = array_merge(
+                        [
+                            'name'        => ucwords($codename),
+                            'version'     => '1.0.0-b',
+                            'author'      => '',
+                            'link'        => '',
+                            'description' => '',
+                        ],
+                        json_decode(file_get_contents($node . DS . 'meta.json'), true)
+                    );
+
+                    $extensions[basename($ext)][] = [
+                        'codename' => basename($node),
+                        'meta'     => $metaInfo,
+                        'path'     => $node,
+                    ];
+                }
             }
         }
 
