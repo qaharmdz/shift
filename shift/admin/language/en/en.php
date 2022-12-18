@@ -38,7 +38,6 @@ $_['action']                = 'Action';
 
 $_['id']                    = 'ID';
 $_['all']                   = 'All';
-$_['list']                  = 'List';
 $_['default']               = 'Default';
 $_['add']                   = 'Add New';
 $_['edit']                  = 'Edit';

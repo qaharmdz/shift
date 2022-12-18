@@ -44,6 +44,9 @@
 .uk-breadcrumb > * > a {
     color: var(--uk-gray-blue);
 }
+.uk-breadcrumb > * > a:hover {
+    color: var(--uk-blue);
+}
 
 /* Card
 ==================================== */

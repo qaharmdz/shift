@@ -18,8 +18,7 @@ class Site extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('system')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('setting/site')],
+            [$this->language->get('page_title'), $this->router->url('setting/site')],
         ]);
 
         $data = [];
@@ -108,8 +107,7 @@ class Site extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('system')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('setting/site')],
+            [$this->language->get('page_title'), $this->router->url('setting/site')],
             [$this->language->get($mode), $this->router->url('setting/site/form')],
         ]);
 

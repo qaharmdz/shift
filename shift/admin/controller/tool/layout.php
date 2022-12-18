@@ -107,8 +107,7 @@ class Layout extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('tool')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('tool/layout')],
+            [$this->language->get('page_title'), $this->router->url('tool/layout')],
             [$this->language->get($mode), $this->router->url('tool/layout/form', 'layout_id=' . $layout_id)],
         ]);
 

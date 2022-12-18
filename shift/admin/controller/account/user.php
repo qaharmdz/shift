@@ -18,8 +18,7 @@ class User extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('account')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('account/user')],
+            [$this->language->get('page_title'), $this->router->url('account/user')],
         ]);
 
         $data = [];
@@ -110,8 +109,7 @@ class User extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('account')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('account/user')],
+            [$this->language->get('page_title'), $this->router->url('account/user')],
             [$this->language->get($mode), $this->router->url('account/user/form', 'user_id=' . $user_id)],
         ]);
 

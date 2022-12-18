@@ -18,8 +18,7 @@ class Plugin extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('extension')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('extension/plugin')],
+            [$this->language->get('page_title'), $this->router->url('extension/plugin')],
         ]);
 
         $data = [];

@@ -18,8 +18,7 @@ class UserGroup extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('account')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('account/usergroup')],
+            [$this->language->get('page_title'), $this->router->url('account/usergroup')],
         ]);
 
         $data = [];
@@ -107,8 +106,7 @@ class UserGroup extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('account')],
-            [$this->language->get('page_title')],
-            [$this->language->get('list'), $this->router->url('account/usergroup')],
+            [$this->language->get('page_title'), $this->router->url('account/usergroup')],
             [$this->language->get($mode), $this->router->url('account/usergroup/form', 'user_group_id=' . $user_group_id)],
         ]);
 
