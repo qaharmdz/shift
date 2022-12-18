@@ -28,22 +28,50 @@ INSERT INTO `{DB_PREFIX}event` (`event_id`, `codename`, `info`, `emitter`, `list
 DROP TABLE IF EXISTS `{DB_PREFIX}extension`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension` (
   `extension_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `type` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `codename` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `metainfo` int(11) DEFAULT NULL,
-  PRIMARY KEY (`extension_id`)
+  `type` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `name` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `version` varchar(16) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `author` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `install` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`extension_id`),
+  UNIQUE KEY `codename_type` (`codename`,`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}extension` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}extension` (`extension_id`, `type`, `codename`, `metainfo`) VALUES
-	(6, 'module', 'banner', NULL),
-	(7, 'module', 'carousel', NULL),
-	(14, 'module', 'account', NULL),
-	(19, 'module', 'slideshow', NULL),
-	(25, 'dashboard', 'online', NULL),
-	(27, 'module', 'html', NULL),
-	(32, 'theme', 'base', NULL);
+INSERT INTO `{DB_PREFIX}extension` (`extension_id`, `codename`, `type`, `name`, `version`, `author`, `link`, `install`) VALUES
+	(6, 'banner', 'module', '', '', '', '', 0),
+	(7, 'carousel', 'module', '', '', '', '', 0),
+	(14, 'account', 'module', '', '', '', '', 0),
+	(19, 'slideshow', 'module', '', '', '', '', 0),
+	(25, 'online', 'dashboard', '', '', '', '', 0),
+	(27, 'html', 'module', '', '', '', '', 0),
+	(32, 'base', 'theme', '', '', '', '', 1),
+	(33, 'architect', 'plugin', 'Architect', '1.0.0', 'Shift', 'https://example.com', 1);
 /*!40000 ALTER TABLE `{DB_PREFIX}extension` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}extension_data`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_data` (
+  `extension_data_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'plugin_id, module_id, theme_id',
+  `extension_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `setting` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`extension_data_id`) USING BTREE,
+  KEY `ext_id` (`extension_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_data` DISABLE KEYS */;
+INSERT INTO `{DB_PREFIX}extension_data` (`extension_data_id`, `extension_id`, `name`, `setting`, `status`, `created`, `updated`) VALUES
+	(1, 33, 'Architect', '[]', 0, NULL, NULL),
+	(2, 6, 'Home Page', '[]', 1, NULL, NULL),
+	(3, 7, 'Home Page', '[]', 0, NULL, NULL),
+	(4, 19, 'Home Page', '[]', 0, NULL, NULL),
+	(5, 7, 'Banner', '[]', 0, NULL, NULL);
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_data` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}information`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}information` (
@@ -165,19 +193,18 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_module` (
   `layout_module_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `layout_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `module_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `code_xyz` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `position` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`layout_module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}layout_module` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}layout_module` (`layout_module_id`, `layout_id`, `module_id`, `code_xyz`, `position`, `sort_order`) VALUES
-	(20, 5, 0, 'xyz', 'column_left', 2),
-	(66, 2, 0, 'slideshow.27', 'content_top', 1),
-	(67, 2, 0, 'carousel.29', 'content_top', 3),
-	(73, 3, 0, 'banner.30', 'column_left', 2),
-	(80, 6, 0, 'banner.31', 'column_right', 1);
+INSERT INTO `{DB_PREFIX}layout_module` (`layout_module_id`, `layout_id`, `module_id`, `position`, `sort_order`) VALUES
+	(20, 5, 0, 'column_left', 2),
+	(66, 2, 0, 'content_top', 1),
+	(67, 2, 0, 'content_top', 3),
+	(73, 3, 0, 'column_left', 2),
+	(80, 6, 0, 'column_right', 1);
 /*!40000 ALTER TABLE `{DB_PREFIX}layout_module` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}layout_route`;
@@ -185,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_route` (
   `layout_route_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `layout_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `site_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `route` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `route` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   PRIMARY KEY (`layout_route_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -205,30 +232,6 @@ INSERT INTO `{DB_PREFIX}layout_route` (`layout_route_id`, `layout_id`, `site_id`
 	(74, 6, 1, 'account/%');
 /*!40000 ALTER TABLE `{DB_PREFIX}layout_route` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `{DB_PREFIX}module`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}module` (
-  `module_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `extension_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `setting` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
-  `created` datetime DEFAULT NULL,
-  `updated` datetime DEFAULT NULL,
-  `publish` datetime DEFAULT NULL,
-  `unpublish` datetime DEFAULT NULL,
-  PRIMARY KEY (`module_id`),
-  KEY `ext_id` (`extension_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
-/*!40000 ALTER TABLE `{DB_PREFIX}module` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}module` (`module_id`, `extension_id`, `name`, `setting`, `status`, `created`, `updated`, `publish`, `unpublish`) VALUES
-	(27, 6, 'Home Page', '{"name":"Home Page","banner_id":"7","width":"1140","height":"380","status":"1"}', 1, NULL, NULL, '2022-12-09 13:59:52', '2022-12-09 13:59:55'),
-	(28, 7, 'Home Page', '{"name":"Home Page","product":["43","40","42","30"],"limit":"4","width":"200","height":"200","status":"1"}', 1, NULL, '2022-12-10 20:46:30', '2022-10-09 13:59:53', NULL),
-	(29, 19, 'Home Page', '{"name":"Home Page","banner_id":"8","width":"130","height":"100","status":"1"}', 0, '2022-12-09 07:20:14', '2022-12-11 11:42:41', '2022-11-09 13:59:53', '2022-12-09 13:59:57'),
-	(30, 7, 'Category', '{"name":"Category","banner_id":"6","width":"182","height":"182","status":"1"}', 1, NULL, NULL, '2022-09-09 13:59:54', '2022-12-09 13:59:58'),
-	(31, 7, 'Banner 1', '{"name":"Banner 1","banner_id":"6","width":"182","height":"182","status":"1"}', 1, NULL, '2022-12-10 20:53:43', '2022-12-09 13:59:54', NULL);
-/*!40000 ALTER TABLE `{DB_PREFIX}module` ENABLE KEYS */;
-
 DROP TABLE IF EXISTS `{DB_PREFIX}setting`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
   `setting_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -236,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
   `group` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `code` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `key` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `encoded` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`),
   KEY `group` (`site_id`,`group`) USING BTREE
@@ -244,15 +247,9 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES
-	(415, 0, 'dashboard', 'dashboard_online', 'dashboard_online_width', '12', 0),
-	(416, 0, 'dashboard', 'dashboard_online', 'dashboard_online_status', '1', 0),
-	(417, 0, 'dashboard', 'dashboard_online', 'dashboard_online_sort_order', '2', 0),
-	(950, 0, 'module', 'account', 'account_status', '0', 0),
-	(1272, 1, 'theme', 'base', 'status', '1', 0),
 	(1296, 0, 'system', 'alias_distinct', 'information/information', 'information_id', 0),
 	(1297, 0, 'system', 'alias_distinct', 'content/post', 'post_id', 0),
 	(1298, 0, 'system', 'alias_multi', 'content/category', 'category_id', 0),
-	(1879, 0, 'theme', 'base', 'status', '1', 0),
 	(2707, 1, 'system', 'site', 'name', 'Site Name 1', 0),
 	(2708, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
 	(2709, 1, 'system', 'site', 'email', 'admin@example.com', 0),
@@ -283,19 +280,19 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(2778, 0, 'system', 'setting', 'mail_smtp_port', '25', 0),
 	(2779, 0, 'system', 'setting', 'mail_smtp_timeout', '300', 0),
 	(2780, 0, 'system', 'setting', 'timezone', 'Asia/Jakarta', 0),
-	(2781, 0, 'system', 'site', 'name', 'Shift Site', 0),
-	(2782, 0, 'system', 'site', 'url_host', 'http://localhost/mdzGit/shift/public/', 0),
-	(2783, 0, 'system', 'site', 'email', 'admin@example.com', 0),
-	(2784, 0, 'system', 'site', 'meta_title', '{"1":"Cool Shift Site","2":"Cool Shift Site"}', 1),
-	(2785, 0, 'system', 'site', 'meta_description', '{"1":"","2":""}', 1),
-	(2786, 0, 'system', 'site', 'meta_keyword', '{"1":"","2":""}', 1),
-	(2787, 0, 'system', 'site', 'logo', 'image/logo.png', 0),
-	(2788, 0, 'system', 'site', 'favicon', 'image/favicon.png', 0),
-	(2789, 0, 'system', 'site', 'language', 'en', 0),
-	(2790, 0, 'system', 'site', 'layout_id', '1', 0),
-	(2791, 0, 'system', 'site', 'theme', 'base', 0),
-	(2792, 0, 'system', 'site', 'maintenance', '0', 0),
-	(2793, 0, 'system', 'site', 'timezone', 'Asia/Jakarta', 0);
+	(2794, 0, 'system', 'site', 'name', 'Shift Site', 0),
+	(2795, 0, 'system', 'site', 'url_host', 'https://localhost/mdzGit/shift/public/', 0),
+	(2796, 0, 'system', 'site', 'email', 'admin@example.com', 0),
+	(2797, 0, 'system', 'site', 'meta_title', '{"1":"Cool Shift Site","2":"Cool Shift Site"}', 1),
+	(2798, 0, 'system', 'site', 'meta_description', '{"1":"","2":""}', 1),
+	(2799, 0, 'system', 'site', 'meta_keyword', '{"1":"","2":""}', 1),
+	(2800, 0, 'system', 'site', 'logo', 'image/logo.png', 0),
+	(2801, 0, 'system', 'site', 'favicon', 'image/favicon.png', 0),
+	(2802, 0, 'system', 'site', 'language', 'en', 0),
+	(2803, 0, 'system', 'site', 'layout_id', '1', 0),
+	(2804, 0, 'system', 'site', 'theme', 'base', 0),
+	(2805, 0, 'system', 'site', 'maintenance', '0', 0),
+	(2806, 0, 'system', 'site', 'timezone', 'Asia/Jakarta', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}site`;
@@ -359,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `status`, `last_login`, `created`, `updated`) VALUES
-	(1, 1, 'admin@example.com', '$2y$10$ix6Di4wDIJp1TOxgFFcJ0O3l1xDZhenGAt/Z3Qt7VSDJl0B7FQ.66', 'admin', 'John', 'Doe', 1, '2022-12-15 15:57:07', '2022-01-30 16:17:31', '2022-03-20 12:17:31'),
+	(1, 1, 'admin@example.com', '$2y$10$UNMe2ToTfZEP3KpyLfUj/O2/1PLxquHygdUCJgG9cg3bfD53WgTJy', 'admin', 'John', 'Doe', 1, '2022-12-18 05:23:13', '2022-01-30 16:17:31', '2022-03-20 12:17:31'),
 	(3, 2, 'user@example.com1', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'username', 'User1', 'Doe1', 0, '2022-11-15 11:57:27', '2022-01-30 16:17:31', '2022-12-10 16:41:26'),
 	(4, 2, 'jane@example.com', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'janedoe', 'Jane', 'Doe', 0, '2022-10-07 20:57:27', '2022-01-30 16:17:31', '2022-12-10 20:14:48');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;

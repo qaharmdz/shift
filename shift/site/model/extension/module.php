@@ -8,14 +8,20 @@ use Shift\System\Mvc;
 
 class Module extends Mvc\Model
 {
-    public function getModule($module_id)
+    public function getModule(int $module_id): array
     {
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "module WHERE module_id = '" . (int)$module_id . "'");
+        $result = $this->db->get(
+            "SELECT *
+            FROM `" . DB_PREFIX . "extension_data` ed
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)
+            WHERE  e.`type` = 'module' AND ed.`extension_data_id` = ?i",
+            [$module_id]
+        )->row;
 
-        if ($query->row) {
-            return json_decode($query->row['setting'], true);
-        } else {
-            return array();
+        if (!empty($result['user_id'])) {
+            $result['setting'] = json_decode($result['setting'], true);
         }
+
+        return $result;
     }
 }

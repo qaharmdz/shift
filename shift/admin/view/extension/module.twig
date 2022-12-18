@@ -26,9 +26,7 @@
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
                     <th style="width:200px">{{ app.language.get('codename') }}</th>
                     <th style="min-width:200px">{{ app.language.get('name') }}</th>
-                    <th style="width:200px;">{{ app.language.get('publish') }}</th>
-                    <th style="width:200px;">{{ app.language.get('unpublish') }}</th>
-                    <th style="width:110px">{{ app.language.get('status') }}</th>
+                    <th style="width:120px">{{ app.language.get('status') }}</th>
                     <th style="width:100px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
@@ -44,18 +42,8 @@
                     <td data-filter='{"type":"string"}'>
                         <input type="text" value="" data-index="3" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"date"}'>
-                        <input type="input" value="" data-index="4" data-datepicker class="uk-input"> -
-                        <input type="input" value="" data-index="4" data-datepicker class="uk-input">
-                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
-                    </td>
-                    <td data-filter='{"type":"date"}'>
-                        <input type="input" value="" data-index="5" data-datepicker class="uk-input"> -
-                        <input type="input" value="" data-index="5" data-datepicker class="uk-input">
-                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
-                    </td>
                     <td data-filter='{"type":"number"}'>
-                        <select data-index="6" class="uk-select">
+                        <select data-index="4" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('enabled') }}</option>
                             <option value="0">{{ app.language.get('disabled') }}</option>
@@ -68,7 +56,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="8" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                    <td colspan="6" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
                 </tr>
             </tbody>
         </table>
@@ -78,7 +66,7 @@
 <script>
 $(document).ready(function() {
 let tableEl     = '#extensionModule-list',
-    columnsHide = [4, 5], // publish, unpublish
+    columnsHide = []
     dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('extension/module/list')|raw }}",
@@ -113,16 +101,6 @@ let tableEl     = '#extensionModule-list',
                 }
             },
             { data : 'name' },
-            { data : 'publish',
-                render : function(data, type, full) {
-                    return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
-                }
-            },
-            { data : 'unpublish',
-                render : function(data, type, full) {
-                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
-                }
-            },
             { data : 'status',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];

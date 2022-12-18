@@ -21,21 +21,22 @@ class Module extends Mvc\Model
     public function dtRecords(array $params)
     {
         $columnMap = [
-            'module_id'    => 'm.module_id',
-            'extension_id' => 'm.extension_id',
+            'module_id'    => 'ed.extension_data_id AS module_id',
+            'extension_id' => 'ed.extension_id',
             'codename'     => 'e.codename',
-            'name'         => 'm.name',
-            'status'       => 'm.status',
-            'publish'      => 'm.publish',
-            'unpublish'    => 'm.unpublish',
+            'name'         => 'ed.name',
+            'status'       => 'ed.status',
         ];
         $filterMap = $columnMap;
+
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $filterMap['module_id'] = 'ed.extension_data_id';
 
         $query = "SELECT " . implode(', ', $columnMap)
-            . " FROM `" . DB_PREFIX . "module` m
-                LEFT JOIN `" . DB_PREFIX . "extension` e ON (m.extension_id = e.extension_id)"
-            . ($dtResult['query']['where'] ? " WHERE " . $dtResult['query']['where'] : "")
+            . " FROM `" . DB_PREFIX . "extension_data` ed
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)"
+            . " WHERE e.`type` = 'module'"
+                 . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -75,9 +76,15 @@ class Module extends Mvc\Model
     // Form CRUD
     // ================================================
 
-    public function getModule($module_id): array
+    public function getModule(int $module_id): array
     {
-        $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "module` WHERE `module_id` = ?i", [$module_id])->row;
+        $result = $this->db->get(
+            "SELECT *
+            FROM `" . DB_PREFIX . "extension_data` ed
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)
+            WHERE  e.`type` = 'module' AND ed.`extension_data_id` = ?i",
+            [$module_id]
+        )->row;
 
         if (!empty($result['user_id'])) {
             $result['setting'] = json_decode($result['setting'], true);
@@ -88,13 +95,17 @@ class Module extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "module`")->row['total'];
+        return (int)$this->db->get(
+            "SELECT COUNT(*) AS total
+            FROM `" . DB_PREFIX . "extension_data` ed
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)
+            WHERE e.`type` = 'module'"
+        )->row['total'];
     }
 
     public function deleteModules(array $modules): void
     {
-        $this->db->delete(DB_PREFIX . 'module', ['module_id' => $modules]);
-        $this->db->delete(DB_PREFIX . 'module_meta', ['module_id' => $modules]);
+        $this->db->delete(DB_PREFIX . 'extension_data', ['extension_data_id' => $modules]);
 
         $this->cache->delete('modules');
     }
@@ -108,12 +119,6 @@ class Module extends Mvc\Model
     public function editModule($module_id, $data)
     {
         $this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($data['name']) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "' WHERE `module_id` = '" . (int)$module_id . "'");
-    }
-
-    public function deleteModule($module_id)
-    {
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` LIKE '%." . (int)$module_id . "'");
     }
 
     public function getModulesByCode($code)
