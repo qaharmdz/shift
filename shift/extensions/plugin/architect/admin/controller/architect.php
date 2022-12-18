@@ -18,8 +18,8 @@ class Architect extends Mvc\Controller
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('extension')],
-            [$this->language->get('plugin')],
-            [$this->language->get('page_title')],
+            [$this->language->get('plugin'), $this->router->url('extension/plugin')],
+            [$this->language->get('page_title'), $this->router->url('extensions/plugin/architect')],
         ]);
 
         $data = [];

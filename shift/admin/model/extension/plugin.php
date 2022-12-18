@@ -20,13 +20,14 @@ class Plugin extends Mvc\Model
             'extension_id' => 'e.extension_id',
             'codename'     => 'e.codename',
             'name'         => 'e.name',
-            'status'       => 'e.status',
+            'status'       => 'ed.status',
         ];
         $filterMap = $columnMap;
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
-            . " FROM `" . DB_PREFIX . "extension` e"
+            . " FROM `" . DB_PREFIX . "extension` e
+                LEFT JOIN `" . DB_PREFIX . "extension_data` ed ON (e.extension_id = ed.extension_id)"
             . " WHERE e.`type` = 'plugin'"
                 . ($dtResult['query']['where'] ? " AND  " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
