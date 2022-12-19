@@ -22,10 +22,22 @@ class SidebarLeft extends Mvc\Controller
         // Content
         $content = [];
 
-        if ($this->user->hasPermission('access', 'catalog/information')) {
+        if ($this->user->hasPermission('access', 'content/post')) {
             $content[] = $this->nav([
-                'name' => $this->language->get('sidebarleft.information'),
-                'url'  => $this->router->url('catalog/information'),
+                'name' => $this->language->get('sidebarleft.post'),
+                'url'  => $this->router->url('content/post'),
+            ]);
+        }
+        if ($this->user->hasPermission('access', 'content/category')) {
+            $content[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.category'),
+                'url'  => $this->router->url('content/category'),
+            ]);
+        }
+        if ($this->user->hasPermission('access', 'content/post')) {
+            $content[] = $this->nav([
+                'name' => $this->language->get('sidebarleft.post'),
+                'url'  => $this->router->url('content/post'),
             ]);
         }
 

@@ -3,7 +3,9 @@
 $_['dashboard']      = 'Dashboard';
 
 $_['content']        = 'Contents';
-$_['information']    = 'Information';
+$_['post']           = 'Posts';
+$_['category']       = 'Categories';
+$_['tags']           = 'tags';
 
 $_['extension']      = 'Extensions';
 $_['installer']      = 'Installer';

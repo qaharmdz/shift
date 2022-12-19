@@ -158,6 +158,9 @@ body {
 .main-navigation .uk-nav .uk-parent > a:hover::after {
     opacity: 1;
 }
+.main-navigation .uk-nav a .uk-icon > * {
+    color: #888;
+}
 .main-navigation .uk-nav-sub {
     padding: 0;
 }

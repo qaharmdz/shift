@@ -1,17 +1,17 @@
 <div class="main-navigation">
-    <ul class="uk-nav uk-nav-default uk-nav-parent-icon" uk-nav="multiple:true">
+    <ul class="uk-nav uk-nav-default" uk-nav="multiple:true">
         {% for menu in menus %}
             {% if not menu.subs %}
                 <li><a href="{{ menu.url }}">{{ menu.name }}</a></li>
             {% else %}
                 <li class="uk-parent">
-                    <a href="{{ menu.url }}">{{ menu.name }}</a>
-                    <ul class="uk-nav uk-nav-sub uk-nav-parent-icon">
+                    <a href="{{ menu.url }}">{{ menu.name }} <span uk-nav-parent-icon></span></a>
+                    <ul class="uk-nav-sub">
                         {% for item in menu.subs %}
                             {% if item.subs %}
                                 <li class="uk-parent">
-                                    <a href="{{ item.url }}">{{ item.name }}</a>
-                                    <ul>
+                                    <a href="{{ item.url }}">{{ item.name }} <span uk-nav-parent-icon></span></a>
+                                    <ul class="uk-nav-sub">
                                         {% for subitem in item.subs %}
                                             <li><a href="{{ subitem.url }}">{{ subitem.name }}</a></li>
                                         {% endfor %}
