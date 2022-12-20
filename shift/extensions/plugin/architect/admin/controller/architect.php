@@ -6,6 +6,12 @@ namespace Shift\Extensions\Plugin\Architect\Admin\Controller;
 
 use Shift\System\Mvc;
 
+/**
+ * This extension incorporates work covered by the following copyright:
+ * Architect - OpenCart extension prototyping tool; rapid extension development.
+ * Copyright (c) 2019 iSenseLabs <https://github.com/iSenseLabs/architect>
+ * Released under the GPL-3.0 or (at your option) any later version.
+ */
 class Architect extends Mvc\Controller
 {
     public function index()
