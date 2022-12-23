@@ -12,7 +12,7 @@
     </div>
 
     <div class="content-body uk-card-panel uk-card-body">
-        <table id="extensionModule-list" class="uk-table uk-table-striped uk-table-hover">
+        <table id="contentPost-list" class="uk-table uk-table-striped uk-table-hover">
             <thead>
                 <tr>
                     <th class="ukt-px-0" style="width:30px;">
@@ -24,8 +24,13 @@
                         </div>
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="width:200px">{{ app.language.get('codename') }}</th>
-                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('title') }}</th>
+                    <th style="width:200px">{{ app.language.get('category') }}</th>
+                    <th style="width:150px">{{ app.language.get('author') }}</th>
+                    <th style="width:200px;">{{ app.language.get('created') }}</th>
+                    <th style="width:200px;">{{ app.language.get('updated') }}</th>
+                    <th style="width:200px;">{{ app.language.get('publish') }}</th>
+                    <th style="width:200px;">{{ app.language.get('unpublish') }}</th>
                     <th style="width:120px">{{ app.language.get('status') }}</th>
                     <th style="width:100px;">{{ app.language.get('action') }}</th>
                 </tr>
@@ -44,6 +49,33 @@
                     </td>
                     <td data-filter='{"type":"number"}'>
                         <select data-index="4" class="uk-select">
+                            <option value=""></option>
+                            <option value="1">cat 1</option>
+                            <option value="0">cat 2</option>
+                        </select>
+                    </td>
+                    <td data-filter='{"type":"date"}'>
+                        <input type="input" value="" data-index="5" data-datepicker class="uk-input"> -
+                        <input type="input" value="" data-index="5" data-datepicker class="uk-input">
+                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
+                    </td>
+                    <td data-filter='{"type":"date"}'>
+                        <input type="input" value="" data-index="6" data-datepicker class="uk-input"> -
+                        <input type="input" value="" data-index="6" data-datepicker class="uk-input">
+                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
+                    </td>
+                    <td data-filter='{"type":"date"}'>
+                        <input type="input" value="" data-index="7" data-datepicker class="uk-input"> -
+                        <input type="input" value="" data-index="7" data-datepicker class="uk-input">
+                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
+                    </td>
+                    <td data-filter='{"type":"date"}'>
+                        <input type="input" value="" data-index="8" data-datepicker class="uk-input"> -
+                        <input type="input" value="" data-index="8" data-datepicker class="uk-input">
+                        <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-datepicker-clear> x</a>
+                    </td>
+                    <td data-filter='{"type":"number"}'>
+                        <select data-index="9" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('enabled') }}</option>
                             <option value="0">{{ app.language.get('disabled') }}</option>
@@ -65,11 +97,11 @@
 
 <script>
 $(document).ready(function() {
-let tableEl     = '#extensionModule-list',
-    columnsHide = [],
+let tableEl     = '#contentPost-list',
+    columnsHide = [5, 7, 8], // created, publish, unpublish
     dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
-            url  : "{{ app.router.url('extension/module/list')|raw }}",
+            url  : "{{ app.router.url('content/post/list')|raw }}",
             data : function(d, s) {
                 d.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 d = dtShiftColumnFilter(d);
@@ -78,7 +110,7 @@ let tableEl     = '#extensionModule-list',
         initComplete: function() {
             dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : [[2, 'asc']], // codename
+        sorting : [[6, 'desc']], // updated
         columnDefs : [
             { searchable : false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -95,12 +127,29 @@ let tableEl     = '#extensionModule-list',
                 }
             },
             { data : 'module_id' },
-            { data : 'codename',
+            { data : 'title' },
+            { data : 'category' },
+            { data : 'author' },
+            { data : 'created',
                 render : function(data, type, full) {
-                    return '<code>' + data + '</code>';
+                    return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
                 }
             },
-            { data : 'name' },
+            { data : 'updated',
+                render : function(data, type, full) {
+                    return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
+                }
+            },
+            { data : 'publish',
+                render : function(data, type, full) {
+                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
+                }
+            },
+            { data : 'unpublish',
+                render : function(data, type, full) {
+                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
+                }
+            },
             { data : 'status',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];
