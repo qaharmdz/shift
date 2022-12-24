@@ -66,7 +66,10 @@ class Post extends Mvc\Model
                         'status'  => $status,
                         'updated' => date('Y-m-d H:i:s'),
                     ],
-                    ['post_id' => (int)$item]
+                    [
+                        'post_id'  => (int)$item,
+                        'taxonomy' => 'post',
+                    ]
                 );
 
                 if ($this->db->affectedRows()) {

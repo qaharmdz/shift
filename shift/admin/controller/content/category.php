@@ -17,7 +17,7 @@ class Category extends Mvc\Controller
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('extension')],
+            [$this->language->get('content')],
             [$this->language->get('page_title'), $this->router->url('content/category')],
         ]);
 
@@ -45,8 +45,8 @@ class Category extends Mvc\Controller
         for ($i = 0; $i < $results->num_rows; $i++) {
             $items[$i] = $results->rows[$i];
 
-            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['post_id'];
-            $items[$i]['url_edit']    = $this->router->url('content/category', 'post_id=' . $items[$i]['post_id']);
+            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['category_id'];
+            $items[$i]['url_edit']    = $this->router->url('content/category', 'category_id=' . $items[$i]['category_id']);
         }
 
         $data = [

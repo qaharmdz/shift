@@ -62,7 +62,10 @@ class Category extends Mvc\Model
                         'status'  => $status,
                         'updated' => date('Y-m-d H:i:s'),
                     ],
-                    ['category_id' => (int)$item]
+                    [
+                        'term_id'  => (int)$item,
+                        'taxonomy' => 'post_category',
+                    ]
                 );
 
                 if ($this->db->affectedRows()) {
@@ -93,10 +96,10 @@ class Category extends Mvc\Model
 
     public function deleteCategories(array $categories): void
     {
-        $this->db->delete(DB_PREFIX . 'term', ['category_id' => $categories]);
-        $this->db->delete(DB_PREFIX . 'term_content', ['category_id' => $categories]);
-        $this->db->delete(DB_PREFIX . 'term_meta', ['category_id' => $categories]);
-        $this->db->delete(DB_PREFIX . 'term_relation', ['category_id' => $categories]);
+        $this->db->delete(DB_PREFIX . 'term', ['term_id' => $categories]);
+        $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $categories]);
+        $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $categories]);
+        $this->db->delete(DB_PREFIX . 'term_relation', ['term_id' => $categories]);
 
         $this->cache->delete('categories');
     }
