@@ -42,7 +42,7 @@ class Post extends Mvc\Model
                 LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (pc.post_id = p.post_id AND pc.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "route_alias` ra ON (ra.param = 'post_id' AND ra.value = p.post_id AND ra.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = p.term_id)
-                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = p.term_id)
+                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = p.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "user` u ON (u.user_id = p.user_id)"
             . " WHERE p.`taxonomy` = 'post'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
@@ -61,7 +61,7 @@ class Post extends Mvc\Model
 
             foreach ($items as $item) {
                 $this->db->set(
-                    DB_PREFIX . 'module',
+                    DB_PREFIX . 'post',
                     [
                         'status'  => $status,
                         'updated' => date('Y-m-d H:i:s'),
@@ -92,7 +92,7 @@ class Post extends Mvc\Model
 
     public function getTotal(): int
     {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "post`")->row['total'];
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "post` WHERE `taxonomy` = 'post'")->row['total'];
     }
 
     public function deletePosts(array $posts): void
