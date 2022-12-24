@@ -35,7 +35,7 @@ class Module extends Mvc\Model
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension_data` ed
                 LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)"
-            . " WHERE e.`type` = 'module'"
+            . " WHERE e.`type` = 'module' AND e.`install` = 1"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];

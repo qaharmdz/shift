@@ -28,7 +28,7 @@ class Plugin extends Mvc\Model
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension` e
                 LEFT JOIN `" . DB_PREFIX . "extension_data` ed ON (e.extension_id = ed.extension_id)"
-            . " WHERE e.`type` = 'plugin'"
+            . " WHERE e.`type` = 'plugin' AND e.`install` = 1"
                 . ($dtResult['query']['where'] ? " AND  " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
