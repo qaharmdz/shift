@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}event` (
   `info` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `emitter` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `listener` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `priority` int(3) NOT NULL DEFAULT '0',
+  `priority` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_data` (
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`extension_data_id`) USING BTREE,
-  KEY `ext_id` (`extension_id`) USING BTREE
+  KEY `extension_id` (`extension_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}extension_data` DISABLE KEYS */;
@@ -72,6 +72,20 @@ INSERT INTO `{DB_PREFIX}extension_data` (`extension_data_id`, `extension_id`, `n
 	(4, 19, 'Home Page', '[]', 0, NULL, NULL),
 	(5, 7, 'Banner', '[]', 0, NULL, NULL);
 /*!40000 ALTER TABLE `{DB_PREFIX}extension_data` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}extension_meta`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_meta` (
+  `extension_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `extension_data_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`extension_meta_id`) USING BTREE,
+  KEY `extension` (`extension_data_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_meta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_meta` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}information`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}information` (
@@ -151,10 +165,10 @@ DROP TABLE IF EXISTS `{DB_PREFIX}language`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}language` (
   `language_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `code` varchar(5) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `code` varchar(12) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `locale` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `flag` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`language_id`),
   KEY `name` (`name`)
@@ -194,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_module` (
   `layout_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `module_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `position` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `sort_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`layout_module_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -231,6 +245,84 @@ INSERT INTO `{DB_PREFIX}layout_route` (`layout_route_id`, `layout_id`, `site_id`
 	(73, 6, 0, 'account/%'),
 	(74, 6, 1, 'account/%');
 /*!40000 ALTER TABLE `{DB_PREFIX}layout_route` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}post`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post` (
+  `post_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `taxonomy` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'post',
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `term_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'default category',
+  `visibility` varchar(12) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'public',
+  `sort_order` int(11) unsigned NOT NULL DEFAULT '0',
+  `status` varchar(12) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'draft',
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  `publish` datetime DEFAULT NULL,
+  `unpublish` datetime DEFAULT NULL,
+  PRIMARY KEY (`post_id`) USING BTREE,
+  KEY `taxonomy_status_publish` (`taxonomy`,`status`,`publish`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}post` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}post` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}post_content`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_content` (
+  `post_id` bigint(20) unsigned NOT NULL,
+  `language_id` bigint(20) unsigned NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `excerpt` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `meta_title` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `meta_description` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `meta_keyword` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`post_id`,`language_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}post_content` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}post_content` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}post_meta`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_meta` (
+  `post_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) unsigned NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`post_meta_id`) USING BTREE,
+  KEY `post_id` (`post_id`) USING BTREE,
+  KEY `key` (`key`(191)) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}post_meta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}post_meta` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}route_alias`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}route_alias` (
+  `route_alias_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `site_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `language_id` bigint(20) unsigned NOT NULL DEFAULT '1',
+  `route` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `param` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `value` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `alias` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`route_alias_id`) USING BTREE,
+  UNIQUE KEY `alias` (`site_id`,`alias`) USING BTREE,
+  KEY `route_param_value` (`route`,`param`,`value`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}route_alias` DISABLE KEYS */;
+INSERT INTO `{DB_PREFIX}route_alias` (`route_alias_id`, `site_id`, `language_id`, `route`, `param`, `value`, `alias`) VALUES
+	(1, 0, 1, 'information/information', 'information_id', '3', 'privacy'),
+	(3, 0, 1, 'information/information', 'information_id', '5', 'terms'),
+	(5, 0, 1, 'information/information', 'information_id', '6', 'delivery'),
+	(6, 0, 1, 'information/contact', '', '', 'contact-us'),
+	(7, 0, 1, 'common/home', '', '', '/'),
+	(14, 0, 1, 'information/information', 'information_id', '4', 'about-us'),
+	(15, 0, 2, 'information/information', 'information_id', '3', 'privacy2'),
+	(16, 1, 2, 'information/information', 'information_id', '3', 'privacy2'),
+	(17, 1, 1, 'information/information', 'information_id', '3', 'privacy');
+/*!40000 ALTER TABLE `{DB_PREFIX}route_alias` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}setting`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
@@ -309,32 +401,64 @@ INSERT INTO `{DB_PREFIX}site` (`site_id`, `name`, `url_host`) VALUES
 	(1, 'Site Name 1', 'https://example.com/');
 /*!40000 ALTER TABLE `{DB_PREFIX}site` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `{DB_PREFIX}url_alias`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}url_alias` (
-  `url_alias_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `site_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `language_id` bigint(20) unsigned NOT NULL DEFAULT '1',
-  `route` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `param` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `value` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `alias` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`url_alias_id`) USING BTREE,
-  UNIQUE KEY `alias` (`site_id`,`alias`) USING BTREE,
-  KEY `route_param_value` (`route`,`param`,`value`) USING BTREE
+DROP TABLE IF EXISTS `{DB_PREFIX}term`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term` (
+  `term_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `taxonomy` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `status` varchar(12) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'draft' COMMENT 'publish, pending, draft, trash',
+  `sort_order` int(11) unsigned NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`term_id`) USING BTREE,
+  KEY `taxonomy` (`taxonomy`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-/*!40000 ALTER TABLE `{DB_PREFIX}url_alias` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}url_alias` (`url_alias_id`, `site_id`, `language_id`, `route`, `param`, `value`, `alias`) VALUES
-	(1, 0, 1, 'information/information', 'information_id', '3', 'privacy'),
-	(3, 0, 1, 'information/information', 'information_id', '5', 'terms'),
-	(5, 0, 1, 'information/information', 'information_id', '6', 'delivery'),
-	(6, 0, 1, 'information/contact', '', '', 'contact-us'),
-	(7, 0, 1, 'common/home', '', '', '/'),
-	(14, 0, 1, 'information/information', 'information_id', '4', 'about-us'),
-	(15, 0, 2, 'information/information', 'information_id', '3', 'privacy2'),
-	(16, 1, 2, 'information/information', 'information_id', '3', 'privacy2'),
-	(17, 1, 1, 'information/information', 'information_id', '3', 'privacy');
-/*!40000 ALTER TABLE `{DB_PREFIX}url_alias` ENABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}term` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}term` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}term_content`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_content` (
+  `term_id` bigint(20) unsigned NOT NULL,
+  `lang_code` varchar(12) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `meta_title` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `meta_description` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `meta_keyword` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`term_id`,`lang_code`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}term_content` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}term_content` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}term_meta`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_meta` (
+  `term_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`term_meta_id`) USING BTREE,
+  KEY `term_id` (`term_id`) USING BTREE,
+  KEY `key` (`key`(191)) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}term_meta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}term_meta` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}term_relation`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_relation` (
+  `term_relation_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `taxonomy` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `taxonomy_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`term_relation_id`) USING BTREE,
+  UNIQUE KEY `term_taxonomy_relation` (`term_id`,`taxonomy`,`taxonomy_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}term_relation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}term_relation` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}user`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
@@ -356,8 +480,8 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `status`, `last_login`, `created`, `updated`) VALUES
-	(1, 1, 'admin@example.com', '$2y$10$UNMe2ToTfZEP3KpyLfUj/O2/1PLxquHygdUCJgG9cg3bfD53WgTJy', 'admin', 'John', 'Doe', 1, '2022-12-18 05:23:13', '2022-01-30 16:17:31', '2022-03-20 12:17:31'),
-	(3, 2, 'user@example.com1', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'username', 'User1', 'Doe1', 0, '2022-11-15 11:57:27', '2022-01-30 16:17:31', '2022-12-10 16:41:26'),
+	(1, 1, 'admin@example.com', '$2y$10$/cEAy9wlsR78s2cdTjYll.9dIGZhreLVB.zVy.pEtjNrMjNMXseoq', 'admin', 'John', 'Doe', 1, '2022-12-23 22:29:09', '2022-01-30 16:17:31', '2022-03-20 12:17:31'),
+	(3, 2, 'user@example.com1', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'username', 'User1', 'Doe1', 0, '2022-11-15 11:57:27', '2022-01-30 16:17:31', '2022-12-23 23:07:19'),
 	(4, 2, 'jane@example.com', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'janedoe', 'Jane', 'Doe', 0, '2022-10-07 20:57:27', '2022-01-30 16:17:31', '2022-12-10 20:14:48');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;
 
@@ -394,8 +518,8 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_meta` (
 /*!40000 ALTER TABLE `{DB_PREFIX}user_meta` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user_meta` (`user_meta_id`, `user_id`, `key`, `value`, `encoded`) VALUES
 	(1, 1, 'twitter', '@example', 0),
-	(3, 3, 'bio', 'Awesome1', 0),
-	(9, 4, 'bio', '', 0);
+	(9, 4, 'bio', '', 0),
+	(11, 3, 'bio', 'Awesome1', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}user_meta` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

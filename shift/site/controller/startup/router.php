@@ -26,7 +26,7 @@ class Router extends Mvc\Controller
 
             foreach ($parts as $part) {
                 // TODO: check site_id, language_id
-                $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `alias` = ?s", [$part]);
+                $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `alias` = ?s", [$part]);
 
                 if (!$query->num_rows) {
                     $alias = [];
@@ -68,7 +68,7 @@ class Router extends Mvc\Controller
         foreach ($urlParams as $param => $value) {
             if (in_array($param, $paramList['distinct'])) {
                 $query = $this->db->get(
-                    "SELECT * FROM `" . DB_PREFIX . "url_alias` WHERE `language_id` = ?i AND `param` = ?s AND `value` = ?s",
+                    "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `param` = ?s AND `value` = ?s",
                     [$language_id, $param, $value]
                 );
 
@@ -84,7 +84,7 @@ class Router extends Mvc\Controller
 
         if (!$alias) {
             $query = $this->db->get(
-                "SELECT * FROM `" . DB_PREFIX . "url_alias` WHERE `language_id` = ?i AND `route` = ?s AND `param` = ''",
+                "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `route` = ?s AND `param` = ''",
                 [$language_id, $route]
             );
 
