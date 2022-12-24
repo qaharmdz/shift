@@ -70,17 +70,17 @@ class Language extends Core\Bags
         }
 
         $data = [];
-        foreach ($paths as $path) {
-            if (is_file($path)) {
+        foreach ($paths as $_path) {
+            if (is_file($_path)) {
                 $_ = [];
-                require $path;
+                require $_path;
 
                 $data = array_replace_recursive($data, $_);
             }
         }
 
         if (!$data) {
-            throw new \InvalidArgumentException(sprintf('Unable to locate Language file "%s".', $path));
+            throw new \InvalidArgumentException(sprintf('Unable to load language "%s".', $path));
         }
 
         $this->set('_param.loaded.' . $pathKey, $data);
