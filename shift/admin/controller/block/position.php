@@ -9,7 +9,7 @@ use Shift\System\Mvc;
 class Position extends Mvc\Controller
 {
     /**
-     * Get all block layout positions
+     * Get all layout modules
      *
      * @return array
      */
@@ -17,15 +17,22 @@ class Position extends Mvc\Controller
     {
         $this->event->emit($eventName = 'controller/block/position::blocks', [$eventName, &$blocks]);
 
-        $terms = ['alpha', 'topbar', 'sidebarleft', 'footer', 'omega'];
-        $blocks = array_unique(array_merge($terms, $blocks));
+        $terms   = ['alpha', 'topbar', 'sidebarleft', 'footer', 'omega'];
+        $blocks  = array_unique(array_merge($terms, $blocks));
+        $modules = [
+            'sidebarleft' => ['extensions/module/adminnav/navigation'],
+        ];
+
+        $this->event->emit($eventName = 'controller/block/position::modules', [$eventName, &$modules]);
 
         $data = [];
         foreach ($blocks as $position) {
-            $data[$position] = ''; // TODO: getModulesByPosition($position);
+            $data[$position] = '';
 
-            if ($position == 'sidebarleft') {
-                $data[$position] = $this->load->controller('block/sidebarleft');
+            if (!empty($modules[$position])) {
+                foreach ($modules[$position] as $module) {
+                    $data[$position] .= $this->load->controller($module);
+                }
             }
         }
 

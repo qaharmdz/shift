@@ -5,7 +5,7 @@ $_['dashboard']      = 'Dashboard';
 $_['content']        = 'Contents';
 $_['post']           = 'Posts';
 $_['category']       = 'Categories';
-$_['tags']           = 'tags';
+$_['tag']            = 'Tags';
 
 $_['extension']      = 'Extensions';
 $_['installer']      = 'Installer';
