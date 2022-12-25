@@ -17,7 +17,7 @@ class Post extends Mvc\Controller
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('extension')],
+            [$this->language->get('content')],
             [$this->language->get('page_title'), $this->router->url('content/post')],
         ]);
 
