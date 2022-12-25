@@ -8,69 +8,31 @@ use Shift\System\Mvc;
 
 class Language extends Mvc\Model
 {
-    public function getLanguages($data = array())
+    public function getLanguages(string $key = 'language_id'): array
     {
-        if ($data) {
-            $sql = "SELECT * FROM " . DB_PREFIX . "language";
+        $data = $this->cache->get('language');
 
-            $sort_data = array(
-                'name',
-                'code',
-                'sort_order'
-            );
+        if (!$data) {
+            $data = [];
 
-            if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-                $sql .= " ORDER BY " . $data['sort'];
-            } else {
-                $sql .= " ORDER BY sort_order, name";
+            $languages = $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` ORDER BY sort_order ASC, name ASC")->rows;
+
+            foreach ($languages as $result) {
+                $data[$result[$key]] = array(
+                    'language_id' => $result['language_id'],
+                    'name'        => $result['name'],
+                    'code'        => $result['code'],
+                    'locale'      => $result['locale'],
+                    'flag'        => $result['flag'],
+                    'sort_order'  => $result['sort_order'],
+                    'status'      => $result['status']
+                );
             }
 
-            if (isset($data['order']) && ($data['order'] == 'DESC')) {
-                $sql .= " DESC";
-            } else {
-                $sql .= " ASC";
-            }
-
-            if (isset($data['start']) || isset($data['limit'])) {
-                if ($data['start'] < 0) {
-                    $data['start'] = 0;
-                }
-
-                if ($data['limit'] < 1) {
-                    $data['limit'] = 20;
-                }
-
-                $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-            }
-
-            $query = $this->db->get($sql);
-
-            return $query->rows;
-        } else {
-            $language_data = $this->cache->get('language');
-
-            if (!$language_data) {
-                $language_data = array();
-
-                $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "language ORDER BY sort_order, name");
-
-                foreach ($query->rows as $result) {
-                    $language_data[$result['code']] = array(
-                        'language_id' => $result['language_id'],
-                        'name'        => $result['name'],
-                        'code'        => $result['code'],
-                        'locale'      => $result['locale'],
-                        'flag'        => $result['flag'],
-                        'sort_order'  => $result['sort_order'],
-                        'status'      => $result['status']
-                    );
-                }
-
-                $this->cache->set('language', $language_data);
-            }
-
-            return $language_data;
+            $this->cache->set('language', $data);
         }
+
+        return $data;
     }
 
     /*

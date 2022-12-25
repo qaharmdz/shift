@@ -8,24 +8,22 @@ use Shift\System\Mvc;
 
 class Language extends Mvc\Model
 {
-    public function getLanguage($language_id)
+    public function getLanguage(int $language_id): array
     {
-        $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
-
-        return $query->row;
+        return $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` WHERE language_id = ?i", [$language_id])->row;
     }
 
-    public function getLanguages()
+    public function getLanguages(string $key = 'language_id'): array
     {
-        $language_data = $this->cache->get('language');
+        $data = $this->cache->get('language');
 
-        if (!$language_data) {
-            $language_data = array();
+        if (!$data) {
+            $data = [];
 
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
+            $languages = $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` ORDER BY sort_order ASC, name ASC")->rows;
 
-            foreach ($query->rows as $result) {
-                $language_data[$result['code']] = array(
+            foreach ($languages as $result) {
+                $data[$result[$key]] = array(
                     'language_id' => $result['language_id'],
                     'name'        => $result['name'],
                     'code'        => $result['code'],
@@ -36,10 +34,10 @@ class Language extends Mvc\Model
                 );
             }
 
-            $this->cache->set('language', $language_data);
+            $this->cache->set('language', $data);
         }
 
-        return $language_data;
+        return $data;
     }
 
     public function getTotalLanguages(): int

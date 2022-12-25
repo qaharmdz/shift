@@ -66,7 +66,7 @@ class Configuration extends Mvc\Controller
         //=== Language
         $this->load->model('extension/language');
 
-        $languages = $this->model_extension_language->getLanguages();
+        $languages = $this->model_extension_language->getLanguages('code');
         $code = $this->config->get('system.site.language', 'en');
 
         if (count($languages) > 1) {
