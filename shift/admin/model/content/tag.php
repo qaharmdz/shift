@@ -21,24 +21,24 @@ class Tag extends Mvc\Model
     public function dtRecords(array $params)
     {
         $columnMap = [
-            'category_id' => 't.term_id AS tag_id',
-            'title'       => 'tc.title',
-            'alias'       => 'ra.alias',
-            'order'       => 't.sort_order AS `order`',
-            'status'      => 't.status',
-            'created'     => 't.created',
-            'updated'     => 't.updated'
+            'tag_id'  => 't.term_id AS tag_id',
+            'title'   => 'tc.title',
+            'alias'   => 'ra.alias',
+            'order'   => 't.sort_order AS `order`',
+            'status'  => 't.status',
+            'created' => 't.created',
+            'updated' => 't.updated'
         ];
         $filterMap = $columnMap;
-        $filterMap['category_id'] = 't.term_id';
-        $filterMap['title']       = 'CONCAT(tc.title, " ", ra.alias)';
+        $filterMap['tag_id'] = 't.term_id';
+        $filterMap['title']  = 'CONCAT(tc.title, " ", ra.alias)';
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
-                LEFT JOIN `" . DB_PREFIX . "route_alias` ra ON (ra.param = 'category_id' AND ra.value = t.term_id AND ra.language_id = " . $this->config->getInt('env.language_id') . ")"
+                LEFT JOIN `" . DB_PREFIX . "route_alias` ra ON (ra.param = 'tag_id' AND ra.value = t.term_id AND ra.language_id = " . $this->config->getInt('env.language_id') . ")"
             . " WHERE t.`taxonomy` = 'post_tag'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
@@ -83,7 +83,7 @@ class Tag extends Mvc\Model
     // Form CRUD
     // ================================================
 
-    public function getTag(int $category_id): array
+    public function getTag(int $tag_id): array
     {
         //
     }

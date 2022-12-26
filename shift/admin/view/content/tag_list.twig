@@ -86,7 +86,7 @@ let tableEl     = '#contentTag-list',
         initComplete: function() {
             dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : [[6, 'desc']], // updated
+        sorting : [[4, 'desc']], // updated
         columnDefs : [
             { searchable : false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -104,8 +104,6 @@ let tableEl     = '#contentTag-list',
             },
             { data : 'module_id' },
             { data : 'title' },
-            { data : 'category' },
-            { data : 'author' },
             { data : 'created',
                 render : function(data, type, full) {
                     return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
@@ -114,16 +112,6 @@ let tableEl     = '#contentTag-list',
             { data : 'updated',
                 render : function(data, type, full) {
                     return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
-                }
-            },
-            { data : 'publish',
-                render : function(data, type, full) {
-                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
-                }
-            },
-            { data : 'unpublish',
-                render : function(data, type, full) {
-                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
                 }
             },
             { data : 'status',

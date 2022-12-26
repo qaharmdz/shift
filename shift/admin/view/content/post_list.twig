@@ -120,13 +120,13 @@ let tableEl     = '#contentPost-list',
             },
         ],
         columns : [
-            { data : 'module_id',
+            { data : 'post_id',
                 className : 'noVisualColumn',
                 render : function(data, type, full) {
                     return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
                 }
             },
-            { data : 'module_id' },
+            { data : 'post_id' },
             { data : 'title' },
             { data : 'category' },
             { data : 'author' },
@@ -159,7 +159,7 @@ let tableEl     = '#contentPost-list',
                     return output;
                 }
             },
-            { data : 'module_id',
+            { data : 'post_id',
                 className : 'noVisualColumn ut-p-2',
                 render : function(data, type, full) {
                     output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
@@ -168,12 +168,12 @@ let tableEl     = '#contentPost-list',
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
                     if (!full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.post_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
                     }
                     if (full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.post_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
                     }
-                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.module_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.post_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
                     output += '        </ul>';
                     output += '    </div>';
                     output += '</div>';

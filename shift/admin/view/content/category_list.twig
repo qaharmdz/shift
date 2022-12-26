@@ -86,7 +86,7 @@ let tableEl     = '#contentCategory-list',
         initComplete: function() {
             dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : [[6, 'desc']], // updated
+        sorting : [[4, 'desc']], // updated
         columnDefs : [
             { searchable : false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -96,16 +96,14 @@ let tableEl     = '#contentCategory-list',
             },
         ],
         columns : [
-            { data : 'module_id',
+            { data : 'category_id',
                 className : 'noVisualColumn',
                 render : function(data, type, full) {
                     return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
                 }
             },
-            { data : 'module_id' },
+            { data : 'category_id' },
             { data : 'title' },
-            { data : 'category' },
-            { data : 'author' },
             { data : 'created',
                 render : function(data, type, full) {
                     return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
@@ -114,16 +112,6 @@ let tableEl     = '#contentCategory-list',
             { data : 'updated',
                 render : function(data, type, full) {
                     return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
-                }
-            },
-            { data : 'publish',
-                render : function(data, type, full) {
-                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
-                }
-            },
-            { data : 'unpublish',
-                render : function(data, type, full) {
-                    return data ? '<span title="' + data + ' UTC">' + formatDate(data) + '</span>' : '-';
                 }
             },
             { data : 'status',
@@ -135,7 +123,7 @@ let tableEl     = '#contentCategory-list',
                     return output;
                 }
             },
-            { data : 'module_id',
+            { data : 'category_id',
                 className : 'noVisualColumn ut-p-2',
                 render : function(data, type, full) {
                     output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
@@ -144,12 +132,12 @@ let tableEl     = '#contentCategory-list',
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
                     if (!full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.category_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
                     }
                     if (full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.category_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
                     }
-                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.module_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.category_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
                     output += '        </ul>';
                     output += '    </div>';
                     output += '</div>';
