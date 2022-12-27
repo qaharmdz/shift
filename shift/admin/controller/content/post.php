@@ -10,6 +10,7 @@ class Post extends Mvc\Controller
 {
     public function index()
     {
+        $this->load->language('content/general');
         $this->load->language('content/post');
 
         $this->document->setTitle($this->language->get('page_title'));

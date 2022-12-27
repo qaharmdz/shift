@@ -10,6 +10,7 @@ class Tag extends Mvc\Controller
 {
     public function index()
     {
+        $this->load->language('content/general');
         $this->load->language('content/tag');
 
         $this->document->setTitle($this->language->get('page_title'));

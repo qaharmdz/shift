@@ -10,6 +10,7 @@ class Category extends Mvc\Controller
 {
     public function index()
     {
+        $this->load->language('content/general');
         $this->load->language('content/category');
 
         $this->document->setTitle($this->language->get('page_title'));
