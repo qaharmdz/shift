@@ -135,7 +135,7 @@ body {
 }
 
 .main-navigation .uk-nav {
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     width: var(--sidebar-width);
     padding: 10px 0;
 }
@@ -166,7 +166,7 @@ body {
 }
 .main-navigation .uk-nav-sub a,
 .main-navigation .uk-nav-sub .uk-nav-header {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     padding: 4px 8px 4px 24px;
 }
 .main-navigation .uk-nav-sub .uk-nav-header {

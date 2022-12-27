@@ -84,9 +84,67 @@ class Category extends Mvc\Model
     // Form CRUD
     // ================================================
 
-    public function getCategory(int $category_id): array
+    public function addCategory(array $data)
     {
         //
+    }
+
+    public function editCategory(int $category_id, array $data)
+    {
+        //
+    }
+
+    public function getCategory(int $category_id): array
+    {
+        $this->load->config('content/category');
+        $this->load->model('setting/site');
+        $this->load->model('extension/language');
+
+        $default   = $this->config->getArray('content.category.form');
+        $sites     = $this->model_setting_site->getSites();
+        $languages = $this->model_extension_language->getLanguages();
+
+        foreach ($languages as $language) {
+            $default['content'][$language['language_id']] = $default['content'][0];
+        }
+        foreach ($sites as $site) {
+            foreach ($languages as $language) {
+                $default['alias'][$site['site_id']][$language['language_id']]   = '';
+            }
+        }
+
+        $data = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "term` t WHERE t.term_id = ?i AND t.taxonomy = ?s",
+            [$category_id, 'post_category']
+        )->row;
+
+        if (!empty($data['term_id'])) {
+            $data['category_id'] = $data['term_id'];
+
+            // Multi-language content
+            $data['content'] = $this->db->query("SELECT * FROM `" . DB_PREFIX . "term_content` tm WHERE tm.term_id = ?i ORDER BY tm.language_id ASC", [$category_id])->row;
+            foreach ($languages as $language) {
+                $data['content'][$content['language_id']] = array_replace($default['content'][0], $content);
+            }
+
+            // Multi-language alias
+            $aliases = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `route` = ?s AND `param` = ?s AND `value` = ?i",
+                ['content/category', 'category_id', $category_id]
+            )->rows;
+            foreach ($aliases as $alias) {
+                $data['alias'][$alias['site_id']][$alias['language_id']] = $alias['alias'];
+            }
+
+            // Metas
+            $data['meta'] = [];
+            $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "term_meta` tm WHERE tm.term_id = ?i", [$category_id]);
+            foreach ($metas as $meta) {
+                $data['meta'][$meta['key']] = $meta['encoded'] ? json_encode($meta['value'], true) : $meta['value'];
+            }
+        }
+
+        return array_replace($default, $data);
     }
 
     public function getTotal(): int

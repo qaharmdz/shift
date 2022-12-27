@@ -79,7 +79,9 @@
     }
 }
 
-
+.uk-checkbox, .uk-input, .uk-radio, .uk-select, .uk-textarea {
+    font-size: .94rem;
+}
 .uk-input, .uk-select, .uk-textarea {
     border: 1px solid #d4d4d4;
 }
@@ -93,6 +95,9 @@
 }
 .uk-select:not([multiple]):not([size]) {
     line-height: 32px;
+}
+.uk-form-controls .uk-button {
+    font-size: .94rem;
 }
 .uk-button-group.uk-button-radio input:first-child + .uk-button {
     border-radius: 3px 0 0 3px;
