@@ -35,7 +35,7 @@
                                 {% for language in languages %}
                                     <li class="{{ loop.first ? 'uk-active' : '' }}">
                                         <a href="#tab-lang-{{ language.language_id }}">
-                                            <img src="{{ app.config.get('env.url_site') }}media/flag/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}">
+                                            <img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}">
                                             {{ language.name }}
                                         </a>
                                     </li>
@@ -47,8 +47,8 @@
                             {% for language in languages %}
                                 <div id="tab-lang-{{ language.language_id }}" class="uk-animation-fade">
                                     <fieldset class="uk-fieldset">
-                                        {{ forms.input({'label':'name', 'name':'content[' ~ language.language_id ~ '][title]', 'value':setting.content[language.language_id]['title'], 'important':true}) }}
-                                        {# {{ forms.input({'label':'url_alias', 'name':'alias[' ~ language.language_id ~ ']', 'value':setting.alias[language.language_id] ?? '', 'class':'uk-form-blank uk-text-italic'}) }} #}
+                                        {{ forms.input({'label':'title', 'name':'content[' ~ language.language_id ~ '][title]', 'value':setting.content[language.language_id]['title'], 'important':true}) }}
+                                        {{ forms.input({'label':'url_alias', 'name':'alias[' ~ language.language_id ~ ']', 'value':setting.alias[language.language_id] ?? '', 'class':'uk-form-blank uk-text-italic'}) }}
                                         {{ forms.textarea({'label':'content', 'name':'content[' ~ language.language_id ~ '][content]', 'value':setting.content[language.language_id]['content'], 'class':'js-editor'}) }}
                                     </fieldset>
 
@@ -63,12 +63,76 @@
                             {% endfor %}
                         </div>
                     </div>
+
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('taxonomy') }}</legend>
+
+                            {{ forms.select({'label':'parent', 'name':'parent_id', 'options':categories, 'selected':setting.parent_id, 'opt_text': 'title_tree', 'opt_value': 'item_id'}) }}
+                        </fieldset>
+
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('posts') }}</legend>
+
+                            {{ forms.input({'type':'number', 'label':'post_per_page', 'name':'meta[post_per_page]', 'value':setting.meta.post_per_page, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead', 'name':'meta[post_lead]', 'value':setting.meta.post_lead, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'meta[post_lead_excerpt]', 'value':setting.meta.post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'after':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column', 'name':'meta[post_column]', 'value':setting.meta.post_column, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'meta[post_column_excerpt]', 'value':setting.meta.post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'after':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.select({'label':'post_order', 'name':'meta[post_order]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('global'),'value': 'global'},
+                                {'text': app.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
+                                {'text': app.language.get('pc.title~desc'), 'value': 'pc.title~desc'},
+                                {'text': app.language.get('p.publish~asc'),'value': 'p.publish~asc'},
+                                {'text': app.language.get('p.publish~desc'), 'value': 'p.publish~desc'},
+                                {'text': app.language.get('p.updated~asc'),'value': 'p.updated~asc'},
+                                {'text': app.language.get('p.updated~desc'), 'value': 'p.updated~desc'},
+                                {'text': app.language.get('p.sort_order~asc'),'value': 'p.sort_order~asc'},
+                                {'text': app.language.get('p.sort_order~asc'), 'value': 'p.sort_order~desc'},
+                            ]}) }}
+                        </fieldset>
+                    </div>
+
+                    <div class="uk-card-panel uk-card-body uk-form-stacked">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('design') }}</legend>
+
+                            {{ forms.textarea({'label':'custom_code', 'name':'meta[custom_code]', 'value':setting.meta.custom_code, 'rows':10}) }}
+                        </fieldset>
+                    </div>
                 </div>
 
                 <div class="uk-width-content-sidebar@l">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
-                        2
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+
+                            {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
+                                {'text': app.language.get('enabled'),  'value': 1},
+                                {'text': app.language.get('disabled'), 'value': 0}
+                            ]}) }}
+                            {{ forms.select({'label':'robots', 'name':'meta[robots]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('global'),           'value': 'global'},
+                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+
+                            ]}) }}
+                            {{ forms.input({'type':'number', 'label':'sort_order', 'name':'sort_order', 'value':setting.sort_order, 'class':'uk-width-75@m'}) }}
+                        </fieldset>
                     </div>
+
+                    {% if mode == 'edit' %}
+                        <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                            <fieldset class="uk-fieldset">
+                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+
+                                {{ forms.infoDate({'label':'created','datetime':setting.created}) }}
+                                {{ forms.infoDate({'label':'updated','datetime':setting.updated}) }}
+                            </fieldset>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </form>

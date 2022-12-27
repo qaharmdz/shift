@@ -97,21 +97,22 @@ class Category extends Mvc\Model
     public function getCategory(int $category_id): array
     {
         $this->load->config('content/category');
-        $this->load->model('setting/site');
+        // $this->load->model('setting/site');
         $this->load->model('extension/language');
 
         $default   = $this->config->getArray('content.category.form');
-        $sites     = $this->model_setting_site->getSites();
+        // $sites     = $this->model_setting_site->getSites();
         $languages = $this->model_extension_language->getLanguages();
 
         foreach ($languages as $language) {
             $default['content'][$language['language_id']] = $default['content'][0];
+            $default['alias'][$language['language_id']]   = '';
         }
-        foreach ($sites as $site) {
-            foreach ($languages as $language) {
-                $default['alias'][$site['site_id']][$language['language_id']]   = '';
-            }
-        }
+        // foreach ($sites as $site) {
+        //     foreach ($languages as $language) {
+        //         $default['alias'][$site['site_id']][$language['language_id']] = '';
+        //     }
+        // }
 
         $data = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "term` t WHERE t.term_id = ?i AND t.taxonomy = ?s",
@@ -133,7 +134,8 @@ class Category extends Mvc\Model
                 ['content/category', 'category_id', $category_id]
             )->rows;
             foreach ($aliases as $alias) {
-                $data['alias'][$alias['site_id']][$alias['language_id']] = $alias['alias'];
+                $data['alias'][$alias['language_id']] = $alias['alias'];
+                // $data['alias'][$alias['site_id']][$alias['language_id']] = $alias['alias'];
             }
 
             // Metas

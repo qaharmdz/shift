@@ -99,10 +99,10 @@ class Category extends Mvc\Controller
         $category_id = $this->request->getInt('query.category_id', 0);
         $mode = !$category_id ? 'add' : 'edit';
 
-        $this->load->config('content/category');
         $this->load->model('setting/site');
         $this->load->model('content/category');
         $this->load->model('extension/language');
+        $this->load->language('content/general');
         $this->load->language('content/category');
 
         $this->document->setTitle($this->language->get('page_title'));
@@ -119,10 +119,12 @@ class Category extends Mvc\Controller
         $data['category_id'] = $category_id;
         $data['sites']       = $this->model_setting_site->getSites();
         $data['languages']   = $this->model_extension_language->getLanguages();
-        $data['setting']     = array_replace_recursive(
-            $this->model_content_category->getCategory($category_id),
-            $this->request->get('post', [])
-        );
+        $data['setting']     = $this->model_content_category->getCategory($category_id);
+
+        $data['categories'] = [
+            ['item_id' => 0, 'title_tree' => $this->language->get('-none-')],
+            // ...Tool\Taxonomy::buildTree($this->model_content_category->getCategories(), $category_id)
+        ];
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
