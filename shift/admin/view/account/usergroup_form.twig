@@ -32,7 +32,7 @@
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">
                         <fieldset class="uk-fieldset">
                             {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'required': true}) }}
-                            {{ forms.checkboxPanel({'label':'access', 'name':'permission[access][]', lists:permissions, checked:setting.permission.access, extraHtml:'
+                            {{ forms.checkboxPanel({'label':'access', 'name':'permission[access][]', lists:permissions, checked:setting.permission.access, htmlEnd:'
 <div class="uk-text-small uk-text-right ukt-mt-2 ukt-mb-2">
     <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
     <span class="ukt-mx-2">|</span>
@@ -40,7 +40,7 @@
 </div>
                             '}) }}
 
-                            {{ forms.checkboxPanel({'label':'modify', 'name':'permission[modify][]', lists:permissions, checked:setting.permission.modify, extraHtml:'
+                            {{ forms.checkboxPanel({'label':'modify', 'name':'permission[modify][]', lists:permissions, checked:setting.permission.modify, htmlEnd:'
 <div class="uk-text-small uk-text-right ukt-mt-2">
     <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
     <span class="ukt-mx-2">|</span>

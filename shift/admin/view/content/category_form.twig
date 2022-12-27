@@ -76,9 +76,9 @@
 
                             {{ forms.input({'type':'number', 'label':'post_per_page', 'name':'meta[post_per_page]', 'value':setting.meta.post_per_page, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
                             {{ forms.input({'type':'number', 'label':'post_lead', 'name':'meta[post_lead]', 'value':setting.meta.post_lead, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'meta[post_lead_excerpt]', 'value':setting.meta.post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'after':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'meta[post_lead_excerpt]', 'value':setting.meta.post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
                             {{ forms.input({'type':'number', 'label':'post_column', 'name':'meta[post_column]', 'value':setting.meta.post_column, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'meta[post_column_excerpt]', 'value':setting.meta.post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'after':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'meta[post_column_excerpt]', 'value':setting.meta.post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
                             {{ forms.select({'label':'post_order', 'name':'meta[post_order]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
                                 {'text': app.language.get('global'),'value': 'global'},
                                 {'text': app.language.get('pc.title~asc'), 'value': 'pc.title~asc'},

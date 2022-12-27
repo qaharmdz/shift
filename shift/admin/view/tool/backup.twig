@@ -17,7 +17,7 @@
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">{{ app.language.get('backup') }}</legend>
 
-                {{ forms.checkboxPanel({'label':'db_table', 'name':'export[]', lists:dbTables, checked:dbTables, extraHtml:'
+                {{ forms.checkboxPanel({'label':'db_table', 'name':'export[]', lists:dbTables, checked:dbTables, htmlEnd:'
 <div class="uk-child-width-1-2 ukt-mt-3" uk-grid>
     <div class="uk-text-small">
         <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
