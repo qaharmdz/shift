@@ -129,7 +129,7 @@ class User extends Mvc\Model
         ];
 
         if ($data['password']) {
-            $data['password'] = $this->secure->passwordHash($data['password']);
+            $updates['password'] = $this->secure->passwordHash($data['password']);
         }
 
         $this->db->set(DB_PREFIX . 'user', $updates, ['user_id' => $user_id]);
