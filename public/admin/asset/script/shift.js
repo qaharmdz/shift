@@ -64,12 +64,17 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
         if (data.message) {
             output += '<div class="uk-text-base-color uk-text-break uk-margin-small-top">' + data.message + '</div>';
         }
-        output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
+        if (shift.env.development === 1) {
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>'; // Ajax URL
+        }
 
         $.fn.shift.goNotify('danger', output);
     } else if ('response' in data) {
         let output = '<div>' + data.response + '</div>';
-            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
+
+        if (shift.env.development === 1) {
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>'; // Ajax URL
+        }
 
         $.fn.shift.goNotify('danger', output);
     } else {

@@ -82,7 +82,9 @@
 .uk-checkbox, .uk-input, .uk-radio, .uk-select, .uk-textarea {
     font-size: .94rem;
 }
-.uk-input, .uk-select, .uk-textarea {
+.uk-input:not(.uk-form-blank),
+.uk-select:not(.uk-form-blank),
+.uk-textarea:not(.uk-form-blank) {
     border: 1px solid #d4d4d4;
 }
 .uk-checkbox, .uk-radio {
@@ -253,6 +255,12 @@ th.uk-text-break {
 }
 .uk-modal-footer .uk-button + .uk-button {
     margin-left: 5px;
+}
+
+/* Notification
+==================================== */
+.uk-notification .uk-text-meta {
+    font-size: .75rem;
 }
 
 /* Label
