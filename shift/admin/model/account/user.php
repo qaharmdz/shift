@@ -100,7 +100,7 @@ class User extends Mvc\Model
             ]
         );
 
-        $user_id = $this->db->insertId();
+        $user_id = (int)$this->db->insertId();
 
         // User meta
         $params = [];

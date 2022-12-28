@@ -174,7 +174,7 @@ class Site extends Mvc\Controller
         }
 
         if (-1 == $site_id) {
-            $data['new_id'] = $site_id = $this->model_setting_site->addSite($post);
+            $data['new_id'] = $this->model_setting_site->addSite($post);
         } else {
             $this->model_setting_site->editSite($site_id, $post);
         }

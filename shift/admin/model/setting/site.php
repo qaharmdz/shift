@@ -60,7 +60,7 @@ class Site extends Mvc\Model
             ]
         );
 
-        $site_id = $this->db->insertId();
+        $site_id = (int)$this->db->insertId();
 
         // Layout Route
         $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE site_id = 0");

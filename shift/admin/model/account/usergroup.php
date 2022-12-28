@@ -86,7 +86,7 @@ class UserGroup extends Mvc\Model
 
         $this->cache->delete('usergroups');
 
-        return $this->db->insertId();
+        return (int)$this->db->insertId();
     }
 
     public function editUserGroup(int $user_group_id, array $data)

@@ -202,7 +202,7 @@ class UserGroup extends Mvc\Controller
         }
 
         if (!$user_group_id) {
-            $data['new_id'] = $user_group_id = $this->model_account_usergroup->addUserGroup($post);
+            $data['new_id'] = $this->model_account_usergroup->addUserGroup($post);
         } else {
             $this->model_account_usergroup->editUserGroup($user_group_id, $post);
         }
