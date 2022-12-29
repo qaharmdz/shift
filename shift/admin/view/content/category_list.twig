@@ -169,6 +169,7 @@ let tableEl     = '#contentCategory-list',
                 }
             },
             onSuccess : function() {
+                $('[data-dtcolumnfilter] input[type=checkbox]').prop('checked', false);
                 dtTable.clearPipeline().draw();
             }
         });

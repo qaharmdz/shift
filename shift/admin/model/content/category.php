@@ -24,7 +24,6 @@ class Category extends Mvc\Model
             'category_id' => 't.term_id AS category_id',
             'parent_id'   => 't.parent_id',
             'title'       => 'tc.title',
-            'alias'       => 'ra.alias',
             'order'       => 't.sort_order AS `order`',
             'status'      => 't.status',
             'created'     => 't.created',
@@ -32,14 +31,12 @@ class Category extends Mvc\Model
         ];
         $filterMap = $columnMap;
         $filterMap['category_id'] = 't.term_id';
-        $filterMap['title']       = 'CONCAT(tc.title, " ", ra.alias)';
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
-                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
-                LEFT JOIN `" . DB_PREFIX . "route_alias` ra ON (ra.param = 'category_id' AND ra.value = t.term_id AND ra.language_id = " . $this->config->getInt('env.language_id') . ")"
+                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")"
             . " WHERE t.`taxonomy` = 'post_category'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']

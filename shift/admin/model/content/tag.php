@@ -23,7 +23,6 @@ class Tag extends Mvc\Model
         $columnMap = [
             'tag_id'  => 't.term_id AS tag_id',
             'title'   => 'tc.title',
-            'alias'   => 'ra.alias',
             'order'   => 't.sort_order AS `order`',
             'status'  => 't.status',
             'created' => 't.created',
@@ -37,8 +36,7 @@ class Tag extends Mvc\Model
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
-                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
-                LEFT JOIN `" . DB_PREFIX . "route_alias` ra ON (ra.param = 'tag_id' AND ra.value = t.term_id AND ra.language_id = " . $this->config->getInt('env.language_id') . ")"
+                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")"
             . " WHERE t.`taxonomy` = 'post_tag'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
