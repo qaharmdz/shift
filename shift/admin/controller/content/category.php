@@ -186,9 +186,37 @@ class Category extends Mvc\Controller
     {
         $errors = [];
 
-        foreach ($post['content'] as $lang_id => $content) {
+        foreach ($post['content'] as $language_id => $content) {
             if (!$this->assert->lengthBetween(2, 250)->check($content['title'])) {
-                $errors['items']['content[' . $lang_id . '][title]'] = sprintf($this->language->get('error_length_between'), 2, 250);
+                $errors['items']['content[' . $language_id . '][title]'] = sprintf($this->language->get('error_length_between'), 2, 250);
+            }
+        }
+
+        foreach ($post['alias'] as $language_id => $alias) {
+            if (count(array_keys($post['alias'], $alias)) > 1) {
+                $errors['items']['alias[' . $language_id . ']'] = $this->language->get('error_alias_unique');
+            }
+
+            if (empty($errors['items']['alias[' . $language_id . ']'])) {
+                $aliases = $this->db->get(
+                    "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` != ?i AND `alias` = ?s",
+                    [$language_id, $alias]
+                )->rows;
+
+                $this->log->write($aliases);
+                foreach ($aliases as $alias) {
+                    if (
+                        !$post['category_id']
+                        || (
+                            $alias['route'] == 'content/category'
+                            && $alias['param'] == 'category_id'
+                            && $alias['value'] != $post['category_id']
+                        )
+                    ) {
+                        $errors['items']['alias[' . $language_id . ']'] = $this->language->get('error_alias_exist');
+                        break;
+                    }
+                }
             }
         }
 

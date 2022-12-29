@@ -219,7 +219,6 @@ class Category extends Mvc\Model
             )->rows;
             foreach ($aliases as $alias) {
                 $data['alias'][$alias['language_id']] = $alias['alias'];
-                // $data['alias'][$alias['site_id']][$alias['language_id']] = $alias['alias'];
             }
 
             // Metas
