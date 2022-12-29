@@ -86,12 +86,101 @@ class Category extends Mvc\Model
 
     public function addCategory(array $data)
     {
-        //
+        $this->db->add(
+            DB_PREFIX . 'term',
+            [
+                'parent_id'  => $data['parent_id'],
+                'taxonomy'   => 'post_category',
+                'sort_order' => $data['sort_order'],
+                'status'     => (int)$data['status'],
+                'created'    => date('Y-m-d H:i:s'),
+                'updated'    => date('Y-m-d H:i:s'),
+            ]
+        );
+
+        $term_id = (int)$this->db->insertId();
+
+        $this->insertData($term_id, $data);
+
+        return $term_id;
     }
 
     public function editCategory(int $category_id, array $data)
     {
-        //
+        // $this->db->set(
+        //     DB_PREFIX . 'term',
+        //     [
+        //         'parent_id'  => $data['parent_id'],
+        //         'taxonomy'   => 'post_category',
+        //         'sort_order' => $data['sort_order'],
+        //         'status'     => (int)$data['status'],
+        //         'updated'    => date('Y-m-d H:i:s'),
+        //     ],
+        //     ['term_id' => $term_id]
+        // );
+    }
+
+    protected function insertData(int $category_id, array $data)
+    {
+        foreach ($data['content'] as $language_id => $content) {
+            $this->db->add(
+                DB_PREFIX . 'term_content',
+                [
+                    'term_id'          => $category_id,
+                    'language_id'      => (int)$language_id,
+                    'title'            => $content['title'],
+                    'content'          => $content['content'],
+                    'meta_title'       => $content['meta_title'],
+                    'meta_description' => $content['meta_description'],
+                    'meta_keyword'     => $content['meta_keyword'],
+                ]
+            );
+        }
+
+        foreach ($data['meta'] as $key => $value) {
+            $this->db->add(
+                DB_PREFIX . 'term_meta',
+                [
+                    'term_id' => $category_id,
+                    'key'     => $key,
+                    'value'   => (is_array($value) ? json_encode($value) : $value),
+                    'encoded' => (is_array($value) ? 1 : 0),
+                ]
+            );
+        }
+
+        $this->load->model('setting/site');
+        $sites = $this->model_setting_site->getSites();
+
+        foreach ($sites as $site) {
+            $alias = '';
+            foreach ($data['alias'] as $language_id => $alias) {
+                if (!$alias) {
+                    continue;
+                }
+
+                $_aliasCount = $this->db->get(
+                    "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `language_id` = ?i AND `alias` = ?s",
+                    [$site['site_id'], $language_id, $alias]
+                )->row['total'];
+
+                if ($_aliasCount) {
+                    $alias = $alias . '-' . $category_id . '-' . $site['site_id'] . '-' . $language_id;
+                }
+
+                $this->db->add(
+                    DB_PREFIX . 'route_alias',
+                    [
+                        'site_id'     => (int)$site['site_id'],
+                        'language_id' => (int)$language_id,
+                        'route'       => 'content/category',
+                        'param'       => 'category_id',
+                        'value'       => $category_id,
+                        'alias'       => $alias,
+                    ]
+                );
+            }
+        }
     }
 
     public function getCategory(int $category_id): array

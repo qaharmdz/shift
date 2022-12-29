@@ -15,7 +15,7 @@ class Language extends Mvc\Model
 
     public function getLanguages(string $key = 'language_id'): array
     {
-        $data = $this->cache->get('language');
+        $data = $this->cache->get('languages');
 
         if (!$data) {
             $data = [];
@@ -34,7 +34,7 @@ class Language extends Mvc\Model
                 );
             }
 
-            $this->cache->set('language', $data);
+            $this->cache->set('languages', $data);
         }
 
         return $data;

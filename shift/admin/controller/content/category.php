@@ -81,7 +81,7 @@ class Category extends Mvc\Controller
             'updated'   => [],
         ];
 
-        if (empty($items) || !in_array($post['type'], $types) || in_array(0, $items)) {
+        if (empty($items) || !in_array($post['type'], $types) || in_array(0, $items)) { // TODO: remove || in_array(0, $items)
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
 
@@ -131,5 +131,71 @@ class Category extends Mvc\Controller
         $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/category_form', $data));
+    }
+
+    public function save()
+    {
+        $this->load->config('content/category');
+        $this->load->model('content/category');
+        $this->load->language('content/category');
+
+        if (!$this->user->hasPermission('modify', 'content/category')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+        if (!$this->request->has('post.category_id')) {
+            return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
+        }
+
+        $data = [];
+        $post = array_replace_recursive(
+            $this->config->getArray('content.category.form'),
+            $this->request->get('post', [])
+        );
+        $category_id = (int)$post['category_id'];
+
+        unset($post['content'][0]);
+
+        if ($errors = $this->validate($post)) {
+            return $this->response->setOutputJson($errors, 422);
+        }
+
+        if (!$category_id) {
+            $data['new_id'] = $this->model_content_category->addCategory($post);
+        } else {
+            $this->model_content_category->editCategory($category_id, $post);
+        }
+
+        // Redirect
+        if ($post['action'] === 'close') {
+            $data['redirect'] = $this->router->url('content/category');
+        }
+        if ($post['action'] === 'new') {
+            $data['redirect'] = $this->router->url('content/category/form');
+        }
+        if (isset($data['new_id']) && empty($data['redirect'])) {
+            $data['redirect'] = $this->router->url('content/category/form', 'category_id=' . $data['new_id']);
+        }
+
+        $this->response->setOutputJson($data);
+    }
+
+    protected function validate(array $post): array
+    {
+        $errors = [];
+
+        foreach ($post['content'] as $lang_id => $content) {
+            if (!$this->assert->lengthBetween(2, 250)->check($content['title'])) {
+                $errors['items']['content[' . $lang_id . '][title]'] = sprintf($this->language->get('error_length_between'), 2, 250);
+            }
+        }
+
+        if (isset($errors['items'])) {
+            $errors['response'] = $this->language->get('error_form');
+        }
+
+        return $errors;
     }
 }

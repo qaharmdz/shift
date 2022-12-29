@@ -31,10 +31,10 @@ $_['words']                 = 'Words';
 $_['post_order']            = 'Post Order';
 $_['pc.title~asc']          = 'Title - Asc';
 $_['pc.title~desc']         = 'Title - Desc';
-$_['p.publish~asc']         = 'publish - Asc';
-$_['p.publish~desc']        = 'publish - Desc';
-$_['p.updated~asc']         = 'updated - Asc';
-$_['p.updated~desc']        = 'updated - Desc';
+$_['p.publish~asc']         = 'Publish - Asc';
+$_['p.publish~desc']        = 'Publish - Desc';
+$_['p.updated~asc']         = 'Updated - Asc';
+$_['p.updated~desc']        = 'Updated - Desc';
 $_['p.sort_order~asc']      = 'Sort Order - Asc';
 $_['p.sort_order~desc']     = 'Sort Order - Desc';
 
