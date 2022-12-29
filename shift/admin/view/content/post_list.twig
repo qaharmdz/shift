@@ -191,7 +191,7 @@ let tableEl     = '#contentPost-list',
         let data = $(this).data('dtaction');
 
         $.fn.shift.dtAction({
-            url  : "{{ app.router.url('extension/module/dtaction')|raw }}",
+            url  : "{{ app.router.url('content/post/dtaction')|raw }}",
             data : data,
             validate : function(dtActionProceed) {
                 if (data.type === 'delete') {
