@@ -244,6 +244,11 @@ class Category extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $categories]);
         $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $categories]);
         $this->db->delete(DB_PREFIX . 'term_relation', ['term_id' => $categories]);
+        $this->db->delete(DB_PREFIX . 'route_alias', [
+            'route' => 'content/category',
+            'param' => 'category_id',
+            'value' => $categories
+        ]);
 
         $this->cache->delete('categories');
     }
