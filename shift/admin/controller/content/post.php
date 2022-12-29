@@ -47,7 +47,7 @@ class Post extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['post_id'];
-            $items[$i]['url_edit']    = $this->router->url('content/post', 'post_id=' . $items[$i]['post_id']);
+            $items[$i]['url_edit']    = $this->router->url('content/post/form', 'post_id=' . $items[$i]['post_id']);
         }
 
         $data = [

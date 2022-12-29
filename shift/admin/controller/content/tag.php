@@ -47,7 +47,7 @@ class Tag extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['tag_id'];
-            $items[$i]['url_edit']    = $this->router->url('content/tag', 'tag_id=' . $items[$i]['tag_id']);
+            $items[$i]['url_edit']    = $this->router->url('content/tag/form', 'tag_id=' . $items[$i]['tag_id']);
         }
 
         $data = [

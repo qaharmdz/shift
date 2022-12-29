@@ -47,7 +47,7 @@ class Category extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['category_id'];
-            $items[$i]['url_edit']    = $this->router->url('content/category', 'category_id=' . $items[$i]['category_id']);
+            $items[$i]['url_edit']    = $this->router->url('content/category/form', 'category_id=' . $items[$i]['category_id']);
         }
 
         $data = [
