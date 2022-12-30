@@ -6,9 +6,6 @@ namespace Shift\System\Http;
 
 class Router
 {
-    // TODO: Route schema: Validate $route request methods.
-    // Prevent access to all controller public method
-    protected $routeWhitelist = [];
     protected $urlGenerators = [];
 
     public function addUrlGenerator(object $urlGenerator)

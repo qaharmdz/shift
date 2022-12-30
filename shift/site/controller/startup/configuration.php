@@ -19,7 +19,6 @@ class Configuration extends Mvc\Controller
             $site_id = (int)$query->row['site_id'];
         }
         $this->config->set('env.site_id', $site_id);
-        // $this->config->set('env.url_site', '...'); // TODO: multistore url_site
 
         //=== Settings
         foreach (['system', 'theme'] as $group) {

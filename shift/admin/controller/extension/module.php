@@ -80,7 +80,7 @@ class Module extends Mvc\Controller
             'updated'   => [],
         ];
 
-        if (empty($items) || !in_array($post['type'], $types) || in_array(0, $items)) {
+        if (empty($items) || !in_array($post['type'], $types)) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
 
