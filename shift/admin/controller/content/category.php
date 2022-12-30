@@ -203,7 +203,6 @@ class Category extends Mvc\Controller
                     [$language_id, $alias]
                 )->rows;
 
-                $this->log->write($aliases);
                 foreach ($aliases as $alias) {
                     if (
                         !$post['category_id']

@@ -104,17 +104,31 @@ class Category extends Mvc\Model
 
     public function editCategory(int $category_id, array $data)
     {
-        // $this->db->set(
-        //     DB_PREFIX . 'term',
-        //     [
-        //         'parent_id'  => $data['parent_id'],
-        //         'taxonomy'   => 'post_category',
-        //         'sort_order' => $data['sort_order'],
-        //         'status'     => (int)$data['status'],
-        //         'updated'    => date('Y-m-d H:i:s'),
-        //     ],
-        //     ['term_id' => $term_id]
-        // );
+        $updated = $this->db->set(
+            DB_PREFIX . 'term',
+            [
+                'parent_id'  => $data['parent_id'],
+                'taxonomy'   => 'post_category',
+                'sort_order' => $data['sort_order'],
+                'status'     => (int)$data['status'],
+                'updated'    => date('Y-m-d H:i:s'),
+            ],
+            ['term_id' => $category_id]
+        );
+
+        if (!empty($updated->affected_rows)) {
+            $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $category_id]);
+            $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $category_id]);
+            $this->db->delete(DB_PREFIX . 'route_alias', [
+                'route' => 'content/category',
+                'param' => 'category_id',
+                'value' => $category_id
+            ]);
+
+            $this->insertData($category_id, $data);
+
+            return $updated->affected_rows;
+        }
     }
 
     protected function insertData(int $category_id, array $data)

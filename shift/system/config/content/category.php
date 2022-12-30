@@ -26,9 +26,9 @@ $_['form'] = [
         'robots'              => 'global',
         'post_per_page'       => 10,
         'post_lead'           => 2,
-        'post_lead_excerpt'   => 100, // words
+        'post_lead_excerpt'   => 101, // words
         'post_column'         => 2,
-        'post_column_excerpt' => 45, // words
+        'post_column_excerpt' => 48, // words
         'post_order'          => 'global',
         'custom_code'         => '', // js, css
     ],
