@@ -93,7 +93,6 @@ let tableEl    = '#accountUserGroup-list',
         ],
         columns : [
             { data : 'user_group_id',
-                className : 'noVisualColumn',
                 render : function(data, type, full) {
                     return '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
                 }
@@ -115,7 +114,7 @@ let tableEl    = '#accountUserGroup-list',
                 }
             },
             { data : 'user_group_id',
-                className : 'noVisualColumn ukt-p-2',
+                className : 'ukt-p-2',
                 render : function(data, type, full) {
                     let output  = '';
 

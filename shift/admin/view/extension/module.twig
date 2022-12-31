@@ -27,7 +27,7 @@
                     <th style="width:200px">{{ app.language.get('codename') }}</th>
                     <th style="min-width:200px">{{ app.language.get('name') }}</th>
                     <th style="width:120px">{{ app.language.get('status') }}</th>
-                    <th style="width:100px;">{{ app.language.get('action') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
                     <td class="ukt-pt-1">
@@ -89,7 +89,6 @@ let tableEl     = '#extensionModule-list',
         ],
         columns : [
             { data : 'module_id',
-                className : 'noVisualColumn',
                 render : function(data, type, full) {
                     return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
                 }
@@ -111,10 +110,10 @@ let tableEl     = '#extensionModule-list',
                 }
             },
             { data : 'module_id',
-                className : 'noVisualColumn ut-p-2',
+                className : 'ukt-p-2',
                 render : function(data, type, full) {
                     output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
-                    output += '<div class="uk-inline ut-ml-2">';
+                    output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
