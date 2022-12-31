@@ -19,7 +19,7 @@ class Position extends Mvc\Controller
 
         $terms   = ['alpha', 'topbar', 'top', 'content_top', 'sidebar_left', 'sidebar_right', 'content_bottom', 'bottom', 'footer', 'omega'];
         $blocks  = array_unique(array_merge($terms, $blocks));
-        $modules = ''; // TODO: getLayoutModules();
+        $modules = []; // TODO: getLayoutModules();
 
         $data = [];
         foreach ($blocks as $position) {

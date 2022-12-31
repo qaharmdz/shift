@@ -117,7 +117,7 @@ let tableEl     = '#contentCategory-list',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];
                     if (!full.status) {
-                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
+                        output  = '<div class="uk-label uk-label-warning">' + output + '</div>';
                     }
                     return output;
                 }

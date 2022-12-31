@@ -13,7 +13,7 @@ const shift = {
 {% endblock %}
 
 {% block base_body %}
-{% if header is defined %}
+{% if header %}
     <div class="page-header">
         {{ header }}
     </div>
@@ -22,7 +22,7 @@ const shift = {
 <!-- TODO: Simplify and consistent terms admin-front: region, layout, section, position -->
 <div class="page-body">
     <div class="region-middle uk-grid-collapse" uk-grid>
-        {% if layouts.sidebarleft is defined %}
+        {% if layouts.sidebarleft %}
             <div class="block-sidebar block-sidebar-left">
                 {{ layouts.sidebarleft }}
             </div>
@@ -48,13 +48,19 @@ const shift = {
                 {% block main_content %}No content available!{% endblock %}
             </div>
 
-            {% if footer is defined %}
+            {% if footer %}
                 <footer class="page-footer">
                     {{ footer }}
                 <footer class="uk-light">
             {% endif %}
 
         </div>{# .region-content #}
+
+        {% if layouts.sidebarright %}
+            <div class="block-sidebar block-sidebar-right">
+                {{ layouts.sidebarright }}
+            </div>
+        {% endif %}
     </div>{# .region-middle #}
 </div>
 

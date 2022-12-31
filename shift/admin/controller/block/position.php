@@ -17,11 +17,9 @@ class Position extends Mvc\Controller
     {
         $this->event->emit($eventName = 'controller/block/position::blocks', [$eventName, &$blocks]);
 
-        $terms   = ['alpha', 'topbar', 'sidebarleft', 'footer', 'omega'];
+        $terms   = ['alpha', 'topbar', 'sidebarleft', 'sidebarright', 'footer', 'omega'];
         $blocks  = array_unique(array_merge($terms, $blocks));
-        $modules = [
-            'sidebarleft' => ['extensions/module/adminnav/navigation'],
-        ];
+        $modules = []; // TODO: getLayoutModules();
 
         $this->event->emit($eventName = 'controller/block/position::modules', [$eventName, &$modules]);
 

@@ -1,7 +1,67 @@
 <div class="block-navbar">
     <nav class="uk-navbar-container" uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-toggle navbar-main-icon" uk-navbar-toggle-icon title="Navigation" uk-toggle="target:.region-middle; cls:hide-sidebar-left;"></a>
+            <div class="uk-inline">
+                <button class="uk-button uk-button-link navbar-main-icon" type="button"><i class="bi bi-command bi-2x"></i></button>
+                <div class="uk-width-large main-navigation" uk-dropdown="offset:8px;">
+                    <div class="uk-dropdown-grid uk-grid-collapse" uk-grid>
+                        <div class="uk-width-2-5 panel-left">
+                            <ul class="uk-nav uk-dropdown-nav" uk-nav>
+                                {% for link in navigation.links %}
+                                    {% if link.type == 'header' %}
+                                        <li class="uk-nav-header">{{ link.name }}</li>
+                                    {% elseif link.type == 'divider' %}
+                                        <li class="uk-nav-divider"></li>
+                                    {% else %}
+                                        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {#
+                                <li class="uk-nav-header">Recently Visited</li>
+                                <li><a href="#">Item</a></li>
+                                #}
+                            </ul>
+                        </div>
+                        <div class="uk-width-expand panel-right">
+                            <ul class="uk-nav uk-dropdown-nav" uk-nav>
+                                {% for menu in navigation.menus %}
+                                    {% if not menu.subs %}
+                                        <li><a href="{{ menu.url }}">{{ menu.name }}</a></li>
+                                    {% else %}
+                                        <li class="uk-parent">
+                                            <a href="{{ menu.url }}">{{ menu.name }} <span uk-nav-parent-icon></span></a>
+                                            <ul class="uk-nav-sub">
+                                                {% for item in menu.subs %}
+                                                    {% if item.subs %}
+                                                        <li class="uk-parent">
+                                                            <a href="{{ item.url }}">{{ item.name }} <span uk-nav-parent-icon></span></a>
+                                                            <ul class="uk-nav-sub">
+                                                                {% for subitem in item.subs %}
+                                                                    <li><a href="{{ subitem.url }}">{{ subitem.name }}</a></li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </li>
+                                                    {% else %}
+                                                        {% if item.type == 'header' %}
+                                                            <li class="uk-nav-header">{{ item.name }}</li>
+                                                        {% elseif item.type == 'divider' %}
+                                                            <li class="uk-nav-divider"></li>
+                                                        {% else %}
+                                                            <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="logo">Shift</div>
         </div>{# .uk-navbar-left #}
@@ -40,20 +100,6 @@
                     <i class="bi bi-display bi-2x"></i>
                 </a>
             {% endif %}
-
-            <div class="uk-display-inline el-account">
-                <a class="uk-navbar-toggle uk-margin-small-right" title="Account">
-                    <i class="bi bi-person bi-2x"></i>
-                    <span class="dropdown-caret"></span>
-                </a>
-                <div uk-dropdown="offset:0; pos:bottom-right;">
-                    <ul class="uk-nav uk-dropdown-nav uk-text-small">
-                        <li><a href="{{ app.router.url('user/profile') }}">{{ app.language.get('header.edit_account') }}</a></li>
-                        <li class="uk-nav-divider"></li>
-                        <li><a href="{{ app.router.url('page/logout') }}">{{ app.language.get('header.logout') }}</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>{# .uk-navbar-right #}
     </nav>
 </div>{# .block-navabr #}
