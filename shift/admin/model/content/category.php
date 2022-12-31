@@ -81,7 +81,7 @@ class Category extends Mvc\Model
     // Form CRUD
     // ================================================
 
-    public function addCategory(array $data)
+    public function addCategory(array $data): int
     {
         $this->db->add(
             DB_PREFIX . 'term',
