@@ -90,4 +90,46 @@ class Post extends Mvc\Controller
 
         $this->response->setOutputJson($data);
     }
+
+    // Form
+    // ================================================
+
+    public function form()
+    {
+        $post_id = $this->request->getInt('query.post_id', 0);
+        $mode = !$post_id ? 'add' : 'edit';
+
+        $this->load->model('setting/site');
+        $this->load->model('content/post');
+        $this->load->model('extension/language');
+        $this->load->language('content/general');
+        $this->load->language('content/post');
+
+        $this->document->setTitle($this->language->get('page_title'));
+
+        $this->document->addNode('breadcrumbs', [
+            [$this->language->get('content')],
+            [$this->language->get('page_title'), $this->router->url('content/post')],
+            [$this->language->get($mode), $this->router->url('content/post/form', 'post_id=' . $post_id)],
+        ]);
+
+        $data = [];
+
+        $data['mode']      = $mode;
+        $data['post_id']   = $post_id;
+        $data['sites']     = $this->model_setting_site->getSites();
+        $data['languages'] = $this->model_extension_language->getLanguages();
+        $data['setting']   = $this->model_content_post->getPost($post_id);
+
+        $data['categories'] = [
+            ['item_id' => 0, 'title_tree' => $this->language->get('-none-')],
+            // ...Tool\Taxonomy::buildTree($this->model_content_category->getCategories(), $post_id)
+        ];
+
+        $data['layouts'] = $this->load->controller('block/position');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
+
+        $this->response->setOutput($this->load->view('content/post_form', $data));
+    }
 }

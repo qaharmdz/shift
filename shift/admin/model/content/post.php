@@ -88,7 +88,49 @@ class Post extends Mvc\Model
 
     public function getPost(int $post_id): array
     {
-        //
+        $this->load->config('content/post');
+        $this->load->model('extension/language');
+
+        $default   = $this->config->getArray('content.post.form');
+        $languages = $this->model_extension_language->getLanguages();
+
+        foreach ($languages as $language) {
+            $default['content'][$language['language_id']] = $default['content'][0];
+            $default['alias'][$language['language_id']]   = '';
+        }
+
+        $data = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "post` p WHERE p.post_id = ?i AND p.taxonomy = ?s",
+            [$post_id, 'post']
+        )->row;
+
+        if (!empty($data['post_id'])) {
+            // Multi-language content
+            $contents = $this->db->get("SELECT * FROM `" . DB_PREFIX . "post_content` pc WHERE pc.post_id = ?i ORDER BY pc.language_id ASC", [$post_id])->rows;
+
+            $data['content'] = [];
+            foreach ($contents as $content) {
+                $data['content'][$content['language_id']] = array_replace($default['content'][0], $content);
+            }
+
+            // Multi-language alias
+            $aliases = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `route` = ?s AND `param` = ?s AND `value` = ?i",
+                ['content/category', 'category_id', $post_id]
+            )->rows;
+            foreach ($aliases as $alias) {
+                $data['alias'][$alias['language_id']] = $alias['alias'];
+            }
+
+            // Metas
+            $data['meta'] = [];
+            $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i", [$post_id]);
+            foreach ($metas as $meta) {
+                $data['meta'][$meta['key']] = $meta['encoded'] ? json_encode($meta['value'], true) : $meta['value'];
+            }
+        }
+
+        return array_replace($default, $data);
     }
 
     public function getTotal(): int

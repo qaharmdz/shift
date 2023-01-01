@@ -216,7 +216,7 @@ class Category extends Mvc\Model
             $data['category_id'] = $data['term_id'];
 
             // Multi-language content
-            $contents = $this->db->get("SELECT * FROM `" . DB_PREFIX . "term_content` tm WHERE tm.term_id = ?i ORDER BY tm.language_id ASC", [$category_id])->rows;
+            $contents = $this->db->get("SELECT * FROM `" . DB_PREFIX . "term_content` tc WHERE tc.term_id = ?i ORDER BY tc.language_id ASC", [$category_id])->rows;
 
             $data['content'] = [];
             foreach ($contents as $content) {
