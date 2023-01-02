@@ -4,11 +4,8 @@ $_['dashboard']      = 'Dashboard';
 $_['my_account']     = 'My Account';
 $_['logout']         = 'Logout';
 
-$_['account']        = 'Accounts';
-$_['user']           = 'Users';
-$_['user_group']     = 'User Groups';
-
 $_['content']        = 'Contents';
+$_['page']           = 'Pages';
 $_['post']           = 'Posts';
 $_['category']       = 'Categories';
 $_['tag']            = 'Tags';
@@ -23,10 +20,14 @@ $_['language']       = 'Languages';
 $_['event']          = 'Events';
 
 $_['tool']           = 'Tools';
-$_['layout']         = 'Layouts';
+$_['module_layout']  = 'Module Layouts';
 $_['maintenance']    = 'Maintenance';
 $_['backup_restore'] = 'DB Backup / Restore';
 $_['log']            = 'Logs Viewer';
+
+$_['account']        = 'Accounts';
+$_['user']           = 'Users';
+$_['user_group']     = 'User Groups';
 
 $_['system']         = 'System';
 $_['setting']        = 'Settings';
