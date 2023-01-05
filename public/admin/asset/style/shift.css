@@ -17,7 +17,7 @@
  * ======================================================================== */
 
 html {
-    background: #fafcfd;
+    background: #f9fbfc;
 }
 body {
     min-width: 640px;
@@ -234,6 +234,7 @@ body {
     .uk-width-content-sidebar\@l {
         width: 300px;
     }
+}
 
 .to-top {
     z-index: 2;

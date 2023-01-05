@@ -109,7 +109,7 @@ class Header extends Mvc\Controller
             $data['menus'][100] = $this->nav([
                 'id'   => 'menu-content',
                 'name' => $this->language->get('header.content'),
-                'subs' => $content
+                'subs' => $content,
             ]);
         }
 
@@ -176,7 +176,7 @@ class Header extends Mvc\Controller
             $data['menus'][200] = $this->nav([
                 'id'   => 'menu-extension',
                 'name' => $this->language->get('header.extension'),
-                'subs' => $extension
+                'subs' => $extension,
             ]);
         }
 
@@ -190,32 +190,11 @@ class Header extends Mvc\Controller
             ]);
         }
 
-        if ($this->user->hasPermissions('access', ['tool/backup', 'tool/log'])) {
-            $tool[] = $this->nav([
-                'type' => 'header',
-                'name' => $this->language->get('header.maintenance'),
-            ]);
-        }
-
-        if ($this->user->hasPermission('access', 'tool/backup')) {
-            $tool[] = $this->nav([
-                'name' => $this->language->get('header.backup_restore'),
-                'url'  => $this->router->url('tool/backup'),
-            ]);
-        }
-
-        if ($this->user->hasPermission('access', 'tool/log')) {
-            $tool[] = $this->nav([
-                'name' => $this->language->get('header.log'),
-                'url'  => $this->router->url('tool/log'),
-            ]);
-        }
-
         if ($tool) {
             $data['menus'][300] = $this->nav([
                 'id'   => 'menu-tool',
                 'name' => $this->language->get('header.tool'),
-                'subs' => $tool
+                'subs' => $tool,
             ]);
         }
 
@@ -240,7 +219,7 @@ class Header extends Mvc\Controller
             $data['menus'][400] = $this->nav([
                 'id'   => 'menu-design',
                 'name' => $this->language->get('header.account'),
-                'subs' => $user
+                'subs' => $user,
             ]);
         }
 
@@ -262,10 +241,35 @@ class Header extends Mvc\Controller
         }
 
         if ($system) {
-            $data['menus'][1000] = $this->nav([
+            $data['menus'][900] = $this->nav([
                 'id'   => 'menu-system',
                 'name' => $this->language->get('header.system'),
-                'subs' => $system
+                'subs' => $system,
+            ]);
+        }
+
+        // Maintenance
+        $maintenance = [];
+
+        if ($this->user->hasPermission('access', 'tool/backup')) {
+            $maintenance[] = $this->nav([
+                'name' => $this->language->get('header.backup_restore'),
+                'url'  => $this->router->url('tool/backup'),
+            ]);
+        }
+
+        if ($this->user->hasPermission('access', 'tool/log')) {
+            $maintenance[] = $this->nav([
+                'name' => $this->language->get('header.log'),
+                'url'  => $this->router->url('tool/log'),
+            ]);
+        }
+
+        if ($maintenance) {
+            $data['menus'][1000] = $this->nav([
+                'id'   => 'menu-system',
+                'name' => $this->language->get('header.maintenance'),
+                'subs' => $maintenance,
             ]);
         }
 
