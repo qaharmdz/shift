@@ -166,7 +166,7 @@ class Category extends Mvc\Model
         foreach ($sites as $site) {
             $alias = '';
             foreach ($data['alias'] as $language_id => $alias) {
-                if (!$alias) {
+                if (!$alias = trim($alias)) {
                     continue;
                 }
 

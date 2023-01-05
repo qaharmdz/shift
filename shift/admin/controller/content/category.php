@@ -191,6 +191,10 @@ class Category extends Mvc\Controller
         }
 
         foreach ($post['alias'] as $language_id => $alias) {
+            if (!$alias = trim($alias)) {
+                continue;
+            }
+
             if (count(array_keys($post['alias'], $alias)) > 1) {
                 $errors['items']['alias[' . $language_id . ']'] = $this->language->get('error_alias_unique');
             }
