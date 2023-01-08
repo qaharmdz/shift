@@ -185,13 +185,13 @@ class Category extends Mvc\Controller
         $errors = [];
 
         foreach ($post['content'] as $language_id => $content) {
-            if (!$this->assert->lengthBetween(2, 250)->check($content['title'])) {
-                $errors['items']['content[' . $language_id . '][title]'] = sprintf($this->language->get('error_length_between'), 2, 250);
+            if (!$this->assert->lengthBetween(2, 200)->check($content['title'])) {
+                $errors['items']['content[' . $language_id . '][title]'] = sprintf($this->language->get('error_length_between'), 2, 200);
             }
         }
 
-        foreach ($post['alias'] as $language_id => $alias) {
-            if (!$alias = trim($alias)) {
+        foreach ($post['alias'] as $language_id => &$alias) {
+            if (!$alias = str_replace(' ', '-', trim($alias))) {
                 continue;
             }
 
