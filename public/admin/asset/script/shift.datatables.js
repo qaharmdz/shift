@@ -334,14 +334,14 @@ function dtShiftUtility(dtTable, colsHide) {
             dtTable.search(value).draw();
         },
     });
-    $('[data-dtColumnFilter] input:not([data-datepicker])').typeWatch({
+    $('[data-dtColumnFilter] input:not([data-dtDatePicker])').typeWatch({
         allowSubmit: true,
         captureLength: 0,
         callback: function(value) {
             dtTable.column($(this).data('index')).search(value).draw();
         },
     });
-    $('[data-dtColumnFilter] input[data-datepicker]').datepicker({
+    $('[data-dtColumnFilter] input[data-dtDatePicker]').datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         changeYear: true,
@@ -363,7 +363,7 @@ function dtShiftUtility(dtTable, colsHide) {
         dtTable.clearSearch().draw();
     });
     // Clear datepicker column
-    $('[data-datepicker-clear]').on('click', function() {
+    $('[data-dtDatePicker-clear]').on('click', function() {
         let el = $(this).parent().find('input');
         el.val('');
         dtTable.column(el.data('index')).search('').draw();

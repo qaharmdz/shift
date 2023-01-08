@@ -138,7 +138,7 @@
     padding-left: 5px;
     padding-right: 5px;
 }
-.uk-table.dataTable .uk-input[data-datepicker] {
+.uk-table.dataTable .uk-input[data-dtDatePicker] {
     width: 80px;
 }
 .uk-table.dataTable thead .uk-button {

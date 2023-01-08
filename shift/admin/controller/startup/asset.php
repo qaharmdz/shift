@@ -36,5 +36,14 @@ class Asset extends Mvc\Controller
                 $this->config->get('env.url_app') . 'asset/script/jquery-ui/jquery-ui.min.js',
             ]
         ]);
+
+        $this->document->addAsset('jqueryui', [
+            'style'  => [
+                $this->config->get('env.url_app') . 'asset/style/shift.jquery-ui.css',
+            ],
+            'script' => [
+                $this->config->get('env.url_app') . 'asset/script/jquery-ui/jquery-ui.min.js',
+            ]
+        ]);
     }
 }
