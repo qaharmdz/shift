@@ -86,6 +86,130 @@ class Post extends Mvc\Model
     // Form CRUD
     // ================================================
 
+    public function addPost(array $data): int
+    {
+        $this->db->add(
+            DB_PREFIX . 'post',
+            [
+                'parent_id'  => 0,
+                'taxonomy'   => 'post',
+                'user_id'    => (int)$data['user_id'],
+                'term_id'    => (int)$data['category_id'],
+                'visibility' => $data['visibility'],
+                'sort_order' => $data['sort_order'],
+                'status'     => (int)$data['status'],
+                'created'    => date('Y-m-d H:i:s'),
+                'updated'    => date('Y-m-d H:i:s'),
+                'publish'    => date('Y-m-d H:i:s'),
+                'unpublish'  => date('Y-m-d H:i:s'),
+            ]
+        );
+
+        $post_id = (int)$this->db->insertId();
+
+        $this->insertData($post_id, $data);
+
+        return $post_id;
+    }
+
+    public function editPost(int $post_id, array $data)
+    {
+        $updated = $this->db->set(
+            DB_PREFIX . 'post',
+            [
+                'parent_id'  => 0,
+                'taxonomy'   => 'post',
+                'user_id'    => (int)$data['user_id'],
+                'term_id'    => (int)$data['category_id'],
+                'visibility' => $data['visibility'],
+                'sort_order' => $data['sort_order'],
+                'status'     => (int)$data['status'],
+                'updated'    => date('Y-m-d H:i:s'),
+                'publish'    => date('Y-m-d H:i:s'),
+                'unpublish'  => date('Y-m-d H:i:s'),
+            ],
+            ['post_id' => $post_id]
+        );
+
+        if (!empty($updated->affected_rows)) {
+            $this->db->delete(DB_PREFIX . 'post_content', ['post_id' => $post_id]);
+            $this->db->delete(DB_PREFIX . 'post_meta', ['post_id' => $post_id]);
+            $this->db->delete(DB_PREFIX . 'route_alias', [
+                'route' => 'content/post',
+                'param' => 'post_id',
+                'value' => $post_id
+            ]);
+
+            $this->insertData($post_id, $data);
+
+            return $updated->affected_rows;
+        }
+    }
+
+    protected function insertData(int $post_id, array $data)
+    {
+        foreach ($data['content'] as $language_id => $content) {
+            $this->db->add(
+                DB_PREFIX . 'post_content',
+                [
+                    'post_id'          => $post_id,
+                    'language_id'      => (int)$language_id,
+                    'title'            => $content['title'],
+                    'excerpt'          => $content['excerpt'],
+                    'content'          => $content['content'],
+                    'meta_title'       => $content['meta_title'],
+                    'meta_description' => $content['meta_description'],
+                    'meta_keyword'     => $content['meta_keyword'],
+                ]
+            );
+        }
+
+        foreach ($data['meta'] as $key => $value) {
+            $this->db->add(
+                DB_PREFIX . 'post_meta',
+                [
+                    'post_id' => $post_id,
+                    'key'     => $key,
+                    'value'   => (is_array($value) ? json_encode($value) : $value),
+                    'encoded' => (is_array($value) ? 1 : 0),
+                ]
+            );
+        }
+
+        $this->load->model('setting/site');
+        $sites = $this->model_setting_site->getSites();
+
+        foreach ($sites as $site) {
+            $alias = '';
+            foreach ($data['alias'] as $language_id => $alias) {
+                if (!$alias = str_replace(' ', '-', trim($alias))) {
+                    continue;
+                }
+
+                $_aliasCount = $this->db->get(
+                    "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `language_id` = ?i AND `alias` = ?s",
+                    [$site['site_id'], $language_id, $alias]
+                )->row['total'];
+
+                if ($_aliasCount) {
+                    $alias = $alias . '-' . $post_id . '-' . $site['site_id'] . '-' . $language_id;
+                }
+
+                $this->db->add(
+                    DB_PREFIX . 'route_alias',
+                    [
+                        'site_id'     => (int)$site['site_id'],
+                        'language_id' => (int)$language_id,
+                        'route'       => 'content/post',
+                        'param'       => 'post_id',
+                        'value'       => $post_id,
+                        'alias'       => $alias,
+                    ]
+                );
+            }
+        }
+    }
+
     public function getPost(int $post_id): array
     {
         $this->load->config('content/post');
@@ -116,7 +240,7 @@ class Post extends Mvc\Model
             // Multi-language alias
             $aliases = $this->db->get(
                 "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `route` = ?s AND `param` = ?s AND `value` = ?i",
-                ['content/category', 'category_id', $post_id]
+                ['content/post', 'post_id', $post_id]
             )->rows;
             foreach ($aliases as $alias) {
                 $data['alias'][$alias['language_id']] = $alias['alias'];
