@@ -184,10 +184,10 @@ class User extends Mvc\Controller
     {
         $errors = [];
 
-        if (!$this->assert->minLength(6)->check($post['username'])) {
-            $errors['items']['username'] = sprintf($this->language->get('error_length_minimum'), 6);
+        if (!$this->assert->minLength(4)->check($post['username'])) {
+            $errors['items']['username'] = sprintf($this->language->get('error_length_minimum'), 4);
         }
-        if (!$this->assert->email(6)->check($post['email'])) {
+        if (!$this->assert->email()->check($post['email'])) {
             $errors['items']['email'] = $this->language->get('error_email');
         }
         if (!$this->assert->stringNotEmpty()->check($post['firstname'])) {
