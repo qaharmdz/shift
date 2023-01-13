@@ -153,7 +153,7 @@ class User extends Mvc\Model
     public function getUser(int $user_id)
     {
         $result = $this->db->get(
-            "SELECT *, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group
+            "SELECT u.*, CONCAT(u.firstname, ' ', u.lastname) AS fullname, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group
             FROM `" . DB_PREFIX . "user` u
             WHERE u.user_id = ?i",
             [$user_id]
@@ -170,6 +170,19 @@ class User extends Mvc\Model
 
         return $result;
     }
+
+    public function getUsers(array $filters = [1 => 1])
+    {
+        return $this->db->get(
+            "SELECT u.user_id, u.user_group_id, u.email, u.username, u.firstname, u.lastname,
+                CONCAT(u.firstname, ' ', u.lastname) AS fullname,
+                (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group
+            FROM `" . DB_PREFIX . "user` u
+            WHERE " . implode(' AND ', array_keys($filters)),
+            array_values($filters)
+        )->rows;
+    }
+
 
     public function getTotal()
     {
