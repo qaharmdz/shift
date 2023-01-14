@@ -24,7 +24,15 @@ class Backup extends Mvc\Controller
         $data = [];
 
         $data['alerts']   = $this->session->pull('flash.alert');
-        $data['dbTables'] = $this->model_tool_backup->getTables();
+
+
+        $data['dbTables'] = [];
+        foreach ($this->model_tool_backup->getTables() as $table) {
+            $data['dbTables'][] = [
+                'text'  => $table,
+                'value' => $table,
+            ];
+        }
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

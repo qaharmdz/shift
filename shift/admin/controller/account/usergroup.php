@@ -163,13 +163,16 @@ class UserGroup extends Mvc\Controller
             }
         }
 
+        sort($routes);
+
         foreach ($routes as $route) {
             if (!in_array($route, $ignore)) {
-                $permissions[] = $route;
+                $permissions[] = [
+                    'text'  => $route,
+                    'value' => $route,
+                ];
             }
         }
-
-        sort($permissions);
 
         return $permissions;
     }

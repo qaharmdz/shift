@@ -166,14 +166,16 @@
 
 {% macro checkboxPanel(param) %}
     {% set param = {
-        'label'     : '',
-        'name'      : '',
-        'lists'     : [],
-        'checked'   : [],
-        'info'      : '',
-        'required'  : false,
-        'errors'    : [],
-        'htmlEnd' : '',
+        'label'      : '',
+        'name'       : '',
+        'lists'      : [],
+        'list_text'  : 'text',
+        'list_value' : 'value',
+        'checked'    : [],
+        'info'       : '',
+        'required'   : false,
+        'errors'     : [],
+        'htmlEnd'    : '',
     }|merge(param) %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
@@ -185,8 +187,8 @@
                 <ul class="uk-list uk-list-striped uk-list-collapse">
                     {% for list in param.lists %}
                         <li>
-                            <label style="display:block;">
-                                <input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list }}" {{ list in param.checked ? 'checked' }}> {{ list }}
+                            <label class="uk-input-text" style="display:block;">
+                                <input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list[param.list_value] }}" {{ list in param.checked ? 'checked' }}> {{ list[param.list_text] }}
                             </label>
                         </li>
                     {% endfor %}

@@ -80,7 +80,7 @@
     }
 }
 
-.uk-checkbox, .uk-input, .uk-radio, .uk-select, .uk-textarea {
+.uk-checkbox, .uk-input, .uk-radio, .uk-select, .uk-textarea, .uk-input-text {
     font-size: .94rem;
 }
 .uk-input:not(.uk-form-blank),
