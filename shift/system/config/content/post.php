@@ -9,11 +9,10 @@ $_['form'] = [
     'taxonomy'    => 'post',
     'user_id'     => 0,
     'category_id' => 0,
-    'categories'  => [],
-    'visibility'  => 'public', // public, protected (password), private (user backend)
+    'visibility'  => 'public', // public, usergroup, password
     'sort_order'  => 0,
     'status'      => 'draft', // publish, pending, draft, trash
-    'created'     => null,
+    'created'     => date('Y-m-d H:i:s'),
     'updated'     => null,
     'publish'     => null,
     'unpublish'   => null,
@@ -30,7 +29,9 @@ $_['form'] = [
         ],
     ],
     'meta'        => [
+        'categories'  => [],
         'robots'      => 'global',
+        'comment'     => 'global',
         'custom_code' => '', // js, css
     ],
 ];

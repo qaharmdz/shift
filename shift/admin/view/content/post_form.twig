@@ -69,7 +69,29 @@
                         <fieldset class="uk-fieldset">
                             <legend class="uk-legend">{{ app.language.get('taxonomy') }}</legend>
 
-                            {{ forms.select({'label':'category', 'name':'category_id', 'options':categories, 'selected':setting.category_id, 'opt_text': 'title_tree', 'opt_value': 'item_id'}) }}
+                            {{ forms.select({'label':'default_category', 'name':'category_id', 'selected':setting.category_id, 'class':'uk-width-2-3@m', 'options':[
+                                {'text': app.language.get('-none-'), 'value': 0}
+                            ]|merge(categories)}) }}
+                            {{ forms.checkboxPanel({'label':'categories', 'name':'meta[categories]', lists:categories, checked:setting.meta.categories}) }}
+                        </fieldset>
+
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('option') }}</legend>
+
+                            {{ forms.select({'label':'robots', 'name':'meta[robots]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('global'),           'value': 'global'},
+                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+                            ]}) }}
+                            {{ forms.select({'label':'comment', 'name':'meta[comment]', 'selected':setting.meta.comment, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('global'),   'value': 'global'},
+                                {'text': app.language.get('public'),   'value': 'public'},
+                                {'text': app.language.get('register'), 'value': 'register'},
+                                {'text': app.language.get('disabled'), 'value': 'disabled'},
+                            ]}) }}
+                            {{ forms.input({'type':'number', 'label':'sort_order', 'name':'sort_order', 'value':setting.sort_order, 'class':'uk-width-75@m'}) }}
                         </fieldset>
                     </div>
 
@@ -87,23 +109,24 @@
                         <fieldset class="uk-fieldset">
                             <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
 
-                            <input type="input" value="" data-index="8" data-dtDatePicker class="uk-input">
-
+                            {{ forms.select({'label':'author', 'name':'user_id', 'options':users, 'selected':setting.user_id, 'opt_text': 'fullname', 'opt_value': 'user_id'}) }}
                             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
                                 {'text': app.language.get('publish'),  'value': 'publish'},
-                                {'text': app.language.get('pending'), 'value': 'pending'},
                                 {'text': app.language.get('draft'), 'value': 'draft'},
+                                {'text': app.language.get('pending'), 'value': 'pending'},
                                 {'text': app.language.get('trash'), 'value': 'trash'},
                             ]}) }}
-                            {{ forms.select({'label':'robots', 'name':'meta[robots]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('global'),           'value': 'global'},
-                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
-                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
-                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
-                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
-
+                            {{ forms.select({'label':'visibility', 'name':'visibility', 'selected':setting.visibility, 'class':'uk-width-150@m', 'options':[
+                                {'text': app.language.get('public'),  'value': 'public'},
+                                {'text': app.language.get('usergroup'), 'value': 'usergroup'},
+                                {'text': app.language.get('password'), 'value': 'password'},
                             ]}) }}
-                            {{ forms.input({'type':'number', 'label':'sort_order', 'name':'sort_order', 'value':setting.sort_order, 'class':'uk-width-75@m'}) }}
+
+                            <p>visibility</p>
+                            <p>publish</p>
+                            <!-- <input type="input" value="" data-index="8" data-datepicker class="uk-input"> -->
+                            <p>unpublish</p>
+
                         </fieldset>
                     </div>
 

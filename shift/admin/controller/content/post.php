@@ -102,6 +102,7 @@ class Post extends Mvc\Controller
         $this->load->model('setting/site');
         $this->load->model('content/post');
         $this->load->model('extension/language');
+        $this->load->model('account/user');
         $this->load->language('content/general');
         $this->load->language('content/post');
 
@@ -117,16 +118,15 @@ class Post extends Mvc\Controller
 
         $data = [];
 
-        $data['mode']      = $mode;
-        $data['post_id']   = $post_id;
-        $data['sites']     = $this->model_setting_site->getSites();
-        $data['languages'] = $this->model_extension_language->getLanguages();
-        $data['setting']   = $this->model_content_post->getPost($post_id);
+        $data['mode']       = $mode;
+        $data['post_id']    = $post_id;
+        $data['sites']      = $this->model_setting_site->getSites();
+        $data['users']      = $this->model_account_user->getUsers(['u.status = ?i' => 1]);
+        $data['languages']  = $this->model_extension_language->getLanguages();
+        $data['categories'] = [];
+        $data['setting']    = $this->model_content_post->getPost($post_id);
 
-        $data['categories'] = [
-            ['item_id' => 0, 'title_tree' => $this->language->get('-none-')],
-            // ...Tool\Taxonomy::buildTree($this->model_content_category->getCategories(), $post_id)
-        ];
+        // d($data['setting']);
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

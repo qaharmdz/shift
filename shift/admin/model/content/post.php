@@ -216,15 +216,16 @@ class Post extends Mvc\Model
         $this->load->model('extension/language');
 
         $default   = $this->config->getArray('content.post.form');
-        $languages = $this->model_extension_language->getLanguages();
+        $default['user_id'] = $this->user->get('user_id');
 
+        $languages = $this->model_extension_language->getLanguages();
         foreach ($languages as $language) {
             $default['content'][$language['language_id']] = $default['content'][0];
             $default['alias'][$language['language_id']]   = '';
         }
 
         $data = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "post` p WHERE p.post_id = ?i AND p.taxonomy = ?s",
+            "SELECT p.*, p.term_id as category_id FROM `" . DB_PREFIX . "post` p WHERE p.post_id = ?i AND p.taxonomy = ?s",
             [$post_id, 'post']
         )->row;
 
@@ -254,7 +255,7 @@ class Post extends Mvc\Model
             }
         }
 
-        return array_replace($default, $data);
+        return array_replace_recursive($default, $data);
     }
 
     public function getTotal(): int
