@@ -122,11 +122,8 @@
                                 {'text': app.language.get('password'), 'value': 'password'},
                             ]}) }}
 
-                            <p>visibility</p>
-                            <p>publish</p>
-                            <!-- <input type="input" value="" data-index="8" data-datepicker class="uk-input"> -->
-                            <p>unpublish</p>
-
+                            {{ forms.input({'label':'publish', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker'}) }}
+                            {{ forms.input({'label':'unpublish', 'name':'unpublish', 'value':setting.unpublish, 'attribute':'data-datepicker'}) }}
                         </fieldset>
                     </div>
 

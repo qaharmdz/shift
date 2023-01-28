@@ -15,6 +15,7 @@
  * # IIDE (Immediate Invoked Data Expressions)
  *   - data-form-monitor
  *   - data-form-submit
+ *   - data-datepicker
  *   - data-format-date
  *
  * # Functions
@@ -411,13 +412,36 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
     });
 });
 
+$(document).on('IIDE.init IIDE.input_date', function(event)
+{
+    /**
+     * Format date from UTC to local browser timezone
+     *
+     * @usage
+     * <input type="text" data-datepicker>
+     */
+    $('[data-datepicker]').each(function() {
+        let el = this;
+
+        $(el).wrap('<div class="uk-inline"></div>').before('<i class="uk-form-icon bi bi-calendar3"></i>');
+        $(el).datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-6:+3',
+            prevText: '<',
+            nextText: '>',
+        });
+    });
+});
+
 $(document).on('IIDE.init IIDE.format_date', function(event)
 {
     /**
      * Format date from UTC to local browser timezone
      *
      * @usage
-     * data-format-date='Y-m-d H:i:s'
+     * <div data-format-date="Y-m-d H:i:s"></div>
      */
     $('[data-format-date]').each(function() {
         let el   = this,

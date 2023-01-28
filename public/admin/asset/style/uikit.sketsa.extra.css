@@ -2,6 +2,17 @@
  * UIkit Sketsa override
  * ======================================================================== */
 
+:root,
+html,
+.uk-form-label,
+.uk-button,
+.uk-alert,
+.uk-nav-header,
+.uk-nav-secondary,
+.uk-text-default {
+    font-size: 14px;
+}
+
 /* Base HTML
 ==================================== */
  :not(pre)>code, :not(pre)>kbd, :not(pre)>samp {

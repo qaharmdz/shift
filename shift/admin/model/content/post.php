@@ -100,8 +100,8 @@ class Post extends Mvc\Model
                 'status'     => (int)$data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
-                'publish'    => date('Y-m-d H:i:s'),
-                'unpublish'  => date('Y-m-d H:i:s'),
+                'publish'    => $data['publish'] ?: null,
+                'unpublish'  => $data['unpublish'] ?: null,
             ]
         );
 
@@ -125,8 +125,8 @@ class Post extends Mvc\Model
                 'sort_order' => $data['sort_order'],
                 'status'     => (int)$data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
-                'publish'    => date('Y-m-d H:i:s'),
-                'unpublish'  => date('Y-m-d H:i:s'),
+                'publish'    => $data['publish'] ?: null,
+                'unpublish'  => $data['unpublish'] ?: null,
             ],
             ['post_id' => $post_id]
         );
