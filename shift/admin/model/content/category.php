@@ -236,7 +236,7 @@ class Category extends Mvc\Model
             $data['meta'] = [];
             $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "term_meta` tm WHERE tm.term_id = ?i", [$category_id]);
             foreach ($metas as $meta) {
-                $data['meta'][$meta['key']] = $meta['encoded'] ? json_encode($meta['value'], true) : $meta['value'];
+                $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
             }
         }
 

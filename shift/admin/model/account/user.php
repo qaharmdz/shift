@@ -164,7 +164,7 @@ class User extends Mvc\Model
             $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_meta` um WHERE um.user_id = ?i", [$user_id]);
 
             foreach ($metas as $meta) {
-                $result['meta'][$meta['key']] = $meta['encoded'] ? json_encode($meta['value'], true) : $meta['value'];
+                $result['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
             }
         }
 

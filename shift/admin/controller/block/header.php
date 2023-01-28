@@ -70,12 +70,6 @@ class Header extends Mvc\Controller
         // Content
         $content = [];
 
-        if ($this->user->hasPermission('access', 'content/page')) {
-            $content[] = $this->nav([
-                'name' => $this->language->get('header.page'),
-                'url'  => $this->router->url('content/page'),
-            ]);
-        }
         if ($this->user->hasPermission('access', 'content/post')) {
             $content[] = $this->nav([
                 'name' => $this->language->get('header.post'),
