@@ -412,25 +412,29 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
     });
 });
 
-$(document).on('IIDE.init IIDE.input_date', function(event)
+$(document).on('IIDE.init IIDE.datepicker', function(event)
 {
     /**
-     * Format date from UTC to local browser timezone
+     * Add datepicker and optional time picker to input
      *
      * @usage
      * <input type="text" data-datepicker>
+     * <input type="text" data-datepicker='{"time":true}'>
      */
-    $('[data-datepicker]').each(function() {
-        let el = this;
+    $('[data-datepicker]').each(function(i) {
+        let el  = this,
+            opt = $.extend({
+                time : false,
+            }, $(el).data('datepicker'));
 
-        $(el).wrap('<div class="uk-inline"></div>').before('<i class="uk-form-icon bi bi-calendar3"></i>');
-        $(el).datepicker({
-            dateFormat: 'yy-mm-dd',
-            changeMonth: true,
-            changeYear: true,
-            yearRange: '-6:+3',
-            prevText: '<',
-            nextText: '>',
+        $(el).wrap('<div class="uk-inline"></div>')
+             .before('<i class="uk-form-icon bi bi-calendar3"></i>');
+
+        flatpickr(el, {
+            allowInput: true,
+            enableTime: opt.time,
+            enableSeconds: opt.time,
+            time_24hr: true,
         });
     });
 });

@@ -122,8 +122,8 @@
                                 {'text': app.language.get('password'), 'value': 'password'},
                             ]}) }}
 
-                            {{ forms.input({'label':'publish', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker'}) }}
-                            {{ forms.input({'label':'unpublish', 'name':'unpublish', 'value':setting.unpublish, 'attribute':'data-datepicker'}) }}
+                            {{ forms.input({'label':'publish', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
+                            {{ forms.input({'label':'unpublish', 'name':'unpublish', 'value':setting.unpublish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
                         </fieldset>
                     </div>
 

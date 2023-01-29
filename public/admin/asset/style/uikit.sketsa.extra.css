@@ -155,6 +155,10 @@ html,
 .uk-form-icon-background:not(.uk-form-icon-flip)~.uk-input {
     padding-left: 44px!important;
 }
+.uk-form-icon-flip-out {
+    right: -30px;
+    left: auto;
+}
 
 /* Table
 ==================================== */

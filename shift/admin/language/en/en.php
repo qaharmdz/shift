@@ -65,16 +65,6 @@ $_['toggle_check']          = 'Toggle check';
 $_['pagination']            = 'Showing %d to %d of %d (%d Pages)';
 $_['no_results']            = 'No results!';
 
-// DataTables
-$_['columns']               = 'Columns';
-$_['search_']               = 'Search..';
-$_['search_all']            = 'Search all';
-$_['search_clear']          = 'Clear search';
-$_['reload_data']           = 'Reload data';
-$_['show_x_data']           = 'Show _START_ to _END_ of _TOTAL_ data'; // Tags: _START_, _END_, _TOTAL_
-$_['filter_x_data']         = '(filtered from _MAX_ total data)'; // Tags: _MAX_
-$_['select_min_one']        = 'Select minimum one item to continue.';
-
 // Notification
 $_['saving']                = 'Saving..';
 $_['loading']               = 'Loading...';
@@ -84,6 +74,16 @@ $_['yes_sure']              = 'Yes, I\'m sure';
 $_['redirecting']           = 'Redirecting..';
 $_['no_data']               = 'No data available!';
 $_['no_result']             = 'No results found!';
+
+// DataTables
+$_['columns']               = 'Columns';
+$_['search_']               = 'Search..';
+$_['search_all']            = 'Search all';
+$_['search_clear']          = 'Clear search';
+$_['reload_data']           = 'Reload data';
+$_['show_x_data']           = 'Show _START_ to _END_ of _TOTAL_ data'; // Tags: _START_, _END_, _TOTAL_
+$_['filter_x_data']         = '(filtered from _MAX_ total data)'; // Tags: _MAX_
+$_['select_min_one']        = 'Select minimum one item to continue.';
 
 $_['confirm_change']        = 'Change you made may not be saved!';
 $_['confirm_delete']        = 'This action cannot be undone!<br>The item(s) will be deleted permanently.';

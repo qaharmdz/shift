@@ -26,23 +26,23 @@ class Asset extends Mvc\Controller
         $this->document->addAsset('datatables', [
             'style'  => [
                 $this->config->get('env.url_app') . 'asset/style/shift.datatables.css',
-                $this->config->get('env.url_app') . 'asset/style/shift.jquery-ui.css',
+                $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
             ],
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/datatables/datatables.min.js',
                 $this->config->get('env.url_app') . 'asset/script/shift.datatables.js',
                 // Extra
                 $this->config->get('env.url_app') . 'asset/script/typewatch/typewatch.min.js',
-                $this->config->get('env.url_app') . 'asset/script/jquery-ui/jquery-ui.min.js',
+                $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.js',
             ]
         ]);
 
-        $this->document->addAsset('jqueryui', [
+        $this->document->addAsset('flatpickr', [
             'style'  => [
-                $this->config->get('env.url_app') . 'asset/style/shift.jquery-ui.css',
+                $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
             ],
             'script' => [
-                $this->config->get('env.url_app') . 'asset/script/jquery-ui/jquery-ui.min.js',
+                $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.js',
             ]
         ]);
     }
