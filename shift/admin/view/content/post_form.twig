@@ -73,6 +73,7 @@
                                 {'text': app.language.get('-none-'), 'value': 0}
                             ]|merge(categories)}) }}
                             {{ forms.checkboxPanel({'label':'categories', 'name':'meta[categories]', lists:categories, checked:setting.meta.categories}) }}
+                            <p>TODO: tags</p>
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
@@ -142,9 +143,4 @@
         </form>
     </div>
 </div>
-<script>
-$(document).ready(function() {
-
-});
-</script>
 {% endblock %}
