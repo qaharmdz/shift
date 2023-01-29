@@ -341,15 +341,10 @@ function dtShiftUtility(dtTable, colsHide) {
             dtTable.column($(this).data('index')).search(value).draw();
         },
     });
-    $('[data-dtColumnFilter] input[data-dtDatePicker]').datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        yearRange: '-6:+3',
-        prevText: '<',
-        nextText: '>',
-        onSelect: function(formattedDate, date, inst) {
-            dtTable.column($(this).data('index')).search(formattedDate).draw();
+    $('[data-dtColumnFilter] input[data-dtDatePicker]').flatpickr({
+        allowInput: true,
+        onChange: function(selectedDates, dateStr, instance) {
+            dtTable.column($(this).data('index')).search(selectedDates).draw();
         }
     });
     $('[data-dtColumnFilter] select').on('change', function() {
@@ -366,7 +361,7 @@ function dtShiftUtility(dtTable, colsHide) {
     $('[data-dtDatePicker-clear]').on('click', function() {
         let el = $(this).parent().find('input');
         el.val('');
-        dtTable.column(el.data('index')).search('').draw();
+        dtTable.clearPipeline().column(el.data('index')).search('').draw();
     });
 
     // Hide columns after all event delegated
