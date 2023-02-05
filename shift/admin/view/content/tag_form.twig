@@ -1,0 +1,87 @@
+{% extends 'main.tpl.twig' %}
+
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <div class="uk-button-group">
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-category", "tag_id":"{{ tag_id }}"}'>{{ app.language.get('save') }}</button>
+                    <div class="uk-inline">
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
+                        <div uk-dropdown="pos:bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-form-submit='{"form":"#form-category", "action":"close", "tag_id":"{{ tag_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-category", "action":"new", "tag_id":"{{ tag_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ app.router.url('content/form') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(tag_id ? 'close' : 'cancel') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <form id="form-category" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('content/tag/save') }}" method="post" data-form-monitor>
+            <div uk-grid>
+                <div class="uk-width-expand">
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal">
+                        {% if languages|length > 1 %}
+                            <ul class="uk-tab-main" uk-tab="animation:uk-animation-fade">
+                                {% for language in languages %}
+                                    <li class="{{ loop.first ? 'uk-active' : '' }}">
+                                        <a href="#tab-lang-{{ language.language_id }}">
+                                            <img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.code }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.code }}">
+                                            {{ language.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <div class="uk-switcher">
+                            {% for language in languages %}
+                                <div id="tab-lang-{{ language.language_id }}" class="uk-animation-fade">
+                                    <fieldset class="uk-fieldset">
+                                        {{ forms.input({'label':'title', 'name':'content[' ~ language.language_id ~ '][title]', 'value':setting.content[language.language_id]['title'], 'required':true}) }}
+                                        {{ forms.input({'label':'url_alias', 'name':'alias[' ~ language.language_id ~ ']', 'value':setting.alias[language.language_id] ?? '', 'class':'uk-form-blank uk-text-italic'}) }}
+                                        {{ forms.textarea({'label':'content', 'name':'content[' ~ language.language_id ~ '][content]', 'value':setting.content[language.language_id]['content'], 'class':'js-editor'}) }}
+                                    </fieldset>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-width-content-sidebar@l">
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+
+                            {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
+                                {'text': app.language.get('enabled'),  'value': 1},
+                                {'text': app.language.get('disabled'), 'value': 0}
+                            ]}) }}
+                        </fieldset>
+                    </div>
+
+                    {% if mode == 'edit' %}
+                        <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                            <fieldset class="uk-fieldset">
+                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+
+                                {{ forms.infoDate({'label':'created','datetime':setting.created}) }}
+                                {{ forms.infoDate({'label':'updated','datetime':setting.updated}) }}
+                            </fieldset>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
