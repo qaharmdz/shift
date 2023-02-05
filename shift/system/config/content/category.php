@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// Default admin setting
+// Default setting
 $_['form'] = [
     'category_id' => 0,
     'parent_id'   => 0,

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// Default admin setting key-value
+// Default setting
 $_['form'] = [
     'user_id'       => 0,
     'user_group_id' => 0,
