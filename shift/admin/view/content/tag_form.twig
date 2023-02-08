@@ -31,7 +31,7 @@
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">
                         {% if languages|length > 1 %}
-                            <ul class="uk-tab-main" uk-tab="animation:uk-animation-fade">
+                            <ul class="uk-tab-main" uk-tab>
                                 {% for language in languages %}
                                     <li class="{{ loop.first ? 'uk-active' : '' }}">
                                         <a href="#tab-lang-{{ language.language_id }}">
@@ -45,7 +45,7 @@
 
                         <div class="uk-switcher">
                             {% for language in languages %}
-                                <div id="tab-lang-{{ language.language_id }}" class="uk-animation-fade">
+                                <div id="tab-lang-{{ language.language_id }}">
                                     <fieldset class="uk-fieldset">
                                         {{ forms.input({'label':'title', 'name':'content[' ~ language.language_id ~ '][title]', 'value':setting.content[language.language_id]['title'], 'required':true}) }}
                                         {{ forms.input({'label':'url_alias', 'name':'alias[' ~ language.language_id ~ ']', 'value':setting.alias[language.language_id] ?? '', 'class':'uk-form-blank uk-text-italic'}) }}

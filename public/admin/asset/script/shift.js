@@ -87,9 +87,14 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
 UIkit.mixin({
     data: {
         mode: 'click',
-        animation: ['uk-animation-slide-bottom-small']
+        animation: ['uk-animation-slide-bottom-small'],
     }
 }, 'dropdown');
+UIkit.mixin({
+    data: {
+        animation: ['uk-animation-fade uk-animation-fast']
+    }
+}, 'tab');
 
 
 /*

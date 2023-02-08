@@ -53,7 +53,7 @@
         <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% if total > 1 %}
-                <ul class="uk-tab ukt-mb-3" uk-tab="connect:#tab-{{ param.label }}; animation:uk-animation-fade uk-animation-fast">
+                <ul class="uk-tab ukt-mb-3" uk-tab="connect:#tab-{{ param.label }};">
                 {% for language in param.languages %}
                     <li>
                         <a href="#" title="{{ '[' ~ language.code ~ '] ' ~ language.name }}">
