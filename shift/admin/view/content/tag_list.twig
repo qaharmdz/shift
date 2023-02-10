@@ -96,12 +96,12 @@ let tableEl     = '#contentTag-list',
             },
         ],
         columns : [
-            { data : 'module_id',
+            { data : 'tag_id',
                 render : function(data, type, full) {
                     return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
                 }
             },
-            { data : 'module_id' },
+            { data : 'tag_id' },
             { data : 'title' },
             { data : 'created',
                 render : function(data, type, full) {
@@ -122,7 +122,7 @@ let tableEl     = '#contentTag-list',
                     return output;
                 }
             },
-            { data : 'module_id',
+            { data : 'tag_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
                     output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
@@ -131,12 +131,12 @@ let tableEl     = '#contentTag-list',
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
                     if (!full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
                     }
                     if (full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.module_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
                     }
-                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.module_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.tag_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
                     output += '        </ul>';
                     output += '    </div>';
                     output += '</div>';
