@@ -30,8 +30,8 @@ $_['form'] = [
     ],
     'meta'        => [
         'categories'  => [],
-        'robots'      => 'global',
-        'comment'     => 'global',
+        'robots'      => '',
+        'comment'     => '',
         'custom_code' => '', // js, css
     ],
 ];

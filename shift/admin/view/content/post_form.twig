@@ -80,14 +80,14 @@
                             <legend class="uk-legend">{{ app.language.get('option') }}</legend>
 
                             {{ forms.select({'label':'robots', 'name':'meta[robots]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('global'),           'value': 'global'},
+                                {'text': app.language.get('global'),           'value': ''},
                                 {'text': app.language.get('index_follow'),     'value': 'index, follow'},
                                 {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
                                 {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
                                 {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
                             ]}) }}
                             {{ forms.select({'label':'comment', 'name':'meta[comment]', 'selected':setting.meta.comment, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('global'),   'value': 'global'},
+                                {'text': app.language.get('global'),   'value': ''},
                                 {'text': app.language.get('public'),   'value': 'public'},
                                 {'text': app.language.get('register'), 'value': 'register'},
                                 {'text': app.language.get('disabled'), 'value': 'disabled'},
