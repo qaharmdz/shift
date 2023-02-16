@@ -1,0 +1,89 @@
+{% extends 'main.tpl.twig' %}
+
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
+{% block main_content %}
+<div class="uk-container {{ sites|length == 1 ? 'uk-container-small' }} container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting"}'>{{ app.language.get('save') }}</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <form id="form-setting" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('setting/setting/save') }}" method="post" data-form-monitor>
+            <div uk-grid>
+                {% if sites|length > 1 %}
+                <div class="uk-width-content-sidebar@l">
+                    <div class="uk-card-panel uk-card-body ukt-p-3">
+                        <ul class="uk-nav uk-nav-secondary">
+                            {% for site in sites %}
+                            <li class="{{ site.site_id == site_id ? 'uk-active' }}">
+                                <a href="{{ site.url_setting }}">
+                                    <div>{{ site.name }}
+                                        <div class="uk-nav-subtitle">{{ site.url_host }}</div>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="uk-width-expand">
+                    <div class="uk-card-panel uk-card-body">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('posts') }}</legend>
+
+                            {{ forms.select({'label':'robots', 'name':'post_robots', 'selected':setting.post_robots, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+                            ]}) }}
+                            {{ forms.select({'label':'comment', 'name':'post_comment', 'selected':setting.post_comment, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('global'),   'value': ''},
+                                {'text': app.language.get('public'),   'value': 'public'},
+                                {'text': app.language.get('register'), 'value': 'register'},
+                                {'text': app.language.get('disabled'), 'value': 'disabled'},
+                            ]}) }}
+                            {{ forms.textarea({'label':'custom_code', 'name':'post_custom_code', 'value':setting.post_custom_code, 'rows':6}) }}
+                        </fieldset>
+
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('categories') }}</legend>
+
+                            {{ forms.select({'label':'robots', 'name':'category_robots', 'selected':setting.category_robots, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+                            ]}) }}
+                            {{ forms.input({'type':'number', 'label':'post_per_page', 'name':'category_post_per_page', 'value':setting.category_post_per_page, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead', 'name':'category_post_lead', 'value':setting.category_post_lead, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'category_post_lead_excerpt', 'value':setting.category_post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column', 'name':'category_post_column', 'value':setting.category_post_column, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'category_post_column_excerpt', 'value':setting.category_post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.select({'label':'post_order', 'name':'category_post_order', 'selected':setting.category_post_order, 'class':'uk-width-175@m', 'options':[
+                                {'text': app.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
+                                {'text': app.language.get('pc.title~desc'), 'value': 'pc.title~desc'},
+                                {'text': app.language.get('p.publish~asc'),'value': 'p.publish~asc'},
+                                {'text': app.language.get('p.publish~desc'), 'value': 'p.publish~desc'},
+                                {'text': app.language.get('p.updated~asc'),'value': 'p.updated~asc'},
+                                {'text': app.language.get('p.updated~desc'), 'value': 'p.updated~desc'},
+                                {'text': app.language.get('p.sort_order~asc'),'value': 'p.sort_order~asc'},
+                                {'text': app.language.get('p.sort_order~asc'), 'value': 'p.sort_order~desc'},
+                            ]}) }}
+                            {{ forms.textarea({'label':'custom_code', 'name':'category_custom_code', 'value':setting.category_custom_code, 'rows':6}) }}
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
