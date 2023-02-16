@@ -25,7 +25,7 @@ class Cache extends Psr16Adapter
     }
 
     /**
-     * Quick setup helper
+     * Setup helper
      */
     public function setup(string|ExtendedCacheItemPoolInterface $driver, array|ConfigurationOptionInterface $config = null)
     {
@@ -55,7 +55,7 @@ class Cache extends Psr16Adapter
     /**
      * Instance to access all API
      *
-     * @return [type] [description]
+     * @return \Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface
      */
     public function getInstance()
     {

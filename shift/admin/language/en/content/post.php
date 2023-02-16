@@ -6,10 +6,7 @@ $_['excerpt']           = 'Excerpt';
 $_['default_category']  = 'Default Category';
 $_['categories']        = 'Categories';
 $_['visibility']        = 'Visibility';
-$_['comment']           = 'Comment';
 
-$_['public']            = 'Public';
-$_['register']          = 'Register';
 $_['draft']             = 'Draft';
 $_['pending']           = 'Pending';
 $_['trash']             = 'Trash';

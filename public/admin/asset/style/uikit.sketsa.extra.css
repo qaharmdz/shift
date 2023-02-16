@@ -39,6 +39,15 @@ html,
     }
 }
 
+/* Nav
+==================================== */
+.uk-nav-secondary .uk-nav-subtitle {
+    font-size: 12.4px;
+}
+.uk-nav-secondary > li.uk-active > a .uk-nav-subtitle {
+    color: #555;
+}
+
 /* Navbar
 ==================================== */
 .uk-navbar-left,

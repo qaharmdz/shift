@@ -37,8 +37,6 @@ class Setting extends Mvc\Controller
             $data['sites'][$key]['url_setting'] = $this->router->url('content/setting', 'site_id=' . $site['site_id']);
         }
 
-        d($data);
-
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');

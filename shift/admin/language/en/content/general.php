@@ -20,7 +20,9 @@ $_['index_follow']        = 'Index - Follow';
 $_['index_nofollow']      = 'Index - No Follow';
 $_['noindex_follow']      = 'No Index - Follow';
 $_['noindex_nofollow']    = 'No Index - No Follow';
-
+$_['comment']             = 'Comment';
+$_['public']              = 'Public';
+$_['register']            = 'Register';
 
 $_['post_per_page']       = 'Post Per Page';
 $_['post_lead']           = 'Leading Post';

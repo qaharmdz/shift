@@ -108,9 +108,7 @@ class Site extends Mvc\Model
         $sites = $this->cache->get('sites');
 
         if (!$sites) {
-            $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC");
-            $sites = $query->rows;
-
+            $sites = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC")->rows;
             $this->cache->set('sites', $sites);
         }
 
