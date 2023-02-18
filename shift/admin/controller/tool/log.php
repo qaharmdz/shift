@@ -130,18 +130,8 @@ class Log extends Mvc\Controller
 
         if (is_file($filepath)) {
             $data['exist'] = true;
-
-            $size = $bytes = filesize($filepath);
-            $suffix = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-            $i = 0;
-            while (($size / 1024) > 1) {
-                $size = $size / 1024;
-                $i++;
-            }
-
-            $data['bytes'] = $bytes;
-            $data['size']  = round($size, 2) . ' ' . $suffix[$i];
+            $data['bytes'] = $bytes = (int)filesize($filepath);
+            $data['size']  = $this->bytesToHuman($bytes);
 
             /**
              * State:
@@ -159,5 +149,16 @@ class Log extends Mvc\Controller
         }
 
         return $data;
+    }
+
+    public function bytesToHuman(int $bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        for ($i = 0; $bytes > 1024; $i++) {
+            $bytes /= 1024;
+        }
+
+        return round($bytes, 2) . ' ' . $units[$i];
     }
 }

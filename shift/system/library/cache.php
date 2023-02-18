@@ -57,7 +57,7 @@ class Cache extends Psr16Adapter
      *
      * @return \Phpfastcache\Core\Pool\ExtendedCacheItemPoolInterface
      */
-    public function getInstance()
+    public function instance()
     {
         return $this->internalCacheInstance;
     }
