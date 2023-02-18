@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Admin\Controller\Setting;
 
 use Shift\System\Mvc;
+use Shift\System\Helper\Arr;
 
 class Site extends Mvc\Controller
 {
@@ -190,9 +191,7 @@ class Site extends Mvc\Controller
             $data['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $data['new_id']);
         }
 
-        unset($post['form']);
-        unset($post['action']);
-        unset($post['site_id']);
+        Arr::unset($post, ['site_id', 'form', 'action', 'timezone']);
 
         $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 

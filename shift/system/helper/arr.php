@@ -89,6 +89,22 @@ class Arr
     }
 
     /**
+     * Removes array items by keys
+     *
+     * @param  array  &$arrays
+     * @param  array  $keys
+     * @return array
+     */
+    public static function unset(array &$arrays, array $keys): array
+    {
+        foreach ($keys as $key) {
+            unset($arrays[$key]);
+        }
+
+        return $arrays;
+    }
+
+    /**
      * Check if an item or items exist in an array using "dot" notation.
      *
      * @param  array  $array

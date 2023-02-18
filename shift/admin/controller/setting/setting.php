@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Admin\Controller\Setting;
 
 use Shift\System\Mvc;
+use Shift\System\Helper\Arr;
 
 class Setting extends Mvc\Controller
 {
@@ -62,8 +63,7 @@ class Setting extends Mvc\Controller
             return $this->response->setOutputJson($errors, 422);
         }
 
-        unset($post['form']);
-        unset($post['action']);
+        Arr::unset($post, ['form', 'action', 'timezone']);
 
         $this->model_setting_setting->editSetting('system', 'setting', $post);
 
