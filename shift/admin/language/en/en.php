@@ -112,4 +112,4 @@ $_['error_value_maximum']   = 'The maximum value allowed is %s.';
 
 $_['error_forbidden']       = 'Forbidden, you not have permission to proceed!'; // 403
 $_['error_precondition']    = 'Precondition failed, please check your request!'; // 412
-$_['error_unprocessable']   = 'Unprocessable entity, try again later, .'; // 422
+$_['error_unprocessable']   = 'Unprocessable entity, try again later.'; // 422

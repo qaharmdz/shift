@@ -88,7 +88,6 @@ class Header extends Mvc\Controller
                 'url'  => $this->router->url('content/tag'),
             ]);
         }
-
         if ($this->user->hasPermission('access', 'content/setting')) {
             $content[] = $this->nav([
                 'type' => 'divider',
@@ -155,7 +154,6 @@ class Header extends Mvc\Controller
                 'url'  => $this->router->url('extension/language'),
             ]);
         }
-
         if ($this->user->hasPermission('access', 'extension/event')) {
             $extension[] = $this->nav([
                 'type' => 'divider',
@@ -201,7 +199,6 @@ class Header extends Mvc\Controller
                 'url'  => $this->router->url('account/user'),
             ]);
         }
-
         if ($this->user->hasPermission('access', 'account/usergroup')) {
             $user[] = $this->nav([
                 'name' => $this->language->get('header.user_group'),
@@ -226,7 +223,6 @@ class Header extends Mvc\Controller
                 'url'  => $this->router->url('setting/setting'),
             ]);
         }
-
         if ($this->user->hasPermission('access', 'setting/site')) {
             $system[] = $this->nav([
                 'name' => $this->language->get('header.sites'),
@@ -245,17 +241,22 @@ class Header extends Mvc\Controller
         // Maintenance
         $maintenance = [];
 
-        if ($this->user->hasPermission('access', 'tool/backup')) {
-            $maintenance[] = $this->nav([
-                'name' => $this->language->get('header.backup_restore'),
-                'url'  => $this->router->url('tool/backup'),
-            ]);
-        }
-
         if ($this->user->hasPermission('access', 'tool/log')) {
             $maintenance[] = $this->nav([
                 'name' => $this->language->get('header.log'),
                 'url'  => $this->router->url('tool/log'),
+            ]);
+        }
+        if ($this->user->hasPermission('access', 'tool/cache')) {
+            $maintenance[] = $this->nav([
+                'name' => $this->language->get('header.cache'),
+                'url'  => $this->router->url('tool/cache'),
+            ]);
+        }
+        if ($this->user->hasPermission('access', 'tool/backup')) {
+            $maintenance[] = $this->nav([
+                'name' => $this->language->get('header.backup_restore'),
+                'url'  => $this->router->url('tool/backup'),
             ]);
         }
 

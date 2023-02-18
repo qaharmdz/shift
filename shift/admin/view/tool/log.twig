@@ -26,9 +26,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill uk-text-warning ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
-                <button type="submit" class="uk-button uk-button-default ukt-px-3" form="form-log"><i class="bi bi-download uk-text-primary ukt-mr-1"></i> {{ app.language.get('download') }}</button>
-                <button type="submit" class="uk-button uk-button-danger ukt-px-3 uk-margin-small-left" data-log-delete><i class="bi bi-trash uk-text-light ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
+                <button type="submit" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left" form="form-log"><i class="bi bi-download uk-text-primary ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-secondary ukt-px-3 uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
+                <button type="submit" class="uk-button uk-button-danger ukt-px-3" data-log-delete><i class="bi bi-trash uk-text-light ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
             </div>
         </div>
     </div>
@@ -58,18 +58,22 @@ $(document).ready(function() {
     $('[data-log-clear]').on('click', function(e) {
         e.preventDefault();
         $.fn.shift.confirm({
-            title   : shift.i18n.are_you_sure,
-            message : '{{ app.language.get("confirm_clear")|raw }}',
-            onConfirm   : function() { $('#form-log').attr('action', "{{ app.router.url('tool/log/action', 'submit=clear')|raw }}").submit() }
+            title     : shift.i18n.are_you_sure,
+            message   : '{{ app.language.get("confirm_clear")|raw }}',
+            onConfirm : function() {
+                $('#form-log').attr('action', "{{ app.router.url('tool/log/action', 'submit=clear')|raw }}").submit();
+            }
         });
     });
 
     $('[data-log-delete]').on('click', function(e) {
         e.preventDefault();
         $.fn.shift.confirm({
-            title   : shift.i18n.are_you_sure,
-            message : '{{ app.language.get("confirm_delete")|raw }}',
-            onConfirm   : function() { $('#form-log').attr('action', "{{ app.router.url('tool/log/action', 'submit=delete')|raw }}").submit() }
+            title     : shift.i18n.are_you_sure,
+            message   : '{{ app.language.get("confirm_delete")|raw }}',
+            onConfirm : function() {
+                $('#form-log').attr('action', "{{ app.router.url('tool/log/action', 'submit=delete')|raw }}").submit();
+            }
         });
     });
 });

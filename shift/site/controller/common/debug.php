@@ -20,7 +20,7 @@ class Debug extends Mvc\Controller
             $_SESSION === $this->session->all(),
             $this->session->all(),
             $this->config->all(),
-            '----------------------------',
+            // '----------------------------',
             $this->user->get(),
             $this->language->all(),
             date('Y-m-d H:i:s'),
@@ -34,9 +34,9 @@ class Debug extends Mvc\Controller
         // $mail = $this->mail->getInstance();
         // d($this->mail, $mail);
 
-        $this->testExtensions();
+        // $this->testExtensions();
         // $this->testImage();
-        // $this->testCache();
+        $this->testCache();
         // $this->testHelperArr();
 
         // $pagination = new \Shift\System\Library\Pagination();
@@ -92,11 +92,11 @@ class Debug extends Mvc\Controller
     private function testCache()
     {
         d(
-            $this->cache->getInstance()->getConfig(),
-            $this->cache->getInstance()->getStats(),
-            $this->cache->setup('DevNull'),
-            $this->cache->getInstance()->getConfig(),
-            $this->cache->getInstance()->getStats(),
+            $this->cache->instance()->getConfig(),
+            $this->cache->instance()->getStats(),
+            // $this->cache->setup('DevNull'),
+            // $this->cache->instance()->getConfig(),
+            // $this->cache->instance()->getStats(),
         );
     }
 
