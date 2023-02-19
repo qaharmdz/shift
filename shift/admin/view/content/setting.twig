@@ -8,13 +8,13 @@
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
-                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting"}'>{{ app.language.get('save') }}</button>
+                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting", "site_id":"{{ site_id }}"}'>{{ app.language.get('save') }}</button>
             </div>
         </div>
     </div>
 
     <div class="content-body">
-        <form id="form-setting" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('setting/setting/save') }}" method="post" data-form-monitor>
+        <form id="form-setting" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('content/setting/save') }}" method="post" data-form-monitor>
             <div uk-grid>
                 {% if sites|length > 1 %}
                 <div class="uk-width-content-sidebar@l">
