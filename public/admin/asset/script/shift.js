@@ -371,10 +371,16 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
             $(document).trigger('IIDE.form_submit.before');
             $(el).prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-data-form-submit" style="margin-left:-5px;margin-right:8px;"></span>');
 
+            if (shift.editor.instances) {
+                $.each(shift.editor.instances, function(elid, editor) {
+                    $('#' + elid).text(editor.getData());
+                });
+            }
+
             $(form).ajaxSubmit({
                 dataType : 'json',
                 data : opt,
-                beforeSend : function(data) {
+                beforeSend: function(data) {
                     $('.main-content *').removeClass('uk-form-danger');
                     $('.uk-text-meta.uk-text-danger').remove();
                     $.fn.shift.goNotify('process', shift.i18n.saving);
@@ -383,7 +389,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                     $(el).prop('disabled', false);
                     $('.js-data-form-submit').remove();
                 },
-                success : function(data) {
+                success: function(data) {
                     shift.formChanged = false;
 
                     setTimeout(function() {
@@ -398,7 +404,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                         }
                     }, 200);
                 },
-                error : function(xhr) {
+                error: function(xhr) {
                     let data = xhr.responseJSON;
 
                     if (data !== undefined) {
@@ -414,6 +420,44 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                 }
             });
         });
+    });
+});
+
+$(document).on('IIDE.init IIDE.editor', function(event)
+{
+    /**
+     * Add datepicker and optional time picker to input
+     *
+     * @usage
+     * <textarea data-editor></textarea>
+     * <textarea data-editor='{"mode":"basic"}'></textarea>
+     */
+    $('[data-editor]').each(function(i) {
+        let el   = this,
+            elid = euid('ckeditor-xxxxxx'),
+            opt  = $.extend({
+                mode  : 'default', // basic, default
+                count : 'count-' + elid
+            }, $(el).data('editor'));
+
+        $(el).attr('id', elid);
+
+        ClassicEditor
+            .create(document.getElementById(elid), {
+                toolbar: {
+                    items: opt.mode == 'basic' ? shift.editor.mode_basic : shift.editor.mode_default,
+                }
+            })
+            .then(function(editor) {
+                shift.editor.instances[elid] = editor;
+
+                let wordCount = editor.plugins.get('WordCount');
+                $('#' + elid).parent().append('<div id="' + opt.count + '"></div>')
+                $('#' + opt.count).html(wordCount.wordCountContainer);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
     });
 });
 
@@ -484,4 +528,16 @@ function formatDate(datetime) {
         };
 
     return new Intl.DateTimeFormat('en-US', options).format(dateUTC).replace (/,/g, '');
+}
+
+/**
+ * Element unique id
+ * https://stackoverflow.com/a/2117523
+ */
+function euid(format) {
+    var euid = format ? format : 'sh-xxx-xxxxxx';
+
+    return euid.replace(new RegExp('x', 'g'), function() {
+        return (Math.floor(Math.random() * 10));
+    });
 }

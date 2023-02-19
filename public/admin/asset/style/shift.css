@@ -281,6 +281,61 @@ body {
     margin-top: 1px;
 }
 
+/* CKEditor 5
+==================================== */
+
+.ck-toolbar__items {
+    font-size: 11px !important;
+}
+.ck.ck-toolbar > .ck-toolbar__items > :not(.ck-toolbar__line-break):not(.ck-toolbar__separator),
+.ck.ck-toolbar > .ck.ck-toolbar__grouped-dropdown {
+    margin-bottom: 2px !important;
+    margin-top: 2px !important;
+    padding: 1px !important;
+}
+.ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+    width: 60px !important;
+}
+
+.ck-editor__editable_inline {
+    font-size: 13px;
+    min-height: 150px;
+}
+.ck-editor__editable_inline p,
+.ck-editor__editable_inline * + p {
+    margin: 10px 0;
+}
+.ck-editor__editable_inline * + h1,
+.ck-editor__editable_inline * + h2,
+.ck-editor__editable_inline * + h3,
+.ck-editor__editable_inline * + h4,
+.ck-editor__editable_inline * + h5,
+.ck-editor__editable_inline * + h6 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.ck-source-editing-area textarea,
+.ck-source-editing-area:after {
+    font-size: 13px !important;
+    line-height: 16px !important;
+    min-height: 150px;
+}
+
+.ck-word-count {
+    text-align: right;
+    line-height: 0;
+    padding: 3px 5px;
+    border-top: 3px solid #fff;
+}
+.ck-word-count__words,
+.ck-word-count__characters {
+    font-size: 11px;
+    line-height: 11px;
+    display: inline-block;
+    margin: 0 5px;
+}
+
 /* Flatpickr
 ==================================== */
 .flatpickr-calendar {

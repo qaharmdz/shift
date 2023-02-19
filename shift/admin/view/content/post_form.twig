@@ -49,8 +49,12 @@
                                     <fieldset class="uk-fieldset">
                                         {{ forms.input({'label':'title', 'name':'content[' ~ language.language_id ~ '][title]', 'value':setting.content[language.language_id]['title'], 'required':true}) }}
                                         {{ forms.input({'label':'url_alias', 'name':'alias[' ~ language.language_id ~ ']', 'value':setting.alias[language.language_id] ?? '', 'class':'uk-form-blank uk-text-italic'}) }}
-                                        {{ forms.textarea({'label':'excerpt', 'name':'content[' ~ language.language_id ~ '][excerpt]', 'value':setting.content[language.language_id]['content'], 'class':'js-editor'}) }}
-                                        {{ forms.textarea({'label':'content', 'name':'content[' ~ language.language_id ~ '][content]', 'value':setting.content[language.language_id]['content'], 'class':'js-editor'}) }}
+                                        <div class="uk-form-editor">
+                                            {{ forms.textarea({'label':'excerpt', 'name':'content[' ~ language.language_id ~ '][excerpt]', 'value':setting.content[language.language_id]['excerpt'], 'attribute':'data-editor=\'{"mode":"basic"}\''}) }}
+                                        </div>
+                                        <div class="uk-form-editor">
+                                            {{ forms.textarea({'label':'content', 'name':'content[' ~ language.language_id ~ '][content]', 'value':setting.content[language.language_id]['content'], 'attribute':'data-editor'}) }}
+                                        </div>
                                     </fieldset>
 
                                     <fieldset class="uk-fieldset">

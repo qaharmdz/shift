@@ -99,6 +99,20 @@ html,
         padding: 0;
     }
 }
+.uk-form-editor .uk-form-label {
+    display: block;
+    width: auto;
+    margin: 0 0 10px 0;
+    float: none;
+}
+.uk-form-editor .uk-form-controls {
+    margin-left: 0;
+    min-height: 100px;
+    background: #f4f4f4;
+}
+.uk-form-editor .uk-form-controls > textarea {
+    display: none;
+}
 
 .uk-checkbox, .uk-input, .uk-radio, .uk-select, .uk-textarea, .uk-input-text {
     font-size: .94rem;

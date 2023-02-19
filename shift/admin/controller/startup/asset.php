@@ -47,11 +47,9 @@ class Asset extends Mvc\Controller
         ]);
 
         $this->document->addAsset('editor', [
-            'style'  => [
-                $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
-            ],
             'script' => [
-                $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.js',
+                $this->config->get('env.url_app') . 'asset/script/ckeditor/build/ckeditor.js',
+                $this->config->get('env.url_app') . 'asset/script/shift.ckeditor.js',
             ]
         ]);
     }
