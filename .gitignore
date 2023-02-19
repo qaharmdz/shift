@@ -15,6 +15,7 @@ shift/temp/*/*
 
 public/media/cache/*
 !public/media/cache/index.html
+**/node_modules
 
 #--------------------------------------------------
 # https://github.com/github/gitignore
