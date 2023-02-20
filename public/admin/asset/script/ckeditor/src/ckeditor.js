@@ -50,6 +50,55 @@ import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount.js';
 
 class Editor extends ClassicEditor {}
 
+// =============================================================================
+
+import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
+import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+
+class ShiftMediaManager extends Plugin {
+    init() {
+        const editor = this.editor;
+
+        // Register button to editor UI components to be displayed in the toolbar
+        editor.ui.componentFactory.add('shiftMediaManager', () => {
+            // The button will be an instance of ButtonView.
+            // https://ckeditor.com/docs/ckeditor5/latest/api/module_ui_button_buttonview-ButtonView.html
+            const button = new ButtonView();
+
+            button.set({
+                // https://icons.getbootstrap.com/icons/images/
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16"><path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/><path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/></svg>',
+                label: 'TODO: Media Manager',
+                class: 'cks-icon cks-media-manager-button',
+                withText: false,
+                tooltip: true,
+            });
+
+            // Execute a callback function when the button is clicked.
+            button.on('execute', () => {
+                const now = new Date();
+
+                // $('.uk-form-editor').addClass('test');
+
+                // Change the model using the model writer.
+                // https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_model_writer-Writer.html
+                editor.model.change(writer => {
+
+                    // Insert the text at the user's current position.
+                    editor.model.insertContent( writer.createText( now.toString() ) );
+
+                    // Add image: https://stackoverflow.com/questions/53208435/how-to-insert-an-image-with-a-caption-into-a-custom-element-in-ckeditor-5
+                });
+
+            });
+
+            return button;
+        });
+    }
+}
+
+// =============================================================================
+
 // Plugins to include in the build.
 Editor.builtinPlugins = [
 	Alignment,
@@ -95,7 +144,8 @@ Editor.builtinPlugins = [
 	TableToolbar,
 	TextTransformation,
 	Underline,
-	WordCount
+	WordCount,
+    ShiftMediaManager,
 ];
 
 // Editor configuration.

@@ -436,24 +436,41 @@ $(document).on('IIDE.init IIDE.editor', function(event)
         let el   = this,
             elid = euid('ckeditor-xxxxxx'),
             opt  = $.extend({
-                mode  : 'default', // basic, default
-                count : 'count-' + elid
+                mode    : 'default', // basic, default, all, custom
+                wrapper : 'wrapper-' + elid,
+                toolbar : [],
             }, $(el).data('editor'));
 
         $(el).attr('id', elid);
 
+        switch (opt.mode) {
+            case 'basic':
+                opt.toolbar = shift.editor.mode_basic;
+                break;
+            case 'all':
+                opt.toolbar = shift.editor.mode_all;
+                break;
+            case 'custom':
+                // Do nothing
+                break;
+            default:
+                opt.toolbar = shift.editor.mode_default;
+        }
+
         ClassicEditor
             .create(document.getElementById(elid), {
                 toolbar: {
-                    items: opt.mode == 'basic' ? shift.editor.mode_basic : shift.editor.mode_default,
+                    items: opt.toolbar,
                 }
             })
             .then(function(editor) {
                 shift.editor.instances[elid] = editor;
 
+                $('#' + elid).parent().addClass(opt.wrapper).addClass('ckeditor-mode-' + opt.mode);
+
                 let wordCount = editor.plugins.get('WordCount');
-                $('#' + elid).parent().append('<div id="' + opt.count + '"></div>')
-                $('#' + opt.count).html(wordCount.wordCountContainer);
+                $('.' + opt.wrapper).append('<div class="ckeditor-wordcount"></div>')
+                $('.' + opt.wrapper + ' .ckeditor-wordcount').html(wordCount.wordCountContainer);
             })
             .catch(function(error) {
                 console.log(error);
