@@ -241,10 +241,10 @@ class Header extends Mvc\Controller
         // Maintenance
         $maintenance = [];
 
-        if ($this->user->hasPermission('access', 'tool/log')) {
+        if ($this->user->hasPermission('access', 'tool/backup')) {
             $maintenance[] = $this->nav([
-                'name' => $this->language->get('header.log'),
-                'url'  => $this->router->url('tool/log'),
+                'name' => $this->language->get('header.backup_restore'),
+                'url'  => $this->router->url('tool/backup'),
             ]);
         }
         if ($this->user->hasPermission('access', 'tool/cache')) {
@@ -253,10 +253,10 @@ class Header extends Mvc\Controller
                 'url'  => $this->router->url('tool/cache'),
             ]);
         }
-        if ($this->user->hasPermission('access', 'tool/backup')) {
+        if ($this->user->hasPermission('access', 'tool/log')) {
             $maintenance[] = $this->nav([
-                'name' => $this->language->get('header.backup_restore'),
-                'url'  => $this->router->url('tool/backup'),
+                'name' => $this->language->get('header.log'),
+                'url'  => $this->router->url('tool/log'),
             ]);
         }
 

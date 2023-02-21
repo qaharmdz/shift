@@ -22,9 +22,9 @@ $_['event']          = 'Events';
 $_['tool']           = 'Tools';
 $_['module_layout']  = 'Module Layouts';
 $_['maintenance']    = 'Maintenance';
-$_['log']            = 'Logs Viewer';
-$_['cache']          = 'Clear Cache';
 $_['backup_restore'] = 'DB Backup / Restore';
+$_['cache']          = 'Clear Cache';
+$_['log']            = 'Logs Viewer';
 
 $_['account']        = 'Accounts';
 $_['user']           = 'Users';

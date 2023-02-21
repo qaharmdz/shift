@@ -15,7 +15,7 @@ shift.editor.mode_default = [
     'fontColor', 'fontBackgroundColor', 'alignment', '|',
     'bulletedList', 'numberedList', 'outdent', 'indent', '|',
     'blockQuote', 'link', 'shiftMediaManager', 'insertTable', '|',
-    'undo', 'redo', 'findAndReplace', '|', 'sourceEditing',
+    'undo', 'redo', '|', 'sourceEditing',
 ];
 shift.editor.mode_all = [
     'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
@@ -23,9 +23,10 @@ shift.editor.mode_all = [
     'bulletedList', 'numberedList', 'outdent', 'indent', '|',
     'blockQuote', 'link', 'shiftMediaManager', 'mediaEmbed', 'insertTable', '|', 'sourceEditing',
     '-',
-    'findAndReplace', 'undo', 'redo', '|', 'fontFamily','fontSize', 'fontColor', 'fontBackgroundColor', '|',
-    'horizontalLine', 'pageBreak', 'code', 'codeBlock'
+    'findAndReplace', '|', 'fontFamily','fontSize', 'fontColor', 'fontBackgroundColor', '|',
+    'horizontalLine', 'pageBreak', 'code', 'codeBlock', '|', 'undo', 'redo'
 ];
+// shift.editor.mode_default = shift.editor.mode_all;
 
 ClassicEditor.defaultConfig =  {
     language: 'en',
@@ -67,7 +68,7 @@ ClassicEditor.defaultConfig =  {
     htmlSupport: {
         allow: [
             {
-                name: /^(div|section|p|span|table|ul|ol|b|i|u)$/,
+                name: /^(div|span|section|table|ul|ol|p|b|i|u)$/,
                 attributes: true,
                 classes: true,
                 styles: true,

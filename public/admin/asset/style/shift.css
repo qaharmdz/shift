@@ -284,7 +284,8 @@ body {
 /* CKEditor 5
 ==================================== */
 
-.ck.ck-toolbar {
+.ck.ck-toolbar,
+.ckeditor-wordcount {
     background: #f8f8f8 !important;
 }
 .ck.ck-toolbar > .ck-toolbar__items {
@@ -309,13 +310,12 @@ a.ck.ck-button:not(.ck-disabled):hover {
 }
 
 .ck-editor__editable_inline {
-    font-size: 12.5px;
-    line-height: 18px;
+    font-size: 13.6px;
     min-height: 300px;
-    max-height: 84vh;
+    max-height: 80vh;
 }
 .ckeditor-mode-basic .ck-editor__editable_inline {
-    min-height: 130px;
+    min-height: 140px;
 }
 
 .ck-editor__editable_inline p,
@@ -334,9 +334,11 @@ a.ck.ck-button:not(.ck-disabled):hover {
 
 .ck-source-editing-area textarea,
 .ck-source-editing-area:after {
+    overflow: auto !important;
     font-size: 13px !important;
     line-height: 16px !important;
-    min-height: 150px;
+    min-height: 140px;
+    max-height: 80vh;
 }
 
 .ckeditor-wordcount {
