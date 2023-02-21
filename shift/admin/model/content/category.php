@@ -262,4 +262,45 @@ class Category extends Mvc\Model
 
         $this->cache->delete('categories');
     }
+
+    /**
+     * @param  string $key     returned array key
+     * @param  array  $filters
+     * @return array
+     */
+    public function getCategoryTree(
+        array $lists = [],
+        array $exclude = [],
+        int $parent = 0,
+        string $indent = '|&mdash;',
+        int $level = 0
+    ): array {
+        $data = [];
+
+        if (!$lists) {
+            $lists = $this->db->get("
+                SELECT t.term_id, t.parent_id, t.status, tc.title
+                FROM `" . DB_PREFIX . "term` t
+                    LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
+                WHERE t.`taxonomy` = 'post_category'
+                ORDER BY t.parent_id ASC, t.sort_order ASC
+            ")->rows;
+        }
+
+        foreach ($lists as $key => $category) {
+            if ($category['parent_id'] == $parent) {
+                $data[] = [
+                    'category_id' => $category['term_id'],
+                    'parent_id'   => $category['parent_id'],
+                    'title'       => str_repeat($indent . ' ', $level) . $category['title'],
+                    'status'      => $category['status'],
+                ];
+
+                unset($lists[$key]); // cleanup
+                $data = array_merge($data, $this->getCategoryTree($lists, $exclude, $category['term_id'], $indent, $level + 1));
+            }
+        }
+
+        return $data;
+    }
 }

@@ -188,7 +188,7 @@
                     {% for list in param.lists %}
                         <li>
                             <label class="uk-input-text" style="display:block;">
-                                <input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list[param.list_value] }}" {{ list in param.checked ? 'checked' }}> {{ list[param.list_text] }}
+                                <input class="uk-checkbox checkbox-toggle-{{ param.label }}" type="checkbox" name="{{ param.name}}" value="{{ list[param.list_value] }}" {{ list[param.list_value] in param.checked ? 'checked' }}> {{ list[param.list_text] }}
                             </label>
                         </li>
                     {% endfor %}
