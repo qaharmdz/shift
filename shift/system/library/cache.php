@@ -15,6 +15,16 @@ use Phpfastcache\Exceptions\PhpfastcacheSimpleCacheException;
 /**
  * PHPFastCache PSR-16 adapter wrapper
  *
+ * Psr16Adapter public methods:
+ * - get(string $key, mixed $default = null): mixed
+ * - public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
+ * - delete(string $key): bool
+ * - clear(): bool
+ * - getMultiple(iterable $keys, mixed $default = null): iterable
+ * - setMultiple(iterable $values, null|int|\DateInterval $ttl = null): bool
+ * - deleteMultiple(iterable $keys): bool
+ * - has(string $key): bool
+ *
  * @link https://github.com/PHPSocialNetwork/phpfastcache/blob/master/lib/Phpfastcache/Helper/Psr16Adapter.php
  */
 class Cache extends Psr16Adapter
@@ -64,6 +74,13 @@ class Cache extends Psr16Adapter
 
     /**
      * Set cache with "tags" parameter
+     *
+     * @param string $key
+     * @param mixed $value
+     * @param null|int|DateInterval $ttl
+     * @param array $tags
+     * @return bool
+     * @throws PhpfastcacheSimpleCacheException
      */
     public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null, array $tags = []): bool
     {

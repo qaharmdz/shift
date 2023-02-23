@@ -93,7 +93,7 @@ class Image extends SimpleImage
         return $this->config['url'] . $this->imageFile;
     }
 
-        /**
+    /**
      * Save image to cache path.
      *
      * @param  string|null $cacheName

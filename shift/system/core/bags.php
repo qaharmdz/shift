@@ -6,6 +6,28 @@ namespace Shift\System\Core;
 
 /**
  * Dot notation access to arrays.
+ *
+ * \Adbar\Dot public methods:
+ * - add($keys, $value = null)
+ * - all()
+ * - clear($keys = null)
+ * - delete($keys)
+ * - exists($array, $key)
+ * - flatten($delimiter = '.', $items = null, $prepend = '')
+ * - get($key = null, $default = null)
+ * - getArrayItems($items)
+ * - has($keys)
+ * - isEmpty($keys = null)
+ * - merge($key, $value = [])
+ * - mergeRecursive($key, $value = [])
+ * - mergeRecursiveDistinct($key, $value = [])
+ * - pull($key = null, $default = null)
+ * - push($key, $value = null)
+ * - replace($key, $value = [])
+ * - set($keys, $value = null)
+ * - setArray($items)
+ * - setReference(array &$items)
+ * - toJson($key = null, $options = 0)
  */
 class Bags extends \Adbar\Dot
 {
