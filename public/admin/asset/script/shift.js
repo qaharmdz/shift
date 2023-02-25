@@ -5,6 +5,7 @@
  *   - Form change confirmation
  *   - AJAX setup
  *   - UIkit components
+ *   - Select2
  *
  * # jQuery Plugins - IIFE (Immediately Invoked Function Expression)
  *   - $.fn.shift.notify()
@@ -15,7 +16,9 @@
  * # IIDE (Immediate Invoked Data Expressions)
  *   - data-form-monitor
  *   - data-form-submit
+ *   - data-editor
  *   - data-datepicker
+ *   - data-selecttwo
  *   - data-format-date
  *
  * # Functions
@@ -95,6 +98,13 @@ UIkit.mixin({
         animation: ['uk-animation-fade uk-animation-fast']
     }
 }, 'tab');
+
+//=== Select2
+if (jQuery().select2) {
+    $.fn.select2.defaults.set('language', {
+        noResults : function() { return shift.i18n.no_results; },
+    });
+}
 
 
 /*
@@ -317,9 +327,8 @@ UIkit.mixin({
  * ======================================================================== */
 
 /**
- * For new created element retrigger IIDE
- * Ex: $(document).trigger('IIDE.form_monitor');
- *
+ * To retrigger IIDE on dynamically created element,
+ * ex: $(document).trigger('IIDE.form_monitor');
  */
 $(document).ready(function()
 {
@@ -426,7 +435,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
 $(document).on('IIDE.init IIDE.editor', function(event)
 {
     /**
-     * Add datepicker and optional time picker to input
+     * CKEditor
      *
      * @usage
      * <textarea data-editor></textarea>
@@ -501,6 +510,31 @@ $(document).on('IIDE.init IIDE.datepicker', function(event)
             enableTime: opt.time,
             enableSeconds: opt.time,
             time_24hr: true,
+        });
+    });
+});
+
+$(document).on('IIDE.init IIDE.data-selecttwo', function(event)
+{
+    /**
+     * Select2
+     *
+     * @usage
+     * <select data-selecttwo><option>...<option></select>
+     * <select data-selecttwo='{"tags":true}'><option>...<option></select>
+     */
+    $('[data-selecttwo]').each(function(i) {
+        let el  = this,
+            opt = $.extend({
+                tags        : false,
+                placeholder : shift.i18n['-select-']
+            }, $(el).data('selecttwo'));
+
+        console.log(opt);
+        $(el).select2({
+            tags : opt.tags,
+            tokenSeparators : opt.tags ? [','] : [],
+            closeOnSelect   : opt.tags ? false : true
         });
     });
 });

@@ -120,7 +120,7 @@ html,
 .uk-input:not(.uk-form-blank),
 .uk-select:not(.uk-form-blank),
 .uk-textarea:not(.uk-form-blank) {
-    border: 1px solid #d4d4d4;
+    border: 1px solid #ccc;
 }
 .uk-checkbox, .uk-radio {
     background-color: #fdfdfd;

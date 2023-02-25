@@ -63,7 +63,6 @@ $_['-none-']                = ' --- None --- ';
 $_['-select-']              = ' --- Select --- ';
 $_['toggle_check']          = 'Toggle check';
 $_['pagination']            = 'Showing %d to %d of %d (%d Pages)';
-$_['no_results']            = 'No results!';
 
 // Notification
 $_['saving']                = 'Saving..';
@@ -73,7 +72,7 @@ $_['are_you_sure']          = 'Are you sure?';
 $_['yes_sure']              = 'Yes, I\'m sure';
 $_['redirecting']           = 'Redirecting..';
 $_['no_data']               = 'No data available!';
-$_['no_result']             = 'No results found!';
+$_['no_results']             = 'No results found!';
 
 // DataTables
 $_['columns']               = 'Columns';
