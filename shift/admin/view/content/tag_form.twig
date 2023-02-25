@@ -9,13 +9,13 @@
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-category", "tag_id":"{{ tag_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-tag", "tag_id":"{{ tag_id }}"}'>{{ app.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-category", "action":"close", "tag_id":"{{ tag_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
-                                <li><a data-form-submit='{"form":"#form-category", "action":"new", "tag_id":"{{ tag_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-tag", "action":"close", "tag_id":"{{ tag_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-tag", "action":"new", "tag_id":"{{ tag_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
                             </ul>
                         </div>
                     </div>
