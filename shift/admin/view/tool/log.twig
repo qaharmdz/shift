@@ -42,7 +42,7 @@
                 <p>{{ log }}</p>
             </div>
         {% else %}
-            <pre class="uk-resize-vertical uk-margin-remove" style="height:500px;"><code>{{ log }}</code></pre>
+            <pre class="uk-resize-vertical uk-margin-remove logs-content" style="height:500px;"><code>{{ log }}</code></pre>
         {% endif %}
 
         <div class="uk-hidden">
@@ -76,6 +76,31 @@ $(document).ready(function() {
             }
         });
     });
+
+    if ($('.logs-content').length) {
+        let logs = $('.logs-content code').html().split('\n');
+
+        $('.logs-content').hide();
+        $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify" style="height:500px;"><code></code></pre>');
+
+        $.each(logs.reverse(), function(i, el) {
+            let _logInfo  = el.split('|');
+
+            if (_logInfo[1] != undefined) {
+                let _logError = _logInfo.slice(2),
+                    html  = '';
+
+                html += '<div style="padding-bottom:10px;">';
+                html += '<b>' + _logInfo[0] + '-<span class="uk-text-danger">' + _logInfo[1] + '</span></b>';
+                $.each(_logError, function(i, el) {
+                html += '<div style="margin-left:20px">' + el + '</div>';
+                });
+                html += '</div>';
+
+                $('.logs-content-pretify code').append(html);
+            }
+        });
+    }
 });
 </script>
 {% endblock %}

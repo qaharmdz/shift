@@ -45,7 +45,7 @@ class Logger
         $context = $context ?: $this->contextInfo();
         $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
         $message = sprintf(
-            '%s | %s' . PHP_EOL . '    | %s' . PHP_EOL . '    | %s',
+            '%s | %s | %s | %s',
             date('Y-m-d H:i:s e'),
             $level,
             print_r($message, true),
@@ -126,8 +126,8 @@ class Logger
     {
         return [
             'method'     => $_SERVER['REQUEST_METHOD'],
-            'url'        => $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
             'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'url'        => $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
         ];
     }
 
