@@ -238,6 +238,13 @@ class Post extends Mvc\Model
                 $data['content'][$content['language_id']] = array_replace($default['content'][0], $content);
             }
 
+            // Metas
+            $data['meta'] = [];
+            $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i", [$post_id])->rows;
+            foreach ($metas as $meta) {
+                $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
+            }
+
             // Multi-language alias
             $aliases = $this->db->get(
                 "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `route` = ?s AND `param` = ?s AND `value` = ?i",
@@ -245,13 +252,6 @@ class Post extends Mvc\Model
             )->rows;
             foreach ($aliases as $alias) {
                 $data['alias'][$alias['language_id']] = $alias['alias'];
-            }
-
-            // Metas
-            $data['meta'] = [];
-            $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i", [$post_id]);
-            foreach ($metas as $meta) {
-                $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
             }
         }
 

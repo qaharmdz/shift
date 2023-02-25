@@ -230,7 +230,7 @@ class Tag extends Mvc\Model
 
             // Metas
             $data['meta'] = [];
-            $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "term_meta` tm WHERE tm.term_id = ?i", [$tag_id]);
+            $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "term_meta` tm WHERE tm.term_id = ?i", [$tag_id])->rows;
             foreach ($metas as $meta) {
                 $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
             }
