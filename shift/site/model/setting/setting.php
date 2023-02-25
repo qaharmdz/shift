@@ -37,7 +37,7 @@ class Setting extends Mvc\Model
 
     public function getSettingValue(string $group, string $code, string $key, int $site_id = 0)
     {
-        $result = $this->db->query(
+        $result = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s AND `code` = ?s AND `key` = ?s",
             [$site_id, $group, $code, $key]
         )->row;
