@@ -90,10 +90,10 @@ $(document).ready(function() {
                 let _logError = _logInfo.slice(2),
                     html  = '';
 
-                html += '<div style="padding-bottom:10px;">';
-                html += '<b>' + _logInfo[0] + '-<span class="uk-text-danger">' + _logInfo[1] + '</span></b>';
+                html += '<div class="ukt-pb-1">';
+                html += '<b>' + _logInfo[0] + '-<span class="uk-text-danger" style="font-size:.9rem;">' + _logInfo[1] + '</span></b>';
                 $.each(_logError, function(i, el) {
-                html += '<div style="margin-left:20px">' + el + '</div>';
+                html += '<div class="ukt-ml-4">' + el + '</div>';
                 });
                 html += '</div>';
 
