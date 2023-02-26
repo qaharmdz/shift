@@ -29,9 +29,12 @@ $_['form'] = [
         ],
     ],
     'meta'        => [
-        'categories'  => [],
         'robots'      => '',
         'comment'     => '',
         'custom_code' => '', // js, css
     ],
+    'term'        => [
+        'categories'  => [],
+        'tags'        => [],
+    ]
 ];

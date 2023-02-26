@@ -102,6 +102,7 @@ class Post extends Mvc\Controller
         $this->load->model('setting/site');
         $this->load->model('content/post');
         $this->load->model('content/category');
+        $this->load->model('content/tag');
         $this->load->model('extension/language');
         $this->load->model('account/user');
         $this->load->language('content/general');
@@ -126,6 +127,7 @@ class Post extends Mvc\Controller
         $data['users']      = $this->model_account_user->getUsers(['u.status = ?i' => 1]);
         $data['languages']  = $this->model_extension_language->getLanguages();
         $data['categories'] = $this->model_content_category->getCategoryTree();
+        $data['tags']       = $this->model_content_tag->getTags();
         $data['setting']    = $this->model_content_post->getPost($post_id);
 
         $data['layouts'] = $this->load->controller('block/position');

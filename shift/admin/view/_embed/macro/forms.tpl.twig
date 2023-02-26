@@ -89,6 +89,7 @@
         'attribute' : '',
         'info'      : '',
         'required'  : false,
+        'multiple'  : false,
         'errors'    : [],
     }|merge(param) %}
 
@@ -96,9 +97,15 @@
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
-            <select id="{{ param.label }}" name="{{ param.name }}" class="uk-select {{ param.class }}" {{ param.attribute }}>
+            <select id="{{ param.label }}" name="{{ param.name }}" class="uk-select {{ param.class }}" {{ param.multiple ? 'multiple="multiple"' }} {{ param.attribute }}>
                 {% for option in param.options %}
-                    <option value="{{ option[param.opt_value] }}" {{ option[param.opt_value] == param.selected ? 'selected' }}>{{ option[param.opt_text] }}</option>
+                    {% set isSelected = false %}
+                    {% if param.multiple %}
+                        {% set isSelected = option[param.opt_value] in param.selected %}
+                    {% else %}
+                        {% set isSelected = option[param.opt_value] == param.selected %}
+                    {% endif %}
+                    <option value="{{ option[param.opt_value] }}" {{ isSelected ? 'selected' }}>{{ option[param.opt_text] }}</option>
                 {% endfor %}
             </select>
             {% if param.info %}

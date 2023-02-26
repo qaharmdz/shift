@@ -20,6 +20,7 @@ class Debug extends Mvc\Controller
             $_SESSION === $this->session->all(),
             $this->session->all(),
             $this->config->all(),
+            $this->config->get('env.languages'),
             // '----------------------------',
             $this->user->get(),
             $this->language->all(),
@@ -27,6 +28,8 @@ class Debug extends Mvc\Controller
             // '----------------------------',
             // $this->view->getConfig(),
             // $this->view->getTemplatePath(),
+            (int)'foo',
+            (int)'foo bar',
         );
 
         // d($this->db->get($this->session->get('dataTables_query'), $this->session->get('dataTables.sql.params')));
@@ -36,7 +39,7 @@ class Debug extends Mvc\Controller
 
         // $this->testExtensions();
         // $this->testImage();
-        $this->testCache();
+        // $this->testCache();
         // $this->testHelperArr();
 
         // $pagination = new \Shift\System\Library\Pagination();

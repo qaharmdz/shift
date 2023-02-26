@@ -101,6 +101,40 @@ class Tag extends Mvc\Model
         return $term_id;
     }
 
+    public function addTagByTitle(string $title): int
+    {
+        $isExist = $this->db->get(
+            "SELECT t.term_id, tc.title FROM `" . DB_PREFIX . "term` t
+                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
+            WHERE t.taxonomy = ?s AND tc.title = ?s",
+            ['post_tag', $title]
+        )->row;
+
+        if ($isExist) {
+            return $isExist['term_id'];
+        }
+
+        $data = [
+            'content' => [],
+            'alias'   => [],
+            'status'  => 1,
+        ];
+
+        $this->load->model('extension/language');
+        $languages = $this->model_extension_language->getLanguages();
+
+        foreach ($languages as $language) {
+            $data['content'][$language['language_id']] = [
+                'title'   => $title,
+                'content' => '',
+            ];
+
+            $data['alias'][$language['language_id']] = $title . '-' . $language['language_id'];
+        }
+
+        return $this->addTag($data);
+    }
+
     public function editTag(int $tag_id, array $data)
     {
         $updated = $this->db->set(
@@ -237,6 +271,17 @@ class Tag extends Mvc\Model
         }
 
         return array_replace($default, $data);
+    }
+
+    public function getTags()
+    {
+        return $this->db->get("
+            SELECT t.term_id, tc.title
+            FROM `" . DB_PREFIX . "term` t
+                LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
+            WHERE t.`taxonomy` = 'post_tag'
+            ORDER BY t.sort_order ASC, tc.title ASC
+        ")->rows;
     }
 
     public function getTotal(): int

@@ -36,10 +36,11 @@ class Post extends Mvc\Model
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
+        // LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = p.term_id)
+
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "post` p
                 LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (pc.post_id = p.post_id AND pc.language_id = " . $this->config->getInt('env.language_id') . ")
-                LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = p.term_id)
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = p.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "user` u ON (u.user_id = p.user_id)"
             . " WHERE p.`taxonomy` = 'post'"
@@ -134,6 +135,10 @@ class Post extends Mvc\Model
         if (!empty($updated->affected_rows)) {
             $this->db->delete(DB_PREFIX . 'post_content', ['post_id' => $post_id]);
             $this->db->delete(DB_PREFIX . 'post_meta', ['post_id' => $post_id]);
+            $this->db->delete(DB_PREFIX . 'term_relation', [
+                'taxonomy' => 'content_post',
+                'taxonomy_id' => $post_id
+            ]);
             $this->db->delete(DB_PREFIX . 'route_alias', [
                 'route' => 'content/post',
                 'param' => 'post_id',
@@ -164,6 +169,7 @@ class Post extends Mvc\Model
             );
         }
 
+        // Meta setting
         foreach ($data['meta'] as $key => $value) {
             $this->db->add(
                 DB_PREFIX . 'post_meta',
@@ -176,6 +182,35 @@ class Post extends Mvc\Model
             );
         }
 
+        // Taxonomy
+        foreach ($data['term']['categories'] as $term_id) {
+            $this->db->add(
+                DB_PREFIX . 'term_relation',
+                [
+                    'term_id'     => $term_id,
+                    'taxonomy'    => 'content_post',
+                    'taxonomy_id' => $post_id,
+                ]
+            );
+        }
+
+        $this->load->model('content/tag');
+        foreach ($data['term']['tags'] as $term_id) {
+            if (!(int)$term_id) {
+                $term_id = $this->model_content_tag->addTagByTitle(title: $term_id);
+            }
+
+            $this->db->add(
+                DB_PREFIX . 'term_relation',
+                [
+                    'term_id'     => $term_id,
+                    'taxonomy'    => 'content_post',
+                    'taxonomy_id' => $post_id,
+                ]
+            );
+        }
+
+        // URL alias
         $this->load->model('setting/site');
         $sites = $this->model_setting_site->getSites();
 
@@ -244,6 +279,32 @@ class Post extends Mvc\Model
             foreach ($metas as $meta) {
                 $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
             }
+
+            // Terms
+            $data['term'] = [];
+
+            $categories = $this->db->get(
+                "SELECT t.term_id
+                FROM `" . DB_PREFIX . "term_relation` tr
+                    LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = tr.term_id)
+                WHERE t.taxonomy = ?s AND tr.taxonomy = ?s AND tr.taxonomy_id = ?i",
+                ['post_category', 'content_post', $post_id]
+            )->rows;
+            foreach ($categories as $category) {
+                $data['term']['categories'][] = $category['term_id'];
+            }
+
+            $tags = $this->db->get(
+                "SELECT t.term_id
+                FROM `" . DB_PREFIX . "term_relation` tr
+                    LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = tr.term_id)
+                WHERE t.taxonomy = ?s AND tr.taxonomy = ?s AND tr.taxonomy_id = ?i",
+                ['post_tag', 'content_post', $post_id]
+            )->rows;
+            foreach ($tags as $tag) {
+                $data['term']['tags'][] = $tag['term_id'];
+            }
+
 
             // Multi-language alias
             $aliases = $this->db->get(

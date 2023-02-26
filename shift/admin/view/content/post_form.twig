@@ -76,8 +76,8 @@
                             {{ forms.select({'label':'primary_category', 'name':'category_id', 'selected':setting.category_id, 'class':'uk-width-2-3@m', 'opt_text':'title', 'opt_value':'category_id', 'attribute':'data-selecttwo', 'options':[
                                 {'title': app.language.get('-none-'), 'category_id': 0}
                             ]|merge(categories)}) }}
-                            {{ forms.checkboxPanel({'label':'categories', 'name':'meta[categories][]', lists:categories, checked:setting.meta.categories, 'list_text':'title', 'list_value':'category_id'}) }}
-                            <p>TODO: tags</p>
+                            {{ forms.checkboxPanel({'label':'categories', 'name':'term[categories][]', lists:categories, checked:setting.term.categories, 'list_text':'title', 'list_value':'category_id'}) }}
+                            {{ forms.select({'label':'tags', 'name':'term[tags][]', 'options':tags, 'selected':setting.term.tags, 'class':'uk-width-1-1', 'opt_text':'title', 'opt_value':'term_id', 'multiple': true, 'attribute':'data-selecttwo=\'{"tags":true}\''}) }}
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
