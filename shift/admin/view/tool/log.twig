@@ -42,7 +42,7 @@
                 <p>{{ log }}</p>
             </div>
         {% else %}
-            <pre class="uk-resize-vertical uk-margin-remove logs-content" style="height:500px;"><code>{{ log }}</code></pre>
+            <pre class="uk-resize-vertical uk-margin-remove logs-content" style="min-height:500px;height:90vh;"><code>{{ log }}</code></pre>
         {% endif %}
 
         <div class="uk-hidden">
@@ -78,22 +78,34 @@ $(document).ready(function() {
     });
 
     if ($('.logs-content').length) {
-        let logs = $('.logs-content code').html().split('\n');
+        let logs = $('.logs-content code').html().split('\n# ');
 
         $('.logs-content').hide();
-        $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify" style="height:500px;"><code></code></pre>');
+        $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify" style="min-height:500px;height:90vh;"><code></code></pre>');
 
         $.each(logs.reverse(), function(i, el) {
             let _logInfo  = el.split('|');
 
             if (_logInfo[1] != undefined) {
                 let _logError = _logInfo.slice(2),
-                    html  = '';
+                    _logTitle = _logInfo[1].trim(),
+                    html  = '',
+                    label = 'danger';
 
-                html += '<div class="ukt-pb-1">';
-                html += '<b>' + _logInfo[0] + '-<span class="uk-text-danger" style="font-size:.9rem;">' + _logInfo[1] + '</span></b>';
+                if (_logTitle == 'Debug') {
+                    label = ' uk-background-blue-light';
+                } else if (_logTitle == 'Warning' || _logTitle == 'Notice') {
+                    label = 'warning';
+                } else if (_logTitle.indexOf('Exception') !== -1) {
+                    label = ' uk-background-teal';
+                }
+
+                html += '<div class="ukt-pb-2">';
+                html += '<b>' + _logInfo[0].trim() + '</b> - <span class="uk-label uk-label-' + label + '">' + _logTitle + '</span>';
                 $.each(_logError, function(i, el) {
-                html += '<div class="ukt-ml-4">' + el + '</div>';
+                    if (el) {
+                        html += '<div class="ukt-ml-4">' + el.trim() + '</div>';
+                    }
                 });
                 html += '</div>';
 

@@ -14,7 +14,7 @@ class Logger
 
         $logfile = $this->config['path'] . $this->config['logfile'];
         if (!is_file($logfile)) {
-            file_put_contents($logfile, '');
+            file_put_contents($logfile, PHP_EOL);
         }
     }
 
@@ -45,7 +45,7 @@ class Logger
         $context = $context ?: $this->contextInfo();
         $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
         $message = sprintf(
-            '%s | %s | %s | %s',
+            '# %s | %s | %s | %s',
             date('Y-m-d H:i:s e'),
             $level,
             print_r($message, true),
@@ -59,9 +59,8 @@ class Logger
 
     public function clear(string $logfile = '')
     {
-        $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
-        $handle = fopen($output, 'w+');
-        fclose($handle);
+        $logfile  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
+        file_put_contents($logfile, PHP_EOL);
     }
 
     public function errorHandler($errno, $errstr, $errfile, $errline, $errcode = 0)
