@@ -526,15 +526,16 @@ $(document).on('IIDE.init IIDE.data-selecttwo', function(event)
     $('[data-selecttwo]').each(function(i) {
         let el  = this,
             opt = $.extend({
-                tags        : false,
+                tags : false,
                 placeholder : shift.i18n['-select-']
             }, $(el).data('selecttwo'));
 
         console.log(opt);
         $(el).select2({
             tags : opt.tags,
+            closeOnSelect : opt.tags ? false : true,
             tokenSeparators : opt.tags ? [','] : [],
-            closeOnSelect   : opt.tags ? false : true
+            dropdownCssClass : opt.tags ? 'select2-tags-dropdown' : '',
         });
     });
 });
