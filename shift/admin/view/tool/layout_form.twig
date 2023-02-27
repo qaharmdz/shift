@@ -33,9 +33,9 @@
 
                     {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-1-2@m', 'required':true}) }}
                     {{ forms.select({'label':'type', 'name':'type', 'selected':setting.type, 'class':'uk-width-200@m', 'options':[
-                        {'text': app.language.get('all'),  'value': 'all'},
-                        {'text': app.language.get('route'), 'value': 'route'},
-                        {'text': app.language.get('specific'), 'value': 'specific'},
+                        {'text': app.language.get('type_all'),  'value': 'all'},
+                        {'text': app.language.get('type_route'), 'value': 'route'},
+                        {'text': app.language.get('type_specific'), 'value': 'specific'},
                     ]}) }}
                     {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
                         {'text': app.language.get('enabled'),  'value': 1},
