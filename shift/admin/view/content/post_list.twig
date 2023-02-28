@@ -47,12 +47,8 @@
                     <td data-filter='{"type":"string"}'>
                         <input type="text" value="" data-index="3" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"number"}'>
-                        <select data-index="4" class="uk-select">
-                            <option value=""></option>
-                            <option value="1">cat 1</option>
-                            <option value="0">cat 2</option>
-                        </select>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="4" class="uk-input">
                     </td>
                     <td data-filter='{"type":"date"}'>
                         <input type="input" value="" data-index="5" data-dtDatePicker class="uk-input"> -
@@ -74,11 +70,13 @@
                         <input type="input" value="" data-index="8" data-dtDatePicker class="uk-input">
                         <a class="uk-text-muted uk-text-mini" style="text-decoration:none;" data-dtDatePicker-clear> x</a>
                     </td>
-                    <td data-filter='{"type":"number"}'>
+                    <td data-filter='{"type":"string"}'>
                         <select data-index="9" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('enabled') }}</option>
-                            <option value="0">{{ app.language.get('disabled') }}</option>
+                            <option value="publish">{{ app.language.get('publish') }}</option>
+                            <option value="pending">{{ app.language.get('pending') }}</option>
+                            <option value="draft">{{ app.language.get('draft') }}</option>
+                            <option value="disabled">{{ app.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td class="uk-text-center">
@@ -97,6 +95,13 @@
 
 <script>
 $(document).ready(function() {
+$.extend(shift.i18n, {
+    status_publish  : '{{ app.language.get("publish") }}',
+    status_pending  : '{{ app.language.get("pending") }}',
+    status_draft    : '{{ app.language.get("draft") }}',
+    status_disabled : '{{ app.language.get("disabled") }}',
+});
+
 let tableEl     = '#contentPost-list',
     columnsHide = [4, 5, 7, 8], // author, created, publish, unpublish
     dtTable     = $(tableEl).DataTable({
@@ -152,9 +157,15 @@ let tableEl     = '#contentPost-list',
             { data : 'status',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];
-                    if (!full.status) {
-                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
+
+                    if (full.status === 'draft') {
+                        output = '<div class="uk-label uk-label-success">' + data + '</div>';
+                    } else if (full.status === 'pending') {
+                        output = '<div class="uk-label uk-label-primary">' + data + '</div>';
+                    } else if (full.status === 'disabled') {
+                        output = '<div class="uk-label uk-label-warning">' + data + '</div>';
                     }
+
                     return output;
                 }
             },
@@ -166,10 +177,16 @@ let tableEl     = '#contentPost-list',
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
-                    if (!full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.post_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                    if (full.status !== 'publish') {
+                        output += '       <li><a data-dtAction=\'{"type":"publish", "item":"' + full.post_id + '"}\'>{{ app.language.get("publish") }}</a></li>';
                     }
-                    if (full.status) {
+                    if (full.status !== 'pending') {
+                        output += '       <li><a data-dtAction=\'{"type":"pending", "item":"' + full.post_id + '"}\'>{{ app.language.get("pending") }}</a></li>';
+                    }
+                    if (full.status !== 'draft') {
+                        output += '       <li><a data-dtAction=\'{"type":"draft", "item":"' + full.post_id + '"}\'>{{ app.language.get("draft") }}</a></li>';
+                    }
+                    if (full.status !== 'disabled') {
                         output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.post_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
                     }
                     output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.post_id + '"}\'> {{ app.language.get("delete") }}</a></li>';

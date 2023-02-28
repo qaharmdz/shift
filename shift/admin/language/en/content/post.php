@@ -10,7 +10,6 @@ $_['visibility']         = 'Visibility';
 
 $_['draft']              = 'Draft';
 $_['pending']            = 'Pending';
-$_['trash']              = 'Trash';
 $_['usergroup']          = 'User Groups';
 $_['password']           = 'Password';
 

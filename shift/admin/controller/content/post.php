@@ -73,7 +73,7 @@ class Post extends Mvc\Controller
         }
 
         $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
-        $types = ['enabled', 'disabled', 'delete'];
+        $types = ['publish', 'pending', 'draft', 'disabled', 'delete'];
         $items = explode(',', $post['item']);
         $data  = [
             'items'     => $items,

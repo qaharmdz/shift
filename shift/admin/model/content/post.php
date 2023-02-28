@@ -36,8 +36,6 @@ class Post extends Mvc\Model
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
-        // LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = p.term_id)
-
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "post` p
                 LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (pc.post_id = p.post_id AND pc.language_id = " . $this->config->getInt('env.language_id') . ")
@@ -55,8 +53,8 @@ class Post extends Mvc\Model
     {
         $_items = [];
 
-        if (in_array($type, ['enabled', 'disabled'])) {
-            $status = $type == 'enabled' ? 1 : 0;
+        if (in_array($type, ['publish', 'pending', 'draft', 'disabled'])) {
+            $status = $type;
 
             foreach ($items as $item) {
                 $this->db->set(
@@ -98,7 +96,7 @@ class Post extends Mvc\Model
                 'term_id'    => (int)$data['category_id'],
                 'visibility' => $data['visibility'],
                 'sort_order' => $data['sort_order'],
-                'status'     => (int)$data['status'],
+                'status'     => $data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
                 'publish'    => $data['publish'] ?: null,
@@ -124,7 +122,7 @@ class Post extends Mvc\Model
                 'term_id'    => (int)$data['category_id'],
                 'visibility' => $data['visibility'],
                 'sort_order' => $data['sort_order'],
-                'status'     => (int)$data['status'],
+                'status'     => $data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
                 'publish'    => $data['publish'] ?: null,
                 'unpublish'  => $data['unpublish'] ?: null,

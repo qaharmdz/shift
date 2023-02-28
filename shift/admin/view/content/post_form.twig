@@ -117,9 +117,9 @@
                             {{ forms.select({'label':'author', 'name':'user_id', 'options':users, 'selected':setting.user_id, 'opt_text':'fullname', 'opt_value':'user_id'}) }}
                             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
                                 {'text': app.language.get('publish'),  'value': 'publish'},
-                                {'text': app.language.get('draft'), 'value': 'draft'},
                                 {'text': app.language.get('pending'), 'value': 'pending'},
-                                {'text': app.language.get('trash'), 'value': 'trash'},
+                                {'text': app.language.get('draft'), 'value': 'draft'},
+                                {'text': app.language.get('disabled'), 'value': 'disabled'},
                             ]}) }}
                             {{ forms.select({'label':'visibility', 'name':'visibility', 'selected':setting.visibility, 'class':'uk-width-150@m', 'options':[
                                 {'text': app.language.get('public'),  'value': 'public'},
