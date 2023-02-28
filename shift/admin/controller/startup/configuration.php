@@ -38,6 +38,10 @@ class Configuration extends Mvc\Controller
             'display' => $this->config->getBool('system.setting.error_display', false)
         ]);
 
+        if ($this->config->getBool('system.setting.development')) {
+            $this->cache->setup('DevNull');
+        }
+
         //=== Event
         $events = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "event` e WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.emitter ASC, e.priority DESC",
