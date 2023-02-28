@@ -297,7 +297,7 @@ class Post extends Mvc\Model
                 FROM `" . DB_PREFIX . "term_relation` tr
                     LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = tr.term_id)
                 WHERE t.taxonomy = ?s AND tr.taxonomy = ?s AND tr.taxonomy_id = ?i",
-                ['post_tag', 'content_post', $post_id]
+                ['content_tag', 'content_post', $post_id]
             )->rows;
             foreach ($tags as $tag) {
                 $data['term']['tags'][] = $tag['term_id'];

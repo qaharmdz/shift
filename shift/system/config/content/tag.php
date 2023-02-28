@@ -5,7 +5,7 @@ declare(strict_types=1);
 // Default setting
 $_['form'] = [
     'tag_id'     => 0,
-    'taxonomy'   => 'post_tag',
+    'taxonomy'   => 'content_tag',
     'status'     => 0,
     'created'    => null,
     'updated'    => null,

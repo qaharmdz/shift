@@ -37,7 +37,7 @@ class Tag extends Mvc\Model
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")"
-            . " WHERE t.`taxonomy` = 'post_tag'"
+            . " WHERE t.`taxonomy` = 'content_tag'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
@@ -61,7 +61,7 @@ class Tag extends Mvc\Model
                     ],
                     [
                         'term_id'  => (int)$item,
-                        'taxonomy' => 'post_tag',
+                        'taxonomy' => 'content_tag',
                     ]
                 );
 
@@ -87,7 +87,7 @@ class Tag extends Mvc\Model
         $this->db->add(
             DB_PREFIX . 'term',
             [
-                'taxonomy'   => 'post_tag',
+                'taxonomy'   => 'content_tag',
                 'status'     => (int)$data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
@@ -107,7 +107,7 @@ class Tag extends Mvc\Model
             "SELECT t.term_id, tc.title FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
             WHERE t.taxonomy = ?s AND tc.title = ?s",
-            ['post_tag', $title]
+            ['content_tag', $title]
         )->row;
 
         if ($isExist) {
@@ -140,7 +140,7 @@ class Tag extends Mvc\Model
         $updated = $this->db->set(
             DB_PREFIX . 'term',
             [
-                'taxonomy'   => 'post_tag',
+                'taxonomy'   => 'content_tag',
                 'status'     => (int)$data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
             ],
@@ -239,7 +239,7 @@ class Tag extends Mvc\Model
 
         $data = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "term` t WHERE t.term_id = ?i AND t.taxonomy = ?s",
-            [$tag_id, 'post_tag']
+            [$tag_id, 'content_tag']
         )->row;
 
         if (!empty($data['term_id'])) {
@@ -279,14 +279,14 @@ class Tag extends Mvc\Model
             SELECT t.term_id, tc.title
             FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
-            WHERE t.`taxonomy` = 'post_tag'
+            WHERE t.`taxonomy` = 'content_tag'
             ORDER BY t.sort_order ASC, tc.title ASC
         ")->rows;
     }
 
     public function getTotal(): int
     {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "term` WHERE `taxonomy` = 'post_tag'")->row['total'];
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "term` WHERE `taxonomy` = 'content_tag'")->row['total'];
     }
 
     public function deleteTags(array $tags): void
