@@ -37,7 +37,7 @@ class Category extends Mvc\Model
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")"
-            . " WHERE t.`taxonomy` = 'post_category'"
+            . " WHERE t.`taxonomy` = 'content_category'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
@@ -61,7 +61,7 @@ class Category extends Mvc\Model
                     ],
                     [
                         'term_id'  => (int)$item,
-                        'taxonomy' => 'post_category',
+                        'taxonomy' => 'content_category',
                     ]
                 );
 
@@ -87,7 +87,7 @@ class Category extends Mvc\Model
             DB_PREFIX . 'term',
             [
                 'parent_id'  => $data['parent_id'],
-                'taxonomy'   => 'post_category',
+                'taxonomy'   => 'content_category',
                 'sort_order' => $data['sort_order'],
                 'status'     => (int)$data['status'],
                 'created'    => date('Y-m-d H:i:s'),
@@ -108,7 +108,7 @@ class Category extends Mvc\Model
             DB_PREFIX . 'term',
             [
                 'parent_id'  => $data['parent_id'],
-                'taxonomy'   => 'post_category',
+                'taxonomy'   => 'content_category',
                 'sort_order' => $data['sort_order'],
                 'status'     => (int)$data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
@@ -209,7 +209,7 @@ class Category extends Mvc\Model
 
         $data = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "term` t WHERE t.term_id = ?i AND t.taxonomy = ?s",
-            [$category_id, 'post_category']
+            [$category_id, 'content_category']
         )->row;
 
         if (!empty($data['term_id'])) {
@@ -245,7 +245,7 @@ class Category extends Mvc\Model
 
     public function getTotal(): int
     {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "term` WHERE `taxonomy` = 'post_category'")->row['total'];
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "term` WHERE `taxonomy` = 'content_category'")->row['total'];
     }
 
     public function deleteCategories(array $categories): void
@@ -282,7 +282,7 @@ class Category extends Mvc\Model
                 SELECT t.term_id, t.parent_id, t.status, tc.title
                 FROM `" . DB_PREFIX . "term` t
                     LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
-                WHERE t.`taxonomy` = 'post_category'
+                WHERE t.`taxonomy` = 'content_category'
                 ORDER BY t.parent_id ASC, t.sort_order ASC
             ")->rows;
         }
