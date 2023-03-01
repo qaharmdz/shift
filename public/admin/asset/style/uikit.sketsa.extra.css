@@ -361,8 +361,11 @@ th.uk-text-break {
 /* Utility
 ==================================== */
 .uk-panel-scrollable {
-    height: 260px;
+    height: auto;
+    min-height: 120px;
+    max-height: 260px;
     background: #fdfdfd;
+    resize: none;
 }
 
 /* Utilities (.ukt)
