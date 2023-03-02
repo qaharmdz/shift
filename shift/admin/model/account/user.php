@@ -161,7 +161,7 @@ class User extends Mvc\Model
 
         if (!empty($result['user_id'])) {
             $result['meta'] = [];
-            $metas = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_meta` um WHERE um.user_id = ?i", [$user_id]);
+            $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_meta` um WHERE um.user_id = ?i", [$user_id])->rows;
 
             foreach ($metas as $meta) {
                 $result['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
