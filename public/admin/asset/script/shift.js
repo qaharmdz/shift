@@ -530,7 +530,6 @@ $(document).on('IIDE.init IIDE.data-selecttwo', function(event)
                 placeholder : shift.i18n['-select-']
             }, $(el).data('selecttwo'));
 
-        console.log(opt);
         $(el).select2({
             tags : opt.tags,
             closeOnSelect : opt.tags ? false : true,

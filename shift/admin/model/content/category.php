@@ -289,10 +289,15 @@ class Category extends Mvc\Model
 
         foreach ($lists as $key => $category) {
             if ($category['parent_id'] == $parent) {
+                if (in_array($category['term_id'], $exclude)) {
+                    continue;
+                }
+
                 $data[] = [
-                    'category_id' => $category['term_id'],
-                    'parent_id'   => $category['parent_id'],
-                    'title'       => str_repeat($indent . ' ', $level) . $category['title'],
+                    'category_id' => (int)$category['term_id'],
+                    'parent_id'   => (int)$category['parent_id'],
+                    'title'       => $category['title'],
+                    'title_level' => str_repeat($indent . ' ', $level) . $category['title'],
                     'status'      => $category['status'],
                 ];
 
