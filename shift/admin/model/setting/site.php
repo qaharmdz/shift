@@ -109,6 +109,14 @@ class Site extends Mvc\Model
 
         if (!$sites) {
             $sites = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC")->rows;
+
+            foreach ($sites as &$site) {
+                $site['title'] = $site['name'];
+
+                if ($site['site_id'] == 0) {
+                    $site['title'] = $site['name'] . ' (' . $this->language->get('default') . ')';
+                }
+            }
             $this->cache->set('sites', $sites);
         }
 

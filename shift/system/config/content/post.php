@@ -17,6 +17,7 @@ $_['form'] = [
     'publish'     => null,
     'unpublish'   => null,
 
+    'sites'      => [0],
     'alias'      => [],
     'content'    => [
         0 => [

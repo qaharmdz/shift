@@ -133,6 +133,10 @@ class Post extends Mvc\Model
         if (!empty($updated->affected_rows)) {
             $this->db->delete(DB_PREFIX . 'post_content', ['post_id' => $post_id]);
             $this->db->delete(DB_PREFIX . 'post_meta', ['post_id' => $post_id]);
+            $this->db->delete(DB_PREFIX . 'site_relation', [
+                'taxonomy' => 'content_post',
+                'taxonomy_id' => $post_id
+            ]);
             $this->db->delete(DB_PREFIX . 'term_relation', [
                 'taxonomy' => 'content_post',
                 'taxonomy_id' => $post_id
@@ -181,6 +185,17 @@ class Post extends Mvc\Model
         }
 
         // Taxonomy
+        foreach ($data['sites'] as $site_id) {
+            $this->db->add(
+                DB_PREFIX . 'site_relation',
+                [
+                    'site_id'     => $site_id,
+                    'taxonomy'    => 'content_post',
+                    'taxonomy_id' => $post_id,
+                ]
+            );
+        }
+
         foreach ($data['term']['categories'] as $term_id) {
             $this->db->add(
                 DB_PREFIX . 'term_relation',
@@ -276,6 +291,17 @@ class Post extends Mvc\Model
             $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i", [$post_id])->rows;
             foreach ($metas as $meta) {
                 $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
+            }
+
+            // Sites
+            $data['sites'] = [];
+            $sites = $this->db->get(
+                "SELECT sr.site_id FROM `" . DB_PREFIX . "site_relation` sr
+                WHERE sr.taxonomy = ?s AND sr.taxonomy_id = ?i",
+                ['content_post', $post_id]
+            )->rows;
+            foreach ($sites as $site) {
+                $data['sites'][] = $site['site_id'];
             }
 
             // Terms
