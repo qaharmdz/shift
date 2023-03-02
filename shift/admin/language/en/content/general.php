@@ -11,8 +11,6 @@ $_['meta_description']    = 'Meta Description';
 $_['meta_keyword']        = 'Keywords';
 
 $_['taxonomy']            = 'Taxonomy';
-$_['parent']              = 'Parent';
-
 $_['posts']               = 'Posts';
 $_['robots']              = 'Robots';
 $_['global']              = 'Global';

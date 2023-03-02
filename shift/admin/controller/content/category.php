@@ -99,6 +99,7 @@ class Category extends Mvc\Controller
         $category_id = $this->request->getInt('query.category_id', 0);
         $mode = !$category_id ? 'add' : 'edit';
 
+        $this->load->model('setting/site');
         $this->load->model('content/category');
         $this->load->model('extension/language');
         $this->load->language('content/general');
@@ -120,6 +121,7 @@ class Category extends Mvc\Controller
         $data['mode']        = $mode;
         $data['category_id'] = $category_id;
         $data['languages']   = $this->model_extension_language->getLanguages();
+        $data['sites']       = $this->model_setting_site->getSites();
         $data['categories']  = $this->model_content_category->getCategoryTree(exclude: [$category_id]);
         $data['setting']     = $this->model_content_category->getCategory($category_id);
 

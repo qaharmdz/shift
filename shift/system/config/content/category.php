@@ -12,6 +12,7 @@ $_['form'] = [
     'created'     => null,
     'updated'     => null,
 
+    'sites'       => [0],
     'alias'       => [],
     'content'     => [
         0 => [

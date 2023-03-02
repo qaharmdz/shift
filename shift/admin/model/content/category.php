@@ -119,6 +119,10 @@ class Category extends Mvc\Model
         if (!empty($updated->affected_rows)) {
             $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $category_id]);
             $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $category_id]);
+            $this->db->delete(DB_PREFIX . 'site_relation', [
+                'taxonomy' => 'content_category',
+                'taxonomy_id' => $post_id
+            ]);
             $this->db->delete(DB_PREFIX . 'route_alias', [
                 'route' => 'content/category',
                 'param' => 'category_id',
@@ -148,6 +152,7 @@ class Category extends Mvc\Model
             );
         }
 
+        // Meta setting
         foreach ($data['meta'] as $key => $value) {
             $this->db->add(
                 DB_PREFIX . 'term_meta',
@@ -160,6 +165,19 @@ class Category extends Mvc\Model
             );
         }
 
+        // Taxonomy
+        foreach ($data['sites'] as $site_id) {
+            $this->db->add(
+                DB_PREFIX . 'site_relation',
+                [
+                    'site_id'     => $site_id,
+                    'taxonomy'    => 'content_category',
+                    'taxonomy_id' => $category_id,
+                ]
+            );
+        }
+
+        // URL alias
         $this->load->model('setting/site');
         $sites = $this->model_setting_site->getSites();
 
