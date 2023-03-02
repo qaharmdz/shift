@@ -106,6 +106,8 @@ class Category extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
+        $this->document->loadAsset('select2');
+
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('content')],
             [$this->language->get('page_title'), $this->router->url('content/category')],
@@ -117,12 +119,8 @@ class Category extends Mvc\Controller
         $data['mode']        = $mode;
         $data['category_id'] = $category_id;
         $data['languages']   = $this->model_extension_language->getLanguages();
+        $data['categories']  = $this->model_content_category->getCategoryTree(exclude: [$category_id]);
         $data['setting']     = $this->model_content_category->getCategory($category_id);
-
-        $data['categories'] = [
-            ['item_id' => 0, 'title_tree' => $this->language->get('-none-')],
-            // ...Tool\Taxonomy::buildTree($this->model_content_category->getCategories(), $category_id)
-        ];
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

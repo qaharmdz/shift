@@ -86,9 +86,9 @@ class Category extends Mvc\Model
         $this->db->add(
             DB_PREFIX . 'term',
             [
-                'parent_id'  => $data['parent_id'],
+                'parent_id'  => (int)$data['parent_id'],
                 'taxonomy'   => 'content_category',
-                'sort_order' => $data['sort_order'],
+                'sort_order' => (int)$data['sort_order'],
                 'status'     => (int)$data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
@@ -107,9 +107,9 @@ class Category extends Mvc\Model
         $updated = $this->db->set(
             DB_PREFIX . 'term',
             [
-                'parent_id'  => $data['parent_id'],
+                'parent_id'  => (int)$data['parent_id'],
                 'taxonomy'   => 'content_category',
-                'sort_order' => $data['sort_order'],
+                'sort_order' => (int)$data['sort_order'],
                 'status'     => (int)$data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
             ],
