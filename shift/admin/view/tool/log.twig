@@ -77,11 +77,12 @@ $(document).ready(function() {
         });
     });
 
+    //=== Pretify log messages
     if ($('.logs-content').length) {
         let logs = $('.logs-content code').html().split('\n# ');
 
         $('.logs-content').hide();
-        $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify" style="min-height:500px;height:90vh;"><code></code></pre>');
+        $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify"><code></code></pre>');
 
         $.each(logs.reverse(), function(i, el) {
             let _logInfo  = el.split('|');
@@ -100,14 +101,21 @@ $(document).ready(function() {
                     label = ' uk-background-teal';
                 }
 
-                html += '<div class="ukt-pb-2">';
-                html += '<b>' + _logInfo[0].trim() + '</b> - <span class="uk-label uk-label-' + label + '">' + _logTitle + '</span>';
+                html += '<div class="logs-content-item">';
+                html += '<b title="' + _logInfo[0].trim() + '">' + formatDate(_logInfo[0].trim()) + '</b>';
+                html += ' - <span class="uk-label uk-label-' + label + '">' + _logTitle + '</span>';
                 $.each(_logError, function(i, el) {
                     if (el) {
                         html += '<div class="ukt-ml-4">' + el.trim() + '</div>';
                     }
                 });
                 html += '</div>';
+
+                html += '<style>';
+                html += '.logs-content-pretify { min-height:500px; height:90vh; padding:5px 0; cursor:default; }';
+                html += '.logs-content-item { padding: 5px 10px; }';
+                html += '.logs-content-item:hover { background:#fffaec; }';
+                html += '</style>';
 
                 $('.logs-content-pretify code').append(html);
             }

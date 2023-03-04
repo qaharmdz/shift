@@ -578,7 +578,7 @@ function formatDate(datetime) {
             timeZoneName: 'short',
         };
 
-    return new Intl.DateTimeFormat('en-US', options).format(dateUTC).replace (/,/g, '');
+    return new Intl.DateTimeFormat('en-GB', options).format(dateUTC);
 }
 
 /**
@@ -587,6 +587,7 @@ function formatDate(datetime) {
  */
 function euid(format) {
     var euid = format ? format : 'sh-xxx-xxxxxx';
+    var euid = format ? format : 'sc-xxx-xxxxxx';
 
     return euid.replace(new RegExp('x', 'g'), function() {
         return (Math.floor(Math.random() * 10));
