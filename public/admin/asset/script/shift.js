@@ -18,7 +18,7 @@
  *   - data-form-submit
  *   - data-editor
  *   - data-datepicker
- *   - data-selecttwo
+ *   - data-select-s2
  *   - data-format-date
  *
  * # Functions
@@ -514,21 +514,21 @@ $(document).on('IIDE.init IIDE.datepicker', function(event)
     });
 });
 
-$(document).on('IIDE.init IIDE.data-selecttwo', function(event)
+$(document).on('IIDE.init IIDE.data-select-s2', function(event)
 {
     /**
      * Select2
      *
      * @usage
-     * <select data-selecttwo><option>...<option></select>
-     * <select data-selecttwo='{"tags":true}'><option>...<option></select>
+     * <select data-select-s2><option>...<option></select>
+     * <select data-select-s2='{"tags":true}'><option>...<option></select>
      */
-    $('[data-selecttwo]').each(function(i) {
+    $('[data-select-s2]').each(function(i) {
         let el  = this,
             opt = $.extend({
                 tags : false,
                 placeholder : shift.i18n['-select-']
-            }, $(el).data('selecttwo'));
+            }, $(el).data('selectS2'));
 
         $(el).select2({
             tags : opt.tags,

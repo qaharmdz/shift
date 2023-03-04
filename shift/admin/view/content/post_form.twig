@@ -78,11 +78,11 @@
                             {% else %}
                                 {{ forms.hidden({'name':'sites[]', 'value':'0'}) }}
                             {% endif %}
-                            {{ forms.select({'label':'primary_category', 'name':'category_id', 'selected':setting.category_id, 'class':'uk-width-2-3@m', 'opt_text':'title_level', 'opt_value':'category_id', 'attribute':'data-selecttwo', 'options':[
+                            {{ forms.select({'label':'primary_category', 'name':'category_id', 'selected':setting.category_id, 'class':'uk-width-2-3@m', 'opt_text':'title_level', 'opt_value':'category_id', 'attribute':'data-select-s2', 'options':[
                                 {'title_level': app.language.get('-none-'), 'category_id': 0}
                             ]|merge(categories)}) }}
                             {{ forms.checkboxPanel({'label':'categories', 'name':'term[categories][]', lists:categories, checked:setting.term.categories, 'list_text':'title_level', 'list_value':'category_id'}) }}
-                            {{ forms.select({'label':'tags', 'name':'term[tags][]', 'options':tags, 'selected':setting.term.tags, 'class':'uk-width-1-1', 'opt_text':'title', 'opt_value':'term_id', 'multiple': true, 'attribute':'data-selecttwo=\'{"tags":true}\''}) }}
+                            {{ forms.select({'label':'tags', 'name':'term[tags][]', 'options':tags, 'selected':setting.term.tags, 'class':'uk-width-1-1', 'opt_text':'title', 'opt_value':'term_id', 'multiple': true, 'attribute':'data-select-s2=\'{"tags":true}\''}) }}
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
