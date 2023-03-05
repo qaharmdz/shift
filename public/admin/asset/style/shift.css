@@ -237,11 +237,28 @@ body {
     .uk-width-content-sidebar\@l {
         width: 300px;
     }
+    .uk-width-content-sidebar\@l .uk-card-body {
+        padding: 20px;
+    }
+    .uk-width-content-sidebar\@l .uk-panel-scrollable {
+        padding: 5px;
+    }
+    .uk-width-content-sidebar\@l .uk-list-striped > * {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .uk-width-content-sidebar\@l .uk-list-striped .uk-checkbox,
+    .uk-width-content-sidebar\@l .uk-list-striped .uk-radio {
+        height: 13px;
+        width: 13px;
+    }
+    .uk-width-content-sidebar\@l .uk-list-striped .uk-input-text {
+        font-size: .92rem;
+    }
 }
 
 .to-top {
     z-index: 2;
-    margin-bottom: 45px;
 }
 .page-footer {
     color: #666;

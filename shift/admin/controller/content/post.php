@@ -105,6 +105,7 @@ class Post extends Mvc\Controller
         $this->load->model('content/tag');
         $this->load->model('extension/language');
         $this->load->model('account/user');
+        $this->load->model('account/usergroup');
         $this->load->language('content/general');
         $this->load->language('content/post');
 
@@ -122,14 +123,15 @@ class Post extends Mvc\Controller
 
         $data = [];
 
-        $data['mode']       = $mode;
-        $data['post_id']    = $post_id;
-        $data['users']      = $this->model_account_user->getUsers(['u.status = ?i' => 1]);
-        $data['languages']  = $this->model_extension_language->getLanguages();
-        $data['sites']      = $this->model_setting_site->getSites();
-        $data['categories'] = $this->model_content_category->getCategoryTree();
-        $data['tags']       = $this->model_content_tag->getTags();
-        $data['setting']    = $this->model_content_post->getPost($post_id);
+        $data['mode']        = $mode;
+        $data['post_id']     = $post_id;
+        $data['languages']   = $this->model_extension_language->getLanguages();
+        $data['users']       = $this->model_account_user->getUsers(['u.status = ?i' => 1]);
+        $data['user_groups'] = $this->model_account_usergroup->getUserGroups();
+        $data['sites']       = $this->model_setting_site->getSites();
+        $data['categories']  = $this->model_content_category->getCategoryTree();
+        $data['tags']        = $this->model_content_tag->getTags();
+        $data['setting']     = $this->model_content_post->getPost($post_id);
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

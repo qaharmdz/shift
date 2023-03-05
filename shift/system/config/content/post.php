@@ -30,6 +30,7 @@ $_['form'] = [
         ],
     ],
     'meta'        => [
+        'visibility_usergroups' => [],
         'robots'      => '',
         'comment'     => '',
         'custom_code' => '', // js, css

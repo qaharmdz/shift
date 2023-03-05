@@ -337,6 +337,7 @@ th.uk-text-break {
 /* Text
 ==================================== */
 .uk-text-meta,
+.uk-label-meta .uk-form-label,
 .uk-text-meta code {
     font-size: .86rem;
 }
@@ -346,6 +347,10 @@ th.uk-text-break {
 .uk-text-meta b,
 .uk-text-meta strong {
     color: #777;
+}
+.uk-label-meta .uk-form-label {
+    line-height: 1.4;
+    color: #888;
 }
 
 .uk-text-base-color {

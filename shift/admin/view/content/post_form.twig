@@ -126,11 +126,17 @@
                                 {'text': app.language.get('draft'), 'value': 'draft'},
                                 {'text': app.language.get('disabled'), 'value': 'disabled'},
                             ]}) }}
-                            {{ forms.select({'label':'visibility', 'name':'visibility', 'selected':setting.visibility, 'class':'uk-width-150@m', 'options':[
+                            {{ forms.select({'label':'visibility', 'name':'visibility', 'selected':setting.visibility, 'class':'uk-width-150@m', 'attribute':'data-select-switcher=\'{"class":"switch-visibility"}\'', 'options':[
                                 {'text': app.language.get('public'),  'value': 'public'},
                                 {'text': app.language.get('usergroup'), 'value': 'usergroup'},
                                 {'text': app.language.get('password'), 'value': 'password'},
                             ]}) }}
+                            <div class="switch-visibility uk-switcher">
+                                <div class="switch-visibility_usergroup">
+                                    {{ forms.checkboxPanel({'label':'visibility_usergroup_info', 'name':'meta[visibility_usergroups][]', lists:user_groups, checked:setting.meta.visibility_usergroups, 'list_text':'name', 'list_value':'user_group_id', 'class':'uk-label-meta'}) }}
+                                </div>
+                                <div class="switch-visibility_password">password</div>
+                            </div>
 
                             {{ forms.input({'label':'publish', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
                             {{ forms.input({'label':'unpublish', 'name':'unpublish', 'value':setting.unpublish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
