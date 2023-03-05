@@ -108,16 +108,20 @@ class UserGroup extends Mvc\Model
 
     public function getUserGroup(int $user_group_id)
     {
-        $result = $this->db->get(
+        $this->load->config('account/usergroup');
+
+        $default = $this->config->getArray('account.usergroup.form');
+
+        $data = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "user_group` WHERE user_group_id = ?i",
             [$user_group_id]
         )->row;
 
-        if (!empty($result['permission'])) {
-            $result['permission'] = json_decode($result['permission'], true);
+        if (!empty($data['permission'])) {
+            $data['permission'] = json_decode($data['permission'], true);
         }
 
-        return $result;
+        return array_replace_recursive($default, $data);
     }
 
     public function getUserGroups()

@@ -98,7 +98,6 @@ class UserGroup extends Mvc\Controller
         $user_group_id = $this->request->getInt('query.user_group_id', 0);
         $mode = !$user_group_id ? 'add' : 'edit';
 
-        $this->load->config('account/usergroup');
         $this->load->model('account/usergroup');
         $this->load->language('account/usergroup');
 
@@ -115,11 +114,7 @@ class UserGroup extends Mvc\Controller
         $data['mode']          = $mode;
         $data['user_group_id'] = $user_group_id;
         $data['permissions']   = $this->permissionList();
-        $data['setting']       = array_replace_recursive(
-            $this->config->getArray('account.usergroup.form'),
-            $this->model_account_usergroup->getUserGroup($user_group_id),
-            $this->request->get('post', [])
-        );
+        $data['setting']       = $this->model_account_usergroup->getUserGroup($user_group_id);
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
