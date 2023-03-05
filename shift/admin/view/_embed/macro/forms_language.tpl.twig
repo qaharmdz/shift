@@ -36,20 +36,21 @@
 
 {% macro textarea(param) %}
     {% set param = {
-        'languages' : [],
-        'label'     : '',
-        'name'      : '',
-        'value'     : '',
-        'rows'      : '5',
-        'class'     : 'uk-width-1-1',
-        'attribute' : '',
-        'info'      : '',
-        'required'  : false,
-        'errors'    : []
+        'languages'  : [],
+        'label'      : '',
+        'name'       : '',
+        'value'      : '',
+        'rows'       : '5',
+        'class'      : 'uk-width-1-1',
+        'class_form' : '',
+        'attribute'  : '',
+        'info'       : '',
+        'required'   : false,
+        'errors'     : []
     }|merge(param) %}
     {% set total = param.languages|length %}
 
-    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+    <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% if total > 1 %}

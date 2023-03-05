@@ -5,19 +5,20 @@
 
 {% macro input(param) %}
     {% set param = {
-        'type'      : 'text',
-        'label'     : '',
-        'name'      : '',
-        'value'     : '',
-        'class'     : 'uk-width-1-1',
-        'attribute' : '',
-        'info'      : '',
-        'required'  : false,
-        'errors'    : [],
-        'htmlAfter' : '',
+        'type'       : 'text',
+        'label'      : '',
+        'name'       : '',
+        'value'      : '',
+        'class'      : 'uk-width-1-1',
+        'class_form' : '',
+        'attribute'  : '',
+        'info'       : '',
+        'required'   : false,
+        'errors'     : [],
+        'htmlAfter'  : '',
     }|merge(param) %}
 
-    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+    <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
@@ -54,18 +55,19 @@
 
 {% macro textarea(param) %}
     {% set param = {
-        'label'     : '',
-        'name'      : '',
-        'value'     : '',
-        'rows'      : 5,
-        'class'     : 'uk-width-1-1',
-        'attribute' : '',
-        'info'      : '',
-        'required'  : false,
-        'errors'    : [],
+        'label'      : '',
+        'name'       : '',
+        'value'      : '',
+        'rows'       : 5,
+        'class'      : 'uk-width-1-1',
+        'class_form' : '',
+        'attribute'  : '',
+        'info'       : '',
+        'required'   : false,
+        'errors'     : [],
     }|merge(param) %}
 
-    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+    <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
@@ -90,6 +92,7 @@
         'opt_value' : 'value',
         'selected'  : '',
         'class'     : 'uk-width-250@m',
+        'class_form' : '',
         'attribute' : '',
         'info'      : '',
         'required'  : false,
@@ -98,7 +101,7 @@
     }|merge(param) %}
 
     {% if param.options is iterable %}
-    <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+    <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
@@ -127,18 +130,18 @@
 
 {% macro radioButton(param) %}
     {% set param = {
-        'mode'      : 'enable-disable',
-        'label'     : '',
-        'name'      : '',
-        'options'   : [],
-        'opt_text'  : 'text',
-        'opt_value' : 'value',
-        'opt_state' : 'state',
-        'checked'   : '',
-        'class'      : '',
-        'info'      : '',
-        'required'  : false,
-        'errors'    : [],
+        'mode'       : 'enable-disable',
+        'label'      : '',
+        'name'       : '',
+        'options'    : [],
+        'opt_text'   : 'text',
+        'opt_value'  : 'value',
+        'opt_state'  : 'state',
+        'checked'    : '',
+        'class_form' : '',
+        'info'       : '',
+        'required'   : false,
+        'errors'     : [],
     }|merge(param) %}
 
     {% if param.options is empty %}
@@ -159,7 +162,7 @@
         {% endif %}
     {% endif %}
 
-    <div class="uk-margin {{ param.class }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+    <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
@@ -188,14 +191,14 @@
         'list_text'  : 'text',
         'list_value' : 'value',
         'checked'    : [],
-        'class'      : '',
+        'class_form' : '',
         'info'       : '',
         'required'   : false,
         'errors'     : [],
         'htmlEnd'    : '',
     }|merge(param) %}
 
-    <div class="uk-margin {{ param.class }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
+    <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.label }}">
                 {{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
@@ -226,11 +229,12 @@
 
 {% macro infoDate(param) %}
     {% set param = {
-        'label'     : '',
-        'datetime'  : '',
+        'label'      : '',
+        'datetime'   : '',
+        'class_form' : '',
     }|merge(param) %}
 
-    <div class="uk-margin">
+    <div class="uk-margin {{ param.class_form }}">
         {% if param.label %}
             <label class="uk-form-label">{{ app.language.get(param.label) }}</label>
         {% endif %}
