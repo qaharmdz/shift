@@ -258,7 +258,7 @@ class Category extends Mvc\Model
             }
         }
 
-        return array_replace($default, $data);
+        return array_replace_recursive($default, $data);
     }
 
     public function getTotal(): int
