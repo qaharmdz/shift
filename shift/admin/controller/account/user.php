@@ -101,7 +101,6 @@ class User extends Mvc\Controller
         $user_id = $this->request->getInt('query.user_id', 0);
         $mode = !$user_id ? 'add' : 'edit';
 
-        $this->load->config('account/user');
         $this->load->model('account/user');
         $this->load->language('account/user');
 
@@ -117,11 +116,7 @@ class User extends Mvc\Controller
 
         $data['mode']    = $mode;
         $data['user_id'] = $user_id;
-        $data['setting'] = array_replace_recursive(
-            $this->config->getArray('account.user.form'),
-            $this->model_account_user->getUser($user_id),
-            $this->request->get('post', [])
-        );
+        $data['setting'] = $this->model_account_user->getUser($user_id);
 
         $this->load->model('account/usergroup');
         $data['user_groups'] = $this->model_account_usergroup->getUserGroups();

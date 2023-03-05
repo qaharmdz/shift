@@ -152,23 +152,27 @@ class User extends Mvc\Model
 
     public function getUser(int $user_id)
     {
-        $result = $this->db->get(
+        $this->load->config('account/user');
+
+        $default = $this->config->getArray('account.user.form');
+
+        $data = $this->db->get(
             "SELECT u.*, CONCAT(u.firstname, ' ', u.lastname) AS fullname, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group
             FROM `" . DB_PREFIX . "user` u
             WHERE u.user_id = ?i",
             [$user_id]
         )->row;
 
-        if (!empty($result['user_id'])) {
-            $result['meta'] = [];
+        if (!empty($data['user_id'])) {
+            $data['meta'] = [];
             $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_meta` um WHERE um.user_id = ?i", [$user_id])->rows;
 
             foreach ($metas as $meta) {
-                $result['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
+                $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
             }
         }
 
-        return $result;
+        return array_replace($default, $data);
     }
 
     public function getUsers(array $filters = [1 => 1])
