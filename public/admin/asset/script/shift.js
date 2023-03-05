@@ -19,6 +19,7 @@
  *   - data-editor
  *   - data-datepicker
  *   - data-select-s2
+ *   - data-select-switcher
  *   - data-format-date
  *
  * # Functions
@@ -539,6 +540,31 @@ $(document).on('IIDE.init IIDE.data-select-s2', function(event)
     });
 });
 
+$(document).on('IIDE.init IIDE.data-select-switcher', function(event)
+{
+    /**
+     * Select2
+     *
+     * @usage
+     * <select data-select-switcher='{"class":"switch-value"}'><option>...<option></select>
+     * <div class="switch-value uk-switcher"></div>
+     */
+    $('[data-select-switcher]').each(function(i) {
+        let el  = this,
+            opt = $.extend({
+                class : 'select-switcher',
+            }, $(el).data('selectSwitcher'));
+
+        console.log($('.' + opt.class + ' > div'));
+        $(el).on('change', function() {
+            $('.' + opt.class + ' > div').removeClass('uk-active');
+            $('.' + opt.class + '_' + $(el).val()).addClass('uk-active');
+        });
+
+        $(el).trigger('change');
+    });
+});
+
 $(document).on('IIDE.init IIDE.format_date', function(event)
 {
     /**
@@ -586,7 +612,6 @@ function formatDate(datetime) {
  * https://stackoverflow.com/a/2117523
  */
 function euid(format) {
-    var euid = format ? format : 'sh-xxx-xxxxxx';
     var euid = format ? format : 'sc-xxx-xxxxxx';
 
     return euid.replace(new RegExp('x', 'g'), function() {
