@@ -13,17 +13,29 @@ class Language extends Mvc\Model
         return $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` WHERE language_id = ?i", [$language_id])->row;
     }
 
-    public function getLanguages(string $key = 'language_id'): array
+    /**
+     * Get languages
+     *
+     * @param  array  $filters
+     * @param  string $rkey    Return key
+     * @return array
+     */
+    public function getLanguages(array $filters = ['l.status = ?i' => 1], string $rkey = 'language_id'): array
     {
-        $data = $this->cache->get('languages');
+        $data = $this->cache->get('languages.' . $this->cache->getHash(func_get_args()));
 
         if (!$data) {
             $data = [];
 
-            $languages = $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` ORDER BY sort_order ASC, name ASC")->rows;
+            $languages = $this->db->get(
+                "SELECT l.* FROM `" . DB_PREFIX . "language` l
+                WHERE " . implode(' AND ', array_keys($filters)) . "
+                ORDER BY l.sort_order ASC, l.name ASC",
+                array_values($filters)
+            )->rows;
 
             foreach ($languages as $result) {
-                $data[$result[$key]] = array(
+                $data[$result[$rkey]] = array(
                     'language_id' => $result['language_id'],
                     'name'        => $result['name'],
                     'code'        => $result['code'],
@@ -34,7 +46,7 @@ class Language extends Mvc\Model
                 );
             }
 
-            $this->cache->set('languages', $data);
+            $this->cache->set('languages.' . $this->cache->getHash(func_get_args()), $data, tags: ['languages']);
         }
 
         return $data;

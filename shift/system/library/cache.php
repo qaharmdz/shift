@@ -104,4 +104,9 @@ class Cache extends Psr16Adapter
             throw new PhpfastcacheSimpleCacheException($e->getMessage(), 0, $e);
         }
     }
+
+    public function getHash(array $args): string
+    {
+        return md5(json_encode($args));
+    }
 }
