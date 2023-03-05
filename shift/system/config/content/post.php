@@ -31,6 +31,7 @@ $_['form'] = [
     ],
     'meta'        => [
         'visibility_usergroups' => [],
+        'visibility_password'   => '',
         'robots'      => '',
         'comment'     => '',
         'custom_code' => '', // js, css

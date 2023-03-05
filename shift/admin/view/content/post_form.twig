@@ -133,9 +133,11 @@
                             ]}) }}
                             <div class="switch-visibility uk-switcher">
                                 <div class="switch-visibility_usergroup">
-                                    {{ forms.checkboxPanel({'label':'visibility_usergroup_info', 'name':'meta[visibility_usergroups][]', lists:user_groups, checked:setting.meta.visibility_usergroups, 'list_text':'name', 'list_value':'user_group_id', 'class':'uk-label-meta'}) }}
+                                    {{ forms.checkboxPanel({'label':'visibility_usergroup_info', 'name':'meta[visibility_usergroups][]', lists:user_groups, checked:setting.meta.visibility_usergroups, 'list_text':'name', 'list_value':'user_group_id', 'class_form':'uk-label-meta'}) }}
                                 </div>
-                                <div class="switch-visibility_password">password</div>
+                                <div class="switch-visibility_password">
+                                    {{ forms.input({'type':'password', 'label':'visibility_password_info', 'name':'meta[visibility_password]', 'value':setting.meta.visibility_password, 'class_form':'uk-label-meta'}) }}
+                                </div>
                             </div>
 
                             {{ forms.input({'label':'publish', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}

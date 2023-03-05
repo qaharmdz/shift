@@ -240,6 +240,10 @@ body {
     .uk-width-content-sidebar\@l .uk-card-body {
         padding: 20px;
     }
+     .uk-form-margin-hover .uk-width-content-sidebar\@l .uk-fieldset .uk-margin {
+        padding: 8px 20px;
+        margin: 0 -20px !important;
+    }
     .uk-width-content-sidebar\@l .uk-panel-scrollable {
         padding: 5px;
     }
