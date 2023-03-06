@@ -67,6 +67,11 @@ class Setting extends Mvc\Controller
 
         $this->model_setting_setting->editSetting('system', 'setting', $post);
 
+        // Clear all cache
+        if ($post['development']) {
+            $this->load->controller('tool/cache/purge');
+        }
+
         $this->response->setOutputJson($data);
     }
 

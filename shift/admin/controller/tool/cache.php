@@ -72,4 +72,11 @@ class Cache extends Mvc\Controller
 
         $this->response->setOutputJson($data);
     }
+
+    public function purge()
+    {
+        $this->cache->clear();
+        $this->view->clearCache();
+        $this->image->clearCache();
+    }
 }
