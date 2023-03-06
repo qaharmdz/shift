@@ -5,7 +5,7 @@
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-            <div class="uk-margin-small-top uk-text-right">
+            <div class="uk-flex uk-flex-middle uk-flex-right">
                 <div class="uk-inline">
                     <button class="uk-button uk-button-default ukt-px-2 ukt-pl-3" type="button">
                         {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small uk-margin-small-left">{{ fileinfo.size }}</div>
@@ -28,7 +28,7 @@
 
                 <button type="submit" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left" form="form-log"><i class="bi bi-download uk-text-primary ukt-mr-1"></i> {{ app.language.get('download') }}</button>
                 <button type="submit" class="uk-button uk-button-secondary ukt-px-3 uk-margin-small-left" data-log-clear><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
-                <button type="submit" class="uk-button uk-button-danger ukt-px-3" data-log-delete><i class="bi bi-trash uk-text-light ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
+                <button type="submit" class="uk-button uk-button-danger ukt-px-3 ukt-ml-1" data-log-delete><i class="bi bi-trash uk-text-light ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
             </div>
         </div>
     </div>

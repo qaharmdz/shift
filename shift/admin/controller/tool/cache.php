@@ -52,6 +52,15 @@ class Cache extends Mvc\Controller
         ];
 
         switch ($this->request->get('post.clear', '')) {
+            case 'all':
+                $this->purge();
+
+                $data['updates'] = [
+                    '.cache_general_size' => $this->load->controller('tool/log/bytesToHuman', $this->cache->instance()->getStats()->getSize()),
+                    '.cache_general_info' => $this->cache->instance()->getStats()->getInfo(),
+                ];
+                break;
+
             case 'general':
                 $this->cache->clear();
 

@@ -50,6 +50,7 @@ $_['save_as_copy']          = 'Save as copy';
 $_['close']                 = 'Close';
 $_['cancel']                = 'Cancel';
 $_['clear']                 = 'Clear';
+$_['purge']                 = 'Purge';
 $_['reset']                 = 'Reset';
 $_['delete']                = 'Delete';
 $_['continue']              = 'Continue';

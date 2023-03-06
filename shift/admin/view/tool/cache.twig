@@ -7,6 +7,9 @@
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <button class="uk-button uk-button-danger" data-cache-clear="all"><i class="bi bi-trash ukt-mr-1"></i> {{ app.language.get('purge') }}</button>
+            </div>
         </div>
     </div>
 
@@ -24,7 +27,7 @@
                         </p>
                         <p><span class="cache_general_info">{{ cache_general.info }}</span></p>
 
-                        <button class="uk-button uk-button-secondary" data-cache-clear="general"><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
+                        <button class="uk-button uk-button-secondary" data-cache-clear="general">{{ app.language.get('clear') }}</button>
                     </fieldset>
                 </div>
             </div>
@@ -34,7 +37,7 @@
                         <legend class="uk-legend">{{ app.language.get('template') }}</legend>
 
                         <p>{{ app.language.get('template_info') }}</p>
-                        <button class="uk-button uk-button-secondary" data-cache-clear="template"><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
+                        <button class="uk-button uk-button-secondary" data-cache-clear="template">{{ app.language.get('clear') }}</button>
                     </fieldset>
                 </div>
             </div>
@@ -45,7 +48,7 @@
                         <legend class="uk-legend">{{ app.language.get('image') }}</legend>
 
                         <p>{{ app.language.get('image_info') }}</p>
-                        <button class="uk-button uk-button-secondary" data-cache-clear="image"><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
+                        <button class="uk-button uk-button-secondary" data-cache-clear="image">{{ app.language.get('clear') }}</button>
                     </fieldset>
                 </div>
             </div>
