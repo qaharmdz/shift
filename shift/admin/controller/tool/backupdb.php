@@ -6,19 +6,19 @@ namespace Shift\Admin\Controller\Tool;
 
 use Shift\System\Mvc;
 
-class Backup extends Mvc\Controller
+class BackupDb extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->model('tool/backup');
-        $this->load->language('tool/backup');
+        $this->load->model('tool/backupdb');
+        $this->load->language('tool/backupdb');
 
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('tool')],
             [$this->language->get('maintenance')],
-            [$this->language->get('page_title'), $this->router->url('tool/backup')],
+            [$this->language->get('page_title'), $this->router->url('tool/backupdb')],
         ]);
 
         $data = [];
@@ -27,7 +27,7 @@ class Backup extends Mvc\Controller
 
 
         $data['dbTables'] = [];
-        foreach ($this->model_tool_backup->getTables() as $table) {
+        foreach ($this->model_tool_backupdb->getTables() as $table) {
             $data['dbTables'][] = [
                 'text'  => $table,
                 'value' => $table,
@@ -38,14 +38,14 @@ class Backup extends Mvc\Controller
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');
 
-        $this->response->setOutput($this->load->view('tool/backup', $data));
+        $this->response->setOutput($this->load->view('tool/backupdb', $data));
     }
 
     public function export()
     {
-        $this->load->language('tool/backup');
+        $this->load->language('tool/backupdb');
 
-        if (!$this->user->hasPermission('modify', 'tool/backup')) {
+        if (!$this->user->hasPermission('modify', 'tool/backupdb')) {
             $this->session->push('flash.alert.warning', $this->language->get('error_permission'));
         }
         if (!$this->request->is('post')) {
@@ -56,11 +56,11 @@ class Backup extends Mvc\Controller
         }
 
         if (!$this->session->isEmpty('flash.alert')) {
-            $this->response->redirect($this->router->url('tool/backup'));
+            $this->response->redirect($this->router->url('tool/backupdb'));
         }
 
-        $this->load->model('tool/backup');
-        $exportContent = $this->model_tool_backup->export($this->request->getArray('post.export'));
+        $this->load->model('tool/backupdb');
+        $exportContent = $this->model_tool_backupdb->export($this->request->getArray('post.export'));
 
         $this->response->download(
             $exportContent,
@@ -70,9 +70,9 @@ class Backup extends Mvc\Controller
 
     public function import()
     {
-        $this->load->language('tool/backup');
+        $this->load->language('tool/backupdb');
 
-        if (!$this->user->hasPermission('modify', 'tool/backup')) {
+        if (!$this->user->hasPermission('modify', 'tool/backupdb')) {
             return $this->response->setOutputJson($this->language->get('error_permission'), 403);
         }
 
@@ -125,7 +125,7 @@ class Backup extends Mvc\Controller
 
         if ($position && !feof($handle)) {
             fclose($handle);
-            $data['next'] = $this->router->url('tool/backup/import', 'import=' . $filename . '&position=' . $position);
+            $data['next'] = $this->router->url('tool/backupdb/import', 'import=' . $filename . '&position=' . $position);
         } else {
             fclose($handle);
             unlink($filename);

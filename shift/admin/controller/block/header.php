@@ -241,10 +241,10 @@ class Header extends Mvc\Controller
         // Maintenance
         $maintenance = [];
 
-        if ($this->user->hasPermission('access', 'tool/backup')) {
+        if ($this->user->hasPermission('access', 'tool/backupdb')) {
             $maintenance[] = $this->nav([
                 'name' => $this->language->get('header.backup_restore'),
-                'url'  => $this->router->url('tool/backup'),
+                'url'  => $this->router->url('tool/backupdb'),
             ]);
         }
         if ($this->user->hasPermission('access', 'tool/cache')) {

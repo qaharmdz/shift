@@ -6,7 +6,7 @@ namespace Shift\Admin\Model\Tool;
 
 use Shift\System\Mvc;
 
-class Backup extends Mvc\Model
+class BackupDb extends Mvc\Model
 {
     public function restore($sql)
     {

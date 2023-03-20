@@ -13,7 +13,7 @@
     {% include '_embed/partial/alerts.tpl.twig' %}
 
     <div class="content-body uk-card-panel uk-card-body">
-        <form id="form-export" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('tool/backup/export') }}" method="post">
+        <form id="form-export" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('tool/backupdb/export') }}" method="post">
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">{{ app.language.get('backup') }}</legend>
 
@@ -72,7 +72,7 @@ $(document).ready(function() {
                 clearInterval(timer);
 
                 $.ajax({
-                    url: '{{ app.router.url("tool/backup/import")|raw }}',
+                    url: '{{ app.router.url("tool/backupdb/import")|raw }}',
                     type: 'post',
                     dataType: 'json',
                     data: new FormData($('#form-import')[0]),
