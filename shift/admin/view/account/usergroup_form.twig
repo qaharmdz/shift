@@ -3,7 +3,7 @@
 {% import '_embed/macro/forms.tpl.twig' as forms %}
 
 {% block main_content %}
-<div class="uk-container container-content-wrapper">
+<div class="uk-container uk-container-small container-content-wrapper">
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
@@ -26,7 +26,7 @@
     </div>
 
     <div class="content-body">
-        <form id="form-usergroup" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('account/usergroup/save') }}" method="post" data-form-monitor>
+        <form id="form-usergroup" class="uk-form-margin-hover" action="{{ app.router.url('account/usergroup/save') }}" method="post" data-form-monitor>
             <div uk-grid>
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">

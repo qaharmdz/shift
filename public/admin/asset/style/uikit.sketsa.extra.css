@@ -26,7 +26,13 @@ html,
 ==================================== */
 
 .uk-container-small {
-    max-width: 960px;
+    max-width: 940px;
+}
+.uk-container-small .uk-form-horizontal:not(.uk-form-stacked\@l) .uk-form-label {
+    width: 165px;
+}
+.uk-container-small .uk-form-horizontal:not(.uk-form-stacked\@l) .uk-form-controls {
+    margin-left: 180px;
 }
 
 @media (min-width: 960px) {
