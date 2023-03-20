@@ -105,8 +105,12 @@ class Cache extends Psr16Adapter
         }
     }
 
-    public function getHash(array $args): string
+    public function getHash(string|int|float|bool|null|array $args): string
     {
-        return md5(json_encode($args));
+        if (is_array($args)) {
+            $args = json_encode($args);
+        }
+
+        return md5((string)$args);
     }
 }
