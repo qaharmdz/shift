@@ -175,7 +175,13 @@ class User extends Mvc\Model
         return array_replace_recursive($default, $data);
     }
 
-    public function getUsers(array $filters = [1 => 1])
+    /**
+     * get users
+     *
+     * @param  array  $filters
+     * @return array
+     */
+    public function getUsers(array $filters = ['u.status = ?i' => 1]): array
     {
         return $this->db->get(
             "SELECT u.user_id, u.user_group_id, u.email, u.username, u.firstname, u.lastname,

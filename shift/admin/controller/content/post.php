@@ -126,7 +126,7 @@ class Post extends Mvc\Controller
         $data['mode']        = $mode;
         $data['post_id']     = $post_id;
         $data['languages']   = $this->model_extension_language->getLanguages();
-        $data['users']       = $this->model_account_user->getUsers(['u.status = ?i' => 1]);
+        $data['users']       = $this->model_account_user->getUsers();
         $data['user_groups'] = $this->model_account_usergroup->getUserGroups();
         $data['sites']       = $this->model_setting_site->getSites();
         $data['categories']  = $this->model_content_category->getCategoryTree();
