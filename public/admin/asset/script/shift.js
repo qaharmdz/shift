@@ -555,13 +555,14 @@ $(document).on('IIDE.init IIDE.data-select-switcher', function(event)
                 class : 'select-switcher',
             }, $(el).data('selectSwitcher'));
 
-        console.log($('.' + opt.class + ' > div'));
         $(el).on('change', function() {
             $('.' + opt.class + ' > div').removeClass('uk-active');
             $('.' + opt.class + '_' + $(el).val()).addClass('uk-active');
         });
 
-        $(el).trigger('change');
+        // Initial
+        $('.' + opt.class + ' > div').removeClass('uk-active');
+        $('.' + opt.class + '_' + $(el).val()).addClass('uk-active');
     });
 });
 
