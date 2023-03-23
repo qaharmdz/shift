@@ -278,7 +278,7 @@ class Category extends Mvc\Model
             'value' => $categories
         ]);
 
-        $this->cache->delete('categories');
+        $this->cache->deleteByTags('content.categories');
     }
 
     /**

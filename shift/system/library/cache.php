@@ -105,6 +105,17 @@ class Cache extends Psr16Adapter
         }
     }
 
+    /**
+     * Delete cache item by tags
+     *
+     * @param  array|string $tagName
+     * @return bool
+     */
+    public function deleteByTags(array|string $tagName): bool
+    {
+        return $this->internalCacheInstance->deleteItemsByTags((array)$tagName);
+    }
+
     public function getHash(string|int|float|bool|null|array $args): string
     {
         if (is_array($args)) {

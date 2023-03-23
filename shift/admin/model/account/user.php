@@ -146,8 +146,6 @@ class User extends Mvc\Model
             "INSERT INTO `" . DB_PREFIX . "user_meta` (`user_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
             $params
         );
-
-        $this->cache->delete('user.' . $user_id);
     }
 
     public function getUser(int $user_id)
@@ -204,6 +202,6 @@ class User extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'user', ['user_id' => $users]);
         $this->db->delete(DB_PREFIX . 'user_meta', ['user_id' => $users]);
 
-        $this->cache->delete('users');
+        $this->cache->deleteByTags('users');
     }
 }

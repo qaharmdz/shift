@@ -130,7 +130,7 @@ class Layout extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'layout_module', ['layout_id' => $layout_ids]);
         $this->db->delete(DB_PREFIX . 'layout_route', ['layout_id' => $layout_ids]);
 
-        $this->cache->delete('layouts');
+        $this->cache->deleteByTags('layouts');
     }
 
     /*

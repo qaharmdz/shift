@@ -354,6 +354,6 @@ class Post extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'post_content', ['post_id' => $posts]);
         $this->db->delete(DB_PREFIX . 'post_meta', ['post_id' => $posts]);
 
-        $this->cache->delete('posts');
+        $this->cache->deleteByTags('content.posts');
     }
 }

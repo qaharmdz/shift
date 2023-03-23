@@ -84,7 +84,7 @@ class UserGroup extends Mvc\Model
             ]
         );
 
-        $this->cache->delete('usergroups');
+        $this->cache->deleteByTags('usergroups');
 
         return (int)$this->db->insertId();
     }
@@ -103,7 +103,7 @@ class UserGroup extends Mvc\Model
             ['user_group_id' => $user_group_id]
         );
 
-        $this->cache->delete('usergroups');
+        $this->cache->deleteByTags('usergroups');
     }
 
     public function getUserGroup(int $user_group_id)
@@ -138,7 +138,7 @@ class UserGroup extends Mvc\Model
 
         if (!$data) {
             $userGroups = $this->db->get(
-                "SELECT * FROM `" . DB_PREFIX . "user_group` ug
+                "SELECT ug.* FROM `" . DB_PREFIX . "user_group` ug
                 WHERE " . implode(' AND ', array_keys($filters)) . "
                 ORDER BY ug.name ASC",
                 array_values($filters)
@@ -161,10 +161,10 @@ class UserGroup extends Mvc\Model
 
     public function deleteUserGroups(array $userGroups)
     {
-        if (!in_array(1, $items)) {
+        if (!in_array(1, $userGroups)) {
             $this->db->delete(DB_PREFIX . 'user_group', ['user_group_id' => $userGroups]);
         }
 
-        $this->cache->delete('usergroups');
+        $this->cache->deleteByTags('usergroups');
     }
 }

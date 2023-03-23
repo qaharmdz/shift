@@ -296,6 +296,6 @@ class Tag extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $tags]);
         $this->db->delete(DB_PREFIX . 'term_relation', ['term_id' => $tags]);
 
-        $this->cache->delete('tags');
+        $this->cache->deleteByTags('content.tags');
     }
 }

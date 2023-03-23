@@ -107,7 +107,7 @@ class Module extends Mvc\Model
     {
         $this->db->delete(DB_PREFIX . 'extension_data', ['extension_data_id' => $modules]);
 
-        $this->cache->delete('modules');
+        $this->cache->deleteByTags('modules');
     }
 
     /*

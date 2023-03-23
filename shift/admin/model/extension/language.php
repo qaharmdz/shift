@@ -33,8 +33,6 @@ class Language extends Mvc\Model
             }
 
             $this->cache->set('languages.' . $argsHash, $data, tags: ['languages']);
-            // TODO: cache delete by tags
-            // $this->cache->instance()->deleteItemsByTag('languages')
         }
 
         return $data;
@@ -45,7 +43,7 @@ class Language extends Mvc\Model
     {
         $this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "'");
 
-        $this->cache->delete('language');
+        $this->cache->deleteByTags('languages');
 
         $language_id = $this->db->getLastId();
 
@@ -56,7 +54,7 @@ class Language extends Mvc\Model
             $this->db->query("INSERT INTO " . DB_PREFIX . "banner_image SET banner_id = '" . (int)$banner_image['banner_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($banner_image['title']) . "', link = '" . $this->db->escape($banner_image['link']) . "', image = '" . $this->db->escape($banner_image['image']) . "', sort_order = '" . (int)$banner_image['sort_order'] . "'");
         }
 
-        $this->cache->delete('banner');
+        $this->cache->deleteByTags('banners');
 
         // Download
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "download_description WHERE language_id = '" . (int)$this->config->get('env.language_id') . "'");
@@ -72,7 +70,7 @@ class Language extends Mvc\Model
             $this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information['information_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($information['title']) . "', description = '" . $this->db->escape($information['description']) . "', meta_title = '" . $this->db->escape($information['meta_title']) . "', meta_description = '" . $this->db->escape($information['meta_description']) . "', meta_keyword = '" . $this->db->escape($information['meta_keyword']) . "'");
         }
 
-        $this->cache->delete('information');
+        $this->cache->deleteByTags('informations');
 
         return $language_id;
     }
@@ -116,19 +114,19 @@ class Language extends Mvc\Model
             );
         }
 
-        $this->cache->delete('language');
+        $this->cache->deleteByTags('languages');
     }
 
     public function deleteLanguage($language_id)
     {
         $this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 
-        $this->cache->delete('language');
+        $this->cache->deleteByTags('languages');
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE language_id = '" . (int)$language_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE language_id = '" . (int)$language_id . "'");
 
-        $this->cache->delete('information');
+        $this->cache->deleteByTags('informations');
     }
 
     public function getLanguage($language_id)
