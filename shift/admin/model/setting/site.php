@@ -76,7 +76,7 @@ class Site extends Mvc\Model
             );
         }
 
-        $this->cache->delete('sites');
+        $this->cache->deleteItemsByTags('sites');
 
         return $site_id;
     }
@@ -92,7 +92,7 @@ class Site extends Mvc\Model
             ['site_id' => $site_id]
         );
 
-        $this->cache->delete('sites');
+        $this->cache->deleteItemsByTags('sites');
     }
 
     public function getSite(int $site_id)
@@ -103,24 +103,40 @@ class Site extends Mvc\Model
         )->row;
     }
 
-    public function getSites()
+    /**
+     * Get sites
+     *
+     * @param  array  $filters
+     * @param  string $rkey    Return key
+     * @return array
+     */
+    public function getSites(array $filters = ['1 = ?i' => 1], string $rkey = 'site_id'): array
     {
-        $sites = $this->cache->get('sites');
+        $argsHash = $this->cache->getHash(func_get_args());
+        $data     = $this->cache->get('sites.' . $argsHash, []);
 
-        if (!$sites) {
-            $sites = $this->db->get("SELECT * FROM `" . DB_PREFIX . "site` ORDER BY site_id ASC")->rows;
+        if (!$data) {
+            $sites = $this->db->get(
+                "SELECT s.* FROM `" . DB_PREFIX . "site` s
+                WHERE " . implode(' AND ', array_keys($filters)) . "
+                ORDER BY s.site_id ASC",
+                array_values($filters)
+            )->rows;
 
-            foreach ($sites as &$site) {
-                $site['title'] = $site['name'];
+            foreach ($sites as &$result) {
+                $result['title'] = $result['name'];
 
-                if ($site['site_id'] == 0) {
-                    $site['title'] = $site['name'] . ' (' . $this->language->get('default') . ')';
+                if ($result['site_id'] == 0) {
+                    $result['title'] = $result['name'] . ' (' . $this->language->get('default') . ')';
                 }
+
+                $data[$result[$rkey]] = $result;
             }
-            $this->cache->set('sites', $sites);
+
+            $this->cache->set('sites.' . $argsHash, $data, tags: ['sites']);
         }
 
-        return $sites;
+        return $data;
     }
 
     public function getTotal()
@@ -136,6 +152,6 @@ class Site extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'setting', ['site_id' => $site_ids]);
         }
 
-        $this->cache->delete('sites');
+        $this->cache->deleteItemsByTags('sites');
     }
 }

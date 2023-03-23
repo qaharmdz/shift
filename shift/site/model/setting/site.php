@@ -8,18 +8,33 @@ use Shift\System\Mvc;
 
 class Site extends Mvc\Model
 {
-    public function getSites($data = array())
+    /**
+     * Get sites
+     *
+     * @param  array  $filters
+     * @param  string $rkey    Return key
+     * @return array
+     */
+    public function getSites(array $filters = ['2 = ?i' => 2], string $rkey = 'site_id'): array
     {
-        $site_data = $this->cache->get('site');
+        $argsHash = $this->cache->getHash(func_get_args());
+        $data     = $this->cache->get('sites.' . $argsHash, []);
 
-        if (!$site_data) {
-            $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site ORDER BY url_host");
+        if (!$data) {
+            $sites = $this->db->get(
+                "SELECT s.* FROM `" . DB_PREFIX . "site` s
+                WHERE " . implode(' AND ', array_keys($filters)) . "
+                ORDER BY s.site_id ASC",
+                array_values($filters)
+            )->rows;
 
-            $site_data = $query->rows;
+            foreach ($sites as &$result) {
+                $data[$result[$rkey]] = $result;
+            }
 
-            $this->cache->set('site', $site_data);
+            $this->cache->set('sites.' . $argsHash, $data, tags: ['sites']);
         }
 
-        return $site_data;
+        return $data;
     }
 }
