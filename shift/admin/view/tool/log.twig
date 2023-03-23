@@ -42,7 +42,7 @@
                 <p>{{ log }}</p>
             </div>
         {% else %}
-            <pre class="uk-resize-vertical uk-margin-remove logs-content" style="min-height:500px;height:90vh;"><code>{{ log }}</code></pre>
+            <pre class="uk-resize-vertical uk-margin-remove logs-content"><code>{{ log }}</code></pre>
         {% endif %}
 
         <div class="uk-hidden">
@@ -84,38 +84,33 @@ $(document).ready(function() {
         $('.logs-content').hide();
         $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify"><code></code></pre>');
 
-        $.each(logs.reverse(), function(i, el) {
-            let _logInfo  = el.split('|');
+        $.each(logs.reverse(), function(i, log) {
+            let _logInfo  = log.split('|');
 
             if (_logInfo[1] != undefined) {
                 let _logError = _logInfo.slice(2),
-                    _logTitle = _logInfo[1].trim(),
+                    _logDate  = _logInfo[0].trim(),
+                    _logType  = _logInfo[1].trim(),
                     html  = '',
                     label = 'danger';
 
-                if (_logTitle == 'Debug') {
+                if (_logType == 'Debug') {
                     label = ' uk-background-blue-light';
-                } else if (_logTitle == 'Warning' || _logTitle == 'Notice') {
+                } else if (_logType == 'Warning' || _logType == 'Notice') {
                     label = 'warning';
-                } else if (_logTitle.indexOf('Exception') !== -1) {
+                } else if (_logType.indexOf('Exception') !== -1) {
                     label = ' uk-background-teal';
                 }
 
                 html += '<div class="logs-content-item">';
-                html += '<b title="' + _logInfo[0].trim() + '">' + formatDate(_logInfo[0].trim()) + '</b>';
-                html += ' - <span class="uk-label uk-label-' + label + '">' + _logTitle + '</span>';
-                $.each(_logError, function(i, el) {
-                    if (el) {
-                        html += '<div class="ukt-ml-4">' + el.trim() + '</div>';
+                html += '<b title="' + _logDate + '">' + formatDate(_logDate) + '</b>';
+                html += ' - <span class="uk-label uk-label-' + label + '">' + _logType + '</span>';
+                $.each(_logError, function(i, message) {
+                    if (message) {
+                        html += '<div class="ukt-ml-4">' + message.trim() + '</div>';
                     }
                 });
                 html += '</div>';
-
-                html += '<style>';
-                html += '.logs-content-pretify { min-height:500px; height:90vh; padding:5px 0; cursor:default; }';
-                html += '.logs-content-item { padding: 5px 10px; }';
-                html += '.logs-content-item:hover { background:#fffaec; }';
-                html += '</style>';
 
                 $('.logs-content-pretify code').append(html);
             }

@@ -8,7 +8,7 @@
  *   - Sidebar
  *   - Middle Region
  *
- * # Specific Page
+ * # Specific Pages
  *   - ...
  *
  * # Misc
@@ -271,6 +271,28 @@ body {
     padding: 40px 0 75px;
 }
 
+
+/*
+ * Specific Pages
+ * ======================================================================== */
+
+ /* Tool Log
+==================================== */
+.logs-content,
+.logs-content-pretify {
+    min-height: 500px;
+    height: 86vh;
+}
+.logs-content-pretify {
+    padding: 5px 0;
+    cursor: default;
+}
+.logs-content-item {
+    padding: 5px 10px;
+}
+.logs-content-item:hover {
+    background: #fffaec;
+}
 
 /*
  * Misc
