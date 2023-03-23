@@ -124,18 +124,34 @@ class UserGroup extends Mvc\Model
         return array_replace_recursive($default, $data);
     }
 
-    public function getUserGroups()
+    /**
+     * Get user groups
+     *
+     * @param  array  $filters
+     * @param  string $rkey    Return key
+     * @return array
+     */
+    public function getUserGroups(array $filters = ['ug.status != ?i' => -1], string $rkey = 'user_group_id'): array
     {
-        $userGroups = $this->cache->get('usergroups');
+        $argsHash = $this->cache->getHash(func_get_args());
+        $data     = $this->cache->get('usergroups.' . $argsHash, []);
 
-        if (!$userGroups) {
-            $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_group` ORDER BY name ASC");
-            $userGroups = $query->rows;
+        if (!$data) {
+            $userGroups = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "user_group` ug
+                WHERE " . implode(' AND ', array_keys($filters)) . "
+                ORDER BY ug.name ASC",
+                array_values($filters)
+            )->rows;
 
-            $this->cache->set('usergroups', $userGroups);
+            foreach ($userGroups as $result) {
+                $data[$result[$rkey]] = $result;
+            }
+
+            $this->cache->set('usergroups.' . $argsHash, $data, tags: ['usergroups']);
         }
 
-        return $userGroups;
+        return $data;
     }
 
     public function getTotal()
