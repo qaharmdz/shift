@@ -27,7 +27,7 @@ class Banner extends Mvc\Controller
                 $data['banners'][] = array(
                     'title' => $result['title'],
                     'link'  => $result['link'],
-                    'image' => $this->image->construct($result['image'], (int)$setting['width'], (int)$setting['height'])
+                    'image' => $this->image->getThumbnail($result['image'], (int)$setting['width'], (int)$setting['height'])
                 );
             }
         }

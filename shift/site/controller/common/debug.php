@@ -83,8 +83,8 @@ class Debug extends Mvc\Controller
         // $this->image->clearCache();
 
         $no_image  = $this->image->fromFile('image/no-image.png')->resize(150, 150)->toCache()->getUrl();
-        // $thumbnail = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->thumbnail(300, 300, 'center')->toCache('apple-macbook-air')->getUrl();
-        $thumbnail = $this->image->construct('image/demo/banners/MacBookAir.jpg', 300, 300, 'apple-macbook-air');
+        // $thumbnail = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->thumbnail(250, 250)->toCache('apple-macbook-air')->getUrl();
+        $thumbnail = $this->image->getThumbnail('image/demo/banners/MacBookAir.jpg', 250, 250, 'apple-macbook-air');
         $bestfit   = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->bestFit(305, 305)->toCache()->getUrl();
         $resize    = $this->image->fromFile('image/demo/banners/MacBookAir.jpg')->resize(310, 310)->toCache()->getUrl();
 

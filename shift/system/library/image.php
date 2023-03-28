@@ -6,6 +6,9 @@ namespace Shift\System\Library;
 
 use claviska\SimpleImage;
 
+/**
+ * TODO: issue fromFile-bestFit and fromFile-resize is not load from cached
+ */
 class Image extends SimpleImage
 {
     private array $config = [];
@@ -51,7 +54,7 @@ class Image extends SimpleImage
      *
      * @return string
      */
-    public function construct(string $imageFile, int $toWidth = null, int $toHeight = null, string $cacheName = null): string
+    public function getThumbnail(string $imageFile, int $toWidth = null, int $toHeight = null, string $cacheName = null): string
     {
         $this->setCacheInfo($imageFile, $toWidth, $toHeight, $cacheName);
 
