@@ -24,12 +24,16 @@ class Debug extends Mvc\Controller
             // '----------------------------',
             $this->user->get(),
             $this->language->all(),
-            date('Y-m-d H:i:s'),
             // '----------------------------',
             // $this->view->getConfig(),
             // $this->view->getTemplatePath(),
+        );
+        d(
+            date('Y-m-d H:i:s'),
             (int)'foo',
             (int)'foo bar',
+            (array)'foo',
+            (array)['foo'],
         );
 
         // d($this->db->get($this->session->get('dataTables_query'), $this->session->get('dataTables.sql.params')));

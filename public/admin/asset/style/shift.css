@@ -104,10 +104,11 @@ body {
 .main-navigation {
     padding: 0;
     width: 380px;
+    --uk-position-offset: 3px;
+    --uk-position-viewport-offset: 3px;
 }
 .main-navigation > div {
     min-height: 300px;
-    margin-left: -7px;
 }
 .main-navigation .uk-nav a {
     font-size: .95rem;
@@ -293,6 +294,62 @@ body {
 .logs-content-item:hover {
     background: #fffaec;
 }
+
+ /* Tool Log
+==================================== */
+.mediamanager {
+    height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+.mediamanager-sidebar,
+.mediamanager-content,
+.mediamanager-topbar {
+    padding: 15px;
+}
+
+.mediamanager-sidebar {
+    font-size: 13px;
+    padding: 10px;
+    min-width: 200px;
+    max-width: 260px;
+    height: 80vh;
+    border-right: 1px solid #e4e4e4;
+}
+.mediamanager-content-wrapper {
+    padding-bottom: 10px;
+    margin-left: -1px;
+    border-left: 1px solid #e4e4e4;
+}
+.mediamanager-topbar {
+    height: 40px;
+    padding: 5px 15px;
+    border-bottom: 1px solid #e4e4e4;
+}
+.mediamanager-content {
+    height: calc(80vh - 40px);
+}
+.mediamanager-content .item-thumbnail {
+    box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+}
+.mediamanager-content .item-thumbnail .card-media {
+    height: 130px;
+}
+.mediamanager-content .item-thumbnail .uk-card-body {
+    font-size: 12px;
+    line-height: 1em;
+    padding: 10px;
+}
+.mediamanager-content .item-thumbnail .uk-card-badge {
+    font-size: 10px;
+    text-transform: uppercase;
+    line-height: 1em;
+    height: auto;
+    padding: 2px 5px;
+    top: 3px;
+    right: 3px;
+}
+
 
 /*
  * Misc
@@ -604,4 +661,20 @@ a.ck.ck-button:not(.ck-disabled):hover {
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable:hover {
     background-color: #5897fb !important;
     color: white;
+}
+
+/* JSTree
+==================================== */
+.jstree-anchor {
+    margin-left: -5px;
+}
+.jstree-default .jstree-node {
+    margin-left: 20px;
+}
+
+.jstree-default > .jstree-container-ul > .jstree-node:first-child {
+    padding-top: 4px;
+}
+.jstree-default > .jstree-container-ul > .jstree-node {
+    padding-bottom: 4px;
 }

@@ -21,10 +21,7 @@ $_['event']          = 'Events';
 
 $_['tool']           = 'Tools';
 $_['module_layout']  = 'Module Layouts';
-$_['maintenance']    = 'Maintenance';
-$_['backup_restore'] = 'DB Backup / Restore';
-$_['cache']          = 'Clear Cache';
-$_['log']            = 'Logs Viewer';
+$_['media_manager']  = 'Media Manager';
 
 $_['account']        = 'Accounts';
 $_['user']           = 'Users';
@@ -33,3 +30,8 @@ $_['user_group']     = 'User Groups';
 $_['system']         = 'System';
 $_['setting']        = 'Settings';
 $_['sites']          = 'Sites';
+
+$_['maintenance']    = 'Maintenance';
+$_['backup_restore'] = 'DB Backup / Restore';
+$_['cache']          = 'Clear Cache';
+$_['log']            = 'Logs Viewer';

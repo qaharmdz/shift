@@ -181,6 +181,12 @@ class Header extends Mvc\Controller
                 'url'  => $this->router->url('tool/layout'),
             ]);
         }
+        if ($this->user->hasPermission('access', 'tool/mediamanager')) {
+            $tool[] = $this->nav([
+                'name' => $this->language->get('header.media_manager'),
+                'url'  => $this->router->url('tool/mediamanager'),
+            ]);
+        }
 
         if ($tool) {
             $data['menus'][300] = $this->nav([
