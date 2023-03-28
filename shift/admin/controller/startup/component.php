@@ -26,7 +26,7 @@ class Component extends Mvc\Controller
             $output = $this->response->getOutput();
         }
 
-        if (!$output) {
+        if (is_null($output)) {
             throw new Exception\NotFoundHttpException(sprintf('Component "%s" do not have a response output', $route));
         }
 
