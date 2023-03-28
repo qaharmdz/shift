@@ -48,10 +48,18 @@ $.ajaxSetup({
     cache: false,
 });
 $(document).ajaxComplete(function(event, jqxhr, options) {
-    let data = jqxhr.responseJSON ? jqxhr.responseJSON : JSON.parse(jqxhr.responseText);
+    if (shift.env.development === 1) {
+        let data = jqxhr.responseJSON ? jqxhr.responseJSON : {};
 
-    if (shift.env.development === 1 && 'debug' in data) {
-        console.log('# Shift CMS debug\n', options.url + '\n', data.debug);
+        if (!Object.keys(data).length) {
+            try {
+                data = JSON.parse(jqxhr.responseText);
+            } catch(e) {}
+        }
+
+        if ('debug' in data) {
+            console.log('# Shift CMS debug\n', options.url + '\n', data.debug);
+        }
     }
 });
 $(document).ajaxError(function(event, jqxhr, settings, exception) {
