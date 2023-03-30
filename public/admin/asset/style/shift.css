@@ -336,8 +336,6 @@ body {
     height: 130px;
 }
 .mediamanager-content .item-thumbnail .uk-card-body {
-    font-size: 12px;
-    line-height: 1em;
     padding: 10px;
 }
 .mediamanager-content .item-thumbnail .uk-card-badge {

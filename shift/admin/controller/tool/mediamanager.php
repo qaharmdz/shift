@@ -32,14 +32,14 @@ class MediaManager extends Mvc\Controller
         $this->response->setOutput($this->load->view('tool/mediamanager', $data));
     }
 
-    public function tree()
+    public function getFolders()
     {
         if (!$this->request->is('ajax', 'post')) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
         $this->response->setOutputJson(
-            $this->treeFolder(
+            $this->folderTree(
                 PATH_MEDIA,
                 $this->request->get('post.folder', ''),
                 ['cache', 'flags', 'image/test', 'image/demo/test2-']
@@ -47,7 +47,7 @@ class MediaManager extends Mvc\Controller
         );
     }
 
-    private function treeFolder(string $root, string $folder, array $xcludes = []): array
+    private function folderTree(string $root, string $folder, array $excludes = []): array
     {
         $output = [];
         $folder = $this->cleanPath($folder);
@@ -58,7 +58,7 @@ class MediaManager extends Mvc\Controller
             }
 
             $filePath = $folder . $item->getFilename();
-            if (in_array(strtolower($filePath), $xcludes)) {
+            if (in_array(strtolower($filePath), $excludes)) {
                 continue;
             }
 
@@ -68,7 +68,7 @@ class MediaManager extends Mvc\Controller
                     'id'        => $item->getFilename() . '/',
                     'text'      => $item->getFilename(),
                     'state'     => ['opened' => true],
-                    'children'  => $this->treeFolder($root, $item->getFilename() . '/', $xcludes),
+                    'children'  => $this->folderTree($root, $item->getFilename() . '/', $excludes),
                 ];
             } elseif ($folder) {
                 $output[] = [
@@ -83,6 +83,16 @@ class MediaManager extends Mvc\Controller
         return $output;
     }
 
+    public function folderAction()
+    {
+        // ...
+    }
+
+    private function folderDelete(string $folder)
+    {
+        // ...
+    }
+
     private function cleanPath(string $folder): string
     {
         $folder = str_replace(['.', '#'], '', $folder); // remove unwanted char
@@ -94,7 +104,34 @@ class MediaManager extends Mvc\Controller
 
     public function getItems()
     {
-        $data = [];
+        if (!$this->request->is('ajax', 'post')) {
+            // return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+
+        $this->load->language('tool/mediamanager');
+
+        $folder   = $this->cleanPath($this->request->get('post.folder', ''));
+        $data     = [
+            'files' => [],
+            'is_ajax' => $this->request->getBool($this->request->get('post.is_ajax')),
+        ];
+
+        foreach (new \DirectoryIterator(PATH_MEDIA . $folder) as $item) {
+            $fileType = explode('/', mime_content_type(PATH_MEDIA . $folder . $item->getFilename()))[0];
+
+            if (!$item->isDot() && $item->isFile() && $fileType == 'image') {
+                $data['files'][] = [
+                    'folder'        => $folder,
+                    'filename'      => $item->getFilename(),
+                    'basename'      => $item->getBasename('.' . $item->getExtension()),
+                    'extension'     => strtolower($item->getExtension()),
+                    'thumbnail'     => $this->image->getThumbnail($folder . $item->getFilename(), 200, 200),
+                    'url'           => $this->config->get('env.url_media') . $folder . $item->getFilename(),
+                    'filesize'      => $this->load->controller('tool/log/bytesToHuman', (int)$item->getSize()),
+                    'modified'      => date('Y-m-d H:i:s', $item->getMTime()),
+                ];
+            }
+        }
 
         $this->response->setOutput($this->load->view('tool/mediamanager_items', $data));
     }
