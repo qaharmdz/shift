@@ -86,15 +86,17 @@ class ShiftMediaManager extends Plugin {
                         imageSrc  = $('#mediamanager-' + elid + ' input#mediamanager-image-source').val();
                         imageAlt  = $('#mediamanager-' + elid + ' input#mediamanager-image-alt').val();
 
-                        // https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_model_model-Model.html#function-insertContent
-                        editor.model.change(writer => {
-                            // https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_model_writer-Writer.html#function-createElement
-                            // https://ckeditor.com/docs/ckeditor5/latest/api/module_image_imageblock-ImageBlock.html
-                            editor.model.insertContent(writer.createElement('imageBlock', {
-                                src: imageSrc,
-                                alt: imageAlt,
-                            }));
-                        });
+                        if (imageSrc) {
+                            // https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_model_model-Model.html#function-insertContent
+                            editor.model.change(writer => {
+                                // https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_model_writer-Writer.html#function-createElement
+                                // https://ckeditor.com/docs/ckeditor5/latest/api/module_image_imageblock-ImageBlock.html
+                                editor.model.insertContent(writer.createElement('imageBlock', {
+                                    src: imageSrc,
+                                    alt: imageAlt,
+                                }));
+                            });
+                        }
                     });
                 }
             });
