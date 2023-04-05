@@ -469,7 +469,7 @@ $(document).on('IIDE.init IIDE.editor', function(event)
                 opt.toolbar = shift.editor.mode_all;
                 break;
             case 'custom':
-                // Do nothing
+                // Do nothing, use the opt.toolbar
                 break;
             default:
                 opt.toolbar = shift.editor.mode_default;
@@ -489,6 +489,21 @@ $(document).on('IIDE.init IIDE.editor', function(event)
                 let wordCount = editor.plugins.get('WordCount');
                 $('.' + opt.wrapper).append('<div class="ckeditor-wordcount"></div>')
                 $('.' + opt.wrapper + ' .ckeditor-wordcount').html(wordCount.wordCountContainer);
+
+                if ($.inArray('shiftMediaManager', editor.config._config.toolbar.items) > 0) {
+                    let htmlModal  = '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
+                        htmlModal += '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
+                        htmlModal += '    <div class="mediamanager-modal-wrapper"></div>';
+                        htmlModal += '    <input type="hidden" id="mediamanager-image-source" value="">';
+                        htmlModal += '    <input type="hidden" id="mediamanager-image-alt" value="">';
+                        htmlModal += '</div>';
+
+                    $('.' + opt.wrapper).append('<div id="mediamanager-' + elid + '" class="ckeditor-mediamanager uk-modal uk-modal-container" uk-modal>' + htmlModal + '</div>');
+
+                    UIkit.util.on('#mediamanager-' + elid, 'beforeshow', function() {
+                        $('#mediamanager-' + elid + ' .mediamanager-modal-wrapper').load(shift.env.url_app + 'r/tool/mediamanager&modal=1&access_token=' + shift.env.access_token);
+                    });
+                }
             })
             .catch(function(error) {
                 console.log(error);

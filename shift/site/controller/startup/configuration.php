@@ -42,6 +42,8 @@ class Configuration extends Mvc\Controller
         }
 
         $this->config->set('env.limit', 36);
+        $this->config->set('env.development', $this->config->getInt('system.setting.development', 36));
+        $this->config->set('env.datetime_format', 'Y-m-d H:i:s');
 
         // Apply DB setting
         $this->log->setConfig([

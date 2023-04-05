@@ -295,7 +295,7 @@ body {
     background: #fffaec;
 }
 
- /* Tool Log
+ /* Media Manager
 ==================================== */
 .mediamanager {
     height: 80vh;
@@ -330,13 +330,16 @@ body {
     height: calc(80vh - 40px);
 }
 .mediamanager-content .item-thumbnail {
-    box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+    box-shadow: 0 1px 3px rgb(0, 0, 0, .25);
+    border-top: 1px solid #e4e4e4;
 }
 .mediamanager-content .item-thumbnail .card-media {
     height: 130px;
 }
 .mediamanager-content .item-thumbnail .uk-card-body {
-    padding: 10px;
+    font-size: .9rem;
+    line-height: 1.3;
+    padding: 6px;
 }
 .mediamanager-content .item-thumbnail .uk-card-badge {
     font-size: 10px;
@@ -346,6 +349,28 @@ body {
     padding: 2px 5px;
     top: 3px;
     right: 3px;
+}
+
+/* MediaManager in Modal (CKEditor) */
+.ckeditor-mediamanager .uk-modal-body {
+    padding: 3px;
+    background: #ccc;
+}
+.ckeditor-mediamanager .uk-container {
+    padding: 0;
+}
+.mediamanager-inmodal .mediamanager,
+.mediamanager-inmodal .mediamanager-sidebar {
+    height: 75vh;
+}
+.mediamanager-inmodal .mediamanager-content {
+    height: calc(75vh - 40px);
+}
+.mediamanager-inmodal .content-header {
+    display: none;
+}
+.mediamanager-inmodal .mediamanager {
+    box-shadow: none;
 }
 
 

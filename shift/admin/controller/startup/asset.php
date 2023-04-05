@@ -47,9 +47,13 @@ class Asset extends Mvc\Controller
         ]);
 
         $this->document->addAsset('editor', [
+            'style'     => [
+                $this->config->get('env.url_app') . 'asset/script/jstree/themes/style.min.css'
+            ],
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/ckeditor/build/ckeditor.js',
                 $this->config->get('env.url_app') . 'asset/script/shift.ckeditor.js',
+                $this->config->get('env.url_app') . 'asset/script/jstree/jstree.min.js'
             ]
         ]);
 

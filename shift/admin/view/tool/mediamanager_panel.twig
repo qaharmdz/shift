@@ -1,0 +1,162 @@
+<div class="uk-container container-content-wrapper {{ inModal ? 'mediamanager-inmodal' }}">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <a href="https://ckeditor.com/ckbox/demo/" target="_blank"class="">https://ckeditor.com/ckbox/demo/</a>
+            </div>
+        </div>
+    </div>
+
+    {% include '_embed/partial/alerts.tpl.twig' %}
+
+    <div class="content-body uk-card-panel mediamanager">
+        <div class="uk-grid-collapse" uk-grid>
+            <div>
+                <div class="mediamanager-sidebar" uk-overflow-auto>
+                    <div class="panel-tree-parent jstree-default">
+                        <i class="jstree-icon jstree-themeicon"></i> Media
+                        <a data-tree-reload class="ukt-ml-1" title="{{ app.language.get('reload_tree') }}" uk-tooltip>
+                            <i class="bi bi-arrow-repeat"></i>
+                        </a>
+                    </div>
+                    <div class="panel-tree"></div>
+                </div>
+            </div>
+            <div class="uk-width-expand">
+                <div class="mediamanager-content-wrapper">
+                    <div class="mediamanager-topbar">
+                        Upload
+                        {# <div class="mm-folder-path">[#] <span></span></div> #}
+                    </div>
+                    <div class="mediamanager-content" uk-overflow-auto></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $.extend(shift.i18n, {
+        new_folder : '{{ app.language.get("new_folder") }}',
+        rename     : '{{ app.language.get("rename") }}',
+    });
+
+    let treeLastNode = '',
+        treeStorage  = JSON.parse(localStorage.getItem('dc-mmtree-' + shift.env.access_token));
+
+    $('[data-tree-reload]').on('click', function() {
+        $('.panel-tree').jstree('refresh');
+    });
+
+    $('.panel-tree').jstree({
+        'core' : {
+            'data' : {
+                'type'  : 'POST',
+                'url'   : "{{ app.router.url('tool/mediamanager/getFolders')|raw }}",
+                'data'  : function(node) {
+                    return { 'folder':node.id };
+                }
+            },
+            'check_callback' : true,
+            'multiple' : false,
+            'strings' : {
+                'Loading ...' : shift.i18n.loading,
+                'New node' : 'new-folder'
+            }
+        },
+        'state' : {
+            'key' : 'dc-mmtree-' + shift.env.access_token,
+        },
+        'contextmenu' : {
+            'select_node' : false,
+            'items' : function(node) {
+                let tmp = $.jstree.defaults.contextmenu.items();
+
+                delete tmp.ccp; // no edit: cut, copy, paste
+                tmp.create.separator_after = false;
+
+                tmp.create.label = shift.i18n.new_folder;
+                if (node.parent =='#') {
+                    delete tmp.rename;
+                    delete tmp.remove;
+                } else {
+                    tmp.rename.label = shift.i18n.rename;
+                    tmp.remove.label = shift.i18n.delete;
+                }
+
+                return tmp;
+            }
+        },
+        'unique' : {
+            'duplicate' : function (name, counter) {
+                return name + '-' + counter;
+            }
+        },
+        'plugins' : ['state','sort','contextmenu','unique']
+    })
+    // jsTree state monitor
+    .on('ready.jstree', function(e, data) {
+        $('.jstree-container-ul > li > a').removeClass('jstree-hovered');
+
+        // If no local storage, select first node
+        if ($.isEmptyObject(treeStorage)) {
+            $('.jstree-container-ul > li:first-child > a').trigger('click');
+        }
+    })
+    .on('changed.jstree', function(e, data) {
+        if (data.action == 'deselect_all') {
+            $('.jstree-container-ul > li > a').removeClass('jstree-hovered');
+
+            // If previously selected folder is missing, select first node
+            if ($.isEmptyObject(data.selected) && $.isEmptyObject(data.old_selection) && $.isEmptyObject(treeStorage.state.core.selected[0])) {
+                $('.jstree-container-ul > li:first-child > a').trigger('click');
+            }
+
+            // Selected node is a sub of deleted folder
+            if (treeLastNode) {
+                data.instance.select_node(treeLastNode);
+                data.instance.save_state();
+                treeLastNode = ''; // reset
+            }
+        }
+
+        if (data.selected[1]) {
+            data.instance.deselect_node(data.selected[0]);
+        }
+
+        if (data.action == 'select_node') {
+            $('.js-tree-parent').removeClass('jstree-clicked');
+            onNodeSelected(data.node.id);
+        }
+    });
+
+    //=== Thumbnail action
+    $('.mediamanager-inmodal .mediamanager-content').on('click', '[data-mm-select]', function() {
+        let imageInfo = $(this).data('mm-select'),
+            editorMediaModal = $(this).parents('.ckeditor-mediamanager');
+
+        // CKEditor image
+        if (editorMediaModal.length) {
+            let editorMediaModalId = editorMediaModal.attr('id');
+
+            // Modal inputs created at shift.js IIDE.editor
+            editorMediaModal.find('#mediamanager-image-source').val(imageInfo.url);
+            editorMediaModal.find('#mediamanager-image-alt').val(imageInfo.filename);
+
+            setTimeout(function() {
+                UIkit.modal('#' + editorMediaModalId).hide();
+            }, 100);
+        }
+
+        // Image form input
+    });
+});
+
+function onNodeSelected(nodeId) {
+    // $('.mm-folder-path span').text(nodeId);
+    $('.mediamanager-content').html('<div class="ukt-mr-2" uk-spinner="ratio:.5"></div><i>' + shift.i18n.loading + '</i>');
+    $('.mediamanager-content').load("{{ app.router.url('tool/mediamanager/getItems')|raw }}", { folder: nodeId, inModal: {{ inModal ? 1 : 0 }} });
+}
+</script>

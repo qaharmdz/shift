@@ -23,13 +23,17 @@ class MediaManager extends Mvc\Controller
 
         $data = [];
 
-        $data['is_ajax'] = $this->request->is('ajax') || $this->request->get('query.modal');
+        $data['inModal'] = $this->request->getBool('query.modal', false);
 
-        $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        if ($data['inModal']) {
+            $this->response->setOutput($this->load->view('tool/mediamanager_panel', $data));
+        } else {
+            $data['layouts'] = $this->load->controller('block/position');
+            $data['footer']  = $this->load->controller('block/footer');
+            $data['header']  = $this->load->controller('block/header');
 
-        $this->response->setOutput($this->load->view('tool/mediamanager', $data));
+            $this->response->setOutput($this->load->view('tool/mediamanager', $data));
+        }
     }
 
     public function getFolders()
@@ -113,7 +117,7 @@ class MediaManager extends Mvc\Controller
         $folder   = $this->cleanPath($this->request->get('post.folder', ''));
         $data     = [
             'files' => [],
-            'is_ajax' => $this->request->getBool($this->request->get('post.is_ajax')),
+            'inModal' => $this->request->getBool('post.inModal', false),
         ];
 
         foreach (new \DirectoryIterator(PATH_MEDIA . $folder) as $item) {
@@ -122,13 +126,15 @@ class MediaManager extends Mvc\Controller
             if (!$item->isDot() && $item->isFile() && $fileType == 'image') {
                 $data['files'][] = [
                     'folder'        => $folder,
-                    'filename'      => $item->getFilename(),
+                    'filename'      => $filename = $item->getFilename(),
                     'basename'      => $item->getBasename('.' . $item->getExtension()),
                     'extension'     => strtolower($item->getExtension()),
+                    'path'          => $folder . $item->getFilename(),
                     'thumbnail'     => $this->image->getThumbnail($folder . $item->getFilename(), 200, 200),
                     'url'           => $this->config->get('env.url_media') . $folder . $item->getFilename(),
                     'filesize'      => $this->load->controller('tool/log/bytesToHuman', (int)$item->getSize()),
-                    'modified'      => date('Y-m-d H:i:s', $item->getMTime()),
+                    'created'       => date($this->config->get('env.datetime_format'), $item->getCTime()),
+                    'modified'      => date($this->config->get('env.datetime_format'), $item->getMTime()),
                 ];
             }
         }
