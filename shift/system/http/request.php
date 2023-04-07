@@ -100,18 +100,30 @@ class Request extends Core\Bags
         return $data;
     }
 
-    public function getIp(): string
+    public function getIp(): ?string
     {
-        return getenv('HTTP_CLIENT_IP') ?: (
-            getenv('HTTP_X_FORWARDED_FOR') ?: (
-                getenv('HTTP_X_FORWARDED') ?: (
-                    getenv('HTTP_FORWARDED_FOR') ?: (
-                        getenv('HTTP_FORWARDED') ?: (
-                            getenv('REMOTE_ADDR') ?: $this->get('server.REMOTE_ADDR', $_SERVER['REMOTE_ADDR'])
-                        )
-                    )
-                )
-            )
+        $keys = array(
+            'HTTP_CLIENT_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_FORWARDED',
+            'HTTP_X_CLUSTER_CLIENT_IP',
+            'HTTP_FORWARDED_FOR',
+            'HTTP_FORWARDED',
+            'HTTP_CF_CONNECTING_IP', // Cloudflare
+            'REMOTE_ADDR'
         );
+
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $_SERVER)) {
+                foreach (explode(',', $_SERVER[$key]) as $ip) {
+                    $ip = trim($ip);
+                    if ((bool)filter_var($ip, FILTER_VALIDATE_IP)) {
+                        return $ip;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }
