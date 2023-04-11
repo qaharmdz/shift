@@ -135,22 +135,29 @@ $(document).ready(function() {
     //=== Thumbnail action
     $('.mediamanager-inmodal .mediamanager-content').on('click', '[data-mm-select]', function() {
         let imageInfo = $(this).data('mm-select'),
-            editorMediaModal = $(this).parents('.ckeditor-mediamanager');
+            editorMediaModal = $(this).parents('.ckeditor-mediamanager'),
+            inputMediaModal = $(this).parents('.input-mediamanager');
 
         // CKEditor image
         if (editorMediaModal.length) {
-            let editorMediaModalId = editorMediaModal.attr('id');
-
             // Modal inputs created at shift.js IIDE.editor
             editorMediaModal.find('#mediamanager-image-source').val(imageInfo.url);
             editorMediaModal.find('#mediamanager-image-alt').val(imageInfo.filename);
 
             setTimeout(function() {
-                UIkit.modal('#' + editorMediaModalId).hide();
+                UIkit.modal('#' + editorMediaModal.attr('id')).hide();
             }, 100);
         }
 
         // Image form input
+        if (inputMediaModal.length) {
+            // Modal inputs created at shift.js IIDE.mediamanager
+            inputMediaModal.find('#mediamanager-image-source').val(imageInfo.path);
+
+            setTimeout(function() {
+                UIkit.modal('#' + inputMediaModal.attr('id')).hide();
+            }, 100);
+        }
     });
 });
 

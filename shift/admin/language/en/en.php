@@ -20,6 +20,7 @@ $_['configuration']         = 'Configuration';
 $_['information']           = 'Information';
 $_['meta']                  = 'Meta';
 $_['title']                 = 'Title';
+$_['image']                 = 'Image';
 $_['name']                  = 'Name';
 $_['email']                 = 'Email';
 $_['media']                 = 'Media';
@@ -63,6 +64,7 @@ $_['status_0']              = $_['disabled'];
 $_['status_1']              = $_['enabled'];
 $_['-none-']                = ' --- None --- ';
 $_['-select-']              = ' --- Select --- ';
+$_['select']                = 'Select';
 $_['toggle_check']          = 'Toggle check';
 $_['pagination']            = 'Showing %d to %d of %d (%d Pages)';
 

@@ -46,7 +46,7 @@ class MediaManager extends Mvc\Controller
             $this->folderTree(
                 PATH_MEDIA,
                 $this->request->get('post.folder', ''),
-                ['cache', 'flags', 'image/test', 'image/demo/test2-']
+                ['cache', 'flags']
             )
         );
     }
@@ -129,9 +129,9 @@ class MediaManager extends Mvc\Controller
                     'filename'      => $filename = $item->getFilename(),
                     'basename'      => $item->getBasename('.' . $item->getExtension()),
                     'extension'     => strtolower($item->getExtension()),
-                    'path'          => $folder . $item->getFilename(),
-                    'thumbnail'     => $this->image->getThumbnail($folder . $item->getFilename(), 200, 200),
-                    'url'           => $this->config->get('env.url_media') . $folder . $item->getFilename(),
+                    'path'          => $imagePath = $folder . $item->getFilename(),
+                    'thumbnail'     => $this->image->getThumbnail($imagePath, 200, 200),
+                    'url'           => $this->config->get('env.url_media') . $imagePath,
                     'filesize'      => $this->load->controller('tool/log/bytesToHuman', (int)$item->getSize()),
                     'created'       => date($this->config->get('env.datetime_format'), $item->getCTime()),
                     'modified'      => date($this->config->get('env.datetime_format'), $item->getMTime()),

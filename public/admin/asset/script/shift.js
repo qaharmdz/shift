@@ -17,6 +17,7 @@
  *   - data-form-monitor
  *   - data-form-submit
  *   - data-editor
+ *   - data-mediamanager
  *   - data-datepicker
  *   - data-select-s2
  *   - data-select-switcher
@@ -508,6 +509,67 @@ $(document).on('IIDE.init IIDE.editor', function(event)
             .catch(function(error) {
                 console.log(error);
             });
+    });
+});
+
+$(document).on('IIDE.init IIDE.mediamanager', function(event)
+{
+    /**
+     * CKEditor
+     *
+     * @usage
+     * <input data-mediamanager>
+     */
+    $('[data-mediamanager]').each(function(i) {
+        let el   = this,
+            elid = euid('mm-xxxxxx'),
+            opt  = $.extend({
+                wrapper       : 'wrapper-' + elid,
+                noImage       : 'image/no-image.png',
+            }, $(el).data('editor'));
+
+        $(el).hide().attr('id', elid).parent().addClass(opt.wrapper);
+
+        // Button
+        let htmlThumb  = '<div class="uk-card uk-card-default card-thumbnail uk-width-150">';
+            htmlThumb += '    <div class="card-media uk-card-media-top uk-cover-container"><img src="' + shift.env.url_media + $(el).val() + '" uk-cover style="cursor:pointer;"></div>';
+            htmlThumb += '    <div class="uk-card-body uk-text-center">';
+            htmlThumb += '        <a class="uk-button uk-button-primary uk-button-small" data-mm-show>' + shift.i18n.select + '</a>';
+            htmlThumb += '        <a class="uk-button uk-button-secondary uk-button-small">' + shift.i18n.clear + '</a>';
+            htmlThumb += '    </div>';
+            htmlThumb += '</div>';
+            $('.' + opt.wrapper).prepend(htmlThumb);
+
+        $(el).parent().on('click', 'img, [data-mm-show]', function() {
+            UIkit.modal('#mediamanager-' + elid).show();
+        });
+
+        // Media Manager modal
+        let htmlModal  = '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
+            htmlModal += '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
+            htmlModal += '    <div class="mediamanager-modal-wrapper"></div>';
+            htmlModal += '    <input type="hidden" id="mediamanager-image-source" value="">';
+            htmlModal += '</div>';
+
+        $('.' + opt.wrapper).append('<div id="mediamanager-' + elid + '" class="input-mediamanager uk-modal uk-modal-container" uk-modal>' + htmlModal + '</div>');
+
+        UIkit.util.on('#mediamanager-' + elid, 'beforeshow', function() {
+            $('#mediamanager-' + elid + ' .mediamanager-modal-wrapper').load(shift.env.url_app + 'r/tool/mediamanager&modal=1&access_token=' + shift.env.access_token);
+        });
+
+        // Apply selected image
+        UIkit.util.on('#mediamanager-' + elid, 'beforehide', function() {
+            imageSrc = $('#mediamanager-' + elid + ' input#mediamanager-image-source').val();
+
+            if (imageSrc) {
+                $('#' + elid).val(imageSrc);
+                $('.card-media img').attr('src', shift.env.url_media + imageSrc);
+            }
+
+            setTimeout(function() {
+                $('#mediamanager-' + elid + ' input#mediamanager-image-source').val('');
+            }, 100);
+        });
     });
 });
 
