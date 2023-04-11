@@ -83,8 +83,8 @@ class ShiftMediaManager extends Plugin {
 
                 if (!imageSrc) {
                     UIkit.util.on('#mediamanager-' + elid, 'beforehide', function() {
-                        imageSrc  = $('#mediamanager-' + elid + ' input#mediamanager-image-source').val();
-                        imageAlt  = $('#mediamanager-' + elid + ' input#mediamanager-image-alt').val();
+                        imageSrc = $('#mediamanager-' + elid + ' input#mediamanager-image-source').val();
+                        imageAlt = $('#mediamanager-' + elid + ' input#mediamanager-image-alt').val();
 
                         if (imageSrc) {
                             // https://ckeditor.com/docs/ckeditor5/latest/api/module_engine_model_model-Model.html#function-insertContent
@@ -97,6 +97,11 @@ class ShiftMediaManager extends Plugin {
                                 }));
                             });
                         }
+
+                        setTimeout(function() {
+                            $('#mediamanager-' + elid + ' input#mediamanager-image-source').val('');
+                            $('#mediamanager-' + elid + ' input#mediamanager-image-alt').val('');
+                        }, 100);
                     });
                 }
             });
