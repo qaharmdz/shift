@@ -346,12 +346,12 @@ body {
     right: 3px;
 }
 
-/* MediaManager in Modal (CKEditor) */
-.ckeditor-mediamanager .uk-modal-body {
+/* MediaManager in Modal */
+.mediamanager-modal.uk-modal-body {
     padding: 3px;
-    background: #ccc;
+    background: #ddd;
 }
-.ckeditor-mediamanager .uk-container {
+.mediamanager-modal .uk-container {
     padding: 0;
 }
 .mediamanager-inmodal .mediamanager,

@@ -1,4 +1,4 @@
-<div class="uk-container container-content-wrapper {{ inModal ? 'mediamanager-inmodal' }}">
+<div class="mediamanager-id-{{ identifier }} uk-container container-content-wrapper {{ inModal ? 'mediamanager-inmodal' }}">
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
@@ -46,11 +46,11 @@ $(document).ready(function() {
     let treeLastNode = '',
         treeStorage  = JSON.parse(localStorage.getItem('dc-mmtree-' + shift.env.access_token));
 
-    $('[data-tree-reload]').on('click', function() {
-        $('.panel-tree').jstree('refresh');
+    $('.mediamanager-id-{{ identifier }} [data-tree-reload]').on('click', function() {
+        $('.mediamanager-id-{{ identifier }}  .panel-tree').jstree('refresh');
     });
 
-    $('.panel-tree').jstree({
+    $('.mediamanager-id-{{ identifier }} .panel-tree').jstree({
         'core' : {
             'data' : {
                 'type'  : 'POST',
@@ -133,7 +133,7 @@ $(document).ready(function() {
     });
 
     //=== Thumbnail action
-    $('.mediamanager-inmodal .mediamanager-content').on('click', '[data-mm-select]', function() {
+    $('.mediamanager-id-{{ identifier }}.mediamanager-inmodal .mediamanager-content').on('click', '[data-mm-select]', function() {
         let imageInfo = $(this).data('mm-select'),
             editorMediaModal = $(this).parents('.ckeditor-mediamanager'),
             inputMediaModal = $(this).parents('.input-mediamanager');
@@ -163,7 +163,7 @@ $(document).ready(function() {
 
 function onNodeSelected(nodeId) {
     // $('.mm-folder-path span').text(nodeId);
-    $('.mediamanager-content').html('<div class="ukt-mr-2" uk-spinner="ratio:.5"></div><i>' + shift.i18n.loading + '</i>');
-    $('.mediamanager-content').load("{{ app.router.url('tool/mediamanager/getItems')|raw }}", { folder: nodeId, inModal: {{ inModal ? 1 : 0 }} });
+    $('.mediamanager-id-{{ identifier }} .mediamanager-content').html('<div class="ukt-mr-2" uk-spinner="ratio:.5"></div><i>' + shift.i18n.loading + '</i>');
+    $('.mediamanager-id-{{ identifier }} .mediamanager-content').load("{{ app.router.url('tool/mediamanager/getItems')|raw }}", { folder: nodeId, inModal: {{ inModal ? 1 : 0 }} });
 }
 </script>

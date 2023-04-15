@@ -23,7 +23,8 @@ class MediaManager extends Mvc\Controller
 
         $data = [];
 
-        $data['inModal'] = $this->request->getBool('query.modal', false);
+        $data['identifier'] = time();
+        $data['inModal']    = $this->request->getBool('query.modal', false);
 
         if ($data['inModal']) {
             $this->response->setOutput($this->load->view('tool/mediamanager_panel', $data));
