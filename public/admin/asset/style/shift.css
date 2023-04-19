@@ -9,7 +9,8 @@
  *   - Middle Region
  *
  * # Specific Pages
- *   - ...
+ *   - Tool Log
+ *   - Media Manager
  *
  * # Misc
  *   - Bootstrap Icons
@@ -393,6 +394,14 @@ body {
 /*
  * Misc
  * ======================================================================== */
+
+/* shift.js
+==================================== */
+
+.shift-modal-confirm {
+    font-size: 16px;
+}
+
 
 /* Bootstrap Icons
 ==================================== */

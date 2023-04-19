@@ -231,7 +231,7 @@ if (jQuery().select2) {
      */
     $.fn.shift.confirm = function(options) {
         let opt     = $.extend({}, $.fn.shift.confirm.defaults, options),
-            content = '<div class="uk-text-center">' + (opt.title ? '<h2 class="uk-modal-title">' + opt.title + '</h2>' : '') + '<div>' + opt.message + '</div></div>';
+            content = '<div class="uk-text-center shift-modal-confirm">' + (opt.title ? '<h2 class="uk-modal-title">' + opt.title + '</h2>' : '') + '<div>' + opt.message + '</div></div>';
 
         UIkit.notification.closeAll();
         UIkit.modal.confirm(content, {
