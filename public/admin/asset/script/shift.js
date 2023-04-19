@@ -535,13 +535,18 @@ $(document).on('IIDE.init IIDE.mediamanager', function(event)
             htmlThumb += '    <div class="card-media uk-card-media-top uk-cover-container"><img src="' + shift.env.url_media + $(el).val() + '" uk-cover style="cursor:pointer;"></div>';
             htmlThumb += '    <div class="uk-card-body uk-text-center">';
             htmlThumb += '        <a class="uk-button uk-button-primary uk-button-small" data-mm-show>' + shift.i18n.select + '</a>';
-            htmlThumb += '        <a class="uk-button uk-button-secondary uk-button-small">' + shift.i18n.clear + '</a>';
+            htmlThumb += '        <a class="uk-button uk-button-secondary uk-button-small" data-mm-clear>' + shift.i18n.clear + '</a>';
             htmlThumb += '    </div>';
             htmlThumb += '</div>';
             $('.' + opt.wrapper).prepend(htmlThumb);
 
         $(el).parent().on('click', 'img, [data-mm-show]', function() {
             UIkit.modal('#mediamanager-' + elid).show();
+        });
+
+        $(el).parent().on('click', '[data-mm-clear]', function() {
+            $('#' + elid).val(opt.noImage);
+            $('.' + opt.wrapper + ' .card-media img').attr('src', shift.env.url_media + opt.noImage);
         });
 
         // Media Manager modal
@@ -563,11 +568,12 @@ $(document).on('IIDE.init IIDE.mediamanager', function(event)
 
             if (imageSrc) {
                 $('#' + elid).val(imageSrc);
-                $('.card-media img').attr('src', shift.env.url_media + imageSrc);
+                $('.' + opt.wrapper + ' .card-media img').attr('src', shift.env.url_media + imageSrc);
             }
 
             setTimeout(function() {
                 $('#mediamanager-' + elid + ' input#mediamanager-image-source').val('');
+                $('#mediamanager-' + elid + ' .mediamanager-modal-wrapper').html('');
             }, 100);
         });
     });
