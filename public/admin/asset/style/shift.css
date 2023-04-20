@@ -377,9 +377,9 @@ body {
 .card-thumbnail .uk-card-body {
     font-size: .94rem;
     line-height: 1.4;
-    background: #f2f3f4;
-    border-top: 1px solid #eee;
     padding: 6px;
+    background: #f4f5f6;
+    border-top: 1px solid #eee;
 }
 .card-thumbnail .card-media {
     height: 140px;
@@ -721,6 +721,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
 ==================================== */
 .jstree-anchor {
     margin-left: -5px;
+    padding: 0 8px 0 1px;
 }
 .jstree-default .jstree-node {
     margin-left: 20px;
@@ -731,4 +732,47 @@ a.ck.ck-button:not(.ck-disabled):hover {
 }
 .jstree-default > .jstree-container-ul > .jstree-node {
     padding-bottom: 4px;
+}
+.jstree-default .jstree-clicked {
+    font-style: italic;
+    background: #eef3ff;
+    border-radius: 0;
+    box-shadow: none;
+}
+.jstree-default .jstree-hovered {
+    background: #f2f2f2;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.vakata-context {
+    font-size: 12px;
+    width: 125px;
+    padding: 4px;
+    margin-left: 20px;
+    background: #fff;
+    border: 0;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 12%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    z-index: 1100;
+}
+.vakata-context li:focus {
+    outline: 0;
+}
+.vakata-context li > a {
+    color: #444;
+    font-size: 12.4px;
+    line-height: 1.2;
+    margin: 0 -4px;
+    padding: 3.5px 8px 4.5px;
+}
+.vakata-context li > a i,
+.vakata-context li > a span {
+    display: none !important;
+}
+.vakata-context li > a:hover,
+.vakata-context .vakata-context-hover > a {
+    color: #222;
+    text-shadow: none;
+    background-color: rgba(145, 145, 145, 0.12);
+    box-shadow: none;
 }

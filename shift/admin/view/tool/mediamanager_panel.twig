@@ -78,13 +78,8 @@ $(document).ready(function() {
                 tmp.create.separator_after = false;
 
                 tmp.create.label = shift.i18n.new_folder;
-                if (node.parent =='#') {
-                    delete tmp.rename;
-                    delete tmp.remove;
-                } else {
-                    tmp.rename.label = shift.i18n.rename;
-                    tmp.remove.label = shift.i18n.delete;
-                }
+                tmp.rename.label = shift.i18n.rename;
+                tmp.remove.label = shift.i18n.delete;
 
                 return tmp;
             }
@@ -127,9 +122,55 @@ $(document).ready(function() {
         }
 
         if (data.action == 'select_node') {
-            $('.js-tree-parent').removeClass('jstree-clicked');
             onNodeSelected(data.node.id);
         }
+    })
+
+    .on('create_node.jstree', function(e, data) {
+        $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'create_node', 'parent':data.node.parent, 'text':data.node.text })
+            .done(function(d) {
+                data.instance.set_id(data.node, d.id);
+            })
+            .fail(function() {
+                // tree_last_node = data.node.parent;
+                data.instance.refresh();
+            });
+    })
+    .on('rename_node.jstree', function(e, data) {
+        $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'rename_node', 'parent':data.node.parent, 'folder':data.node.id, 'text':data.text })
+            .done(function(d) {
+                data.instance.set_id(data.node, d.id);
+                data.instance.set_text(data.node, d.text);
+
+                if (d.id == data.instance.get_selected()[0]) {
+                    data.instance.refresh();
+                }
+            })
+            .fail(function() {
+                tree_last_node = data.node.parent;
+                data.instance.refresh();
+            });
+    })
+    .on('delete_node.jstree', function(e, data) {
+        $.fn.shift.confirm({
+            title       : '{{ app.language.get("page_title") }}',
+            message     : '{{ app.language.get("confirm_delete_folder")}}',
+            onConfirm   : function() {
+                $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'delete_node', 'parent':data.node.parent, 'folder':data.node.id })
+                    .done(function(d) {
+                        tree_last_node = data.node.parent;
+                        data.instance.refresh();
+                    })
+                    .fail(function() {
+                        tree_last_node = data.node.parent;
+                        data.instance.refresh();
+                    });
+            },
+            onCancel    : function() {
+                tree_last_node = data.node.id;
+                data.instance.refresh();
+            }
+        });
     });
 
     //=== Thumbnail action

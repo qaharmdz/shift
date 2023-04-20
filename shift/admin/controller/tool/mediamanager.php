@@ -90,12 +90,51 @@ class MediaManager extends Mvc\Controller
 
     public function folderAction()
     {
-        // ...
-    }
+        if (!$this->request->is('ajax', 'post')) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
 
-    private function folderDelete(string $folder)
-    {
-        // ...
+        $data = [];
+        $post = $this->request->getArray('post');
+        $post['parent'] = $this->cleanPath($post['parent'] ?? '');
+        $post['folder'] = $this->cleanPath($post['folder'] ?? '');
+
+        if ($post['action'] == 'create_node') {
+            $folder     = sanitizeChar($post['text']);
+            $folder_new = $post['parent'] . $folder;
+
+            // folder will be created in rename_node
+            $data = [
+                'id'    => $folder_new,
+                'text'  => $folder
+            ];
+        }
+
+        if ($post['action'] == 'rename_node' && sanitizeChar($post['parent'])) {
+            $status     = false;
+            $folder     = mb_strtolower(sanitizeChar($post['text']));
+            $folder_old = $post['folder'];
+            $folder_new = $post['parent'] . $folder . '/';
+
+            if (!file_exists(PATH_MEDIA . $folder_old)) {
+                $status = mkdir(PATH_MEDIA . $folder_new); // in chain with create_node
+            } elseif ($folder_old != $folder_new) {
+                $status = rename(PATH_MEDIA . $folder_old, PATH_MEDIA . $folder_new);
+            }
+
+            if ($status) {
+                $data = [
+                    'id'    => $folder_new,
+                    'text'  => $folder
+                ];
+            }
+        }
+
+        if ($post['action'] == 'delete_node' && sanitizeChar($post['parent'])) {
+            $this->deletePath(PATH_MEDIA . $post['folder']);
+        }
+
+        $this->response->setOutputJson($data);
     }
 
     private function cleanPath(string $folder): string
@@ -105,6 +144,33 @@ class MediaManager extends Mvc\Controller
         $folder = preg_replace('~//+~', '/', $folder);  // multi slash to one
 
         return $folder;
+    }
+
+    private function deletePath(string $folder)
+    {
+        $folder = $this->cleanPath($folder);
+
+        if (empty($folder) || !file_exists($folder)) {
+            return true;
+        } elseif (is_file($folder) || is_link($folder)) {
+            return @unlink($folder);
+        }
+
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($folder, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $fileinfo) {
+            $action = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+            if (!@$action($fileinfo->getRealPath())) {
+                return false;
+            }
+        }
+
+        if (is_dir($folder)) {
+            return rmdir($folder);
+        }
     }
 
     public function getItems()
