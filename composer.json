@@ -27,7 +27,7 @@
     "autoload": {
         "classmap": ["shift/", "tests/"],
         "files": [
-            "shift/system/helper/utf8.php"
+            "shift/system/helper/autoloaded.php"
         ]
     },
     "config": {
