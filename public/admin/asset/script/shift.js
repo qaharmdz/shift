@@ -234,7 +234,8 @@ if (jQuery().select2) {
         let opt     = $.extend({}, $.fn.shift.confirm.defaults, options),
             content = '<div class="uk-text-center shift-modal-confirm">' + (opt.title ? '<h2 class="uk-modal-title">' + opt.title + '</h2>' : '') + '<div>' + opt.message + '</div></div>';
 
-        UIkit.notification.closeAll();
+        if (opt.clear) { UIkit.notification.closeAll(); }
+
         UIkit.modal.confirm(content, {
             bgClose     : false,
             escClose    : false,
@@ -251,7 +252,8 @@ if (jQuery().select2) {
         labelOk     : shift.i18n.yes_sure,
         labelCancel : shift.i18n.cancel,
         onConfirm   : function() { return true; },
-        onCancel    : function() { return false; }
+        onCancel    : function() { return false; },
+        clear       : false
     };
 
     /**
@@ -275,7 +277,8 @@ if (jQuery().select2) {
     $.fn.shift.prompt = function(options) {
         var opt = $.extend({}, $.fn.shift.prompt.defaults, options);
 
-        UIkit.notification.closeAll();
+        if (opt.clear) { UIkit.notification.closeAll(); }
+
         UIkit.modal.prompt(opt.message, opt.value, {
             bgClose     : false,
             escClose    : false,
@@ -292,7 +295,8 @@ if (jQuery().select2) {
         value       : '',
         labelOk     : shift.i18n.submit,
         labelCancel : shift.i18n.cancel,
-        onAction    : function(value) {}
+        onAction    : function(value) {},
+        clear       : false
     };
 
     /**

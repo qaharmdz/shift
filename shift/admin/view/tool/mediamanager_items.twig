@@ -12,12 +12,14 @@
                                 <i class="bi bi-check2-square"></i>
                             </button>
                         {% endif %}
-                        <button class="uk-button uk-button-gray button-action" title="{{ app.language.get('rename') }}" uk-tooltip data-mm-action='{"action":"rename", "folder":"{{ file.folder }}", "basename":"{{ file.basename }}", "ext":"{{ file.extension }}"}'>
-                            <i class="bi bi-pencil uk-text-primary"></i>
-                        </button>
-                        <button class="uk-button uk-button-gray button-action" title="{{ app.language.get('delete') }}" uk-tooltip data-mm-action='{"action":"delete", "folder":"{{ file.folder }}", "filename":"{{ file.filename }}"}'>
-                            <i class="bi bi-trash uk-text-danger"></i>
-                        </button>
+                        {% if not inModal %}
+                            <button class="uk-button uk-button-gray button-action" title="{{ app.language.get('rename') }}" uk-tooltip data-mm-action='{"action":"rename", "folder":"{{ file.folder }}", "basename":"{{ file.basename }}", "ext":"{{ file.extension }}"}'>
+                                <i class="bi bi-pencil uk-text-primary"></i>
+                            </button>
+                            <button class="uk-button uk-button-gray button-action" title="{{ app.language.get('delete') }}" uk-tooltip data-mm-action='{"action":"delete", "folder":"{{ file.folder }}", "filename":"{{ file.filename }}"}'>
+                                <i class="bi bi-trash uk-text-danger"></i>
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="uk-card-body">
