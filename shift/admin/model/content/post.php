@@ -291,6 +291,12 @@ class Post extends Mvc\Model
             $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i", [$post_id])->rows;
             foreach ($metas as $meta) {
                 $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
+
+                if ($meta['key'] == 'image') {
+                    if (!is_file(PATH_MEDIA . $data['meta']['image'])) {
+                        $data['meta']['image'] = $default['meta']['image'];
+                    }
+                }
             }
 
             // Sites
