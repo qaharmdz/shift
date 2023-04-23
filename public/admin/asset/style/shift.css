@@ -347,7 +347,7 @@ body {
     right: 3px;
 }
 
-/* MediaManager in Modal */
+/* Media Manager in Modal */
 .mediamanager-modal.uk-modal-body {
     padding: 3px;
     background: #ddd;
@@ -369,7 +369,7 @@ body {
     box-shadow: none;
 }
 
-/* MediaManager input thumbnail */
+/* Media Manager input thumbnail */
 .card-thumbnail {
     box-shadow: 0 1px 3px rgb(0, 0, 0, .25);
     border-top: 1px solid #eee;
@@ -377,17 +377,38 @@ body {
 .card-thumbnail .uk-card-body {
     font-size: .94rem;
     line-height: 1.4;
-    padding: 6px;
-    background: #f4f5f6;
+    padding: 7px;
+/*    background: #f4f5f6;*/
     border-top: 1px solid #eee;
+}
+.card-thumbnail .uk-card-body *+p {
+    margin-top: 8px;
 }
 .card-thumbnail .card-media {
     height: 140px;
 }
-.card-thumbnail .uk-card-body .uk-button-small {
+.card-thumbnail .button-wrapper {
+    padding: 2px;
+    background: rgba(125,125,125,.5);
+    text-align: center;
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+.card-thumbnail .button-wrapper .button-action {
     font-size: 12px;
     line-height: 1.4;
-    padding: 0 8px;
+    padding: 0 4px;
+    border-radius: 3px;
+}
+.card-thumbnail .button-wrapper .button-action + .button-action {
+    margin-left: 2px;
+}
+.card-thumbnail .button-wrapper .button-action .bi {
+    font-size: 14px;
+    line-height: inherit;
 }
 
 
