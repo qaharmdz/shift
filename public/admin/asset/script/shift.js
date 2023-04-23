@@ -11,6 +11,7 @@
  *   - $.fn.shift.notify()
  *   - $.fn.shift.goNotify()
  *   - $.fn.shift.confirm()
+ *   - $.fn.shift.prompt()
  *   - $.fn.shift.dtAction()
  *
  * # IIDE (Immediate Invoked Data Expressions)
@@ -139,8 +140,8 @@ if (jQuery().select2) {
     $.fn.shift.notify = function(options) {
         let opt = $.extend({}, $.fn.shift.notify.defaults, options);
 
-        if (opt.clear) { UIkit.notification.closeAll(); }
         if (!opt.message) { return; }
+        if (opt.clear) { UIkit.notification.closeAll(); }
 
         UIkit.notification({
             message : opt.icon + ' <div>' + opt.message + '</div>',
@@ -254,7 +255,48 @@ if (jQuery().select2) {
     };
 
     /**
-     * Bulk action AJAX processing (designed for dataTables)
+     * @depedency UIkit.modal
+     *
+     * # Usage
+     * $.fn.shift.prompt({
+     *     message      : 'Label',
+     *     value        : 'Placeholder',
+     *     onAction     : function() { ... }
+     * });
+     *
+     * # Override global setter
+     * $.extend($.fn.shift.prompt.defaults, {
+     *     labelOk      : 'Submit',
+     *     labelCancel  : 'Cancel',
+     *     onAction     : function(value) {}
+     * });
+     *
+     */
+    $.fn.shift.prompt = function(options) {
+        var opt = $.extend({}, $.fn.shift.prompt.defaults, options);
+
+        UIkit.notification.closeAll();
+        UIkit.modal.prompt(opt.message, opt.value, {
+            bgClose     : false,
+            escClose    : false,
+            stack       : true,
+            labels      : {
+                ok      : opt.labelOk,
+                cancel  : opt.labelCancel
+            }
+        }).then(opt.onAction);
+    };
+
+    $.fn.shift.prompt.defaults = {
+        message     : '',
+        value       : '',
+        labelOk     : shift.i18n.submit,
+        labelCancel : shift.i18n.cancel,
+        onAction    : function(value) {}
+    };
+
+    /**
+     * DataTables bulk action AJAX processing
      *
      * # Usage
      * # Override global setter
