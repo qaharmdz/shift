@@ -50,11 +50,12 @@ $_['save_new']              = 'Save & New';
 $_['save_as_copy']          = 'Save as copy';
 $_['close']                 = 'Close';
 $_['cancel']                = 'Cancel';
+$_['continue']              = 'Continue';
 $_['clear']                 = 'Clear';
 $_['purge']                 = 'Purge';
 $_['reset']                 = 'Reset';
+$_['submit']                = 'Submit';
 $_['delete']                = 'Delete';
-$_['continue']              = 'Continue';
 
 $_['yes']                   = 'Yes';
 $_['no']                    = 'No';

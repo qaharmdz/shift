@@ -11,4 +11,5 @@ $_['select']                = 'Select';
 $_['select_image']          = 'Select Image';
 
 $_['empty_folder']          = 'Folder is empty';
-$_['confirm_delete_folder'] = 'This action cannot be undone! Folder and Files will be deleted recursively.';
+$_['confirm_delete_file']   = 'This action cannot be undone!<br>The file will be deleted permanently.';
+$_['confirm_delete_folder'] = 'This action cannot be undone!<br>Folder and Files will be deleted recursively.';

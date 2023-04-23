@@ -93,6 +93,9 @@ class MediaManager extends Mvc\Controller
         if (!$this->request->is('ajax', 'post')) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
+        if (!$this->user->hasPermission('modify', 'tool/mediamanager')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
 
         $data = [];
         $post = $this->request->getArray('post');
@@ -105,8 +108,8 @@ class MediaManager extends Mvc\Controller
 
             // folder will be created in rename_node
             $data = [
-                'id'    => $folder_new,
-                'text'  => $folder
+                'id'   => $folder_new,
+                'text' => $folder
             ];
         }
 
@@ -124,8 +127,8 @@ class MediaManager extends Mvc\Controller
 
             if ($status) {
                 $data = [
-                    'id'    => $folder_new,
-                    'text'  => $folder
+                    'id'   => $folder_new,
+                    'text' => $folder
                 ];
             }
         }
@@ -176,7 +179,7 @@ class MediaManager extends Mvc\Controller
     public function getItems()
     {
         if (!$this->request->is('ajax', 'post')) {
-            // return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
         $this->load->language('tool/mediamanager');
@@ -193,7 +196,7 @@ class MediaManager extends Mvc\Controller
             if (!$item->isDot() && $item->isFile() && $fileType == 'image') {
                 $data['files'][] = [
                     'folder'        => $folder,
-                    'filename'      => $filename = $item->getFilename(),
+                    'filename'      => $item->getFilename(),
                     'basename'      => $item->getBasename('.' . $item->getExtension()),
                     'extension'     => strtolower($item->getExtension()),
                     'path'          => $imagePath = $folder . $item->getFilename(),
@@ -207,5 +210,36 @@ class MediaManager extends Mvc\Controller
         }
 
         $this->response->setOutput($this->load->view('tool/mediamanager_items', $data));
+    }
+
+    public function itemAction()
+    {
+        if (!$this->request->is('ajax', 'post')) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+        if (!$this->user->hasPermission('modify', 'tool/mediamanager')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+
+        $data = ['status' => false];
+        $post = $this->request->getArray('post');
+
+        if ($post['action'] == 'rename' && sanitizeChar($post['rename'])) {
+            $path     = PATH_MEDIA . $post['folder'];
+            $file_old = $post['basename'] . '.' . $post['ext'];
+            $file_new = mb_strtolower(sanitizeChar($post['rename']) . '.' . $post['ext']);
+
+            $data['status'] = rename($path . $file_old, $path . $file_new);
+        }
+
+        if ($post['action'] == 'delete') {
+            $file = PATH_MEDIA . $post['folder'] . $post['filename'];
+
+            if (is_file($file)) {
+                $data['status'] = @unlink($file);
+            }
+        }
+
+        $this->response->setOutputJson($data);
     }
 }
