@@ -541,8 +541,8 @@ $(document).on('IIDE.init IIDE.editor', function(event)
                     let htmlModal  = '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
                         htmlModal += '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
                         htmlModal += '    <div class="mediamanager-modal-wrapper"></div>';
-                        htmlModal += '    <input type="hidden" id="mediamanager-image-source" value="">';
-                        htmlModal += '    <input type="hidden" id="mediamanager-image-alt" value="">';
+                        htmlModal += '    <input type="hidden" class="mediamanager-image-source" value="">';
+                        htmlModal += '    <input type="hidden" class="mediamanager-image-alt" value="">';
                         htmlModal += '</div>';
 
                     $('.' + opt.wrapper).append('<div id="mediamanager-' + elid + '" class="ckeditor-mediamanager uk-modal uk-modal-container" uk-modal>' + htmlModal + '</div>');
@@ -599,7 +599,7 @@ $(document).on('IIDE.init IIDE.mediamanager', function(event)
         let htmlModal  = '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
             htmlModal += '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
             htmlModal += '    <div class="mediamanager-modal-wrapper"></div>';
-            htmlModal += '    <input type="hidden" id="mediamanager-image-source" value="">';
+            htmlModal += '    <input type="hidden" class="mediamanager-image-source" value="">';
             htmlModal += '</div>';
 
         $('.' + opt.wrapper).append('<div id="mediamanager-' + elid + '" class="input-mediamanager uk-modal uk-modal-container" uk-modal>' + htmlModal + '</div>');
@@ -610,7 +610,7 @@ $(document).on('IIDE.init IIDE.mediamanager', function(event)
 
         // Apply selected image
         UIkit.util.on('#mediamanager-' + elid, 'beforehide', function() {
-            imageSrc = $('#mediamanager-' + elid + ' input#mediamanager-image-source').val();
+            imageSrc = $('#mediamanager-' + elid + ' input.mediamanager-image-source').val();
 
             if (imageSrc) {
                 $('#' + elid).val(imageSrc);
@@ -618,7 +618,7 @@ $(document).on('IIDE.init IIDE.mediamanager', function(event)
             }
 
             setTimeout(function() {
-                $('#mediamanager-' + elid + ' input#mediamanager-image-source').val('');
+                $('#mediamanager-' + elid + ' input.mediamanager-image-source').val('');
                 $('#mediamanager-' + elid + ' .mediamanager-modal-wrapper').html('');
             }, 100);
         });
