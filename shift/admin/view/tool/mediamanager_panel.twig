@@ -217,8 +217,8 @@ $(document).ready(function() {
         // CKEditor image
         if (editorMediaModal.length) {
             // Modal inputs created at shift.js IIDE.editor
-            editorMediaModal.find('#mediamanager-image-source').val(imageInfo.url);
-            editorMediaModal.find('#mediamanager-image-alt').val(imageInfo.filename);
+            editorMediaModal.find('.mediamanager-image-source').val(imageInfo.url);
+            editorMediaModal.find('.mediamanager-image-alt').val(imageInfo.filename);
 
             setTimeout(function() {
                 UIkit.modal('#' + editorMediaModal.attr('id')).hide();
@@ -228,7 +228,7 @@ $(document).ready(function() {
         // Image form input
         if (inputMediaModal.length) {
             // Modal inputs created at shift.js IIDE.mediamanager
-            inputMediaModal.find('#mediamanager-image-source').val(imageInfo.path);
+            inputMediaModal.find('.mediamanager-image-source').val(imageInfo.path);
 
             setTimeout(function() {
                 UIkit.modal('#' + inputMediaModal.attr('id')).hide();
