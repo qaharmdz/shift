@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.3.0] - 2023-04-24
 ### Added
 - Twig template engine.
+- Admin setting content/*
+- Admin setting extension/*
+- Admin setting tool/*
+- Admin setting account/*
+- Admin setting system/*
+- Admin setting maintenance/*
 
 ### Changed
 - Rewrite admin controller, language and template.
@@ -45,5 +52,7 @@ Based on OpenCart v2.3.0.2.
 - Ecommerce features (catalog, cart, order, customer etc).
 - Extension modification (OcMod).
 
-[Unreleased]: https://github.com/qaharmdz/shift/compare/v0.1.0...dev/0.x.x
+[Unreleased]: https://github.com/qaharmdz/shift/compare/v0.3.0...dev/0.x.x
 [v0.1.0]: https://github.com/qaharmdz/shift/releases/tag/v0.1.0
+[v0.2.0]: https://github.com/qaharmdz/shift/releases/tag/v0.2.0
+[v0.3.0]: https://github.com/qaharmdz/shift/releases/tag/v0.3.0
