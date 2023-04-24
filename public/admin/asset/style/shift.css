@@ -304,8 +304,7 @@ body {
     overflow: hidden;
 }
 .mediamanager-sidebar,
-.mediamanager-content,
-.mediamanager-topbar {
+.mediamanager-content {
     padding: 15px;
 }
 
@@ -322,13 +321,8 @@ body {
     margin-left: -1px;
     border-left: 1px solid #e4e4e4;
 }
-.mediamanager-topbar {
-    height: 40px;
-    padding: 5px 15px;
-    border-bottom: 1px solid #e4e4e4;
-}
 .mediamanager-content {
-    height: calc(80vh - 40px);
+    height: calc(80vh);
 }
 .mediamanager-content .card-thumbnail .card-media {
     height: 130px;
@@ -360,7 +354,7 @@ body {
     height: 75vh;
 }
 .mediamanager-inmodal .mediamanager-content {
-    height: calc(75vh - 40px);
+    height: calc(75vh);
 }
 .mediamanager-inmodal .content-header {
     display: none;
@@ -397,10 +391,15 @@ body {
     right: 0;
     z-index: 99;
 }
+.mediamanager-inmodal .card-thumbnail .button-wrapper {
+    margin-right: 4px;
+    text-align: end;
+    background: transparent;
+}
 .card-thumbnail .button-wrapper .button-action {
     font-size: 12px;
     line-height: 1.4;
-    padding: 0 4px;
+    padding: 2px 4px 1px;
     border-radius: 3px;
 }
 .card-thumbnail .button-wrapper .button-action + .button-action {
@@ -408,7 +407,7 @@ body {
 }
 .card-thumbnail .button-wrapper .button-action .bi {
     font-size: 14px;
-    line-height: inherit;
+    line-height: 14px;
 }
 
 
@@ -517,7 +516,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
 }
 
 .ckeditor-wordcount {
-    text-align: right;
+    text-align: end;
     line-height: 0;
     padding: 5px 5px;
     margin-top: -1px;

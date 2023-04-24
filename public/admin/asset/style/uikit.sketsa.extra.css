@@ -258,7 +258,7 @@ th.uk-text-break {
 ==================================== */
 .uk-dropdown {
     padding: 5px;
-    text-align: left;
+    text-align: start;
 }
 .uk-dropdown-nav {
     white-space: normal;

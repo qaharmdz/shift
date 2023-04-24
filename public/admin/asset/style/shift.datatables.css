@@ -50,7 +50,7 @@
 
 /* === Datatables Top right panel  */
 .dt-top-right {
-    text-align: right;
+    text-align: end;
 }
 
 .dataTables_length {
@@ -95,7 +95,7 @@
 .buttons-colvisRestore {
     width: 100%;
     margin: 1px 0;
-    text-align: left;
+    text-align: start;
 }
 .buttons-columnVisibility.uk-button-default {
     color: #888;
