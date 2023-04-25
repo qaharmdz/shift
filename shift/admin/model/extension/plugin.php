@@ -67,6 +67,6 @@ class Plugin extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension` WHERE `type` = 'plugin'")->row['total'];
+        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension` WHERE `type` = 'plugin' AND `install` = 1")->row['total'];
     }
 }
