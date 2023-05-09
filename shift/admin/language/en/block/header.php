@@ -20,7 +20,7 @@ $_['language']       = 'Languages';
 $_['event']          = 'Events';
 
 $_['tool']           = 'Tools';
-$_['module_layout']  = 'Module Layouts';
+$_['module_layout']  = 'Module-Route Layouts';
 $_['media_manager']  = 'Media Manager';
 
 $_['account']        = 'Accounts';

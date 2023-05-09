@@ -1,8 +1,8 @@
 {
-    "name"       : "Architect",
-    "codename"   : "architect",
-    "version"    : "1.0.0",
-    "author"     : "Shift",
-    "url"        : "https://github.com/qaharmdz/shift",
-    "description": ""
+    "codename"    : "architect",
+    "name"        : "Architect",
+    "version"     : "1.0.0",
+    "description" : "",
+    "author"      : "Shift",
+    "url"         : "https://github.com/qaharmdz/shift"
 }

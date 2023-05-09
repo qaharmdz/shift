@@ -1,3 +1,3 @@
 <?php
 
-$_['page_title']        = 'Extension Manage';
+$_['page_title']        = 'Manage Extensions';

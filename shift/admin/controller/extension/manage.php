@@ -14,46 +14,73 @@ class Manage extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
+        $this->document->loadAsset('datatables');
+
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('extension')],
-            [$this->language->get('page_title')],
+            [$this->language->get('page_title'), $this->router->url('extension/manage')],
         ]);
 
-        $extensions = [];
-        foreach (glob(PATH_EXTENSIONS . '*', GLOB_ONLYDIR) as $ext) {
-            $extensions[basename($ext)] = [];
-
-            foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
-                if (is_file($node . DS . 'meta.json')) {
-                    $codename = basename($node);
-                    $metaInfo = array_merge(
-                        [
-                            'name'        => ucwords($codename),
-                            'version'     => '1.0.0-b',
-                            'author'      => '',
-                            'link'        => '',
-                            'description' => '',
-                        ],
-                        json_decode(file_get_contents($node . DS . 'meta.json'), true)
-                    );
-
-                    $extensions[basename($ext)][] = [
-                        'codename' => basename($node),
-                        'meta'     => $metaInfo,
-                        'path'     => $node,
-                    ];
-                }
-            }
-        }
-
-        d($extensions);
-
         $data = [];
+
+        $newExtensions = $this->checkExtensions();
+        // TODO: notification new extensions
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('extension/manage', $data));
+    }
+
+    /**
+     * Check if there is new extensions and add to the DB `sf_extension`
+     *
+     * @return array
+     */
+    private function checkExtensions(): array
+    {
+        $data = ['total' => 0];
+
+        $extensions = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension`")->rows;
+
+        foreach (glob(PATH_EXTENSIONS . '*', GLOB_ONLYDIR) as $ext) {
+            $extType = basename($ext);
+            $data[$extType] = [];
+
+            foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
+                if (is_file($node . DS . 'meta.json')) {
+                    $codename = basename($node);
+                    $metas    = json_decode(file_get_contents($node . DS . 'meta.json'), true);
+
+                    if ($codename === $metas['codename']) {
+                        $isExtInDb = array_filter($extensions, function ($v) use ($extType, $codename) {
+                            return ($v['type'] === $extType && $v['codename'] === $codename);
+                        });
+
+                        // Add new extensions to database
+                        if (empty($isExtInDb)) {
+                            $extData = [
+                                'codename'    => $metas['codename'],
+                                'type'        => $extType,
+                                'name'        => $metas['name'],
+                                'version'     => $metas['version'],
+                                'description' => $metas['description'],
+                                'author'      => $metas['author'],
+                                'url'         => $metas['url'],
+                            ];
+
+                            $this->db->add(DB_PREFIX . 'extension', $extData);
+
+                            $data[$extType][] = $extData;
+
+                            $data['total']++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 }
