@@ -5,9 +5,48 @@ declare(strict_types=1);
 namespace Shift\Admin\Model\Extension;
 
 use Shift\System\Mvc;
+use Shift\System\Helper;
 
 class Manage extends Mvc\Model
 {
+    // List
+    // ================================================
+
+    /**
+     * DataTables records
+     *
+     * @param  array  $params
+     */
+    public function dtRecords(array $params)
+    {
+        $columnMap = [
+            'extension_id' => 'e.extension_id',
+            'codename'     => 'e.codename',
+            'name'         => 'e.name',
+            'version'         => 'e.version',
+            'type'         => 'e.type',
+            'install'      => 'e.install',
+        ];
+        $filterMap = $columnMap;
+        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+
+        $query = "SELECT " . implode(', ', $columnMap)
+            . " FROM `" . DB_PREFIX . "extension` e"
+            . ($dtResult['query']['where'] ? " WHERE " . $dtResult['query']['where'] : "")
+            . " ORDER BY " . $dtResult['query']['order']
+            . " LIMIT " . $dtResult['query']['limit'];
+
+        return $this->db->get($query, $dtResult['query']['params']);
+    }
+
+    public function getTotal(): int
+    {
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "post` WHERE `taxonomy` = 'post'")->row['total'];
+    }
+
+    // Manage
+    // ================================================
+
     public function getInstalled($type)
     {
         $data = [];

@@ -9,9 +9,71 @@
         </div>
     </div>
 
-    <div class="content-body">
-        <div class="uk-card-panel uk-card-body">
-<pre><code>Extension Manage:
+    <div class="content-body uk-card-panel uk-card-body">
+        <table id="extensionManage-list" class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th class="ukt-px-0 noVisualColumn" style="width:30px;">
+                        <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                        <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width:60px;">{{ app.language.get('id') }}</th>
+                    <th style="width:160px">{{ app.language.get('codename') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="width:100px">{{ app.language.get('version') }}</th>
+                    <th style="width:120px">{{ app.language.get('type') }}</th>
+                    <th style="width:120px">{{ app.language.get('status') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                </tr>
+                <tr data-dtColumnFilter>
+                    <td class="ukt-pt-1">
+                        <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
+                    </td>
+                    <td data-filter='{"type":"number"}'>
+                        <input type="text" value="" data-index="1" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="3" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="4" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"text"}'>
+                        <select data-index="5" class="uk-select">
+                            <option value=""></option>
+                            <option value="plugin">{{ app.language.get('plugin') }}</option>
+                            <option value="module">{{ app.language.get('module') }}</option>
+                            <option value="theme">{{ app.language.get('theme') }}</option>
+                            <option value="language">{{ app.language.get('language') }}</option>
+                        </select>
+                    </td>
+                    <td data-filter='{"type":"number"}'>
+                        <select data-index="6" class="uk-select">
+                            <option value=""></option>
+                            <option value="1">{{ app.language.get('installed') }}</option>
+                            <option value="0">{{ app.language.get('installed_not') }}</option>
+                        </select>
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code>Extension Manage:
 - Show all extension type: plugin, module, theme, language
     - Plugins: Covers all non-specific extension that extends the Shift features and functions.
     - Module: Specific extension assigned to Section Positions through Tools > Module Layout.
@@ -22,7 +84,116 @@
     - Info button is the extension information, while the edit button is for extension setting, where the edit URL depend on the extension type/ custom URL provided by the method metaInfo().
     - Plugin "Content" can have module "Content - Latest Post". On the Install button, show title: Install Content plugin + 5 Content module
 </code></pre>
-        </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+$.extend(shift.i18n, {
+    install_0 : '{{ app.language.get("install_0") }}',
+    install_1 : '{{ app.language.get("install_1") }}',
+    confirm_delete : '{{ app.language.get("confirm_delete")|raw }}',
+    confirm_uninstall : '{{ app.language.get("confirm_uninstall")|raw }}',
+});
+
+let tableEl     = '#extensionManage-list',
+    columnsHide = [],
+    dtTable     = $(tableEl).DataTable({
+        ajax : $.fn.dataTable.pipeline({
+            url  : "{{ app.router.url('extension/manage/list')|raw }}",
+            data : function(d, s) {
+                d.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                d = dtShiftColumnFilter(d);
+            }
+        }),
+        initComplete: function() {
+            dtShiftUtility(dtTable, columnsHide);
+        },
+        sorting : [[2, 'asc']], // codename
+        columnDefs : [
+            { searchable : false, targets : [0, -1] },
+            { orderable : false, targets : [0, -1] },
+            { createdCell : function(nTd) {
+                $(nTd).addClass('uk-text-center'); },
+                targets : [ 0, 1, -4, -2, -1 ]
+            },
+        ],
+        columns : [
+            { data : 'extension_id',
+                render : function(data, type, full) {
+                    return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                }
+            },
+            { data : 'extension_id' },
+            { data : 'codename',
+                render : function(data, type, full) {
+                    return '<code>' + data + '</code>';
+                }
+            },
+            { data : 'name' },
+            { data : 'version' },
+            { data : 'type',
+                render : function(data, type, full) {
+                    return shift.i18n[data];
+                }
+            },
+            { data : 'install',
+                render : function(data, type, full) {
+                    output = shift.i18n['install_' + data];
+                    if (!full.install) {
+                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['install_' + data] + '</div>';
+                    }
+                    return output;
+                }
+            },
+            { data : 'extension_id',
+                className : 'ukt-p-2',
+                render : function(data, type, full) {
+                    output  = '';
+                    if (full.install) {
+                        output += '<a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\' class="uk-text-warning" uk-tooltip  title="{{ app.language.get("uninstall") }}"><i class="bi bi-dash-circle-fill bi-2x"></i></a>';
+                    } else {
+                        output += '<a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("install") }}"><i class="bi bi-plus-circle-fill bi-2x"></i></a>';
+                        output += '<a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\' class="ukt-ml-2 uk-text-danger" uk-tooltip  title="{{ app.language.get("delete_extension") }}"><i class="bi bi-x-circle-fill bi-2x"></i></a>';
+                    }
+
+                    return output;
+                }
+            }
+        ]
+    });
+
+    // Action quick-edit
+    $('.main-content').on('click', '[data-dtAction]', function(e) {
+        e.preventDefault();
+
+        let data = $(this).data('dtaction');
+
+        $.fn.shift.dtAction({
+            url  : "{{ app.router.url('extension/manage/dtaction')|raw }}",
+            data : data,
+            validate : function(dtActionProceed) {
+                if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else if (data.type === 'uninstall') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_uninstall,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else {
+                    dtActionProceed();
+                }
+            },
+            onSuccess : function() {
+                dtTable.clearPipeline().draw();
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
