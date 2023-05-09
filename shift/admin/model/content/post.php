@@ -9,7 +9,6 @@ use Shift\System\Helper;
 
 class Post extends Mvc\Model
 {
-
     // List
     // ================================================
 

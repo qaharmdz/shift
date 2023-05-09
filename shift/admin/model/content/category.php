@@ -9,7 +9,6 @@ use Shift\System\Helper;
 
 class Category extends Mvc\Model
 {
-
     // List
     // ================================================
 

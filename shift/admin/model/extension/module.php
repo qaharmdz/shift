@@ -9,7 +9,6 @@ use Shift\System\Helper;
 
 class Module extends Mvc\Model
 {
-
     // List
     // ================================================
 
