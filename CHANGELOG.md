@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- n/a
+- Admin extension/manage
 
 ### Changed
 - n/a
@@ -26,7 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Twig template engine.
 - Admin setting content/*
-- Admin setting extension/*
 - Admin setting tool/*
 - Admin setting account/*
 - Admin setting system/*

@@ -127,11 +127,11 @@ class Site extends Mvc\Controller
         $this->load->model('tool/layout');
         $data['layoutList'] = $this->model_tool_layout->getLayouts();
 
-        $this->load->model('extension/extension');
-        $extensions = $this->model_extension_extension->getInstalled('theme');
+        $this->load->model('extension/manage');
+        $themes = $this->model_extension_manage->getInstalled('theme');
 
         $data['themes'] = [];
-        foreach ($extensions as $code) {
+        foreach ($themes as $code) {
             $lang = $this->load->language('extension/theme/' . $code, '_temp');
             $data['themes'][] = [
                 'text'  => $lang['heading_title'] ?? ucwords($code),

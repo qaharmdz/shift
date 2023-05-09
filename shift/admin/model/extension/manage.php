@@ -6,21 +6,21 @@ namespace Shift\Admin\Model\Extension;
 
 use Shift\System\Mvc;
 
-class Extension extends Mvc\Model
+class Manage extends Mvc\Model
 {
     public function getInstalled($type)
     {
-        $extension_data = array();
-
+        $data = [];
         $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY codename");
 
         foreach ($query->rows as $result) {
-            $extension_data[] = $result['codename'];
+            $data[] = $result['codename'];
         }
 
-        return $extension_data;
+        return $data;
     }
 
+    /*
     public function install($type, $codename)
     {
         $extensions = $this->getInstalled($type);
@@ -32,7 +32,10 @@ class Extension extends Mvc\Model
 
     public function uninstall($type, $codename)
     {
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename]);
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = ?s AND `codename` = ?s", [$type, $codename]);
+        // TODO: delete extension_data
+        // TODO: delete extension_meta
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename]);
     }
+    */
 }
