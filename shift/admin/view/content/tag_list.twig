@@ -15,7 +15,7 @@
         <table id="contentTag-list" class="uk-table uk-table-striped uk-table-hover">
             <thead>
                 <tr>
-                    <th class="ukt-px-0" style="width:30px;">
+                    <th class="ukt-px-0 noVisualColumn" style="width:30px;">
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
@@ -125,16 +125,15 @@ let tableEl     = '#contentTag-list',
             { data : 'tag_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
-                    if (!full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
-                    }
                     if (full.status) {
                         output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                    } else {
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
                     }
                     output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.tag_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
                     output += '        </ul>';

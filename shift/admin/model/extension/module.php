@@ -27,9 +27,9 @@ class Module extends Mvc\Model
             'status'       => 'ed.status',
         ];
         $filterMap = $columnMap;
+        $filterMap['module_id'] = 'ed.extension_data_id';
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
-        $filterMap['module_id'] = 'ed.extension_data_id';
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension_data` ed

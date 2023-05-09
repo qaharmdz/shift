@@ -29,7 +29,6 @@ class Tag extends Mvc\Model
         ];
         $filterMap = $columnMap;
         $filterMap['tag_id'] = 't.term_id';
-        $filterMap['title']  = 'CONCAT(tc.title, " ", ra.alias)';
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
