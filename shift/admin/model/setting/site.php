@@ -76,7 +76,7 @@ class Site extends Mvc\Model
             );
         }
 
-        $this->cache->deleteItemsByTags('sites');
+        $this->cache->deleteByTags('sites');
 
         return $site_id;
     }
@@ -92,7 +92,7 @@ class Site extends Mvc\Model
             ['site_id' => $site_id]
         );
 
-        $this->cache->deleteItemsByTags('sites');
+        $this->cache->deleteByTags('sites');
     }
 
     public function getSite(int $site_id)
@@ -152,6 +152,6 @@ class Site extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'setting', ['site_id' => $site_ids]);
         }
 
-        $this->cache->deleteItemsByTags('sites');
+        $this->cache->deleteByTags('sites');
     }
 }
