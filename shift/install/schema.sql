@@ -32,58 +32,62 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension` (
   `type` varchar(32) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `name` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `version` varchar(16) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `description` varchar(510) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `author` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `url` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `setting` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `install` tinyint(1) NOT NULL DEFAULT '0',
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`extension_id`),
-  UNIQUE KEY `codename_type` (`codename`,`type`)
+  UNIQUE KEY `codename_type` (`codename`,`type`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}extension` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}extension` (`extension_id`, `codename`, `type`, `name`, `version`, `author`, `url`, `install`) VALUES
-	(6, 'banner', 'module', '', '', '', '', 1),
-	(7, 'carousel', 'module', '', '', '', '', 1),
-	(19, 'slideshow', 'module', '', '', '', '', 1),
-	(25, 'online', 'dashboard', '', '', '', '', 0),
-	(32, 'base', 'theme', '', '', '', '', 1),
-	(33, 'architect', 'plugin', 'Architect', '1.0.0', 'Shift', 'https://example.com', 1);
+INSERT INTO `{DB_PREFIX}extension` (`extension_id`, `codename`, `type`, `name`, `version`, `description`, `author`, `url`, `setting`, `status`, `install`, `created`, `updated`) VALUES
+	(6, 'banner', 'module', 'Banner', '1.0.0', '', '', '', '[]', 0, 1, NULL, NULL),
+	(7, 'carousel', 'module', 'Carousel', '1.0.0', '', '', '', '[]', 0, 1, NULL, NULL),
+	(19, 'slideshow', 'module', 'SlideShow', '1.0.0', '', '', '', '[]', 0, 0, NULL, NULL),
+	(32, 'base', 'theme', 'Theme Base', '1.0.0', '', 'Shift', 'https://example.com', '[]', 0, 1, NULL, NULL),
+	(33, 'architect', 'plugin', 'Architect', '1.0.0', '', 'Shift', 'https://example.com', '[]', 1, 1, NULL, '2023-05-11 17:14:56');
 /*!40000 ALTER TABLE `{DB_PREFIX}extension` ENABLE KEYS */;
 
-DROP TABLE IF EXISTS `{DB_PREFIX}extension_data`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_data` (
-  `extension_data_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'plugin_id, module_id, theme_id',
+DROP TABLE IF EXISTS `{DB_PREFIX}extension_meta`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_meta` (
+  `extension_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `extension_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `extension_data_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`extension_meta_id`) USING BTREE,
+  KEY `extension` (`extension_id`,`extension_data_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_meta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_meta` ENABLE KEYS */;
+
+DROP TABLE IF EXISTS `{DB_PREFIX}extension_module`;
+CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_module` (
+  `extension_module_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'plugin_id, module_id, theme_id',
   `extension_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `name` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `setting` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
-  PRIMARY KEY (`extension_data_id`) USING BTREE,
+  PRIMARY KEY (`extension_module_id`) USING BTREE,
   KEY `extension_id` (`extension_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
-/*!40000 ALTER TABLE `{DB_PREFIX}extension_data` DISABLE KEYS */;
-INSERT INTO `{DB_PREFIX}extension_data` (`extension_data_id`, `extension_id`, `name`, `setting`, `status`, `created`, `updated`) VALUES
-	(1, 33, 'Architect', '[]', 0, NULL, NULL),
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_module` DISABLE KEYS */;
+INSERT INTO `{DB_PREFIX}extension_module` (`extension_module_id`, `extension_id`, `name`, `setting`, `status`, `created`, `updated`) VALUES
 	(2, 6, 'Home Page', '[]', 1, NULL, NULL),
-	(3, 7, 'Home Page', '[]', 0, NULL, NULL),
+	(3, 7, 'Home Page', '[]', 0, NULL, '2023-05-11 19:20:30'),
 	(4, 19, 'Home Page', '[]', 0, NULL, NULL),
 	(5, 7, 'Banner', '[]', 0, NULL, NULL);
-/*!40000 ALTER TABLE `{DB_PREFIX}extension_data` ENABLE KEYS */;
-
-DROP TABLE IF EXISTS `{DB_PREFIX}extension_meta`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_meta` (
-  `extension_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `extension_data_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`extension_meta_id`) USING BTREE,
-  KEY `extension` (`extension_data_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
-/*!40000 ALTER TABLE `{DB_PREFIX}extension_meta` DISABLE KEYS */;
-/*!40000 ALTER TABLE `{DB_PREFIX}extension_meta` ENABLE KEYS */;
+/*!40000 ALTER TABLE `{DB_PREFIX}extension_module` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}information`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}information` (
@@ -291,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_meta` (
   `post_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `post_id` bigint(20) unsigned NOT NULL,
   `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`post_meta_id`) USING BTREE,
   KEY `post_id` (`post_id`) USING BTREE,
@@ -378,13 +382,13 @@ DROP TABLE IF EXISTS `{DB_PREFIX}setting`;
 CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
   `setting_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `site_id` bigint(20) NOT NULL DEFAULT '0',
-  `group` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `code` varchar(64) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `key` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `group` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `code` varchar(128) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `encoded` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`),
-  KEY `group` (`site_id`,`group`) USING BTREE
+  KEY `group` (`site_id`,`group`,`code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` DISABLE KEYS */;
@@ -392,19 +396,6 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(1296, 0, 'system', 'alias_distinct', 'information/information', 'information_id', 0),
 	(1297, 0, 'system', 'alias_distinct', 'content/post', 'post_id', 0),
 	(1298, 0, 'system', 'alias_multi', 'content/category', 'category_id', 0),
-	(2707, 1, 'system', 'site', 'name', 'Site Name 1', 0),
-	(2708, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
-	(2709, 1, 'system', 'site', 'email', 'admin@example.com', 0),
-	(2710, 1, 'system', 'site', 'meta_title', '{"1":"","2":""}', 1),
-	(2711, 1, 'system', 'site', 'meta_description', '{"1":"","2":""}', 1),
-	(2712, 1, 'system', 'site', 'meta_keyword', '{"1":"","2":""}', 1),
-	(2713, 1, 'system', 'site', 'logo', 'image/logo.png', 0),
-	(2714, 1, 'system', 'site', 'favicon', 'image/favicon.png', 0),
-	(2715, 1, 'system', 'site', 'language', 'en', 0),
-	(2716, 1, 'system', 'site', 'layout_id', '1', 0),
-	(2717, 1, 'system', 'site', 'theme', 'base', 0),
-	(2718, 1, 'system', 'site', 'maintenance', '1', 0),
-	(2719, 1, 'system', 'site', 'timezone', 'Asia/Jakarta', 0),
 	(2937, 0, 'system', 'site', 'name', 'Shift Site', 0),
 	(2938, 0, 'system', 'site', 'url_host', 'https://localhost/mdzGit/shift/public/', 0),
 	(2939, 0, 'system', 'site', 'email', 'admin@example.com', 0),
@@ -455,7 +446,19 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(3189, 0, 'system', 'setting', 'mail_smtp_username', '', 0),
 	(3190, 0, 'system', 'setting', 'mail_smtp_password', '', 0),
 	(3191, 0, 'system', 'setting', 'mail_smtp_port', '', 0),
-	(3192, 0, 'system', 'setting', 'mail_smtp_timeout', '', 0);
+	(3192, 0, 'system', 'setting', 'mail_smtp_timeout', '', 0),
+	(3229, 1, 'system', 'site', 'name', 'Site Name', 0),
+	(3230, 1, 'system', 'site', 'url_host', 'https://example.com/', 0),
+	(3231, 1, 'system', 'site', 'email', 'admin@example.com', 0),
+	(3232, 1, 'system', 'site', 'meta_title', '{"1":"","2":""}', 1),
+	(3233, 1, 'system', 'site', 'meta_description', '{"1":"","2":""}', 1),
+	(3234, 1, 'system', 'site', 'meta_keyword', '{"1":"","2":""}', 1),
+	(3235, 1, 'system', 'site', 'logo', 'image/logo.png', 0),
+	(3236, 1, 'system', 'site', 'favicon', 'image/favicon.png', 0),
+	(3237, 1, 'system', 'site', 'language', 'en', 0),
+	(3238, 1, 'system', 'site', 'layout_id', '1', 0),
+	(3239, 1, 'system', 'site', 'theme', 'base', 0),
+	(3240, 1, 'system', 'site', 'maintenance', '1', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}setting` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}site`;
@@ -469,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}site` (
 /*!40000 ALTER TABLE `{DB_PREFIX}site` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}site` (`site_id`, `name`, `url_host`) VALUES
 	(0, 'Shift Site', 'https://localhost/mdzGit/shift/public/'),
-	(1, 'Site Name 1', 'https://example.com/');
+	(1, 'Site Name', 'https://example.com/');
 /*!40000 ALTER TABLE `{DB_PREFIX}site` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}site_relation`;
@@ -484,6 +487,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}site_relation` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}site_relation` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}site_relation` (`site_relation_id`, `site_id`, `taxonomy`, `taxonomy_id`) VALUES
+	(36, 0, 'content_category', 18),
 	(35, 1, 'content_post', 1);
 /*!40000 ALTER TABLE `{DB_PREFIX}site_relation` ENABLE KEYS */;
 
@@ -506,12 +510,12 @@ INSERT INTO `{DB_PREFIX}term` (`term_id`, `parent_id`, `taxonomy`, `sort_order`,
 	(15, 0, 'content_tag', 0, 1, '2023-02-05 18:25:29', '2023-02-26 07:04:53'),
 	(16, 0, 'content_category', 0, 0, '2023-02-21 18:01:09', '2023-02-21 18:01:15'),
 	(17, 14, 'content_category', 0, 1, '2023-02-21 18:01:33', '2023-02-28 16:59:52'),
-	(18, 17, 'content_category', 0, 1, '2023-02-21 18:01:48', '2023-03-02 17:31:24'),
+	(18, 17, 'content_category', 0, 1, '2023-02-21 18:01:48', '2023-04-24 16:16:40'),
 	(20, 0, 'content_tag', 0, 1, '2023-02-26 07:30:25', '2023-02-26 07:30:25'),
 	(21, 0, 'content_tag', 0, 1, '2023-02-26 07:30:26', '2023-02-26 07:30:26'),
 	(22, 0, 'content_tag', 0, 1, '2023-02-26 07:30:26', '2023-02-26 07:30:26'),
 	(23, 0, 'content_tag', 0, 1, '2023-02-26 07:59:45', '2023-02-26 08:02:29'),
-	(24, 0, 'content_tag', 0, 1, '2023-02-26 07:59:45', '2023-02-26 07:59:45'),
+	(24, 0, 'content_tag', 0, 1, '2023-02-26 07:59:45', '2023-05-09 19:54:20'),
 	(25, 0, 'content_tag', 0, 1, '2023-02-26 08:04:38', '2023-02-26 08:04:38'),
 	(26, 0, 'content_tag', 0, 1, '2023-02-26 08:05:55', '2023-02-26 08:05:55');
 /*!40000 ALTER TABLE `{DB_PREFIX}term` ENABLE KEYS */;
@@ -561,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_meta` (
   `term_meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `term_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `key` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `value` text COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `encoded` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`term_meta_id`) USING BTREE,
   KEY `term_id` (`term_id`) USING BTREE,
@@ -594,14 +598,14 @@ INSERT INTO `{DB_PREFIX}term_meta` (`term_meta_id`, `term_id`, `key`, `value`, `
 	(190, 17, 'post_column_excerpt', '48', 0),
 	(191, 17, 'post_order', '', 0),
 	(192, 17, 'custom_code', '', 0),
-	(217, 18, 'robots', 'noindex, follow', 0),
-	(218, 18, 'post_per_page', '10', 0),
-	(219, 18, 'post_lead', '2', 0),
-	(220, 18, 'post_lead_excerpt', '101', 0),
-	(221, 18, 'post_column', '2', 0),
-	(222, 18, 'post_column_excerpt', '48', 0),
-	(223, 18, 'post_order', 'p.publish~asc', 0),
-	(224, 18, 'custom_code', '', 0);
+	(225, 18, 'robots', 'noindex, follow', 0),
+	(226, 18, 'post_per_page', '10', 0),
+	(227, 18, 'post_lead', '2', 0),
+	(228, 18, 'post_lead_excerpt', '101', 0),
+	(229, 18, 'post_column', '2', 0),
+	(230, 18, 'post_column_excerpt', '48', 0),
+	(231, 18, 'post_order', 'p.publish~asc', 0),
+	(232, 18, 'custom_code', '', 0);
 /*!40000 ALTER TABLE `{DB_PREFIX}term_meta` ENABLE KEYS */;
 
 DROP TABLE IF EXISTS `{DB_PREFIX}term_relation`;
@@ -644,7 +648,7 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
 
 /*!40000 ALTER TABLE `{DB_PREFIX}user` DISABLE KEYS */;
 INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `status`, `last_login`, `created`, `updated`) VALUES
-	(1, 1, 'admin@example.com', '$2y$10$pZaFRjBdpjtrrHPA6Cc2VOnMBjiM.RrLWQ586hv.ZoeScmcExMAeC', 'admin', 'John', 'Doe', 1, '2023-04-24 13:53:04', '2022-01-30 16:17:31', '2022-03-20 12:17:31'),
+	(1, 1, 'admin@example.com', '$2y$10$aoN3hKTurGHDmrBbenED/.VeDanhyLQz51/eWUaRkOrUvU2dhuM8K', 'admin', 'John', 'Doe', 1, '2023-05-11 15:18:18', '2022-01-30 16:17:31', '2022-03-20 12:17:31'),
 	(3, 2, 'james@example.com', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'james', 'James', 'Doe', 1, '2022-11-15 11:57:27', '2022-01-30 16:17:31', '2023-03-02 22:53:07'),
 	(4, 2, 'jane@example.com', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'janedoe', 'Jane', 'Doe', 0, '2022-10-07 20:57:27', '2022-01-30 16:17:31', '2023-03-05 16:44:48');
 /*!40000 ALTER TABLE `{DB_PREFIX}user` ENABLE KEYS */;

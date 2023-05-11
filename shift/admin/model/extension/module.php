@@ -20,20 +20,20 @@ class Module extends Mvc\Model
     public function dtRecords(array $params)
     {
         $columnMap = [
-            'module_id'    => 'ed.extension_data_id AS module_id',
-            'extension_id' => 'ed.extension_id',
+            'module_id'    => 'em.extension_module_id AS module_id',
+            'extension_id' => 'em.extension_id',
             'codename'     => 'e.codename',
-            'name'         => 'ed.name',
-            'status'       => 'ed.status',
+            'name'         => 'em.name',
+            'status'       => 'em.status',
         ];
         $filterMap = $columnMap;
-        $filterMap['module_id'] = 'ed.extension_data_id';
+        $filterMap['module_id'] = 'em.extension_module_id';
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
-            . " FROM `" . DB_PREFIX . "extension_data` ed
-                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)"
+            . " FROM `" . DB_PREFIX . "extension_module` em
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)"
             . " WHERE e.`type` = 'module' AND e.`install` = 1"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
@@ -51,12 +51,12 @@ class Module extends Mvc\Model
 
             foreach ($items as $item) {
                 $this->db->set(
-                    DB_PREFIX . 'module',
+                    DB_PREFIX . 'extension_module',
                     [
                         'status'  => $status,
                         'updated' => date('Y-m-d H:i:s'),
                     ],
-                    ['module_id' => (int)$item]
+                    ['extension_module_id' => (int)$item]
                 );
 
                 if ($this->db->affectedRows()) {
@@ -72,6 +72,16 @@ class Module extends Mvc\Model
         return $_items;
     }
 
+    public function getTotal(): int
+    {
+        return (int)$this->db->get(
+            "SELECT COUNT(*) AS total
+            FROM `" . DB_PREFIX . "extension_module` em
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
+            WHERE e.`type` = 'module'"
+        )->row['total'];
+    }
+
     // Form CRUD
     // ================================================
 
@@ -79,9 +89,9 @@ class Module extends Mvc\Model
     {
         $result = $this->db->get(
             "SELECT *
-            FROM `" . DB_PREFIX . "extension_data` ed
-                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)
-            WHERE  e.`type` = 'module' AND ed.`extension_data_id` = ?i",
+            FROM `" . DB_PREFIX . "extension_module` em
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
+            WHERE  e.`type` = 'module' AND em.`extension_module_id` = ?i",
             [$module_id]
         )->row;
 
@@ -92,19 +102,9 @@ class Module extends Mvc\Model
         return $result;
     }
 
-    public function getTotal(): int
-    {
-        return (int)$this->db->get(
-            "SELECT COUNT(*) AS total
-            FROM `" . DB_PREFIX . "extension_data` ed
-                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)
-            WHERE e.`type` = 'module'"
-        )->row['total'];
-    }
-
     public function deleteModules(array $modules): void
     {
-        $this->db->delete(DB_PREFIX . 'extension_data', ['extension_data_id' => $modules]);
+        $this->db->delete(DB_PREFIX . 'extension_module', ['extension_module_id' => $modules]);
 
         $this->cache->deleteByTags('modules');
     }

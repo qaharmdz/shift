@@ -72,8 +72,8 @@ class Manage extends Mvc\Model
     public function uninstall($type, $codename)
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = ?s AND `codename` = ?s", [$type, $codename]);
-        // TODO: delete extension_data
         // TODO: delete extension_meta
+        // TODO: delete extension_module
         $this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename]);
     }
     */

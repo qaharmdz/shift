@@ -12,9 +12,9 @@ class Module extends Mvc\Model
     {
         $result = $this->db->get(
             "SELECT *
-            FROM `" . DB_PREFIX . "extension_data` ed
-                LEFT JOIN `" . DB_PREFIX . "extension` e ON (ed.extension_id = e.extension_id)
-            WHERE  e.`type` = 'module' AND ed.`extension_data_id` = ?i",
+            FROM `" . DB_PREFIX . "extension_module` em
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
+            WHERE  e.`type` = 'module' AND em.`extension_module_id` = ?i",
             [$module_id]
         )->row;
 
