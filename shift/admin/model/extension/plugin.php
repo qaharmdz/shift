@@ -20,14 +20,13 @@ class Plugin extends Mvc\Model
             'extension_id' => 'e.extension_id',
             'codename'     => 'e.codename',
             'name'         => 'e.name',
-            'status'       => 'ed.status',
+            'status'       => 'e.status',
         ];
         $filterMap = $columnMap;
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
-            . " FROM `" . DB_PREFIX . "extension` e
-                LEFT JOIN `" . DB_PREFIX . "extension_data` ed ON (e.extension_id = ed.extension_id)"
+            . " FROM `" . DB_PREFIX . "extension` e"
             . " WHERE e.`type` = 'plugin' AND e.`install` = 1"
                 . ($dtResult['query']['where'] ? " AND  " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
@@ -48,6 +47,7 @@ class Plugin extends Mvc\Model
                     DB_PREFIX . 'extension',
                     [
                         'status'  => $status,
+                        'updated' => date('Y-m-d H:i:s'),
                     ],
                     ['extension_id' => (int)$item]
                 );
@@ -56,10 +56,6 @@ class Plugin extends Mvc\Model
                     $_items[] = $item;
                 }
             }
-        }
-
-        if ($type == 'delete') {
-            // $this->deleteUsers($items);
         }
 
         return $_items;

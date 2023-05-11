@@ -72,7 +72,7 @@ class Plugin extends Mvc\Controller
         }
 
         $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
-        $types = ['enabled', 'disabled', 'delete'];
+        $types = ['enabled', 'disabled'];
         $items = explode(',', $post['item']);
         $data  = [
             'items'     => $items,
