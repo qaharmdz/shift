@@ -31,8 +31,6 @@ class Post extends Mvc\Model
             'unpublish' => 'p.unpublish',
         ];
         $filterMap = $columnMap;
-        $filterMap['post_id'] = 'ed.extension_data_id';
-
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
