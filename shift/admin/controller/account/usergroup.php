@@ -80,7 +80,7 @@ class UserGroup extends Mvc\Controller
             'updated'   => [],
         ];
 
-        if (empty($items) || !in_array($post['type'], $types)) {
+        if (empty($items) || !in_array($post['type'], $types) || in_array(1, $items)) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
 

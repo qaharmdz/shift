@@ -290,6 +290,7 @@ th.uk-text-break {
     line-height: 1.2;
     margin: 0 -4px;
     padding: 3.5px 8px 4.5px!important;
+    text-transform: none;
 }
 
 /* Modal

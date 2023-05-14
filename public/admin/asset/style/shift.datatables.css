@@ -25,6 +25,9 @@
     background-color: #e7efff;
     cursor: pointer;
 }
+.uk-table.dataTable .uk-dropdown {
+    font-weight: normal;
+}
 
 /* === Datatables Filter & Info  */
 .dataTables_filter,

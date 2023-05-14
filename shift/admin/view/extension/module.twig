@@ -19,6 +19,8 @@
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtAction='{"type":"enabled"}'>{{ app.language.get('enabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"disabled"}'>{{ app.language.get('disabled') }}</a></li>
                                 <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
                             </ul>
                         </div>
