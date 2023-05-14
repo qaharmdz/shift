@@ -83,7 +83,14 @@ class User extends Mvc\Controller
             'updated'   => [],
         ];
 
-        if (empty($items) || !in_array($post['type'], $types)) {
+        $this->log->write($this->db->get("SELECT * FROM `" . DB_PREFIX . "user` WHERE user_group_id = 1 AND user_id IN (:items?i)", ['items' => $items])->rows);
+
+        if (
+            empty($items)
+            || !in_array($post['type'], $types)
+            // Prevent any change to super_admin
+            || $this->db->get("SELECT * FROM `" . DB_PREFIX . "user` WHERE user_group_id = 1 AND user_id IN (:items?i)", ['items' => $items])->num_rows
+        ) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
 

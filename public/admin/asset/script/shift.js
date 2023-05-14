@@ -340,8 +340,10 @@ if (jQuery().select2) {
                 beforeSend: function() {
                     $.fn.shift.goNotify('process', opt.msgBefore);
                 },
-                success: function(data) {
+                complete: function() {
                     opt.data.item = ''; // reset
+                },
+                success: function(data) {
                     $.fn.shift.goNotify('success', data.message ? data.message : opt.msgSuccess);
 
                     opt.onSuccess(this, data);
