@@ -345,18 +345,6 @@ if (jQuery().select2) {
                     $.fn.shift.goNotify('success', data.message ? data.message : opt.msgSuccess);
 
                     opt.onSuccess(this, data);
-
-                    // changed row glow effect
-                    if (opt.glow) {
-                        setTimeout(function() {
-                            $.each(data.items, function(i) {
-                                $('.dt-row-' + data.items[i]).addClass(opt.glowClass);
-                                setTimeout(function () {
-                                    $('.dt-row-' + data.items[i]).removeClass(opt.glowClass);
-                                }, 1000);
-                            });
-                        }, 750);
-                    }
                 }
             });
         }
@@ -370,8 +358,6 @@ if (jQuery().select2) {
         msgBefore   : shift.i18n.processing,
         msgSuccess  : shift.i18n.success_update,
         msgError    : shift.i18n.error_general,
-        glow        : true,
-        glowClass   : 'uk-active',
         validate    : function(dtActionProceed) { dtActionProceed(); },
         onSuccess   : function() {}
     };
