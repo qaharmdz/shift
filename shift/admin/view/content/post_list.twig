@@ -25,8 +25,8 @@
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
                     <th style="min-width:200px">{{ app.language.get('title') }}</th>
-                    <th style="width:200px">{{ app.language.get('category') }}</th>
                     <th style="width:150px">{{ app.language.get('author') }}</th>
+                    <th style="width:200px">{{ app.language.get('category') }}</th>
                     <th style="width:200px;">{{ app.language.get('created') }}</th>
                     <th style="width:200px;">{{ app.language.get('updated') }}</th>
                     <th style="width:200px;">{{ app.language.get('publish') }}</th>
@@ -103,7 +103,7 @@ $.extend(shift.i18n, {
 });
 
 let tableEl     = '#contentPost-list',
-    columnsHide = [4, 5, 7, 8], // author, created, publish, unpublish
+    columnsHide = [5, 7, 8], // created, publish, unpublish
     dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('content/post/list')|raw }}",
@@ -132,8 +132,8 @@ let tableEl     = '#contentPost-list',
             },
             { data : 'post_id' },
             { data : 'title' },
-            { data : 'category' },
             { data : 'author' },
+            { data : 'category' },
             { data : 'created',
                 render : function(data, type, full) {
                     return '<span title="' + data + ' UTC">' + formatDate(data) + '</span>';
@@ -172,7 +172,7 @@ let tableEl     = '#contentPost-list',
             { data : 'post_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></span></a>';
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';

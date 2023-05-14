@@ -22,8 +22,8 @@ class Post extends Mvc\Model
         $columnMap = [
             'post_id'   => 'p.post_id',
             'title'     => 'pc.title',
-            'category'  => 'tc.title AS category',
             'author'    => 'CONCAT(u.firstname, " ", u.lastname) AS author',
+            'category'  => 'tc.title AS category',
             'status'    => 'p.status',
             'created'   => 'p.created',
             'updated'   => 'p.updated',
@@ -31,6 +31,9 @@ class Post extends Mvc\Model
             'unpublish' => 'p.unpublish',
         ];
         $filterMap = $columnMap;
+        $filterMap['author']   = 'CONCAT(u.firstname, " ", u.lastname)';
+        $filterMap['category'] = 'tc.title';
+
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
