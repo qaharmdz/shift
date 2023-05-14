@@ -23,8 +23,9 @@ class Manage extends Mvc\Model
             'extension_id' => 'e.extension_id',
             'codename'     => 'e.codename',
             'name'         => 'e.name',
-            'version'         => 'e.version',
+            'version'      => 'e.version',
             'type'         => 'e.type',
+            'status'       => 'e.status',
             'install'      => 'e.install',
         ];
         $filterMap = $columnMap;
