@@ -168,10 +168,15 @@ let tableEl     = '#extensionManage-list',
                 render : function(data, type, full) {
                     output  = '';
                     if (full.install) {
-                        output += '<a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\' class="uk-text-warning" uk-tooltip  title="{{ app.language.get("uninstall") }}"><i class="bi bi-dash-circle-fill bi-2x"></i></a>';
+                        if (full.status) {
+                            output += '<a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\' class="uk-text-danger" uk-tooltip  title="{{ app.language.get("disabled") }}"><i class="bi bi-x-circle-fill" style="font-size:16px;"></i></a>';
+                        } else {
+                            output += '<a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("enabled") }}"><i class="bi bi-check-circle-fill" style="font-size:16px;"></i></a>';
+                        }
+                        output += '<a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\' class="uk-text-warning ukt-ml-2" uk-tooltip  title="{{ app.language.get("uninstall") }}"><i class="bi bi-box-arrow-up" style="font-size:18px;"></i></a>';
                     } else {
-                        output += '<a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("install") }}"><i class="bi bi-plus-circle-fill bi-2x"></i></a>';
-                        output += '<a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\' class="ukt-ml-2 uk-text-danger" uk-tooltip  title="{{ app.language.get("delete_extension") }}"><i class="bi bi-x-circle-fill bi-2x"></i></a>';
+                        output += '<a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("install") }}"><i class="bi bi-box-arrow-in-down" style="font-size:18px;"></i></a>';
+                        output += '<a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\' class="uk-text-danger ukt-ml-2" uk-tooltip  title="{{ app.language.get("delete") }}"><i class="bi bi-trash3-fill"></i></a>';
                     }
 
                     return output;
@@ -190,16 +195,16 @@ let tableEl     = '#extensionManage-list',
             url  : "{{ app.router.url('extension/manage/dtaction')|raw }}",
             data : data,
             validate : function(dtActionProceed) {
-                if (data.type === 'delete') {
-                    $.fn.shift.confirm({
-                        title   : shift.i18n.are_you_sure,
-                        message : shift.i18n.confirm_delete,
-                        onConfirm : function() { dtActionProceed(); }
-                    });
-                } else if (data.type === 'uninstall') {
+                if (data.type === 'uninstall') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_uninstall,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
                         onConfirm : function() { dtActionProceed(); }
                     });
                 } else {

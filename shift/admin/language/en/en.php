@@ -95,13 +95,13 @@ $_['confirm_delete']        = 'This action cannot be undone!<br>The item(s) will
 $_['success']               = 'Success';
 $_['success_x']             = 'Successfully %s';
 $_['success_save']          = 'Successfully saved!';
-$_['success_update']        = 'Successfully updated';
-$_['success_enabled']       = 'Successfully enabled';
-$_['success_disabled']      = 'Successfully disabled';
-$_['success_delete']        = 'Successfully deleted';
+$_['success_update']        = 'Successfully updated!';
+$_['success_enabled']       = 'Successfully enabled!';
+$_['success_disabled']      = 'Successfully disabled!';
+$_['success_delete']        = 'Successfully deleted!';
 
-$_['error_general']         = 'Error occured, try again later.';
-$_['error_permission']      = 'You not have permission to proceed.';
+$_['error_general']         = 'Error occured, try again later!';
+$_['error_permission']      = 'You not have permission to proceed!';
 $_['error_request_method']  = 'Requet method not allowed!';
 
 $_['error_form']            = 'Please check the required or invalid input.';

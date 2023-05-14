@@ -40,6 +40,48 @@ class Manage extends Mvc\Model
         return $this->db->get($query, $dtResult['query']['params']);
     }
 
+    public function dtAction(string $type, array $items): array
+    {
+        $_items = [];
+
+        if (in_array($type, ['enabled', 'disabled'])) {
+            $status = $type == 'enabled' ? 1 : 0;
+
+            foreach ($items as $item) {
+                $this->db->set(
+                    DB_PREFIX . 'extension',
+                    [
+                        'status'  => $status,
+                        'updated' => date('Y-m-d H:i:s'),
+                    ],
+                    ['extension_id' => (int)$item]
+                );
+
+                if ($this->db->affectedRows()) {
+                    $_items[] = $item;
+                }
+            }
+        }
+
+        if ($type == 'install') {
+            foreach ($items as $extension_id) {
+                // $this->install($extension_id);
+            }
+        }
+
+        if ($type == 'uninstall') {
+            foreach ($items as $extension_id) {
+                // $this->uninstall($extension_id);
+            }
+        }
+
+        if ($type == 'delete') {
+            // $this->deletes($items);
+        }
+
+        return $_items;
+    }
+
     public function getTotal(): int
     {
         return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "post` WHERE `taxonomy` = 'post'")->row['total'];
