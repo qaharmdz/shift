@@ -73,6 +73,10 @@ class User
 
     public function get(string $key = null, $default = null)
     {
+        if (!$key) {
+            return $this->bags->all();
+        }
+
         return $this->bags->get($key, $default);
     }
 
