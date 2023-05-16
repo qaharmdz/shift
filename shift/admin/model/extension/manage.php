@@ -47,19 +47,17 @@ class Manage extends Mvc\Model
         if (in_array($type, ['enabled', 'disabled'])) {
             $status = $type == 'enabled' ? 1 : 0;
 
-            foreach ($items as $item) {
-                $this->db->set(
-                    DB_PREFIX . 'extension',
-                    [
-                        'status'  => $status,
-                        'updated' => date('Y-m-d H:i:s'),
-                    ],
-                    ['extension_id' => (int)$item]
-                );
+            $this->db->set(
+                DB_PREFIX . 'extension',
+                [
+                    'status'  => $status,
+                    'updated' => date('Y-m-d H:i:s'),
+                ],
+                ['extension_id' => $items]
+            );
 
-                if ($this->db->affectedRows()) {
-                    $_items[] = $item;
-                }
+            if ($this->db->affectedRows()) {
+                $_items = $items;
             }
         }
 

@@ -51,22 +51,20 @@ class Category extends Mvc\Model
         if (in_array($type, ['enabled', 'disabled'])) {
             $status = $type == 'enabled' ? 1 : 0;
 
-            foreach ($items as $item) {
-                $this->db->set(
-                    DB_PREFIX . 'term',
-                    [
-                        'status'  => $status,
-                        'updated' => date('Y-m-d H:i:s'),
-                    ],
-                    [
-                        'term_id'  => (int)$item,
-                        'taxonomy' => 'content_category',
-                    ]
-                );
+            $this->db->set(
+                DB_PREFIX . 'term',
+                [
+                    'status'  => $status,
+                    'updated' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'term_id'  => $items,
+                    'taxonomy' => 'content_category',
+                ]
+            );
 
-                if ($this->db->affectedRows()) {
-                    $_items[] = $item;
-                }
+            if ($this->db->affectedRows()) {
+                $_items[] = $items;
             }
         }
 

@@ -56,22 +56,20 @@ class Post extends Mvc\Model
         if (in_array($type, ['publish', 'pending', 'draft', 'disabled'])) {
             $status = $type;
 
-            foreach ($items as $item) {
-                $this->db->set(
-                    DB_PREFIX . 'post',
-                    [
-                        'status'  => $status,
-                        'updated' => date('Y-m-d H:i:s'),
-                    ],
-                    [
-                        'post_id'  => (int)$item,
-                        'taxonomy' => 'post',
-                    ]
-                );
+            $this->db->set(
+                DB_PREFIX . 'post',
+                [
+                    'status'  => $status,
+                    'updated' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'post_id'  => $items,
+                    'taxonomy' => 'post',
+                ]
+            );
 
-                if ($this->db->affectedRows()) {
-                    $_items[] = $item;
-                }
+            if ($this->db->affectedRows()) {
+                $_items[] = $items;
             }
         }
 

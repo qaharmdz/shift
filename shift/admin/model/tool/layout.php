@@ -44,18 +44,16 @@ class Layout extends Mvc\Model
         if (in_array($type, ['enabled', 'disabled'])) {
             $status = $type == 'enabled' ? 1 : 0;
 
-            foreach ($items as $item) {
-                $this->db->set(
-                    DB_PREFIX . 'layout',
-                    [
-                        'status'  => $status,
-                    ],
-                    ['layout_id' => (int)$item]
-                );
+            $this->db->set(
+                DB_PREFIX . 'layout',
+                [
+                    'status'  => $status,
+                ],
+                ['layout_id' => $items]
+            );
 
-                if ($this->db->affectedRows()) {
-                    $_items[] = $item;
-                }
+            if ($this->db->affectedRows()) {
+                $_items[] = $items;
             }
         }
 
