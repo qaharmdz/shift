@@ -58,15 +58,15 @@ class Dispatch
             list($ext, $extType, $extCodename) = $extParts;
 
             if (count($extParts) === 3) {
-                $extParts[] = $extCodename;
+                $extParts[] = 'index';
             }
-            $extFile = implode('/', array_slice($extParts, 3));
+            $extFile = implode('/', array_slice($extParts, 2));
 
-            $routeMap = strtr('extensions/:type/:codename/:app_folder/controller/:file', [
-                ':type'       => $extType,
-                ':codename'   => $extCodename,
-                ':app_folder' => APP_FOLDER,
-                ':file'       => $extFile,
+            $routeMap = strtr('extensions/:type/:codename/:app_folder/controller/:class_method', [
+                ':type'         => $extType,
+                ':codename'     => $extCodename,
+                ':app_folder'   => APP_FOLDER,
+                ':class_method' => $extFile,
             ]);
 
             $this->routeMap  = $routeMap;
