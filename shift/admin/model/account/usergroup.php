@@ -168,6 +168,21 @@ class UserGroup extends Mvc\Model
 
     public function addPermission(int $user_group_id, string $access, string $path)
     {
+        $userGroup = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = ?i", [$user_group_id])->row;
+
+        if ($userGroup) {
+            $permissions = json_decode($userGroup['permission'], true);
+
+            if (!in_array($path, $permissions[$access])) {
+                $permissions[$access][] = $path;
+
+                $this->db->set(
+                    DB_PREFIX . 'user_group',
+                    ['permission' => json_encode($permissions)],
+                    ['user_group_id' => $user_group_id]
+                );
+            }
+        }
     }
 
     public function removePermission(int $user_group_id, string $access, string $path)
