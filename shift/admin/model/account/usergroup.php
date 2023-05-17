@@ -165,4 +165,12 @@ class UserGroup extends Mvc\Model
 
         $this->cache->deleteByTags('usergroups');
     }
+
+    public function addPermission(int $user_group_id, string $access, string $path)
+    {
+    }
+
+    public function removePermission(int $user_group_id, string $access, string $path)
+    {
+    }
 }

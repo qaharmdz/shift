@@ -63,7 +63,7 @@ class Manage extends Mvc\Model
 
         if ($type == 'install') {
             foreach ($items as $extension_id) {
-                // $this->install($extension_id);
+                $this->install((int)$extension_id);
             }
         }
 
@@ -88,10 +88,10 @@ class Manage extends Mvc\Model
     // Manage
     // ================================================
 
-    public function getInstalled($type)
+    public function getInstalled(string $type)
     {
         $data = [];
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = '" . $this->db->escape($type) . "' ORDER BY codename");
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s ORDER BY codename", $type);
 
         foreach ($query->rows as $result) {
             $data[] = $result['codename'];
@@ -100,16 +100,28 @@ class Manage extends Mvc\Model
         return $data;
     }
 
-    /*
-    public function install($type, $codename)
+    public function install(int $extension_id)
     {
-        $extensions = $this->getInstalled($type);
+        $extension = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i", [$extension_id])->row;
 
-        if (!in_array($codename, $extensions)) {
-            $this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = '" . $this->db->escape($type) . "', `codename` = '" . $this->db->escape($codename) . "'");
+        if ($extension) {
+            $extPath   = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
+
+            $this->load->model('account/usergroup');
+            $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'access', $extPath);
+            $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'modify', $extPath);
+
+            $this->load->controller($extPath . '/install');
+
+            $this->db->set(
+                DB_PREFIX . 'extension',
+                ['install'  => 1, 'updated' => date('Y-m-d H:i:s'), ],
+                ['extension_id' => $extension['extension_id']]
+            );
         }
     }
 
+    /*
     public function uninstall($type, $codename)
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = ?s AND `codename` = ?s", [$type, $codename]);

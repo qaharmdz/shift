@@ -47,4 +47,14 @@ class Architect extends Mvc\Controller
 
         $this->index();
     }
+
+    public function install()
+    {
+        $this->log->write(__METHOD__);
+    }
+
+    public function uninstall()
+    {
+        $this->log->write(__METHOD__);
+    }
 }

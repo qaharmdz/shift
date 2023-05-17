@@ -342,7 +342,11 @@ if (jQuery().select2) {
                 },
                 complete: function() {
                     opt.data.item = ''; // reset
-                    UIkit.dropdown($('.uk-dropdown.uk-open')).hide(0);
+
+                    uiDropdown = $('.uk-dropdown.uk-open');
+                    if (uiDropdown.length) {
+                        UIkit.dropdown(uiDropdown).hide(0);
+                    }
                 },
                 success: function(data) {
                     $.fn.shift.goNotify('success', data.message ? data.message : opt.msgSuccess);
