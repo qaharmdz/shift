@@ -168,7 +168,10 @@ class UserGroup extends Mvc\Model
 
     public function addPermission(int $user_group_id, string $access, string $path)
     {
-        $userGroup = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = ?i", [$user_group_id])->row;
+        $userGroup = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = ?i",
+            [$user_group_id]
+        )->row;
 
         if ($userGroup) {
             $permissions = json_decode($userGroup['permission'], true);
@@ -185,7 +188,22 @@ class UserGroup extends Mvc\Model
         }
     }
 
-    public function removePermission(int $user_group_id, string $access, string $path)
+    public function removePermission(string $access, string $path)
     {
+        $userGroups = $this->db->get("SELECT * FROM `" . DB_PREFIX . "user_group`")->rows;
+
+        foreach ($userGroups as $userGroup) {
+            $permissions = json_decode($userGroup['permission'], true);
+
+            if (in_array($path, $permissions[$access])) {
+                $permissions[$access] = array_diff($permissions[$access], [$path]);
+
+                $this->db->set(
+                    DB_PREFIX . 'user_group',
+                    ['permission' => json_encode($permissions)],
+                    ['user_group_id' => $userGroup['user_group_id']]
+                );
+            }
+        }
     }
 }

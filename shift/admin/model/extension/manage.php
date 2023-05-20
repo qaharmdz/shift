@@ -69,7 +69,7 @@ class Manage extends Mvc\Model
 
         if ($type == 'uninstall') {
             foreach ($items as $extension_id) {
-                // $this->uninstall($extension_id);
+                $this->uninstall((int)$extension_id);
             }
         }
 
@@ -102,7 +102,10 @@ class Manage extends Mvc\Model
 
     public function install(int $extension_id)
     {
-        $extension = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i", [$extension_id])->row;
+        $extension = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i AND `install` = ?i",
+            [$extension_id, 0]
+        )->row;
 
         if ($extension) {
             $extPath   = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
@@ -121,13 +124,32 @@ class Manage extends Mvc\Model
         }
     }
 
-    /*
-    public function uninstall($type, $codename)
+    public function uninstall(int $extension_id)
     {
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = ?s AND `codename` = ?s", [$type, $codename]);
-        // TODO: delete extension_meta
-        // TODO: delete extension_module
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename]);
+        $extension = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i AND `install` = ?i",
+            [$extension_id, 1]
+        )->row;
+
+        if ($extension) {
+            $extPath   = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
+
+            $this->load->model('account/usergroup');
+            $this->model_account_usergroup->removePermission('access', $extPath);
+            $this->model_account_usergroup->removePermission('modify', $extPath);
+
+            $this->load->controller($extPath . '/uninstall');
+
+            $this->db->set(
+                DB_PREFIX . 'extension',
+                ['status'  => 0, 'install'  => 0, 'updated' => date('Y-m-d H:i:s'), ],
+                ['extension_id' => $extension['extension_id']]
+            );
+
+            $this->db->delete(DB_PREFIX . 'extension', ['type' => $extension['type'], 'codename' => $extension['codename']]);
+            $this->db->delete(DB_PREFIX . 'extension_meta', ['extension_id' => $extension['extension_id']]);
+            $this->db->delete(DB_PREFIX . 'extension_module', ['extension_id' => $extension['extension_id']]);
+            $this->db->delete(DB_PREFIX . 'setting', ['group' => $extension['type'], 'code' => $extension['codename']]);
+        }
     }
-    */
 }
