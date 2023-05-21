@@ -159,20 +159,15 @@ class MediaManager extends Mvc\Controller
             return @unlink($folder);
         }
 
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($folder, \RecursiveDirectoryIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
-        );
+        $dirIterator = new \RecursiveDirectoryIterator($folder, \FilesystemIterator::SKIP_DOTS);
+        $nodes = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
-        foreach ($files as $fileinfo) {
-            $action = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-            if (!@$action($fileinfo->getRealPath())) {
-                return false;
-            }
+        foreach ($nodes as $node) {
+            $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
         }
 
         if (is_dir($folder)) {
-            return rmdir($folder);
+            rmdir($folder);
         }
     }
 
