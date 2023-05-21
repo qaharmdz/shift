@@ -29,12 +29,15 @@ class Debug extends Mvc\Controller
             // $this->view->getTemplatePath(),
         );
         d(
-            date('Y-m-d H:i:s'),
-            (int)'foo',
-            (int)'foo bar',
-            (array)'foo',
-            (array)['foo'],
+            // '----------------------------',
+            // date('Y-m-d H:i:s'),
+            // (int)'foo',
+            // (int)'foo bar',
+            // (array)'foo',
+            // (array)['foo'],
         );
+
+        $this->dbAllTableSearch('architect');
 
         // d($this->db->get($this->session->get('dataTables_query'), $this->session->get('dataTables.sql.params')));
 
@@ -136,5 +139,39 @@ class Debug extends Mvc\Controller
             Arr::has($array, 'lev1.lev2z'),
             $array === $array_temp,
         );
+    }
+
+    private function dbAllTableSearch(string $keyword)
+    {
+        $tables = $this->db->get(
+            "SELECT table_name AS `name` FROM information_schema.TABLES  WHERE table_schema = ?s ORDER BY `name` ASC",
+            [$this->config->get('root.database.config.database')]
+        )->rows;
+
+        // d($tables);
+
+        foreach ($tables as $table) {
+            $columns = $this->db->get(
+                "SELECT column_name AS `name` FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ?s",
+                [$table['name']]
+            )->rows;
+
+            // d($columns);
+
+            $colSearch = [];
+            foreach ($columns as $column) {
+                $colSearch[] = "`" . $column['name'] . "` LIKE '%" . $keyword . "%'";
+            }
+
+            // d($colSearch);
+
+            if ($colSearch) {
+                $results = $this->db->get("SELECT * FROM `" . $table['name'] . "` WHERE " . implode(' OR ', $colSearch))->rows;
+
+                if ($results) {
+                    d($foundTableAt = $table['name'], $results);
+                }
+            }
+        }
     }
 }

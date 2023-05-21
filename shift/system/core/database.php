@@ -256,7 +256,7 @@ class Database
      * $sql = "SELECT * FROM `user` WHERE (firstname LIKE :name OR lastname LIKE :name)
      *      AND phone = :phone?i
      *      AND username LIKE :name
-     *      AND (user_id IN (:items?i) OR group_id IN (:items?i)
+     *      AND (user_id IN (:items?i) OR group_id IN (:items?i))
      *      ORDER BY {order_column} {sort_order}";
      *
      * $params = [
