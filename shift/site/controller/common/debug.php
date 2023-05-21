@@ -37,7 +37,16 @@ class Debug extends Mvc\Controller
             // (array)['foo'],
         );
 
-        $this->dbAllTableSearch('architect');
+        // $this->dbAllTableSearch('architect');
+
+        $path = PATH_TEMP . 'twig/';
+        $path = PATH_MEDIA . 'cache/';
+        // $path = PATH_EXTENSIONS . 'plugin/architect/';
+
+        $iterators = $this->testIterator($path);
+
+        d($path);
+        d($iterators);
 
         // d($this->db->get($this->session->get('dataTables_query'), $this->session->get('dataTables.sql.params')));
 
@@ -173,5 +182,19 @@ class Debug extends Mvc\Controller
                 }
             }
         }
+    }
+
+    private function testIterator(string $path)
+    {
+        $dirIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
+        $nodes       = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+        $lists       = [];
+
+        foreach ($nodes as $node) {
+            $lists[] = $node->getRealPath();
+            // $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
+        }
+
+        return $lists;
     }
 }

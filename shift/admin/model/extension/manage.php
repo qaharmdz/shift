@@ -74,7 +74,9 @@ class Manage extends Mvc\Model
         }
 
         if ($type == 'delete') {
-            // $this->deletes($items);
+            foreach ($items as $extension_id) {
+                $this->delete((int)$extension_id);
+            }
         }
 
         return $_items;
@@ -146,10 +148,32 @@ class Manage extends Mvc\Model
                 ['extension_id' => $extension['extension_id']]
             );
 
-            $this->db->delete(DB_PREFIX . 'extension', ['type' => $extension['type'], 'codename' => $extension['codename']]);
             $this->db->delete(DB_PREFIX . 'extension_meta', ['extension_id' => $extension['extension_id']]);
             $this->db->delete(DB_PREFIX . 'extension_module', ['extension_id' => $extension['extension_id']]);
             $this->db->delete(DB_PREFIX . 'setting', ['group' => $extension['type'], 'code' => $extension['codename']]);
         }
+    }
+
+    public function delete(int $extension_id)
+    {
+        $extension = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i AND `install` = ?i",
+            [$extension_id, 0]
+        )->row;
+
+        $path = PATH_EXTENSIONS . $extension['type'] . DS . $extension['codename'] . DS;
+
+        $dirIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
+        $nodes = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        foreach ($nodes as $node) {
+            $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
+        }
+
+        if (is_dir($path)) {
+            rmdir($path);
+        }
+
+        $this->db->delete(DB_PREFIX . 'extension', ['type' => $extension['type'], 'codename' => $extension['codename']]);
     }
 }
