@@ -35,11 +35,13 @@ if (!empty($rootConfig['force_ssl'])) {
     $secure = true;
 }
 
-$_SERVER['SECURE']        = $secure;
-$_SERVER['HTTPS']         = $secure ? 'on' : 'off';
-$_SERVER['PROTOCOL']      = $secure ? 'https://' : 'http://';
-$_SERVER['REMOTE_ADDR']   = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
-$_SERVER['DOCUMENT_ROOT'] = PATH_PUBLIC;
+$_SERVER['SECURE']   = $secure;
+$_SERVER['HTTPS']    = $secure ? 'on' : 'off';
+$_SERVER['PROTOCOL'] = $secure ? 'https://' : 'http://';
+$_SERVER['REMOTE_ADDR']    = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$_SERVER['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'] ?? null;
+$_SERVER['DOCUMENT_ROOT']  = PATH_PUBLIC;
+
 //=== Define
 if ($rootConfig) {
     define('URL_APP', $_SERVER['PROTOCOL'] . $rootConfig['url_host'] . APP_URL_PATH);
