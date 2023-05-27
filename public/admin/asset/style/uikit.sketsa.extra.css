@@ -219,6 +219,7 @@ th.uk-text-break {
 .uk-button:not(.uk-button-large):not(.uk-button-small) {
     line-height: 32px;
     padding: 0 18px;
+    border-radius: 3px;
 }
 .uk-button-small {
     line-height: 26px;
