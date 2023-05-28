@@ -55,8 +55,8 @@ class Authentication extends Mvc\Controller
                 $this->toLogin();
                 break;
 
-            // Force logout if last activity more than 'x' minute, default 180 minute
-            case (time() - $this->session->getInt('user_activity')) > (60 * $this->config->getInt('system.setting.login_session', (60 * 3))):
+            // Force logout if last activity more than 'x' minute, default 240 minute
+            case (time() - $this->session->getInt('user_activity')) > (60 * $this->config->getInt('system.setting.login_session', (60 * 4))):
                 $this->session->set('flash.auth.inactive', true);
                 $this->user->logout();
                 $this->toLogin();
