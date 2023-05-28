@@ -66,7 +66,7 @@ body {
     height: var(--navbar-height);
     padding: 0 15px !important;
     color: rgba(255, 255, 255, .85);
-    background: #777;
+    background: #555;
     border-radius: 0 !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 }
@@ -74,7 +74,7 @@ body {
     font-size: 24px;
     color: #fbfbfb;
 }
-.navbar-main-menu:focus {
+.navbar-main-menu[aria-expanded="true"]{
     background: #1e87f0;
 }
 

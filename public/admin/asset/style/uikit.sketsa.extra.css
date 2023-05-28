@@ -219,7 +219,6 @@ th.uk-text-break {
 .uk-button:not(.uk-button-large):not(.uk-button-small) {
     line-height: 32px;
     padding: 0 18px;
-    border-radius: 3px;
 }
 .uk-button-small {
     line-height: 26px;
@@ -381,6 +380,13 @@ th.uk-text-break {
 }
 .uk-text-warning {
     color: #f46808!important
+}
+.uk-text-muted {
+    color: #999!important;
+}
+.uk-link-muted {
+    color: #a4a4a4!important;
+    cursor: default;
 }
 
 /* Utility

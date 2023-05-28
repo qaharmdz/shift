@@ -63,6 +63,8 @@ $_['enabled']               = 'Enabled';
 $_['disabled']              = 'Disabled';
 $_['status_0']              = $_['disabled'];
 $_['status_1']              = $_['enabled'];
+$_['click_disabled']        = 'Click to disabled';
+$_['click_enabled']         = 'Click to enabled';
 $_['-none-']                = ' --- None --- ';
 $_['-select-']              = ' --- Select --- ';
 $_['select']                = 'Select';
@@ -77,7 +79,7 @@ $_['are_you_sure']          = 'Are you sure?';
 $_['yes_sure']              = 'Yes, I\'m sure';
 $_['redirecting']           = 'Redirecting..';
 $_['no_data']               = 'No data available!';
-$_['no_results']             = 'No results found!';
+$_['no_results']            = 'No results found!';
 
 // DataTables
 $_['columns']               = 'Columns';

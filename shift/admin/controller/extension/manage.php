@@ -23,8 +23,8 @@ class Manage extends Mvc\Controller
 
         $data = [];
 
-        $newExtensions = $this->checkExtensions();
-        // TODO: notification new extensions
+        $data['newExtensions'] = $this->syncExtensions(); // TODO: notification new extensions
+        $data['ini_uploadMaxFilesize'] = $this->parseSize(ini_get('upload_max_filesize'));
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
@@ -97,9 +97,13 @@ class Manage extends Mvc\Controller
      *
      * @return array
      */
-    private function checkExtensions(): array
+    public function syncExtensions(): array
     {
         $data = ['total' => 0];
+
+        if (!$this->user->hasPermission('modify', 'extension/manage')) {
+            return $data;
+        }
 
         $extensions = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension`")->rows;
 
@@ -146,5 +150,86 @@ class Manage extends Mvc\Controller
         }
 
         return $data;
+    }
+
+    public function upload()
+    {
+        $this->load->language('extension/manage');
+
+        $data  = [
+            'success' => 0,
+            'message' => '',
+        ];
+
+        if (!$this->user->hasPermission('modify', 'extension/manage')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+
+        $fileUpload = $this->request->getArray('files.file');
+
+        if (isset($fileUpload['name'])) {
+            if (substr($fileUpload['name'], -4) != '.zip') {
+                $data['message'] = $this->language->get('error_package_type');
+            } else {
+                $package = PATH_TEMP . 'storage' . DS . $fileUpload['name'];
+
+                move_uploaded_file($fileUpload['tmp_name'], $package);
+
+                if (!is_file($package)) {
+                    $data['message'] = $this->language->get('error_package_move') . $package;
+                    unlink($fileUpload['tmp_name']);
+                } else {
+                    $extZip = new \ZipArchive();
+                    $extZipOpenStatus = $extZip->open($package);
+
+                    if ($extZipOpenStatus !== true) {
+                        $data['message'] = $this->language->get('error_package_open');
+                    } else {
+                        $extMeta = json_decode($extZip->getFromName('meta.json'), true);
+
+                        if (empty($extMeta['type']) || empty($extMeta['codename']) || empty($extMeta['name'])) {
+                            $data['message'] = $this->language->get('error_package_meta');
+                        } else {
+                            $extPath = PATH_EXTENSIONS . $extMeta['type'] . DS;
+
+                            if (!is_writable($extPath)) {
+                                $data['message'] = $this->language->get('error_path_write') . $extPath;
+                            } else {
+                                $isExtracted = $extZip->extractTo($extPath . $extMeta['codename'] . DS);
+
+                                if (!$isExtracted) {
+                                    $data['message'] = $this->language->get('error_package_extract') . $extPath . $extMeta['codename'] . DS;
+                                } else {
+                                    $data['success'] = 1;
+                                    $data['message'] = $this->language->get('success_upload');
+                                }
+                            }
+                        }
+                    }
+
+                    $extZip->close();
+                }
+
+                unlink($package);
+            }
+        }
+
+        $this->response->setOutputJson($data);
+    }
+
+    private function parseSize($size): float
+    {
+        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size);
+        $size = preg_replace('/[^0-9\.]/', '', $size);
+
+        if ($unit) {
+            $size = $size * pow(1024, stripos('bkmgtpezy', $unit[0]));
+        }
+
+        return round($size);
     }
 }

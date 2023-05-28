@@ -109,22 +109,11 @@ class Header extends Mvc\Controller
         // Extension
         $extension = [];
 
-        if ($this->user->hasPermission('access', 'extension/installer')) {
-            $extension[] = $this->nav([
-                'name' => $this->language->get('header.installer'),
-                'url'  => $this->router->url('extension/installer'),
-            ]);
-        }
         if ($this->user->hasPermission('access', 'extension/manage')) {
             $extension[] = $this->nav([
                 'name' => $this->language->get('header.manage'),
                 'url'  => $this->router->url('extension/manage'),
             ]);
-        }
-        if (
-            $this->user->hasPermission('access', 'extension/installer')
-            || $this->user->hasPermission('access', 'extension/manage')
-        ) {
             $extension[] = $this->nav([
                 'type' => 'divider',
             ]);

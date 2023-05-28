@@ -29,6 +29,7 @@ class Debug extends Mvc\Controller
             // $this->view->getTemplatePath(),
         );
         d(
+            $this->user::class
             // '----------------------------',
             // date('Y-m-d H:i:s'),
             // (int)'foo',
@@ -39,14 +40,15 @@ class Debug extends Mvc\Controller
 
         // $this->dbAllTableSearch('architect');
 
+        /*
         $path = PATH_TEMP . 'twig/';
         $path = PATH_MEDIA . 'cache/';
         // $path = PATH_EXTENSIONS . 'plugin/architect/';
 
         $iterators = $this->testIterator($path);
-
         d($path);
         d($iterators);
+         */
 
         // d($this->db->get($this->session->get('dataTables_query'), $this->session->get('dataTables.sql.params')));
 

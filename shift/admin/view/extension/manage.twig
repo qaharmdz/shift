@@ -5,7 +5,9 @@
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-            <div class="uk-flex uk-flex-middle uk-flex-right"></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <button type="button" id="ext-upload-package" class="uk-button uk-button-primary"><i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('upload') }}</button>
+            </div>
         </div>
     </div>
 
@@ -82,24 +84,32 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
 
-        <pre><code>Extension Manage:
-- Show all extension type: plugin, module, theme, language
-    - Plugins: Covers all non-specific extension that extends the Shift features and functions.
-    - Module: Specific extension assigned to Section Positions through Tools > Module Layout.
-    - Themes: Specific extension that change the Shift appearance and templates.
-    - Language: Specific extension to provide an additional language translations.
-- Per row buttons: info, edit, install/uninstall.
-- For button info and edit link, get method metaInfo() for each extension. Possible scenario:
-    - Info button is the extension information, while the edit button is for extension setting, where the edit URL depend on the extension type/ custom URL provided by the method metaInfo().
-    - Plugin "Content" can have module "Content - Latest Post". On the Install button, show title: Install Content plugin + 5 Content module
-</code></pre>
+<div id="extension-upload" class="uk-hidden">
+    <form id="ext-upload-form" enctype="multipart/form-data">
+        <input id="ext-upload-input" type="file" name="file" accept=".zip" />
+    </form>
+
+    <div id="upload-progress" uk-modal='{"esc-close":false, bg-close:false}'>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">{{ app.language.get('upload') }}</h2>
+
+            <progress class="uk-progress" value="0" max="100"></progress>
+            <div class="ext-upload-message ukt-mb-4"></div>
+
+            <div class="uk-text-right">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
 $(document).ready(function() {
 $.extend(shift.i18n, {
+    uploading : '{{ app.language.get("uploading")|raw }}',
     install_0 : '{{ app.language.get("install_0") }}',
     install_1 : '{{ app.language.get("install_1") }}',
     confirm_delete : '{{ app.language.get("confirm_delete")|raw }}',
@@ -221,6 +231,62 @@ let tableEl     = '#extensionManage-list',
             },
             onSuccess : function() {
                 dtTable.clearPipeline().draw();
+            }
+        });
+    });
+});
+
+$('#ext-upload-package').on('click', function(e) {
+    $('#ext-upload-input').trigger('click').on('change', function () {
+        let elButton   = $('#ext-upload-package'),
+            elProgress = $('#upload-progress .uk-progress');
+
+        $.ajax({
+            url  : "{{ app.router.url('extension/manage/upload')|raw }}",
+            type : 'POST',
+            data : new FormData($('#ext-upload-form')[0]),
+            dataType : 'json',
+            cache : false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                elButton.prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-process-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
+                UIkit.modal('#upload-progress').show();
+            },
+            complete: function () {
+                elButton.prop('disabled', false);
+                $('.js-process-spinner').remove();
+                $('#ext-upload-input').val(null);
+            },
+            xhr: function() {
+                $('.ext-upload-message').html(shift.i18n.uploading);
+
+                let xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener('progress', function(evt) {
+                    if (evt.lengthComputable) {
+                        let progressComplete = (evt.loaded / evt.total) * 100;
+
+                        progressComplete = (progressComplete / 3) * 2;
+                        elProgress.attr('value', progressComplete);
+                    }
+                }, false);
+
+                return xhr;
+            },
+            success: function(data) {
+                let ntfClass = data.success ? 'uk-text-success' : 'uk-text-danger';
+
+                setTimeout(function() {
+                    $('.ext-upload-message').html(data.message).addClass(ntfClass);
+
+                    if (data.success) {
+                        elProgress.attr('value', 100);
+
+                        $.get("{{ app.router.url('extension/manage/syncExtensions')|raw }}", function(data) {
+                            $('.main-content').find('[data-dtreload]').first().trigger('click');
+                        });
+                    }
+                }, 500);
             }
         });
     });
