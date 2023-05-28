@@ -171,13 +171,19 @@ let tableEl     = '#extensionManage-list',
                     output  = '';
                     if (full.install) {
                         if (full.status) {
-                            output += '<a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\' class="uk-text-danger" uk-tooltip  title="{{ app.language.get("disabled") }}"><i class="bi bi-x-circle-fill" style="font-size:16px;"></i></a>';
+                            output += '<a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\' class="uk-text-danger" uk-tooltip  title="{{ app.language.get("click_disabled") }}"><i class="bi bi-x-circle-fill" style="font-size:16px;"></i></a>';
                         } else {
-                            output += '<a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("enabled") }}"><i class="bi bi-check-circle-fill" style="font-size:16px;"></i></a>';
+                            output += '<a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("click_enabled") }}"><i class="bi bi-check-circle-fill" style="font-size:16px;"></i></a>';
                         }
                         output += '<a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\' class="uk-text-warning ukt-ml-2" uk-tooltip  title="{{ app.language.get("uninstall") }}"><i class="bi bi-box-arrow-up" style="font-size:18px;"></i></a>';
+                        output += '<a class="uk-link-muted ukt-ml-2" uk-tooltip  title="{{ app.language.get("delete") }}"><i class="bi bi-trash3-fill"></i></a>';
                     } else {
-                        output += '<a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("install") }}"><i class="bi bi-box-arrow-in-down" style="font-size:18px;"></i></a>';
+                        if (full.status) {
+                            output += '<a class="uk-link-muted" uk-tooltip  title="{{ app.language.get("click_disabled") }}"><i class="bi bi-x-circle-fill" style="font-size:16px;"></i></a>';
+                        } else {
+                            output += '<a class="uk-link-muted" uk-tooltip  title="{{ app.language.get("click_enabled") }}"><i class="bi bi-check-circle-fill" style="font-size:16px;"></i></a>';
+                        }
+                        output += '<a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\' class="uk-text-success ukt-ml-2" uk-tooltip  title="{{ app.language.get("install") }}"><i class="bi bi-box-arrow-in-down" style="font-size:18px;"></i></a>';
                         output += '<a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\' class="uk-text-danger ukt-ml-2" uk-tooltip  title="{{ app.language.get("delete") }}"><i class="bi bi-trash3-fill"></i></a>';
                     }
 
