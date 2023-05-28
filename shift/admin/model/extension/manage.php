@@ -93,7 +93,7 @@ class Manage extends Mvc\Model
     public function getInstalled(string $type)
     {
         $data = [];
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s ORDER BY codename", $type);
+        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s ORDER BY codename", [$type]);
 
         foreach ($query->rows as $result) {
             $data[] = $result['codename'];
