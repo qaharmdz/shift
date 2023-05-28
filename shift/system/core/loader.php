@@ -97,8 +97,11 @@ class Loader
 
     public function view(string $template, array $vars = [])
     {
-        $template = preg_replace(['#[^a-zA-Z0-9._/]#', '#/+#'], ['', '/'], $template);
         $output = null;
+
+        if (empty($vars['twigTemplateFromString'])) {
+            $template = preg_replace(['#[^a-zA-Z0-9._/]#', '#/+#'], ['', '/'], $template);
+        }
 
         $this->event->emit($eventName = 'view/' . $template . '::before', [$eventName, &$vars, &$output]);
 

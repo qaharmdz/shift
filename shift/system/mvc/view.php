@@ -86,10 +86,13 @@ class View
             'cache'            => $this->config['debug'] ? false : $this->config['path_cache'],
         ]);
 
-        $twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone($this->config['timezone']);
-        // $twig->addExtension(new \Twig\Extension\StringLoaderExtension());
-        $twig->addExtension(new \Twig\Extension\DebugExtension());
         $twig->addGlobal('app', $this->global);
+
+        $twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone($this->config['timezone']);
+        if ($this->config['debug']) {
+            // https://twig.symfony.com/doc/3.x/functions/dump.html
+            $twig->addExtension(new \Twig\Extension\DebugExtension());
+        }
 
         return $twig;
     }
@@ -98,6 +101,13 @@ class View
     {
         if (!$this->twig) {
             $this->twig = $this->init();
+        }
+
+        if (!empty($data['twigTemplateFromString'])) {
+            $this->twig->addExtension(new \Twig\Extension\StringLoaderExtension());
+            $twigTemplate = $this->twig->createTemplate($template);
+
+            return $twigTemplate->render($data);
         }
 
         return $this->twig->render($template . '.twig', $data);

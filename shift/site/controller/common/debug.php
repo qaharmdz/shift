@@ -29,7 +29,8 @@ class Debug extends Mvc\Controller
             // $this->view->getTemplatePath(),
         );
         d(
-            $this->user::class
+            $this->user::class,
+            // $this->load->view('Hello {{ name }}', ['name' => 'Shift', 'twigTemplateFromString' => true]),
             // '----------------------------',
             // date('Y-m-d H:i:s'),
             // (int)'foo',
