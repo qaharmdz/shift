@@ -71,6 +71,9 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
         console.error('# Shift CMS error\n', jqxhr.status + ' ' + exception + '\n', jqxhr);
     }
 
+    // Close all modal
+    $(document).find('.uk-modal-close,.uk-modal-close-default,.uk-modal-close-outside,.uk-modal-close-full').trigger('click');
+
     if ('redirect' in data) {
         window.location.replace(data.redirect);
     } else if ('title' in data) {
@@ -80,7 +83,7 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
             output += '<div class="uk-text-base-color uk-text-break uk-margin-small-top">' + data.message + '</div>';
         }
         if (shift.env.development === 1) {
-            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>'; // Ajax URL
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
         }
 
         $.fn.shift.goNotify('danger', output);
@@ -88,7 +91,7 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
         let output = '<div>' + data.response + '</div>';
 
         if (shift.env.development === 1) {
-            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>'; // Ajax URL
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + '</div>';
         }
 
         $.fn.shift.goNotify('danger', output);
@@ -427,7 +430,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
 
         $(el).on('click', function() {
             $(document).trigger('IIDE.form_submit.before');
-            $(el).prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-data-form-submit" style="margin-left:-5px;margin-right:8px;"></span>');
+            $(el).prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-form-submit-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
 
             if (shift.editor.instances) {
                 $.each(shift.editor.instances, function(elid, editor) {
@@ -445,7 +448,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                 },
                 complete: function() {
                     $(el).prop('disabled', false);
-                    $('.js-data-form-submit').remove();
+                    $('.js-form-submit-spinner').remove();
                 },
                 success: function(data) {
                     shift.formChanged = false;
