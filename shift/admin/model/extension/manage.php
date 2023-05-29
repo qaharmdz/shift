@@ -24,6 +24,8 @@ class Manage extends Mvc\Model
             'codename'     => 'e.codename',
             'name'         => 'e.name',
             'version'      => 'e.version',
+            'author'       => 'e.author',
+            'url'          => 'e.url',
             'type'         => 'e.type',
             'status'       => 'e.status',
             'install'      => 'e.install',

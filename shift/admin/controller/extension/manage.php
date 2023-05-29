@@ -117,15 +117,15 @@ class Manage extends Mvc\Controller
                     $metas    = json_decode(file_get_contents($node . DS . 'meta.json'), true);
 
                     if ($codename === $metas['codename']) {
-                        $isExtInDb = array_filter($extensions, function ($v) use ($extType, $codename) {
-                            return ($v['type'] === $extType && $v['codename'] === $codename);
+                        $isExtInDb = array_filter($extensions, function ($v) use ($codename, $metas) {
+                            return ($v['type'] === $metas['type'] && $v['codename'] === $codename);
                         });
 
                         // Add new extensions to database
                         if (empty($isExtInDb)) {
                             $extData = [
                                 'codename'    => $metas['codename'],
-                                'type'        => $extType,
+                                'type'        => $metas['type'],
                                 'name'        => $metas['name'],
                                 'version'     => $metas['version'],
                                 'description' => $metas['description'],

@@ -26,10 +26,11 @@
                         </div>
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="width:160px">{{ app.language.get('codename') }}</th>
-                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
-                    <th style="width:100px">{{ app.language.get('version') }}</th>
                     <th style="width:120px">{{ app.language.get('type') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="width:140px">{{ app.language.get('codename') }}</th>
+                    <th style="width:140px">{{ app.language.get('author') }}</th>
+                    <th style="width:100px">{{ app.language.get('version') }}</th>
                     <th style="width:120px">{{ app.language.get('status') }}</th>
                     <th style="width:120px">{{ app.language.get('installed') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
@@ -38,20 +39,8 @@
                     <td class="ukt-pt-1">
                         <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
                     </td>
-                    <td data-filter='{"type":"number"}'>
-                        <input type="text" value="" data-index="1" class="uk-input">
-                    </td>
-                    <td data-filter='{"type":"string"}'>
-                        <input type="text" value="" data-index="2" class="uk-input">
-                    </td>
-                    <td data-filter='{"type":"string"}'>
-                        <input type="text" value="" data-index="3" class="uk-input">
-                    </td>
-                    <td data-filter='{"type":"string"}'>
-                        <input type="text" value="" data-index="4" class="uk-input">
-                    </td>
                     <td data-filter='{"type":"text"}'>
-                        <select data-index="5" class="uk-select">
+                        <select data-index="1" class="uk-select">
                             <option value=""></option>
                             <option value="plugin">{{ app.language.get('plugin') }}</option>
                             <option value="module">{{ app.language.get('module') }}</option>
@@ -60,14 +49,29 @@
                         </select>
                     </td>
                     <td data-filter='{"type":"number"}'>
-                        <select data-index="6" class="uk-select">
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="3" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="4" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="5" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"string"}'>
+                        <input type="text" value="" data-index="6" class="uk-input">
+                    </td>
+                    <td data-filter='{"type":"number"}'>
+                        <select data-index="7" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('enabled') }}</option>
                             <option value="0">{{ app.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td data-filter='{"type":"number"}'>
-                        <select data-index="7" class="uk-select">
+                        <select data-index="8" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('installed') }}</option>
                             <option value="0">{{ app.language.get('installed_not') }}</option>
@@ -129,7 +133,7 @@ let tableEl     = '#extensionManage-list',
         initComplete: function() {
             dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : [[2, 'asc']], // codename
+        sorting : [[2, 'desc'], [7, 'desc']], // type, status
         columnDefs : [
             { searchable : false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -145,18 +149,23 @@ let tableEl     = '#extensionManage-list',
                 }
             },
             { data : 'extension_id' },
-            { data : 'codename',
-                render : function(data, type, full) {
-                    return '<code>' + data + '</code>';
-                }
-            },
-            { data : 'name' },
-            { data : 'version' },
             { data : 'type',
                 render : function(data, type, full) {
                     return shift.i18n[data];
                 }
             },
+            { data : 'name' },
+            { data : 'codename',
+                render : function(data, type, full) {
+                    return '<code>' + data + '</code>';
+                }
+            },
+            { data : 'author',
+                render : function(data, type, full) {
+                    return '<a href="'+ full.url + '" target="_blank">' + data + '</a>';
+                }
+            },
+            { data : 'version' },
             { data : 'status',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];

@@ -2,11 +2,7 @@
 
 $_['page_title']        = 'Manage Extensions';
 
-// $_['plugin']         = 'Plugin';
-// $_['module']         = 'Module';
-// $_['theme']          = 'Theme';
-// $_['language']       = 'Language';
-
+$_['author']            = 'Author';
 $_['version']           = 'Version';
 $_['install']           = 'Install';
 $_['uninstall']         = 'Uninstall';
