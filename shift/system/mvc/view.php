@@ -110,6 +110,23 @@ class View
             return $twigTemplate->render($data);
         }
 
+        if (str_starts_with($template, 'extensions/')) {
+            $parts = array_map('strtolower', array_filter(explode('/', $template)));
+            list($ext, $extType, $extCodename) = $parts;
+
+            if (count($parts) === 3) {
+                $parts[] = $extCodename;
+            }
+            $extFile = implode('/', array_slice($parts, 3));
+
+            $template = strtr(':type/:codename/:app_folder/view/:file', [
+                ':type'       => $extType,
+                ':codename'   => $extCodename,
+                ':app_folder' => APP_FOLDER,
+                ':file'       => $extFile,
+            ]);
+        }
+
         return $this->twig->render($template . '.twig', $data);
     }
 

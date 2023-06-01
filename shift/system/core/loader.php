@@ -105,26 +105,8 @@ class Loader
 
         $this->event->emit($eventName = 'view/' . $template . '::before', [$eventName, &$vars, &$output]);
 
-        $templateFile = $template;
-        if (str_starts_with($template, 'extensions/')) {
-            $parts = array_map('strtolower', array_filter(explode('/', $template)));
-            list($ext, $extType, $extCodename) = $parts;
-
-            if (count($parts) === 3) {
-                $parts[] = $extCodename;
-            }
-            $extFile = implode('/', array_slice($parts, 3));
-
-            $templateFile = strtr(':type/:codename/:app_folder/view/:file', [
-                ':type'       => $extType,
-                ':codename'   => $extCodename,
-                ':app_folder' => APP_FOLDER,
-                ':file'       => $extFile,
-            ]);
-        }
-
         if (is_null($output)) {
-            $output = $this->registry->get('view')->render($templateFile, $vars);
+            $output = $this->registry->get('view')->render($template, $vars);
         }
 
         $this->event->emit($eventName = 'view/' . $template . '::after', [$eventName, &$vars, &$output]);
