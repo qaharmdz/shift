@@ -108,7 +108,7 @@ class Secure
                 break;
 
             case 'crypt':
-                $result = random_bytes($length);
+                $result = $this->random($length);
                 break;
 
             case 'hash':
@@ -118,5 +118,21 @@ class Secure
         }
 
         return substr($result, rand(0, (strlen($result) - $length)), $length);
+    }
+
+    public function random(int $length = 0): string
+    {
+        $length = $length ?: rand(32, 64);
+        $length = (int)ceil($length / 2);
+
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            $bytes = openssl_random_pseudo_bytes($length);
+        } elseif (function_exists('random_bytes')) {
+            $bytes = random_bytes($length);
+        } else {
+            throw new \Exception('No cryptographically secure random function available!');
+        }
+
+        return bin2hex($bytes);
     }
 }
