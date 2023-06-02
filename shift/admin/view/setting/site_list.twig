@@ -63,7 +63,7 @@ let tableEl     = '#settingSite-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('setting/site/list')|raw }}",
             data : function(d, s) {
-                d.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
             }
         }),

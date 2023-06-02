@@ -426,7 +426,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
 
         if (!form.length) { return; }
 
-        opt.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        opt.timezone = getLocalTimezone();
 
         $(el).on('click', function() {
             $(document).trigger('IIDE.form_submit.before');
@@ -721,6 +721,15 @@ $(document).on('IIDE.init IIDE.format_date', function(event)
  * Functions
  * ======================================================================== */
 
+/**
+ * Get browser timezone
+ *
+ * @return string
+ */
+function getLocalTimezone() {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
  /**
  * Datetime UTC to local timezone
  *
@@ -734,7 +743,7 @@ function formatDate(datetime) {
         options = {
             day: '2-digit', month: 'short', year: 'numeric',
             hour: '2-digit', minute: '2-digit', hour12: false,
-            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            timeZone: getLocalTimezone(),
             timeZoneName: 'short',
         };
 
