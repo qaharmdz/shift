@@ -6,7 +6,7 @@
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
-                <button type="button" id="ext-upload-package" class="uk-button uk-button-primary"><i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('upload') }}</button>
+                <button type="button" id="ext-upload-button" class="uk-button uk-button-primary"><i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('upload') }}</button>
             </div>
         </div>
     </div>
@@ -91,12 +91,12 @@
     </div>
 </div>
 
-<div id="extension-upload" class="uk-hidden">
+<div id="ext-upload-wrapper" class="uk-hidden">
     <form id="ext-upload-form" enctype="multipart/form-data">
         <input id="ext-upload-input" type="file" name="file" accept=".zip" />
     </form>
 
-    <div id="upload-progress" uk-modal='{"esc-close":false, bg-close:false}'>
+    <div id="ext-upload-progress" uk-modal='{"esc-close":false, bg-close:false}'>
         <div class="uk-modal-dialog uk-modal-body">
             <h2 class="uk-modal-title">{{ app.language.get('upload') }}</h2>
 
@@ -245,10 +245,10 @@ let tableEl     = '#extensionManage-list',
     });
 });
 
-$('#ext-upload-package').on('click', function(e) {
+$('#ext-upload-button').on('click', function(e) {
     $('#ext-upload-input').trigger('click').on('change', function () {
-        let elButton   = $('#ext-upload-package'),
-            elProgress = $('#upload-progress .uk-progress');
+        let elButton   = $('#ext-upload-button'),
+            elProgress = $('#ext-upload-progress .uk-progress');
 
         $.ajax({
             url  : "{{ app.router.url('extension/manage/upload')|raw }}",
@@ -260,7 +260,7 @@ $('#ext-upload-package').on('click', function(e) {
             processData: false,
             beforeSend: function () {
                 elButton.prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-process-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
-                UIkit.modal('#upload-progress').show();
+                UIkit.modal('#ext-upload-progress').show();
             },
             xhr: function() {
                 $('.ext-upload-message').html(shift.i18n.uploading);
