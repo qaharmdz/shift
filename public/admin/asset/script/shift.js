@@ -348,13 +348,13 @@ if (jQuery().select2) {
 
                     opt.onSuccess(this, data);
                 },
-                complete: function() {
+                complete: function(jqxhr) {
                     uiDropdown = $('.uk-dropdown.uk-open');
                     if (uiDropdown.length) {
                         UIkit.dropdown(uiDropdown).hide(0);
                     }
 
-                    opt.onComplete(this, data);
+                    opt.onComplete(this, jqxhr);
                 }
             });
         }
