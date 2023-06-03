@@ -99,7 +99,7 @@ class Loader
     {
         $output = null;
 
-        if (empty($vars['twigTemplateFromString'])) {
+        if (empty($vars['stringTemplate'])) {
             $template = preg_replace(['#[^a-zA-Z0-9._/]#', '#/+#'], ['', '/'], $template);
         }
 

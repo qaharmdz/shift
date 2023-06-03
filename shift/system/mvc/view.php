@@ -103,7 +103,7 @@ class View
             $this->twig = $this->init();
         }
 
-        if (!empty($data['twigTemplateFromString'])) {
+        if (!empty($data['stringTemplate'])) {
             $this->twig->addExtension(new \Twig\Extension\StringLoaderExtension());
             $twigTemplate = $this->twig->createTemplate($template);
 
