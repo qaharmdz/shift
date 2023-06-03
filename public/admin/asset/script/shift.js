@@ -343,18 +343,18 @@ if (jQuery().select2) {
                 beforeSend: function() {
                     $.fn.shift.goNotify('process', opt.msgBefore);
                 },
-                complete: function() {
-                    opt.data.item = ''; // reset
-
-                    uiDropdown = $('.uk-dropdown.uk-open');
-                    if (uiDropdown.length) {
-                        UIkit.dropdown(uiDropdown).hide(0);
-                    }
-                },
                 success: function(data) {
                     $.fn.shift.goNotify('success', data.message ? data.message : opt.msgSuccess);
 
                     opt.onSuccess(this, data);
+                },
+                complete: function() {
+                    uiDropdown = $('.uk-dropdown.uk-open');
+                    if (uiDropdown.length) {
+                        UIkit.dropdown(uiDropdown).hide(0);
+                    }
+
+                    opt.onComplete(this, data);
                 }
             });
         }
@@ -369,7 +369,8 @@ if (jQuery().select2) {
         msgSuccess  : shift.i18n.success_update,
         msgError    : shift.i18n.error_general,
         validate    : function(dtActionProceed) { dtActionProceed(); },
-        onSuccess   : function() {}
+        onSuccess   : function() {},
+        onComplete  : function() {},
     };
 })(jQuery);
 
@@ -446,10 +447,6 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                     $('.uk-text-meta.uk-text-danger').remove();
                     $.fn.shift.goNotify('process', shift.i18n.saving);
                 },
-                complete: function() {
-                    $(el).prop('disabled', false);
-                    $('.js-form-submit-spinner').remove();
-                },
                 success: function(data) {
                     shift.formChanged = false;
 
@@ -478,7 +475,11 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                             }
                         });
                     }
-                }
+                },
+                complete: function() {
+                    $(el).prop('disabled', false);
+                    $('.js-form-submit-spinner').remove();
+                },
             });
         });
     });

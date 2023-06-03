@@ -133,7 +133,7 @@ let tableEl     = '#extensionManage-list',
         initComplete: function() {
             dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : [[2, 'desc'], [7, 'desc']], // type, status
+        sorting : [[2, 'desc'], [3, 'asc']], // type, name
         columnDefs : [
             { searchable : false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -262,11 +262,6 @@ $('#ext-upload-package').on('click', function(e) {
                 elButton.prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-process-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
                 UIkit.modal('#upload-progress').show();
             },
-            complete: function () {
-                elButton.prop('disabled', false);
-                $('.js-process-spinner').remove();
-                $('#ext-upload-input').val(null);
-            },
             xhr: function() {
                 $('.ext-upload-message').html(shift.i18n.uploading);
 
@@ -296,6 +291,11 @@ $('#ext-upload-package').on('click', function(e) {
                         });
                     }
                 }, 500);
+            },
+            complete: function () {
+                elButton.prop('disabled', false);
+                $('.js-process-spinner').remove();
+                $('#ext-upload-input').val(null);
             }
         });
     });
