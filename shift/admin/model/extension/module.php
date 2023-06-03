@@ -76,7 +76,7 @@ class Module extends Mvc\Model
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension_module` em
                 LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
-            WHERE e.`type` = 'module'"
+            WHERE e.`type` = 'module' AND e.`install` = 1"
         )->row['total'];
     }
 
