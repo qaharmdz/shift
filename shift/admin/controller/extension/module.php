@@ -46,7 +46,7 @@ class Module extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['module_id'];
-            $items[$i]['url_edit']    = $this->router->url('extension/module/' . $items[$i]['codename'], 'module_id=' . $items[$i]['module_id']);
+            $items[$i]['url_edit']    = $this->router->url('extensions/module/' . $items[$i]['codename'], 'module_id=' . $items[$i]['module_id']);
         }
 
         $data = [
@@ -57,6 +57,21 @@ class Module extends Mvc\Controller
         ];
 
         $this->response->setOutputJson($data);
+    }
+
+    public function trove()
+    {
+        $this->load->model('extension/module');
+        $this->load->language('extension/module');
+
+        $data = [];
+
+        $data['modules'] = $this->model_extension_module->getModules();
+        foreach ($data['modules'] as $key => $module) {
+            $data['modules'][$key]['url_add'] = $this->router->url('extensions/module/' . $module['codename']);
+        }
+
+        $this->response->setOutput($this->load->view('extension/module_trove', $data));
     }
 
     public function dtaction()

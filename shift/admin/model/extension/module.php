@@ -34,7 +34,7 @@ class Module extends Mvc\Model
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension_module` em
                 LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)"
-            . " WHERE e.`type` = 'module' AND e.`install` = 1"
+            . " WHERE e.`type` = 'module' AND e.`status` = 1 AND e.`install` = 1"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
@@ -76,7 +76,7 @@ class Module extends Mvc\Model
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension_module` em
                 LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
-            WHERE e.`type` = 'module' AND e.`install` = 1"
+            WHERE e.`type` = 'module' AND e.`status` = 1 AND e.`install` = 1"
         )->row['total'];
     }
 
@@ -105,6 +105,15 @@ class Module extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'extension_module', ['extension_module_id' => $modules]);
 
         $this->cache->deleteByTags('modules');
+    }
+
+    public function getModules()
+    {
+        return $this->db->get(
+            "SELECT *
+            FROM `" . DB_PREFIX . "extension` e
+            WHERE e.`type` = 'module' AND e.`status` = 1 AND e.`install` = 1 ORDER BY e.`name` ASC"
+        )->rows;
     }
 
     /*

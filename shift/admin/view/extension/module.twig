@@ -6,7 +6,7 @@
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
-                <a href="{{ app.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+                <button type="button" id="ext-module-button" class="uk-button uk-button-primary">Add</button>
             </div>
         </div>
     </div>
@@ -62,6 +62,18 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div id="ext-module-wrapper" class="uk-hidden">
+    <div id="ext-module-list" class="uk-modal-container" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">{{ app.language.get('module') }}</h2>
+
+            <div id="ext-module-content">
+                {{ app.language.get('processing') }}
+            </div>
+        </div>
     </div>
 </div>
 
@@ -159,6 +171,13 @@ let tableEl     = '#extensionModule-list',
                 dtTable.clearPipeline().draw();
             }
         });
+    });
+});
+
+$('#ext-module-button').on('click', function(e) {
+    UIkit.modal('#ext-module-list').show();
+    $.get("{{ app.router.url('extension/module/trove')|raw }}", function(data) {
+        $('#ext-module-content').html(data);
     });
 });
 </script>
