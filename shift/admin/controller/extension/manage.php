@@ -206,6 +206,8 @@ class Manage extends Mvc\Controller
                                 } else {
                                     $data['success'] = 1;
                                     $data['message'] = $this->language->get('success_upload');
+
+                                    // TODO: update meta.json info
                                 }
                             }
                         }

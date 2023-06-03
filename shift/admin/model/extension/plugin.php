@@ -27,7 +27,7 @@ class Plugin extends Mvc\Model
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension` e"
-            . " WHERE e.`type` = 'plugin' AND e.`install` = 1"
+            . " WHERE e.`type` = 'plugin' AND e.`status` = 1 AND e.`install` = 1"
                 . ($dtResult['query']['where'] ? " AND  " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
@@ -61,6 +61,10 @@ class Plugin extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension` WHERE `type` = 'plugin' AND `install` = 1")->row['total'];
+        return (int)$this->db->get(
+            "SELECT COUNT(*) AS total
+            FROM `" . DB_PREFIX . "extension`
+            WHERE `type` = 'plugin'  AND `status` = 1 AND `install` = 1"
+        )->row['total'];
     }
 }
