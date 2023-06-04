@@ -3,7 +3,8 @@
         {% for module in modules %}
             <div>
                 <a href="{{ module.url_add }}">
-                    <div class="uk-background-muted">
+                    <div class="card-trove">
+                        <div class="uk-card-badge uk-label">{{ app.language.get('add') }}</div>
                         <h4>{{ module.name }} v{{ module.version }}</h4>
                         {% if module.description %}
                         <p>{{ module.description }}</p>

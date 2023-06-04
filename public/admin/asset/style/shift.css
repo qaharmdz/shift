@@ -414,11 +414,21 @@ body {
     color: inherit;
     text-decoration: none;
 }
-#ext-module-content a:hover .uk-background-muted {
-    background-color: #e8e8e8;
-}
-#ext-module-content .uk-background-muted {
+#ext-module-content .card-trove {
     padding: 12px;
+    background-color: #eee;
+}
+#ext-module-content .uk-card-badge {
+    display: none;
+    top: -4px;
+    right: -4px;
+    height: auto;
+}
+#ext-module-content a:hover .card-trove {
+    background-color: #e4e4e4;
+}
+#ext-module-content a:hover .uk-card-badge {
+    display: flex;
 }
 #ext-module-content h4 {
     font-size: 1.4rem;
@@ -433,7 +443,7 @@ body {
 
 /*
  * Misc
- * ======================================================================== */
+ * ========================================================================
 
 /* shift.js
 ==================================== */
