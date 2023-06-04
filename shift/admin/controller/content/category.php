@@ -107,7 +107,7 @@ class Category extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
-        $this->document->loadAsset('editor');
+        $this->document->loadAsset('ckeditor');
         $this->document->loadAsset('select2');
 
         $this->document->addNode('breadcrumbs', [

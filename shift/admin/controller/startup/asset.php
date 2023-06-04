@@ -24,7 +24,7 @@ class Asset extends Mvc\Controller
         ]);
 
         $this->document->addAsset('datatables', [
-            'style'  => [
+            'style' => [
                 $this->config->get('env.url_app') . 'asset/style/shift.datatables.css',
                 $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
             ],
@@ -38,7 +38,7 @@ class Asset extends Mvc\Controller
         ]);
 
         $this->document->addAsset('flatpickr', [
-            'style'  => [
+            'style' => [
                 $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
             ],
             'script' => [
@@ -46,19 +46,15 @@ class Asset extends Mvc\Controller
             ]
         ]);
 
-        $this->document->addAsset('editor', [
-            'style'     => [
-                $this->config->get('env.url_app') . 'asset/script/jstree/themes/style.min.css'
-            ],
+        $this->document->addAsset('ckeditor', [
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/ckeditor/build/ckeditor.js',
                 $this->config->get('env.url_app') . 'asset/script/shift.ckeditor.js',
-                $this->config->get('env.url_app') . 'asset/script/jstree/jstree.min.js'
             ]
         ]);
 
         $this->document->addAsset('select2', [
-            'style'  => [
+            'style' => [
                 $this->config->get('env.url_app') . 'asset/script/select2/select2.min.css',
             ],
             'script' => [
@@ -67,11 +63,36 @@ class Asset extends Mvc\Controller
         ]);
 
         $this->document->addAsset('jstree', [
-            'style'     => [
-                $this->config->get('env.url_app') . 'asset/script/jstree/themes/style.min.css'
+            'style' => [
+                $this->config->get('env.url_app') . 'asset/script/jstree/themes/style.min.css',
             ],
-            'script'    => [
-                $this->config->get('env.url_app') . 'asset/script/jstree/jstree.min.js'
+            'script' => [
+                $this->config->get('env.url_app') . 'asset/script/jstree/jstree.min.js',
+            ]
+        ]);
+
+        $this->document->addAsset('codemirror', [
+            'style' => [
+                $this->config->get('env.url_app') . 'asset/script/codemirror/codemirror.css',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/foldgutter.css',
+            ],
+            'script' => [
+                $this->config->get('env.url_app') . 'asset/script/codemirror/codemirror.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/selection/active-line.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/edit/matchbrackets.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/foldcode.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/foldgutter.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/brace-fold.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/xml-fold.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/indent-fold.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/markdown-fold.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/comment-fold.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/xml/xml.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/javascript/javascript.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/css/css.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/htmlmixed/htmlmixed.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/clike/clike.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/php/php.js',
             ]
         ]);
     }
