@@ -16,11 +16,6 @@
                                         <li><a href="{{ link.url }}">{{ link.name }}</a></li>
                                     {% endif %}
                                 {% endfor %}
-
-                                {#
-                                <li class="uk-nav-header">Recently Visited</li>
-                                <li><a href="#">Item</a></li>
-                                #}
                             </ul>
                         </div>
                         <div class="uk-width-expand panel-right">
@@ -66,20 +61,6 @@
         </div>{# .uk-navbar-left #}
 
         <div class="uk-navbar-right">
-            <div class="uk-display-inline el-bookmarks">
-                <a class="uk-navbar-toggle" title="Account">
-                    <i class="bi bi-bookmarks bi-2x"></i>
-                    <span class="dropdown-caret"></span>
-                </a>
-                <div uk-dropdown="offset:0; pos:bottom-right;">
-                    <ul class="uk-nav uk-dropdown-nav uk-text-small">
-                        <li><a href="#">URL name</a></li>
-                        <li class="uk-nav-divider"></li>
-                        <li><a href="#">{{ app.language.get('header.bookmark_add') }}</a></li>
-                    </ul>
-                </div>
-            </div>
-
             {% if sites|length > 1 %}
                 <div class="uk-display-inline el-sites">
                     <a class="uk-navbar-toggle" title="Visit sites">
