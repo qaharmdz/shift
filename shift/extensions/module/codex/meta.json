@@ -1,0 +1,10 @@
+{
+    "codename"    : "codex",
+    "type"        : "module",
+
+    "name"        : "Codex - HTML, Twig and Script",
+    "version"     : "1.0.0",
+    "description" : "",
+    "author"      : "Shift",
+    "url"         : "https://github.com/qaharmdz/shift"
+}

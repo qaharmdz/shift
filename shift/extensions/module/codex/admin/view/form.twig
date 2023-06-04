@@ -1,0 +1,46 @@
+{% extends 'main.tpl.twig' %}
+
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
+{% block main_content %}
+<div class="uk-container container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-child-width-expand" uk-grid>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-flex uk-flex-middle uk-flex-right">
+                <div class="uk-button-group">
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-post", "module_id":"{{ module_id }}"}'>{{ app.language.get('save') }}</button>
+                    <div class="uk-inline">
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
+                        <div uk-dropdown="pos:bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-form-submit='{"form":"#form-post", "action":"close", "module_id":"{{ module_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-post", "action":"new", "module_id":"{{ module_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ app.router.url('content/post') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(module_id ? 'close' : 'cancel') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body">
+        <form id="form-post" class="uk-form-margin-hover" action="{{ app.router.url('extensions/module/codex/save') }}" method="post" data-form-monitor>
+            <div uk-grid>
+                <div class="uk-width-expand">
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal">
+        Codexing...
+                    </div>
+                </div>
+
+                <div class="uk-width-content-sidebar@l">
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                        sidebar
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
