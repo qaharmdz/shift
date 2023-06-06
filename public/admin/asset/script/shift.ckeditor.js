@@ -1,3 +1,10 @@
+/* jshint -W097, -W117 */
+/* globals $, document, shift */
+
+'use strict';
+
+shift.ckeditor = { instances: {} };
+
 /**
  * Editor configuration.
  *
@@ -5,19 +12,19 @@
  * - https://ckeditor.com/docs/ckeditor5/latest/examples/builds/classic-editor.html
  * - https://ckeditor.com/docs/ckeditor5/latest/installation/getting-started/quick-start.html#sample-implementation-2
  */
-shift.editor.mode_basic = [
+shift.ckeditor.mode_basic = [
     'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
     'bulletedList', 'numberedList', 'outdent', 'indent', '|', 'blockQuote', 'link', '|',
     'undo', 'redo', '|', 'sourceEditing'
 ];
-shift.editor.mode_default = [
+shift.ckeditor.mode_default = [
     'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
     'fontColor', 'fontBackgroundColor', 'alignment', '|',
     'bulletedList', 'numberedList', 'outdent', 'indent', '|',
     'blockQuote', 'link', 'shiftMediaManager', 'insertTable', '|',
     'undo', 'redo', '|', 'sourceEditing',
 ];
-shift.editor.mode_all = [
+shift.ckeditor.mode_all = [
     'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
     'fontColor', 'fontBackgroundColor', 'alignment', '|',
     'bulletedList', 'numberedList', 'outdent', 'indent', '|',
@@ -26,13 +33,13 @@ shift.editor.mode_all = [
     'findAndReplace', '|', 'fontFamily','fontSize', 'fontColor', 'fontBackgroundColor', '|',
     'horizontalLine', 'pageBreak', 'code', 'codeBlock', '|', 'undo', 'redo'
 ];
-// shift.editor.mode_default = shift.editor.mode_all;
+// shift.ckeditor.mode_default = shift.ckeditor.mode_all;
 
 ClassicEditor.defaultConfig =  {
     language: 'en',
     placeholder: '',
     toolbar: {
-        items: shift.editor.mode_default,
+        items: shift.ckeditor.mode_default,
         shouldNotGroupWhenFull: true
     },
     image: {
@@ -77,3 +84,9 @@ ClassicEditor.defaultConfig =  {
         disallow: [ /* HTML features to disallow */ ]
     }
 };
+
+$(document).on('IIDE.form_submit.before', function() {
+    $.each(shift.ckeditor.instances, function(elid, instance) {
+        $('#' + elid).text(instance.getData());
+    });
+});

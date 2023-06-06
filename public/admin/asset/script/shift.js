@@ -1,3 +1,8 @@
+/* jshint -W097, -W117 */
+/* globals $, document, shift */
+
+'use strict';
+
 /*
  * Table of Content:
  *
@@ -278,7 +283,7 @@ if (jQuery().select2) {
      *
      */
     $.fn.shift.prompt = function(options) {
-        var opt = $.extend({}, $.fn.shift.prompt.defaults, options);
+        let opt = $.extend({}, $.fn.shift.prompt.defaults, options);
 
         if (opt.clear) { UIkit.notification.closeAll(); }
 
@@ -433,12 +438,6 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
             $(document).trigger('IIDE.form_submit.before');
             $(el).prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-form-submit-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
 
-            if (shift.editor.instances) {
-                $.each(shift.editor.instances, function(elid, editor) {
-                    $('#' + elid).text(editor.getData());
-                });
-            }
-
             $(form).ajaxSubmit({
                 dataType : 'json',
                 data : opt,
@@ -507,16 +506,16 @@ $(document).on('IIDE.init IIDE.editor', function(event)
 
         switch (opt.mode) {
             case 'basic':
-                opt.toolbar = shift.editor.mode_basic;
+                opt.toolbar = shift.ckeditor.mode_basic;
                 break;
             case 'all':
-                opt.toolbar = shift.editor.mode_all;
+                opt.toolbar = shift.ckeditor.mode_all;
                 break;
             case 'custom':
                 // Do nothing, use the opt.toolbar
                 break;
             default:
-                opt.toolbar = shift.editor.mode_default;
+                opt.toolbar = shift.ckeditor.mode_default;
         }
 
         ClassicEditor
@@ -526,7 +525,7 @@ $(document).on('IIDE.init IIDE.editor', function(event)
                 }
             })
             .then(function(editor) {
-                shift.editor.instances[elid] = editor;
+                shift.ckeditor.instances[elid] = editor;
 
                 $('#' + elid).parent().addClass(opt.wrapper).addClass('ckeditor-mode-' + opt.mode);
 
@@ -709,11 +708,12 @@ $(document).on('IIDE.init IIDE.format_date', function(event)
      * <div data-format-date="Y-m-d H:i:s"></div>
      */
     $('[data-format-date]').each(function() {
-        let el   = this,
-            date = $(el).data('formatDate');
+        let el    = this,
+            date  = $(el).data('formatDate'),
+            chunk = '';
 
-        $html = date  ? '<span title="' + date + ' UTC">' + formatDate(date) + '</span>' : '<i>n/a</i>';
-        $(el).html($html);
+        chunk = date  ? '<span title="' + date + ' UTC">' + formatDate(date) + '</span>' : '<i>n/a</i>';
+        $(el).html(chunk);
     });
 });
 
@@ -756,7 +756,7 @@ function formatDate(datetime) {
  * https://stackoverflow.com/a/2117523
  */
 function euid(format) {
-    var euid = format ? format : 'sc-xxx-xxxxxx';
+    let euid = format ? format : 'sc-xxx-xxxxxx';
 
     return euid.replace(new RegExp('x', 'g'), function() {
         return (Math.floor(Math.random() * 10));

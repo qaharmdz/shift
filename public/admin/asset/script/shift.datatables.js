@@ -1,3 +1,8 @@
+/* jshint -W097, -W117 */
+/* globals $, document, shift */
+
+'use strict';
+
 // Default dataTables initialisation
 // ================================================
 $.extend($.fn.dataTable.defaults, {
