@@ -416,7 +416,7 @@ body {
 }
 #ext-module-content .card-trove {
     padding: 12px;
-    background-color: #eee;
+    background-color: #f4f4f4;
 }
 #ext-module-content .uk-card-badge {
     display: none;
@@ -425,7 +425,7 @@ body {
     height: auto;
 }
 #ext-module-content a:hover .card-trove {
-    background-color: #e4e4e4;
+    background-color: #eee;
 }
 #ext-module-content a:hover .uk-card-badge {
     display: flex;
@@ -825,4 +825,43 @@ a.ck.ck-button:not(.ck-disabled):hover {
     text-shadow: none;
     background-color: rgba(145, 145, 145, 0.12);
     box-shadow: none;
+}
+
+/* CodeMirror
+==================================== */
+.CodeMirror {
+    height: auto;
+    background: transparent;
+}
+.CodeMirror-scroll {
+    height: calc(100vh - 75px);
+}
+.CodeMirror pre {
+    font-size: 12px !important;
+    line-height: 16px !important;
+    letter-spacing: -0.2px !important;
+}
+.CodeMirror-gutters {
+    background: rgba(0,0,0,0.025);
+    border-right: 1px solid transparent;
+}
+.CodeMirror-linenumber {
+    font-size: 11px;
+    line-height: 15px;
+    color: rgba(0,0,0,.4);
+    padding: 1px 8px 0 5px;
+}
+.CodeMirror-activeline-background {
+    background: rgba(0,0,0,0.04);
+}
+.CodeMirror-activeline-gutter {
+    background: rgba(0,0,0,0.08);
+}
+.CodeMirror-activeline-gutter .CodeMirror-linenumber {
+    color: rgba(0,0,0,.65);
+    font-weight: 600;
+}
+.CodeMirror-foldmarker {
+    color: #1919ca;
+    text-shadow: #dfceff 1px 1px 2px, #dfceff -1px -1px 2px, #dfceff 1px -1px 2px, #dfceff -1px 1px 2px;
 }

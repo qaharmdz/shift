@@ -17,6 +17,8 @@ class Codex extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
+        $this->document->loadAsset('codemirror');
+
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('extension')],
             [$this->language->get('module'), $this->router->url('extension/module')],

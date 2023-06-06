@@ -87,12 +87,14 @@ class Asset extends Mvc\Controller
                 $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/indent-fold.js',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/markdown-fold.js',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/comment-fold.js',
-                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/xml/xml.js',
-                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/javascript/javascript.js',
-                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/css/css.js',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/mode/htmlmixed/htmlmixed.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/css/css.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/javascript/javascript.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/xml/xml.js',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/mode/clike/clike.js',
+                $this->config->get('env.url_app') . 'asset/script/codemirror/mode/twig/twig.js',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/mode/php/php.js',
+                $this->config->get('env.url_app') . 'asset/script/shift.codemirror.js',
             ]
         ]);
     }
