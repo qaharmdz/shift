@@ -10,6 +10,10 @@ class Config extends Bags
     {
         $file = PATH_SYSTEM . 'config' . DS . $filename . '.php';
 
+        if (str_starts_with($filename, 'extensions/')) {
+            $file = PATH_SHIFT . $filename . DS . 'config.php';
+        }
+
         $data = [];
         if (is_file($file)) {
             $_ = [];
