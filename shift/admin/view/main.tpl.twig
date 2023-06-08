@@ -1,6 +1,6 @@
 {% extends 'document.tpl.twig' %}
 
-{% block base_head_asset %}
+{% block document_head_asset %}
 <script>
 const shift = {
     version     : "{{ app.config.get('root.version') }}",
@@ -12,7 +12,11 @@ const shift = {
 </script>
 {% endblock %}
 
-{% block base_body %}
+{% block document_head_omega %}
+<script src="{{ app.config.get('env.url_app') }}asset/script/shift.js"></script>
+{% endblock %}
+
+{% block document_body %}
 {% if header %}
     <div class="page-header">
         {{ header }}

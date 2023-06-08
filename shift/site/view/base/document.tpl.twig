@@ -15,7 +15,7 @@
     <link rel="{{ link.rel }}" href="{{ link.href }}" {{ link.hreflang ? 'hreflang="' ~ link.hreflang ~ '"' }} {{ link.type ? 'type="' ~ link.type ~ '"' }} {{ link.media ? 'type="' ~ link.media ~ '"' }}>
 {% endfor %}
 
-    {% block base_head_meta %}{% endblock %}
+    {% block document_head_meta %}{% endblock %}
 
     <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit.sketsa.min.css" />
 {% for style in app.document.getStyles() %}
@@ -23,7 +23,7 @@
 {% endfor %}
     <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/base/style/base.css" />
 
-    {% block base_head_asset %}{% endblock %}
+    {% block document_head_asset %}{% endblock %}
 
     <script src="{{ app.config.get('env.url_site') }}asset/script/jquery/jquery-3.6.0.min.js"></script>
     <script src="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit.min.js"></script>
@@ -33,13 +33,13 @@
 {% endfor %}
     <script src="{{ app.config.get('env.url_site') }}asset/base/script/base.js"></script>
 
-    {% block base_head_omega %}{% endblock %}
+    {% block document_head_omega %}{% endblock %}
 
 </head>
 
 <body class="{{ app.document.getNode('class_body')|join(' ') }}">
 
-{% block base_body %}{% endblock %}
+{% block document_body %}{% endblock %}
 
 {% for script in app.document.getScripts('footer') %}
     <script src="{{ script }}"></script>
