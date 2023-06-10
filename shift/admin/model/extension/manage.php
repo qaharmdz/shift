@@ -92,6 +92,11 @@ class Manage extends Mvc\Model
     // Manage
     // ================================================
 
+    public function getExtension(string $codename)
+    {
+        return $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `codename` = ?s", [$codename])->row;
+    }
+
     public function getInstalled(string $type)
     {
         $data = [];

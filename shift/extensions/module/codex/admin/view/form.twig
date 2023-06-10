@@ -9,13 +9,13 @@
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-post", "module_id":"{{ module_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success js-codemirror-save" data-form-submit='{"form":"#form-post", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'>{{ app.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-post", "action":"close", "module_id":"{{ module_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
-                                <li><a data-form-submit='{"form":"#form-post", "action":"new", "module_id":"{{ module_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-post", "action":"close", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-post", "action":"new", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -30,13 +30,20 @@
             <div uk-grid>
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-form-horizontal">
-                        <textarea id="cm-editor" name="editor" data-codemirror rows="5" class="uk-textarea uk-width-1-1"></textarea>
+                        <textarea id="cm-editor" name="setting[editor]" data-codemirror rows="5" class="uk-textarea uk-width-1-1">{{ module.setting.editor }}</textarea>
                     </div>
                 </div>
 
                 <div class="uk-width-content-sidebar@l">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
-                        sidebar
+                        <fieldset class="uk-fieldset">
+                            {{ forms.input({'label':'name', 'name':'name', 'value':module.name, 'required':true}) }}
+                            {{ forms.textarea({'label':'description', 'name':'setting[description]', 'value':module.setting.description, 'rows':7}) }}
+                            {{ forms.select({'label':'status', 'name':'status', 'selected':module.status, 'class':'uk-width-150@m', 'options':[
+                                {'text': app.language.get('enabled'),  'value': 1},
+                                {'text': app.language.get('disabled'), 'value': 0}
+                            ]}) }}
+                        </fieldset>
                     </div>
                 </div>
             </div>

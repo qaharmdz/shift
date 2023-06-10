@@ -705,7 +705,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
     padding: 3px 10px;
 }
 
-/* === Select Dropdown === */
+/* === Multiple Select Dropdown === */
 .select2-container--default .select2-selection--multiple {
     font-size: .9rem;
     padding: 0;
@@ -831,7 +831,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
 ==================================== */
 .CodeMirror {
     height: auto;
-    background: transparent;
+    background: #f5f6f7;
 }
 .CodeMirror-scroll {
     height: calc(100vh - 75px);
