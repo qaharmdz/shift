@@ -6,7 +6,7 @@
 <div class="uk-container container-content-wrapper">
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
-            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }} <span class="tagline">{{ module_id ? 'ID #' ~ module_id }}</span></h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
                 <div class="uk-button-group">
                     <button class="uk-button uk-button-success js-codemirror-save" data-form-submit='{"form":"#form-post", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'>{{ app.language.get('save') }}</button>
@@ -37,14 +37,46 @@
                 <div class="uk-width-content-sidebar@l">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+
                             {{ forms.input({'label':'name', 'name':'name', 'value':module.name, 'required':true}) }}
-                            {{ forms.textarea({'label':'description', 'name':'setting[description]', 'value':module.setting.description, 'rows':7}) }}
+                            {{ forms.textarea({'label':'description', 'name':'setting[description]', 'value':module.setting.description, 'rows':3}) }}
                             {{ forms.select({'label':'status', 'name':'status', 'selected':module.status, 'class':'uk-width-150@m', 'options':[
                                 {'text': app.language.get('enabled'),  'value': 1},
                                 {'text': app.language.get('disabled'), 'value': 0}
                             ]}) }}
                         </fieldset>
                     </div>
+
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                        <fieldset class="uk-fieldset">
+                            <legend class="uk-legend">{{ app.language.get('visibility') }}</legend>
+
+                            {{ forms.select({'label':'visibility', 'name':'setting[visibility]', 'selected':module.setting.visibility, 'class':'uk-width-150@m', 'attribute':'data-select-switcher=\'{"class":"switch-visibility"}\'', 'options':[
+                                {'text': app.language.get('public'),  'value': 'public'},
+                                {'text': app.language.get('usergroup'), 'value': 'usergroup'},
+                            ]}) }}
+                            <div class="switch-visibility uk-switcher">
+                                <div class="switch-visibility_usergroup">
+                                    {{ forms.checkboxPanel({'label':'visibility_usergroup_info', 'name':'setting[visibility_usergroups][]', lists:user_groups, checked:module.setting.visibility_usergroups, 'list_text':'name', 'list_value':'user_group_id', 'class_form':'uk-label-meta'}) }}
+                                </div>
+                            </div>
+
+                            {{ forms.input({'label':'publish', 'name':'publish', 'value':module.publish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
+                            {{ forms.input({'label':'unpublish', 'name':'unpublish', 'value':module.unpublish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
+                        </fieldset>
+                    </div>
+
+                    {% if mode == 'edit' %}
+                        <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
+                            <fieldset class="uk-fieldset">
+                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+
+                                {{ forms.infoDate({'label':'created','datetime':module.created}) }}
+                                {{ forms.infoDate({'label':'updated','datetime':module.updated}) }}
+                            </fieldset>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </form>

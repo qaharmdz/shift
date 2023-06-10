@@ -261,9 +261,15 @@ body {
     }
 }
 
-.to-top {
-    z-index: 2;
+.tagline {
+    font-size: 1.6rem;
+    line-height: 1.2em;
+    color: #888;
+    font-weight: 300;
+    letter-spacing: -.5px;
+    margin-left: 5px;
 }
+
 .page-footer {
     color: #666;
     font-size: 12.6px;
@@ -831,10 +837,10 @@ a.ck.ck-button:not(.ck-disabled):hover {
 ==================================== */
 .CodeMirror {
     height: auto;
-    background: #f5f6f7;
+    background: #fdfdfd;
 }
 .CodeMirror-scroll {
-    height: calc(100vh - 75px);
+    min-height: calc(100vh - 75px);
 }
 .CodeMirror pre {
     font-size: 12px !important;

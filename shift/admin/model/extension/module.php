@@ -85,39 +85,73 @@ class Module extends Mvc\Model
 
     public function addModule(array $data)
     {
-        $setting = $data['setting'] ?? $data;
-
         $this->db->add(
             DB_PREFIX . 'extension_module',
             [
                 'extension_id' => (int)$data['extension_id'],
                 'name'         => $data['name'],
-                'setting'      => json_encode($setting),
+                'setting'      => json_encode($data['setting'] ?? []),
                 'status'       => (int)$data['status'],
                 'created'      => date('Y-m-d H:i:s'),
                 'updated'      => date('Y-m-d H:i:s'),
             ]
         );
 
-        return (int)$this->db->insertId();
+        $module_id = (int)$this->db->insertId();
+
+        if (!empty($data['setting'])) {
+            foreach ($data['meta'] as $key => $value) {
+                $this->db->add(
+                    DB_PREFIX . 'extension_meta',
+                    [
+                        'extension_id' => (int)$data['extension_id'],
+                        'extension_module_id' => $module_id,
+                        'key'     => $key,
+                        'value'   => (is_array($value) ? json_encode($value) : $value),
+                        'encoded' => (is_array($value) ? 1 : 0),
+                    ]
+                );
+            }
+        }
+
+        return $module_id;
     }
 
     public function editModule(int $module_id, array $data)
     {
-        $setting = $data['setting'] ?? $data;
-
         $updated = $this->db->set(
             DB_PREFIX . 'extension_module',
             [
                 'extension_id' => (int)$data['extension_id'],
                 'name'         => $data['name'],
-                'setting'      => json_encode($setting),
+                'setting'      => json_encode($data['setting'] ?? []),
                 'status'       => (int)$data['status'],
-                'created'      => date('Y-m-d H:i:s'),
                 'updated'      => date('Y-m-d H:i:s'),
             ],
             ['extension_module_id' => $module_id]
         );
+
+        if (!empty($updated->affected_rows)) {
+            $this->db->delete(DB_PREFIX . 'extension_meta', [
+                'extension_id' => (int)$data['extension_id'],
+                'extension_module_id' => $module_id,
+            ]);
+
+            if (!empty($data['setting'])) {
+                foreach ($data['meta'] as $key => $value) {
+                    $this->db->add(
+                        DB_PREFIX . 'extension_meta',
+                        [
+                            'extension_id' => (int)$data['extension_id'],
+                            'extension_module_id' => $module_id,
+                            'key'     => $key,
+                            'value'   => (is_array($value) ? json_encode($value) : $value),
+                            'encoded' => (is_array($value) ? 1 : 0),
+                        ]
+                    );
+                }
+            }
+        }
 
         return $updated->affected_rows;
     }

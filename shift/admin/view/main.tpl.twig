@@ -67,17 +67,4 @@ const shift = {
         {% endif %}
     </div>{# .region-middle #}
 </div>
-
-<a class="to-top uk-position-fixed uk-position-small uk-position-bottom-right js-scrolldown-visible" uk-totop uk-scroll style="display:none"></a>
-
-<script>
-let scrollDown = $('.js-scrolldown-visible');
-$(window).scroll(function() {
-    if ($(window).scrollTop() >= 200) {
-        scrollDown.fadeIn();
-    } else {
-        scrollDown.fadeOut();
-    }
-});
-</script>
 {% endblock %}

@@ -8,10 +8,14 @@ $_['form'] = [
     'extension_id' => 0,
     'name'         => '',
     'setting'      => [
-        'description' => '',
         'editor'      => '',
+        'description' => '',
+        'visibility'  => 'public',
+        'visibility_usergroups' => [],
     ],
     'status'       => 0,
     'created'      => null,
     'updated'      => null,
+    'publish'      => null,
+    'unpublish'    => null,
 ];

@@ -13,15 +13,16 @@ class Codex extends Mvc\Controller
         $module_id = $this->request->getInt('query.module_id', 0);
         $mode = !$module_id ? 'add' : 'edit';
 
-        $this->load->config('extensions/module/codex');
+        $this->load->model('account/usergroup');
         $this->load->model('extension/manage');
         $this->load->model('extension/module');
+        $this->load->config('extensions/module/codex');
         $this->load->language('extensions/module/codex');
-
 
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->loadAsset('codemirror');
+        $this->document->loadAsset('flatpickr');
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('extension')],
@@ -44,6 +45,7 @@ class Codex extends Mvc\Controller
 
         $extension = $this->model_extension_manage->getExtension('codex');
         $data['extension_id'] = $extension['extension_id'];
+        $data['user_groups']  = $this->model_account_usergroup->getUserGroups();
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
