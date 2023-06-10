@@ -109,8 +109,8 @@ class Configuration extends Mvc\Controller
         ]);
 
         $this->view->setGlobal('config', $this->config);
+        $this->view->setGlobal('router', $this->router);
         $this->view->setGlobal('document', $this->document);
         $this->view->setGlobal('language', $this->language);
-        $this->view->setGlobal('router', $this->router);
     }
 }

@@ -13,25 +13,52 @@ class Position extends Mvc\Controller
      *
      * @return array
      */
-    public function index(array $blocks = []): array
+    public function index(): array
     {
-        $this->event->emit($eventName = 'controller/block/position::blocks', [$eventName, &$blocks]);
-
-        $terms   = ['alpha', 'topbar', 'top', 'content_top', 'sidebar_left', 'sidebar_right', 'content_bottom', 'bottom', 'footer', 'omega'];
-        $blocks  = array_unique(array_merge($terms, $blocks));
-        $modules = []; // TODO: getLayoutModules();
-
         $data = [];
-        foreach ($blocks as $position) {
+        $positions = $this->getLayoutPositions();
+        $layout_id = $this->getLayoutId($this->request->get('query.route'));
+
+        foreach ($positions as $position) {
+            $modules = $this->getLayoutModules($layout_id, $position);
             $data[$position] = '';
 
-            if (!empty($modules[$position])) {
-                foreach ($modules[$position] as $module) {
-                    $data[$position] .= $this->load->controller($module);
+            if ($modules) {
+                foreach ($modules as $module) {
+                    $data[$position] .= $this->load->controller('extensions/module/' . $module['codename'], $module);
                 }
             }
         }
 
         return $data;
+    }
+
+    public function getLayoutPositions(): array
+    {
+        return ['alpha', 'topbar', 'top', 'content_top', 'sidebar_left', 'sidebar_right', 'content_bottom', 'bottom', 'footer', 'omega'];
+    }
+
+    public function getLayoutId(string $route): int
+    {
+        return (int)$this->db->get(
+            "SELECT layout_id FROM `" . DB_PREFIX . "layout_route` WHERE ?s LIKE `route` ORDER BY `priority` ASC LIMIT 1",
+            [$route],
+        )->row['layout_id'] ?? 0;
+    }
+
+    public function getLayoutModules(int $layout_id, string $position)
+    {
+        return $this->db->get(
+            "SELECT e.codename, em.* FROM `" . DB_PREFIX . "layout_module` lm
+                LEFT JOIN `" . DB_PREFIX . "extension_module` em ON (em.extension_module_id = lm.extension_module_id)
+                LEFT JOIN `" . DB_PREFIX . "extension` e ON (e.extension_id = em.extension_id)
+            WHERE lm.layout_id = ?i
+                AND lm.position = ?s
+                AND e.install = 1
+                AND e.status = 1
+                AND em.status = 1
+            ORDER BY sort_order ASC",
+            [$layout_id, $position],
+        )->rows;
     }
 }

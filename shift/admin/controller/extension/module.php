@@ -66,7 +66,7 @@ class Module extends Mvc\Controller
 
         $data = [];
 
-        $data['modules'] = $this->model_extension_module->getExtensionModules();
+        $data['modules'] = $this->model_extension_module->getModules();
         foreach ($data['modules'] as $key => $module) {
             $data['modules'][$key]['url_add'] = $this->router->url('extensions/module/' . $module['codename']);
         }
