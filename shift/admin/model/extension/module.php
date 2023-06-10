@@ -132,7 +132,7 @@ class Module extends Mvc\Model
             [$module_id]
         )->row;
 
-        if ($result['setting']) {
+        if ($result) {
             $result['setting'] = json_decode($result['setting'], true);
         }
 
