@@ -104,7 +104,10 @@ class View
         }
 
         if (!empty($data['stringTemplate'])) {
-            $this->twig->addExtension(new \Twig\Extension\StringLoaderExtension());
+            if (!$this->twig->hasExtension('\Twig\Extension\StringLoaderExtension')) {
+                $this->twig->addExtension(new \Twig\Extension\StringLoaderExtension());
+            }
+
             $twigTemplate = $this->twig->createTemplate($template);
 
             return $twigTemplate->render($data);
