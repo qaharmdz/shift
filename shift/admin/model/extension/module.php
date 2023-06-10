@@ -107,7 +107,7 @@ class Module extends Mvc\Model
         $this->cache->deleteByTags('modules');
     }
 
-    public function getModules()
+    public function getExtensionModules()
     {
         return $this->db->get(
             "SELECT *

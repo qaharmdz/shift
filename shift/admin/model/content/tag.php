@@ -77,7 +77,6 @@ class Tag extends Mvc\Model
     // Form CRUD
     // ================================================
 
-
     public function addTag(array $data): int
     {
         $this->db->add(
