@@ -6,6 +6,7 @@ _dev/
 
 *.log
 *.cache
+debug.php
 
 shift/config.php
 shift/admin/config.php
