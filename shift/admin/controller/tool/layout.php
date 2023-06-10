@@ -115,6 +115,8 @@ class Layout extends Mvc\Controller
 
         $data['mode']      = $mode;
         $data['layout_id'] = $layout_id;
+
+        // TODO:
         $data['setting']   = array_replace_recursive(
             $this->config->getArray('tool.layout.form'),
             $this->model_tool_layout->getLayout($layout_id),

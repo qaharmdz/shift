@@ -118,7 +118,6 @@ class Site extends Mvc\Controller
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('setting.site.form'),
             $this->model_setting_setting->getSetting('system', 'site', $site_id),
-            $this->request->get('post', [])
         );
 
         $this->load->model('extension/language');
