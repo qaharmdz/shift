@@ -25,7 +25,9 @@ class Position extends Mvc\Controller
 
             if ($modules) {
                 foreach ($modules as $module) {
+                    $data[$position] .= '<div class="module-wrapper module-' . $module['codename'] . ' module-id-' . $module['extension_module_id'] . '">';
                     $data[$position] .= $this->load->controller('extensions/module/' . $module['codename'], $module);
+                    $data[$position] .= '</div>';
                 }
             }
         }
