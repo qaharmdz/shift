@@ -99,7 +99,7 @@ class Module extends Mvc\Model
 
         $module_id = (int)$this->db->insertId();
 
-        if (!empty($data['setting'])) {
+        if (!empty($data['meta'])) {
             foreach ($data['meta'] as $key => $value) {
                 $this->db->add(
                     DB_PREFIX . 'extension_meta',
@@ -137,7 +137,7 @@ class Module extends Mvc\Model
                 'extension_module_id' => $module_id,
             ]);
 
-            if (!empty($data['setting'])) {
+            if (!empty($data['meta'])) {
                 foreach ($data['meta'] as $key => $value) {
                     $this->db->add(
                         DB_PREFIX . 'extension_meta',

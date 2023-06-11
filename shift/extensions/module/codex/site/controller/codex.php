@@ -8,15 +8,15 @@ use Shift\System\Mvc;
 
 class Codex extends Mvc\Controller
 {
-    public function index(array $module = [])
+    public function index(array $config = [])
     {
-        if (!$module) {
+        if (!$config) {
             return null;
         }
 
         $this->load->model('extensions/module/codex');
 
-        $setting  = json_decode($module['setting'], true);
+        $setting  = json_decode($config['setting'], true);
         $template = trim(htmlspecialchars_decode(
             $setting['editor'],
             ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401
