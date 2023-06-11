@@ -14,6 +14,8 @@ class Codex extends Mvc\Controller
             return null;
         }
 
+        $this->load->model('extensions/module/codex');
+
         $setting  = json_decode($module['setting'], true);
         $template = trim(htmlspecialchars_decode(
             $setting['editor'],
@@ -22,16 +24,7 @@ class Codex extends Mvc\Controller
 
         $data = [
             'stringTemplate' => true,
-            'codex' => [
-                'user' => [
-                    'user_id'       => $this->user->get('user_id'),
-                    'user_group_id' => $this->user->get('user_group_id'),
-                    'fullname'      => $this->user->get('fullname'),
-                    'firstname'     => $this->user->get('firstname'),
-                    'lastname'      => $this->user->get('lastname'),
-                    'backend'       => $this->user->get('backend'),
-                ],
-            ],
+            'codex' => $this->model_extensions_module_codex,
         ];
 
         return $this->load->view($template, $data);

@@ -56,8 +56,8 @@ class Codex extends Mvc\Controller
 
     public function save()
     {
-        $this->load->config('extensions/module/codex');
         $this->load->model('extension/module');
+        $this->load->config('extensions/module/codex');
         $this->load->language('extensions/module/codex');
 
         if (!$this->user->hasPermission('modify', 'extension/module/codex')) {
