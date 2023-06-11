@@ -185,9 +185,9 @@ $.fn.dataTable.Api.register('clearPipeline()', function () {
 // ================================================
 $.fn.dataTable.Api.register('clearSearch()', function () {
     return this.iterator('table', function (settings) {
-        // clear pre-search
+        let iCol = 0;
         settings.oPreviousSearch.sSearch = '';
-        for (iCol = 0; iCol < settings.aoPreSearchCols.length; iCol++) {
+        for (;iCol < settings.aoPreSearchCols.length; iCol++) {
             if (typeof settings.aoPreSearchCols[iCol].search !== 'undefined') { // set back to initial search
                 settings.aoPreSearchCols[iCol].sSearch = settings.aoPreSearchCols[iCol].search;
             } else {
