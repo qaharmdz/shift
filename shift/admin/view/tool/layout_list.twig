@@ -6,7 +6,7 @@
         <div class="uk-child-width-expand" uk-grid>
             <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
-                <a href="{{ app.router.url('tool/layout/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add') }}</a>
+                <a href="{{ app.router.url('tool/layout/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add_new') }}</a>
             </div>
         </div>
     </div>
@@ -84,8 +84,8 @@ let tableEl    = '#toolLayout-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('tool/layout/list')|raw }}",
             data : function(d, s) {
-                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
             }
         }),
         initComplete: function() {

@@ -85,8 +85,8 @@ let tableEl     = '#extensionModule-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('extension/module/list')|raw }}",
             data : function(d, s) {
-                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
             }
         }),
         initComplete: function() {

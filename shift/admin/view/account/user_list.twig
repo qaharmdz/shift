@@ -100,8 +100,8 @@ let tableEl     = '#accountUser-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('account/user/list')|raw }}",
             data : function(d, s) {
-                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
             }
         }),
         initComplete: function() {

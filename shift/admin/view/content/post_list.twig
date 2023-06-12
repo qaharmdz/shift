@@ -112,8 +112,8 @@ let tableEl     = '#contentPost-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('content/post/list')|raw }}",
             data : function(d, s) {
-                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
             }
         }),
         initComplete: function() {

@@ -121,25 +121,25 @@ class Manage extends Mvc\Controller
             foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
                 if (is_file($node . DS . 'meta.json')) {
                     $codename = basename($node);
-                    $metas    = json_decode(file_get_contents($node . DS . 'meta.json'), true);
+                    $metaInfo = json_decode(file_get_contents($node . DS . 'meta.json'), true);
 
-                    if ($codename === $metas['codename']) {
-                        $data['metaFiles'][$metas['type'] . '_' . $metas['codename']] = $metas;
+                    if ($codename === $metaInfo['codename']) {
+                        $data['metaFiles'][$metaInfo['type'] . '_' . $metaInfo['codename']] = $metaInfo;
 
-                        $isExtInDb = array_filter($data['dbLists'], function ($v) use ($codename, $metas) {
-                            return ($v['type'] === $metas['type'] && $v['codename'] === $codename);
+                        $isExtInDb = array_filter($data['dbLists'], function ($v) use ($codename, $metaInfo) {
+                            return ($v['type'] === $metaInfo['type'] && $v['codename'] === $codename);
                         });
 
                         // Add new extensions to database
                         if (empty($isExtInDb)) {
                             $extData = [
-                                'codename'    => $metas['codename'],
-                                'type'        => $metas['type'],
-                                'name'        => $metas['name'],
-                                'version'     => $metas['version'],
-                                'description' => $metas['description'],
-                                'author'      => $metas['author'],
-                                'url'         => $metas['url'],
+                                'codename'    => $metaInfo['codename'],
+                                'type'        => $metaInfo['type'],
+                                'name'        => $metaInfo['name'],
+                                'version'     => $metaInfo['version'],
+                                'description' => $metaInfo['description'],
+                                'author'      => $metaInfo['author'],
+                                'url'         => $metaInfo['url'],
                                 'setting'     => '[]',
                                 'status'      => 0,
                                 'install'     => 0,

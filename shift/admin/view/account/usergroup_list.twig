@@ -77,8 +77,8 @@ let tableEl    = '#accountUserGroup-list',
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('account/usergroup/list')|raw }}",
             data : function(d, s) {
-                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
             }
         }),
         initComplete: function() {
