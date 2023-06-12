@@ -23,7 +23,7 @@ class Manage extends Mvc\Controller
 
         $data = [];
 
-        $data['newExtensions'] = $this->syncExtensions(); // TODO: notification new extensions
+        $data['extensions'] = $this->syncExtensions(); // TODO: notification new extensions
         $data['ini_uploadMaxFilesize'] = $this->parseSize(ini_get('upload_max_filesize'));
 
         $data['layouts'] = $this->load->controller('block/position');
@@ -41,14 +41,15 @@ class Manage extends Mvc\Controller
 
         $this->load->model('extension/manage');
 
-        $params  = $this->request->get('post');
-        $results = $this->model_extension_manage->dtRecords($params);
+        $params   = $this->request->get('post');
+        $results  = $this->model_extension_manage->dtRecords($params);
 
         $items = [];
         for ($i = 0; $i < $results->num_rows; $i++) {
             $items[$i] = $results->rows[$i];
 
-            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['extension_id'];
+            $items[$i]['version_meta'] = $params['extMetas'][$items[$i]['type'] . '_' . $items[$i]['codename']]['version'] ?? '';
+            $items[$i]['DT_RowClass']  = 'dt-row-' . $items[$i]['extension_id'];
         }
 
         $data = [
@@ -99,17 +100,23 @@ class Manage extends Mvc\Controller
      */
     public function syncExtensions(): array
     {
-        $data = ['total' => 0];
+        $data = [
+            'dbLists' => [],
+            'metaFiles' => [],
+            'new' => [
+                'total' => 0
+            ],
+        ];
 
         if (!$this->user->hasPermission('modify', 'extension/manage')) {
             return $data;
         }
 
-        $extensions = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension`")->rows;
+        $data['dbLists'] = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension`")->rows;
 
         foreach (glob(PATH_EXTENSIONS . '*', GLOB_ONLYDIR) as $ext) {
             $extType = basename($ext);
-            $data[$extType] = [];
+            $data['new'][$extType] = [];
 
             foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
                 if (is_file($node . DS . 'meta.json')) {
@@ -117,7 +124,9 @@ class Manage extends Mvc\Controller
                     $metas    = json_decode(file_get_contents($node . DS . 'meta.json'), true);
 
                     if ($codename === $metas['codename']) {
-                        $isExtInDb = array_filter($extensions, function ($v) use ($codename, $metas) {
+                        $data['metaFiles'][$metas['type'] . '_' . $metas['codename']] = $metas;
+
+                        $isExtInDb = array_filter($data['dbLists'], function ($v) use ($codename, $metas) {
                             return ($v['type'] === $metas['type'] && $v['codename'] === $codename);
                         });
 
@@ -140,9 +149,8 @@ class Manage extends Mvc\Controller
 
                             $this->db->add(DB_PREFIX . 'extension', $extData);
 
-                            $data[$extType][] = $extData;
-
-                            $data['total']++;
+                            $data['new'][$extType][] = $extData;
+                            $data['new']['total']++;
                         }
                     }
                 }
@@ -221,8 +229,6 @@ class Manage extends Mvc\Controller
                                 } else {
                                     $data['success'] = 1;
                                     $data['message'] = $this->language->get('success_upload');
-
-                                    // TODO: update meta.json info
                                 }
                             }
                         }

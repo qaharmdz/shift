@@ -170,14 +170,14 @@ class Manage extends Mvc\Model
 
         $path = PATH_EXTENSIONS . $extension['type'] . DS . $extension['codename'] . DS;
 
-        $dirIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
-        $nodes = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
-
-        foreach ($nodes as $node) {
-            $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
-        }
-
         if (is_dir($path)) {
+            $dirIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
+            $nodes = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+            foreach ($nodes as $node) {
+                $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
+            }
+
             rmdir($path);
         }
 

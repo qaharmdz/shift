@@ -30,9 +30,9 @@
                     <th style="width:140px">{{ app.language.get('codename') }}</th>
                     <th style="min-width:200px">{{ app.language.get('name') }}</th>
                     <th style="width:140px">{{ app.language.get('author') }}</th>
-                    <th style="width:90px">{{ app.language.get('version') }}</th>
-                    <th style="width:100px">{{ app.language.get('installed') }}</th>
-                    <th style="width:100px">{{ app.language.get('status') }}</th>
+                    <th style="width:85px">{{ app.language.get('version') }}</th>
+                    <th style="width:110px">{{ app.language.get('installed') }}</th>
+                    <th style="width:90px">{{ app.language.get('status') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
@@ -136,6 +136,7 @@ let tableEl     = '#extensionManage-list',
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
                 d.timezone = getLocalTimezone();
+                d.extMetas = {{ extensions.metaFiles|json_encode()|raw }};
             }
         }),
         initComplete: function() {
@@ -167,7 +168,17 @@ let tableEl     = '#extensionManage-list',
                     return '<code>' + data + '</code>';
                 }
             },
-            { data : 'name' },
+            { data : 'name',
+                render : function(data, type, full) {
+                    output = data;
+                    if (full.version_meta && full.version != full.version_meta) {
+                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ app.language.get("information") }}">';
+                        output += '[{{ app.language.get("new") }} v' + full.version_meta + ']';
+                        output += '</a>';
+                    }
+                    return output;
+                }
+            },
             { data : 'author',
                 render : function(data, type, full) {
                     return '<a href="'+ full.url + '" target="_blank">' + data + '</a>';
@@ -195,7 +206,7 @@ let tableEl     = '#extensionManage-list',
             { data : 'extension_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output = '<a data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip  title="{{ app.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
+                    output = '<a data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ app.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
