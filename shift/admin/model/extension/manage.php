@@ -117,19 +117,35 @@ class Manage extends Mvc\Model
         )->row;
 
         if ($extension) {
-            $extPath   = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
-
-            $this->load->model('account/usergroup');
-            $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'access', $extPath);
-            $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'modify', $extPath);
-
-            $this->load->controller($extPath . '/install');
-
-            $this->db->set(
-                DB_PREFIX . 'extension',
-                ['install'  => 1, 'updated' => date('Y-m-d H:i:s'), ],
-                ['extension_id' => $extension['extension_id']]
+            $extPath  = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
+            $metaInfo = json_decode(
+                file_get_contents(PATH_EXTENSIONS . $extension['type'] . DS . $extension['codename'] . DS . 'meta.json'),
+                true
             );
+
+            if ($metaInfo) {
+                $this->load->model('account/usergroup');
+                $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'access', $extPath);
+                $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'modify', $extPath);
+
+                $this->load->controller($extPath . '/install');
+
+                $this->db->set(
+                    DB_PREFIX . 'extension',
+                    [
+                        'name'        => $metaInfo['name'],
+                        'version'     => $metaInfo['version'],
+                        'description' => $metaInfo['description'],
+                        'author'      => $metaInfo['author'],
+                        'url'         => $metaInfo['url'],
+                        'setting'     => '[]',
+                        'status'      => 1,
+                        'install'     => 1,
+                        'updated'     => date('Y-m-d H:i:s'),
+                    ],
+                    ['extension_id' => $extension['extension_id']]
+                );
+            }
         }
     }
 
@@ -151,7 +167,12 @@ class Manage extends Mvc\Model
 
             $this->db->set(
                 DB_PREFIX . 'extension',
-                ['status'  => 0, 'install'  => 0, 'updated' => date('Y-m-d H:i:s'), ],
+                [
+                    'setting' => '[]',
+                    'status'  => 0,
+                    'install' => 0,
+                    'updated' => date('Y-m-d H:i:s'),
+                ],
                 ['extension_id' => $extension['extension_id']]
             );
 
