@@ -96,7 +96,7 @@ class UserGroup extends Mvc\Controller
     public function form()
     {
         $user_group_id = $this->request->getInt('query.user_group_id', 0);
-        $mode = !$user_group_id ? 'add' : 'edit';
+        $mode = !$user_group_id ? 'add_new' : 'edit';
 
         $this->load->model('account/usergroup');
         $this->load->language('account/usergroup');

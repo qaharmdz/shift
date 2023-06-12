@@ -97,7 +97,7 @@ class Tag extends Mvc\Controller
     public function form()
     {
         $tag_id = $this->request->getInt('query.tag_id', 0);
-        $mode = !$tag_id ? 'add' : 'edit';
+        $mode = !$tag_id ? 'add_new' : 'edit';
 
         $this->load->model('content/tag');
         $this->load->model('extension/language');

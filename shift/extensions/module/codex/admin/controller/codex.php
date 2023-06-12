@@ -11,7 +11,7 @@ class Codex extends Mvc\Controller
     public function index()
     {
         $module_id = $this->request->getInt('query.module_id', 0);
-        $mode = !$module_id ? 'add' : 'edit';
+        $mode = !$module_id ? 'add_new' : 'edit';
 
         $this->load->model('account/usergroup');
         $this->load->model('extension/manage');

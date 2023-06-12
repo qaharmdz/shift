@@ -97,7 +97,7 @@ class Site extends Mvc\Controller
     public function form()
     {
         $site_id = $this->request->getInt('query.site_id', -1);
-        $mode    = $site_id == -1 ? 'add' : 'edit';
+        $mode    = $site_id == -1 ? 'add_new' : 'edit';
 
         $this->load->config('setting/site');
         $this->load->model('setting/setting');

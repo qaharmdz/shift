@@ -97,7 +97,7 @@ class Post extends Mvc\Controller
     public function form()
     {
         $post_id = $this->request->getInt('query.post_id', 0);
-        $mode = !$post_id ? 'add' : 'edit';
+        $mode = !$post_id ? 'add_new' : 'edit';
 
         $this->load->model('setting/site');
         $this->load->model('content/post');

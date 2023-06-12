@@ -97,7 +97,7 @@ class Layout extends Mvc\Controller
     public function form()
     {
         $layout_id = $this->request->getInt('query.layout_id', 0);
-        $mode = !$layout_id ? 'add' : 'edit';
+        $mode = !$layout_id ? 'add_new' : 'edit';
 
         $this->load->config('tool/layout');
         $this->load->model('tool/layout');

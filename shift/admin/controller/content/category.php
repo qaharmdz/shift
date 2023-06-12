@@ -97,7 +97,7 @@ class Category extends Mvc\Controller
     public function form()
     {
         $category_id = $this->request->getInt('query.category_id', 0);
-        $mode = !$category_id ? 'add' : 'edit';
+        $mode = !$category_id ? 'add_new' : 'edit';
 
         $this->load->model('setting/site');
         $this->load->model('content/category');
