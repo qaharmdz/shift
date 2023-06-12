@@ -152,6 +152,21 @@ class Manage extends Mvc\Controller
         return $data;
     }
 
+    public function info()
+    {
+        $this->load->model('extension/manage');
+        $this->load->language('extension/manage');
+
+        $data = $this->model_extension_manage->getExtension($this->request->getString('query.codename'));
+        $data['_meta'] = json_decode(
+            file_get_contents(PATH_EXTENSIONS . $data['type'] . DS . $data['codename'] . DS . 'meta.json'),
+            true
+        );
+        $data['hasUpdate'] = $data['version'] !== $data['_meta']['version'];
+
+        $this->response->setOutput($this->load->view('extension/manage_ext_info', $data));
+    }
+
     public function upload()
     {
         $this->load->language('extension/manage');

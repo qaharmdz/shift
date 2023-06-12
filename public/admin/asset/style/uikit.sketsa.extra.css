@@ -74,6 +74,17 @@ html,
     gap: 0;
 }
 
+/* UK-alert
+==================================== */
+.uk-alert-small {
+    font-size: 13px;
+    padding: 7px 20px 7px 12px;
+}
+.uk-alert-small .uk-alert-close {
+    top: 10px;
+    right: 7px;
+}
+
 /* Breadcrumbs
 ==================================== */
 .uk-breadcrumb > * > * {
@@ -221,8 +232,14 @@ th.uk-text-break {
     padding: 0 18px;
 }
 .uk-button-small {
-    line-height: 26px;
+    font-size: 13px;
+    line-height: 24px;
     padding: 0 10px;
+}
+.uk-button-mini {
+    font-size: 12px;
+    padding: 0 10px;
+    line-height: 20px;
 }
 
 .uk-button-group.uk-button-radio {
@@ -385,7 +402,7 @@ th.uk-text-break {
     color: #999!important;
 }
 .uk-link-muted {
-    color: #a4a4a4!important;
+    color: #999!important;
     cursor: default;
 }
 

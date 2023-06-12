@@ -1,0 +1,31 @@
+<button class="uk-modal-close-outside" type="button" uk-close></button>
+
+<h2 class="uk-modal-title">{{ name }}<span class="tagline">v{{ version }}</span></h2>
+
+{% if hasUpdate %}
+<div class="uk-alert-primary uk-alert-small" uk-alert>
+    <p>
+        {{ app.language.get('message_update')|format(_meta.version) }}
+        <a class="uk-button uk-button-primary uk-button-small ukt-ml-4">{{ app.language.get('update') }}</a>
+    </p>
+</div>
+{% endif %}
+
+<table class="uk-table uk-table-divider">
+    <tbody>
+        <tr>
+            <td class="uk-width-125">{{ app.language.get('codename') }}</td>
+            <td><code>{{ codename }}</code></td>
+        </tr>
+        <tr>
+            <td>{{ app.language.get('author') }}</td>
+            <td>{{ author }}</td>
+        </tr>
+        <tr>
+            <td>{{ app.language.get('web_site') }}</td>
+            <td><a href="{{ url }}" rel="nofollow" target="_blank">{{ url }}</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>{{ description }}</p>

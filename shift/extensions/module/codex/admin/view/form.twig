@@ -6,7 +6,7 @@
 <div class="uk-container container-content-wrapper">
     <div class="content-header">
         <div class="uk-child-width-expand" uk-grid>
-            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }} <span class="tagline">{{ module_id ? 'ID #' ~ module_id }}</span></h1></div>
+            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}<span class="tagline">{{ module_id ? 'ID #' ~ module_id }}</span></h1></div>
             <div class="uk-flex uk-flex-middle uk-flex-right">
                 <div class="uk-button-group">
                     <button class="uk-button uk-button-success js-codemirror-save" data-form-submit='{"form":"#form-post", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'>{{ app.language.get('save') }}</button>

@@ -110,6 +110,14 @@
     </div>
 </div>
 
+<div id="ext-info-wrapper" class="uk-hidden">
+    <div id="ext-information" uk-modal>
+        <div id="ext-info-content" class="uk-modal-dialog uk-modal-body uk-width-750">
+            {{ app.language.get('processing') }}
+        </div>
+    </div>
+</div>
+
 <script>
 $(document).ready(function() {
 $.extend(shift.i18n, {
@@ -212,12 +220,15 @@ let tableEl     = '#extensionManage-list',
         ]
     });
 
-    // Action quick-edit
-    $('.main-content').on('click', '[data-dtAction]', function(e) {
-        e.preventDefault();
+// Action quick-edit
+$('.main-content').on('click', '[data-dtAction]', function(e) {
+    e.preventDefault();
 
-        let data = $(this).data('dtaction');
+    let data = $(this).data('dtaction');
 
+    if (data.type === 'info') {
+        extensionInfo(data);
+    } else {
         $.fn.shift.dtAction({
             url  : "{{ app.router.url('extension/manage/dtaction')|raw }}",
             data : data,
@@ -242,7 +253,8 @@ let tableEl     = '#extensionManage-list',
                 dtTable.clearPipeline().draw();
             }
         });
-    });
+    }
+
 });
 
 $('#ext-upload-button').on('click', function(e) {
@@ -300,5 +312,17 @@ $('#ext-upload-button').on('click', function(e) {
         });
     });
 });
+});
+
+function extensionInfo(params) {
+    $.get("{{ app.router.url('extension/manage/info')|raw }}", params, function(data) {
+        $('#ext-info-content').html(data);
+        UIkit.modal('#ext-information').show();
+    });
+
+    UIkit.util.on('#ext-information', 'hidden', function() {
+        $('#ext-info-content').html("{{ app.language.get('processing') }}");
+    });
+}
 </script>
 {% endblock %}
