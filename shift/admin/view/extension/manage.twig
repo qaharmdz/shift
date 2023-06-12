@@ -26,13 +26,13 @@
                         </div>
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="width:120px">{{ app.language.get('type') }}</th>
-                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="width:90px">{{ app.language.get('type') }}</th>
                     <th style="width:140px">{{ app.language.get('codename') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
                     <th style="width:140px">{{ app.language.get('author') }}</th>
-                    <th style="width:100px">{{ app.language.get('version') }}</th>
-                    <th style="width:120px">{{ app.language.get('status') }}</th>
-                    <th style="width:120px">{{ app.language.get('installed') }}</th>
+                    <th style="width:90px">{{ app.language.get('version') }}</th>
+                    <th style="width:100px">{{ app.language.get('installed') }}</th>
+                    <th style="width:100px">{{ app.language.get('status') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
@@ -66,15 +66,15 @@
                     <td data-filter='{"type":"number"}'>
                         <select data-index="7" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('enabled') }}</option>
-                            <option value="0">{{ app.language.get('disabled') }}</option>
+                            <option value="1">{{ app.language.get('installed') }}</option>
+                            <option value="0">{{ app.language.get('installed_not') }}</option>
                         </select>
                     </td>
                     <td data-filter='{"type":"number"}'>
                         <select data-index="8" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('installed') }}</option>
-                            <option value="0">{{ app.language.get('installed_not') }}</option>
+                            <option value="1">{{ app.language.get('enabled') }}</option>
+                            <option value="0">{{ app.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td class="uk-text-center">
@@ -84,7 +84,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="6" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                    <td colspan="10" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
                 </tr>
             </tbody>
         </table>
@@ -129,13 +129,13 @@ $.extend(shift.i18n, {
 });
 
 let tableEl     = '#extensionManage-list',
-    columnsHide = [-2], // Installed
+    columnsHide = [],
     dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
             url  : "{{ app.router.url('extension/manage/list')|raw }}",
             data : function(d, s) {
-                d.timezone = getLocalTimezone();
                 d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
             }
         }),
         initComplete: function() {
@@ -147,7 +147,7 @@ let tableEl     = '#extensionManage-list',
             { orderable : false, targets : [0, -1] },
             { createdCell : function(nTd) {
                 $(nTd).addClass('uk-text-center'); },
-                targets : [ 0, 1, -3, -2, -1 ]
+                targets : [ 0, 1, -4, -3, -2, -1 ]
             },
         ],
         columns : [
@@ -162,27 +162,18 @@ let tableEl     = '#extensionManage-list',
                     return shift.i18n[data];
                 }
             },
-            { data : 'name' },
             { data : 'codename',
                 render : function(data, type, full) {
                     return '<code>' + data + '</code>';
                 }
             },
+            { data : 'name' },
             { data : 'author',
                 render : function(data, type, full) {
                     return '<a href="'+ full.url + '" target="_blank">' + data + '</a>';
                 }
             },
             { data : 'version' },
-            { data : 'status',
-                render : function(data, type, full) {
-                    output = shift.i18n['status_' + data];
-                    if (!full.status) {
-                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
-                    }
-                    return output;
-                }
-            },
             { data : 'install',
                 render : function(data, type, full) {
                     output = shift.i18n['install_' + data];
@@ -192,27 +183,43 @@ let tableEl     = '#extensionManage-list',
                     return output;
                 }
             },
+            { data : 'status',
+                render : function(data, type, full) {
+                    output = shift.i18n['status_' + data];
+                    if (!full.status) {
+                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
+                    }
+                    return output;
+                }
+            },
             { data : 'extension_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output  = '';
-                    if (full.install) {
-                        if (full.status) {
-                            output += '<a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\' class="uk-text-danger" uk-tooltip  title="{{ app.language.get("click_disabled") }}"><i class="bi bi-x-circle-fill" style="font-size:16px;"></i></a>';
-                        } else {
-                            output += '<a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\' class="uk-text-success" uk-tooltip  title="{{ app.language.get("click_enabled") }}"><i class="bi bi-check-circle-fill" style="font-size:16px;"></i></a>';
-                        }
-                        output += '<a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\' class="uk-text-warning ukt-ml-2" uk-tooltip  title="{{ app.language.get("uninstall") }}"><i class="bi bi-box-arrow-up" style="font-size:18px;"></i></a>';
-                        output += '<a class="uk-link-muted ukt-ml-2" uk-tooltip  title="{{ app.language.get("delete") }}"><i class="bi bi-trash3-fill"></i></a>';
+                    output = '<a data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip  title="{{ app.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
+                    output += '<div class="uk-inline ukt-ml-2">';
+                    output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                    output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                    output += '        <ul class="uk-nav uk-dropdown-nav">';
+                    if (full.status) {
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
                     } else {
-                        if (full.status) {
-                            output += '<a class="uk-link-muted" uk-tooltip  title="{{ app.language.get("click_disabled") }}"><i class="bi bi-x-circle-fill" style="font-size:16px;"></i></a>';
+                        if (full.install) {
+                            output += '   <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
                         } else {
-                            output += '<a class="uk-link-muted" uk-tooltip  title="{{ app.language.get("click_enabled") }}"><i class="bi bi-check-circle-fill" style="font-size:16px;"></i></a>';
+                            output += '   <li><a class="uk-link-muted">{{ app.language.get("enabled") }}</a></li>';
                         }
-                        output += '<a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\' class="uk-text-success ukt-ml-2" uk-tooltip  title="{{ app.language.get("install") }}"><i class="bi bi-box-arrow-in-down" style="font-size:18px;"></i></a>';
-                        output += '<a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\' class="uk-text-danger ukt-ml-2" uk-tooltip  title="{{ app.language.get("delete") }}"><i class="bi bi-trash3-fill"></i></a>';
                     }
+                    output += '           <li class="uk-nav-divider"></li>';
+                    if (full.install) {
+                        output += '       <li><a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\'>{{ app.language.get("uninstall") }}</a></li>';
+                        output += '       <li><a class="uk-link-muted">{{ app.language.get("delete") }}</a></li>';
+                    } else {
+                        output += '       <li><a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\'>{{ app.language.get("install") }}</li>';
+                        output += '       <li><a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\'>{{ app.language.get("delete") }}</a></li>';
+                    }
+                    output += '        </ul>';
+                    output += '    </div>';
+                    output += '</div>';
 
                     return output;
                 }
@@ -254,7 +261,6 @@ $('.main-content').on('click', '[data-dtAction]', function(e) {
             }
         });
     }
-
 });
 
 $('#ext-upload-button').on('click', function(e) {
