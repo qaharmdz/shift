@@ -12,11 +12,10 @@
         <div class="uk-grid-collapse" uk-grid>
             <div>
                 <div class="mediamanager-sidebar" uk-overflow-auto>
-                    <div class="panel-tree-parent jstree-default">
-                        <i class="jstree-icon jstree-themeicon"></i> Media
-                        <a data-tree-reload class="ukt-ml-1" title="{{ app.language.get('reload_tree') }}" uk-tooltip>
-                            <i class="bi bi-arrow-repeat"></i>
-                        </a>
+                    <div class="panel-tree-root jstree-default">
+                        <a data-tree-addroot class="ukt-ml-1" title="{{ app.language.get('root_folder_add') }}" uk-tooltip><i class="bi bi-plus-square-fill"></i></a>
+                        {{ app.language.get('media_folder') }}
+                        <a data-tree-reload class="ukt-ml-2" title="{{ app.language.get('root_folder_reload') }}" uk-tooltip><i class="bi bi-arrow-repeat"></i></a>
                     </div>
                     <div class="panel-tree"></div>
                 </div>
@@ -41,10 +40,6 @@ $(document).ready(function() {
 
     let treeLastNode = '',
         treeStorage  = JSON.parse(localStorage.getItem('dc-mmtree-' + shift.env.access_token));
-
-    $('.mediamanager-id-{{ identifier }} [data-tree-reload]').on('click', function() {
-        $('.mediamanager-id-{{ identifier }}  .panel-tree').jstree('refresh');
-    });
 
     $('.mediamanager-id-{{ identifier }} .panel-tree').jstree({
         'core' : {
@@ -105,7 +100,7 @@ $(document).ready(function() {
                 $('.jstree-container-ul > li:first-child > a').trigger('click');
             }
 
-            // Selected node is a sub of deleted folder
+            // The current selected node is a deleted folder or it's sub
             if (treeLastNode) {
                 data.instance.select_node(treeLastNode);
                 data.instance.save_state();
@@ -128,22 +123,23 @@ $(document).ready(function() {
                 data.instance.set_id(data.node, d.id);
             })
             .fail(function() {
-                // tree_last_node = data.node.parent;
                 data.instance.refresh();
             });
     })
     .on('rename_node.jstree', function(e, data) {
         $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'rename_node', 'parent':data.node.parent, 'folder':data.node.id, 'text':data.text })
             .done(function(d) {
-                data.instance.set_id(data.node, d.id);
-                data.instance.set_text(data.node, d.text);
+                if (d.length) {
+                    data.instance.set_id(data.node, d.id);
+                    data.instance.set_text(data.node, d.text);
 
-                if (d.id == data.instance.get_selected()[0]) {
-                    data.instance.refresh();
+                    if (d.id == data.instance.get_selected()[0]) {
+                        data.instance.refresh();
+                    }
                 }
             })
             .fail(function() {
-                tree_last_node = data.node.parent;
+                treeLastNode = data.node.parent;
                 data.instance.refresh();
             });
     })
@@ -154,18 +150,27 @@ $(document).ready(function() {
             onConfirm : function() {
                 $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'delete_node', 'parent':data.node.parent, 'folder':data.node.id })
                     .done(function(d) {
-                        tree_last_node = data.node.parent;
+                        treeLastNode = data.node.parent;
                         data.instance.refresh();
                     })
                     .fail(function() {
-                        tree_last_node = data.node.parent;
+                        treeLastNode = data.node.parent;
                         data.instance.refresh();
                     });
             },
             onCancel    : function() {
-                tree_last_node = data.node.id;
+                treeLastNode = data.node.id;
                 data.instance.refresh();
             }
+        });
+    });
+
+    $('.mediamanager-id-{{ identifier }} [data-tree-reload]').on('click', function() {
+        $('.mediamanager-id-{{ identifier }} .panel-tree').jstree('refresh');
+    });
+    $('.mediamanager-id-{{ identifier }} [data-tree-addroot]').on('click', function() {
+        $('.mediamanager-id-{{ identifier }} .panel-tree').jstree('create_node', null, null, 'last', function(node) {
+            this.edit(node);
         });
     });
 
@@ -236,7 +241,6 @@ $(document).ready(function() {
 });
 
 function loadFolderItems(nodeId) {
-    // $('.mm-folder-path span').text(nodeId);
     $('.mediamanager-id-{{ identifier }} .mediamanager-content').html('<div class="ukt-mr-2" uk-spinner="ratio:.5"></div><i>' + shift.i18n.loading + '</i>');
     $('.mediamanager-id-{{ identifier }} .mediamanager-content').load("{{ app.router.url('tool/mediamanager/getItems')|raw }}", { folder: nodeId, inModal: {{ inModal ? 1 : 0 }} });
 }

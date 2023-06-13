@@ -113,13 +113,13 @@ class MediaManager extends Mvc\Controller
             ];
         }
 
-        if ($post['action'] == 'rename_node' && sanitizeChar($post['parent'])) {
+        if ($post['action'] == 'rename_node') {
             $status     = false;
             $folder     = mb_strtolower(sanitizeChar($post['text']));
             $folder_old = $post['folder'];
             $folder_new = $post['parent'] . $folder . '/';
 
-            if (!file_exists(PATH_MEDIA . $folder_old)) {
+            if (!file_exists(PATH_MEDIA . $folder_new)) {
                 $status = mkdir(PATH_MEDIA . $folder_new); // in chain with create_node
             } elseif ($folder_old != $folder_new) {
                 $status = rename(PATH_MEDIA . $folder_old, PATH_MEDIA . $folder_new);
@@ -133,7 +133,7 @@ class MediaManager extends Mvc\Controller
             }
         }
 
-        if ($post['action'] == 'delete_node' && sanitizeChar($post['parent'])) {
+        if ($post['action'] == 'delete_node') {
             $this->deletePath(PATH_MEDIA . $post['folder']);
         }
 
