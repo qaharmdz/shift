@@ -25,10 +25,11 @@ class Image extends SimpleImage
     {
         $this->config = array_replace_recursive(
             [
-                'quality'       => 100,
-                'path_image'    => '',
-                'path_cache'    => '',
-                'url'           => '',
+                'quality'    => 100,
+                'mimeType'   => 'image/webp',
+                'path_image' => '',
+                'path_cache' => '',
+                'url'        => '',
             ],
             $this->config,
             $configuration
@@ -48,16 +49,15 @@ class Image extends SimpleImage
      * Shortcut to create thumbnail and return the URL.
      *
      * @param  string      $imageFile
-     * @param  int|null    $toWidth
-     * @param  int|null    $toHeight
+     * @param  int         $toWidth
+     * @param  int         $toHeight
      * @param  string|null $cacheName
      *
      * @return string
      */
-    public function getThumbnail(string $imageFile, int $toWidth = null, int $toHeight = null, string $cacheName = null): string
+    public function getThumbnail(string $imageFile, int $toWidth = 400, int $toHeight = 400, string $cacheName = null): string
     {
         $this->setCacheInfo($imageFile, $toWidth, $toHeight, $cacheName);
-
         $result = $this->config['url'] . $this->cacheInfo['cacheUrlPath'];
 
         if (!$this->isCacheValid()) {
@@ -109,7 +109,7 @@ class Image extends SimpleImage
 
         if (!$this->isCacheValid()) {
             $this->preparePath($this->cacheInfo['cacheFilePath']);
-            $this->toFile($this->cacheInfo['cacheFilePath'], null, $this->config['quality']);
+            $this->toFile($this->cacheInfo['cacheFilePath'], $this->config['mimeType'], $this->config['quality']);
         }
 
         // Update to the cache file image
@@ -136,6 +136,26 @@ class Image extends SimpleImage
     protected function setCacheInfo(string $imageFile, int $toWidth = null, int $toHeight = null, string $cacheName = null)
     {
         $this->cacheInfo = array_merge($this->cacheInfo, pathinfo($imageFile));
+
+        switch ($this->config['mimeType']) {
+            case 'image/gif':
+                $this->cacheInfo['extension'] = 'gif';
+                break;
+
+            case 'image/jpeg':
+                $this->cacheInfo['extension'] = 'jpeg';
+                break;
+
+            case 'image/png':
+                $this->cacheInfo['extension'] = 'png';
+                break;
+
+            case 'image/webp':
+            default:
+                $this->cacheInfo['extension'] = 'webp';
+                break;
+        }
+
         $this->cacheInfo['imageFile'] = $imageFile;
         $this->cacheInfo['cacheFile'] = strtr('{filepath}-{width}x{height}.{ext}', [
             '{filepath}' => $this->cacheInfo['dirname'] . '/' . ($cacheName ?: $this->cacheInfo['filename']),
@@ -150,7 +170,8 @@ class Image extends SimpleImage
     protected function isCacheValid()
     {
         if (
-            !is_file($this->cacheInfo['cacheFilePath'])
+            !$this->cacheInfo
+            || !is_file($this->cacheInfo['cacheFilePath'])
             || filectime($this->config['path_image'] . $this->cacheInfo['imageFile']) > filectime($this->cacheInfo['cacheFilePath'])
             || (time() - filectime($this->cacheInfo['cacheFilePath'])) > (60 * 60)
         ) {
