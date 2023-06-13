@@ -173,7 +173,7 @@ let tableEl     = '#extensionManage-list',
                     output = data;
                     if (full.version_meta && full.version != full.version_meta) {
                         output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ app.language.get("information") }}">';
-                        output += '[{{ app.language.get("new") }} v' + full.version_meta + ']';
+                        output += '<b>*</b> {{ app.language.get("new") }} v' + full.version_meta;
                         output += '</a>';
                     }
                     return output;
