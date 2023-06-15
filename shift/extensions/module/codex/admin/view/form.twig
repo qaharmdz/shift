@@ -30,7 +30,8 @@
             <div uk-grid>
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-form-horizontal">
-                        <textarea id="cm-editor" name="setting[editor]" data-codemirror rows="5" class="uk-textarea uk-width-1-1">{{ module.setting.editor }}</textarea>
+
+                        {{ forms.textarea({'label':'', 'name':'setting[editor]', 'value':module.setting.editor, 'attribute':'data-codemirror'}) }}
                     </div>
                 </div>
 

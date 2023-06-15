@@ -893,3 +893,9 @@ a.ck.ck-button:not(.ck-disabled):hover {
     color: #1919ca;
     text-shadow: #dfceff 1px 1px 2px, #dfceff -1px -1px 2px, #dfceff 1px -1px 2px, #dfceff -1px 1px 2px;
 }
+
+/* Use codemirror theme to set height */
+.cm-s-basic .CodeMirror-scroll {
+    min-height: 300px;
+    max-height: calc(100vh - 150px);
+}

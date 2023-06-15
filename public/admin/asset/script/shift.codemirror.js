@@ -17,13 +17,15 @@ $(document).ready(function()
     $('[data-codemirror]').each(function(e) {
         let el = this,
             opt = $.extend({
-                id   : $(this).attr('id'),
-                mode : 'html',
+                id     : $(this).attr('id'),
+                mode   : 'html',
+                type   : '',
                 saveEl : '.js-codemirror-save',
             }, $(el).data('codemirror'));
 
-        if (opt.id === undefined) {
-            return false;
+        if (opt.id === undefined || !opt.id) {
+            opt.id = euid('codemirror-xxxxxx');
+            $(this).attr('id', opt.id);
         }
 
         switch (opt.mode) {
@@ -47,6 +49,7 @@ $(document).ready(function()
 
         shift.codemirror.instances[opt.id] = CodeMirror.fromTextArea(document.getElementById(opt.id), {
             mode            : opt.mode,
+            theme           : 'default ' + opt.type,
             indentUnit      : 2,
             lineNumbers     : true,
             lineWrapping    : true,
