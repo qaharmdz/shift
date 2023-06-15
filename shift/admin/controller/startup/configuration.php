@@ -45,7 +45,8 @@ class Configuration extends Mvc\Controller
 
         //=== Event
         $events = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "event` e WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.emitter ASC, e.priority DESC",
+            "SELECT e.* FROM `" . DB_PREFIX . "event` e
+            WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.priority DESC, e.emitter ASC",
             ['admin/%']
         )->rows;
 
