@@ -1,6 +1,6 @@
 <?php
 
-$_['page_title']       = 'Clear Cache';
+$_['page_title']       = 'Cache Manager';
 
 $_['tool']             = 'Tools';
 $_['maintenance']      = 'Maintenance';

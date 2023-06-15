@@ -39,4 +39,4 @@ $_['p.sort_order~asc']    = 'Sort Order - Asc';
 $_['p.sort_order~desc']   = 'Sort Order - Desc';
 
 $_['design']              = 'Design';
-$_['custom_code']         = 'Custom Code';
+$_['custom_code']         = 'Custom Code (CSS and Javascript)';

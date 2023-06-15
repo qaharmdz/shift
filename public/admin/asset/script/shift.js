@@ -449,6 +449,8 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
                 success: function(data) {
                     shift.formChanged = false;
 
+                    // TODO: data.items to update the inputs, ex: content/post url-alias
+
                     setTimeout(function() {
                         $.fn.shift.goNotify('success', data.message);
 

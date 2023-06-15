@@ -33,5 +33,5 @@ $_['sites']          = 'Sites';
 
 $_['maintenance']    = 'Maintenance';
 $_['backup_restore'] = 'DB Backup / Restore';
-$_['cache']          = 'Clear Cache';
+$_['cache']          = 'Cache Manager';
 $_['log']            = 'Logs Viewer';
