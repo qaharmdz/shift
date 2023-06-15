@@ -23,7 +23,7 @@
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.id ?: param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
-        <div class="uk-form-controls">
+        <div class="{{ param.label ? 'uk-form-controls' }}">
             <input type="{{ param.type }}" id="{{ param.id ?: param.label }}" name="{{ param.name }}" value="{{ param.value }}" class="uk-input {{ param.class }}" {{ param.attribute }}>
             {% if param.type == 'password' %}
                 <a class="uk-link-text" style="margin-left:-30px;" onclick="
@@ -73,7 +73,7 @@
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.id ?: param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
-        <div class="uk-form-controls">
+        <div class="{{ param.label ? 'uk-form-controls' }}">
             <textarea id="{{ param.id ?: param.label }}" name="{{ param.name }}" rows="{{ param.rows }}" class="uk-textarea {{ param.class }}" {{ param.attribute }}>{{ param.value }}</textarea>
             {% if param.info %}
                 <div class="uk-text-meta">{{ param.info }}</div>
@@ -108,7 +108,7 @@
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.id ?: param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
-        <div class="uk-form-controls">
+        <div class="{{ param.label ? 'uk-form-controls' }}">
             <select id="{{ param.id ?: param.label }}" name="{{ param.name }}" class="uk-select {{ param.class }}" {{ param.multiple ? 'multiple="multiple"' }} {{ param.attribute }}>
                 {% for option in param.options %}
                     {% set isSelected = false %}
@@ -170,7 +170,7 @@
         {% if param.label %}
             <label class="uk-form-label" for="{{ param.id ?: param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
         {% endif %}
-        <div class="uk-form-controls">
+        <div class="{{ param.label ? 'uk-form-controls' }}">
             <div class="uk-button-group uk-button-radio">
                 {% for option in param.options %}
                     <input type="radio" id="{{ (param.id ?: param.label) ~ '-' ~ loop.index }}" name="{{ param.name }}" value="{{ option[param.opt_value] }}" {{ option[param.opt_value] == param.checked ? 'checked' }} hidden>
@@ -209,7 +209,7 @@
                 {{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}
             </label>
         {% endif %}
-        <div class="uk-form-controls">
+        <div class="{{ param.label ? 'uk-form-controls' }}">
             <div class="uk-panel uk-panel-scrollable">
                 <ul class="uk-list uk-list-striped uk-list-collapse">
                     {% for list in param.lists %}
@@ -243,6 +243,6 @@
         {% if param.label %}
             <label class="uk-form-label">{{ app.language.get(param.label) }}</label>
         {% endif %}
-        <div class="uk-form-controls uk-form-controls-text" data-format-date="{{ param.datetime }}">{{ param.datetime }}</div>
+        <div class="{{ param.label ? 'uk-form-controls uk-form-controls-text' }}" data-format-date="{{ param.datetime }}">{{ param.datetime }}</div>
     </div>
 {% endmacro %}
