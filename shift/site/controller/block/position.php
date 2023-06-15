@@ -43,7 +43,7 @@ class Position extends Mvc\Controller
     public function getLayoutId(string $route): int
     {
         return (int)$this->db->get(
-            "SELECT layout_id FROM `" . DB_PREFIX . "layout_route` WHERE ?s LIKE `route` ORDER BY `priority` ASC LIMIT 1",
+            "SELECT layout_id FROM `" . DB_PREFIX . "layout_route` WHERE ?s LIKE `route` ORDER BY `priority` DESC LIMIT 1",
             [$route],
         )->row['layout_id'] ?? 0;
     }

@@ -277,7 +277,10 @@ class Post extends Mvc\Model
 
         if (!empty($data['post_id'])) {
             // Multi-language content
-            $contents = $this->db->get("SELECT * FROM `" . DB_PREFIX . "post_content` pc WHERE pc.post_id = ?i ORDER BY pc.language_id ASC", [$post_id])->rows;
+            $contents = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "post_content` pc WHERE pc.post_id = ?i ORDER BY pc.language_id ASC",
+                [$post_id]
+            )->rows;
 
             $data['content'] = [];
             foreach ($contents as $content) {
@@ -286,7 +289,10 @@ class Post extends Mvc\Model
 
             // Metas
             $data['meta'] = [];
-            $metas = $this->db->get("SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i", [$post_id])->rows;
+            $metas = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i",
+                [$post_id]
+            )->rows;
             foreach ($metas as $meta) {
                 $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
 
@@ -336,7 +342,8 @@ class Post extends Mvc\Model
 
             // Multi-language alias
             $aliases = $this->db->get(
-                "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `route` = ?s AND `param` = ?s AND `value` = ?i",
+                "SELECT * FROM `" . DB_PREFIX . "route_alias`
+                WHERE `route` = ?s AND `param` = ?s AND `value` = ?i",
                 ['content/post', 'post_id', $post_id]
             )->rows;
             foreach ($aliases as $alias) {
