@@ -26,30 +26,82 @@
     </div>
 
     <div class="content-body">
-        <form id="form-user" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('tool/layout/save') }}" method="post" data-form-monitor>
-            <div class="uk-card-panel uk-card-body">
+        <form id="form-layout" class="uk-form-margin-hover" action="{{ app.router.url('tool/layout/save') }}" method="post" data-form-monitor>
+            <div class="uk-card-panel uk-card-body uk-form-horizontal">
                 <fieldset class="uk-fieldset">
                     <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
 
                     {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-1-2@m', 'required':true}) }}
-                    {{ forms.select({'label':'type', 'name':'type', 'selected':setting.type, 'class':'uk-width-200@m', 'options':[
-                        {'text': app.language.get('type_all'),  'value': 'all'},
-                        {'text': app.language.get('type_route'), 'value': 'route'},
-                        {'text': app.language.get('type_specific'), 'value': 'specific'},
-                    ]}) }}
                     {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
                         {'text': app.language.get('enabled'),  'value': 1},
                         {'text': app.language.get('disabled'), 'value': 0}
                     ]}) }}
-                    {{ forms.textarea({'label':'css_style', 'name':'style', 'value':setting.style, 'class':'uk-width-2-3@m'}) }}
+
+                    <hr>
+                    {{ forms.select({'label':'type', 'name':'type', 'selected':setting.type, 'class':'uk-width-200@m', 'attribute':'data-select-switcher=\'{"class":"switch-visibility"}\'', 'options':[
+                        {'text': app.language.get('type_all'),  'value': 'all'},
+                        {'text': app.language.get('type_route'), 'value': 'route'},
+                    ]}) }}
+                    <div class="switch-visibility uk-switcher ukt-mt-3">
+                        <div class="switch-visibility_all">
+                            <p>Show modules to all pages, except the following URL routes.</p>
+                        </div>
+                        <div class="switch-visibility_route">
+                            <p>Show modules to the following URL routes that is not match to the excluded URL route pattern.</p>
+
+                            <table class="uk-table uk-table-striped uk-table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="uk-width-225 uk-text-center">{{ app.language.get('site') }}</th>
+                                        <th class="uk-width-50 uk-text-center">{{ app.language.get('exclude') }}</th>
+                                        <th class="uk-width-350 uk-text-center">{{ app.language.get('route') }}</th>
+                                        <th class="uk-text-center">{{ app.language.get('url_param') }}</th>
+                                        <th class="uk-width-75">{{ app.language.get('priority') }}</th>
+                                        <th class="uk-width-50 uk-text-center">{{ app.language.get('action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for route in setting.routes %}
+                                        {% set i = loop.index %}
+                                        <tr>
+                                            <td>
+                                                <select name="routes[{{ i }}][site_id]" class="uk-select uk-form-small uk-width-expand">
+                                                    {% for site in sites %}
+                                                    <option value="{{ site.site_id }}" {{ site.site_id == route.site_id ? 'selected'}}>{{ site.title}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </td>
+                                            <td class="uk-text-center">
+                                                <input type="checkbox" name="routes[{{ i }}][exclude]" value="{{ route.exclude }}" {{ route.exclude ? 'checked' }} class="uk-checkbox ukt-mt-1">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="routes[{{ i }}][route]" value="{{ route.route }}" placeholder="ex. content/*, content/tag" class="uk-input uk-form-small uk-width-expand">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="routes[{{ i }}][url_params]" value="{{ route.url_params }}" placeholder="ex. category_id=1&post_id=2" class="uk-input uk-form-small uk-width-expand">
+                                            </td>
+                                            <td>
+                                                <input type="number" name="routes[{{ i }}][priority]" value="{{ route.priority }}" class="uk-input uk-form-small uk-width-expand">
+                                            </td>
+                                            <td class="uk-text-center">
+                                                <a class="uk-text-danger uk-display-inline-block ukt-mt-1" uk-tooltip title="remove"><i class="bi bi-dash-square-fill"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <p>Except the following URL routes.</p>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
+
             <div class="uk-card-panel uk-card-body">
                 <h3 class="uk-legend">{{ app.language.get('module_placement') }}</h3>
 
                 <div class="uk-grid-small" uk-grid>
                     <div class="uk-width-expand">
-                        <div class="section-wrapper">
+                        <div class="position-wrapper">
                             Alpha
                         </div>
                     </div>

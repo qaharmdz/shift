@@ -100,10 +100,13 @@ class Layout extends Mvc\Controller
         $mode = !$layout_id ? 'add_new' : 'edit';
 
         $this->load->config('tool/layout');
+        $this->load->model('setting/site');
         $this->load->model('tool/layout');
         $this->load->language('tool/layout');
 
         $this->document->setTitle($this->language->get('page_title'));
+
+        $this->document->loadAsset('codemirror');
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('tool')],
@@ -115,18 +118,25 @@ class Layout extends Mvc\Controller
 
         $data['mode']      = $mode;
         $data['layout_id'] = $layout_id;
+        $data['sites']     = $this->model_setting_site->getSites();
+        $data['setting']   = $this->model_tool_layout->getLayout($layout_id);
 
-        // TODO:
-        $data['setting']   = array_replace_recursive(
-            $this->config->getArray('tool.layout.form'),
-            $this->model_tool_layout->getLayout($layout_id),
-            $this->request->get('post', [])
-        );
+        // d($data['setting']);
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
         $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('tool/layout_form', $data));
+    }
+
+    public function save()
+    {
+        $data = [];
+
+        $this->log->write($this->request->get('post'));
+        // $this->log->write($this->request->get('post.positions.top.rows.1'));
+
+        $this->response->setOutputJson($data);
     }
 }

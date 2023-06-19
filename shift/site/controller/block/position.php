@@ -42,10 +42,28 @@ class Position extends Mvc\Controller
 
     public function getLayoutId(string $route): int
     {
+        // parse_str($allURLQuery, $urlParams)
+
+        // TODO: match route by positions, header might be route all, while the rest match route pattern
+
         return (int)$this->db->get(
             "SELECT layout_id FROM `" . DB_PREFIX . "layout_route` WHERE ?s LIKE `route` ORDER BY `priority` DESC LIMIT 1",
             [$route],
         )->row['layout_id'] ?? 0;
+
+
+        /*
+        SELECT *
+        FROM `sf_layout_route`
+        WHERE
+            'account/logout' LIKE REPLACE(`route`, '*', '%')
+            AND NOT EXISTS (
+                SELECT layout_route_id
+                FROM `sf_layout_route`
+                WHERE 'account/logout' LIKE REPLACE(`route`, '*', '%')
+                AND `exclude` = 1
+            )
+         */
     }
 
     public function getLayoutModules(int $layout_id, string $position)

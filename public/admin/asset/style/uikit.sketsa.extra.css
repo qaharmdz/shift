@@ -154,7 +154,6 @@ html,
 .uk-checkbox, .uk-radio {
     background-color: #fdfdfd;
 }
-
 .uk-input, .uk-select:not([multiple]):not([size]) {
     height: 34px;
     line-height: 34px;
@@ -162,6 +161,13 @@ html,
 .uk-select:not([multiple]):not([size]) {
     line-height: 32px;
 }
+
+.uk-input::placeholder,
+.uk-textarea::placeholder,
+.uk-search-input::placeholder {
+    color: #aaa;
+}
+
 .uk-form-controls .uk-button {
     font-size: .94rem;
 }
@@ -338,7 +344,7 @@ th.uk-text-break {
 ==================================== */
 .uk-label {
     padding: 0 8px;
-    line-height: 1.5;
+    line-height: 17px;
 }
 .uk-label-small {
     font-size: 10px;

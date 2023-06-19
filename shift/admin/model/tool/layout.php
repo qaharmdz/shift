@@ -79,7 +79,40 @@ class Layout extends Mvc\Model
 
     public function getLayout(int $layout_id): array
     {
-        return [];
+        $this->load->config('tool/layout');
+
+        $default = $this->config->getArray('tool.layout.form');
+
+        $data = $this->db->get(
+            "SELECT l.* FROM `" . DB_PREFIX . "layout` l WHERE l.layout_id = ?i",
+            [$layout_id]
+        )->row;
+
+        if (!empty($data['layout_id'])) {
+            // Routes
+            $data['routes'] = [];
+            $routes = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "layout_route`
+                WHERE layout_id = ?i ORDER BY priority DESC, site_id ASC, route ASC",
+                [$layout_id]
+            )->rows;
+            foreach ($routes as $route) {
+                $data['routes'][] = $route;
+            }
+
+            // Modules
+            $data['modules'] = [];
+            $modules = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "layout_module`
+                WHERE layout_id = ?i ORDER BY position ASC, sort_order ASC",
+                [$layout_id]
+            )->rows;
+            foreach ($modules as $module) {
+                $data['modules'][] = $module;
+            }
+        }
+
+        return array_replace_recursive($default, $data);
     }
 
     public function getLayouts($data = array()): array
