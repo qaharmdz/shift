@@ -113,7 +113,7 @@ class Category extends Mvc\Model
             ['term_id' => $category_id]
         );
 
-        if (!empty($updated->affected_rows)) {
+        if ($updated->affected_rows != -1) {
             $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $category_id]);
             $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $category_id]);
             $this->db->delete(DB_PREFIX . 'site_relation', [

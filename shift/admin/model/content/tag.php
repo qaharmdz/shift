@@ -142,7 +142,7 @@ class Tag extends Mvc\Model
             ['term_id' => $tag_id]
         );
 
-        if (!empty($updated->affected_rows)) {
+        if ($updated->affected_rows != -1) {
             $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $tag_id]);
             $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $tag_id]);
             $this->db->delete(DB_PREFIX . 'route_alias', [
@@ -163,10 +163,10 @@ class Tag extends Mvc\Model
             $this->db->add(
                 DB_PREFIX . 'term_content',
                 [
-                    'term_id'          => $tag_id,
-                    'language_id'      => (int)$language_id,
-                    'title'            => $content['title'],
-                    'content'          => $content['content'],
+                    'term_id'     => $tag_id,
+                    'language_id' => (int)$language_id,
+                    'title'       => $content['title'],
+                    'content'     => $content['content'],
                 ]
             );
         }

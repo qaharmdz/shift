@@ -128,7 +128,7 @@ class Post extends Mvc\Model
             ['post_id' => $post_id]
         );
 
-        if (!empty($updated->affected_rows)) {
+        if ($updated->affected_rows != -1) {
             $this->db->delete(DB_PREFIX . 'post_content', ['post_id' => $post_id]);
             $this->db->delete(DB_PREFIX . 'post_meta', ['post_id' => $post_id]);
             $this->db->delete(DB_PREFIX . 'site_relation', [
