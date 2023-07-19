@@ -497,7 +497,7 @@ $(document).on('IIDE.init IIDE.editor', function(event)
      */
     $('[data-editor]').each(function(i) {
         let el   = this,
-            elid = euid('ckeditor-xxxxxx'),
+            elid = euid('ckeditor-xxxxxxxxxxxx'),
             opt  = $.extend({
                 mode    : 'default', // basic, default, all, custom
                 wrapper : 'wrapper-' + elid,
@@ -566,7 +566,7 @@ $(document).on('IIDE.init IIDE.mediamanager', function(event)
      */
     $('[data-mediamanager]').each(function(i) {
         let el   = this,
-            elid = euid('mm-xxxxxx'),
+            elid = euid('mm-xxxxxxxxxxxx'),
             opt  = $.extend({
                 wrapper       : 'wrapper-' + elid,
                 noImage       : 'image/no-image.png',
@@ -755,12 +755,13 @@ function formatDate(datetime) {
 
 /**
  * Element unique id
- * https://stackoverflow.com/a/2117523
  */
-function euid(format) {
-    let euid = format ? format : 'sc-xxx-xxxxxx';
+function euid(format, type) {
+    let euid = format ? format : 'xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        chars = type == 'alnum' ? '0123456789abcdefghijklmnopqrstuvwxyz' : '1234567890',
+        length = type == 'alnum' ? 32 : 10;
 
     return euid.replace(new RegExp('x', 'g'), function() {
-        return (Math.floor(Math.random() * 10));
+        return chars[(Math.floor(Math.random() * length))];
     });
 }
