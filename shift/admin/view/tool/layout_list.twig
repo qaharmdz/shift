@@ -27,7 +27,6 @@
                     </th>
                     <th style="width:60px;">{{ app.language.get('id') }}</th>
                     <th style="min-width:300px">{{ app.language.get('name') }}</th>
-                    <th style="width:160px">{{ app.language.get('type') }}</th>
                     <th style="width:140px">{{ app.language.get('status') }}</th>
                     <th style="width:80px;">{{ app.language.get('action') }}</th>
                 </tr>
@@ -40,14 +39,6 @@
                     </td>
                     <td data-filter='{"type":"string", "mode":"like"}'>
                         <input type="text" value="" data-index="2" class="uk-input">
-                    </td>
-                    <td data-filter='{"type":"number", "mode":"match"}'>
-                        <select data-index="3" class="uk-select">
-                            <option value=""></option>
-                            <option value="all">{{ app.language.get('type_all') }}</option>
-                            <option value="route">{{ app.language.get('type_route') }}</option>
-                            <option value="specific">{{ app.language.get('type_specific') }}</option>
-                        </select>
                     </td>
                     <td data-filter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
@@ -72,11 +63,6 @@
 
 <script>
 $(document).ready(function() {
-$.extend(shift.i18n, {
-    type_all : '{{ app.language.get("type_all") }}',
-    type_route : '{{ app.language.get("type_route") }}',
-    type_specific : '{{ app.language.get("type_specific") }}',
-});
 
 let tableEl    = '#toolLayout-list',
     columnsHide = [],
@@ -91,7 +77,7 @@ let tableEl    = '#toolLayout-list',
         initComplete: function() {
             dtShiftUtility(dtTable, columnsHide);
         },
-        sorting : [[3, 'asc'], [2, 'asc']], // type, name
+        sorting : [[2, 'asc']], // type, name
         columnDefs : [
             { searchable: false, targets : [0, -1] },
             { orderable : false, targets : [0, -1] },
@@ -114,11 +100,6 @@ let tableEl    = '#toolLayout-list',
             },
             { data : 'layout_id' },
             { data : 'name'},
-            { data : 'type',
-                render : function(data, type, full) {
-                    return shift.i18n['type_' + data];
-                }
-            },
             { data : 'status',
                 render : function(data, type, full) {
                     output = shift.i18n['status_' + data];

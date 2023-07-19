@@ -4,10 +4,6 @@ $_['page_title']        = 'Layouts';
 
 $_['tool']              = 'Tools';
 
-$_['type']              = 'Type';
-$_['type_all']          = 'All Page';
-$_['type_route']        = 'URL Route Pattern';
-
 $_['site']              = 'Site';
 $_['exclude']           = 'Exclude';
 $_['route']             = 'URL Route';

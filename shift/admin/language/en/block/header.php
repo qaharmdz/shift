@@ -20,8 +20,8 @@ $_['language']       = 'Languages';
 $_['event']          = 'Events';
 
 $_['tool']           = 'Tools';
-$_['module_layout']  = 'Layout - Module Positions';
 $_['media_manager']  = 'Media Manager';
+$_['module_layout']  = 'Layouts Builder';
 
 $_['account']        = 'Accounts';
 $_['user']           = 'Users';

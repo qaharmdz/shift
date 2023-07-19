@@ -21,7 +21,6 @@ class Layout extends Mvc\Model
     {
         $columnMap = [
             'layout_id' => 'l.layout_id',
-            'type'      => 'l.type',
             'name'      => 'l.name',
             'status'    => 'l.status',
         ];
@@ -69,12 +68,61 @@ class Layout extends Mvc\Model
 
     public function addLayout(array $data): int
     {
-        return (int)0;
+        $this->db->add(
+            DB_PREFIX . 'layout',
+            [
+                'name'        => $data['name'],
+                'data'        => $data['positions'],
+                'custom_code' => $data['custom_code'],
+                'status'      => (int)$data['status'],
+            ],
+        );
+
+        $layout_id = (int)$this->db->insertId();
+
+        $this->insertData($layout_id, $data);
+
+        return $layout_id;
     }
 
-    public function editLayout(int $layout_id, array $data): void
+    public function editLayout(int $layout_id, array $data)
     {
-        //
+        $updated = $this->db->set(
+            DB_PREFIX . 'layout',
+            [
+                'name'        => $data['name'],
+                'data'        => $data['positions'],
+                'custom_code' => $data['custom_code'],
+                'status'      => (int)$data['status'],
+            ],
+            ['layout_id' => $layout_id]
+        );
+
+        if ($updated->affected_rows != -1) {
+            $this->db->delete(DB_PREFIX . 'layout_route', ['layout_id' => $layout_id]);
+            // $this->db->delete(DB_PREFIX . 'layout_module', ['layout_id' => $layout_id]);
+
+            $this->insertData($layout_id, $data);
+
+            return $updated->affected_rows;
+        }
+    }
+
+    protected function insertData(int $layout_id, array $data)
+    {
+        foreach ($data['routes'] as $route) {
+            $this->db->add(
+                DB_PREFIX . 'layout_route',
+                [
+                    'layout_id'  => $layout_id,
+                    'site_id'    => (int)$route['site_id'],
+                    'route'      => $route['route'],
+                    'url_params' => $route['url_params'],
+                    'exclude'    => (int)($route['exclude'] ?? 0),
+                    'priority'   => (int)$route['priority'],
+                ]
+            );
+        }
     }
 
     public function getLayout(int $layout_id): array
@@ -93,7 +141,8 @@ class Layout extends Mvc\Model
             $data['routes'] = [];
             $routes = $this->db->get(
                 "SELECT * FROM `" . DB_PREFIX . "layout_route`
-                WHERE layout_id = ?i ORDER BY priority DESC, site_id ASC, route ASC",
+                WHERE layout_id = ?i
+                ORDER BY site_id ASC, priority DESC, route ASC",
                 [$layout_id]
             )->rows;
             foreach ($routes as $route) {

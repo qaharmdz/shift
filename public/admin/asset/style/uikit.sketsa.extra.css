@@ -269,6 +269,11 @@ th.uk-text-break {
 .uk-tab>*>a {
     padding: 6px 12px;
 }
+.uk-tab>.uk-active>a {
+    color: #0060c1;
+    font-weight: 500;
+    border-color: #1e87f0;
+}
 .uk-tab>*:not(.uk-active)>a:focus,
 .uk-tab>*:not(.uk-active)>a:hover {
     border-color: #c4c4c4;

@@ -131,7 +131,7 @@ class Module extends Mvc\Model
             ['extension_module_id' => $module_id]
         );
 
-        if (!empty($updated->affected_rows)) {
+        if ($updated->affected_rows != -1) {
             $this->db->delete(DB_PREFIX . 'extension_meta', [
                 'extension_id' => (int)$data['extension_id'],
                 'extension_module_id' => $module_id,
