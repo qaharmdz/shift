@@ -106,6 +106,7 @@ class Layout extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
+        $this->document->loadAsset('sortable.layout');
         $this->document->loadAsset('codemirror');
 
         $this->document->addNode('breadcrumbs', [
@@ -151,7 +152,7 @@ class Layout extends Mvc\Controller
 
         $data = [];
         $post = array_replace_recursive(
-            $this->config->getArray('setting.layout.form'),
+            $this->config->getArray('tool.layout.form'),
             $this->request->get('post', [])
         );
         $layout_id = (int)$post['layout_id'];

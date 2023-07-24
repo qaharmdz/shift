@@ -97,5 +97,20 @@ class Asset extends Mvc\Controller
                 $this->config->get('env.url_app') . 'asset/script/shift.codemirror.js',
             ]
         ]);
+
+        $this->document->addAsset('sortable', [
+            'script' => [
+                $this->config->get('env.url_app') . 'asset/script/sortable/sortable.min.js',
+            ]
+        ]);
+        $this->document->addAsset('sortable.layout', [
+            'style' => [
+                $this->config->get('env.url_app') . 'asset/style/shift.layout.css',
+            ],
+            'script' => [
+                $this->config->get('env.url_app') . 'asset/script/sortable/sortable.min.js',
+                $this->config->get('env.url_app') . 'asset/script/shift.layout.js',
+            ]
+        ]);
     }
 }

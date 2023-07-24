@@ -131,8 +131,6 @@ if (jQuery().select2) {
  * ======================================================================== */
 
 (function($) {
-    $.fn.shift = {}; // global namespace
-
     /**
      * @depedency UIkit.notification
      *

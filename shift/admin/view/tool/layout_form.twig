@@ -109,46 +109,134 @@
                 </div>
                 <div class="uk-grid-small" uk-grid>
                     <div class="uk-width-expand">
-                        <div class="position-wrapper">
+                        <div class="position-wrapper" data-layout-position="top">
                             <div class="position-header">Top</div>
-
-                            <div class="row-wrapper">
-                                {{ forms.hidden({'name':'positions[top][rows][1][setting][container]', 'value':'0'}) }}
-                                <div class="row-header">Row 1</div>
-                                <div class="uk-child-width-expand" uk-grid>
-                                    <div class="uk-width-1-2">
-                                        {{ forms.hidden({'name':'positions[top][rows][1][columns][1][width]', 'value':'1-2'}) }}
-                                        <div class="grid-header">Width: 50%</div>
-                                        <div class="grid-wrapper">
-                                            <div class="module-wrapper">
-                                                {{ forms.hidden({'name':'positions[top][rows][1][columns][1][modules][extension_module_id][]', 'value':'23'}) }}
-                                                a
+                            <div class="position-rows" data-layout-node='{"group":"rows"}'>
+                                <div class="row-wrapper">
+                                    <div class="row-header uk-flex uk-flex-middle">
+                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                        <div>Row 1</div>
+                                    </div>
+                                    <div class="uk-child-width-expand" uk-grid data-layout-node='{"group":"columns"}'>
+                                        <div class="uk-width-1-2 column-wrapper">
+                                            <div class="column-container">
+                                                <div class="column-header uk-flex uk-flex-middle">
+                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                    <div>Width: 50%</div>
+                                                </div>
+                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">Lorem ipsum dolor sit, amet consectetur, adipisicing elit. Quam ab, earum ratione, ullam ipsa at. Quae obcaecati repellat similique aspernatur quasi iure inventore ea soluta, est odit voluptatibus minus, ab.</div>
+                                                    </div>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">b</div>
+                                                    </div>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">c</div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="module-wrapper">
-                                                {{ forms.hidden({'name':'positions[top][rows][1][columns][1][modules][extension_module_id][]', 'value':'25'}) }}
-                                                d
+                                        </div>
+                                        <div class="uk-width-1-4 column-wrapper">
+                                            <div class="column-container">
+                                                <div class="column-header uk-flex uk-flex-middle">
+                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                    <div>Width: 25%</div>
+                                                </div>
+                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">d</div>
+                                                    </div>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">e</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-expand column-wrapper">
+                                            <div class="column-container">
+                                                <div class="column-header uk-flex uk-flex-middle">
+                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                    <div>Width: expand</div>
+                                                </div>
+                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">f</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="uk-width-1-4">
-                                        {{ forms.hidden({'name':'positions[top][rows][1][columns][2][width]', 'value':'1-4'}) }}
-                                        <div class="grid-header">Width: 25%</div>
-                                        <div class="grid-wrapper">
-                                            {{ forms.hidden({'name':'positions[top][rows][1][columns][2][modules][extension_module_id][]', 'value':'25'}) }}
-                                            b
-                                        </div>
+                                </div>
+                                <div class="row-wrapper">
+                                    <div class="row-header uk-flex uk-flex-middle">
+                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                        <div>Row 2</div>
                                     </div>
-                                    <div class="uk-width-expand">
-                                        {{ forms.hidden({'name':'positions[top][rows][1][columns][3][width]', 'value':'1-4'}) }}
-                                        <div class="grid-header">Width: expand</div>
-                                        <div class="grid-wrapper">
-                                            {{ forms.hidden({'name':'positions[top][rows][1][columns][3][modules][extension_module_id][]', 'value':'25'}) }}
-                                            c
+                                    <div class="uk-child-width-expand" uk-grid data-layout-node='{"group":"columns"}'>
+                                        <div class="uk-width-1-2 column-wrapper">
+                                            <div class="column-container">
+                                                <div class="column-header uk-flex uk-flex-middle">
+                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                    <div>Width: 50%</div>
+                                                </div>
+                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">Lorem ipsum dolor sit, amet consectetur, adipisicing elit. Quam ab, earum ratione, ullam ipsa at. Quae obcaecati repellat similique aspernatur quasi iure inventore ea soluta, est odit voluptatibus minus, ab.</div>
+                                                    </div>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">b</div>
+                                                    </div>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">c</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-4 column-wrapper">
+                                            <div class="column-container">
+                                                <div class="column-header uk-flex uk-flex-middle">
+                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                    <div>Width: 25%</div>
+                                                </div>
+                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">d</div>
+                                                    </div>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">e</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-expand column-wrapper">
+                                            <div class="column-container">
+                                                <div class="column-header uk-flex uk-flex-middle">
+                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                    <div>Width: expand</div>
+                                                </div>
+                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
+                                                    <div class="module-wrapper uk-flex">
+                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+                                                        <div class="module-data">f</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -228,59 +316,4 @@
         </form>
     </div>
 </div>
-<style>
-.position-wrapper {
-    padding: 10px;
-    line-height: 1.2em;
-    background: #f5fdff;
-    border: 1px dashed rgba(0,0,0,.1);
-}
-.position-wrapper .uk-grid {
-    margin-left: -10px !important;
-}
-.position-wrapper .uk-grid > * {
-    padding-left: 10px !important;
-}
-.position-wrapper * + .uk-grid,
-.position-wrapper *+.uk-grid-margin,
-.position-wrapper .uk-grid+.uk-grid,
-.position-wrapper .uk-grid>.uk-grid-margin {
-    margin-top: 10px;
-}
-
-.row-wrapper {
-    padding: 10px;
-    background: #f2f2f2;
-}
-* + .row-wrapper {
-    margin-top: 10px;
-}
-.position-header,
-.row-header {
-    margin: -10px;
-    margin-bottom: 0;
-    padding: 5px 10px;
-    background: rgba(0,0,0,.05);
-}
-
-.grid-header {
-    padding: 5px 10px;
-    background: rgba(0,0,0,.05);
-}
-.grid-wrapper {
-    padding: 8px;
-    background: #f6f7f8;
-    border: 1px dashed #d4d4d4;
-    border-top: 1px solid #d4d4d4;
-}
-
-.module-wrapper {
-    padding: 5px 10px;
-    background: #fdfdfd;
-    border: 1px solid rgba(0,0,0,.1);
-}
-* + .module-wrapper {
-    margin-top: 5px;
-}
-</style>
 {% endblock %}

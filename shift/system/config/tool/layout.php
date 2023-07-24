@@ -6,8 +6,8 @@ declare(strict_types=1);
 $_['form'] = [
     'layout_id'   => 0,
     'name'        => '',
-    'custom_code' => '',
     'status'      => 0,
     'routes'      => [],
     'positions'   => [],
+    'custom_code' => '',
 ];
