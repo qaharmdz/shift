@@ -36,7 +36,14 @@ class Language extends Core\Bags
         return parent::get($key, $default);
     }
 
-    public function load(string $path, string $group = '')
+    /**
+     * Language file loader
+     *
+     * @param  string $path     Language path
+     * @param  string $group    Recommend: camelCase
+     * @return array
+     */
+    public function load(string $path, string $group = ''): array
     {
         $pathKey = str_replace(['/', '\\', ' '], '.', $path);
         if ($this->has('_param.loaded.' . $pathKey)) {

@@ -10,7 +10,7 @@ class Footer extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('block/footer', 'footer');
+        $this->load->language('block/footer', 'blockFooter');
 
         return $this->load->view('block/footer');
     }
