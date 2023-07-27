@@ -233,7 +233,7 @@ th.uk-text-break {
 
 /* Button
 ==================================== */
-.uk-button:not(.uk-button-large):not(.uk-button-small) {
+.uk-button:not(.uk-button-large):not(.uk-button-small):not(.uk-button-mini) {
     line-height: 32px;
     padding: 0 18px;
 }
@@ -244,8 +244,9 @@ th.uk-text-break {
 }
 .uk-button-mini {
     font-size: 12px;
-    padding: 0 10px;
-    line-height: 20px;
+    line-height: 1em;
+    height: 20px;
+    padding: 0 8px;
 }
 
 .uk-button-group.uk-button-radio {

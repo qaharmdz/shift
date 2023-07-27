@@ -5,9 +5,11 @@
 {% block main_content %}
 <div class="uk-container container-content-wrapper">
     <div class="content-header">
-        <div class="uk-child-width-expand" uk-grid>
-            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-            <div class="uk-flex uk-flex-middle uk-flex-right">
+        <div class="uk-flex uk-flex-middle">
+            <div class="uk-width-expand">
+                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+            </div>
+            <div class="uk-width-auto">
                 <div class="uk-button-group">
                     <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-layout", "layout_id":"{{ layout_id }}"}'>{{ app.language.get('save') }}</button>
                     <div class="uk-inline">
@@ -53,7 +55,7 @@
                                 {% set i = loop.index %}
                                 <tr>
                                     <td>
-                                        <select name="routes[{{ i }}][site_id]" class="uk-select uk-form-small uk-width-expand">
+                                        <select name="routes[{{ i }}][site_id]" class="uk-select uk-form-small">
                                             {% for site in sites %}
                                             <option value="{{ site.site_id }}" {{ site.site_id == route.site_id ? 'selected'}}>{{ site.title}}</option>
                                             {% endfor %}
@@ -63,13 +65,13 @@
                                         <input type="checkbox" name="routes[{{ i }}][exclude]" value="{{ route.exclude }}" {{ route.exclude ? 'checked' }} class="uk-checkbox ukt-mt-1">
                                     </td>
                                     <td>
-                                        <input type="text" name="routes[{{ i }}][route]" value="{{ route.route }}" placeholder="ex. content/*, content/tag" class="uk-input uk-form-small uk-width-expand">
+                                        <input type="text" name="routes[{{ i }}][route]" value="{{ route.route }}" placeholder="ex. content/*, content/tag" class="uk-input uk-form-small">
                                     </td>
                                     <td>
-                                        <input type="text" name="routes[{{ i }}][url_params]" value="{{ route.url_params }}" placeholder="ex. category_id=1&post_id=2" class="uk-input uk-form-small uk-width-expand">
+                                        <input type="text" name="routes[{{ i }}][url_params]" value="{{ route.url_params }}" placeholder="ex. category_id=1&post_id=2" class="uk-input uk-form-small">
                                     </td>
                                     <td>
-                                        <input type="number" name="routes[{{ i }}][priority]" value="{{ route.priority }}" class="uk-input uk-form-small uk-width-expand">
+                                        <input type="number" name="routes[{{ i }}][priority]" value="{{ route.priority }}" class="uk-input uk-form-small">
                                     </td>
                                     <td class="uk-text-center">
                                         <a class="uk-text-danger uk-display-inline-block ukt-mt-1" uk-tooltip title="remove"><i class="bi bi-dash-square-fill"></i></a>
@@ -84,161 +86,33 @@
             <div class="uk-card-panel uk-card-body">
                 <h3 class="uk-legend">{{ app.language.get('module_placement') }}</h3>
 
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Alpha
-                        </div>
-                    </div>
+                <div class="position-wrapper">
+                    Alpha
                 </div>
 
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Top Bar
-                        </div>
-                    </div>
+                <div class="position-wrapper">
+                    Top Bar
                 </div>
 
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Header
+                <div class="position-wrapper" data-layout-position="header">
+                    <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-header-rows">
+                        <div class="uk-width-expand">{{ app.language.get('header') }}</div>
+                        <div class="uk-width-auto">
+                            <button type="button" class="uk-button uk-button-primary uk-button-mini"
+                                data-layout-add='{"type":"row", "target":".js-node-header-rows"}'>
+                                {{ app.language.get('add_row') }}
+                            </button>
+                            <button type="button" class="uk-button uk-button-danger uk-button-mini">{{ app.language.get('delete_row') }}</button>
                         </div>
                     </div>
+                    <div class="position-rows js-node-header-rows" data-layout-node='{"group":"rows"}'></div>
                 </div>
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper" data-layout-position="top">
-                            <div class="position-header">Top</div>
-                            <div class="position-rows" data-layout-node='{"group":"rows"}'>
-                                <div class="row-wrapper">
-                                    <div class="row-header uk-flex uk-flex-middle">
-                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                        <div>Row 1</div>
-                                    </div>
-                                    <div class="uk-child-width-expand" uk-grid data-layout-node='{"group":"columns"}'>
-                                        <div class="uk-width-1-2 column-wrapper">
-                                            <div class="column-container">
-                                                <div class="column-header uk-flex uk-flex-middle">
-                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                    <div>Width: 50%</div>
-                                                </div>
-                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">Lorem ipsum dolor sit, amet consectetur, adipisicing elit. Quam ab, earum ratione, ullam ipsa at. Quae obcaecati repellat similique aspernatur quasi iure inventore ea soluta, est odit voluptatibus minus, ab.</div>
-                                                    </div>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">b</div>
-                                                    </div>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">c</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-1-4 column-wrapper">
-                                            <div class="column-container">
-                                                <div class="column-header uk-flex uk-flex-middle">
-                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                    <div>Width: 25%</div>
-                                                </div>
-                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">d</div>
-                                                    </div>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">e</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-expand column-wrapper">
-                                            <div class="column-container">
-                                                <div class="column-header uk-flex uk-flex-middle">
-                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                    <div>Width: expand</div>
-                                                </div>
-                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">f</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row-wrapper">
-                                    <div class="row-header uk-flex uk-flex-middle">
-                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                        <div>Row 2</div>
-                                    </div>
-                                    <div class="uk-child-width-expand" uk-grid data-layout-node='{"group":"columns"}'>
-                                        <div class="uk-width-1-2 column-wrapper">
-                                            <div class="column-container">
-                                                <div class="column-header uk-flex uk-flex-middle">
-                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                    <div>Width: 50%</div>
-                                                </div>
-                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">Lorem ipsum dolor sit, amet consectetur, adipisicing elit. Quam ab, earum ratione, ullam ipsa at. Quae obcaecati repellat similique aspernatur quasi iure inventore ea soluta, est odit voluptatibus minus, ab.</div>
-                                                    </div>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">b</div>
-                                                    </div>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">c</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-1-4 column-wrapper">
-                                            <div class="column-container">
-                                                <div class="column-header uk-flex uk-flex-middle">
-                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                    <div>Width: 25%</div>
-                                                </div>
-                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">d</div>
-                                                    </div>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">e</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-expand column-wrapper">
-                                            <div class="column-container">
-                                                <div class="column-header uk-flex uk-flex-middle">
-                                                    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                    <div>Width: expand</div>
-                                                </div>
-                                                <div class="column-module" data-layout-node='{"group":"modules"}'>
-                                                    <div class="module-wrapper uk-flex">
-                                                        <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-                                                        <div class="module-data">f</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                <div class="position-wrapper" data-layout-position="top">
+                    <div class="position-header uk-flex uk-flex-middle">
+                        <div>{{ app.language.get('top') }}</div>
                     </div>
+                    <div class="position-rows" data-layout-node='{"group":"rows"}'>...</div>
                 </div>
 
                 <div class="uk-grid-small" uk-grid>
@@ -281,28 +155,16 @@
                     </div>
                 </div>
 
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Bottom
-                        </div>
-                    </div>
+                <div class="position-wrapper">
+                    Bottom
                 </div>
 
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Footer
-                        </div>
-                    </div>
+                <div class="position-wrapper">
+                    Footer
                 </div>
 
-                <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Omega
-                        </div>
-                    </div>
+                <div class="position-wrapper">
+                    Omega
                 </div>
             </div>
 
@@ -315,5 +177,52 @@
             </div>
         </form>
     </div>
+
+<template id="template-row">
+<div class="row-wrapper">
+    <div class="row-header">
+        <div class="uk-flex uk-flex-middle">
+            <div class="uk-width-expand">
+                <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
+                <div class="uk-display-inline-block">{{ app.language.get('row') }}</div>
+            </div>
+            <div class="uk-width-auto ukt-pr-2">
+                <button type="button" class="uk-button uk-button-primary uk-button-mini"
+                    data-layout-add='{"type":"column", "target":".{-node-target-}"}'>
+                    {{ app.language.get('add_column') }}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row-columns uk-grid-small {-node-target-}" uk-grid data-layout-node='{"group":"columns"}'></div>
+</div>
+</template>
+<template id="template-column">
+<div class="uk-width-expand column-wrapper">
+    <div class="column-container">
+        <div class="column-header uk-flex uk-flex-middle">
+            <div class="uk-width-expand">
+                <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
+                <div class="uk-display-inline-block">{{ app.language.get('width') }}: expand</div>
+            </div>
+            <div class="uk-width-auto ukt-pr-2">
+                <button type="button" class="uk-button uk-button-primary uk-button-mini"
+                    data-layout-add='{"type":"module", "target":".{-node-target-}"}'>
+                    {{ app.language.get('add_module') }}
+                </button>
+            </div>
+        </div>
+        <div class="column-modules {-node-target-}" data-layout-node='{"group":"modules"}'></div>
+    </div>
+</div>
+</template>
+<template id="template-module">
+<div class="module-wrapper uk-flex uk-flex-middle">
+    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
+    <div class="module-data">
+        {{ app.language.get('select_module') }}
+    </div>
+</div>
+</template>
 </div>
 {% endblock %}

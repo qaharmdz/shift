@@ -11,6 +11,13 @@ $_['url_param']         = 'URL Parameter';
 $_['priority']          = 'Priority';
 
 $_['module_placement']  = 'Module Placement';
+$_['header']            = 'Header';
+$_['top']               = 'Top';
+$_['row']               = 'Row';
+$_['add_row']           = 'Add Row';
+$_['add_column']        = 'Add Column';
+$_['add_module']        = 'Add Module';
+$_['select_module']     = 'Select module';
 
 $_['design']            = 'Design';
 $_['custom_code']       = 'Custom Code (CSS and Javascript)';
