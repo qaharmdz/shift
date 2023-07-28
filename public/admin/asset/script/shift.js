@@ -756,8 +756,8 @@ function formatDate(datetime) {
  */
 function euid(format, type) {
     let euid = format ? format : 'xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx',
-        chars = type == 'alnum' ? '0123456789abcdefghijklmnopqrstuvwxyz' : '1234567890',
-        length = type == 'alnum' ? 32 : 10;
+        chars = type == 'number' ? '1234567890' : '0123456789abcdefghijklmnopqrstuvwxyz',
+        length = type == 'number' ? 10 : 32;
 
     return euid.replace(new RegExp('x', 'g'), function() {
         return chars[(Math.floor(Math.random() * length))];

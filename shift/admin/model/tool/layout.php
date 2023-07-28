@@ -72,7 +72,7 @@ class Layout extends Mvc\Model
             DB_PREFIX . 'layout',
             [
                 'name'        => $data['name'],
-                'data'        => $data['positions'],
+                'placements'  => $data['placements'],
                 'custom_code' => $data['custom_code'],
                 'status'      => (int)$data['status'],
             ],
@@ -91,7 +91,7 @@ class Layout extends Mvc\Model
             DB_PREFIX . 'layout',
             [
                 'name'        => $data['name'],
-                'data'        => $data['positions'],
+                'placements'  => $data['placements'],
                 'custom_code' => $data['custom_code'],
                 'status'      => (int)$data['status'],
             ],
@@ -135,6 +135,8 @@ class Layout extends Mvc\Model
             "SELECT l.* FROM `" . DB_PREFIX . "layout` l WHERE l.layout_id = ?i",
             [$layout_id]
         )->row;
+
+        $data['placements'] = json_decode($data['placements'], true);
 
         if (!empty($data['layout_id'])) {
             // Routes

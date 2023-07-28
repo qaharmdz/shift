@@ -8,6 +8,6 @@ $_['form'] = [
     'name'        => '',
     'status'      => 0,
     'routes'      => [],
-    'positions'   => [],
+    'placements'  => [],
     'custom_code' => '',
 ];

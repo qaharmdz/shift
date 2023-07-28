@@ -8,29 +8,32 @@
 
     $.fn.shift.layout.defaults = {
         animation  : 200,
-        dataIdAttr : 'data-layout-id',
         handle     : '.layout-handle'
     };
+
     $.fn.shift.layout.construct = function() {
-        $('[data-layout-node]').each(function() {
+        $('[data-layout-sortable]').each(function() {
             if (!$(this).is('[data-layout-is-sortable]')) {
                 let el  = this,
                     opt = $.extend(
                         $.fn.shift.layout.defaults,
-                        $(el).data('layout-node')
+                        $(el).data('layout-sortable')
                     );
+
+                    opt.onEnd = function (evt) {
+                        $.fn.shift.layout.save();
+                    };
 
                     new Sortable(el, opt);
                     $(this).attr('data-layout-is-sortable', '');
             }
         });
     };
+
     $.fn.shift.layout.add = function(el) {
-        let template   = '',
-            position   = $(el).closest('[data-layout-position]').data('layout-position'),
-            innerItems = 0,
-            nodeTarget = 'js-node-',
-            opt = $.extend(
+        let template = '',
+            elid = '',
+            opt  = $.extend(
                 {
                     type   : '',
                     target : '',
@@ -43,41 +46,69 @@
         }
 
         if (opt.type == 'row') {
-            innerItems = $(opt.target).find('.row-wrapper').length + 1;
+            elid     = euid('row-xxxxxxxxxxxx');
             template = $('#template-row')
                             .html()
-                            .replaceAll(
-                                '{-node-target-}',
-                                nodeTarget + position + '-row-' + innerItems
-                            );
+                            .replaceAll('{-node-}', elid);
 
             $(opt.target).append(template);
             $.fn.shift.layout.construct();
         }
         if (opt.type == 'column') {
-            innerItems = $(opt.target).find('.column-wrapper').length + 1;
-            nodeTarget = opt.target.replace('.', '');
+            elid     = euid('col-xxxxxxxxxxxx');
             template = $('#template-column')
                             .html()
-                            .replaceAll(
-                                '{-node-target-}',
-                                nodeTarget + '-column-' + innerItems
-                            );
+                            .replaceAll('{-node-}', elid);
 
             $(opt.target).append(template);
             $.fn.shift.layout.construct();
         }
         if (opt.type == 'module') {
-            innerItems = $(opt.target).find('.module-wrapper').length + 1;
-            template = $('#template-module').html();
+            elid     = euid('mod-xxxxxxxxxxxx');
+            template = $('#template-module')
+                            .html()
+                            .replaceAll('{-node-}', elid);
 
             $(opt.target).append(template);
         }
+
+        $.fn.shift.layout.save();
     };
-    $.fn.shift.layout.save = function(options) {
+
+    $.fn.shift.layout.save = function() {
+        let data = {};
+
         $('[data-layout-position]').each(function() {
-            // console.log($(this));
+            let position = $(this).data('layout-position');
+            data[position] = {
+                'setting' : $(this).data('layout-setting'),
+                'rows' : {},
+            };
+
+            $(this).find('[data-layout-row]').each(function() {
+                let row = $(this).data('layout-row');
+                data[position].rows[row] = {
+                    'setting' : $(this).data('layout-setting'),
+                    'columns' : {},
+                };
+
+                $(this).find('[data-layout-column]').each(function() {
+                    let column = $(this).data('layout-column');
+                    data[position].rows[row].columns[column] = {
+                        'setting' : $(this).data('layout-setting'),
+                        'modules' : {},
+                    };
+
+                    $(this).find('[data-layout-module]').each(function() {
+                        let module = $(this).data('layout-module');
+                        data[position].rows[row].columns[column].modules[module] = $(this).data('layout-setting');
+                    });
+                });
+            });
+
         });
+
+        $('.js-layout-placements').text(JSON.stringify(data));
     };
 })(jQuery);
 
@@ -88,16 +119,3 @@ $(document).ready(function() {
 
     $.fn.shift.layout.construct();
 });
-
-/**
- * Element unique id
- */
-function euid(format, type) {
-    let euid = format ? format : 'xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx',
-        chars = type == 'alnum' ? '0123456789abcdefghijklmnopqrstuvwxyz' : '1234567890',
-        length = type == 'alnum' ? 32 : 10;
-
-    return euid.replace(new RegExp('x', 'g'), function() {
-        return chars[(Math.floor(Math.random() * length))];
-    });
-}
