@@ -86,91 +86,42 @@
             <div class="uk-card-panel uk-card-body">
                 <h3 class="uk-legend">{{ app.language.get('module_placement') }}</h3>
 
-                <div class="position-wrapper">
-                    Alpha
-                </div>
-
-                <div class="position-wrapper">
-                    Top Bar
-                </div>
-
-                <div class="position-wrapper" data-layout-position="header" data-layout-setting='{}'>
-                    <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-header-rows">
-                        <div class="uk-width-expand ukt-lh-1">{{ app.language.get('header') }}</div>
-                        <div class="uk-width-auto ukt-lh-1">
-                            <button type="button" class="uk-button uk-button-primary uk-button-mini"
-                                data-layout-add='{"type":"row", "target":".js-node-header-rows"}'>
-                                {{ app.language.get('add_row') }}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="position-rows js-node-header-rows" data-layout-sortable='{"group":"rows"}'></div>
-                </div>
-
-                <div class="position-wrapper" data-layout-position="top">
-                    <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-top-rows">
-                        <div class="uk-width-expand ukt-lh-1">{{ app.language.get('top') }}</div>
-                        <div class="uk-width-auto ukt-lh-1">
-                            <button type="button" class="uk-button uk-button-primary uk-button-mini"
-                                data-layout-add='{"type":"row", "target":".js-node-top-rows"}'>
-                                {{ app.language.get('add_row') }}
-                            </button>
-                        </div>
-                    </div>
-                    <div class="position-rows js-node-top-rows" data-layout-sortable='{"group":"rows"}'></div>
-                </div>
+                {{ _self.layoutPosition('alpha', setting.placements.alpha) }}
+                {{ _self.layoutPosition('topbar', setting.placements.topbar) }}
+                {{ _self.layoutPosition('header', setting.placements.header) }}
+                {{ _self.layoutPosition('top', setting.placements.top) }}
 
                 <div class="uk-grid-small" uk-grid>
-                    <div class="uk-width-1-5">
-                        <div class="position-wrapper" style="height:100%">
-                            Sidebar Left
-                        </div>
+                    <div class="uk-width-1-5 wider-on-hover">
+                        {{ _self.layoutPosition('sidebar_left', setting.placements.sidebar_left) }}
                     </div>
                     <div class="uk-width-expand">
-                        <div class="position-wrapper">
-                            Content Top
-                        </div>
+                        {{ _self.layoutPosition('content_top', setting.placements.content_top) }}
 
-                        <div class="uk-grid-small ukt-py-3" uk-grid>
-                            <div class="uk-width-1-3">
-                                <div class="position-wrapper" style="height:100%">
-                                    Content Left
-                                </div>
+                        <div class="uk-grid-small" uk-grid>
+                            <div class="uk-width-1-3 wider-on-hover">
+                                {{ _self.layoutPosition('content_left', setting.placements.content_left) }}
                             </div>
                             <div class="uk-width-expand">
                                 <h2>Content</h2>
                                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta eos culpa, alias porro. Adipisci ipsa laborum suscipit cupiditate vero ut inventore consequuntur quos.</p>
                             </div>
-                            <div class="uk-width-1-3">
-                                <div class="position-wrapper" style="height:100%">
-                                    Content Right
-                                </div>
+                            <div class="uk-width-1-3 wider-on-hover">
+                                {{ _self.layoutPosition('content_right', setting.placements.content_right) }}
                             </div>
                         </div>
 
-
-                        <div class="position-wrapper">
-                            Content Bottom
-                        </div>
+                        {{ _self.layoutPosition('content_bottom', setting.placements.content_bottom) }}
                     </div>
-                    <div class="uk-width-1-5">
-                        <div class="position-wrapper" style="height:100%">
-                            Sidebar Right
-                        </div>
+                    <div class="uk-width-1-5 wider-on-hover">
+                        {{ _self.layoutPosition('sidebar_right', setting.placements.sidebar_right) }}
                     </div>
                 </div>
 
-                <div class="position-wrapper">
-                    Bottom
-                </div>
-
-                <div class="position-wrapper">
-                    Footer
-                </div>
-
-                <div class="position-wrapper">
-                    Omega
-                </div>
+                {{ _self.layoutPosition('bottom', setting.placements.bottom) }}
+                {{ _self.layoutPosition('bottombar', setting.placements.bottombar) }}
+                {{ _self.layoutPosition('footer', setting.placements.footer) }}
+                {{ _self.layoutPosition('omega', setting.placements.omega) }}
 
                 {{ forms.hidden({'type':'textarea', 'name':'placements', 'value':setting.placements|json_encode(), 'class':'js-layout-placements'}) }}
             </div>
@@ -186,7 +137,113 @@
     </div>
 
 <template id="template-row">
-<div class="row-wrapper" data-layout-row="{-node-}" data-layout-setting='{"container":0}'>
+{{
+    _self.layoutRows({
+        '{-node-}': {
+            'setting': {
+                'container': 0
+            },
+            'columns': {}
+        }
+    })
+}}
+</template>
+
+<template id="template-column">
+{{
+    _self.layoutColumns({
+        '{-node-}': {
+            'setting': {
+                'width': '1-2'
+            },
+            'modules': {}
+        }
+    })
+}}
+</template>
+
+<template id="template-module">
+{{
+    _self.layoutModules({
+        '{-node-}': {
+            'module_id': 0,
+            'codename': '',
+            'name': ''
+        }
+    })
+}}
+</template>
+
+{#
+<select class="uk-select uk-form-small uk-width-1-1">
+    <option hidden value="0">{{ app.language.get('-select-') }}</option>
+    {% for group, options in modules %}
+      <optgroup label="{{ group }}">
+        {% for opt in options %}
+            <option vlaue="{{ opt.extension_module_id }}">{{ opt.name }}</option>
+        {% endfor %}
+      </optgroup>
+    {% endfor %}
+</select>
+#}
+
+<div id="layout-module-wrapper" class="uk-hidden">
+    <div id="layout-module-list" class="layout-select-modules" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-width-750">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title ukt-mb-2">{{ app.language.get('module') }}</h2>
+            <div id="layout-module-content">
+                <table class="uk-table uk-table-striped uk-table-hover">
+                    <thead>
+                    <tr>
+                        <th class="uk-text-center" style="width:50px">{{ app.language.get('id') }}</th>
+                        <th class="uk-text-center" style="width:150px">{{ app.language.get('codename') }}</th>
+                        <th class="uk-text-center">{{ app.language.get('module') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for module in modules %}
+                        <tr>
+                            <td class="uk-text-center">{{ module.extension_module_id}}</td>
+                            <td><code>{{ module.codename }}</code></td>
+                            <td>
+                                <a class="js-select-module" data-module-info='{"module_id":{{ module.extension_module_id }},"codename":"{{ module.codename }}","name": "{{ module.name }}"}'>
+                                    {{ module.name }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% macro layoutPosition(position, data) %}
+<div class="position-wrapper position-node-{{ position }}" data-layout-position="{{ position }}" data-layout-setting='{{ data.setting|json_encode()|raw }}'>
+    <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-{{ position }}-rows">
+        <div class="uk-width-expand ukt-lh-1">{{ app.language.get(position) }}</div>
+        <div class="uk-width-auto ukt-lh-1">
+            <button type="button" class="uk-button uk-button-primary uk-background-teal uk-button-mini button-layout"
+                data-layout-add='{"type":"row", "target":".js-node-{{ position }}-rows"}'
+                uk-tooltip title="{{ app.language.get('add_row') }}">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </div>
+    </div>
+    <div class="position-rows js-node-{{ position }}-rows" data-layout-sortable='{"group":"rows"}'>
+        {{ _self.layoutRows(data.rows) }}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro layoutRows(data) %}
+{% for node, row in data %}
+<div class="row-wrapper" data-layout-row="{{ node }}" data-layout-setting='{{ row.setting|json_encode()|raw }}'>
     <div class="row-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
@@ -194,46 +251,75 @@
                 <div class="uk-display-inline-block">{{ app.language.get('row') }}</div>
             </div>
             <div class="uk-width-auto ukt-lh-1 ukt-pr-2">
-                <button type="button" class="uk-button uk-button-primary uk-button-mini"
-                    data-layout-add='{"type":"column", "target":".js-node-{-node-}"}'>
-                    {{ app.language.get('add_column') }}
+                <button type="button" class="uk-button uk-button-primary uk-background-purple uk-button-mini button-layout ukt-mr-2"
+                    data-layout-add='{"type":"column", "target":".js-node-{{ node }}"}'
+                    uk-tooltip title="{{ app.language.get('add_column') }}">
+                    <i class="bi bi-plus-square"></i>
                 </button>
-                <button type="button" class="uk-button uk-button-danger uk-button-mini">{{ app.language.get('delete_row') }}</button>
+                <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+                    uk-tooltip title="{{ app.language.get('setting_row') }}">
+                    <i class="bi bi-gear-fill"></i>
+                </button>
+                <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+                    uk-tooltip title="{{ app.language.get('delete_row') }}">
+                    <i class="bi bi-trash"></i>
+                </button>
             </div>
         </div>
     </div>
-    <div class="row-columns uk-grid-small js-node-{-node-}" uk-grid data-layout-sortable='{"group":"columns"}'></div>
+    <div class="row-columns uk-grid-small js-node-{{ node }}" uk-grid data-layout-sortable='{"group":"columns"}'>
+        {{ _self.layoutColumns(row.columns) }}
+    </div>
 </div>
-</template>
+{% endfor %}
+{% endmacro %}
 
-<template id="template-column">
-<div class="uk-width-expand column-wrapper" data-layout-column="{-node-}" data-layout-setting='{"width":"1-2"}'>
+{% macro layoutColumns(data) %}
+{% for node, column in data %}
+<div class="column-wrapper uk-width-{{ column.setting.width }}" data-layout-column="{{ node }}" data-layout-setting='{{ column.setting|json_encode()|raw }}'>
     <div class="column-container">
         <div class="column-header uk-flex uk-flex-middle">
             <div class="uk-width-expand">
                 <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
-                <div class="uk-display-inline-block">{{ app.language.get('width') }}: expand</div>
+                <div class="uk-display-inline-block">{{ column.setting.width }}</div>
             </div>
             <div class="uk-width-auto ukt-lh-1 ukt-pr-2">
-                <button type="button" class="uk-button uk-button-primary uk-button-mini"
-                    data-layout-add='{"type":"module", "target":".js-node-{-node-}"}'>
-                    {{ app.language.get('add_module') }}
+                <button type="button" class="uk-button uk-button-primary uk-button-mini button-layout ukt-mr-2"
+                    data-layout-add='{"type":"module", "target":".js-node-{{ node }}"}'
+                    uk-tooltip title="{{ app.language.get('add_module') }}">
+                    <i class="bi bi-plus"></i>
+                </button>
+                <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+                    uk-tooltip title="{{ app.language.get('setting_column') }}">
+                    <i class="bi bi-gear-fill"></i>
+                </button>
+                <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+                    uk-tooltip title="{{ app.language.get('delete_column') }}">
+                    <i class="bi bi-trash"></i>
                 </button>
             </div>
         </div>
-        <div class="column-modules js-node-{-node-}" data-layout-sortable='{"group":"modules"}'></div>
+        <div class="column-modules js-node-{{ node }}" data-layout-sortable='{"group":"modules"}'>
+            {{ _self.layoutModules(column.modules) }}
+        </div>
     </div>
 </div>
-</template>
+{% endfor %}
+{% endmacro %}
 
-<template id="template-module">
-<div class="module-wrapper uk-flex uk-flex-middle" data-layout-module="{-node-}" data-layout-setting='0'>
-    <div class="layout-handle"><i class="bi bi-grip-vertical"></i></div>
-    <div class="module-data">
-        {{ app.language.get('select_module') }}
+{% macro layoutModules(data) %}
+{% for node, setting in data %}
+<div class="module-wrapper uk-flex" data-layout-module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
+    <div class="uk-width-expand uk-flex">
+        <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
+        <div class="module-data js-module-trove uk-display-inline-block uk-width-1-1"><code>{{ setting.codename }}</code> {{ setting.name }}</div>
+    </div>
+    <div class="uk-width-auto ukt-lh-1">
+        <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+            uk-tooltip title="{{ app.language.get('delete_module') }}">
+            <i class="bi bi-trash"></i>
+        </button>
     </div>
 </div>
-</template>
-
-</div>
-{% endblock %}
+{% endfor %}
+{% endmacro %}

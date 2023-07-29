@@ -180,12 +180,46 @@ class Module extends Mvc\Model
         $this->cache->deleteByTags('modules');
     }
 
-    public function getModules()
+    public function getExtModules()
     {
         return $this->db->get(
             "SELECT *
             FROM `" . DB_PREFIX . "extension` e
-            WHERE e.`type` = 'module' AND e.`status` = 1 AND e.`install` = 1 ORDER BY e.`name` ASC"
+            WHERE e.`type` = 'module' AND e.`status` = 1 AND e.`install` = 1
+            ORDER BY e.`name` ASC"
         )->rows;
+    }
+
+    /**
+     * Get modules
+     *
+     * @param  array  $filters
+     * @param  string $rkey    Return key
+     * @return array
+     */
+    public function getModules(array $filters = ['em.status = ?i' => 1], string $rkey = 'extension_module_id'): array
+    {
+        $argsHash = $this->cache->getHash(func_get_args());
+        $data     = $this->cache->get('modules.' . $argsHash, []);
+
+        if (!$data) {
+            $modules = $this->db->get(
+                "SELECT em.*, e.`codename`
+                FROM `" . DB_PREFIX . "extension_module` em
+                    LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
+                WHERE " . implode(' AND ', array_keys($filters)) . "
+                    AND e.`status` = 1 AND e.`install` = 1
+                ORDER BY em.extension_id ASC, em.name ASC",
+                array_values($filters)
+            )->rows;
+
+            foreach ($modules as $result) {
+                $data[$result[$rkey]] = $result;
+            }
+
+            $this->cache->set('modules.' . $argsHash, $data, tags: ['modules']);
+        }
+
+        return $data;
     }
 }

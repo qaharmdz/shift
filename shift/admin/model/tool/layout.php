@@ -137,6 +137,9 @@ class Layout extends Mvc\Model
         )->row;
 
         $data['placements'] = json_decode($data['placements'], true);
+        if (!$data['placements']) {
+            unset($data['placements']);
+        }
 
         if (!empty($data['layout_id'])) {
             // Routes

@@ -11,10 +11,24 @@ $_['url_param']         = 'URL Parameter';
 $_['priority']          = 'Priority';
 
 $_['module_placement']  = 'Module Placement';
+$_['alpha']             = 'Alpha';
+$_['topbar']            = 'Top Bar';
 $_['header']            = 'Header';
 $_['top']               = 'Top';
+$_['sidebar_left']      = 'Sidebar Left';
+$_['content_top']       = 'Content Top';
+$_['content_left']      = 'Content Left';
+$_['content_right']     = 'Content Right';
+$_['content_bottom']    = 'Content Bottom';
+$_['sidebar_right']     = 'Sidebar Right';
+$_['bottom']            = 'Bottom';
+$_['bottombar']         = 'Bottom Bar';
+$_['footer']            = 'Footer';
+$_['omega']             = 'Omega';
+
 $_['row']               = 'Row';
 $_['add_row']           = 'Add Row';
+$_['setting_row']       = 'Setting Row';
 $_['delete_row']        = 'Delete Row';
 $_['add_column']        = 'Add Column';
 $_['add_module']        = 'Add Module';

@@ -101,6 +101,7 @@ class Layout extends Mvc\Controller
 
         $this->load->config('tool/layout');
         $this->load->model('setting/site');
+        $this->load->model('extension/module');
         $this->load->model('tool/layout');
         $this->load->language('tool/layout');
 
@@ -124,8 +125,10 @@ class Layout extends Mvc\Controller
         $data['layout_id'] = $layout_id;
         $data['sites']     = $this->model_setting_site->getSites();
         $data['setting']   = $this->model_tool_layout->getLayout($layout_id);
+        $data['modules']   = $this->model_extension_module->getModules();
 
-        // d($data['setting']);
+        // d($data['setting']['placements']);
+        // d($data);
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

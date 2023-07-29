@@ -105,7 +105,6 @@
                     });
                 });
             });
-
         });
 
         $('.js-layout-placements').text(JSON.stringify(data));
@@ -115,6 +114,22 @@
 $(document).ready(function() {
     $('[data-layout-position]').on('click', '[data-layout-add]', function(e) {
         $.fn.shift.layout.add(this)
+    });
+
+    $('[data-layout-position]').on('click', '.js-module-trove', function(e) {
+        let el = this;
+
+        UIkit.modal('#layout-module-list').show();
+
+        $('.js-select-module').off('click').on('click', function() {
+            let module = $(this).data('module-info');
+
+            $(el).closest('[data-layout-setting]').attr('data-layout-setting', JSON.stringify(module));
+            $(el).html('<code>' + module.codename + '</code> ' + module.name);
+
+            UIkit.modal('#layout-module-list').hide();
+            $.fn.shift.layout.save();
+        });
     });
 
     $.fn.shift.layout.construct();
