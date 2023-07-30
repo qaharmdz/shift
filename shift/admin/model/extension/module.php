@@ -23,11 +23,13 @@ class Module extends Mvc\Model
             'module_id'    => 'em.extension_module_id AS module_id',
             'extension_id' => 'em.extension_id',
             'codename'     => 'e.codename',
+            'type'         => 'em.type',
             'name'         => 'em.name',
             'status'       => 'em.status',
         ];
         $filterMap = $columnMap;
         $filterMap['module_id'] = 'em.extension_module_id';
+        $filterMap['codename'] = 'CONCAT(e.codename, " ", em.type)';
 
         $dtResult  = Helper\DataTables::parse($params, $filterMap);
 
