@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shift\System\Mvc;
 
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+
 class View
 {
     private array $config = [];
@@ -87,10 +90,29 @@ class View
         ]);
 
         $twig->addGlobal('app', $this->global);
-
         $twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone($this->config['timezone']);
+
+        $twig->addFunction(new TwigFunction('combine', 'array_combine'));
+        $twig->addFunction(new TwigFunction('ceil', 'ceil'));
+        $twig->addFunction(new TwigFunction('floor', 'floor'));
+        $twig->addFunction(new TwigFunction('round', 'round'));
+
+        $twig->addFilter(new TwigFilter('base64_decode', 'base64_decode'));
+        $twig->addFilter(new TwigFilter('base64_encode', 'base64_encode'));
+        $twig->addFilter(new TwigFilter('string', 'strval'));
+        $twig->addFilter(new TwigFilter('integer', 'intval'));
+        $twig->addFilter(new TwigFilter('float', 'floatval'));
+
+        $twig->addFilter(new TwigFilter('values', 'array_values'));
+        $twig->addFilter(new TwigFilter('unique', 'array_unique'));
+        $twig->addFilter(new TwigFilter('diff', 'array_diff'));
+        $twig->addFilter(new TwigFilter('intersect', 'array_intersect'));
+        $twig->addFilter(new TwigFilter('replace', 'array_replace'));
+        $twig->addFilter(new TwigFilter('merge_recursive', 'array_merge_recursive'));
+        $twig->addFilter(new TwigFilter('replace_recursive', 'array_replace_recursive'));
+
+        // https://twig.symfony.com/doc/3.x/functions/dump.html
         if ($this->config['debug']) {
-            // https://twig.symfony.com/doc/3.x/functions/dump.html
             $twig->addExtension(new \Twig\Extension\DebugExtension());
         }
 
