@@ -75,6 +75,31 @@
         $.fn.shift.layout.save();
     };
 
+    $.fn.shift.layout.delete = function(el) {
+        let opt  = $.extend(
+                {
+                    type   : '',
+                },
+                $(el).data('layout-delete')
+            );
+
+        if (!opt.type) {
+            return null;
+        }
+
+        if (opt.type == 'row') {
+            $(el).closest('.row-wrapper').remove();
+        }
+        if (opt.type == 'column') {
+            $(el).closest('.column-wrapper').remove();
+        }
+        if (opt.type == 'module') {
+            $(el).closest('.module-wrapper').remove();
+        }
+
+        $.fn.shift.layout.save();
+    };
+
     $.fn.shift.layout.save = function() {
         let data = {};
 
@@ -113,7 +138,10 @@
 
 $(document).ready(function() {
     $('[data-layout-position]').on('click', '[data-layout-add]', function(e) {
-        $.fn.shift.layout.add(this)
+        $.fn.shift.layout.add(this);
+    });
+    $('[data-layout-position]').on('click', '[data-layout-delete]', function(e) {
+        $.fn.shift.layout.delete(this);
     });
 
     $('[data-layout-position]').on('click', '.js-module-trove', function(e) {

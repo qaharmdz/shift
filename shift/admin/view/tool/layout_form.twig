@@ -88,7 +88,9 @@
 
                 {{ _self.layoutPosition('alpha', setting.placements.alpha) }}
                 {{ _self.layoutPosition('topbar', setting.placements.topbar) }}
-                {{ _self.layoutPosition('header', setting.placements.header) }}
+                <div class="position-empty">
+                    <h1 class="ukt-m-0">HEADER</h1>
+                </div>
                 {{ _self.layoutPosition('top', setting.placements.top) }}
 
                 <div class="uk-grid-small" uk-grid>
@@ -103,8 +105,8 @@
                                 {{ _self.layoutPosition('content_left', setting.placements.content_left) }}
                             </div>
                             <div class="uk-width-expand">
-                                <h2>Content</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta eos culpa, alias porro. Adipisci ipsa laborum suscipit cupiditate vero ut inventore consequuntur quos.</p>
+                                <h2 class="ukt-mb-2">Title</h2>
+                                <p class="ukt-mt-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta eos culpa, alias porro. Adipisci ipsa laborum suscipit cupiditate vero ut inventore consequuntur quos.</p>
                             </div>
                             <div class="uk-width-1-3 wider-on-hover">
                                 {{ _self.layoutPosition('content_right', setting.placements.content_right) }}
@@ -135,57 +137,6 @@
             </div>
         </form>
     </div>
-
-<template id="template-row">
-{{
-    _self.layoutRows({
-        '{-node-}': {
-            'setting': {
-                'container': 0
-            },
-            'columns': {}
-        }
-    })
-}}
-</template>
-
-<template id="template-column">
-{{
-    _self.layoutColumns({
-        '{-node-}': {
-            'setting': {
-                'width': '1-2'
-            },
-            'modules': {}
-        }
-    })
-}}
-</template>
-
-<template id="template-module">
-{{
-    _self.layoutModules({
-        '{-node-}': {
-            'module_id': 0,
-            'codename': '',
-            'name': ''
-        }
-    })
-}}
-</template>
-
-{#
-<select class="uk-select uk-form-small uk-width-1-1">
-    <option hidden value="0">{{ app.language.get('-select-') }}</option>
-    {% for group, options in modules %}
-      <optgroup label="{{ group }}">
-        {% for opt in options %}
-            <option vlaue="{{ opt.extension_module_id }}">{{ opt.name }}</option>
-        {% endfor %}
-      </optgroup>
-    {% endfor %}
-</select>
-#}
 
 <div id="layout-module-wrapper" class="uk-hidden">
     <div id="layout-module-list" class="layout-select-modules" uk-modal>
@@ -220,6 +171,41 @@
     </div>
 </div>
 
+<template id="template-row">
+{{
+    _self.layoutRows({
+        '{-node-}': {
+            'setting': {
+                'container': 0
+            },
+            'columns': {}
+        }
+    })
+}}
+</template>
+<template id="template-column">
+{{
+    _self.layoutColumns({
+        '{-node-}': {
+            'setting': {
+                'width': '1-2'
+            },
+            'modules': {}
+        }
+    })
+}}
+</template>
+<template id="template-module">
+{{
+    _self.layoutModules({
+        '{-node-}': {
+            'module_id': 0,
+            'codename': '',
+            'name': ''
+        }
+    })
+}}
+</template>
 </div>
 {% endblock %}
 
@@ -261,6 +247,7 @@
                     <i class="bi bi-gear-fill"></i>
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+                    data-layout-delete='{"type":"row"}'
                     uk-tooltip title="{{ app.language.get('delete_row') }}">
                     <i class="bi bi-trash"></i>
                 </button>
@@ -294,6 +281,7 @@
                     <i class="bi bi-gear-fill"></i>
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+                    data-layout-delete='{"type":"column"}'
                     uk-tooltip title="{{ app.language.get('delete_column') }}">
                     <i class="bi bi-trash"></i>
                 </button>
@@ -312,10 +300,17 @@
 <div class="module-wrapper uk-flex" data-layout-module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
     <div class="uk-width-expand uk-flex">
         <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
-        <div class="module-data js-module-trove uk-display-inline-block uk-width-1-1"><code>{{ setting.codename }}</code> {{ setting.name }}</div>
+        <div class="module-data js-module-trove uk-display-inline-block uk-width-1-1">
+            {% if setting.codename %}
+                <code>{{ setting.codename }}</code> {{ setting.name }}
+            {% else %}
+                <div class="uk-text-meta uk-text-italic">{{ app.language.get('select_module') }}</div>
+            {% endif %}
+        </div>
     </div>
     <div class="uk-width-auto ukt-lh-1">
         <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
+            data-layout-delete='{"type":"module"}'
             uk-tooltip title="{{ app.language.get('delete_module') }}">
             <i class="bi bi-trash"></i>
         </button>

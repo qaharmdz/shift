@@ -11,7 +11,7 @@ $_['form'] = [
     'placements'  => [
         'alpha'          => ['setting' => [], 'rows' => []],
         'topbar'         => ['setting' => [], 'rows' => []],
-        'header'         => ['setting' => [], 'rows' => []],
+        // 'header'         => ['setting' => [], 'rows' => []],
         'top'            => ['setting' => [], 'rows' => []],
         'sidebar_left'   => ['setting' => [], 'rows' => []],
         'content_top'    => ['setting' => [], 'rows' => []],

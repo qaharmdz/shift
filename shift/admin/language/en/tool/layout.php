@@ -31,8 +31,10 @@ $_['add_row']           = 'Add Row';
 $_['setting_row']       = 'Setting Row';
 $_['delete_row']        = 'Delete Row';
 $_['add_column']        = 'Add Column';
+$_['delete_column']     = 'Delete Column';
 $_['add_module']        = 'Add Module';
-$_['select_module']     = 'Select module';
+$_['delete_module']     = 'Delete Module';
+$_['select_module']     = 'Select module..';
 
 $_['design']            = 'Design';
 $_['custom_code']       = 'Custom Code (CSS and Javascript)';

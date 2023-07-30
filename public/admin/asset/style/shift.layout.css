@@ -1,3 +1,8 @@
+.position-empty {
+    padding: 30px 20px;
+    text-align: center;
+    background: #e4e4e4;
+}
 .position-wrapper {
     min-height: 64px;
     background: #f8f8f8;
@@ -11,7 +16,9 @@
 }
 .uk-grid + .position-wrapper,
 .position-wrapper + .uk-grid,
-.position-wrapper + .position-wrapper {
+.position-wrapper + .position-wrapper,
+.position-empty + .position-wrapper,
+.position-wrapper + .position-empty {
     margin-top: 15px;
 }
 
@@ -23,23 +30,17 @@
 }
 
 .position-wrapper .button-layout {
-    padding: 2px 2px;
-    height: 24px;
-    width: 26px;
-    border-radius: 3px;
-
     height: 22px;
     width: 24px;
+    padding: 2px 2px;
+    border-radius: 2px;
 }
 .position-wrapper .button-layout .bi {
-    font-size: 15px;
-    line-height: 1em;
-
     font-size: 13px;
+    line-height: 1em;
 }
 .position-wrapper .button-layout .bi-plus {
     font-size: 17px;
-
     line-height: 15px;
 }
 
@@ -60,7 +61,7 @@
     border: 1px dashed rgba(0,0,0,.15);
 }
 .row-wrapper:hover {
-    background: rgba(199,247,255,.2);
+    background: #eef3ff;
 }
 .row-wrapper + .row-wrapper {
     margin-top: 8px;
@@ -99,6 +100,9 @@
 
 .module-wrapper {
     background: #fdfdfd;
+}
+.module-wrapper:hover {
+    background: #f3ffed;
 }
 * + .module-wrapper {
     margin-top: 8px;
@@ -150,12 +154,14 @@
     height: 32px;
 }
 
+.wider-on-hover {
+    -webkit-transition: width .3s;
+    -moz-transition: width .3s;
+    -o-transition: width .3s;
+    transition: width .3s;
+}
 .wider-on-hover:hover {
     width: 350px;
-    -webkit-transition: width .4s ease-in-out;
-    -moz-transition: width .4s ease-in-out;
-    -o-transition: width .4s ease-in-out;
-    transition: width .4s ease-in-out;
 }
 
 /* Modal  */
