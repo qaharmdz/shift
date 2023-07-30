@@ -102,7 +102,7 @@
     background: #fdfdfd;
 }
 .module-wrapper:hover {
-    background: #f3ffed;
+    background: #e5ffd7;
 }
 * + .module-wrapper {
     margin-top: 8px;

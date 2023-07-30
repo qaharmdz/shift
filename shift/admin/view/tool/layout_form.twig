@@ -171,45 +171,17 @@
     </div>
 </div>
 
-<template id="template-row">
-{{
-    _self.layoutRows({
-        '{-node-}': {
-            'setting': {
-                'container': 0
-            },
-            'columns': {}
-        }
-    })
-}}
-</template>
-<template id="template-column">
-{{
-    _self.layoutColumns({
-        '{-node-}': {
-            'setting': {
-                'width': '1-2'
-            },
-            'modules': {}
-        }
-    })
-}}
-</template>
-<template id="template-module">
-{{
-    _self.layoutModules({
-        '{-node-}': {
-            'module_id': 0,
-            'codename': '',
-            'name': ''
-        }
-    })
-}}
-</template>
+<template id="template-row">{{ _self.layoutRows({'{-node-}': {}}) }}</template>
+<template id="template-column">{{ _self.layoutColumns({'{-node-}': {}}) }}</template>
+<template id="template-module">{{ _self.layoutModules({'{-node-}': {}}) }}</template>
 </div>
 {% endblock %}
 
 {% macro layoutPosition(position, data) %}
+{% set data = {
+    'setting': {},
+    'rows': {},
+}|replace_recursive(data) %}
 <div class="position-wrapper position-node-{{ position }}" data-layout-position="{{ position }}" data-layout-setting='{{ data.setting|json_encode()|raw }}'>
     <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-{{ position }}-rows">
         <div class="uk-width-expand ukt-lh-1">{{ app.language.get(position) }}</div>
@@ -229,6 +201,12 @@
 
 {% macro layoutRows(data) %}
 {% for node, row in data %}
+{% set row = {
+    'setting': {
+        'child_width': 'uk-child-width-1-3',
+    },
+    'columns': {},
+}|replace_recursive(row) %}
 <div class="row-wrapper" data-layout-row="{{ node }}" data-layout-setting='{{ row.setting|json_encode()|raw }}'>
     <div class="row-header">
         <div class="uk-flex uk-flex-middle">
@@ -254,7 +232,7 @@
             </div>
         </div>
     </div>
-    <div class="row-columns uk-grid-small js-node-{{ node }}" uk-grid data-layout-sortable='{"group":"columns"}'>
+    <div class="row-columns uk-grid-small {{ row.setting.child_width }} js-node-{{ node }}" uk-grid data-layout-sortable='{"group":"columns"}'>
         {{ _self.layoutColumns(row.columns) }}
     </div>
 </div>
@@ -263,7 +241,13 @@
 
 {% macro layoutColumns(data) %}
 {% for node, column in data %}
-<div class="column-wrapper uk-width-{{ column.setting.width }}" data-layout-column="{{ node }}" data-layout-setting='{{ column.setting|json_encode()|raw }}'>
+{% set column = {
+    'setting': {
+        'width': '',
+    },
+    'modules': {},
+}|replace_recursive(column) %}
+<div class="column-wrapper {{ column.setting.width }}" data-layout-column="{{ node }}" data-layout-setting='{{ column.setting|json_encode()|raw }}'>
     <div class="column-container">
         <div class="column-header uk-flex uk-flex-middle">
             <div class="uk-width-expand">
@@ -297,6 +281,11 @@
 
 {% macro layoutModules(data) %}
 {% for node, setting in data %}
+{% set setting = {
+    'module_id': 0,
+    'codename': '',
+    'name': '',
+}|replace_recursive(setting) %}
 <div class="module-wrapper uk-flex" data-layout-module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
     <div class="uk-width-expand uk-flex">
         <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>

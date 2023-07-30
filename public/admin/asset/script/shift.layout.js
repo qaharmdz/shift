@@ -127,9 +127,25 @@
                     $(this).find('[data-layout-module]').each(function() {
                         let module = $(this).data('layout-module');
                         data[position].rows[row].columns[column].modules[module] = $(this).data('layout-setting');
+
+                        if (data[position].rows[row].columns[column].modules[module].module_id === 0) {
+                            delete data[position].rows[row].columns[column].modules[module];
+                        }
                     });
+
+                    if (Object.keys(data[position].rows[row].columns[column].modules).length === 0) {
+                        delete data[position].rows[row].columns[column];
+                    }
                 });
+
+                if (Object.keys(data[position].rows[row].columns).length === 0) {
+                    delete data[position].rows[row];
+                }
             });
+
+            if (Object.keys(data[position].rows).length === 0) {
+                delete data[position];
+            }
         });
 
         $('.js-layout-placements').text(JSON.stringify(data));
@@ -148,6 +164,9 @@ $(document).ready(function() {
         let el = this;
 
         UIkit.modal('#layout-module-list').show();
+        UIkit.util.on('#layout-module-list', 'hidden', function() {
+            $.fn.shift.layout.save();
+        });
 
         $('.js-select-module').off('click').on('click', function() {
             let module = $(this).data('module-info');
@@ -156,7 +175,6 @@ $(document).ready(function() {
             $(el).html('<code>' + module.codename + '</code> ' + module.name);
 
             UIkit.modal('#layout-module-list').hide();
-            $.fn.shift.layout.save();
         });
     });
 
