@@ -99,7 +99,7 @@ class Loader
     {
         $output = null;
 
-        if (empty($vars['stringTemplate'])) {
+        if (empty($vars['_stringTemplate'])) {
             $template = preg_replace(['#[^a-zA-Z0-9._/]#', '#/+#'], ['', '/'], $template);
         }
 

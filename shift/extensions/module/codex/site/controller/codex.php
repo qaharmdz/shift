@@ -23,7 +23,7 @@ class Codex extends Mvc\Controller
         ));
 
         $data = [
-            'stringTemplate' => true,
+            '_stringTemplate' => true,
             'codex' => $this->model_extensions_module_codex,
         ];
 
