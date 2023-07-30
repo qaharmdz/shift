@@ -171,6 +171,10 @@ class View
             $nodes = new \RecursiveIteratorIterator($dirIterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($nodes as $node) {
+                if ($node->getBasename() === 'index.html') {
+                    continue;
+                }
+
                 $node->isDir() ? rmdir($node->getRealPath()) : unlink($node->getRealPath());
             }
         }
