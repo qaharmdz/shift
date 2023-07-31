@@ -71,6 +71,15 @@
 
             $(opt.target).append(template);
         }
+        if (opt.type == 'row-module') {
+            elid     = euid('rowmod-xxxxxxxxxxxx');
+            template = $('#template-module')
+                            .html()
+                            .replaceAll('data-layout-module', 'data-layout-row-module')
+                            .replaceAll('{-node-}', elid);
+
+            $(opt.target).append(template);
+        }
 
         $.fn.shift.layout.save();
     };
@@ -143,6 +152,15 @@
                 }
             });
 
+            $(this).find('[data-layout-row-module]').each(function() {
+                let rowModule = $(this).data('layout-row-module');
+                data[position].rows[rowModule] = $(this).data('layout-setting');
+
+                if (data[position].rows[rowModule].module_id === 0) {
+                    delete data[position].rows[rowModule];
+                }
+            });
+
             if (Object.keys(data[position].rows).length === 0) {
                 delete data[position];
             }
@@ -171,8 +189,8 @@ $(document).ready(function() {
         $('.js-select-module').off('click').on('click', function() {
             let module = $(this).data('module-info');
 
-            $(el).closest('[data-layout-setting]').attr('data-layout-setting', JSON.stringify(module));
             $(el).html('<code>' + module.codename + '</code> ' + module.name);
+            $(el).closest('[data-layout-setting]').data('layout-setting', module);
 
             UIkit.modal('#layout-module-list').hide();
         });

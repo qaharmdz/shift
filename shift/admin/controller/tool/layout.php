@@ -127,7 +127,7 @@ class Layout extends Mvc\Controller
         $data['setting']   = $this->model_tool_layout->getLayout($layout_id);
         $data['modules']   = $this->model_extension_module->getModules();
 
-        // d($data['setting']['placements']);
+        // d($data['setting']);
         // d($data);
 
         $data['layouts'] = $this->load->controller('block/position');

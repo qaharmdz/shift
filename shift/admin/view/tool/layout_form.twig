@@ -179,32 +179,46 @@
 
 {% macro layoutPosition(position, data) %}
 {% set data = {
-    'setting': {},
+    'setting': {
+        'node_child': 'row',
+    },
     'rows': {},
 }|replace_recursive(data) %}
 <div class="position-wrapper position-node-{{ position }}" data-layout-position="{{ position }}" data-layout-setting='{{ data.setting|json_encode()|raw }}'>
     <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-{{ position }}-rows">
         <div class="uk-width-expand ukt-lh-1">{{ app.language.get(position) }}</div>
         <div class="uk-width-auto ukt-lh-1">
-            <button type="button" class="uk-button uk-button-primary uk-background-teal uk-button-mini button-layout"
-                data-layout-add='{"type":"row", "target":".js-node-{{ position }}-rows"}'
-                uk-tooltip title="{{ app.language.get('add_row') }}">
-                <i class="bi bi-plus-circle"></i>
-            </button>
+            {% if data.setting.node_child == 'module' %}
+                <button type="button" class="uk-button uk-button-primary uk-button-mini button-layout"
+                    data-layout-add='{"type":"row-module", "target":".js-node-{{ position }}-rows"}'
+                    uk-tooltip title="{{ app.language.get('add_module') }}">
+                    <i class="bi bi-plus"></i>
+                </button>
+            {% else %}
+                <button type="button" class="uk-button uk-button-primary uk-background-teal uk-button-mini button-layout"
+                    data-layout-add='{"type":"row", "target":".js-node-{{ position }}-rows"}'
+                    uk-tooltip title="{{ app.language.get('add_row') }}">
+                    <i class="bi bi-plus-circle"></i>
+                </button>
+            {% endif %}
         </div>
     </div>
-    <div class="position-rows js-node-{{ position }}-rows" data-layout-sortable='{"group":"rows"}'>
-        {{ _self.layoutRows(data.rows) }}
-    </div>
+    {% if data.setting.node_child == 'module' %}
+        <div class="position-rows js-node-{{ position }}-rows" data-layout-sortable='{"group":"modules"}'>
+            {{ _self.layoutModules(data.rows, true) }}
+        </div>
+    {% else %}
+        <div class="position-rows js-node-{{ position }}-rows" data-layout-sortable='{"group":"row"}'>
+            {{ _self.layoutRows(data.rows) }}
+        </div>
+    {% endif %}
 </div>
 {% endmacro %}
 
 {% macro layoutRows(data) %}
 {% for node, row in data %}
 {% set row = {
-    'setting': {
-        'child_width': 'uk-child-width-1-3',
-    },
+    'setting': {},
     'columns': {},
 }|replace_recursive(row) %}
 <div class="row-wrapper" data-layout-row="{{ node }}" data-layout-setting='{{ row.setting|json_encode()|raw }}'>
@@ -232,7 +246,7 @@
             </div>
         </div>
     </div>
-    <div class="row-columns uk-grid-small {{ row.setting.child_width }} js-node-{{ node }}" uk-grid data-layout-sortable='{"group":"columns"}'>
+    <div class="row-columns uk-grid-small uk-child-width-1-2 js-node-{{ node }}" uk-grid data-layout-sortable='{"group":"columns"}'>
         {{ _self.layoutColumns(row.columns) }}
     </div>
 </div>
@@ -243,7 +257,7 @@
 {% for node, column in data %}
 {% set column = {
     'setting': {
-        'width': '',
+        'width': 'uk-width-1-2',
     },
     'modules': {},
 }|replace_recursive(column) %}
@@ -279,14 +293,14 @@
 {% endfor %}
 {% endmacro %}
 
-{% macro layoutModules(data) %}
+{% macro layoutModules(data, isRowModule = false) %}
 {% for node, setting in data %}
 {% set setting = {
     'module_id': 0,
     'codename': '',
     'name': '',
 }|replace_recursive(setting) %}
-<div class="module-wrapper uk-flex" data-layout-module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
+<div class="module-wrapper uk-flex" data-layout-{{ isRowModule ? 'row-' }}module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
     <div class="uk-width-expand uk-flex">
         <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
         <div class="module-data js-module-trove uk-display-inline-block uk-width-1-1">

@@ -31,6 +31,7 @@ $_['add_row']           = 'Add Row';
 $_['setting_row']       = 'Setting Row';
 $_['delete_row']        = 'Delete Row';
 $_['add_column']        = 'Add Column';
+$_['setting_column']    = 'Setting Column';
 $_['delete_column']     = 'Delete Column';
 $_['add_module']        = 'Add Module';
 $_['delete_module']     = 'Delete Module';
