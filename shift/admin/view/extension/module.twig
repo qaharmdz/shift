@@ -110,7 +110,7 @@ let tableEl     = '#extensionModule-list',
             { data : 'module_id' },
             { data : 'codename',
                 render : function(data, type, full) {
-                    return '<code>' + data + (full.type ? ' [' + full.type + ']' : '') + '</code>';
+                    return '<code>' + data + (full.type ? '::' + full.type : '') + '</code>';
                 }
             },
             { data : 'name' },

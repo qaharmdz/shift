@@ -6,7 +6,7 @@
 // Default dataTables initialisation
 // ================================================
 $.extend($.fn.dataTable.defaults, {
-    dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-2-3'fi>'<'uk-width-1-3 dt-top-right'lB>>><'dataTables-content't><'dataTables-bottom'<'uk-grid'<'uk-width-1-3'i><'uk-width-2-3 uk-text-right'p>>>r",
+    dom             : "<'dataTables-top'<'uk-grid uk-grid-small'<'uk-width-expand'fi>'<'uk-width-auto dt-top-right'lB>>><'dataTables-content't><'dataTables-bottom'<'uk-grid'<'uk-width-expand'i><'uk-width-auto'p>>>r",
     serverSide      : true,
     processing      : true,
     searchDelay     : 1000,
@@ -293,6 +293,76 @@ $.fn.dataTable.ext.renderer.pageButton.uikit = function (settings, host, idx, bu
         $(host).empty().html('<ul class="uk-pagination uk-flex-right"/>').children('ul'),
         buttons
    );
+};
+
+// Shift DataTables static table with input filter configuration
+// ================================================
+/**
+ * <table id="table-list">
+ *     <thead>
+ *         <tr><th>ID</th><th>Name</th></tr>
+ *         <tr class="dt-filters"><td>ID</td><td>Name</td></tr>
+ *     </thead>
+ *     <tbody>
+ *         <tr><td>1</td><td>John Doe</td></tr>
+ *         <tr><td>2</td><td>Jane Doe</td></tr>
+ *     </tbody>
+ * </table>
+ *
+ * $('#table-list').DataTable($.extend($.fn.dataTable.configBasic, {
+ *     sorting : [[1, 'asc'], [2, 'asc']], // codex, name
+ * }));
+ */
+$.fn.dataTable.configBasic = {
+    serverSide  : false,
+    processing  : false,
+    searchDelay : 200,
+    // https://datatables.net/extensions/fixedheader/examples/options/columnFiltering.html
+    initComplete: function () {
+        var api = this.api();
+
+        // For each column
+        api
+            .columns()
+            .eq(0)
+            .each(function (colIdx) {
+                // Set the header cell to contain the input element
+                var cell = $('.dt-filters td').eq(
+                    $(api.column(colIdx).header()).index()
+                );
+                var title = $(cell).text();
+                console.log(cell);
+                $(cell).html('<input type="text" class="uk-input" placeholder="' + title + '" />');
+
+                // On every keypress in this input
+                $(
+                    'input',
+                    $('.dt-filters td').eq($(api.column(colIdx).header()).index())
+                )
+                    .off('keyup change')
+                    .on('change', function (e) {
+                        // Get the search value
+                        $(this).attr('title', $(this).val());
+                        var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                        // Search the column for that value
+                        api
+                            .column(colIdx)
+                            .search(
+                                this.value != ''
+                                    ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                    : '',
+                                this.value != '',
+                                this.value == ''
+                            )
+                            .draw();
+                    })
+                    .on('keyup', function (e) {
+                        e.stopPropagation();
+                        $(this).trigger('change');
+                    });
+            });
+    }
 };
 
 // Shift DataTables utilities

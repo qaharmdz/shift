@@ -109,6 +109,7 @@ class Layout extends Mvc\Controller
 
         $this->document->loadAsset('sortable.layout');
         $this->document->loadAsset('codemirror');
+        $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('tool')],

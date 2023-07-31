@@ -181,8 +181,8 @@ $(document).ready(function() {
     $('[data-layout-position]').on('click', '.js-module-trove', function(e) {
         let el = this;
 
-        UIkit.modal('#layout-module-list').show();
-        UIkit.util.on('#layout-module-list', 'hidden', function() {
+        UIkit.modal('#layout-module-modal').show();
+        UIkit.util.on('#layout-module-modal', 'hidden', function() {
             $.fn.shift.layout.save();
         });
 
@@ -192,9 +192,13 @@ $(document).ready(function() {
             $(el).html('<code>' + module.codename + '</code> ' + module.name);
             $(el).closest('[data-layout-setting]').data('layout-setting', module);
 
-            UIkit.modal('#layout-module-list').hide();
+            UIkit.modal('#layout-module-modal').hide();
         });
     });
+
+    $('#layout-module-list').DataTable($.extend($.fn.dataTable.configBasic, {
+        sorting : [[1, 'asc'], [2, 'asc']], // codex, name
+    }));
 
     $.fn.shift.layout.construct();
 });

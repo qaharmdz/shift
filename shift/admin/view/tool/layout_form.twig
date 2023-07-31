@@ -7,7 +7,7 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ app.language.get('page_title') }} <span class="uk-sub-title">{{ app.language.get('id') }} #{{ layout_id }}</span></h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">
@@ -139,24 +139,29 @@
     </div>
 
 <div id="layout-module-wrapper" class="uk-hidden">
-    <div id="layout-module-list" class="layout-select-modules" uk-modal>
+    <div id="layout-module-modal" class="layout-select-modules" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-width-750">
             <button class="uk-modal-close-default" type="button" uk-close></button>
-            <h2 class="uk-modal-title ukt-mb-2">{{ app.language.get('module') }}</h2>
-            <div id="layout-module-content">
-                <table class="uk-table uk-table-striped uk-table-hover">
+            <h2 class="uk-modal-title ukt-mb-3 uk-title">{{ app.language.get('module') }} <span class="uk-sub-title">{{ app.language.get('select_module') }}</span></h2>
+            <div id="layout-module-content" class="hide-dataTables-top">
+                <table id="layout-module-list" class="uk-table uk-table-striped uk-table-hover">
                     <thead>
-                    <tr>
-                        <th class="uk-text-center" style="width:50px">{{ app.language.get('id') }}</th>
-                        <th class="uk-text-center" style="width:150px">{{ app.language.get('codename') }}</th>
-                        <th class="uk-text-center">{{ app.language.get('module') }}</th>
-                    </tr>
+                        <tr>
+                            <th class="uk-text-center" style="width:50px">{{ app.language.get('id') }}</th>
+                            <th class="uk-text-center" style="width:150px">{{ app.language.get('codename') }}</th>
+                            <th class="uk-text-center">{{ app.language.get('module') }}</th>
+                        </tr>
+                        <tr class="dt-filters">
+                            <td>{{ app.language.get('id') }}</td>
+                            <td>{{ app.language.get('codename') }}</td>
+                            <td>{{ app.language.get('module') }}</td>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for module in modules %}
                         <tr>
                             <td class="uk-text-center">{{ module.extension_module_id}}</td>
-                            <td><code>{{ module.codename }}</code></td>
+                            <td><code>{{ module.codename }}{{ module.type ? '::' ~ module.type }}</code></td>
                             <td>
                                 <a class="js-select-module" data-module-info='{"module_id":{{ module.extension_module_id }},"codename":"{{ module.codename }}","name": "{{ module.name }}"}'>
                                     {{ module.name }}
