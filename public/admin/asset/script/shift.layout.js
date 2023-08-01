@@ -194,7 +194,8 @@ $(document).ready(function() {
     });
 
     $('#layout-module-list').DataTable($.extend($.fn.dataTable.configBasic, {
-        sorting : [[1, 'asc'], [2, 'asc']], // codex, name
+        pageLength  : 12,
+        sorting     : [[1, 'asc'], [2, 'asc']], // codex, name
     }));
 
     $.fn.shift.layout.construct();

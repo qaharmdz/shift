@@ -317,6 +317,10 @@ $.fn.dataTable.configBasic = {
     serverSide  : false,
     processing  : false,
     searchDelay : 200,
+    pageLength  : 20,
+    language    : {
+        infoPostFix : '',
+    },
 
     // https://datatables.net/extensions/fixedheader/examples/options/columnFiltering.html
     initComplete: function () {
