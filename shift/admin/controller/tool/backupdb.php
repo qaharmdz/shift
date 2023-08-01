@@ -25,7 +25,6 @@ class BackupDb extends Mvc\Controller
 
         $data['alerts']   = $this->session->pull('flash.alert');
 
-
         $data['dbTables'] = [];
         foreach ($this->model_tool_backupdb->getTables() as $table) {
             $data['dbTables'][] = [

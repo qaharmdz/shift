@@ -71,15 +71,6 @@
 
             $(opt.target).append(template);
         }
-        if (opt.type == 'row-module') {
-            elid     = euid('rowmod-xxxxxxxxxxxx');
-            template = $('#template-module')
-                            .html()
-                            .replaceAll('data-layout-module', 'data-layout-row-module')
-                            .replaceAll('{-node-}', elid);
-
-            $(opt.target).append(template);
-        }
 
         $.fn.shift.layout.save();
     };
@@ -119,52 +110,58 @@
                 'rows' : {},
             };
 
-            $(this).find('[data-layout-row]').each(function() {
-                let row = $(this).data('layout-row');
-                data[position].rows[row] = {
-                    'setting' : $(this).data('layout-setting'),
-                    'columns' : {},
-                };
+            let isChildRow = $(this).find('[data-layout-row]').length;
 
-                $(this).find('[data-layout-column]').each(function() {
-                    let column = $(this).data('layout-column');
-                    data[position].rows[row].columns[column] = {
+            if (isChildRow) {
+                $(this).find('[data-layout-row]').each(function() {
+                    let row = $(this).data('layout-row');
+                    data[position].rows[row] = {
                         'setting' : $(this).data('layout-setting'),
-                        'modules' : {},
+                        'columns' : {},
                     };
 
-                    $(this).find('[data-layout-module]').each(function() {
-                        let module = $(this).data('layout-module');
-                        data[position].rows[row].columns[column].modules[module] = $(this).data('layout-setting');
+                    $(this).find('[data-layout-column]').each(function() {
+                        let column = $(this).data('layout-column');
+                        data[position].rows[row].columns[column] = {
+                            'setting' : $(this).data('layout-setting'),
+                            'modules' : {},
+                        };
 
-                        if (data[position].rows[row].columns[column].modules[module].module_id === 0) {
-                            delete data[position].rows[row].columns[column].modules[module];
+                        $(this).find('[data-layout-module]').each(function() {
+                            let module = $(this).data('layout-module');
+                            data[position].rows[row].columns[column].modules[module] = $(this).data('layout-setting');
+
+                            if (data[position].rows[row].columns[column].modules[module].module_id === 0) {
+                                delete data[position].rows[row].columns[column].modules[module];
+                            }
+                        });
+
+                        if (Object.keys(data[position].rows[row].columns[column].modules).length === 0) {
+                            delete data[position].rows[row].columns[column];
                         }
                     });
 
-                    if (Object.keys(data[position].rows[row].columns[column].modules).length === 0) {
-                        delete data[position].rows[row].columns[column];
+                    if (Object.keys(data[position].rows[row].columns).length === 0) {
+                        delete data[position].rows[row];
                     }
                 });
+            } else {
+                $(this).find('[data-layout-module]').each(function() {
+                    let module = $(this).data('layout-module');
+                    data[position].rows[module] = $(this).data('layout-setting');
 
-                if (Object.keys(data[position].rows[row].columns).length === 0) {
-                    delete data[position].rows[row];
-                }
-            });
-
-            $(this).find('[data-layout-row-module]').each(function() {
-                let rowModule = $(this).data('layout-row-module');
-                data[position].rows[rowModule] = $(this).data('layout-setting');
-
-                if (data[position].rows[rowModule].module_id === 0) {
-                    delete data[position].rows[rowModule];
-                }
-            });
+                    if (data[position].rows[module].module_id === 0) {
+                        delete data[position].rows[module];
+                    }
+                });
+            }
 
             if (Object.keys(data[position].rows).length === 0) {
                 delete data[position];
             }
         });
+
+        console.log(data);
 
         $('.js-layout-placements').text(JSON.stringify(data));
     };

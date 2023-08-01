@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Admin extension/manage
+- Admin tool/layout
+- Admin extension/module/codex
 
 ### Changed
 - n/a

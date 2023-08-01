@@ -195,7 +195,7 @@
         <div class="uk-width-auto ukt-lh-1">
             {% if data.setting.node_child == 'module' %}
                 <button type="button" class="uk-button uk-button-primary uk-button-mini button-layout"
-                    data-layout-add='{"type":"row-module", "target":".js-node-{{ position }}-rows"}'
+                    data-layout-add='{"type":"module", "target":".js-node-{{ position }}-rows"}'
                     uk-tooltip title="{{ app.language.get('add_module') }}">
                     <i class="bi bi-plus"></i>
                 </button>
@@ -210,7 +210,7 @@
     </div>
     {% if data.setting.node_child == 'module' %}
         <div class="position-rows js-node-{{ position }}-rows" data-layout-sortable='{"group":"modules"}'>
-            {{ _self.layoutModules(data.rows, true) }}
+            {{ _self.layoutModules(data.rows) }}
         </div>
     {% else %}
         <div class="position-rows js-node-{{ position }}-rows" data-layout-sortable='{"group":"row"}'>
@@ -298,14 +298,14 @@
 {% endfor %}
 {% endmacro %}
 
-{% macro layoutModules(data, isRowModule = false) %}
+{% macro layoutModules(data) %}
 {% for node, setting in data %}
 {% set setting = {
     'module_id': 0,
     'codename': '',
     'name': '',
 }|replace_recursive(setting) %}
-<div class="module-wrapper uk-flex" data-layout-{{ isRowModule ? 'row-' }}module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
+<div class="module-wrapper uk-flex" data-layout-module="{{ node }}" data-layout-setting='{{ setting|json_encode()|raw }}'>
     <div class="uk-width-expand uk-flex">
         <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
         <div class="module-data js-module-trove uk-display-inline-block uk-width-1-1">

@@ -317,6 +317,7 @@ $.fn.dataTable.configBasic = {
     serverSide  : false,
     processing  : false,
     searchDelay : 200,
+
     // https://datatables.net/extensions/fixedheader/examples/options/columnFiltering.html
     initComplete: function () {
         var api = this.api();
@@ -331,7 +332,6 @@ $.fn.dataTable.configBasic = {
                     $(api.column(colIdx).header()).index()
                 );
                 var title = $(cell).text();
-                console.log(cell);
                 $(cell).html('<input type="text" class="uk-input" placeholder="' + title + '" />');
 
                 // On every keypress in this input
