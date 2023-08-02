@@ -46,7 +46,7 @@
         }
 
         if (opt.type == 'row') {
-            elid     = euid('row-xxxxxxxxxxxx');
+            elid = euid('row-xxxxxxxxxxxx');
             template = $('#template-row')
                             .html()
                             .replaceAll('{-node-}', elid);
@@ -55,7 +55,7 @@
             $.fn.shift.layout.construct();
         }
         if (opt.type == 'column') {
-            elid     = euid('col-xxxxxxxxxxxx');
+            elid = euid('col-xxxxxxxxxxxx');
             template = $('#template-column')
                             .html()
                             .replaceAll('{-node-}', elid);
@@ -64,7 +64,7 @@
             $.fn.shift.layout.construct();
         }
         if (opt.type == 'module') {
-            elid     = euid('mod-xxxxxxxxxxxx');
+            elid = euid('mod-xxxxxxxxxxxx');
             template = $('#template-module')
                             .html()
                             .replaceAll('{-node-}', elid);
@@ -161,9 +161,8 @@
             }
         });
 
-        console.log(data);
-
         $('.js-layout-placements').text(JSON.stringify(data));
+        shift.formChanged = true;
     };
 })(jQuery);
 

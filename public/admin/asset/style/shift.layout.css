@@ -64,6 +64,9 @@
 .row-wrapper:hover {
     background: #eef3ff;
 }
+.row-wrapper:hover .row-header {
+    background: #cadafb;
+}
 .row-wrapper + .row-wrapper {
     margin-top: 8px;
 }
@@ -173,4 +176,9 @@
 .layout-select-modules .uk-table th,
 .layout-select-modules .uk-table td {
     padding: 7px 6px;
+}
+.layout-select-modules .uk-table td a {
+    display: block;
+    margin: -5px;
+    padding: 5px;
 }
