@@ -16,6 +16,7 @@ class Dispatch
     protected null|string $file = null;
     protected null|string $class = null;
     protected string $method = 'index';
+    protected array $meta = [];
 
     public function __construct(string $route)
     {
@@ -56,22 +57,35 @@ class Dispatch
 
         if ($extParts[0] === 'extensions') {
             list($ext, $extType, $extCodename) = $extParts;
+            $countExtPart = count($extParts);
 
-            if (count($extParts) === 3) {
+            if ($countExtPart === 3) {
                 $extParts[] = 'index';
             }
-            $extFile = implode('/', array_slice($extParts, 2));
+
+            if ($countExtPart > 4) {
+                // Remove codename as the class name
+                $extClassMethod = implode('/', array_slice($extParts, 3));
+            } else {
+                $extClassMethod = implode('/', array_slice($extParts, 2));
+            }
 
             $routeMap = strtr('extensions/:type/:codename/:app_folder/controller/:class_method', [
                 ':type'         => $extType,
                 ':codename'     => $extCodename,
                 ':app_folder'   => APP_FOLDER,
-                ':class_method' => $extFile,
+                ':class_method' => $extClassMethod,
             ]);
 
             $this->routeMap  = $routeMap;
             $this->basePath  = PATH_SHIFT;
             $this->namespace = 'Shift\\';
+            $this->meta      = [
+                'type'         => $extType,
+                'codename'     => $extCodename,
+                'app_folder'   => APP_FOLDER,
+                'class_method' => $extClassMethod,
+            ];
         }
 
         return explode('/', $this->routeMap);
@@ -92,6 +106,7 @@ class Dispatch
             'namespace' => $this->namespace,
             'class'     => $this->class,
             'method'    => $this->method,
+            'meta'      => $this->meta,
         ];
     }
 
