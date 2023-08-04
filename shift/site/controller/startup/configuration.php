@@ -12,6 +12,7 @@ class Configuration extends Mvc\Controller
     public function index()
     {
         //=== Multi sites
+        // TODO: Multi-site $site_id
         $query = $this->db->get("SELECT * FROM " . DB_PREFIX . "site WHERE REPLACE(`url_host`, 'www.', '') = '" . $this->db->escape(str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\')) . "'");
 
         $site_id = $this->request->getInt('query.site_id', 0);

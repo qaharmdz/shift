@@ -52,7 +52,7 @@ class Log extends Mvc\Controller
         ];
 
         // Current log file
-        $file     = $this->request->get('query.file', $this->log->getConfig('logfile', 'log-' . date('Y-m') . '.log'));
+        $file     = $this->request->get('query.file', $this->log->getConfig('logfile', date('Y-m') . '.log'));
         $fileinfo = $data['logFiles'][$file] ?? $this->fileinfo($file);
 
         $data['fileinfo'] = $fileinfo;

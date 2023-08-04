@@ -23,7 +23,7 @@ class Logger
         $this->config = array_replace_recursive(
             [
                 'path'    => PATH_TEMP . 'logs/',
-                'logfile' => 'log-' . date('Y-m') . '.log',
+                'logfile' => date('Y-m') . '.log',
                 'display' => false
             ],
             $this->config,

@@ -11,10 +11,15 @@ class Configuration extends Mvc\Controller
 {
     public function index()
     {
+        //=== Multi sites
+        // TODO: Multi-site $site_id
+        $site_id = 0;
+        $this->config->set('env.site_id', $site_id);
+
         //=== Settings
         $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = '0' AND `group` = ?s ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
-            ['system']
+            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
+            [$site_id, 'system']
         );
 
         $settings = [];
