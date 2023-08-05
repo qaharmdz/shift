@@ -33,7 +33,7 @@ class Database
     {
         $this->config = array_replace_recursive(
             [
-                'query_fallback' => true
+                'raw_query' => true
             ],
             $this->config,
             $configuration
@@ -105,7 +105,7 @@ class Database
      */
     public function query(string $query, array $params = [], string $types = ''): \mysqli_result|\mysqli_stmt|bool
     {
-        if ($params === [] && $this->getConfig('query_fallback')) {
+        if ($params === [] && $this->getConfig('raw_query')) {
             return $this->raw($query);
         }
 
@@ -289,7 +289,7 @@ class Database
         }
         if (count(array_unique($tokenParam)) !== count(array_intersect_key(array_flip($tokenParam), $params))) {
             throw new \InvalidArgumentException(
-                sprintf('The number of given parameters not match named-parameter for query: %s', $query)
+                sprintf('The number of given parameters does not match the named-parameter for query: %s', $query)
             );
         }
 
@@ -402,6 +402,7 @@ class Database
 
     /**
      * SELECT query helper.
+     * TODO: change to select()
      *
      * @param  string $query
      * @param  array  $params
@@ -429,6 +430,7 @@ class Database
 
     /**
      * INSERT query builder. Use transaction() for multiple INSERT.
+     * TODO: change to insert(), add param bool $multi
      *
      * @param  string $table
      * @param  array  $data
@@ -455,6 +457,7 @@ class Database
 
     /**
      * UPDATE query builder. Use transaction() for multiple UPDATE.
+     * TODO: change to update(), add param bool $multi
      *
      * @param  string $table
      * @param  array  $data
@@ -495,6 +498,7 @@ class Database
 
     /**
      * DELETE query helper
+     * TODO: change to delete()
      *
      * @param  string $table
      * @param  array  $where
