@@ -75,8 +75,8 @@ ClassicEditor.defaultConfig =  {
     htmlSupport: {
         allow: [
             {
-                name: /^(div|span|section|table|ul|ol|p|b|i|u)$/,
-                attributes: true,
+                name: /^(div|span|section|article|table|ul|ol|p|b|i|u)$/,
+                attributes: ['id', /data-*/, /uk-*/],
                 classes: true,
                 styles: true,
             },
