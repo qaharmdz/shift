@@ -21,14 +21,14 @@
                 <legend class="uk-legend">{{ app.language.get('backup') }}</legend>
 
                 {{ forms.checkboxPanel({'label':'db_table', 'name':'export[]', lists:dbTables, checked:dbTables, htmlEnd:'
-<div class="uk-child-width-1-2 ukt-mt-3" uk-grid>
-    <div class="uk-text-small">
+<div class="uk-flex uk-flex-top ukt-mt-3">
+    <div class="uk-width-expand uk-text-small">
         <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
         <span class="ukt-mx-2">|</span>
         <a class="js-unselect-all">' ~ app.language.get('unselect_all') ~ '</a>
     </div>
-    <div>
-        <button type="submit" class="uk-button uk-button-secondary ukt-px-3 uk-align-right" form="form-export">
+    <div class="uk-width-auto">
+        <button type="submit" class="uk-button uk-button-secondary uk-button-large" form="form-export">
             <i class="bi bi-download ukt-mr-1"></i>' ~ app.language.get('export') ~ '
         </button>
     </div>
@@ -44,7 +44,7 @@
                     <progress id="js-progress-import" class="uk-progress" value="0" max="100"></progress>
                 </div>
 
-                <button type="button" id="button-import" class="uk-button uk-button-primary uk-align-center">
+                <button type="button" id="button-import" class="uk-button uk-button-primary uk-button-large uk-align-center">
                     <i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('import') }}
                 </button>
             </fieldset>

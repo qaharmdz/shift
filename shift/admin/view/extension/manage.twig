@@ -41,7 +41,7 @@
                     <td class="ukt-pt-1">
                         <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
                     </td>
-                    <td data-filter='{"type":"text"}'>
+                    <td data-dtInputfilter='{"type":"text"}'>
                         <select data-index="1" class="uk-select">
                             <option value=""></option>
                             <option value="plugin">{{ app.language.get('plugin') }}</option>
@@ -50,29 +50,29 @@
                             <option value="language">{{ app.language.get('language') }}</option>
                         </select>
                     </td>
-                    <td data-filter='{"type":"number"}'>
+                    <td data-dtInputfilter='{"type":"number"}'>
                         <input type="text" value="" data-index="2" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string"}'>
+                    <td data-dtInputfilter='{"type":"string"}'>
                         <input type="text" value="" data-index="3" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string"}'>
+                    <td data-dtInputfilter='{"type":"string"}'>
                         <input type="text" value="" data-index="4" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string"}'>
+                    <td data-dtInputfilter='{"type":"string"}'>
                         <input type="text" value="" data-index="5" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"string"}'>
+                    <td data-dtInputfilter='{"type":"string"}'>
                         <input type="text" value="" data-index="6" class="uk-input">
                     </td>
-                    <td data-filter='{"type":"number"}'>
+                    <td data-dtInputfilter='{"type":"number"}'>
                         <select data-index="7" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('installed') }}</option>
                             <option value="0">{{ app.language.get('installed_not') }}</option>
                         </select>
                     </td>
-                    <td data-filter='{"type":"number"}'>
+                    <td data-dtInputfilter='{"type":"number"}'>
                         <select data-index="8" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('enabled') }}</option>

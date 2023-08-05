@@ -374,7 +374,7 @@ $.fn.dataTable.configBasic = {
 
 function dtShiftColumnFilter(d) {
     $('[data-dtColumnFilter] td').each(function(i) {
-        let colFilter = $(this).data('filter');
+        let colFilter = $(this).data('dtInputfilter');
         if (colFilter) {
             let forms = $('input, select', this),
                 index = forms.data('index');
