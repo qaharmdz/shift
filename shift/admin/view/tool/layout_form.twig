@@ -39,52 +39,40 @@
                         {'text': app.language.get('disabled'), 'value': 0}
                     ]}) }}
 
-                    <table class="uk-table uk-table-striped uk-table-hover">
-                        <thead>
-                            <tr>
-                                <th class="uk-width-225 uk-text-center">{{ app.language.get('site') }}</th>
-                                <th class="uk-width-50 uk-text-center">{{ app.language.get('exclude') }}</th>
-                                <th class="uk-width-350 uk-text-center">{{ app.language.get('route') }}</th>
-                                <th class="uk-text-center">{{ app.language.get('url_param') }}</th>
-                                <th class="uk-width-75">{{ app.language.get('priority') }}</th>
-                                <th class="uk-width-50 uk-text-center">{{ app.language.get('action') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for route in setting.routes %}
-                                {% set i = loop.index %}
-                                <tr>
-                                    <td>
-                                        <select name="routes[{{ i }}][site_id]" class="uk-select uk-form-small">
-                                            {% for site in sites %}
-                                            <option value="{{ site.site_id }}" {{ site.site_id == route.site_id ? 'selected'}}>{{ site.title}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </td>
-                                    <td class="uk-text-center">
-                                        <input type="checkbox" name="routes[{{ i }}][exclude]" value="{{ route.exclude }}" {{ route.exclude ? 'checked' }} class="uk-checkbox ukt-mt-1">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="routes[{{ i }}][route]" value="{{ route.route }}" placeholder="ex. content/*, content/tag" class="uk-input uk-form-small">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="routes[{{ i }}][url_params]" value="{{ route.url_params }}" placeholder="ex. category_id=1&post_id=2" class="uk-input uk-form-small">
-                                    </td>
-                                    <td>
-                                        <input type="number" name="routes[{{ i }}][priority]" value="{{ route.priority }}" class="uk-input uk-form-small">
-                                    </td>
-                                    <td class="uk-text-center">
-                                        <a class="uk-text-danger uk-display-inline-block ukt-mt-1" uk-tooltip title="remove"><i class="bi bi-dash-square-fill"></i></a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div id="layout-routes" class="uk-margin">
+                        <label class="uk-form-label" for="status">{{ app.language.get('routes') }}</label>
+                        <div class="uk-form-controls uk-text-right">
+                            <button type="button" class="uk-button uk-button-primary uk-button-small ukt-px-3 ukt-mt-2"
+                                data-layout-route='{"action":"add", "target":"#layout-routes-table tbody"}'>
+                                {{ app.language.get('add_route') }}
+                            </button>
+                        </div>
+                        <div class="ukt-px-2 ukt-pb-2 ukt-mt-3 ukt-mb-3 uk-background-white">
+                            <table id="layout-routes-table" class="uk-table uk-table-striped uk-table-hover ukt-mb-2">
+                                <thead>
+                                    <tr>
+                                        <th class="uk-width-225 uk-text-center">{{ app.language.get('site') }}</th>
+                                        <th class="uk-width-50 uk-text-center">{{ app.language.get('exclude') }}</th>
+                                        <th class="uk-width-350 uk-text-center">{{ app.language.get('route') }}</th>
+                                        <th class="uk-text-center">{{ app.language.get('url_param') }}</th>
+                                        <th class="uk-width-75">{{ app.language.get('priority') }}</th>
+                                        <th class="uk-width-50 uk-text-center">{{ app.language.get('action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, route in setting.routes %}
+                                        {{ _self.layoutRoute(loop.index, sites, route) }}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
 
             <div class="uk-card-panel uk-card-body">
                 <h3 class="uk-legend">{{ app.language.get('module_placement') }}</h3>
+                {# TODO: Select active positions #}
 
                 {{ _self.layoutPosition('alpha', setting.placements.alpha) }}
                 {{ _self.layoutPosition('topbar', setting.placements.topbar) }}
@@ -176,11 +164,46 @@
     </div>
 </div>
 
-<template id="template-row">{{ _self.layoutRows({'{-node-}': {}}) }}</template>
-<template id="template-column">{{ _self.layoutColumns({'{-node-}': {}}) }}</template>
-<template id="template-module">{{ _self.layoutModules({'{-node-}': {}}) }}</template>
+<template id="template-layout-routes" hidden>{{ _self.layoutRoute('{-i-}', sites, []) }}</template>
+<template id="template-row" hidden>{{ _self.layoutRows({'{-node-}': {}}) }}</template>
+<template id="template-column" hidden>{{ _self.layoutColumns({'{-node-}': {}}) }}</template>
+<template id="template-module" hidden>{{ _self.layoutModules({'{-node-}': {}}) }}</template>
 </div>
 {% endblock %}
+
+{% macro layoutRoute(i, sites, data) %}
+{% set data = {
+    'site_id'   : 0,
+    'route'     : '',
+    'url_params': '',
+    'exclude'   : 0,
+    'priority'  : 0,
+}|replace_recursive(data) %}
+<tr>
+    <td>
+        <select name="routes[{{ i }}][site_id]" class="uk-select uk-form-small">
+            {% for site in sites %}
+            <option value="{{ site.site_id }}" {{ site.site_id == data.site_id ? 'selected'}}>{{ site.title}}</option>
+            {% endfor %}
+        </select>
+    </td>
+    <td class="uk-text-center">
+        <input type="checkbox" name="routes[{{ i }}][exclude]" value="1" {{ data.exclude ? 'checked' }} class="uk-checkbox ukt-mt-1">
+    </td>
+    <td>
+        <input type="text" name="routes[{{ i }}][route]" value="{{ data.route }}" placeholder="ex. content/*, content/category" class="uk-input uk-form-small">
+    </td>
+    <td>
+        <input type="text" name="routes[{{ i }}][url_params]" value="{{ data.url_params }}" placeholder="ex. category_id=1&post_id=2" class="uk-input uk-form-small">
+    </td>
+    <td>
+        <input type="number" name="routes[{{ i }}][priority]" value="{{ data.priority }}" class="uk-input uk-form-small">
+    </td>
+    <td class="uk-text-center">
+        <a class="uk-text-danger uk-display-inline-block ukt-mt-1" uk-tooltip title="{{ app.language.get('delete') }}" data-layout-route='{"action":"delete"}'><i class="bi bi-dash-square-fill"></i></a>
+    </td>
+</tr>
+{% endmacro %}
 
 {% macro layoutPosition(position, data) %}
 {% set data = {
@@ -239,6 +262,7 @@
                     uk-tooltip title="{{ app.language.get('add_column') }}">
                     <i class="bi bi-plus-square"></i>
                 </button>
+                {# TODO: layout row settings #}
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
                     uk-tooltip title="{{ app.language.get('setting_row') }}">
                     <i class="bi bi-gear-fill"></i>
@@ -281,6 +305,7 @@
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
                     uk-tooltip title="{{ app.language.get('setting_column') }}">
+                    {# TODO: layout column settings #}
                     <i class="bi bi-gear-fill"></i>
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
@@ -317,6 +342,7 @@
         </div>
     </div>
     <div class="uk-width-auto ukt-lh-1">
+        {# TODO: layout column edit icon - open new tab #}
         <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
             data-layout-delete='{"type":"module"}'
             uk-tooltip title="{{ app.language.get('delete_module') }}">

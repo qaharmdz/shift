@@ -165,8 +165,6 @@ class Layout extends Mvc\Controller
             return $this->response->setOutputJson($errors, 422);
         }
 
-        // $this->log->write($post);
-
         $post['placements'] = html_entity_decode($post['placements']);
 
         if (!$layout_id) {

@@ -51,7 +51,7 @@
                             .html()
                             .replaceAll('{-node-}', elid);
 
-            $(opt.target).append(template);
+            $(template).appendTo(opt.target).hide().fadeIn(500);
             $.fn.shift.layout.construct();
         }
         if (opt.type == 'column') {
@@ -60,7 +60,7 @@
                             .html()
                             .replaceAll('{-node-}', elid);
 
-            $(opt.target).append(template);
+            $(template).appendTo(opt.target).hide().fadeIn(500);
             $.fn.shift.layout.construct();
         }
         if (opt.type == 'module') {
@@ -69,7 +69,7 @@
                             .html()
                             .replaceAll('{-node-}', elid);
 
-            $(opt.target).append(template);
+            $(template).appendTo(opt.target).hide().fadeIn(500);
         }
 
         $.fn.shift.layout.save();
@@ -88,13 +88,13 @@
         }
 
         if (opt.type == 'row') {
-            $(el).closest('.row-wrapper').remove();
+            $(el).closest('.row-wrapper').fadeOut(250, function() { $(this).remove(); });
         }
         if (opt.type == 'column') {
-            $(el).closest('.column-wrapper').remove();
+            $(el).closest('.column-wrapper').fadeOut(250, function() { $(this).remove(); });
         }
         if (opt.type == 'module') {
-            $(el).closest('.module-wrapper').remove();
+            $(el).closest('.module-wrapper').fadeOut(250, function() { $(this).remove(); });
         }
 
         $.fn.shift.layout.save();
@@ -167,6 +167,32 @@
 })(jQuery);
 
 $(document).ready(function() {
+    $('#layout-routes').on('click', '[data-layout-route]', function(e) {
+        let el  = this,
+            opt  = $.extend(
+                {
+                    action : '',
+                    target : '',
+                },
+                $(el).data('layout-route')
+            );
+
+        if (opt.action == 'add') {
+            let elid = euid('route-xxxxxxxx'),
+                template = $('#template-layout-routes')
+                            .html()
+                            .replaceAll('{-i-}', elid);
+
+            $(template).appendTo(opt.target).hide().fadeIn(500);
+        }
+
+        if (opt.action == 'delete') {
+            $(this).closest('tr').fadeOut(250, function() { $(this).remove(); });
+        }
+
+        shift.formChanged = true;
+    });
+
     $('[data-layout-position]').on('click', '[data-layout-add]', function(e) {
         $.fn.shift.layout.add(this);
     });

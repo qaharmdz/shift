@@ -4,6 +4,8 @@ $_['page_title']        = 'Layouts';
 
 $_['tool']              = 'Tools';
 
+$_['routes']            = 'Routes';
+$_['add_route']         = 'Add Route';
 $_['site']              = 'Site';
 $_['exclude']           = 'Exclude';
 $_['route']             = 'URL Route';
