@@ -261,15 +261,6 @@ body {
     }
 }
 
-.tagline {
-    font-size: 1.6rem;
-    line-height: 1.2em;
-    color: #888;
-    font-weight: 300;
-    letter-spacing: -.5px;
-    margin-left: 5px;
-}
-
 .page-footer {
     color: #666;
     font-size: 12.6px;

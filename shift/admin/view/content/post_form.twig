@@ -5,9 +5,11 @@
 {% block main_content %}
 <div class="uk-container container-content-wrapper">
     <div class="content-header">
-        <div class="uk-child-width-expand" uk-grid>
-            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-            <div class="uk-flex uk-flex-middle uk-flex-right">
+        <div class="uk-flex uk-flex-middle">
+            <div class="uk-width-expand">
+                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+            </div>
+            <div class="uk-width-auto">
                 <div class="uk-button-group">
                     <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-post", "post_id":"{{ post_id }}"}'>{{ app.language.get('save') }}</button>
                     <div class="uk-inline">

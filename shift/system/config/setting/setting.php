@@ -5,7 +5,7 @@ declare(strict_types=1);
 // Default setting
 $_['form'] = [
     // General
-    'compression'       => 0,
+    'compression'       => 5,
     // 'login_session'     => 180,
 
     // Admin Options

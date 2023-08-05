@@ -108,7 +108,7 @@ $(document).ajaxError(function(event, jqxhr, settings, exception) {
 //=== UIkit components
 UIkit.mixin({
     data: {
-        offset: 10,
+        offset: 8,
         mode: 'click',
         animation: ['uk-animation-slide-bottom-small'],
     }

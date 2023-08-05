@@ -7,7 +7,7 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }} <span class="uk-sub-title">{{ app.language.get('id') }} #{{ layout_id }}</span></h1>
+                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}<span class="uk-sub-title">{{ layout_id ? app.language.get('id') ~ ' #' ~ layout_id }}</span></h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">

@@ -387,7 +387,9 @@ th.uk-text-break {
     color: #999;
     font-size: .75em;
     line-height: 1.4;
+    letter-spacing: -.8px;
     font-weight: 300;
+    margin-left: 6px;
 }
 .uk-text-meta,
 .uk-label-meta .uk-form-label,

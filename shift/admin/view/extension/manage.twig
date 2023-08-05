@@ -3,9 +3,11 @@
 {% block main_content %}
 <div class="uk-container container-content-wrapper">
     <div class="content-header">
-        <div class="uk-child-width-expand" uk-grid>
-            <div class="uk-width-auto@s"><h1>{{ app.language.get('page_title') }}</h1></div>
-            <div class="uk-flex uk-flex-middle uk-flex-right">
+        <div class="uk-flex uk-flex-middle">
+            <div class="uk-width-expand">
+                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+            </div>
+            <div class="uk-width-auto">
                 <button type="button" id="ext-upload-button" class="uk-button uk-button-primary"><i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('upload') }}</button>
             </div>
         </div>
@@ -112,8 +114,11 @@
 
 <div id="ext-info-wrapper" class="uk-hidden">
     <div id="ext-information" uk-modal>
-        <div id="ext-info-content" class="uk-modal-dialog uk-modal-body uk-width-750">
-            {{ app.language.get('processing') }}
+        <div class="uk-modal-dialog uk-modal-body uk-width-750">
+            <button class="uk-modal-close-outside" type="button" uk-close></button>
+            <div id="ext-info-content">
+                {{ app.language.get('processing') }}
+            </div>
         </div>
     </div>
 </div>
