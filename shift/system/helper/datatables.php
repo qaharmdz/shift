@@ -77,7 +77,7 @@ class DataTables
                 // Default mode default by type
                 if (!$columnSearch['mode']) {
                     switch ($columnSearch['type']) {
-                        case 'text': // type string, mode match
+                        case 'text': // type: string, mode: match
                         case 'number':
                             $columnSearch['mode'] = 'match';
                             break;
