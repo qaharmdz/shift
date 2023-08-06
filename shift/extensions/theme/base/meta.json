@@ -1,8 +1,8 @@
 {
-    "type"        : "module",
-    "codename"    : "codex",
+    "type"        : "theme",
+    "codename"    : "base",
 
-    "name"        : "Codex - HTML, Twig and Script",
+    "name"        : "Base Theme",
     "version"     : "1.0.0",
     "description" : "",
     "author"      : "Shift CMS",

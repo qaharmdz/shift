@@ -11,12 +11,154 @@
         </div>
     </div>
 
-    <div class="content-body">
-        <div class="uk-card-panel uk-card-body">
-<pre><code>Themes: Specific extension that change the Shift appearance and templates.
-    - "Add New" button will open a modal of listed installed theme to create a new theme style
-</code></pre>
-        </div>
+    <div class="content-body uk-card-panel uk-card-body">
+        <table id="extensionTheme-list" class="uk-table uk-table-striped uk-table-hover">
+            <thead>
+                <tr>
+                    <th class="ukt-px-0 noVisualColumn" style="width:30px;">
+                        <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
+                        <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-dtAction='{"type":"enabled"}'>{{ app.language.get('enabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"disabled"}'>{{ app.language.get('disabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th style="width:60px;">{{ app.language.get('id') }}</th>
+                    <th style="width:180px">{{ app.language.get('codename') }}</th>
+                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
+                    <th style="width:120px">{{ app.language.get('status') }}</th>
+                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                </tr>
+                <tr data-dtColumnFilter>
+                    <td class="ukt-pt-1">
+                        <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
+                    </td>
+                    <td data-dtInputfilter='{"type":"number"}'>
+                        <input type="text" value="" data-index="1" class="uk-input">
+                    </td>
+                    <td data-dtInputfilter='{"type":"string"}'>
+                        <input type="text" value="" data-index="2" class="uk-input">
+                    </td>
+                    <td data-dtInputfilter='{"type":"string"}'>
+                        <input type="text" value="" data-index="3" class="uk-input">
+                    </td>
+                    <td data-dtInputfilter='{"type":"number"}'>
+                        <select data-index="4" class="uk-select">
+                            <option value=""></option>
+                            <option value="1">{{ app.language.get('enabled') }}</option>
+                            <option value="0">{{ app.language.get('disabled') }}</option>
+                        </select>
+                    </td>
+                    <td class="uk-text-center">
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+let tableEl     = '#extensionTheme-list',
+    columnsHide = [],
+    dtTable     = $(tableEl).DataTable({
+        ajax : $.fn.dataTable.pipeline({
+            url  : "{{ app.router.url('extension/theme/list')|raw }}",
+            data : function(d, s) {
+                d = dtShiftColumnFilter(d);
+                d.timezone = getLocalTimezone();
+            }
+        }),
+        initComplete: function() {
+            dtShiftUtility(dtTable, columnsHide);
+        },
+        sorting : [[2, 'asc']], // codename
+        columnDefs : [
+            { searchable : false, targets : [0, -1] },
+            { orderable : false, targets : [0, -1] },
+            { createdCell : function(nTd) {
+                $(nTd).addClass('uk-text-center'); },
+                targets : [ 0, 1, -2, -1 ]
+            },
+        ],
+        columns : [
+            { data : 'extension_id',
+                render : function(data, type, full) {
+                    return  '<input type="checkbox" class="uk-checkbox checkbox-toggle" name="dtaction[]" value="' + data + '" />';
+                }
+            },
+            { data : 'extension_id' },
+            { data : 'codename',
+                render : function(data, type, full) {
+                    return '<code>' + data + '</code>';
+                }
+            },
+            { data : 'name' },
+            { data : 'status',
+                render : function(data, type, full) {
+                    output = shift.i18n['status_' + data];
+                    if (!full.status) {
+                        output = '<div class="uk-label uk-label-warning">' + shift.i18n['status_' + data] + '</div>';
+                    }
+                    return output;
+                }
+            },
+            { data : 'extension_id',
+                className : 'ukt-p-2',
+                render : function(data, type, full) {
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></a>';
+                    output += '<div class="uk-inline ukt-ml-2">';
+                    output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
+                    output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
+                    output += '        <ul class="uk-nav uk-dropdown-nav">';
+                    if (full.status) {
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                    } else {
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                    }
+                    output += '        </ul>';
+                    output += '    </div>';
+                    output += '</div>';
+
+                    return output;
+                }
+            }
+        ]
+    });
+
+    // Action quick-edit
+    $('.main-content').on('click', '[data-dtAction]', function(e) {
+        e.preventDefault();
+
+        let data = $(this).data('dtaction');
+
+        $.fn.shift.dtAction({
+            url  : "{{ app.router.url('extension/theme/dtaction')|raw }}",
+            data : data,
+            validate : function(dtActionProceed) {
+                if (data.type === 'delete') {
+                    $.fn.shift.confirm({
+                        title   : shift.i18n.are_you_sure,
+                        message : shift.i18n.confirm_delete,
+                        onConfirm : function() { dtActionProceed(); }
+                    });
+                } else {
+                    dtActionProceed();
+                }
+            },
+            onSuccess : function() {
+                dtTable.clearPipeline().draw();
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

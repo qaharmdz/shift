@@ -131,7 +131,7 @@ class Site extends Mvc\Controller
 
         $data['themes'] = [];
         foreach ($themes as $code) {
-            $lang = $this->load->language('extension/theme/' . $code, '_temp');
+            $lang = $this->load->language('extensions/theme/' . $code, '_temp');
             $data['themes'][] = [
                 'text'  => $lang['heading_title'] ?? ucwords($code),
                 'value' => $code,

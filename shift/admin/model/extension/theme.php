@@ -7,7 +7,7 @@ namespace Shift\Admin\Model\Extension;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Plugin extends Mvc\Model
+class Theme extends Mvc\Model
 {
     /**
      * DataTables records
@@ -27,7 +27,7 @@ class Plugin extends Mvc\Model
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension` e"
-            . " WHERE e.`type` = 'plugin' AND e.`install` = 1"
+            . " WHERE e.`type` = 'theme' AND e.`install` = 1"
                 . ($dtResult['query']['where'] ? " AND  " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
@@ -64,7 +64,7 @@ class Plugin extends Mvc\Model
         return (int)$this->db->get(
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension`
-            WHERE `type` = 'plugin'  AND `status` = 1 AND `install` = 1"
+            WHERE `type` = 'theme'  AND `status` = 1 AND `install` = 1"
         )->row['total'];
     }
 }

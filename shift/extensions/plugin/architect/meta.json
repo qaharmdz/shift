@@ -1,6 +1,6 @@
 {
-    "codename"    : "architect",
     "type"        : "plugin",
+    "codename"    : "architect",
 
     "name"        : "Architect",
     "version"     : "1.1.0",
