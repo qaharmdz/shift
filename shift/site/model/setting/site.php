@@ -15,7 +15,7 @@ class Site extends Mvc\Model
      * @param  string $rkey    Return key
      * @return array
      */
-    public function getSites(array $filters = ['2 = ?i' => 2], string $rkey = 'site_id'): array
+    public function getSites(array $filters = ['1 = ?i' => 1], string $rkey = 'site_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
         $data     = $this->cache->get('sites.' . $argsHash, []);

@@ -129,7 +129,7 @@ class UserGroup extends Mvc\Model
      * @param  string $rkey    Return key
      * @return array
      */
-    public function getUserGroups(array $filters = ['ug.status != ?i' => -1], string $rkey = 'user_group_id'): array
+    public function getUserGroups(array $filters = ['1 = ?i' => 1], string $rkey = 'user_group_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
         $data     = $this->cache->get('usergroups.' . $argsHash, []);
