@@ -81,12 +81,14 @@ class Manage extends Mvc\Model
             }
         }
 
+        $this->cache->deleteByTags('extension');
+
         return $_items;
     }
 
     public function getTotal(): int
     {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension`")->row['total'];
+        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension`")->row['total'];
     }
 
     // Manage
@@ -158,6 +160,8 @@ class Manage extends Mvc\Model
                     ],
                     ['extension_id' => $extension['extension_id']]
                 );
+
+                $this->cache->deleteByTags('extension');
             }
         }
     }
@@ -192,6 +196,7 @@ class Manage extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'extension_meta', ['extension_id' => $extension['extension_id']]);
             $this->db->delete(DB_PREFIX . 'extension_module', ['extension_id' => $extension['extension_id']]);
             $this->db->delete(DB_PREFIX . 'setting', ['group' => $extension['type'], 'code' => $extension['codename']]);
+            $this->cache->deleteByTags('extension');
         }
     }
 
@@ -216,5 +221,6 @@ class Manage extends Mvc\Model
         }
 
         $this->db->delete(DB_PREFIX . 'extension', ['type' => $extension['type'], 'codename' => $extension['codename']]);
+        $this->cache->deleteByTags('extension');
     }
 }

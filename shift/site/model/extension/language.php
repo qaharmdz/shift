@@ -49,7 +49,7 @@ class Language extends Mvc\Model
                 $data[$result[$rkey]]['setting'] = json_decode($result['setting'], true);
             }
 
-            $this->cache->set('languages.' . $argsHash, $data, tags: ['languages']);
+            $this->cache->set('languages.' . $argsHash, $data, tags: ['extension', 'languages']);
         }
 
         return $data;
@@ -57,6 +57,12 @@ class Language extends Mvc\Model
 
     public function getTotalLanguages(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension` WHERE `type` = 'language'",)->row['total'];
+        return (int)$this->db->get(
+            "SELECT COUNT(*) AS total
+            FROM `" . DB_PREFIX . "extension`
+            WHERE `type` = 'language'
+                AND `install` = 1
+                AND `status` = 1"
+        )->row['total'];
     }
 }
