@@ -8,9 +8,15 @@ use Shift\System\Mvc;
 
 class Language extends Mvc\Model
 {
-    public function getLanguage(int $language_id): array
+    public function getLanguage(int $extension_id): array
     {
-        return $this->db->get("SELECT * FROM `" . DB_PREFIX . "language` WHERE language_id = ?i", [$language_id])->row;
+        $language = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i", [$extension_id])->row;
+
+        if ($language) {
+            $language['setting'] = json_decode($language['setting'], true);
+        }
+
+        return $language;
     }
 
     /**
@@ -20,21 +26,27 @@ class Language extends Mvc\Model
      * @param  string $rkey    Return key
      * @return array
      */
-    public function getLanguages(array $filters = ['l.status = ?i' => 1], string $rkey = 'language_id'): array
+    public function getLanguages(array $filters = ['status = ?i' => 1], string $rkey = 'extension_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
         $data     = $this->cache->get('languages.' . $argsHash, []);
 
         if (!$data) {
-            $languages = $this->db->get(
-                "SELECT l.* FROM `" . DB_PREFIX . "language` l
+            $filters = array_merge([
+                'type = ?s' => 'language',
+                'install = ?i' => 1,
+            ], $filters);
+
+            $languages  = $this->db->get(
+                "SELECT * FROM `" . DB_PREFIX . "extension`
                 WHERE " . implode(' AND ', array_keys($filters)) . "
-                ORDER BY l.sort_order ASC, l.name ASC",
+                ORDER BY `name` ASC",
                 array_values($filters)
             )->rows;
 
             foreach ($languages as $result) {
                 $data[$result[$rkey]] = $result;
+                $data[$result[$rkey]]['setting'] = json_decode($result['setting'], true);
             }
 
             $this->cache->set('languages.' . $argsHash, $data, tags: ['languages']);
@@ -45,6 +57,6 @@ class Language extends Mvc\Model
 
     public function getTotalLanguages(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "language`")->row['total'];
+        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension` WHERE `type` = 'language'",)->row['total'];
     }
 }

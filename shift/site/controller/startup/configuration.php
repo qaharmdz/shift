@@ -69,7 +69,7 @@ class Configuration extends Mvc\Controller
         //=== Language
         $this->load->model('extension/language');
 
-        $languages = $this->model_extension_language->getLanguages(rkey: 'code');
+        $languages = $this->model_extension_language->getLanguages(rkey: 'codename');
         $code = $this->config->get('system.site.language', 'en');
 
         if (count($languages) > 1) {
@@ -88,7 +88,7 @@ class Configuration extends Mvc\Controller
             }
         }
 
-        $this->config->set('env.language_id', (int)$languages[$code]['language_id']);
+        $this->config->set('env.language_id', (int)$languages[$code]['extension_id']);
         $this->config->set('env.language_code', $code);
 
         $this->language->set('_param.active', $code);

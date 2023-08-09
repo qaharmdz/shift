@@ -22,8 +22,8 @@ class Language extends Mvc\Controller
             foreach ($languages as $result) {
                 $data['languages'][] = [
                     'name' => $result['name'],
-                    'code' => $result['code'],
-                    'flag' => $result['flag'],
+                    'code' => $result['codename'],
+                    'flag' => $result['setting']['flag'],
                 ];
             }
 
