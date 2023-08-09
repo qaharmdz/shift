@@ -24,7 +24,8 @@ class Logger
             [
                 'path'    => PATH_TEMP . 'logs/',
                 'logfile' => date('Y-m') . '.log',
-                'display' => false
+                'display' => false,
+                'hasErrorDisplay' => false,
             ],
             $this->config,
             $configuration
@@ -70,6 +71,7 @@ class Logger
         $this->write($errstr . ' in ' . $errfile . ' on line ' . $errline, $level, $this->contextInfo(), $this->config['logfile']);
 
         if ($this->config['display'] && !$this->isAjax()) {
+            $this->setConfig(['hasErrorDisplay' => true]);
             echo '<div style="font-size:14px; color:#444; line-height:1.5em; padding:10px 15px; margin:15px; background:#fee8e6; border-left:4px solid #db180a;">
                 <h3 style="font-size:1.6em; color:#c00; font-weight:600; margin:0 0 10px;">' . ucfirst($level) . '</h3>'
                 . ($errcode ? '<p style="margin:0;"><b style="width:80px; display:inline-block;">Error Code</b> : ' . $errcode . '</p>' : '')

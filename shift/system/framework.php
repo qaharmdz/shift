@@ -194,9 +194,6 @@ class Framework
         // 404 Not Found
         } catch (Exception\NotFoundHttpException | \InvalidArgumentException $e) {
             $logger->exceptionHandler($e);
-            if ($logger->getConfig('display')) {
-                $config->set('system.setting.compression', 0);
-            }
 
             $request->set('query.route', $config->get('root.app_error'));
             $event = $this->get('event');
@@ -223,7 +220,12 @@ class Framework
         // Fallback
         } catch (\Exception $e) {
             $logger->exceptionHandler($e);
+
             exit('The site temporarily unavailable!');
+        }
+
+        if ($logger->getConfig('hasErrorDisplay')) {
+            $config->set('system.setting.compression', 0);
         }
 
         // Response
