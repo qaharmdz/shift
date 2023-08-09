@@ -94,16 +94,29 @@ class Manage extends Mvc\Model
 
     public function getExtension(string $codename)
     {
-        return $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `codename` = ?s", [$codename])->row;
+        $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `codename` = ?s", [$codename])->row;
+
+        if (!empty($result['setting'])) {
+            $result['setting'] = json_decode($result['setting'], true);
+        }
+
+        return $result;
     }
 
-    public function getInstalled(string $type)
+    public function getExtensions(array $filters = ['1 = ?i' => 1], string $rkey = 'extension_id'): array
     {
         $data = [];
-        $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `install` = 1 ORDER BY codename", [$type]);
 
-        foreach ($query->rows as $result) {
-            $data[] = $result['codename'];
+        $results = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension`
+            WHERE " . implode(' AND ', array_keys($filters)) . "
+            ORDER BY `codename` ASC",
+            array_values($filters)
+        )->rows;
+
+        foreach ($results as $result) {
+            $data[$result[$rkey]] = $result;
+            $data[$result[$rkey]]['setting'] = json_decode($result['setting'], true);
         }
 
         return $data;

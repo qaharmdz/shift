@@ -120,23 +120,21 @@ class Site extends Mvc\Controller
             $this->model_setting_setting->getSetting('system', 'site', $site_id),
         );
 
-        $this->load->model('extension/language');
-        $data['languages'] = $this->model_extension_language->getLanguages();
+        $this->load->model('extension/manage');
+        $data['languages'] = $this->model_extension_manage->getExtensions([
+            'type    = ?s' => 'language',
+            'status  = ?i' => 1,
+            'install = ?i' => 1,
+        ]);
+
+        $data['themes'] = $this->model_extension_manage->getExtensions([
+            'type    = ?s' => 'theme',
+            'status  = ?i' => 1,
+            'install = ?i' => 1,
+        ]);
 
         $this->load->model('tool/layout');
         $data['layoutList'] = $this->model_tool_layout->getLayouts();
-
-        $this->load->model('extension/manage');
-        $themes = $this->model_extension_manage->getInstalled('theme');
-
-        $data['themes'] = [];
-        foreach ($themes as $code) {
-            $lang = $this->load->language('extensions/theme/' . $code, '_temp');
-            $data['themes'][] = [
-                'text'  => $lang['heading_title'] ?? ucwords($code),
-                'value' => $code,
-            ];
-        }
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

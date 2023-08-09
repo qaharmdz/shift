@@ -13,7 +13,7 @@ class Router extends Mvc\Controller
         $this->router->addUrlGenerator($this);
     }
 
-    public function generateAlias(string $route, string $args = '', int $language_id = 0): string
+    public function generateAlias(string $route, string $args = ''): string
     {
         if ($this->session->get('access_token')) {
             $args = $args . '&access_token=' . $this->session->getString('access_token');

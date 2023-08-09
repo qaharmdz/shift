@@ -56,9 +56,9 @@
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">{{ app.language.get('configuration') }}</legend>
 
-                {{ forms.select({'label':'language', 'name':'language', 'options':languages, 'opt_text': 'name', 'opt_value': 'code', 'selected':setting.language}) }}
+                {{ forms.select({'label':'language', 'name':'language', 'options':languages, 'opt_text': 'name', 'opt_value': 'codename', 'selected':setting.language}) }}
+                {{ forms.select({'label':'theme', 'name':'theme', 'options':themes, 'opt_text': 'name', 'opt_value': 'codename', 'selected':setting.theme}) }}
                 {{ forms.select({'label':'layout', 'name':'layout_id', 'options':layoutList, 'opt_text': 'name', 'opt_value': 'layout_id', 'selected':setting.layout_id}) }}
-                {{ forms.select({'label':'theme', 'name':'theme', 'options':themes, 'selected':setting.theme}) }}
                 {{ forms.radioButton({'label':'maintenance', 'name':'maintenance', 'checked':setting.maintenance}) }}
             </fieldset>
         </form>

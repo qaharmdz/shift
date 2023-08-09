@@ -101,9 +101,9 @@ class Manage extends Mvc\Controller
     public function syncExtensions(): array
     {
         $data = [
-            'dbLists' => [],
+            'dbLists'   => [],
             'metaFiles' => [],
-            'new' => [
+            'new'       => [
                 'total' => 0
             ],
         ];
