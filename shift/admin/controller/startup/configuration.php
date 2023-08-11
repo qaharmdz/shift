@@ -61,13 +61,13 @@ class Configuration extends Mvc\Controller
 
         //=== Language
         $language = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "language` WHERE code = ?s",
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'language' AND `codename` = ?s",
             [$this->config->get('system.setting.admin_language', 'en')]
         )->row;
 
         if ($language) {
-            $this->config->set('env.language_id', (int)$language['language_id']);
-            $this->config->set('env.language_code', $language['code']);
+            $this->config->set('env.language_id', (int)$language['extension_id']);
+            $this->config->set('env.language_code', $language['codename']);
         }
 
         $this->language->set('_param.active', $this->config->get('env.language_code'));

@@ -120,13 +120,10 @@ class Site extends Mvc\Controller
             $this->model_setting_setting->getSetting('system', 'site', $site_id),
         );
 
-        $this->load->model('extension/manage');
-        $data['languages'] = $this->model_extension_manage->getExtensions([
-            'type    = ?s' => 'language',
-            'status  = ?i' => 1,
-            'install = ?i' => 1,
-        ]);
+        $this->load->model('extension/language');
+        $data['languages'] = $this->model_extension_language->getLanguages();
 
+        $this->load->model('extension/manage');
         $data['themes'] = $this->model_extension_manage->getExtensions([
             'type    = ?s' => 'theme',
             'status  = ?i' => 1,
