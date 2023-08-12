@@ -130,8 +130,7 @@ class Framework
         $this->set('user', new Library\User($this->registry));
 
         // Language
-        $language = new Library\Language($config->get('root.locale'));
-        $language->load($config->get('root.locale'));
+        $language = new Library\Language();
         $this->set('language', $language);
 
         // Validaion assert

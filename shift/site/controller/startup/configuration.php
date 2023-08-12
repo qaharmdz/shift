@@ -88,11 +88,15 @@ class Configuration extends Mvc\Controller
             }
         }
 
+        $langPath = $code == 'en' ? $code : 'extensions/language/' . $code;
+        $langPath = $code;
+
         $this->config->set('env.language_id', (int)$languages[$code]['extension_id']);
         $this->config->set('env.language_code', $code);
+        $this->config->set('env.language_path', $langPath);
 
         $this->language->set('_param.active', $code);
-        $this->language->load($code);
+        $this->language->load($langPath);
 
         //=== Mail
         $this->mail->setConfig([

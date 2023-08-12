@@ -60,18 +60,37 @@ class Configuration extends Mvc\Controller
         }
 
         //=== Language
-        $language = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'language' AND `codename` = ?s",
-            [$this->config->get('system.setting.admin_language', 'en')]
-        )->row;
+        $this->load->model('extension/language');
 
-        if ($language) {
-            $this->config->set('env.language_id', (int)$language['extension_id']);
-            $this->config->set('env.language_code', $language['codename']);
+        $languages = $this->model_extension_language->getLanguages(rkey: 'codename');
+        $code = $this->config->get('system.site.language', 'en');
+
+        if (count($languages) > 1) {
+            $code = $this->session->get('language', $code);
+
+            if ($this->request->has('cookie.language') && !array_key_exists($code, $languages)) {
+                $code = $this->request->get('cookie.language');
+            }
+
+            if (!$this->session->has('language') || $this->session->get('language') != $code) {
+                $this->session->set('language', $code);
+            }
+
+            if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
+                setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->get('server.HTTP_HOST'));
+            }
         }
 
-        $this->language->set('_param.active', $this->config->get('env.language_code'));
-        $this->language->load($this->config->get('env.language_code'));
+        $langPath = $code == 'en' ? $code : 'extensions/language/' . $code;
+        $langPath = $code;
+
+        $this->config->set('env.language_id', (int)$languages[$code]['extension_id']);
+        $this->config->set('env.language_code', $code);
+        $this->config->set('env.language_path', $langPath);
+
+        $this->language->set('_param.active', $code);
+        $this->language->load($langPath);
+
 
         //=== Mail
         $this->mail->setConfig([

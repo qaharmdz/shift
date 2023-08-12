@@ -18,15 +18,19 @@ use Shift\System\Core;
  */
 class Language extends Core\Bags
 {
-    public function __construct(string $default = 'en')
+    /**
+     * Default language code always 'en' as a fallback.
+     */
+    public function __construct()
     {
         $this->set([
             '_param'     => [
-                'default' => $default,
-                'active'  => $default,
+                'default' => 'en',
+                'active'  => 'en',
                 'loaded'  => [],
             ],
         ]);
+        $this->load('en');
     }
 
     public function get($key = null, $default = null)
@@ -34,6 +38,14 @@ class Language extends Core\Bags
         $default = $default ?: 'i18n_' . $key;
 
         return parent::get($key, $default);
+    }
+
+    public function all()
+    {
+        $languages = $this->items;
+        unset($languages['_param']);
+
+        return $languages;
     }
 
     /**
@@ -50,10 +62,12 @@ class Language extends Core\Bags
             return $this->get('_param.loaded.' . $pathKey);
         }
 
-        $paths = array_unique([
-            PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
-            PATH_APP . 'language/' . $this->get('_param.active') . '/' . $path . '.php'
-        ]);
+        $paths = [
+            0 => PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
+            1 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.default') . '/' . APP_FOLDER . '/' . $path . '.php',
+            10 => PATH_APP . 'language/' . $this->get('_param.active') . '/' . $path . '.php',
+            11 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.active') . '/' . APP_FOLDER . '/' . $path . '.php',
+        ];
 
         if (str_starts_with($path, 'extensions/')) {
             $parts = array_map('strtolower', array_filter(explode('/', $path)));
@@ -70,14 +84,15 @@ class Language extends Core\Bags
                 ':app_folder' => APP_FOLDER,
             ]);
 
-            $paths = array_unique(array_merge($paths, [
-                PATH_SHIFT . $extPath . $this->get('_param.default') . '/' . $extFile . '.php',
-                PATH_SHIFT . $extPath . $this->get('_param.active') . '/' . $extFile . '.php'
-            ]));
+            $paths = $paths + [
+                2 => PATH_SHIFT . $extPath . $this->get('_param.default') . '/' . $extFile . '.php',
+                12 => PATH_SHIFT . $extPath . $this->get('_param.active') . '/' . $extFile . '.php',
+            ];
+            ksort($paths);
         }
 
         $data = [];
-        foreach ($paths as $_path) {
+        foreach (array_unique($paths) as $_path) {
             if (is_file($_path)) {
                 $_ = [];
                 require $_path;

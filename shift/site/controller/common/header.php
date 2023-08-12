@@ -40,11 +40,11 @@ class Header extends Mvc\Controller
 
         $data['navigations'] = [];
         $data['navigations'][] = [
-            'name'     => $this->language->get('text_home'),
+            'name'     => $this->language->get('home'),
             'href'     => $this->router->url('common/home')
         ];
         $data['navigations'][] = [
-            'name'     => $this->language->get('text_about', 'About'),
+            'name'     => $this->language->get('about', 'About'),
             'href'     => $this->router->url('information/information', 'information_id=4')
         ];
         $dropdownItems = [];
