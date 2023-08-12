@@ -63,10 +63,9 @@ class Language extends Core\Bags
         }
 
         $paths = [
-            0 => PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
-            1 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.default') . '/' . APP_FOLDER . '/' . $path . '.php',
-            10 => PATH_APP . 'language/' . $this->get('_param.active') . '/' . $path . '.php',
-            11 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.active') . '/' . APP_FOLDER . '/' . $path . '.php',
+            0  => PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
+            5  => PATH_SHIFT . 'extensions/language/' . $this->get('_param.default') . '/' . APP_FOLDER . '/' . $path . '.php',
+            9 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.active') . '/' . APP_FOLDER . '/' . $path . '.php',
         ];
 
         if (str_starts_with($path, 'extensions/')) {
@@ -85,8 +84,8 @@ class Language extends Core\Bags
             ]);
 
             $paths = $paths + [
-                2 => PATH_SHIFT . $extPath . $this->get('_param.default') . '/' . $extFile . '.php',
-                12 => PATH_SHIFT . $extPath . $this->get('_param.active') . '/' . $extFile . '.php',
+                3 => PATH_SHIFT . $extPath . $this->get('_param.default') . '/' . $extFile . '.php',
+                7 => PATH_SHIFT . $extPath . $this->get('_param.active') . '/' . $extFile . '.php',
             ];
             ksort($paths);
         }
