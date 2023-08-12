@@ -31,7 +31,7 @@
         <form id="form-layout" class="uk-form-margin-hover" action="{{ app.router.url('tool/layout/save') }}" method="post" data-form-monitor>
             <div class="uk-card-panel uk-card-body uk-form-horizontal">
                 <fieldset class="uk-fieldset">
-                    <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+                    <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
 
                     {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-1-2@m', 'required':true}) }}
                     {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
@@ -130,19 +130,19 @@
     <div id="layout-module-modal" class="layout-select-modules" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-width-750">
             <button class="uk-modal-close-default" type="button" uk-close></button>
-            <h2 class="uk-modal-title ukt-mb-3 uk-title">{{ app.language.get('module') }} <span class="uk-sub-title">{{ app.language.get('select_module') }}</span></h2>
+            <h2 class="uk-modal-title ukt-mb-3 uk-title">{{ app.language.get('modules') }}<span class="uk-sub-title">{{ app.language.get('select_module') }}</span></h2>
             <div id="layout-module-content" class="hide-dataTables-top">
                 <table id="layout-module-list" class="uk-table uk-table-striped uk-table-hover">
                     <thead>
                         <tr>
                             <th class="uk-text-center" style="width:50px">{{ app.language.get('id') }}</th>
                             <th class="uk-text-center" style="width:150px">{{ app.language.get('codename') }}</th>
-                            <th class="uk-text-center">{{ app.language.get('module') }}</th>
+                            <th class="uk-text-center">{{ app.language.get('modules') }}</th>
                         </tr>
                         <tr class="dt-filters">
-                            <td>{{ app.language.get('id') }}</td>
-                            <td>{{ app.language.get('codename') }}</td>
-                            <td>{{ app.language.get('module') }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>

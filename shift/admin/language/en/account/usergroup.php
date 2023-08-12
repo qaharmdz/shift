@@ -2,7 +2,7 @@
 
 $_['page_title']        = 'User Groups';
 
-$_['account']           = 'Accounts';
+$_['accounts']          = 'Accounts';
 $_['backend']           = 'Admin Access';
 $_['access']            = 'Access Permission';
 $_['modify']            = 'Modify Permission';

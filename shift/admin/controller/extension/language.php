@@ -15,7 +15,7 @@ class Language extends Mvc\Controller
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('extension')],
+            [$this->language->get('extensions')],
             [$this->language->get('page_title')],
         ]);
 

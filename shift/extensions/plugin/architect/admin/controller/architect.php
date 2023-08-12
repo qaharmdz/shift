@@ -23,8 +23,8 @@ class Architect extends Mvc\Controller
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('extension')],
-            [$this->language->get('plugin'), $this->router->url('extension/plugin')],
+            [$this->language->get('extensions')],
+            [$this->language->get('plugins'), $this->router->url('extension/plugin')],
             [$this->language->get('page_title'), $this->router->url('extensions/plugin/architect')],
         ]);
 

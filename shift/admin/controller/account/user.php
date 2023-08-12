@@ -17,7 +17,7 @@ class User extends Mvc\Controller
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('account')],
+            [$this->language->get('accounts')],
             [$this->language->get('page_title'), $this->router->url('account/user')],
         ]);
 
@@ -114,7 +114,7 @@ class User extends Mvc\Controller
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('account')],
+            [$this->language->get('accounts')],
             [$this->language->get('page_title'), $this->router->url('account/user')],
             [$this->language->get($mode), $this->router->url('account/user/form', 'user_id=' . $user_id)],
         ]);

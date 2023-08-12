@@ -88,7 +88,7 @@
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('option') }}</legend>
+                            <legend class="uk-legend">{{ app.language.get('options') }}</legend>
 
                             {{ forms.input({'label':'image', 'name':'meta[image]', 'value':setting.meta.image, 'attribute':'data-mediamanager'}) }}
                             {{ forms.select({'label':'robots', 'name':'meta[robots]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
@@ -120,7 +120,7 @@
                 <div class="uk-width-content-sidebar@l">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+                            <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
 
                             {{ forms.select({'label':'author', 'name':'user_id', 'options':users, 'selected':setting.user_id, 'opt_text':'fullname', 'opt_value':'user_id'}) }}
                             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
@@ -131,7 +131,7 @@
                             ]}) }}
                             {{ forms.select({'label':'visibility', 'name':'visibility', 'selected':setting.visibility, 'class':'uk-width-150@m', 'attribute':'data-select-switcher=\'{"class":"switch-visibility"}\'', 'options':[
                                 {'text': app.language.get('public'),  'value': 'public'},
-                                {'text': app.language.get('usergroup'), 'value': 'usergroup'},
+                                {'text': app.language.get('user_groups'), 'value': 'usergroup'},
                                 {'text': app.language.get('password'), 'value': 'password'},
                             ]}) }}
                             <div class="switch-visibility uk-switcher">

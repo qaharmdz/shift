@@ -25,8 +25,8 @@ class Codex extends Mvc\Controller
         $this->document->loadAsset('flatpickr');
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('extension')],
-            [$this->language->get('module'), $this->router->url('extension/module')],
+            [$this->language->get('extensions')],
+            [$this->language->get('modules'), $this->router->url('extension/module')],
             [$this->language->get('page_title'), $this->router->url('extensions/module/codex')],
         ]);
 

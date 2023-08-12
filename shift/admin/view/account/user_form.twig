@@ -54,9 +54,9 @@
                 <div class="uk-width-content-sidebar@l">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+                            <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
 
-                            {{ forms.select({'label':'user_group', 'name':'user_group_id', 'options':user_groups, 'selected':setting.user_group_id, 'class':'uk-width-200@m', 'opt_text': 'name', 'opt_value': 'user_group_id'}) }}
+                            {{ forms.select({'label':'user_groups', 'name':'user_group_id', 'options':user_groups, 'selected':setting.user_group_id, 'class':'uk-width-200@m', 'opt_text': 'name', 'opt_value': 'user_group_id'}) }}
                             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
                                 {'text': app.language.get('enabled'),  'value': 1},
                                 {'text': app.language.get('disabled'), 'value': 0}

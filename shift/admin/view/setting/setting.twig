@@ -24,9 +24,9 @@
             </fieldset>
 
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('option') }}</legend>
+                <legend class="uk-legend">{{ app.language.get('options') }}</legend>
 
-                {{ forms.select({'label':'admin_language', 'name':'admin_language', 'options':languages, 'opt_text': 'name', 'opt_value': 'code', 'selected':setting.admin_language}) }}
+                {{ forms.select({'label':'admin_language', 'name':'admin_language', 'options':languages, 'opt_text': 'name', 'opt_value': 'codename', 'selected':setting.admin_language}) }}
                 {{ forms.input({'type':'number', 'label':'admin_limit', 'name':'admin_limit', 'value':setting.admin_limit, 'class':'uk-width-75@m', 'attribute':'min="20"'}) }}
             </fieldset>
 

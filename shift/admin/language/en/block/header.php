@@ -4,31 +4,31 @@ $_['dashboard']      = 'Dashboard';
 $_['my_account']     = 'My Account';
 $_['logout']         = 'Logout';
 
-$_['content']        = 'Contents';
-$_['page']           = 'Pages';
-$_['post']           = 'Posts';
-$_['category']       = 'Categories';
-$_['tag']            = 'Tags';
+$_['contents']       = 'Contents';
+$_['pages']          = 'Pages';
+$_['posts']          = 'Posts';
+$_['categories']     = 'Categories';
+$_['tags']           = 'Tags';
 
-$_['extension']      = 'Extensions';
+$_['extensions']     = 'Extensions';
 $_['installer']      = 'Installer';
 $_['manage']         = 'Manage';
-$_['plugin']         = 'Plugins';
-$_['module']         = 'Modules';
-$_['theme']          = 'Themes';
-$_['language']       = 'Languages';
-$_['event']          = 'Events';
+$_['plugins']        = 'Plugins';
+$_['modules']        = 'Modules';
+$_['themes']         = 'Themes';
+$_['languages']      = 'Languages';
+$_['events']         = 'Events';
 
-$_['tool']           = 'Tools';
+$_['tools']          = 'Tools';
 $_['media_manager']  = 'Media Manager';
 $_['module_layout']  = 'Layouts Builder';
 
-$_['account']        = 'Accounts';
-$_['user']           = 'Users';
-$_['user_group']     = 'User Groups';
+$_['accounts']       = 'Accounts';
+$_['users']          = 'Users';
+$_['user_groups']    = 'User Groups';
 
 $_['system']         = 'System';
-$_['setting']        = 'Settings';
+$_['settings']       = 'Settings';
 $_['sites']          = 'Sites';
 
 $_['maintenance']    = 'Maintenance';

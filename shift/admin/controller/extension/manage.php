@@ -17,7 +17,7 @@ class Manage extends Mvc\Controller
         $this->document->loadAsset('datatables');
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('extension')],
+            [$this->language->get('extensions')],
             [$this->language->get('page_title'), $this->router->url('extension/manage')],
         ]);
 

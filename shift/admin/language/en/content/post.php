@@ -10,7 +10,7 @@ $_['visibility']         = 'Visibility';
 
 $_['draft']              = 'Draft';
 $_['pending']            = 'Pending';
-$_['usergroup']          = 'User Groups';
+$_['user_groups']        = 'User Groups';
 $_['password']           = 'Password';
 
 $_['visibility_usergroup_info'] = 'User groups allowed to access content.';

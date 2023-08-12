@@ -81,7 +81,7 @@ class Manage extends Mvc\Model
             }
         }
 
-        $this->cache->deleteByTags('extension');
+        $this->cache->deleteByTags('extensions');
 
         return $_items;
     }
@@ -161,7 +161,7 @@ class Manage extends Mvc\Model
                     ['extension_id' => $extension['extension_id']]
                 );
 
-                $this->cache->deleteByTags('extension');
+                $this->cache->deleteByTags('extensions');
             }
         }
     }
@@ -196,7 +196,7 @@ class Manage extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'extension_meta', ['extension_id' => $extension['extension_id']]);
             $this->db->delete(DB_PREFIX . 'extension_module', ['extension_id' => $extension['extension_id']]);
             $this->db->delete(DB_PREFIX . 'setting', ['group' => $extension['type'], 'code' => $extension['codename']]);
-            $this->cache->deleteByTags('extension');
+            $this->cache->deleteByTags('extensions');
         }
     }
 
@@ -221,6 +221,6 @@ class Manage extends Mvc\Model
         }
 
         $this->db->delete(DB_PREFIX . 'extension', ['type' => $extension['type'], 'codename' => $extension['codename']]);
-        $this->cache->deleteByTags('extension');
+        $this->cache->deleteByTags('extensions');
     }
 }
