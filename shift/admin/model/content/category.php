@@ -218,8 +218,8 @@ class Category extends Mvc\Model
         $languages = $this->model_extension_language->getLanguages();
 
         foreach ($languages as $language) {
-            $default['content'][$language['language_id']] = $default['content'][0];
-            $default['alias'][$language['language_id']]   = '';
+            $default['content'][$language['extension_id']] = $default['content'][0];
+            $default['alias'][$language['extension_id']]   = '';
         }
 
         $data = $this->db->get(

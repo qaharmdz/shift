@@ -4,7 +4,7 @@
         <ul class="uk-nav uk-navbar-dropdown-nav">
             {% for language in languages %}
                 <li>
-                    <a data-language data-language-code="{{ language.code }}">
+                    <a data-language data-language-code="{{ language.codename }}">
                         <img src="media/flags/{{ language.flag }}" alt="{{ language.name }}" title="{{ language.name }}">
                         {{ language.name }}
                     </a>

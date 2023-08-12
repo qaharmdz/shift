@@ -21,9 +21,9 @@ class Language extends Mvc\Controller
             $languages = $this->model_extension_language->getLanguages();
             foreach ($languages as $result) {
                 $data['languages'][] = [
-                    'name' => $result['name'],
-                    'code' => $result['codename'],
-                    'flag' => $result['setting']['flag'],
+                    'name'     => $result['name'],
+                    'codename' => $result['codename'],
+                    'flag'     => $result['setting']['flag'],
                 ];
             }
 
