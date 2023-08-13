@@ -18,7 +18,6 @@ class Secure
      * Check if given type is valid algorithm.
      *
      * @param  string|int|null    $type
-     *
      * @return boolean
      */
     public function isValidAlgo(string|int|null $type): bool
@@ -30,7 +29,6 @@ class Secure
      * Password hash from string.
      *
      * @param  string $password
-     *
      * @return string
      */
     public function passwordHash(string $password): string
@@ -43,7 +41,6 @@ class Secure
      *
      * @param  string  $password
      * @param  string  $hash
-     *
      * @return bool
      */
     public function passwordVerify(string $password, string $hash): bool
@@ -55,7 +52,6 @@ class Secure
      * Check if password hash need to be updated.
      *
      * @param  string  $hash
-     *
      * @return bool
      */
     public function isPasswordNeedRehash(string $hash): bool
@@ -78,11 +74,32 @@ class Secure
     }
 
     /**
-     * Generate 'random' token code.
+     * Random crypt
+     *
+     * @param  int|integer $length
+     * @return string
+     */
+    public function random(int $length = 0): string
+    {
+        $length = $length ?: rand(32, 64);
+        $length = (int)ceil($length / 2);
+
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            $bytes = openssl_random_pseudo_bytes($length);
+        } elseif (function_exists('random_bytes')) {
+            $bytes = random_bytes($length);
+        } else {
+            throw new \Exception('No cryptographically secure random function available!');
+        }
+
+        return bin2hex($bytes);
+    }
+
+    /**
+     * Generate token code.
      *
      * @param  string      $type
      * @param  integer     $length
-     *
      * @return string
      */
     public function token(string $type = 'hash', int $length = 32): string
@@ -118,21 +135,5 @@ class Secure
         }
 
         return substr($result, rand(0, (strlen($result) - $length)), $length);
-    }
-
-    public function random(int $length = 0): string
-    {
-        $length = $length ?: rand(32, 64);
-        $length = (int)ceil($length / 2);
-
-        if (function_exists('openssl_random_pseudo_bytes')) {
-            $bytes = openssl_random_pseudo_bytes($length);
-        } elseif (function_exists('random_bytes')) {
-            $bytes = random_bytes($length);
-        } else {
-            throw new \Exception('No cryptographically secure random function available!');
-        }
-
-        return bin2hex($bytes);
     }
 }

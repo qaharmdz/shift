@@ -43,7 +43,7 @@ class Authentication extends Mvc\Controller
                 break;
 
             // Validate token
-            case ($this->session->getString('access_token', time()) !== $this->request->getString('query.access_token', 'o_O')):
+            case ($this->session->getString('access_token', $this->secure->random()) !== $this->request->getString('query.access_token', 'o_O')):
                 $this->session->set('flash.auth.invalid_token', true);
                 $this->toLogin();
                 break;
