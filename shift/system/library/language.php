@@ -63,10 +63,15 @@ class Language extends Core\Bags
         }
 
         $paths = [
-            0  => PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
-            5  => PATH_SHIFT . 'extensions/language/' . $this->get('_param.default') . '/' . APP_FOLDER . '/' . $path . '.php',
+            0 => PATH_APP . 'language/' . $this->get('_param.default') . '/' . $path . '.php',
+            5 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.default') . '/' . APP_FOLDER . '/' . $path . '.php',
             9 => PATH_SHIFT . 'extensions/language/' . $this->get('_param.active') . '/' . APP_FOLDER . '/' . $path . '.php',
         ];
+
+        if ($this->get('_param.default') !== $this->get('_param.active') && $this->get('_param.active') === $path) {
+            unset($paths[0]);
+            unset($paths[5]);
+        }
 
         if (str_starts_with($path, 'extensions/')) {
             $parts = array_map('strtolower', array_filter(explode('/', $path)));
