@@ -45,7 +45,7 @@ class User
             }
             $this->dbUpdateLastLogin($email);
 
-            $this->session->regenerateId();
+            $this->session->regenerateId(true); // Destroy old session
             $this->session->set('user_email', $this->bags->get('email'));
             $this->session->set('user_activity', time());
             $this->session->set('access_token', $this->secure->token('hash', rand(24, 32)));
@@ -69,6 +69,8 @@ class User
     public function setPassword(string $email, string $password)
     {
         $this->dbUpdatePassword($email, $password);
+
+        $this->session->regenerateId(true);
     }
 
     public function get(string $key = null, $default = null)

@@ -55,7 +55,7 @@ class Authentication extends Mvc\Controller
                 $this->toLogin();
                 break;
 
-            // Force logout if last activity more than 'x' minute, default 240 minute
+            // Force logout if last activity more than 'x' minute, default 240 minute.
             case (time() - $this->session->getInt('user_activity')) > (60 * $this->config->getInt('system.setting.login_session', (60 * 4))):
                 $this->session->set('flash.auth.inactive', true);
                 $this->user->logout();
@@ -63,7 +63,7 @@ class Authentication extends Mvc\Controller
                 break;
 
             default:
-                // Prevent session fixation. Renew session id per 30 minute
+                // Hardening session fixation, renew session id per 30 minute.
                 if ((time() - $this->session->get('user_activity')) > (60 * 30)) {
                     $this->session->regenerateId();
                 }
