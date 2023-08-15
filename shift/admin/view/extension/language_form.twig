@@ -28,8 +28,8 @@
 
     <div class="content-body uk-card-panel uk-card-body">
         <form id="form-language" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('extension/language/save') }}" method="post" data-form-monitor>
-            {{ forms.info({'label':'name','text':setting.name}) }}
-            {{ forms.info({'label':'codename','text':'<code>' ~ setting.codename ~ '</code>'}) }}
+            {{ forms.text({'label':'name','text':setting.name}) }}
+            {{ forms.text({'label':'codename','text':'<code>' ~ setting.codename ~ '</code>'}) }}
             {{ forms.input({'type':'text', 'label':'locale', 'name':'setting[locale]', 'value':setting.setting.locale, 'class':'uk-width-2-3', 'required': true}) }}
             {{ forms.input({'type':'text', 'label':'flag', 'name':'setting[flag]', 'value':setting.setting.flag, 'class':'uk-width-100@m', 'required': true}) }}
             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[

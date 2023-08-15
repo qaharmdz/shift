@@ -69,9 +69,9 @@
                             <fieldset class="uk-fieldset">
                                 <legend class="uk-legend">{{ app.language.get('information') }}</legend>
 
-                                {{ forms.infoDate({'label':'last_login','datetime':setting.last_login}) }}
-                                {{ forms.infoDate({'label':'created','datetime':setting.created}) }}
-                                {{ forms.infoDate({'label':'updated','datetime':setting.updated}) }}
+                                {{ forms.textDate({'label':'last_login','datetime':setting.last_login}) }}
+                                {{ forms.textDate({'label':'created','datetime':setting.created}) }}
+                                {{ forms.textDate({'label':'updated','datetime':setting.updated}) }}
                             </fieldset>
                         </div>
                     {% endif %}

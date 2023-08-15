@@ -236,7 +236,22 @@
     </div>
 {% endmacro %}
 
-{% macro infoDate(param) %}
+{% macro text(param) %}
+    {% set param = {
+        'label'      : '',
+        'text'       : '',
+        'class_form' : '',
+    }|merge(param) %}
+
+    <div class="uk-margin {{ param.class_form }}">
+        {% if param.label %}
+            <label class="uk-form-label">{{ app.language.get(param.label) }}</label>
+        {% endif %}
+        <div class="{{ param.label ? 'uk-form-controls uk-form-controls-text' }}">{{ param.text }}</div>
+    </div>
+{% endmacro %}
+
+{% macro textDate(param) %}
     {% set param = {
         'label'      : '',
         'datetime'   : '',

@@ -56,7 +56,7 @@
                 <div class="uk-width-content-sidebar@l">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+                            <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
 
                             {{ forms.select({'label':'backend', 'name':'backend', 'selected':setting.backend, 'class':'uk-width-150@m', 'options':[
                                 {'text': app.language.get('yes'), 'value': 1},
@@ -74,8 +74,8 @@
                             <fieldset class="uk-fieldset">
                                 <legend class="uk-legend">{{ app.language.get('information') }}</legend>
 
-                                {{ forms.infoDate({'label':'created','datetime':setting.created}) }}
-                                {{ forms.infoDate({'label':'updated','datetime':setting.updated}) }}
+                                {{ forms.textDate({'label':'created','datetime':setting.created}) }}
+                                {{ forms.textDate({'label':'updated','datetime':setting.updated}) }}
                             </fieldset>
                         </div>
                     {% endif %}
