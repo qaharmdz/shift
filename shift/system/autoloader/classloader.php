@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shift\System\Autoloader;
 
+/**
+ * @ref  \Composer\Autoload\ClassLoader
+ */
 class ClassLoader
 {
     private $includeFile;
@@ -28,7 +31,7 @@ class ClassLoader
          * @param  string $file
          * @return void
          */
-        $this->includeFile = static function($file) {
+        $this->includeFile = static function ($file) {
             include $file;
         };
     }

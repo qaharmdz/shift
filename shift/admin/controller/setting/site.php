@@ -174,6 +174,9 @@ class Site extends Mvc\Controller
             $this->model_setting_site->editSite($site_id, $post);
         }
 
+        Arr::unset($post, ['site_id', 'form', 'action', 'timezone']);
+        $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
+
         // Redirect
         if ($post['action'] === 'close') {
             $data['redirect'] = $this->router->url('setting/site');
@@ -184,10 +187,6 @@ class Site extends Mvc\Controller
         if (isset($data['new_id']) && empty($data['redirect'])) {
             $data['redirect'] = $this->router->url('setting/site/form', 'site_id=' . $data['new_id']);
         }
-
-        Arr::unset($post, ['site_id', 'form', 'action', 'timezone']);
-
-        $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 
         $this->response->setOutputJson($data);
     }
