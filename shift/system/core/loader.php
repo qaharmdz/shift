@@ -48,12 +48,12 @@ class Loader
                 }
                 $extFile = implode('/', array_slice($parts, 3));
 
-                $class = strtr('Shift\Extensions\:type\:codename\:app_folder\model\:file', [
+                $class = strtolower(strtr('Shift\Extensions\:type\:codename\:app_folder\model\:file', [
                     ':type'       => $extType,
                     ':codename'   => $extCodename,
                     ':app_folder' => APP_FOLDER,
                     ':file'       => $extFile,
-                ]);
+                ]));
             }
 
             if (class_exists($class)) {
@@ -70,7 +70,9 @@ class Loader
                     }
                 }
 
-                $proxy->{'_key'} = $model_key;
+                $proxy->{'_class'} = $class;
+                $proxy->{'_key'}   = $model_key;
+
                 $this->registry->set($model_key, $proxy);
             } else {
                 throw new \InvalidArgumentException(sprintf('Unable to locate model "%s".', $path));
