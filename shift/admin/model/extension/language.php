@@ -67,6 +67,40 @@ class Language extends Mvc\Model
             WHERE `type` = 'language'  AND `status` = 1 AND `install` = 1"
         )->row['total'];
     }
+
+    // Form CRUD
+    // ================================================
+
+    public function edit(int $extension_id, array $data)
+    {
+        $this->db->set(
+            DB_PREFIX . 'extension',
+            [
+                'setting' => json_encode($data['setting']),
+                'status'  => (int)$data['status'],
+                'updated' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'extension_id' => $extension_id,
+                'type' => 'language',
+            ]
+        );
+    }
+
+    public function getLanguage(int $extension_id): array
+    {
+        $language = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i",
+            [$extension_id]
+        )->row;
+
+        if ($language) {
+            $language['setting'] = json_decode($language['setting'], true);
+        }
+
+        return $language;
+    }
+
     /**
      * Get languages
      *

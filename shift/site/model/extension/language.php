@@ -10,7 +10,10 @@ class Language extends Mvc\Model
 {
     public function getLanguage(int $extension_id): array
     {
-        $language = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i", [$extension_id])->row;
+        $language = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i",
+            [$extension_id]
+        )->row;
 
         if ($language) {
             $language['setting'] = json_decode($language['setting'], true);

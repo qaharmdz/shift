@@ -1,0 +1,42 @@
+{% extends 'main.tpl.twig' %}
+
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
+{% block main_content %}
+<div class="uk-container uk-container-small container-content-wrapper">
+    <div class="content-header">
+        <div class="uk-flex uk-flex-middle">
+            <div class="uk-width-expand">
+                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+            </div>
+            <div class="uk-width-auto">
+                <div class="uk-button-group">
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-language", "extension_id":"{{ extension_id }}"}'>{{ app.language.get('save') }}</button>
+                    <div class="uk-inline">
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
+                        <div uk-dropdown="pos:bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-form-submit='{"form":"#form-language", "action":"close", "extension_id":"{{ extension_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ app.router.url('extension/language') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get('close') }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body uk-card-panel uk-card-body">
+        <form id="form-language" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('extension/language/save') }}" method="post" data-form-monitor>
+            {{ forms.info({'label':'name','text':setting.name}) }}
+            {{ forms.info({'label':'codename','text':'<code>' ~ setting.codename ~ '</code>'}) }}
+            {{ forms.input({'type':'text', 'label':'locale', 'name':'setting[locale]', 'value':setting.setting.locale, 'class':'uk-width-2-3', 'required': true}) }}
+            {{ forms.input({'type':'text', 'label':'flag', 'name':'setting[flag]', 'value':setting.setting.flag, 'class':'uk-width-100@m', 'required': true}) }}
+            {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
+                {'text': app.language.get('enabled'),  'value': 1},
+                {'text': app.language.get('disabled'), 'value': 0}
+            ]}) }}
+        </form>
+    </div>
+</div>
+{% endblock %}
