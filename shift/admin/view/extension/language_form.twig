@@ -32,10 +32,7 @@
             {{ forms.text({'label':'codename','text':'<code>' ~ setting.codename ~ '</code>'}) }}
             {{ forms.input({'type':'text', 'label':'locale', 'name':'setting[locale]', 'value':setting.setting.locale, 'class':'uk-width-2-3', 'required': true}) }}
             {{ forms.input({'type':'text', 'label':'flag', 'name':'setting[flag]', 'value':setting.setting.flag, 'class':'uk-width-100@m', 'required': true}) }}
-            {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
-                {'text': app.language.get('enabled'),  'value': 1},
-                {'text': app.language.get('disabled'), 'value': 0}
-            ]}) }}
+            {{ forms.radioButton({'label':'status', 'name':'status', 'checked':setting.status}) }}
         </form>
     </div>
 </div>

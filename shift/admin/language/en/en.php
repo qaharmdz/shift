@@ -11,6 +11,7 @@ $_['general']               = 'General';
 $_['extensions']            = 'Extensions';
 $_['system']                = 'System';
 $_['setting']               = 'Setting';
+$_['settings']              = 'Settings';
 $_['plugin']                = 'Plugin';
 $_['module']                = 'Module';
 $_['modules']               = 'Modules';

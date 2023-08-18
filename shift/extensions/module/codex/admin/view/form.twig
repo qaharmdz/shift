@@ -44,10 +44,7 @@
 
                             {{ forms.input({'label':'name', 'name':'name', 'value':module.name, 'required':true}) }}
                             {{ forms.textarea({'label':'description', 'name':'setting[description]', 'value':module.setting.description, 'rows':3}) }}
-                            {{ forms.select({'label':'status', 'name':'status', 'selected':module.status, 'class':'uk-width-150@m', 'options':[
-                                {'text': app.language.get('enabled'),  'value': 1},
-                                {'text': app.language.get('disabled'), 'value': 0}
-                            ]}) }}
+                            {{ forms.radioButton({'label':'status', 'name':'status', 'checked':module.status}) }}
                         </fieldset>
                     </div>
 
