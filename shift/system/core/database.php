@@ -70,12 +70,8 @@ class Database
         try {
             return $this->mysqli->query($query, \MYSQLI_STORE_RESULT);
         } catch (\Mysqli_sql_exception $e) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    '\Mysqli_sql_exception: %s. Error query: %s',
-                    $e->getMessage(),
-                    $query
-                ),
+            throw new \Mysqli_sql_exception(
+                sprintf('%s. Query: %s', $e->getMessage(), $query),
                 $e->getCode()
             );
         }
@@ -133,12 +129,8 @@ class Database
 
             return $statement;
         } catch (\Mysqli_sql_exception $e) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    '\Mysqli_sql_exception: %s. Error query: %s',
-                    $e->getMessage(),
-                    $query
-                ),
+            throw new \Mysqli_sql_exception(
+                sprintf('%s. Query: %s', $e->getMessage(), $query),
                 $e->getCode()
             );
         }
