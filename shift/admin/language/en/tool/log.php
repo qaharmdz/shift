@@ -5,6 +5,8 @@ $_['page_title']       = 'Logs Viewer';
 $_['tool']             = 'Tools';
 $_['maintenance']      = 'Maintenance';
 $_['download']         = 'Download';
+$_['message']          = 'Message';
+$_['context']          = 'Context';
 
 $_['confirm_clear']    = 'This action cannot be undone!<br>The log content will be cleared.';
 $_['confirm_delete']   = 'This action cannot be undone!<br>The file will be deleted permanently.';

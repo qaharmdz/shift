@@ -87,31 +87,34 @@ $(document).ready(function() {
         $('.content-body').append('<pre class="uk-resize-vertical uk-margin-remove logs-content-pretify"><code></code></pre>');
 
         $.each(logs.reverse(), function(i, log) {
-            let _logInfo  = log.split('|');
+            let _logData  = log.split('|');
 
-            if (_logInfo[1] != undefined) {
-                let _logError = _logInfo.slice(2),
-                    _logDate  = _logInfo[0].trim(),
-                    _logType  = _logInfo[1].trim(),
-                    html  = '',
-                    label = 'danger';
+            if (_logData[1] != undefined) {
+                let _logDate    = _logData[0].trim(),
+                    _logType    = _logData[1].trim(),
+                    _logMessage = _logData[2].trim(),
+                    _logContext = _logData[3].trim(),
+                    _logContextObj = JSON.parse(_logContext);
+                let html  = '',
+                    label = 'uk-label-danger';
 
                 if (_logType == 'Debug') {
-                    label = ' uk-background-blue-light';
+                    label = 'uk-background-blue-light';
                 } else if (_logType == 'Warning' || _logType == 'Notice') {
-                    label = 'warning';
-                } else if (_logType.indexOf('Exception') !== -1) {
-                    label = ' uk-background-teal';
+                    label = 'uk-label-warning';
+                } else if (_logType.search(/exception/i) !== -1) {
+                    label = 'uk-background-teal';
                 }
 
-                html += '<div class="logs-content-item">';
+                html += '<div class="logs-pretify-item">';
                 html += '<b title="' + _logDate + '">' + formatDate(_logDate) + '</b>';
-                html += ' - <span class="uk-label uk-label-' + label + '">' + _logType + '</span>';
-                $.each(_logError, function(i, message) {
-                    if (message) {
-                        html += '<div class="ukt-ml-4">' + message.trim() + '</div>';
-                    }
-                });
+                html += ' - <span class="uk-label ' + label + '">' + _logType + '</span>';
+                if (_logMessage) {
+                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ app.language.get("message") }}</b>: ' + _logMessage.trim() + '</div>';
+                }
+                if ('url' in _logContextObj) {
+                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ app.language.get("context") }}</b>: ' + JSON.stringify(_logContextObj, null, 4) + '</div>';
+                }
                 html += '</div>';
 
                 $('.logs-content-pretify code').append(html);

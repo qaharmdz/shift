@@ -279,16 +279,21 @@ body {
 .logs-content-pretify {
     min-height: 500px;
     height: 86vh;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 .logs-content-pretify {
     padding: 5px 0;
     cursor: default;
 }
-.logs-content-item {
-    padding: 5px 10px;
+.logs-pretify-item {
+    padding: 6px 10px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 }
-.logs-content-item:hover {
-    background: #f6f8fe;
+.logs-pretify-item:hover {
+    color: #b30042;
+    background: #fff;
 }
 
 /* Media Manager

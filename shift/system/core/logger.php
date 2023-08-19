@@ -24,6 +24,7 @@ class Logger
             [
                 'path'    => PATH_TEMP . 'logs/',
                 'logfile' => date('Y-m') . '.log',
+                'context' => [],
                 'display' => false,
                 'hasErrorDisplay' => false,
             ],
@@ -43,7 +44,7 @@ class Logger
 
     public function write($message, string $level = 'Debug', array $context = [], string $logfile = '')
     {
-        $context = $context ?: $this->contextInfo();
+        $context = array_merge($this->config['context'], $context);
         $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
         $message = sprintf(
             '# %s | %s | %s | %s',
@@ -68,7 +69,7 @@ class Logger
     {
         $level = $this->errorLevel($errno);
 
-        $this->write($errstr . ' in ' . $errfile . ' on line ' . $errline, $level, $this->contextInfo(), $this->config['logfile']);
+        $this->write($errstr . ' in ' . $errfile . ' on line ' . $errline, $level, $this->config['context'], $this->config['logfile']);
 
         if ($this->config['display'] && !$this->isAjax()) {
             $this->setConfig(['hasErrorDisplay' => true]);
@@ -121,15 +122,6 @@ class Logger
             default:
                 return 'Error';
         }
-    }
-
-    protected function contextInfo()
-    {
-        return [
-            'method'     => $_SERVER['REQUEST_METHOD'],
-            'ip_address' => $_SERVER['REMOTE_ADDR'],
-            'url'        => $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
-        ];
     }
 
     protected function isAjax(): bool
