@@ -6,5 +6,11 @@
     "version"     : "1.0.0",
     "description" : "",
     "author"      : "Shift CMS",
-    "url"         : "https://github.com/qaharmdz/shift"
+    "url"         : "https://github.com/qaharmdz/shift",
+
+    "setting"     : {
+        "locale" : "ID,en-ID,en_ID.UTF-8,indonesia",
+        "flag"   : "id.png"
+    },
+    "meta"        : []
 }

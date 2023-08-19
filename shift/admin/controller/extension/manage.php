@@ -120,10 +120,19 @@ class Manage extends Mvc\Controller
 
             foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
                 if (is_file($node . DS . 'meta.json')) {
+                    $metaInfo = [];
                     $codename = basename($node);
-                    $metaInfo = json_decode(file_get_contents($node . DS . 'meta.json'), true);
 
-                    if ($codename === $metaInfo['codename']) {
+                    try {
+                        $metaInfo = json_decode(file_get_contents($node . DS . 'meta.json'), true, flags: \JSON_THROW_ON_ERROR);
+                    } catch (\JsonException $e) {
+                        throw new \JsonException(
+                            sprintf('%s. Path: %s', $e->getMessage(), $node . DS . 'meta.json'),
+                            $e->getCode()
+                        );
+                    }
+
+                    if ($metaInfo && $metaInfo['codename'] === $codename) {
                         $data['metaFiles'][$metaInfo['type'] . '_' . $metaInfo['codename']] = $metaInfo;
 
                         $isExtInDb = array_filter($data['dbLists'], function ($v) use ($codename, $metaInfo) {
@@ -137,10 +146,10 @@ class Manage extends Mvc\Controller
                                 'type'        => $metaInfo['type'],
                                 'name'        => $metaInfo['name'],
                                 'version'     => $metaInfo['version'],
-                                'description' => $metaInfo['description'],
+                                'description' => $metaInfo['description'] ?? '',
                                 'author'      => $metaInfo['author'],
-                                'url'         => $metaInfo['url'],
-                                'setting'     => '[]',
+                                'url'         => $metaInfo['url'] ?? '',
+                                'setting'     => $metaInfo['setting'] ?? [],
                                 'status'      => 0,
                                 'install'     => 0,
                                 'created'     => date('Y-m-d H:i:s'),
@@ -148,6 +157,20 @@ class Manage extends Mvc\Controller
                             ];
 
                             $this->db->add(DB_PREFIX . 'extension', $extData);
+
+                            if (!empty($metaInfo['meta'])) {
+                                $extension_id = (int)$this->db->insertId();
+
+                                $params = [];
+                                foreach ($metaInfo['meta'] as $key => $value) {
+                                    $params[] = [$extension_id, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
+                                }
+
+                                $this->db->transaction(
+                                    "INSERT INTO `" . DB_PREFIX . "extension_meta` (`extension_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
+                                    $params
+                                );
+                            }
 
                             $data['new'][$extType][] = $extData;
                             $data['new']['total']++;

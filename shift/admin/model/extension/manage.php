@@ -94,7 +94,7 @@ class Manage extends Mvc\Model
     // Manage
     // ================================================
 
-    public function getExtension(string $codename)
+    public function getExtension(string $codename): array
     {
         $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `codename` = ?s", [$codename])->row;
 
@@ -124,7 +124,7 @@ class Manage extends Mvc\Model
         return $data;
     }
 
-    public function install(int $extension_id)
+    public function install(int $extension_id): void
     {
         $extension = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i AND `install` = ?i",
