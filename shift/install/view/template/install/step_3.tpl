@@ -19,7 +19,7 @@
   <?php } ?>
   <div class="row">
     <div class="col-sm-9">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?php echo $action; ?>" method="post" class="form-horizontal">
         <p><?php echo $text_db_connection; ?></p>
         <fieldset>
           <div class="form-group">

@@ -14,7 +14,7 @@
   </header>
   <div class="row">
     <div class="col-sm-9">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $action; ?>" method="post">
         <div class="terms"><?php echo $text_terms; ?></div>
         <div class="buttons">
           <div class="pull-right">

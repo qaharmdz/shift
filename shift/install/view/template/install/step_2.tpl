@@ -19,7 +19,7 @@
   <?php } ?>
   <div class="row">
     <div class="col-sm-9">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $action; ?>" method="post">
         <p><?php echo $text_install_php; ?></p>
         <fieldset>
           <table class="table">
