@@ -173,7 +173,7 @@ class Framework
 
         try {
             if (str_starts_with($request->get('query.route'), 'startup/')) {
-                throw new \LogicException('Oops!');
+                throw new \Exception('Oops!');
             }
 
             $pageRoute = new Http\Dispatch($config->get('root.app_component'));
@@ -191,7 +191,7 @@ class Framework
             $pageRoute->execute();
 
         // 404 Not Found
-        } catch (Exception\NotFoundHttpException | \InvalidArgumentException $e) {
+        } catch (Exception\NotFoundHttpException | \LogicException $e) {
             $logger->exceptionHandler($e);
 
             $request->set('query.route', $config->get('root.app_error'));
