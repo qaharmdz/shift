@@ -4,9 +4,9 @@
 {{ layouts.alpha }}
 
 {% if layouts.topbar %}
-    <div class="position-topbar">
+    <section class="position-topbar">
         {{ layouts.topbar }}
-    </div>
+    </section>
 {% endif %}
 
 <div class="page-header">
@@ -28,64 +28,64 @@
 </div>
 
 {% if layouts.top %}
-    <div class="position-top">
+    <section class="position-top">
         {{ layouts.top }}
-    </div>
+    </section>
 {% endif %}
 
 <div class="page-body uk-section">
-    <div class="region-middle uk-container">
+    <div class="section-middle uk-container">
         <div class="uk-grid" uk-grid>
             {% if layouts.sidebar_left %}
-                <aside class="position-sidebar-left uk-width-1-4 uk-width-1-5@m uk-visible@s">
+                <section class="position-sidebar-left uk-width-1-4 uk-width-1-5@m uk-visible@s">
                     {{ layouts.sidebar_left }}
-                </aside>
+                </section>
             {% endif %}
 
             <div class="region-content uk-width-expand">
                 {% if layouts.content_top %}
-                    <div class="position-content-top">
+                    <section class="position-content-top">
                         {{ layouts.content_top }}
-                    </div>
+                    </section>
                 {% endif %}
 
-                <div class="main-content">
+                <main class="main-content">
                     {% block content %}{% endblock %}
-                </div>
+                </main>
 
                 {% if layouts.content_bottom %}
-                    <div class="position-content-top">
+                    <section class="position-content-top">
                         {{ layouts.content_bottom }}
-                    </div>
+                    </section>
                 {% endif %}
             </div>
 
             {% if layouts.sidebar_right %}
-                <aside class="position-sidebar-right uk-width-1-4 uk-width-1-5@m uk-visible@s">
+                <section class="position-sidebar-right uk-width-1-4 uk-width-1-5@m uk-visible@s">
                     {{ layouts.sidebar_right }}
-                </aside>
+                </section>
             {% endif %}
         </div>
     </div>
 </div>
 
 {% if layouts.bottom %}
-    <div class="position-bottom">
+    <section class="position-bottom">
         {{ layouts.bottom }}
-    </div>
+    </section>
 {% endif %}
 
-<footer class="page-footer uk-section uk-section-secondary">
+<div class="page-footer uk-section uk-section-secondary">
     {% if layouts.footer %}
-        <div class="position-footer">
+        <section class="position-footer">
             {{ layouts.footer }}
-        </div>
+        </section>
     {% endif %}
 
-    <div class="uk-light">
+    <footer class="uk-light">
         {{ footer }}
-    </div>
-</footer>
+    </footer>
+</div>
 
 {{ layouts.omega }}
 {% endblock %}

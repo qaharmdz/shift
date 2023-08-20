@@ -23,31 +23,31 @@
 
 .page-header {}
 
-.block-navbar-top {
+.section-navbar-top {
     background: var(--uk-gray-deep);
 }
-.block-navbar-top .uk-navbar-item,
-.block-navbar-top .uk-navbar-nav > li > a,
-.block-navbar-top .uk-navbar-toggle {
+.section-navbar-top .uk-navbar-item,
+.section-navbar-top .uk-navbar-nav > li > a,
+.section-navbar-top .uk-navbar-toggle {
     font-size: 1rem;
     height: var(--id-navbar-top-height);
     min-height: var(--id-navbar-top-height);
 }
-.block-navbar-top .uk-search-navbar {
+.section-navbar-top .uk-search-navbar {
     width: 200px;
 }
-.block-navbar-top .uk-search-navbar .uk-search-icon {
+.section-navbar-top .uk-search-navbar .uk-search-icon {
     width: 15px;
     height: var(--id-navbar-top-height);
 }
-.block-navbar-top .uk-search-navbar .uk-search-input {
+.section-navbar-top .uk-search-navbar .uk-search-input {
     font-size: 1rem;
     height: var(--id-navbar-top-height);
     padding: 0;
     padding-left: 25px !important;
 }
 
-.region-header {
+.section-header {
     padding: 40px 0 30px;
 }
 
@@ -74,7 +74,7 @@
         padding: 40px 0 50px;
     }
 }
-.region-middle {
+.section-middle {
     min-height: 40vh;
 }
 

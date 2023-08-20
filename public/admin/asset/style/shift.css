@@ -6,7 +6,7 @@
  * # Block Layout
  *   - Header Navbar
  *   - Sidebar
- *   - Middle Region
+ *   - Middle
  *
  * # Specific Pages
  *   - Tool Log
@@ -29,7 +29,7 @@ body {
 }
 
 /*
- * Block Layout
+ * Layouts
  * ======================================================================== */
 
 /* Header Navbar
@@ -174,7 +174,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, .25);
 }
 
-/* Sidebar
+/* Layout Sidebar
 ==================================== */
 :root {
     --sidebar-width: 180px;
@@ -210,17 +210,17 @@ body {
     background: rgba(0,0,0,.1);
 }
 
-/* Middle Region
+/* Layout Middle
 ==================================== */
-.region-middle {
+.section-middle {
     min-height: calc(100vh - var(--navbar-height));
 }
 
-.block-top {
+.section-breadcrumb {
     background: rgba(0,0,0,.02);
     border-bottom: 1px solid rgba(0,0,0,.05);
 }
-.block-top .uk-breadcrumb > * > * {
+.section-breadcrumb .uk-breadcrumb > * > * {
     font-size: 12.4px;
 }
 
