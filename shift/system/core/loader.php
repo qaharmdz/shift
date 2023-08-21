@@ -59,6 +59,7 @@ class Loader
             if (class_exists($class)) {
                 $proxy  = new Proxy();
                 $object = new $class();
+                $proxy->{'class'} = $class;
 
                 foreach (get_class_vars($class) as $name => $value) {
                     $proxy->{$name} = $value;
@@ -69,9 +70,6 @@ class Loader
                         $proxy->{$method} = $this->modelCallback($this->event, $path . '/' . $method, $object, $method);
                     }
                 }
-
-                $proxy->{'_class'} = $class;
-                $proxy->{'_key'}   = $model_key;
 
                 $this->registry->set($model_key, $proxy);
             } else {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once realpath(__DIR__ . './../') . '/path.php';
+require_once realpath(dirname(__DIR__)) . '/path.php';
 
 define('APP_FOLDER', 'admin');
 define('APP_URL_PATH', 'admin/');

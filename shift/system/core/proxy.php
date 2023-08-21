@@ -9,24 +9,39 @@ namespace Shift\System\Core;
  */
 class Proxy
 {
+    protected string $class;
+    protected array $storage = [];
+
+    /**
+     * @param  string $key
+     */
     public function __get(string $key)
     {
-        return $this->{$key} ?? null;
+        return $this->storage[$key] ?? null;
     }
 
+    /**
+     *
+     * @param string $key
+     * @param mixed  $callback
+     */
     public function __set(string $key, mixed $callback)
     {
-        $this->{$key} = $callback;
+        $this->storage[$key] = $callback;
     }
 
+    /**
+     * @param  string $key
+     * @param  array  $params
+     */
     public function __call(string $key, array $params)
     {
-        if (isset($this->{$key})) {
-            return call_user_func($this->{$key}, $params);
+        if (isset($this->storage[$key])) {
+            return call_user_func($this->storage[$key], $params);
         } else {
             $trace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 3);
 
-            throw new \BadMethodCallException(sprintf('Undefined "%s::%s" in %s line %s.', $this->{'_class'}, $key, $trace[0]['file'], $trace[0]['line']));
+            throw new \BadMethodCallException(sprintf('Undefined "%s::%s" in %s line %s.', $this->class, $key, $trace[0]['file'], $trace[0]['line']));
         }
     }
 }

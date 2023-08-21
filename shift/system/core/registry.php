@@ -9,7 +9,7 @@ namespace Shift\System\Core;
  */
 class Registry
 {
-    protected $storage = [];
+    protected array $storage = [];
     protected static $instance = null;
 
     public static function init(bool $fresh = false): Registry
