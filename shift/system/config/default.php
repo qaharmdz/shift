@@ -20,11 +20,14 @@ $_['cache_ttl']         = 1800; // in seconds
 // Configuration
 $_['database'] = [
     'config' => [
-        'host'     => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'shift',
-        'port'     => 3306,
+        'host'      => 'localhost',
+        'username'  => 'root',
+        'password'  => '',
+        'database'  => 'shift',
+        'port'      => 3306,
+        'socket'    => null,
+        'charset'   => 'utf8mb4',
+        'collation' => 'utf8mb4_unicode_520_ci',
     ],
     'table' => [
         'prefix'   => 'sf_',
