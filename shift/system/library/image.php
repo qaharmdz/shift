@@ -6,13 +6,10 @@ namespace Shift\System\Library;
 
 use claviska\SimpleImage;
 
-/**
- * TODO: issue fromFile-bestFit and fromFile-resize is not load from cached
- */
 class Image extends SimpleImage
 {
     private array $config = [];
-    protected $flags = [];
+    protected array $flags = [];
     protected $imageFile;
     protected $cacheInfo = [];
 
@@ -73,9 +70,9 @@ class Image extends SimpleImage
     /**
      * Add file checker relative to the config path_image.
      *
-     * @param  string $imageFile
+     * @param  string $file
      */
-    public function fromFile($imageFile)
+    public function fromFile(string $imageFile): static
     {
         $this->imageFile = $imageFile;
 

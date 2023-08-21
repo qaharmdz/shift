@@ -15,7 +15,7 @@ return array(
     'Phpfastcache\\Tests\\' => array($vendorDir . '/phpfastcache/phpfastcache/tests/lib'),
     'Phpfastcache\\' => array($vendorDir . '/phpfastcache/phpfastcache/lib/Phpfastcache'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'League\\ColorExtractor\\' => array($vendorDir . '/league/color-extractor/src'),
     'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Adbar\\' => array($vendorDir . '/adbario/php-dot-notation/src'),
-    '' => array($vendorDir . '/league/color-extractor/src'),
 );

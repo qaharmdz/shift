@@ -36,6 +36,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
             'Phpfastcache\\' => 13,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'L' => 
+        array (
+            'League\\ColorExtractor\\' => 22,
+        ),
         'K' => 
         array (
             'Kint\\' => 5,
@@ -83,6 +87,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'League\\ColorExtractor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/color-extractor/src',
+        ),
         'Kint\\' => 
         array (
             0 => __DIR__ . '/..' . '/kint-php/kint/src',
@@ -91,10 +99,6 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         array (
             0 => __DIR__ . '/..' . '/adbario/php-dot-notation/src',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/league/color-extractor/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -114,7 +118,9 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Composer\\Autoload\\ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e' => __DIR__ . '/..' . '/composer/autoload_static.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Kint\\CallFinder' => __DIR__ . '/..' . '/kint-php/kint/src/CallFinder.php',
+        'Kint\\FacadeInterface' => __DIR__ . '/..' . '/kint-php/kint/src/FacadeInterface.php',
         'Kint\\Kint' => __DIR__ . '/..' . '/kint-php/kint/src/Kint.php',
+        'Kint\\Parser\\AbstractPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/AbstractPlugin.php',
         'Kint\\Parser\\ArrayLimitPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ArrayLimitPlugin.php',
         'Kint\\Parser\\ArrayObjectPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ArrayObjectPlugin.php',
         'Kint\\Parser\\Base64Plugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/Base64Plugin.php',
@@ -124,6 +130,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Parser\\ClassStaticsPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ClassStaticsPlugin.php',
         'Kint\\Parser\\ClosurePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ClosurePlugin.php',
         'Kint\\Parser\\ColorPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ColorPlugin.php',
+        'Kint\\Parser\\ConstructablePluginInterface' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ConstructablePluginInterface.php',
         'Kint\\Parser\\DOMDocumentPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/DOMDocumentPlugin.php',
         'Kint\\Parser\\DateTimePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/DateTimePlugin.php',
         'Kint\\Parser\\EnumPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/EnumPlugin.php',
@@ -133,7 +140,7 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Parser\\MicrotimePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/MicrotimePlugin.php',
         'Kint\\Parser\\MysqliPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/MysqliPlugin.php',
         'Kint\\Parser\\Parser' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/Parser.php',
-        'Kint\\Parser\\Plugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/Plugin.php',
+        'Kint\\Parser\\PluginInterface' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/PluginInterface.php',
         'Kint\\Parser\\ProxyPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ProxyPlugin.php',
         'Kint\\Parser\\SerializePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/SerializePlugin.php',
         'Kint\\Parser\\SimpleXMLElementPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/SimpleXMLElementPlugin.php',
@@ -146,10 +153,12 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Parser\\ToStringPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/ToStringPlugin.php',
         'Kint\\Parser\\TracePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/TracePlugin.php',
         'Kint\\Parser\\XmlPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Parser/XmlPlugin.php',
+        'Kint\\Renderer\\AbstractRenderer' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/AbstractRenderer.php',
         'Kint\\Renderer\\CliRenderer' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/CliRenderer.php',
         'Kint\\Renderer\\PlainRenderer' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/PlainRenderer.php',
-        'Kint\\Renderer\\Renderer' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Renderer.php',
+        'Kint\\Renderer\\RendererInterface' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/RendererInterface.php',
         'Kint\\Renderer\\RichRenderer' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/RichRenderer.php',
+        'Kint\\Renderer\\Rich\\AbstractPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/AbstractPlugin.php',
         'Kint\\Renderer\\Rich\\ArrayLimitPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/ArrayLimitPlugin.php',
         'Kint\\Renderer\\Rich\\BinaryPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/BinaryPlugin.php',
         'Kint\\Renderer\\Rich\\BlacklistPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/BlacklistPlugin.php',
@@ -157,9 +166,8 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Renderer\\Rich\\ClosurePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/ClosurePlugin.php',
         'Kint\\Renderer\\Rich\\ColorPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/ColorPlugin.php',
         'Kint\\Renderer\\Rich\\DepthLimitPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/DepthLimitPlugin.php',
-        'Kint\\Renderer\\Rich\\DocstringPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/DocstringPlugin.php',
+        'Kint\\Renderer\\Rich\\MethodDefinitionPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/MethodDefinitionPlugin.php',
         'Kint\\Renderer\\Rich\\MicrotimePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/MicrotimePlugin.php',
-        'Kint\\Renderer\\Rich\\Plugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/Plugin.php',
         'Kint\\Renderer\\Rich\\PluginInterface' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/PluginInterface.php',
         'Kint\\Renderer\\Rich\\RecursionPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/RecursionPlugin.php',
         'Kint\\Renderer\\Rich\\SimpleXMLElementPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/SimpleXMLElementPlugin.php',
@@ -170,12 +178,13 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Renderer\\Rich\\TraceFramePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/TraceFramePlugin.php',
         'Kint\\Renderer\\Rich\\ValuePluginInterface' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Rich/ValuePluginInterface.php',
         'Kint\\Renderer\\TextRenderer' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/TextRenderer.php',
+        'Kint\\Renderer\\Text\\AbstractPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/AbstractPlugin.php',
         'Kint\\Renderer\\Text\\ArrayLimitPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/ArrayLimitPlugin.php',
         'Kint\\Renderer\\Text\\BlacklistPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/BlacklistPlugin.php',
         'Kint\\Renderer\\Text\\DepthLimitPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/DepthLimitPlugin.php',
         'Kint\\Renderer\\Text\\EnumPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/EnumPlugin.php',
         'Kint\\Renderer\\Text\\MicrotimePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/MicrotimePlugin.php',
-        'Kint\\Renderer\\Text\\Plugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/Plugin.php',
+        'Kint\\Renderer\\Text\\PluginInterface' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/PluginInterface.php',
         'Kint\\Renderer\\Text\\RecursionPlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/RecursionPlugin.php',
         'Kint\\Renderer\\Text\\TracePlugin' => __DIR__ . '/..' . '/kint-php/kint/src/Renderer/Text/TracePlugin.php',
         'Kint\\Utils' => __DIR__ . '/..' . '/kint-php/kint/src/Utils.php',
@@ -185,9 +194,10 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Zval\\EnumValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/EnumValue.php',
         'Kint\\Zval\\InstanceValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/InstanceValue.php',
         'Kint\\Zval\\MethodValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/MethodValue.php',
+        'Kint\\Zval\\ParameterHoldingTrait' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/ParameterHoldingTrait.php',
         'Kint\\Zval\\ParameterValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/ParameterValue.php',
         'Kint\\Zval\\Representation\\ColorRepresentation' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Representation/ColorRepresentation.php',
-        'Kint\\Zval\\Representation\\DocstringRepresentation' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Representation/DocstringRepresentation.php',
+        'Kint\\Zval\\Representation\\MethodDefinitionRepresentation' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Representation/MethodDefinitionRepresentation.php',
         'Kint\\Zval\\Representation\\MicrotimeRepresentation' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Representation/MicrotimeRepresentation.php',
         'Kint\\Zval\\Representation\\Representation' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Representation/Representation.php',
         'Kint\\Zval\\Representation\\SourceRepresentation' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Representation/SourceRepresentation.php',
@@ -199,10 +209,11 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Kint\\Zval\\TraceFrameValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/TraceFrameValue.php',
         'Kint\\Zval\\TraceValue' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/TraceValue.php',
         'Kint\\Zval\\Value' => __DIR__ . '/..' . '/kint-php/kint/src/Zval/Value.php',
-        'League\\ColorExtractor\\Color' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/Color.php',
-        'League\\ColorExtractor\\ColorExtractor' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/ColorExtractor.php',
-        'League\\ColorExtractor\\Palette' => __DIR__ . '/..' . '/league/color-extractor/src/League/ColorExtractor/Palette.php',
-        'League\\ColorExtractor\\Test\\PaletteTest' => __DIR__ . '/..' . '/league/color-extractor/tests/League/ColorExtractor/Test/PaletteTest.php',
+        'League\\ColorExtractor\\Color' => __DIR__ . '/..' . '/league/color-extractor/src/Color.php',
+        'League\\ColorExtractor\\ColorExtractor' => __DIR__ . '/..' . '/league/color-extractor/src/ColorExtractor.php',
+        'League\\ColorExtractor\\Palette' => __DIR__ . '/..' . '/league/color-extractor/src/Palette.php',
+        'League\\ColorExtractor\\Tests\\ColorExtractorTest' => __DIR__ . '/..' . '/league/color-extractor/tests/ColorExtractorTest.php',
+        'League\\ColorExtractor\\Tests\\PaletteTest' => __DIR__ . '/..' . '/league/color-extractor/tests/PaletteTest.php',
         'PHPMailer\\PHPMailer\\DSNConfigurator' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/DSNConfigurator.php',
         'PHPMailer\\PHPMailer\\Exception' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/Exception.php',
         'PHPMailer\\PHPMailer\\OAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/src/OAuth.php',
@@ -378,7 +389,6 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\Admin\\Controller\\Error\\NotFound' => __DIR__ . '/../../..' . '/shift/admin/controller/error/notfound.php',
         'Shift\\Admin\\Controller\\Error\\Permission' => __DIR__ . '/../../..' . '/shift/admin/controller/error/permission.php',
         'Shift\\Admin\\Controller\\Extension\\Event' => __DIR__ . '/../../..' . '/shift/admin/controller/extension/event.php',
-        'Shift\\Admin\\Controller\\Extension\\Installer' => __DIR__ . '/../../..' . '/shift/admin/controller/extension/installer.php',
         'Shift\\Admin\\Controller\\Extension\\Language' => __DIR__ . '/../../..' . '/shift/admin/controller/extension/language.php',
         'Shift\\Admin\\Controller\\Extension\\Manage' => __DIR__ . '/../../..' . '/shift/admin/controller/extension/manage.php',
         'Shift\\Admin\\Controller\\Extension\\Module' => __DIR__ . '/../../..' . '/shift/admin/controller/extension/module.php',
@@ -410,15 +420,19 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         'Shift\\Admin\\Model\\Extension\\Manage' => __DIR__ . '/../../..' . '/shift/admin/model/extension/manage.php',
         'Shift\\Admin\\Model\\Extension\\Module' => __DIR__ . '/../../..' . '/shift/admin/model/extension/module.php',
         'Shift\\Admin\\Model\\Extension\\Plugin' => __DIR__ . '/../../..' . '/shift/admin/model/extension/plugin.php',
+        'Shift\\Admin\\Model\\Extension\\Theme' => __DIR__ . '/../../..' . '/shift/admin/model/extension/theme.php',
         'Shift\\Admin\\Model\\Setting\\Setting' => __DIR__ . '/../../..' . '/shift/admin/model/setting/setting.php',
         'Shift\\Admin\\Model\\Setting\\Site' => __DIR__ . '/../../..' . '/shift/admin/model/setting/site.php',
         'Shift\\Admin\\Model\\Tool\\BackupDb' => __DIR__ . '/../../..' . '/shift/admin/model/tool/backupdb.php',
         'Shift\\Admin\\Model\\Tool\\Layout' => __DIR__ . '/../../..' . '/shift/admin/model/tool/layout.php',
         'Shift\\Extensions\\Module\\Codex\\Admin\\Controller\\Codex' => __DIR__ . '/../../..' . '/shift/extensions/module/codex/admin/controller/codex.php',
         'Shift\\Extensions\\Module\\Codex\\Site\\Controller\\Codex' => __DIR__ . '/../../..' . '/shift/extensions/module/codex/site/controller/codex.php',
+        'Shift\\Extensions\\Module\\Codex\\Site\\Controller\\Debug' => __DIR__ . '/../../..' . '/shift/extensions/module/codex/site/controller/debug.php',
         'Shift\\Extensions\\Module\\Codex\\Site\\Model\\Codex' => __DIR__ . '/../../..' . '/shift/extensions/module/codex/site/model/codex.php',
         'Shift\\Extensions\\Plugin\\Architect\\Admin\\Controller\\Architect' => __DIR__ . '/../../..' . '/shift/extensions/plugin/architect/admin/controller/architect.php',
         'Shift\\Extensions\\Plugin\\Architect\\Admin\\Model\\Architect' => __DIR__ . '/../../..' . '/shift/extensions/plugin/architect/admin/model/architect.php',
+        'Shift\\Extensions\\Theme\\Base\\Admin\\Controller\\Base' => __DIR__ . '/../../..' . '/shift/extensions/theme/base/admin/controller/base.php',
+        'Shift\\Extensions\\Theme\\Base\\Admin\\Model\\Base' => __DIR__ . '/../../..' . '/shift/extensions/theme/base/admin/model/base.php',
         'Shift\\Install\\Controller\\Common\\ColumnLeft' => __DIR__ . '/../../..' . '/shift/install/controller/common/columnleft.php',
         'Shift\\Install\\Controller\\Common\\Footer' => __DIR__ . '/../../..' . '/shift/install/controller/common/footer.php',
         'Shift\\Install\\Controller\\Common\\Header' => __DIR__ . '/../../..' . '/shift/install/controller/common/header.php',
@@ -689,7 +703,6 @@ class ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitec3ddbcfb6fb1e1b644ccfec9082eb1e::$classMap;
 
