@@ -163,6 +163,7 @@ class Site extends Mvc\Controller
             $this->request->get('post', [])
         );
         $site_id = (int)$post['site_id'];
+        $action  = $post['action'];
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);
@@ -178,10 +179,10 @@ class Site extends Mvc\Controller
         $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 
         // Redirect
-        if ($post['action'] === 'close') {
+        if ($action === 'close') {
             $data['redirect'] = $this->router->url('setting/site');
         }
-        if ($post['action'] === 'new') {
+        if ($action === 'new') {
             $data['redirect'] = $this->router->url('setting/site/form');
         }
         if (isset($data['new_id']) && empty($data['redirect'])) {
