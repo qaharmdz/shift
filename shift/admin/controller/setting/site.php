@@ -169,8 +169,10 @@ class Site extends Mvc\Controller
             return $this->response->setOutputJson($errors, 422);
         }
 
+        $post['url_host'] = rtrim($post['url_host'], '/') . '/';
+
         if (-1 == $site_id) {
-            $data['new_id'] = $this->model_setting_site->addSite($post);
+            $data['new_id'] = $site_id = $this->model_setting_site->addSite($post);
         } else {
             $this->model_setting_site->editSite($site_id, $post);
         }
@@ -201,7 +203,7 @@ class Site extends Mvc\Controller
         }
 
         if (false === \filter_var($post['url_host'], \FILTER_VALIDATE_URL)) {
-            $errors['items']['url_host'] = $this->language->get('error_no_empty');
+            $errors['items']['url_host'] = $this->language->get('error_url_host');
         }
 
         if (!$this->assert->email()->check($post['email'])) {
