@@ -93,7 +93,7 @@ class Log extends Mvc\Controller
 
             if (file_exists($filepath)) {
                 if ($submit == 'download') {
-                    $this->response->download($filepath, $this->config->get('system.site.name') . '__' . date('Y-m-d_H-i-s', time()) . '__' . $filename);
+                    $this->response->download($filepath, $this->config->get('system.site.name') . '_' . $filename);
                 }
 
                 if ($submit == 'clear') {

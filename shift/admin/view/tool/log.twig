@@ -2,15 +2,15 @@
 
 {% block main_content %}
 <div class="uk-container container-content-wrapper">
-    <div class="content-header">
-        <div class="uk-flex uk-flex-middle">
-            <div class="uk-width-expand">
+    <div class="content-header uk-text-center uk-text-left@m">
+        <div class="uk-grid" uk-grid>
+            <div class="uk-width-expand@m">
                 <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
             </div>
-            <div class="uk-width-auto">
+            <div class="uk-width-auto@m">
                 <div class="uk-inline">
-                    <button class="uk-button uk-button-default ukt-px-2 ukt-pl-3" type="button">
-                        {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small uk-margin-small-left">{{ fileinfo.size }}</div>
+                    <button type="button" class="uk-button uk-button-default ukt-px-2 ukt-pl-3">
+                        {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small ukt-ml-3">{{ fileinfo.size }}</div>
                         <span class="dropdown-caret"></span>
                     </button>
                     <div class="uk-width-{{ partition.width }}" style="max-width:none" uk-dropdown="pos:bottom-right;">
@@ -29,8 +29,8 @@
                 </div>
 
                 <button type="submit" class="uk-button uk-button-default ukt-px-3 ukt-ml-1" data-log-clear><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
-                <button type="submit" class="uk-button uk-button-danger ukt-px-3 uk-margin-small-left" data-log-delete><i class="bi bi-trash ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
-                <button type="submit" class="uk-button uk-button-secondary ukt-px-3 ukt-ml-1" form="form-log"><i class="bi bi-download ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-secondary ukt-px-3 ukt-ml-3" form="form-log"><i class="bi bi-download ukt-mr-1"></i> {{ app.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-danger ukt-px-3 ukt-ml-1" data-log-delete><i class="bi bi-trash ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
             </div>
         </div>
     </div>
