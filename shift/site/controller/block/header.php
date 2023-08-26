@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Controller\Common;
+namespace Shift\Site\Controller\Block;
 
 use Shift\System\Mvc;
 
@@ -10,7 +10,7 @@ class Header extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('common/header');
+        $this->load->language('block/header');
 
         if (is_file(PATH_MEDIA . $this->config->get('system.site.icon'))) {
             $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'));
@@ -35,13 +35,13 @@ class Header extends Mvc\Controller
         }
 
         $data['logged']   = $this->user->isLogged();
-        $data['language'] = $this->load->controller('common/language');
-        $data['search']   = $this->load->controller('common/search');
+        $data['language'] = $this->load->controller('block/language');
+        $data['search']   = $this->load->controller('block/search');
 
         $data['navigations'] = [];
         $data['navigations'][] = [
             'name'     => $this->language->get('home'),
-            'href'     => $this->router->url('common/home')
+            'href'     => $this->router->url('page/home')
         ];
         $data['navigations'][] = [
             'name'     => $this->language->get('about', 'About'),
@@ -51,7 +51,7 @@ class Header extends Mvc\Controller
         for ($i = 0; $i < 12; $i++) {
             $dropdownItems[] = [
                 'name'  => 'Item ' . $i,
-                'href'  => $this->router->url('common/home'),
+                'href'  => $this->router->url('page/home'),
             ];
         }
         $data['navigations'][] = [

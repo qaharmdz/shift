@@ -12,7 +12,7 @@ $_['app_startup']       = [];
 $_['app_error']         = 'error/notfound';
 $_['app_event']         = [];
 
-$_['route_default']     = 'common/home';
+$_['route_default']     = 'page/home';
 
 $_['cache_driver']      = 'Files';
 $_['cache_ttl']         = 1800; // in seconds

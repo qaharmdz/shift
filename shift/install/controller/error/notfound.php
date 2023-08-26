@@ -21,10 +21,10 @@ class NotFound extends Mvc\Controller
 
         $data['button_continue'] = $this->language->get('button_continue');
 
-        $data['continue'] = $this->router->url('common/home');
+        $data['continue'] = $this->router->url('page/home');
 
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('error/not_found', $data), 404);
         */

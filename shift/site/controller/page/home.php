@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Controller\Common;
+namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
@@ -16,8 +16,8 @@ class Home extends Mvc\Controller
         $this->document->addLink($this->config->get('env.url_app'), 'canonical');
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('common/footer');
-        $data['header']  = $this->load->controller('common/header');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/home', $data));
     }

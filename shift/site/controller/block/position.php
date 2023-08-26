@@ -46,10 +46,10 @@ class Position extends Mvc\Controller
 
         // TODO: match route by positions, header might be route all, while the rest match route pattern
 
-        return (int)$this->db->get(
+        return (int)($this->db->get(
             "SELECT layout_id FROM `" . DB_PREFIX . "layout_route` WHERE ?s LIKE `route` ORDER BY `priority` DESC LIMIT 1",
             [$route],
-        )->row['layout_id'] ?? 0;
+        )->row['layout_id'] ?? 0);
 
 
         /*

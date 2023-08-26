@@ -16,7 +16,7 @@ class Sitemap extends Mvc\Controller
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('text_home'), $this->router->url('common/home')],
+            [$this->language->get('text_home'), $this->router->url('page/home')],
             [$this->language->get('page_title'), $this->router->url('information/sitemap')],
         ]);
 
@@ -32,8 +32,8 @@ class Sitemap extends Mvc\Controller
         }
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('common/footer');
-        $data['header']  = $this->load->controller('common/header');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/sitemap', $data));
     }

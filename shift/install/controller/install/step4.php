@@ -50,8 +50,8 @@ class Step4 extends Mvc\Controller
         $data['openbay'] = $this->router->url('3rd_party/openbay');
         $data['extension'] = $this->router->url('3rd_party/extension');
 
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('install/step_4', $data));
     }

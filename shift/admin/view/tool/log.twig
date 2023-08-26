@@ -112,7 +112,7 @@ $(document).ready(function() {
                 if (_logMessage) {
                     html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ app.language.get("message") }}</b>: ' + _logMessage.trim() + '</div>';
                 }
-                if ('url' in _logContextObj) {
+                if ('uri' in _logContextObj) {
                     html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ app.language.get("context") }}</b>: ' + JSON.stringify(_logContextObj, null, 4) + '</div>';
                 }
                 html += '</div>';

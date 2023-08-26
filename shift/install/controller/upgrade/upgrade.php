@@ -34,8 +34,8 @@ class Upgrade extends Mvc\Controller
 
         $data['total'] = count(glob(PATH_APP . 'model/upgrade/*.php'));
 
-        $data['header'] = $this->load->controller('common/header');
-        $data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
         $data['column_left'] = $this->load->controller('common/column_left');
 
         $this->response->setOutput($this->load->view('upgrade/upgrade', $data));

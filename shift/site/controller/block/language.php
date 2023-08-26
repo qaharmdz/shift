@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Controller\common;
+namespace Shift\Site\Controller\block;
 
 use Shift\System\Mvc;
 
@@ -13,8 +13,9 @@ class Language extends Mvc\Controller
         $this->load->model('extension/language');
 
         if ($this->model_extension_language->getTotalLanguages() > 1) {
-            $this->load->language('common/language');
+            $this->load->language('block/language');
 
+            $data = [];
             $data['code'] = $this->session->get('language', $this->config->get('env.language_code'));
             $data['languages'] = [];
 
@@ -27,7 +28,7 @@ class Language extends Mvc\Controller
                 ];
             }
 
-            $data['redirect'] = ['route' => 'common/home', 'args' => ''];
+            $data['redirect'] = ['route' => $this->config->get('root.route_default'), 'args' => ''];
             if ($this->request->has('query.route')) {
                 $url_data = $this->request->get('query');
                 $route = $url_data['route'];
@@ -41,7 +42,7 @@ class Language extends Mvc\Controller
                 $data['redirect'] = ['route' => $route, 'args' => $args];
             }
 
-            return $this->load->view('common/language', $data);
+            return $this->load->view('block/language', $data);
         }
     }
 

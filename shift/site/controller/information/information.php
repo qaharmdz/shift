@@ -25,7 +25,7 @@ class Information extends Mvc\Controller
 
         $this->document->addLink($this->router->url('information/information', 'information_id=' .  $information_id), 'canonical');
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('text_home'), $this->router->url('common/home')],
+            [$this->language->get('text_home'), $this->router->url('page/home')],
             [$information_info['title'], $this->router->url('information/information', 'information_id=' .  $information_id)],
         ]);
 
@@ -35,8 +35,8 @@ class Information extends Mvc\Controller
         $data['content']    = html_entity_decode($information_info['description'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('common/footer');
-        $data['header']  = $this->load->controller('common/header');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/information', $data));
     }

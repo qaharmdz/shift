@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Controller\Common;
+namespace Shift\Site\Controller\Block;
 
 use Shift\System\Mvc;
 
@@ -11,7 +11,7 @@ class Footer extends Mvc\Controller
     public function index()
     {
         $this->load->model('catalog/information');
-        $this->load->language('common/footer');
+        $this->load->language('block/footer');
 
         $data = [];
 

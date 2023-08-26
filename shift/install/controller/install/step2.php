@@ -115,8 +115,8 @@ class Step2 extends Mvc\Controller
 
         $data['back'] = $this->router->url('install/step_1');
 
-        $data['footer'] = $this->load->controller('common/footer');
-        $data['header'] = $this->load->controller('common/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
         $data['column_left'] = $this->load->controller('common/column_left');
 
         $this->response->setOutput($this->load->view('install/step_2', $data));
