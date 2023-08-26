@@ -9,23 +9,25 @@
     </section>
 {% endif %}
 
-<div class="page-header">
+<header class="page-header">
     {{ header }}
 
     {% if app.document.getNode('breadcrumbs') %}
-        <div class="uk-container">
-            <ul class="uk-breadcrumb">
-                {% for breadcrumb in app.document.getNode('breadcrumbs') %}
-                    {% if breadcrumb.1 is defined %}
-                        <li><a href="{{ breadcrumb.1 }}" {{ breadcrumb.2 is defined ? 'title="' ~ breadcrumb.2 ~ '"' : '' }}>{{ breadcrumb.0 }}</a></li>
-                    {% else %}
-                        <li class="uk-disabled"><span>{{ breadcrumb.0 }}</span></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+        <section class="section-breadcrumb">
+            <div class="uk-container">
+                <ul class="uk-breadcrumb">
+                    {% for breadcrumb in app.document.getNode('breadcrumbs') %}
+                        {% if breadcrumb.1 is defined %}
+                            <li><a href="{{ breadcrumb.1 }}" {{ breadcrumb.2 is defined ? 'title="' ~ breadcrumb.2 ~ '"' : '' }}>{{ breadcrumb.0 }}</a></li>
+                        {% else %}
+                            <li class="uk-disabled"><span>{{ breadcrumb.0 }}</span></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
     {% endif %}
-</div>
+</header>
 
 {% if layouts.top %}
     <section class="position-top">
