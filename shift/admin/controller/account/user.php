@@ -83,8 +83,6 @@ class User extends Mvc\Controller
             'updated'   => [],
         ];
 
-        $this->log->write($this->db->get("SELECT * FROM `" . DB_PREFIX . "user` WHERE user_group_id = 1 AND user_id IN (:items?i)", ['items' => $items])->rows);
-
         if (
             empty($items)
             || !in_array($post['type'], $types)
@@ -150,6 +148,7 @@ class User extends Mvc\Controller
         if (!$this->request->has('post.user_id')) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
+        // TODO: double validate edit to super-admin
 
         $data = [];
         $post = array_replace_recursive(
