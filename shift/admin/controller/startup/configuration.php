@@ -102,7 +102,6 @@ class Configuration extends Mvc\Controller
         $this->language->set('_param.active', $code);
         $this->language->load($code);
 
-
         //=== Mail
         $this->mail->setConfig([
             'engine'        => $this->config->get('system.setting.mail_engine'),

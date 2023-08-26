@@ -11,11 +11,10 @@ class Maintenance extends Mvc\Controller
 {
     public function index()
     {
-        if (!$this->config->getBool('system.site.maintenance')) {
-            return null;
-        }
-
-        if (!$this->user->isLogged()) {
+        if (
+            $this->config->getBool('system.site.maintenance')
+            && !$this->user->isLogged()
+        ) {
             return new Http\Dispatch('page/maintenance');
         }
     }
