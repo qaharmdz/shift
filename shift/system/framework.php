@@ -96,12 +96,13 @@ class Framework
 
         $config->set('root.url_host', URL_SITE);
         $config->set('env.site_id', $site['site_id']);
-        $config->set('env.site_name', $site['name']);
         $config->set('env.app', APP_FOLDER);
         $config->set('env.url_app', URL_APP);
         $config->set('env.url_site', URL_SITE);
         $config->set('env.url_asset', URL_SITE . 'asset/');
         $config->set('env.url_media', URL_SITE . 'media/');
+        $config->set('system.site.name', $site['name']);
+        $config->set('system.site.url_host', $site['url_host']);
 
         return $this;
     }
@@ -109,8 +110,6 @@ class Framework
     protected function engine(): Framework
     {
         $config = $this->get('config');
-
-        // d($config->all());
 
         // Request
         $this->set('request', new Http\Request());

@@ -12,26 +12,25 @@ class Configuration extends Mvc\Controller
     public function index()
     {
         //=== Settings
-        foreach (['system', 'theme'] as $group) {
-            $results = $this->db->get(
-                "SELECT * FROM `" . DB_PREFIX . "setting`
-                WHERE (site_id = '0' OR site_id = ?i) AND `group` = ?s
-                ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
-                [$this->config->get('env.site_id', 0), $group]
-            );
+        $results = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "setting`
+            WHERE (site_id = '0' OR site_id = :site_id?i) AND `group` IN (:groups?s)
+            ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
+            [
+                'site_id' => $this->config->get('env.site_id', 0),
+                'groups' => ['system', 'theme'],
+            ]
+        );
 
-            $settings = [];
-            foreach ($results->rows as $row) {
-                $value = $row['encoded'] ? json_decode($row['value'], true) : $row['value'];
+        $settings = [];
+        foreach ($results->rows as $row) {
+            $value = $row['encoded'] ? json_decode($row['value'], true) : $row['value'];
 
-                if ($row['code']) {
-                    $settings[$row['group']][$row['code']][$row['key']] = $value;
-                } else {
-                    $settings[$row['group']][$row['key']] = $value;
-                }
+            if ($row['code']) {
+                $settings[$row['group']][$row['code']][$row['key']] = $value;
+            } else {
+                $settings[$row['group']][$row['key']] = $value;
             }
-
-            $this->config->set($settings);
         }
 
         $this->config->set(array_merge_recursive(

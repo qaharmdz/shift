@@ -118,6 +118,7 @@ class Site extends Mvc\Controller
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('setting.site.form'),
             $this->model_setting_setting->getSetting('system', 'site', $site_id),
+            $this->model_setting_site->getSite($site_id)
         );
 
         $this->load->model('extension/language');
@@ -177,7 +178,7 @@ class Site extends Mvc\Controller
             $this->model_setting_site->editSite($site_id, $post);
         }
 
-        Arr::unset($post, ['site_id', 'form', 'action', 'timezone']);
+        Arr::unset($post, ['site_id', 'name', 'url_host', 'form', 'action', 'timezone']);
         $this->model_setting_setting->editSetting('system', 'site', $post, $site_id);
 
         // Redirect

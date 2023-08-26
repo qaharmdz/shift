@@ -36,9 +36,9 @@
         <div class="uk-grid" uk-grid>
             <div class="uk-width-225 uk-visible@m">
                 {% if logo %}
-                    <a href="{{ app.router.url('common/home') }}"><img src="{{ logo }}" title="{{ app.config.get('system.setting.site_name') }}" alt="{{ app.config.get('system.setting.site_name') }}"></a>
+                    <a href="{{ app.router.url('common/home') }}"><img src="{{ logo }}" title="{{ app.config.get('system.site.name') }}" alt="{{ app.config.get('system.site.name') }}"></a>
                 {% else %}
-                    <h1><a href="{{ app.router.url('common/home') }}">{{ app.config.get('system.setting.site_name') }}</a></h1>
+                    <h1><a href="{{ app.router.url('common/home') }}">{{ app.config.get('system.site.name') }}s</a></h1>
                 {% endif %}
             </div>
             <div class="uk-width-expand">
@@ -75,9 +75,9 @@
                     <div class="uk-navbar-left">
                         <a class="uk-navbar-item uk-logo uk-width-100 uk-padding-remove" href="{{ app.router.url('common/home') }}">
                             {% if logo %}
-                                <img src="{{ logo }}" title="{{ app.config.get('system.setting.site_name') }}" alt="{{ app.config.get('system.setting.site_name') }}">
+                                <img src="{{ logo }}" title="{{ app.config.get('system.site.name') }}" alt="{{ app.config.get('system.site.name') }}">
                             {% else %}
-                                {{ app.config.get('system.setting.site_name') }}
+                                {{ app.config.get('system.site.name') }}
                             {% endif %}
                         </a>
                     </div>
