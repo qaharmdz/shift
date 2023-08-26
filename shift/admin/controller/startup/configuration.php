@@ -40,21 +40,13 @@ class Configuration extends Mvc\Controller
         $this->config->set('env.datetime_format', 'Y-m-d H:i:s');
 
         // Apply DB setting
-        $user = '';
-        if ($this->user->isLogged()) {
-            $user = sprintf(
-                '%s, %s, %s %s',
-                $this->user->get('user_id'),
-                $this->user->get('username'),
-                $this->user->get('firstname'),
-                $this->user->get('lastname'),
-            );
-        }
         $this->log->setConfig([
             'display' => $this->config->getBool('system.setting.error_display', false),
             'context' => [
-                'user'       => $user,
-                'url'        => htmlspecialchars_decode($_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),
+                'user_id'    => $this->user->get('user_id'),
+                'name'       => $this->user->get('firstname') . ' ' . $this->user->get('lastname'),
+                'uri'        => htmlspecialchars_decode($_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),
+                'referrer'   => htmlspecialchars_decode($_SERVER['HTTP_REFERER']),
                 'method'     => $_SERVER['REQUEST_METHOD'],
                 'ip_address' => $_SERVER['REMOTE_ADDR'],
             ],
