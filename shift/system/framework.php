@@ -47,7 +47,7 @@ class Framework
 
     public function init(string $appFolder, array $rootConfig = []): Framework
     {
-        //=== Config
+        //=== Root Config
         $config = new Core\Config();
         $config->set('root.version', VERSION);
         $config->set('root.version_id', VERSION_ID);
@@ -55,12 +55,6 @@ class Framework
         $config->load('default', 'root');
         $config->load('app/' . $appFolder, 'root');
         $config->replaceRecursive(['root' => $rootConfig]);
-
-        $config->set('env.app', APP_FOLDER);
-        $config->set('env.url_app', URL_APP);
-        $config->set('env.url_site', URL_SITE);
-        $config->set('env.url_asset', URL_SITE . 'asset/');
-        $config->set('env.url_media', URL_SITE . 'media/');
 
         $this->set('config', $config);
 
@@ -79,9 +73,35 @@ class Framework
                 SESSION sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
         ');
         $this->set('db', $db);
+        define('DB_PREFIX', $config->get('root.database.table.prefix', 'sf_'));
 
         //=== Session
         $this->set('session', new Core\Session($config->get('root.session')));
+
+        //=== Environment Config
+        $hostname = str_replace('www.', '', $_SERVER['HTTP_HOST'])
+                    . rtrim(dirname($_SERVER['PHP_SELF'], (APP_URL_PATH ? 2 : 1)), '/') . '/';
+        $site = $db->get(
+            "SELECT * FROM `" . DB_PREFIX . "site` WHERE REPLACE(`url_host`, 'www.', '') LIKE ?s",
+            ['%' . $hostname]
+        )->row;
+
+        if (!$site) {
+            header('Location: ' . $_SERVER['PROTOCOL'] . $config->get('root.url_host'), true, 302);
+            exit('╮ (. ❛ ᴗ ❛.) ╭');
+        }
+
+        define('URL_SITE', $site['url_host']);
+        define('URL_APP', $site['url_host'] . APP_URL_PATH);
+
+        $config->set('root.url_host', URL_SITE);
+        $config->set('env.site_id', $site['site_id']);
+        $config->set('env.site_name', $site['name']);
+        $config->set('env.app', APP_FOLDER);
+        $config->set('env.url_app', URL_APP);
+        $config->set('env.url_site', URL_SITE);
+        $config->set('env.url_asset', URL_SITE . 'asset/');
+        $config->set('env.url_media', URL_SITE . 'media/');
 
         return $this;
     }
@@ -89,6 +109,8 @@ class Framework
     protected function engine(): Framework
     {
         $config = $this->get('config');
+
+        // d($config->all());
 
         // Request
         $this->set('request', new Http\Request());

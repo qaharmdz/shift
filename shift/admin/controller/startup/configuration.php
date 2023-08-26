@@ -11,15 +11,12 @@ class Configuration extends Mvc\Controller
 {
     public function index()
     {
-        //=== Multi sites
-        // TODO: Multi-site $site_id
-        $site_id = 0;
-        $this->config->set('env.site_id', $site_id);
-
         //=== Settings
         $results = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "setting` WHERE site_id = ?i AND `group` = ?s ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
-            [$site_id, 'system']
+            "SELECT * FROM `" . DB_PREFIX . "setting`
+            WHERE (site_id = '0' OR site_id = ?i) AND `group` = ?s
+            ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
+            [$this->config->get('env.site_id', 0), 'system']
         );
 
         $settings = [];
@@ -33,10 +30,13 @@ class Configuration extends Mvc\Controller
             }
         }
 
-        $this->config->set($settings);
+        $this->config->set(array_merge_recursive(
+            ['system' => $this->config->get('system', [])],
+            $settings
+        ));
         $this->config->set('env.access_token', $this->session->getString('access_token'));
         $this->config->set('env.limit', $this->config->getInt('system.setting.admin_limit', 36));
-        $this->config->set('env.development', $this->config->getInt('system.setting.development', 36));
+        $this->config->set('env.development', $this->config->getInt('system.setting.development', 0));
         $this->config->set('env.datetime_format', 'Y-m-d H:i:s');
 
         // Apply DB setting
@@ -66,8 +66,7 @@ class Configuration extends Mvc\Controller
 
         //=== Event
         $events = $this->db->get(
-            "SELECT e.* FROM `" . DB_PREFIX . "event` e
-            WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.priority DESC, e.emitter ASC",
+            "SELECT e.* FROM `" . DB_PREFIX . "event` e WHERE e.emitter LIKE ?s AND e.status = 1 ORDER BY e.priority DESC, e.emitter ASC",
             ['admin/%']
         )->rows;
 

@@ -21,9 +21,7 @@ ini_set('display_errors', '1');
 
 //=== Protocols
 $secure = false;
-if (!empty($rootConfig['force_ssl'])) {
-    $secure = true;
-} elseif (
+if (
     (!empty($_SERVER['secure']) && ($_SERVER['secure'] === 'on' || $_SERVER['secure'] !== 'off'))
     || $_SERVER['SERVER_PORT'] == 443
 ) {
@@ -35,31 +33,20 @@ if (!empty($rootConfig['force_ssl'])) {
     $secure = true;
 }
 
-$_SERVER['SECURE']   = $secure;
-$_SERVER['HTTPS']    = $secure ? 'on' : 'off';
-$_SERVER['PROTOCOL'] = $secure ? 'https://' : 'http://';
+$_SERVER['SECURE']         = $secure;
+$_SERVER['HTTPS']          = $secure ? 'on' : 'off';
+$_SERVER['PROTOCOL']       = $secure ? 'https://' : 'http://';
 $_SERVER['REMOTE_ADDR']    = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 $_SERVER['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'] ?? null;
 $_SERVER['DOCUMENT_ROOT']  = PATH_PUBLIC;
 
 //=== Define
-if ($rootConfig) {
-    define('URL_APP', $_SERVER['PROTOCOL'] . $rootConfig['url_host'] . APP_URL_PATH);
-    define('URL_SITE', $_SERVER['PROTOCOL'] . $rootConfig['url_host']);
-}
-
-// DIR
 define('PATH_APP', PATH_SHIFT . APP_FOLDER . DS);
 define('PATH_SITE', PATH_SHIFT . 'site/');
 define('PATH_EXTENSIONS', PATH_SHIFT . 'extensions/');
 define('PATH_SYSTEM', PATH_SHIFT . 'system' . DS);
 define('PATH_TEMP', PATH_SHIFT . 'temp' . DS);
 define('PATH_MEDIA', PATH_PUBLIC . 'media' . DS);
-
-// DB
-if ($rootConfig) {
-    define('DB_PREFIX', $rootConfig['database']['table']['prefix']);
-}
 
 //=== Autoloader
 $loader = require PATH_SHIFT . 'vendor/autoload.php';
