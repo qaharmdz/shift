@@ -46,7 +46,7 @@ class Configuration extends Mvc\Controller
                 'user_id'    => $this->user->get('user_id'),
                 'name'       => $this->user->get('firstname') . ' ' . $this->user->get('lastname'),
                 'uri'        => htmlspecialchars_decode($_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),
-                'referrer'   => htmlspecialchars_decode($_SERVER['HTTP_REFERER']),
+                'referrer'   => htmlspecialchars_decode($_SERVER['HTTP_REFERER'] ?? ''),
                 'method'     => $_SERVER['REQUEST_METHOD'],
                 'ip_address' => $_SERVER['REMOTE_ADDR'],
             ],
