@@ -58,6 +58,6 @@ class Success extends Mvc\Controller
         $data['footer'] = $this->load->controller('block/footer');
         $data['header'] = $this->load->controller('block/header');
 
-        $this->response->setOutput($this->load->view('common/success', $data));
+        $this->response->setOutput($this->load->view('page/success', $data));
     }
 }
