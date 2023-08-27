@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Model\Design;
+namespace Shift\Site\Model\Tool;
 
 use Shift\System\Mvc;
 
