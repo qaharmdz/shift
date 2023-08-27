@@ -24,9 +24,9 @@ $_['success_install']   = 'Successfully installed!';
 $_['success_uninstall'] = 'Successfully uninstalled!';
 $_['success_upload']    = 'Successfully upload extension package!';
 
-$_['error_package_type'] = 'Extension installation must in ZIP package!';
-$_['error_package_move'] = 'Unable to move uploaded package: ';
-$_['error_package_open'] = 'Error opening installation package!';
-$_['error_package_meta'] = 'Extension has invalid meta information!';
+$_['error_package_type']    = 'Extension installation must in ZIP package!';
+$_['error_package_move']    = 'Unable to move uploaded package: ';
+$_['error_package_open']    = 'Error opening installation package!';
+$_['error_package_meta']    = 'Extension has invalid meta information!';
 $_['error_package_extract'] = 'Unable to extract installation package: ';
-$_['error_path_write'] = 'Extension path is not writable: ';
+$_['error_path_write']      = 'Extension path is not writable: ';
