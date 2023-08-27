@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Controller\Information;
+namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
@@ -10,7 +10,7 @@ class Contact extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('information/contact');
+        $this->load->language('page/contact');
 
         $this->document->setTitle($this->language->get('page_title'));
 
@@ -26,12 +26,12 @@ class Contact extends Mvc\Controller
             $mail->isHTML(false);
             $mail->send();
 
-            $this->response->redirect($this->router->url('information/contact/success'));
+            $this->response->redirect($this->router->url('page/contact/success'));
         }
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('text_home'), $this->router->url('page/home')],
-            [$this->language->get('page_title'), $this->router->url('information/contact')],
+            [$this->language->get('page_title'), $this->router->url('page/contact')],
         ]);
 
         // TODO: Error alert bar
@@ -80,13 +80,13 @@ class Contact extends Mvc\Controller
 
     public function success()
     {
-        $this->load->language('information/contact');
+        $this->load->language('page/contact');
 
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('text_home'), $this->router->url('page/home')],
-            [$this->language->get('page_title'), $this->router->url('information/contact')],
+            [$this->language->get('page_title'), $this->router->url('page/contact')],
             ['Success'],
         ]);
 

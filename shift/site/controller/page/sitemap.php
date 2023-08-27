@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shift\Site\Controller\Information;
+namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
@@ -11,13 +11,13 @@ class Sitemap extends Mvc\Controller
     public function index()
     {
         $this->load->model('catalog/information');
-        $this->load->language('information/sitemap');
+        $this->load->language('page/sitemap');
 
         $this->document->setTitle($this->language->get('page_title'));
 
         $this->document->addNode('breadcrumbs', [
             [$this->language->get('text_home'), $this->router->url('page/home')],
-            [$this->language->get('page_title'), $this->router->url('information/sitemap')],
+            [$this->language->get('page_title'), $this->router->url('page/sitemap')],
         ]);
 
 
@@ -36,5 +36,10 @@ class Sitemap extends Mvc\Controller
         $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/sitemap', $data));
+    }
+
+    public function xml()
+    {
+        // TODO: sitemap xml feed
     }
 }

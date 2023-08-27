@@ -62,7 +62,7 @@ class Header extends Mvc\Controller
         ];
         $data['navigations'][] = [
             'name'     => $this->language->get('text_contact'),
-            'href'     => $this->router->url('information/contact')
+            'href'     => $this->router->url('page/contact')
         ];
 
         return $this->load->view('block/header', $data);
