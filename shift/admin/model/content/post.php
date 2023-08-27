@@ -132,17 +132,17 @@ class Post extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'post_content', ['post_id' => $post_id]);
             $this->db->delete(DB_PREFIX . 'post_meta', ['post_id' => $post_id]);
             $this->db->delete(DB_PREFIX . 'site_relation', [
-                'taxonomy' => 'content_post',
-                'taxonomy_id' => $post_id
+                'taxonomy'    => 'content_post',
+                'taxonomy_id' => $post_id,
             ]);
             $this->db->delete(DB_PREFIX . 'term_relation', [
-                'taxonomy' => 'content_post',
-                'taxonomy_id' => $post_id
+                'taxonomy'    => 'content_post',
+                'taxonomy_id' => $post_id,
             ]);
             $this->db->delete(DB_PREFIX . 'route_alias', [
                 'route' => 'content/post',
                 'param' => 'post_id',
-                'value' => $post_id
+                'value' => $post_id,
             ]);
 
             $this->insertData($post_id, $data);

@@ -117,13 +117,13 @@ class Category extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'term_content', ['term_id' => $category_id]);
             $this->db->delete(DB_PREFIX . 'term_meta', ['term_id' => $category_id]);
             $this->db->delete(DB_PREFIX . 'site_relation', [
-                'taxonomy' => 'content_category',
-                'taxonomy_id' => $post_id
+                'taxonomy'    => 'content_category',
+                'taxonomy_id' => $category_id,
             ]);
             $this->db->delete(DB_PREFIX . 'route_alias', [
                 'route' => 'content/category',
                 'param' => 'category_id',
-                'value' => $category_id
+                'value' => $category_id,
             ]);
 
             $this->insertData($category_id, $data);
