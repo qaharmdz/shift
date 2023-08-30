@@ -9,6 +9,9 @@
 /* UIkit Sketsa override
 ============================== */
 
+.uk-navbar-dropdown-nav>li>a {
+    color: #444;
+}
 .uk-navbar-nav > li > a {
     text-transform: none;
 }
