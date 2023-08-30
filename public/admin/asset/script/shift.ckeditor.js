@@ -14,26 +14,25 @@ shift.ckeditor = { instances: {} };
  */
 shift.ckeditor.mode_basic = [
     'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
-    'bulletedList', 'numberedList', 'outdent', 'indent', '|', 'blockQuote', 'link', '|',
+    'bulletedList', 'numberedList', 'outdent', 'indent', '|', 'link', 'blockQuote', '|',
     'undo', 'redo', '|', 'sourceEditing'
 ];
 shift.ckeditor.mode_default = [
     'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
     'fontColor', 'fontBackgroundColor', 'alignment', '|',
     'bulletedList', 'numberedList', 'outdent', 'indent', '|',
-    'blockQuote', 'link', 'shiftMediaManager', 'insertTable', '|',
+    'link', 'blockQuote', 'shiftMediaManager', 'insertTable', '|',
     'undo', 'redo', '|', 'sourceEditing',
 ];
 shift.ckeditor.mode_all = [
     'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'removeFormat', '|',
     'fontColor', 'fontBackgroundColor', 'alignment', '|',
     'bulletedList', 'numberedList', 'outdent', 'indent', '|',
-    'blockQuote', 'link', 'shiftMediaManager', 'mediaEmbed', 'insertTable', '|', 'sourceEditing',
+    'link', 'blockQuote', 'shiftMediaManager', 'mediaEmbed', 'insertTable', '|', 'sourceEditing',
     '-',
     'findAndReplace', '|', 'fontFamily','fontSize', 'fontColor', 'fontBackgroundColor', '|',
     'horizontalLine', 'pageBreak', 'code', 'codeBlock', '|', 'undo', 'redo'
 ];
-// shift.ckeditor.mode_default = shift.ckeditor.mode_all;
 
 ClassicEditor.defaultConfig =  {
     language: 'en',
@@ -85,6 +84,9 @@ ClassicEditor.defaultConfig =  {
     }
 };
 
+/**
+ * Automatically update textarea with editor content
+ */
 $(document).on('IIDE.form_submit.before', function() {
     $.each(shift.ckeditor.instances, function(elid, instance) {
         $('#' + elid).text(instance.getData());
