@@ -33,7 +33,7 @@
 
 <header class="section-header">
     <div class="uk-container nav-boundary">
-        <div class="uk-grid" uk-grid>
+        <div class="uk-grid uk-flex-middle" uk-grid>
             <div class="uk-width-225 uk-visible@m">
                 {% if logo %}
                     <a href="{{ app.router.url('page/home') }}">
@@ -44,7 +44,7 @@
                 {% endif %}
             </div>
             <div class="uk-width-expand">
-                <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-desktop uk-margin-small-top uk-visible@m" uk-navbar>
+                <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-desktop uk-visible@m" uk-navbar>
                     <div class="uk-navbar-right">
                         <ul class="uk-navbar-nav">
                             {% for nav in navigations %}
