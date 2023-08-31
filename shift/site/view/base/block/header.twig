@@ -36,7 +36,9 @@
         <div class="uk-grid" uk-grid>
             <div class="uk-width-225 uk-visible@m">
                 {% if logo %}
-                    <a href="{{ app.router.url('page/home') }}"><img src="{{ logo }}" title="{{ app.config.get('system.site.name') }}" alt="{{ app.config.get('system.site.name') }}"></a>
+                    <a href="{{ app.router.url('page/home') }}">
+                        <img src="{{ logo }}" title="{{ app.config.get('system.site.name') }}" alt="{{ app.config.get('system.site.name') }}">
+                    </a>
                 {% else %}
                     <h1><a href="{{ app.router.url('page/home') }}">{{ app.config.get('system.site.name') }}s</a></h1>
                 {% endif %}

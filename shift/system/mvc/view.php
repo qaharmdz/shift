@@ -102,7 +102,6 @@ class View
         $twig->addFilter(new TwigFilter('string', 'strval'));
         $twig->addFilter(new TwigFilter('integer', 'intval'));
         $twig->addFilter(new TwigFilter('float', 'floatval'));
-
         $twig->addFilter(new TwigFilter('values', 'array_values'));
         $twig->addFilter(new TwigFilter('unique', 'array_unique'));
         $twig->addFilter(new TwigFilter('diff', 'array_diff'));
