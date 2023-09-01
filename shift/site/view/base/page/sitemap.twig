@@ -8,26 +8,24 @@
 {% endif %}
 
 <div class="uk-child-width-1-2@m" uk-grid>
+{% for section in sections %}
     <div>
-        1
-    </div>
-    <div>
-        2
-    </div>
-</div>
-
-{#
-<ul class="uk-list">
-    <li><a href="{{ app.router.url('account/account') }}">{{ app.language.get('text_account') }}</a></li>
-    <li><a href="{{ app.router.url('page/search') }}">{{ app.language.get('text_search') }}</a></li>
-    <li>{{ app.language.get('text_information') }}
-        <ul class="uk-list uk-margin-left">
-            {% for information in informations %}
-                <li><a href="{{ information.href }}">{{ information.title|raw }}</a></li>
-            {% endfor %}
+        <ul class="uk-list">
+        {% for links in section %}
+            {% if links.1 is iterable %}
+                <li>{{ links.0 }}
+                    <ul class="uk-list uk-margin-left">
+                    {% for link in links.1 %}
+                        <li><a href="{{ link.1 }}">{{ link.0 }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="{{ links.1 }}">{{ links.0 }}</a></li>
+            {% endif %}
+        {% endfor %}
         </ul>
-    </li>
-    <li><a href="{{ app.router.url('page/contact') }}">{{ app.language.get('text_contact') }}</a></li>
-</ul>
- #}
+    </div>
+{% endfor %}
+</div>
 {% endblock %}
