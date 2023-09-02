@@ -52,7 +52,7 @@ class Log extends Mvc\Controller
         ];
 
         // Current log file
-        $file     = $this->request->get('query.file', $this->log->getConfig('logfile', date('Y-m') . '.log'));
+        $file     = $this->request->get('query.file', $this->log->getConfig('logfile', date('Y-m') . '_error.log'));
         $fileinfo = $data['logFiles'][$file] ?? $this->fileinfo($file);
 
         $data['fileinfo'] = $fileinfo;
@@ -88,10 +88,10 @@ class Log extends Mvc\Controller
 
         if ($this->session->isEmpty('flash.alert')) {
             $submit   = $this->request->get('query.submit', 'download');
-            $filename = $this->request->get('post.file', 'error-' . date('Y-m') . '.log');
+            $filename = $this->request->get('post.file', $this->log->getConfig('logfile', date('Y-m') . '_error.log'));
             $filepath = PATH_TEMP . 'logs/' . $filename;
 
-            if (file_exists($filepath)) {
+            if (is_file($filepath)) {
                 if ($submit == 'download') {
                     $this->response->download($filepath, $this->config->get('system.site.name') . '_' . $filename);
                 }
