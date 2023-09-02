@@ -241,6 +241,8 @@ class Framework
         } catch (\Exception $e) {
             $logger->exceptionHandler($e);
 
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            header('Content-Type: text/html; charset=utf-8');
             exit('The site temporarily unavailable!');
         }
 

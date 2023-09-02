@@ -3,15 +3,24 @@
 declare(strict_types=1);
 
 if (!is_array($rootConfig)) {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    header('Content-Type: text/html; charset=utf-8');
     exit('(╯°□°）╯︵ ┻━┻');
 }
 
-define('VERSION', '0.3.0+a.1'); // Staging: a.*, b.*, rc.*
+define('VERSION', '0.3.0-a.1'); // Staging: a.*, b.*, rc.*
 list($major, $minor, $patch) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 
 if (!(PHP_VERSION_ID >= 80200)) {
-    exit('Shift CMS require a PHP version ">= 8.2.0". You are running ' . PHP_VERSION . '.');
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    header('Content-Type: text/html; charset=utf-8');
+    exit(sprintf(
+        'Your server is running PHP version %s but Shift v%s requires at least %s.',
+        PHP_VERSION,
+        VERSION,
+        '8.2.0',
+    ));
 }
 
 mb_internal_encoding('UTF-8');
