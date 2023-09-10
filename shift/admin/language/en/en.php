@@ -104,6 +104,8 @@ $_['success_save']          = 'Successfully saved!';
 $_['success_update']        = 'Successfully updated!';
 $_['success_enabled']       = 'Successfully enabled!';
 $_['success_disabled']      = 'Successfully disabled!';
+$_['success_publish']       = 'Successfully published!';
+$_['success_draft']         = 'Successfully set as draft!';
 $_['success_delete']        = 'Successfully deleted!';
 
 $_['error_general']         = 'Error occured, try again later!';
