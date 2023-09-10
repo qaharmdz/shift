@@ -228,17 +228,17 @@ class Post extends Mvc\Model
         foreach ($sites as $site) {
             $alias = '';
             foreach ($data['alias'] as $language_id => $alias) {
-                if (!$alias = str_replace(' ', '-', trim($alias))) {
-                    continue;
+                if (!$alias = sanitizeChar(strtolower($alias))) {
+                    $alias = sanitizeChar(strtolower($data['content'][$language_id]['title']));
                 }
 
                 $_aliasCount = $this->db->get(
-                    "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `language_id` = ?i AND `alias` = ?s",
-                    [$site['site_id'], $language_id, $alias]
+                    "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `alias` = ?s",
+                    [$site['site_id'], $alias]
                 )->row['total'];
 
                 if ($_aliasCount) {
-                    $alias = $alias . '-' . $post_id . '-' . $site['site_id'] . '-' . $language_id;
+                    $alias = $alias . '-' . $language_id;
                 }
 
                 $this->db->add(

@@ -192,7 +192,7 @@ class Category extends Mvc\Controller
         }
 
         foreach ($post['alias'] as $language_id => &$alias) {
-            if (!$alias = str_replace(' ', '-', trim($alias))) {
+            if (!$alias = trim($alias)) {
                 continue;
             }
 
