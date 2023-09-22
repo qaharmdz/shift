@@ -10,7 +10,7 @@ class Header extends Mvc\Controller
 {
     public function index()
     {
-        $this->load->language('block/header');
+        $this->load->language('block/header', 'blockHeader');
 
         if (is_file(PATH_MEDIA . $this->config->get('system.site.icon'))) {
             $this->document->addLink('icon', $this->config->get('env.url_media') . $this->config->get('system.site.icon'));
@@ -40,13 +40,18 @@ class Header extends Mvc\Controller
 
         $data['navigations'] = [];
         $data['navigations'][] = [
-            'name'     => $this->language->get('home'),
-            'href'     => $this->router->url('page/home')
+            'name'     => $this->language->get('blockHeader.home'),
+            'href'     => $this->router->url('page/home'),
         ];
         $data['navigations'][] = [
-            'name'     => $this->language->get('about', 'About'),
-            'href'     => $this->router->url('information/information', 'information_id=4')
+            'name'     => $this->language->get('blockHeader.about', 'About'),
+            'href'     => $this->router->url('information/information', 'information_id=4'),
         ];
+        $data['navigations'][] = [
+            'name'     => $this->language->get('blockHeader.content', 'Content'),
+            'href'     => $this->router->url('content/home'),
+        ];
+
         $dropdownItems = [];
         for ($i = 0; $i < 12; $i++) {
             $dropdownItems[] = [
@@ -60,8 +65,9 @@ class Header extends Mvc\Controller
             'children' => $dropdownItems,
             'href'     => $this->router->url('information/information', 'information_id=6')
         ];
+
         $data['navigations'][] = [
-            'name'     => $this->language->get('text_contact'),
+            'name'     => $this->language->get('blockHeader.contact'),
             'href'     => $this->router->url('page/contact')
         ];
 

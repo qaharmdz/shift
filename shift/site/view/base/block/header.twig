@@ -12,15 +12,15 @@
                         {{ language|raw }}
                     </li>
                     <li>
-                        <a>{{ app.language.get('text_account') }}</a>
+                        <a>{{ app.language.get('blockHeader.account') }}</a>
                         <div class="uk-navbar-dropdown uk-width-small" uk-dropdown="offset:0; pos:bottom-right;">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 {% if logged %}
-                                    <li><a href="{{ app.router.url('account/account') }}">{{ app.language.get('text_account') }}</a></li>
-                                    <li><a href="{{ app.router.url('account/logout') }}">{{ app.language.get('text_logout') }}</a></li>
+                                    <li><a href="{{ app.router.url('account/account') }}">{{ app.language.get('blockHeader.account') }}</a></li>
+                                    <li><a href="{{ app.router.url('account/logout') }}">{{ app.language.get('blockHeader.logout') }}</a></li>
                                 {% else %}
-                                    <li><a href="{{ app.router.url('account/register') }}">{{ app.language.get('text_register') }}</a></li>
-                                    <li><a href="{{ app.router.url('account/login') }}">{{ app.language.get('text_login') }}</a></li>
+                                    <li><a href="{{ app.router.url('account/register') }}">{{ app.language.get('blockHeader.register') }}</a></li>
+                                    <li><a href="{{ app.router.url('account/login') }}">{{ app.language.get('blockHeader.login') }}</a></li>
                                 {% endif %}
                             </ul>
                         </div>

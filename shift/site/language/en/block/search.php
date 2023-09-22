@@ -1,3 +1,3 @@
 <?php
 
-$_['text_search'] = 'Search';
+$_['search'] = 'Search';
