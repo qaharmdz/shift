@@ -37,20 +37,20 @@
                     <td class="ukt-pt-1">
                         <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
                     </td>
-                    <td data-dtInputfilter='{"type":"number"}'>
+                    <td data-dtinputfilter='{"type":"number"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
                     </td>
-                    <td data-dtInputfilter='{"type":"string"}'>
+                    <td data-dtinputfilter='{"type":"string"}'>
                         <input type="text" value="" data-index="2" class="uk-input">
                     </td>
-                    <td data-dtInputfilter='{"type":"number", "mode":"match"}'>
+                    <td data-dtinputfilter='{"type":"number", "mode":"match"}'>
                         <select data-index="3" class="uk-select">
                             <option value=""></option>
                             <option value="0">{{ app.language.get('no') }}</option>
                             <option value="1">{{ app.language.get('yes') }}</option>
                         </select>
                     </td>
-                    <td data-dtInputfilter='{"type":"number", "mode":"match"}'>
+                    <td data-dtinputfilter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('enabled') }}</option>
@@ -80,7 +80,7 @@ let tableEl    = '#accountUserGroup-list',
             url  : "{{ app.router.url('account/usergroup/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

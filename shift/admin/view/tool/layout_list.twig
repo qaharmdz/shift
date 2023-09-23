@@ -36,13 +36,13 @@
                     <td class="ukt-pt-1">
                         <input type="checkbox" class="uk-checkbox uk-margin-remove" onclick="$(this).closest('.uk-table').find('tbody td:first-child :checkbox').prop('checked', $(this).prop('checked'));">
                     </td>
-                    <td data-dtInputfilter='{"type":"number", "mode":"match"}'>
+                    <td data-dtinputfilter='{"type":"number", "mode":"match"}'>
                         <input type="text" value="" data-index="1" class="uk-input">
                     </td>
-                    <td data-dtInputfilter='{"type":"string", "mode":"like"}'>
+                    <td data-dtinputfilter='{"type":"string", "mode":"like"}'>
                         <input type="text" value="" data-index="2" class="uk-input">
                     </td>
-                    <td data-dtInputfilter='{"type":"number", "mode":"match"}'>
+                    <td data-dtinputfilter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
                             <option value=""></option>
                             <option value="1">{{ app.language.get('enabled') }}</option>

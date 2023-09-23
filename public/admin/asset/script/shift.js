@@ -733,7 +733,7 @@ function getVisitorTimezone() {
 }
 
  /**
- * Datetime UTC to local timezone
+ * Datetime UTC to visitor browser timezone
  *
  * @param  string   datetime  Y-m-d H:i:s UTC
  * @return string
@@ -741,15 +741,12 @@ function getVisitorTimezone() {
 function formatDate(datetime) {
     if (!datetime) { return ''; }
 
-    let dateUTC = new Date(datetime + ' UTC'),
-        options = {
-            day: '2-digit', month: 'short', year: 'numeric',
-            hour: '2-digit', minute: '2-digit', hour12: false,
-            timeZone: getVisitorTimezone(),
-            timeZoneName: 'short',
-        };
-
-    return new Intl.DateTimeFormat('en-GB', options).format(dateUTC);
+    return new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', hour12: false,
+        timeZone: getVisitorTimezone(),
+        timeZoneName: 'short',
+    }).format(new Date(datetime + ' UTC'));
 }
 
 /**
