@@ -73,7 +73,7 @@ let tableEl    = '#toolLayout-list',
             url  : "{{ app.router.url('tool/layout/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

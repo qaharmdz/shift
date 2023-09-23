@@ -115,7 +115,7 @@ let tableEl     = '#contentPost-list',
             url  : "{{ app.router.url('content/post/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

@@ -74,7 +74,7 @@ let tableEl     = '#extensionTheme-list',
             url  : "{{ app.router.url('extension/theme/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

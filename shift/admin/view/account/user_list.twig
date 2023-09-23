@@ -103,7 +103,7 @@ let tableEl     = '#accountUser-list',
             url  : "{{ app.router.url('account/user/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

@@ -88,7 +88,7 @@ let tableEl     = '#extensionModule-list',
             url  : "{{ app.router.url('extension/module/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

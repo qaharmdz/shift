@@ -431,7 +431,7 @@ $(document).on('IIDE.init IIDE.form_submit', function(event)
 
         if (!form.length) { return; }
 
-        opt.timezone = getLocalTimezone();
+        opt.timezone = getVisitorTimezone();
 
         $(el).on('click', function() {
             $(document).trigger('IIDE.form_submit.before');
@@ -713,7 +713,7 @@ $(document).on('IIDE.init IIDE.format_date', function(event)
             date  = $(el).data('formatDate'),
             chunk = '';
 
-        chunk = date  ? '<span title="' + date + ' UTC">' + formatDate(date) + '</span>' : '<i>n/a</i>';
+        chunk = date ? '<span title="' + date + ' UTC">' + formatDate(date) + '</span>' : '<i>n/a</i>';
         $(el).html(chunk);
     });
 });
@@ -728,7 +728,7 @@ $(document).on('IIDE.init IIDE.format_date', function(event)
  *
  * @return string
  */
-function getLocalTimezone() {
+function getVisitorTimezone() {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
 
@@ -745,7 +745,7 @@ function formatDate(datetime) {
         options = {
             day: '2-digit', month: 'short', year: 'numeric',
             hour: '2-digit', minute: '2-digit', hour12: false,
-            timeZone: getLocalTimezone(),
+            timeZone: getVisitorTimezone(),
             timeZoneName: 'short',
         };
 

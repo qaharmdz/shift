@@ -74,7 +74,7 @@ let tableEl     = '#extensionPlugin-list',
             url  : "{{ app.router.url('extension/plugin/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {

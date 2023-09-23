@@ -84,7 +84,7 @@ let tableEl     = '#contentCategory-list',
             url  : "{{ app.router.url('content/category/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
-                d.timezone = getLocalTimezone();
+                d.timezone = getVisitorTimezone();
             }
         }),
         initComplete: function() {
