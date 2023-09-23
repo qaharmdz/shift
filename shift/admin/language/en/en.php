@@ -37,6 +37,8 @@ $_['created']               = 'Created';
 $_['updated']               = 'Updated';
 $_['publish']               = 'Publish';
 $_['unpublish']             = 'Unpublish';
+$_['publish_utc']           = 'Publish (UTC)';
+$_['unpublish_utc']         = 'Unpublish (UTC)';
 $_['status']                = 'Status';
 $_['action']                = 'Action';
 
