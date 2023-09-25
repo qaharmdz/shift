@@ -116,6 +116,7 @@ class Database
         }
 
         // Validate sequential array parameter
+        $params = array_values($params); // reindex
         if (array_keys($params) !== range(0, count($params) - 1)) {
             return false;
         }
