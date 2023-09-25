@@ -105,6 +105,8 @@ class Database
             return $this->raw($query);
         }
 
+        $params = array_filter($params, fn ($item) => null !== $item);
+
         if ($types === '') {
             if ($results = $this->parseParamName($query, $params)) {
                 list($query, $params, $types) = $results;
@@ -407,7 +409,7 @@ class Database
         $stmt_result = $params ? $this->query($query, $params, $types) : $this->raw($query);
 
         if (!$stmt_result instanceof \mysqli_result) {
-            throw new \InvalidArgumentException(sprintf('Invalid \mysqli_result instance for "SELECT" query: %s', $query));
+            throw new \InvalidArgumentException(sprintf('Invalid \mysqli_result instance for query: %s', $query));
         }
 
         $result = new \stdClass();
