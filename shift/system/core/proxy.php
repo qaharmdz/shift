@@ -9,7 +9,6 @@ namespace Shift\System\Core;
  */
 class Proxy
 {
-    protected string $class;
     protected array $storage = [];
 
     /**
@@ -41,7 +40,7 @@ class Proxy
         } else {
             $trace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 3);
 
-            throw new \BadMethodCallException(sprintf('Undefined "%s::%s" in %s line %s.', $this->class, $key, $trace[0]['file'], $trace[0]['line']));
+            throw new \BadMethodCallException(sprintf('Undefined "%s::%s" in %s line %s.', $this->storage['class'], $key, $trace[0]['file'], $trace[0]['line']));
         }
     }
 }
