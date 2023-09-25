@@ -126,8 +126,8 @@ class Site extends Mvc\Controller
 
         $this->load->model('extension/manage');
         $data['themes'] = $this->model_extension_manage->getExtensions([
-            'type    = ?s' => 'theme',
-            'status  = ?i' => 1,
+            'type = ?s' => 'theme',
+            'status = ?i' => 1,
             'install = ?i' => 1,
         ]);
 
