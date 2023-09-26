@@ -13,7 +13,7 @@ class Home extends Mvc\Controller
         $this->document->addMeta('name', 'description', $this->config->get('system.site.meta_description.' . $this->config->get('env.language_id', 0)));
         $this->document->addMeta('name', 'keywords', $this->config->get('system.site.meta_keyword.' . $this->config->get('env.language_id', 0)));
 
-        $this->document->addLink($this->config->get('env.url_app'), 'canonical');
+        $this->document->addLink($this->router->url('content/home'), 'canonical');
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');

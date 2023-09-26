@@ -52,7 +52,7 @@ class Language extends Mvc\Model
                 $data[$result[$rkey]]['setting'] = json_decode($result['setting'], true);
             }
 
-            $this->cache->set('languages.' . $argsHash, $data, tags: ['extension', 'languages']);
+            $this->cache->set('languages.' . $argsHash, $data, tags: ['extensions', 'languages']);
         }
 
         return $data;

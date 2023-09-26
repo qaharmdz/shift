@@ -315,7 +315,10 @@ class Post extends Mvc\Model
             }
 
             // Terms
-            $data['term'] = [];
+            $data['term'] = [
+                'categories' => [],
+                'tags' => [],
+            ];
 
             $categories = $this->db->get(
                 "SELECT t.term_id
@@ -338,7 +341,6 @@ class Post extends Mvc\Model
             foreach ($tags as $tag) {
                 $data['term']['tags'][] = $tag['term_id'];
             }
-
 
             // Multi-language alias
             $aliases = $this->db->get(

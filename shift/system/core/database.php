@@ -105,8 +105,6 @@ class Database
             return $this->raw($query);
         }
 
-        $params = array_filter($params, fn ($item) => null !== $item);
-
         if ($types === '') {
             if ($results = $this->parseParamName($query, $params)) {
                 list($query, $params, $types) = $results;
@@ -116,7 +114,6 @@ class Database
         }
 
         // Validate sequential array parameter
-        $params = array_values($params); // reindex
         if (array_keys($params) !== range(0, count($params) - 1)) {
             return false;
         }

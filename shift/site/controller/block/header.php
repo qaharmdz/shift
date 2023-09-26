@@ -49,7 +49,7 @@ class Header extends Mvc\Controller
         ];
         $data['navigations'][] = [
             'name'     => $this->language->get('blockHeader.content', 'Content'),
-            'href'     => $this->router->url('content/home'),
+            'href'     => $this->router->url('content/category'),
         ];
 
         $dropdownItems = [];
