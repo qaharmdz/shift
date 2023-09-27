@@ -115,7 +115,7 @@ body {
     color: #333;
     line-height: 1.5;
     margin: 0 -10px;
-    padding: 5px 15px !important;
+    padding: 5px 12px !important;
 }
 .main-navigation .uk-nav a:hover {
     background: rgba(0,0,0,.05);
@@ -157,14 +157,20 @@ body {
 
 .main-navigation .panel-left,
 .main-navigation .panel-right {
-    padding: 5px 10px 15px;
+    padding: 5px 10px 10px;
 }
 .main-navigation .panel-left {
-    width: 160px;
     background: #3d3f42;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.main-navigation .panel-left .uk-dropdown-nav {
+    width: 140px;
 }
 .main-navigation .panel-left .uk-nav a {
+    font-size: .9rem;
     color: #ddd;
+    margin: 0 -2px;
 }
 .main-navigation .panel-left .uk-nav a:hover {
     color: #eee;

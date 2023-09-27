@@ -52,16 +52,18 @@ class Header extends Mvc\Controller
         $data = [];
 
         //=== Left panel
-        $data['links'][0] = $this->nav([
+        $data['links'] = [];
+        $data['links'][998] = $this->nav([
             'name' => $this->language->get('blockHeader.my_account'),
             'url'  => $this->router->url('account/user/form', 'user_id=' . $this->user->get('user_id')),
         ]);
-        $data['links'][1] = $this->nav([
+        $data['links'][999] = $this->nav([
             'name' => $this->language->get('blockHeader.logout'),
             'url'  => $this->router->url('page/logout'),
         ]);
 
         //=== Right panel
+        $data['menus'] = [];
         $data['menus'][0] = $this->nav([
             'name' => $this->language->get('blockHeader.dashboard'),
             'url'  => $this->router->url('page/dashboard'),

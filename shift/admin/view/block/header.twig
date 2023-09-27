@@ -5,7 +5,8 @@
                 <button class="uk-button uk-button-link navbar-main-menu" type="button"><i class="bi bi-command bi-2x"></i></button>
                 <div class="uk-width-large main-navigation" uk-dropdown="offset:3px;">
                     <div class="uk-dropdown-grid uk-grid-collapse" uk-grid>
-                        <div class="uk-width-2-5 panel-left">
+                        <div class="uk-width-auto panel-left">
+                            {% if navigation.links %}
                             <ul class="uk-nav uk-dropdown-nav" uk-nav>
                                 {% for link in navigation.links %}
                                     {% if link.type == 'header' %}
@@ -17,6 +18,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
+                            {% endif %}
                         </div>
                         <div class="uk-width-expand panel-right">
                             <ul class="uk-nav uk-dropdown-nav" uk-nav>
