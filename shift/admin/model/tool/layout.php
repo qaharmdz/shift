@@ -145,9 +145,10 @@ class Layout extends Mvc\Model
             // Routes
             $data['routes'] = [];
             $routes = $this->db->get(
-                "SELECT * FROM `" . DB_PREFIX . "layout_route`
-                WHERE layout_id = ?i
-                ORDER BY site_id ASC, priority DESC, route ASC",
+                "SELECT lr.* FROM `" . DB_PREFIX . "layout_route` lr
+                    INNER JOIN `" . DB_PREFIX . "site` s
+                WHERE layout_id = ?i AND lr.site_id = s.site_id
+                ORDER BY lr.site_id ASC, lr.priority DESC, lr.route ASC",
                 [$layout_id]
             )->rows;
             foreach ($routes as $route) {
