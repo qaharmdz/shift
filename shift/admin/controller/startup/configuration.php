@@ -84,7 +84,7 @@ class Configuration extends Mvc\Controller
             }
 
             if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
-                setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->get('server.HTTP_HOST'));
+                setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', ini_get('session.cookie_domain'), (bool)ini_get('session.cookie_secure'));
             }
         }
 
