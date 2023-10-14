@@ -187,7 +187,7 @@ class Category extends Mvc\Model
 
                 $_aliasCount = $this->db->get(
                     "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `alias` = ?s",
-                    [$site['site_id'], $language_id, $alias]
+                    [$site['site_id'], $alias]
                 )->row['total'];
 
                 if ($_aliasCount) {
