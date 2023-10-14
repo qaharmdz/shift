@@ -41,7 +41,7 @@ class Post extends Mvc\Model
                 LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (pc.post_id = p.post_id AND pc.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = p.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "user` u ON (u.user_id = p.user_id)"
-            . " WHERE p.`taxonomy` = 'post'"
+            . " WHERE p.`taxonomy` = 'content_post'"
                  . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
@@ -64,7 +64,7 @@ class Post extends Mvc\Model
                 ],
                 [
                     'post_id'  => $items,
-                    'taxonomy' => 'post',
+                    'taxonomy' => 'content_post',
                 ]
             );
 
@@ -89,7 +89,7 @@ class Post extends Mvc\Model
             DB_PREFIX . 'post',
             [
                 'parent_id'  => 0,
-                'taxonomy'   => 'post',
+                'taxonomy'   => 'content_post',
                 'user_id'    => (int)$data['user_id'],
                 'term_id'    => (int)$data['category_id'],
                 'visibility' => $data['visibility'],
@@ -115,7 +115,7 @@ class Post extends Mvc\Model
             DB_PREFIX . 'post',
             [
                 'parent_id'  => 0,
-                'taxonomy'   => 'post',
+                'taxonomy'   => 'content_post',
                 'user_id'    => (int)$data['user_id'],
                 'term_id'    => (int)$data['category_id'],
                 'visibility' => $data['visibility'],
@@ -272,7 +272,7 @@ class Post extends Mvc\Model
 
         $data = $this->db->get(
             "SELECT p.*, p.term_id as category_id FROM `" . DB_PREFIX . "post` p WHERE p.post_id = ?i AND p.taxonomy = ?s",
-            [$post_id, 'post']
+            [$post_id, 'content_post']
         )->row;
 
         if (!empty($data['post_id'])) {
@@ -358,7 +358,7 @@ class Post extends Mvc\Model
 
     public function getTotal(): int
     {
-        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "post` WHERE `taxonomy` = 'post'")->row['total'];
+        return $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "post` WHERE `taxonomy` = 'content_post'")->row['total'];
     }
 
     public function deletePosts(array $posts): void
