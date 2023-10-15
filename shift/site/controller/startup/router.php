@@ -60,11 +60,23 @@ class Router extends Mvc\Controller
         parse_str($args, $urlParams);
 
         $alias     = '';
+
+        // Base route no args
+        $query = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `route` = ?s AND `param` = ''",
+            [$language_id, $route]
+        );
+
+        if (!empty($query->row['alias'])) {
+            $alias .= '/' . rtrim($query->row['alias'], '/');
+        }
+
         $paramList = [
             'distinct' => $this->config->get('system.alias_distinct'),
             'multi'    => $this->config->get('system.alias_multi'),
         ];
 
+        // Args URL alias
         foreach ($urlParams as $param => $value) {
             if (in_array($param, $paramList['distinct'])) {
                 $query = $this->db->get(
@@ -72,24 +84,24 @@ class Router extends Mvc\Controller
                     [$language_id, $param, $value]
                 );
 
-                if ($query->num_rows && $query->row['alias']) {
+                if (!empty($query->row['alias'])) {
                     $alias .= '/' . $query->row['alias'];
-
                     unset($urlParams[$param]);
                 }
             } elseif (in_array($param, $paramList['multi'])) {
-                // TODO: content/category&category_id=x_y_z
-            }
-        }
+                $ids = explode('_', $value);
 
-        if (!$alias) {
-            $query = $this->db->get(
-                "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `route` = ?s AND `param` = ''",
-                [$language_id, $route]
-            );
+                foreach ($ids as $id) {
+                    $query = $this->db->get(
+                        "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `param` = ?s AND `value` = ?s",
+                        [$language_id, $param, $id]
+                    );
 
-            if ($query->num_rows && $query->row['alias']) {
-                $alias .= '/' . rtrim($query->row['alias'], '/');
+                    if (!empty($query->row['alias'])) {
+                        $alias .= '/' . $query->row['alias'];
+                        unset($urlParams[$param]);
+                    }
+                }
             }
         }
 
