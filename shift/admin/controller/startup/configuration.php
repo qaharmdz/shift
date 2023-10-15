@@ -40,16 +40,25 @@ class Configuration extends Mvc\Controller
         $this->config->set('env.datetime_format', 'Y-m-d H:i:s');
 
         // Apply DB setting
-        $this->log->setConfig([
-            'display' => $this->config->getBool('system.setting.error_display', false),
-            'context' => [
+        $logContext = [];
+        if ($this->user->get('user_id')) {
+            $logContext = [
                 'user_id'    => $this->user->get('user_id'),
                 'name'       => $this->user->get('firstname') . ' ' . $this->user->get('lastname'),
-                'uri'        => htmlspecialchars_decode($_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),
-                'referrer'   => htmlspecialchars_decode($_SERVER['HTTP_REFERER'] ?? ''),
-                'method'     => $_SERVER['REQUEST_METHOD'],
-                'ip_address' => $_SERVER['REMOTE_ADDR'],
-            ],
+            ];
+        }
+
+        $this->log->setConfig([
+            'display' => $this->config->getBool('system.setting.error_display', false),
+            'context' => array_merge(
+                $logContext,
+                [
+                    'uri'        => htmlspecialchars_decode($_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']),
+                    'referrer'   => htmlspecialchars_decode($_SERVER['HTTP_REFERER'] ?? ''),
+                    'method'     => $_SERVER['REQUEST_METHOD'],
+                    'ip_address' => $_SERVER['REMOTE_ADDR'],
+                ]
+            ),
         ]);
 
         if ($this->config->getBool('system.setting.development')) {
