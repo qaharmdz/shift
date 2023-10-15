@@ -14,22 +14,20 @@ class Post extends Mvc\Model
             "SELECT p.*, p.term_id as category_id, pc.*, sr.site_id
             FROM `" . DB_PREFIX . "post` p
                 LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (p.post_id = pc.post_id AND pc.language_id = :langId?i)
-                LEFT JOIN `" . DB_PREFIX . "site_relation` sr ON (p.post_id = sr.taxonomy_id AND sr.taxonomy = :siteTaxonomy?s)
+                LEFT JOIN `" . DB_PREFIX . "site_relation` sr ON (p.post_id = sr.taxonomy_id AND sr.taxonomy = 'content_post')
             WHERE p.post_id = :postId?i
-                AND p.taxonomy = :taxonomy?s
+                AND p.taxonomy = 'content_post'
                 AND p.visibility = :visibility?s
                 AND p.status = :status?s
                 AND (p.publish IS NULL OR p.publish <= NOW())
                 AND (p.unpublish IS NULL OR p.unpublish >= NOW())
                 AND sr.site_id = :siteId?i",
             [
-                'taxonomy'     => 'post',
                 'postId'       => $post_id,
                 'langId'       => $this->config->getInt('env.language_id'),
                 'siteId'       => $this->config->getInt('env.site_id'),
                 'visibility'   => 'public', // TODO: check visibility usergroup, password
                 'status'       => 'publish', // TODO: permission to view pending or draft
-                'siteTaxonomy' => 'content_post',
             ]
         )->row;
 
@@ -83,40 +81,41 @@ class Post extends Mvc\Model
         return $data;
     }
 
-    public function getPosts(
-        array $filters = ['p.term_id != ?i' => -1],
-        string $dataKey = 'post_id'
-    ): array {
+    public function getPosts(array $filters = []): array
+    {
         $argsHash = $this->cache->getHash(func_get_args());
         $data     = $this->cache->get('content.posts' . $argsHash, []);
 
-        // Default $filters
-        $filters = array_merge($filters, [
-            'p.taxonomy = ?s' => 'post',
-            'visibility = ?s' => 'public', // TODO: check visibility usergroup, password
-            'status = ?s'     => 'publish', // TODO: permission to view pending or draft
-            '(p.publish IS NULL OR p.publish <= NOW())' => null,
-            '(p.unpublish IS NULL OR p.unpublish >= NOW())' => null,
-            'sr.site_id = ?i' => $this->config->getInt('env.site_id'),
-        ]);
-
-        $wheres = array_keys($filters);
-        $params = array_values(array_filter(array_values($filters), fn ($item) => null !== $item));
-
         if (!$data) {
-            $posts = $this->db->get(
-                "SELECT p.*, p.term_id as category_id, pc.*, sr.site_id
-                FROM `" . DB_PREFIX . "post` p
-                    LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (p.post_id = pc.post_id AND pc.language_id = "  . $this->config->getInt('env.language_id') . ")
-                    LEFT JOIN `" . DB_PREFIX . "site_relation` sr ON (p.post_id = sr.taxonomy_id AND sr.taxonomy = 'content_post')
-                WHERE " . implode(' AND ', $wheres) . "
-                ORDER BY p.sort_order ASC, p.updated DESC",
-                $params
-            )->rows;
+            $filters = array_merge([
+                'category_id' => 0,
+                'page'        => 1,
+                'start'       => 0,
+                'limit'       => $this->config->getInt('env.limit'),
+            ], $filters);
 
-            foreach ($posts as &$result) {
-                $data[$result[$dataKey]] = $result;
+            $sql = "SELECT p.*, sr.site_id, pc.*";
+            $sql .= " FROM `" . DB_PREFIX . "post` p";
+            $sql .= "   LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (p.post_id = pc.post_id AND pc.language_id = "  . $this->config->getInt('env.language_id') . ")";
+            $sql .= "   LEFT JOIN `" . DB_PREFIX . "site_relation` sr ON (p.post_id = sr.taxonomy_id AND sr.taxonomy = 'content_post')";
+            if ($filters['category_id']) {
+                $sql .= "   LEFT JOIN `" . DB_PREFIX . "term_relation` tr ON (p.post_id = tr.taxonomy_id AND tr.taxonomy = 'content_post')";
             }
+            $sql .= " WHERE p.taxonomy = 'content_post'";
+            if ($filters['category_id']) {
+                $sql .= "   AND (p.term_id = " . (int)$filters['category_id'] . " OR tr.term_id = " . (int)$filters['category_id'] . ")";
+            }
+            $sql .= "   AND p.visibility = 'public'"; // TODO: check visibility usergroup, password
+            $sql .= "   AND p.status = 'publish'"; // TODO: permission to view pending or draft
+            $sql .= "   AND (p.publish IS NULL OR p.publish <= NOW()) AND (p.unpublish IS NULL OR p.unpublish >= NOW())";
+            $sql .= "   AND sr.site_id = " . $this->config->getInt('env.site_id');
+            $sql .= " GROUP BY p.post_id";
+            $sql .= " ORDER BY p.sort_order ASC, p.updated DESC";
+            $sql .= " LIMIT " . (int)$filters['start'] . ", " . (int)$filters['limit'];
+
+            $posts = $this->db->get($sql)->rows;
+
+            $data = $posts;
 
             $this->cache->set('content.posts.' . $argsHash, $data, tags: ['content.posts']);
         }

@@ -1,1 +1,28 @@
 {% extends 'main.tpl.twig' %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+{% if categories %}
+<div class="uk-child-width-1-2@m" uk-grid>
+    {% for category in categories %}
+        <div>
+            <h3>{{ category.title }} <span class="uk-sub-title"><a href="{{ category.url }}">{{ app.language.get('view_more') }}</a></span></h3>
+            <ul class="uk-list uk-margin-small-left">
+            {% for post in category.posts %}
+                {% if loop.first %}
+                    <li class="uk-margin-bottom">
+                        <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+                        <p>{{ post.excerpt|striptags|length > 210 ? post.excerpt|striptags|slice(0, 210) ~ '...' : post.excerpt|striptags }}</p>
+                    </li>
+                {% else %}
+                    <li><h4><a href="{{ post.url }}">{{ post.title }}</a></h4></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

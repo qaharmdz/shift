@@ -6,7 +6,7 @@
 }
 
 
-/* UIkit Sketsa override
+/* UIkit Sketsa extra
 ============================== */
 
 .uk-navbar-dropdown-nav>li>a {
@@ -16,10 +16,19 @@
     text-transform: none;
 }
 
-.uk-list-collapse>*>ul, .uk-list-collapse>:nth-child(n+2) {
+.uk-list-collapse > * > ul,
+.uk-list-collapse > :nth-child(n+2) {
     margin-top: 3px;
 }
 
+.uk-sub-title {
+    color: #999;
+    font-size: .75em;
+    line-height: 1.4;
+    letter-spacing: -.8px;
+    font-weight: 300;
+    margin-left: 6px;
+}
 
 /* Header
 ============================== */

@@ -30,7 +30,7 @@ class Contact extends Mvc\Controller
         }
 
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('text_home'), $this->router->url('page/home')],
+            [$this->language->get('home'), $this->router->url('page/home')],
             [$this->language->get('page_title'), $this->router->url('page/contact')],
         ]);
 
