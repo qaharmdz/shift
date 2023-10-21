@@ -300,19 +300,21 @@ class Response
      */
     public function download(string $filepath, string $filename = '')
     {
-        $filename = $filename ?: basename(html_entity_decode($filepath, ENT_QUOTES, 'UTF-8'));
-
-        header('Pragma: public');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Content-Transfer-Encoding: binary');
-
         if (is_file($filepath)) {
+            $filename = $filename ?: basename(html_entity_decode($filepath, ENT_QUOTES, 'UTF-8'));
+
+            header('Pragma: public');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
             header('Content-Length: ' . filesize($filepath));
+            header('Content-Transfer-Encoding: binary');
+
+            ob_clean();
+            flush();
 
             readfile($filepath);
         } else {
