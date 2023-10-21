@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shift\System\Http;
 
+use Shift\System\Exception;
+
 /**
  * Represents a HTTP response.
  */
@@ -300,9 +302,9 @@ class Response
      */
     public function download(string $filepath, string $filename = '')
     {
-        if (is_file($filepath)) {
-            $filename = $filename ?: basename(html_entity_decode($filepath, ENT_QUOTES, 'UTF-8'));
+        $filename = $filename ?: basename(html_entity_decode($filepath, ENT_QUOTES, 'UTF-8'));
 
+        if (is_file($filepath)) {
             header('Pragma: public');
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -318,7 +320,7 @@ class Response
 
             readfile($filepath);
         } else {
-            return $this->setOutput($filepath);
+            throw new Exception\FileNotFoundException(sprintf('File "%s" could not be found.', $filename));
         }
 
         $this->terminate();
