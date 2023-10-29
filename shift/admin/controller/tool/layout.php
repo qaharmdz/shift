@@ -162,7 +162,7 @@ class Layout extends Mvc\Controller
             return $this->response->setOutputJson($errors, 422);
         }
 
-        $post['placements'] = html_entity_decode($post['placements']);
+        $post['placements'] = html_entity_decode($post['placements'], ENT_QUOTES, 'UTF-8');
 
         if (!$layout_id) {
             $data['new_id'] = $this->model_tool_layout->addLayout($post);
