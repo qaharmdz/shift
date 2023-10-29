@@ -14,12 +14,9 @@ class Configuration extends Mvc\Controller
         //=== Settings
         $results = $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "setting`
-            WHERE (site_id = '0' OR site_id = :site_id?i) AND `group` IN (:groups?s)
+            WHERE (site_id = '0' OR site_id = ?i)
             ORDER BY `site_id` ASC, `group` ASC, `code` ASC, `key` ASC",
-            [
-                'site_id' => $this->config->get('env.site_id', 0),
-                'groups' => ['system', 'theme'],
-            ]
+            [$this->config->get('env.site_id', 0)]
         );
 
         $settings = [];

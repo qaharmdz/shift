@@ -29,7 +29,7 @@ class Setting extends Mvc\Controller
         $data['site_id'] = $this->request->getInt('query.site_id', 0);
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('content.setting.form'),
-            $this->model_setting_setting->getSetting('content', 'setting', $data['site_id']),
+            $this->model_setting_setting->getSetting('plugin', 'content', $data['site_id']),
         );
 
         $data['sites'] = [];
@@ -74,7 +74,7 @@ class Setting extends Mvc\Controller
 
         Arr::unset($post, ['site_id', 'form', 'action', 'timezone']);
 
-        $this->model_setting_setting->editSetting('content', 'setting', $post, $site_id);
+        $this->model_setting_setting->editSetting('plugin', 'content', $post, $site_id);
 
         $this->response->setOutputJson($data);
     }
