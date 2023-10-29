@@ -7,12 +7,12 @@ namespace Shift\System\Helper;
 /**
  * String helper
  *
- * @link https://github.com/WordPress/wordpress-develop/
+ * @link https://github.com/WordPress/wordpress-develop/blob/6.4/src/wp-includes/formatting.php
  * @link https://github.com/jstewmc/php-helpers
  */
 class Str
 {
-    public static function htmlDecode(string $string, int $flags = ENT_QUOTES)
+    public static function htmlDecode(string $string, int $flags = ENT_QUOTES): string
     {
         return html_entity_decode($string, $flags, 'UTF-8');
     }
@@ -31,7 +31,7 @@ class Str
         int $limit = 200,
         bool $stripTags = true,
         ?string $break = ' ',
-        ?string $ellipsis = '...'
+        ?string $ellipsis = ' ...'
     ): string {
         if (strlen($string) <= $limit) {
             return $string;
