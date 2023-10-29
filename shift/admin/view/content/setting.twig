@@ -65,9 +65,9 @@
                             ]}) }}
                             {{ forms.input({'type':'number', 'label':'post_per_page', 'name':'category_post_per_page', 'value':setting.category_post_per_page, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
                             {{ forms.input({'type':'number', 'label':'post_lead', 'name':'category_post_lead', 'value':setting.category_post_lead, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'category_post_lead_excerpt', 'value':setting.category_post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'category_post_lead_excerpt', 'value':setting.category_post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('characters') ~ '</span>'}) }}
                             {{ forms.input({'type':'number', 'label':'post_column', 'name':'category_post_column', 'value':setting.category_post_column, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'category_post_column_excerpt', 'value':setting.category_post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('words') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'category_post_column_excerpt', 'value':setting.category_post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('characters') ~ '</span>'}) }}
                             {{ forms.select({'label':'post_order', 'name':'category_post_order', 'selected':setting.category_post_order, 'class':'uk-width-175@m', 'options':[
                                 {'text': app.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
                                 {'text': app.language.get('pc.title~desc'), 'value': 'pc.title~desc'},

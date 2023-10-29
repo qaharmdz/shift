@@ -11,9 +11,9 @@ $_['form'] = [
     'category_robots'              => 'index, follow',
     'category_post_per_page'       => 10,
     'category_post_lead'           => 2,
-    'category_post_lead_excerpt'   => 100, // word
+    'category_post_lead_excerpt'   => 200, // characters
     'category_post_column'         => 2,
-    'category_post_column_excerpt' => 48, // word
+    'category_post_column_excerpt' => 100, // characters
     'category_post_order'          => 'p.publish~desc',
     'category_custom_code'         => '',
 ];

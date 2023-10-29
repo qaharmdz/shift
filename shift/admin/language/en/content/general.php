@@ -28,6 +28,7 @@ $_['post_lead_excerpt']   = 'Leading Post Excerpt';
 $_['post_column']         = 'Post Column';
 $_['post_column_excerpt'] = 'Post Column Excerpt';
 $_['words']               = 'Words';
+$_['characters']          = 'Characters';
 $_['post_order']          = 'Post Order';
 $_['pc.title~asc']        = 'Title - Asc';
 $_['pc.title~desc']       = 'Title - Desc';
