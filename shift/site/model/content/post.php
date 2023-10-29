@@ -23,11 +23,11 @@ class Post extends Mvc\Model
                 AND (p.unpublish IS NULL OR p.unpublish >= NOW())
                 AND sr.site_id = :siteId?i",
             [
-                'postId'       => $post_id,
-                'langId'       => $this->config->getInt('env.language_id'),
-                'siteId'       => $this->config->getInt('env.site_id'),
-                'visibility'   => 'public', // TODO: check visibility usergroup, password
-                'status'       => 'publish', // TODO: permission to view pending or draft
+                'postId'     => $post_id,
+                'langId'     => $this->config->getInt('env.language_id'),
+                'siteId'     => $this->config->getInt('env.site_id'),
+                'visibility' => 'public', // TODO: check visibility usergroup, password
+                'status'     => 'publish', // TODO: permission to view pending or draft
             ]
         )->row;
 
@@ -38,6 +38,7 @@ class Post extends Mvc\Model
                 "SELECT * FROM `" . DB_PREFIX . "post_meta` pm WHERE pm.post_id = ?i",
                 [$post_id]
             )->rows;
+
             foreach ($metas as $meta) {
                 $data['meta'][$meta['key']] = $meta['encoded'] ? json_decode($meta['value'], true) : $meta['value'];
 
@@ -62,6 +63,7 @@ class Post extends Mvc\Model
                 WHERE t.taxonomy = ?s AND t.status = 1 AND tr.taxonomy = ?s AND tr.taxonomy_id = ?i",
                 [$this->config->get('env.language_id'), 'content_category', 'content_post', $post_id]
             )->rows;
+
             foreach ($categories as $category) {
                 $data['term']['categories'][$category['term_id']] = $category;
             }
@@ -110,12 +112,10 @@ class Post extends Mvc\Model
             $sql .= "   AND (p.publish IS NULL OR p.publish <= NOW()) AND (p.unpublish IS NULL OR p.unpublish >= NOW())";
             $sql .= "   AND sr.site_id = " . $this->config->getInt('env.site_id');
             $sql .= " GROUP BY p.post_id";
-            $sql .= " ORDER BY p.sort_order ASC, p.updated DESC";
+            $sql .= " ORDER BY p.sort_order ASC, p.updated DESC"; // TODO: post order
             $sql .= " LIMIT " . (int)$filters['start'] . ", " . (int)$filters['limit'];
 
-            $posts = $this->db->get($sql)->rows;
-
-            $data = $posts;
+            $data = $this->db->get($sql)->rows;
 
             $this->cache->set('content.posts.' . $argsHash, $data, tags: ['content.posts']);
         }

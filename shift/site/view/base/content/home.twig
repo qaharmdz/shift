@@ -7,12 +7,12 @@
 <div class="uk-child-width-1-{{ app.config.get('plugin.content.category_post_column') }}@m" uk-grid>
     {% for category in categories %}
         <div>
-            <h3>{{ category.title }} <span class="uk-sub-title"><a href="{{ category.url }}">{{ app.language.get('view_more') }}</a></span></h3>
+            <h2>{{ category.title }} <span class="uk-sub-title"><a href="{{ category.url }}">{{ app.language.get('view_more') }}</a></span></h2>
             <ul class="uk-list">
             {% for post in category.posts %}
                 {% if loop.index <= app.config.get('plugin.content.category_post_lead') %}
                     <li class="uk-margin-bottom">
-                        <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+                        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
                         {{ post.excerpt|raw }}
                     </li>
                 {% else %}

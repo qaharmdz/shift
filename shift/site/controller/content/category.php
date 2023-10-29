@@ -20,10 +20,10 @@ class Category extends Mvc\Controller
             [$this->language->get('content'), $this->router->url('content/category')],
         ]);
 
-        if (!$this->request->has('category_id')) {
+        if (!$this->request->has('query.category_id')) {
             $this->home();
         } else {
-            $this->page($this->request->getInt('category_id'));
+            $this->page($this->request->getInt('query.category_id'));
         }
     }
 
@@ -34,6 +34,7 @@ class Category extends Mvc\Controller
         $this->document->addMeta('name', 'keywords', $this->config->get('system.site.meta_keyword.' . $this->config->get('env.language_id', 0)));
 
         $this->document->addLink($this->router->url('content/category'), 'canonical');
+        // $this->test();
 
         $data = [];
         $data['page_title'] = $this->language->get('content');
@@ -50,7 +51,6 @@ class Category extends Mvc\Controller
 
             $posts = $this->model_content_post->getPosts([
                 'category_id' => (int)$category['term_id'],
-                'limit' => 9,
             ]);
 
             foreach ($posts as $kPost => $post) {
@@ -86,8 +86,24 @@ class Category extends Mvc\Controller
 
         $data = [];
         $data['category'] = $category;
+        $data['category']['content'] = Str::htmlDecode($category['content']);
 
-        d($data);
+        $posts = $this->model_content_post->getPosts([
+            'category_id' => (int)$category['term_id'],
+        ]);
+
+        $data['posts'] = [];
+        foreach ($posts as $key => $post) {
+            $data['posts'][$key] = $post;
+            $data['posts'][$key]['url'] = $this->router->url('content/post', 'post_id=' . $post['post_id']);
+
+            if ($post['excerpt']) {
+                $data['posts'][$key]['excerpt'] = Str::htmlDecode($post['excerpt']);
+            } else {
+                // TODO: excerpt limit
+                $data['posts'][$key]['excerpt'] = '<p>' . Str::truncate(Str::htmlDecode($post['content'])) . '</p>';
+            }
+        }
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer']  = $this->load->controller('block/footer');
