@@ -8,12 +8,13 @@
     {% for category in categories %}
         <div>
             <h3>{{ category.title }} <span class="uk-sub-title"><a href="{{ category.url }}">{{ app.language.get('view_more') }}</a></span></h3>
-            <ul class="uk-list uk-margin-small-left">
+            <ul class="uk-list">
             {% for post in category.posts %}
                 {% if loop.first %}
                     <li class="uk-margin-bottom">
                         <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
-                        <p>{{ post.excerpt|striptags|length > 210 ? post.excerpt|striptags|slice(0, 210) ~ '...' : post.excerpt|striptags }}</p>
+                        {{ post.excerpt|raw }}
+                        {# <p>{{ post.excerpt|striptags|length > app.config.get('plugin.content.') ? post.excerpt|striptags|slice(0, 210) ~ '...' : post.excerpt|striptags }}</p> #}
                     </li>
                 {% else %}
                     <li><h4><a href="{{ post.url }}">{{ post.title }}</a></h4></li>

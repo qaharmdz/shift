@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Site\Controller\Content;
 
 use Shift\System\Mvc;
+use Shift\System\Helper\Str;
 
 class Category extends Mvc\Controller
 {
@@ -28,6 +29,7 @@ class Category extends Mvc\Controller
 
     protected function home()
     {
+        $this->document->setTitle($this->language->get('content'));
         $this->document->addMeta('name', 'description', $this->config->get('system.site.meta_description.' . $this->config->get('env.language_id', 0)));
         $this->document->addMeta('name', 'keywords', $this->config->get('system.site.meta_keyword.' . $this->config->get('env.language_id', 0)));
 
@@ -53,8 +55,13 @@ class Category extends Mvc\Controller
 
             foreach ($posts as $kPost => $post) {
                 $data['categories'][$key]['posts'][$kPost] = $post;
-                $data['categories'][$key]['posts'][$kPost]['excerpt'] = html_entity_decode($post['excerpt'], ENT_QUOTES, 'UTF-8');
                 $data['categories'][$key]['posts'][$kPost]['url'] = $this->router->url('content/post', 'post_id=' . $post['post_id']);
+
+                if ($post['excerpt']) {
+                    $data['categories'][$key]['posts'][$kPost]['excerpt'] = Str::htmlDecode($post['excerpt']);
+                } else {
+                    $data['categories'][$key]['posts'][$kPost]['excerpt'] = '<p>' . Str::truncate(Str::htmlDecode($post['content'])) . '</p>';
+                }
             }
         }
 
@@ -67,9 +74,24 @@ class Category extends Mvc\Controller
 
     protected function page($category_id)
     {
+        $category = $this->model_content_category->getCategory($category_id);
+
+        $this->document->setTitle($category['meta_title']);
+        $this->document->addMeta('name', 'description', $category['meta_description']);
+        $this->document->addMeta('name', 'keywords', $category['meta_keyword']);
+
         $this->document->addNode('breadcrumbs', [
-            [$this->language->get('content'), $this->router->url('content/category')],
+            [$category['title'], $this->router->url('content/category')],
         ]);
+
+        $data = [];
+        $data['category'] = $category;
+
+        d($data);
+
+        $data['layouts'] = $this->load->controller('block/position');
+        $data['footer']  = $this->load->controller('block/footer');
+        $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/category', $data));
     }

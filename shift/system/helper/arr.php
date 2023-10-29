@@ -18,10 +18,9 @@ class Arr
      *
      * @param  array      $array Array to validate
      * @param  int|string $key   The key to look for
-     *
      * @return bool
      */
-    protected static function exists($array, $key)
+    public static function exists($array, $key): bool
     {
         return array_key_exists($key, $array);
     }
@@ -111,7 +110,7 @@ class Arr
      * @param  string|array  $keys
      * @return bool
      */
-    public static function has(array $array, $keys)
+    public static function has(array $array, $keys): bool
     {
         $keys = (array)$keys;
 
