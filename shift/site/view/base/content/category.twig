@@ -7,10 +7,22 @@
 
 <div class="uk-child-width-1-{{ category.meta.post_column }}@m" uk-grid>
 {% for post in posts %}
-    <div class="{{ loop.index <= category.meta.post_lead ? 'uk-width-1-1' }}">
-        <h2>{{ post.title }}</h2>
+    <article class="uk-article {{ loop.index <= category.meta.post_lead ? 'uk-width-1-1' }}">
+        {% if loop.index <= category.meta.post_lead %}
+            <h2 class="ukt-mb-1"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        {% else %}
+            <h3 class="ukt-mb-1"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        {% endif %}
+        <p class="uk-article-meta ukt-my-0">
+            Posted
+            {% if post.publish %}
+                on <time datetime="{{ post.publish }}">{{ post.publish|date('Y-m-d') }}</time>
+            {% endif %}
+            by {{ post.author_fullname }}
+        </p>
         {{ post.excerpt|raw }}
-    </div>
+        <a href="{{ post.url }}">{{ app.language.get('read_more') }}</a>
+    </article>
 {% endfor %}
 </div>
 

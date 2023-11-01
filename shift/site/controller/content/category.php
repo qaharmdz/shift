@@ -55,7 +55,7 @@ class Category extends Mvc\Controller
 
             foreach ($posts as $kPost => $post) {
                 $data['categories'][$key]['posts'][$kPost] = $post;
-                $data['categories'][$key]['posts'][$kPost]['url'] = $this->router->url('content/post', 'post_id=' . $post['post_id']);
+                $data['categories'][$key]['posts'][$kPost]['url'] = $this->router->url('content/post', 'category_id=' . $post['term_id'] . '&post_id=' . $post['post_id']);
 
                 if ($post['excerpt']) {
                     $data['categories'][$key]['posts'][$kPost]['excerpt'] = Str::htmlDecode($post['excerpt']);
@@ -76,7 +76,7 @@ class Category extends Mvc\Controller
     {
         $category = $this->model_content_category->getCategory($category_id);
 
-        $this->document->setTitle($category['meta_title']);
+        $this->document->setTitle($category['meta_title'] ?: $category['title']);
         $this->document->addMeta('name', 'description', $category['meta_description']);
         $this->document->addMeta('name', 'keywords', $category['meta_keyword']);
 
@@ -89,13 +89,13 @@ class Category extends Mvc\Controller
         $data['category']['content'] = Str::htmlDecode($category['content']);
 
         $posts = $this->model_content_post->getPosts([
-            'category_id' => (int)$category['term_id'],
+            'term_id' => (int)$category['term_id'],
         ]);
 
         $data['posts'] = [];
         foreach ($posts as $key => $post) {
             $data['posts'][$key] = $post;
-            $data['posts'][$key]['url'] = $this->router->url('content/post', 'post_id=' . $post['post_id']);
+            $data['posts'][$key]['url'] = $this->router->url('content/post', 'category_id=' . $post['term_id'] . '&post_id=' . $post['post_id']);
 
             if ($post['excerpt']) {
                 $data['posts'][$key]['excerpt'] = Str::htmlDecode($post['excerpt']);
@@ -110,21 +110,5 @@ class Category extends Mvc\Controller
         $data['header']  = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/category', $data));
-    }
-
-    private function test()
-    {
-        d(__METHOD__);
-
-        $this->load->model('content/post');
-        $this->load->model('content/category');
-        $this->load->model('content/tag');
-
-        d(
-            $this->model_content_post->getPost($post_id = 2),
-            $this->model_content_post->getPosts(),
-            $this->model_content_post->getPosts(['category_id' => 17]),
-            // $this->model_content_category->getCategory(16),
-        );
     }
 }

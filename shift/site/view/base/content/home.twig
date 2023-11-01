@@ -12,7 +12,14 @@
             {% for post in category.posts %}
                 {% if loop.index <= app.config.get('plugin.content.category_post_lead') %}
                     <li class="uk-margin-bottom">
-                        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                        <h3 class="ukt-mb-1"><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                        <p class="uk-article-meta ukt-my-0">
+                            Posted
+                            {% if post.publish %}
+                                on <time datetime="{{ post.publish }}">{{ post.publish|date('Y-m-d') }}</time>
+                            {% endif %}
+                            by {{ post.author_fullname }}
+                        </p>
                         {{ post.excerpt|raw }}
                     </li>
                 {% else %}
