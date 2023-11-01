@@ -17,21 +17,22 @@
 
     {% block document_head_meta %}{% endblock %}
 
-    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit.sketsa.min.css" />
+    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/theme/base/script/uikit/uikit.sketsa.min.css" />
+    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/theme/base/style/uikit.sketsa.extra.css" />
 {% for style in app.document.getStyles() %}
     <link rel="stylesheet" href="{{ style.href }}" media="{{ style.media }}">
 {% endfor %}
-    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/base/style/base.css" />
+    <link rel="stylesheet" href="{{ app.config.get('env.url_site') }}asset/theme/base/style/base.css" />
 
     {% block document_head_asset %}{% endblock %}
 
     <script src="{{ app.config.get('env.url_site') }}asset/script/jquery/jquery-3.6.0.min.js"></script>
-    <script src="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit.min.js"></script>
-    <script src="{{ app.config.get('env.url_site') }}asset/base/script/uikit/uikit-icons.min.js"></script>
+    <script src="{{ app.config.get('env.url_site') }}asset/theme/base/script/uikit/uikit.min.js"></script>
+    <script src="{{ app.config.get('env.url_site') }}asset/theme/base/script/uikit/uikit-icons.min.js"></script>
 {% for script in app.document.getScripts('header') %}
     <script src="{{ script }}"></script>
 {% endfor %}
-    <script src="{{ app.config.get('env.url_site') }}asset/base/script/base.js"></script>
+    <script src="{{ app.config.get('env.url_site') }}asset/theme/base/script/base.js"></script>
 
     {% block document_head_omega %}{% endblock %}
 </head>
