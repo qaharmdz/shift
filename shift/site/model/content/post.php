@@ -33,7 +33,7 @@ class Post extends Mvc\Model
         )->row;
 
         if ($data) {
-            $data = array_merge($data, $this->getPostData($post_id));
+            $data = array_merge($data, $this->getPostData($post_id, $data));
         }
 
         return $data;
@@ -62,7 +62,10 @@ class Post extends Mvc\Model
             }
             $sql .= " WHERE p.taxonomy = 'content_post'";
             if ($filters['term_id']) {
-                $sql .= "   AND (p.term_id = " . (int)$filters['term_id'] . " OR tr.term_id = " . (int)$filters['term_id'] . ")";
+                $sql .= "   AND (
+                    p.term_id = " . (int)$filters['term_id'] . "
+                    OR (tr.term_id = " . (int)$filters['term_id'] . " AND tr.taxonomy = 'content_post')
+                )";
             }
             $sql .= "   AND p.visibility = 'public'"; // TODO: check visibility usergroup, password
             $sql .= "   AND p.status = 'publish'"; // TODO: permission to view pending or draft
@@ -76,7 +79,7 @@ class Post extends Mvc\Model
 
             if ($data) {
                 foreach ($data as $key => $post) {
-                    $data[$key] = array_merge($post, $this->getPostData($post['post_id']));
+                    $data[$key] = array_merge($post, $this->getPostData($post['post_id'], $post));
                 }
             }
 
@@ -86,7 +89,7 @@ class Post extends Mvc\Model
         return $data;
     }
 
-    public function getPostData(int $post_id)
+    public function getPostData(int $post_id, $post)
     {
         $data = [];
 
@@ -118,8 +121,13 @@ class Post extends Mvc\Model
             FROM `" . DB_PREFIX . "term_relation` tr
                 LEFT JOIN `" . DB_PREFIX . "term` t ON (t.term_id = tr.term_id)
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (t.term_id = tc.term_id AND tc.language_id = ?i)
-            WHERE t.taxonomy = ?s AND t.status = 1 AND tr.taxonomy = ?s AND tr.taxonomy_id = ?i",
-            [$this->config->get('env.language_id'), 'content_category', 'content_post', $post_id]
+            WHERE t.taxonomy = 'content_category'
+                AND t.status = 1
+                AND (
+                    t.term_id = ?i
+                    OR (tr.taxonomy_id = ?i AND tr.taxonomy = 'content_post')
+                )",
+            [$this->config->get('env.language_id'), $post['term_id'], $post_id]
         )->rows;
 
         foreach ($categories as $category) {

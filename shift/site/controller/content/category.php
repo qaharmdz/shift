@@ -81,7 +81,7 @@ class Category extends Mvc\Controller
         $this->document->addMeta('name', 'keywords', $category['meta_keyword']);
 
         $this->document->addNode('breadcrumbs', [
-            [$category['title'], $this->router->url('content/category')],
+            [$category['title'], $this->router->url('content/category', 'category_id=' . $category_id)],
         ]);
 
         $data = [];

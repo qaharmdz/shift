@@ -1,1 +1,17 @@
 {% extends 'main.tpl.twig' %}
+
+{% block content %}
+<article class="uk-article">
+<h1 class="uk-article-title">{{ post.title }}</h1>
+
+<p class="uk-article-meta">
+    Posted
+    {% if post.publish %}
+        on <time datetime="{{ post.publish }}">{{ post.publish|date('Y-m-d') }}</time>
+    {% endif %}
+    by {{ post.author_fullname }}
+</p>
+
+{{ post.content|raw }}
+</article>
+{% endblock %}
