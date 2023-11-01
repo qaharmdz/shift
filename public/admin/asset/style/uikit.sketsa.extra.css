@@ -12,7 +12,7 @@ html,
 .uk-nav-header,
 .uk-nav-secondary,
 .uk-text-default {
-    font-size: 14px;
+    font-size: var(--uk-font-size);
 }
 
 /* Base HTML

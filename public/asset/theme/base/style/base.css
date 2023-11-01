@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 :root {
+    --uk-font-size: 15px;
     --id-navbar-top-height: 38px;
     --id-navbar-main-height: 38px;
 }
