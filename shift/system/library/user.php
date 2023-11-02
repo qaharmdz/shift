@@ -23,7 +23,7 @@ class User
         if ($email = $this->session->getString('user_email')) {
             $user = $this->dbGetUserByMail($email);
 
-            if ($user['user_id']) {
+            if (!empty($user['user_id'])) {
                 unset($user['password']);
                 $this->bags->add($user);
             } else {
@@ -90,6 +90,20 @@ class User
     public function isSuperAdmin(): bool
     {
         return $this->bags->getInt('user_group_id', 0) === 1;
+    }
+
+    /**
+     * Check given user_ids has user with super_admin
+     *
+     * @param  array  $users
+     * @return bool
+     */
+    public function checkSuperAdmins(array $users): bool
+    {
+        return (bool)$this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "user` WHERE user_group_id = 1 AND user_id IN (:users?i)",
+            ['users' => $users]
+        )->num_rows;
     }
 
     public function hasPermission(string $type, string $route): bool

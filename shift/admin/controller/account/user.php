@@ -86,8 +86,7 @@ class User extends Mvc\Controller
         if (
             empty($items)
             || !in_array($post['type'], $types)
-            // Prevent any change to super_admin
-            || $this->db->get("SELECT * FROM `" . DB_PREFIX . "user` WHERE user_group_id = 1 AND user_id IN (:items?i)", ['items' => $items])->num_rows
+            || $this->user->checkSuperAdmins($items) // Prevent any change to super_admin
         ) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
@@ -148,7 +147,6 @@ class User extends Mvc\Controller
         if (!$this->request->has('post.user_id')) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
-        // TODO: double validate edit to super-admin
 
         $data = [];
         $post = array_replace_recursive(
@@ -156,6 +154,10 @@ class User extends Mvc\Controller
             $this->request->get('post', [])
         );
         $user_id = (int)$post['user_id'];
+
+        if (!$this->user->isSuperAdmin() && $this->user->checkSuperAdmins([$user_id])) {
+            return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
+        }
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);
