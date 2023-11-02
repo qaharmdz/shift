@@ -50,7 +50,7 @@ class Category extends Mvc\Controller
             $data['categories'][$key]['url'] = $this->router->url('content/category', 'category_id=' . $category['term_id']);
 
             $posts = $this->model_content_post->getPosts([
-                'category_id' => (int)$category['term_id'],
+                'term_id' => (int)$category['term_id'],
             ]);
 
             foreach ($posts as $kPost => $post) {
