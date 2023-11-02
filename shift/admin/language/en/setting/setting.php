@@ -6,7 +6,6 @@ $_['general']            = 'General';
 $_['compression']        = 'Compression';
 
 $_['admin_language']     = 'Admin Language';
-$_['admin_limit']        = 'Admin Limit';
 
 $_['mail']               = 'Mail';
 $_['mail_engine']        = 'Mail Engine';

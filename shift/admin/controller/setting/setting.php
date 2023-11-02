@@ -83,10 +83,6 @@ class Setting extends Mvc\Controller
             $errors['items']['compression'] = sprintf($this->language->get('error_value_between'), 0, 10);
         }
 
-        if (!$this->assert->greaterThanEq(20)->check($post['admin_limit'])) {
-            $errors['items']['admin_limit'] = sprintf($this->language->get('error_value_minimum'), 20);
-        }
-
         if (isset($errors['items'])) {
             $errors['response'] = $this->language->get('error_form');
         }

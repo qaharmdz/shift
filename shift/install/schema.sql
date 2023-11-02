@@ -337,7 +337,6 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
 	(3112, 1, 'content', 'setting', 'category_custom_code', '', 0),
 	(3593, 0, 'system', 'setting', 'compression', '0', 0),
 	(3594, 0, 'system', 'setting', 'admin_language', 'en', 0),
-	(3595, 0, 'system', 'setting', 'admin_limit', '36', 0),
 	(3596, 0, 'system', 'setting', 'mail_engine', 'mail', 0),
 	(3597, 0, 'system', 'setting', 'smtp_host', '', 0),
 	(3598, 0, 'system', 'setting', 'smtp_username', '', 0),
