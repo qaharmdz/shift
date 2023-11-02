@@ -25,8 +25,10 @@ class Router extends Mvc\Controller
             $parts = array_filter(explode('/', $routeAlias));
 
             foreach ($parts as $part) {
-                // TODO: check site_id, language_id
-                $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `alias` = ?s", [$part]);
+                $query = $this->db->get(
+                    "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `alias` = ?s",
+                    [$this->config->getInt('env.site_id'), $part]
+                );
 
                 if (!$query->num_rows) {
                     $alias = [];
@@ -44,7 +46,24 @@ class Router extends Mvc\Controller
                     $this->request->set('query.' . $alias['param'], $alias['value']);
                 }
 
-                // TODO: change language per $alias language_id
+                // Change language per $alias language_id
+                if ($alias['language_id'] !== $this->config->get('env.language_id')) {
+                    $this->load->model('extension/language');
+                    $languages = $this->model_extension_language->getLanguages();
+
+                    if (!empty($languages[$alias['language_id']]['codename'])) {
+                        $langCode = $languages[$alias['language_id']]['codename'];
+
+                        $this->session->set('language', $langCode);
+                        setcookie('language', $langCode, time() + 60 * 60 * 24 * 30, '/', ini_get('session.cookie_domain'), (bool)ini_get('session.cookie_secure'));
+
+                        $this->config->set('env.language_id', (int)$alias['language_id']);
+                        $this->config->set('env.language_code', $langCode);
+
+                        $this->language->set('_param.active', $langCode);
+                        $this->language->load($langCode);
+                    }
+                }
             }
 
             if (!$alias) {
