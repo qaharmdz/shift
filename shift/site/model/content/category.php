@@ -60,7 +60,7 @@ class Category extends Mvc\Model
             $sql .= " WHERE t.taxonomy = 'content_category'";
             $sql .= "   AND t.status = 1";
             $sql .= " GROUP BY t.term_id";
-            $sql .= " ORDER BY " . ($filters['order_by'] ?: 't.sort_order ASC, t.parent_id ASC');
+            $sql .= " ORDER BY " . ($filters['order_by'] ?: 't.sort_order ASC, tc.title ASC');
             $sql .= " LIMIT 0, " . (int)$filters['limit'];
 
             $data = $this->db->get($sql)->rows;
