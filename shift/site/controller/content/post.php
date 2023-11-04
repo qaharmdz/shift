@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shift\Site\Controller\Content;
 
 use Shift\System\Mvc;
+use Shift\System\Exception;
 use Shift\System\Helper\Str;
 
 class Post extends Mvc\Controller
@@ -17,6 +18,10 @@ class Post extends Mvc\Controller
         $category_id = $this->request->getInt('query.category_id');
         $post_id = $this->request->getInt('query.post_id');
         $post = $this->model_content_post->getPost($post_id);
+
+        if (!$post) {
+            throw new Exception\NotFoundHttpException(sprintf('Content post ID #%s is not available for public access.', $post_id));
+        }
 
         $this->document->setTitle($post['meta_title'] ?: $post['title']);
         $this->document->addMeta('name', 'description', $post['meta_description']);
