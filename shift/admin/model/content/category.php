@@ -175,10 +175,7 @@ class Category extends Mvc\Model
         }
 
         // URL alias
-        $this->load->model('setting/site');
-        $sites = $this->model_setting_site->getSites();
-
-        foreach ($sites as $site) {
+        foreach ($data['sites'] as $site_id) {
             $alias = '';
             foreach ($data['alias'] as $language_id => $alias) {
                 if (!$alias = sanitizeChar(strtolower($alias))) {
@@ -187,17 +184,18 @@ class Category extends Mvc\Model
 
                 $_aliasCount = $this->db->get(
                     "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `alias` = ?s",
-                    [$site['site_id'], $alias]
+                    [$site_id, $alias]
                 )->row['total'];
 
                 if ($_aliasCount) {
+                    // TODO: change suffix to language code
                     $alias = $alias . '-' . $language_id;
                 }
 
                 $this->db->add(
                     DB_PREFIX . 'route_alias',
                     [
-                        'site_id'     => (int)$site['site_id'],
+                        'site_id'     => (int)$site_id,
                         'language_id' => (int)$language_id,
                         'route'       => 'content/category',
                         'param'       => 'category_id',

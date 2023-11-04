@@ -69,11 +69,10 @@ class Router extends Mvc\Controller
 
     public function generateAlias(string $route, string $args = '', int $language_id = 0): string
     {
+        $alias = '';
         $language_id = $language_id ?: $this->config->getInt('env.language_id');
 
         parse_str($args, $urlParams);
-
-        $alias     = '';
 
         // Base route no args
         $query = $this->db->get(

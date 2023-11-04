@@ -171,6 +171,7 @@ class Tag extends Mvc\Model
             );
         }
 
+        // Meta setting
         if (!empty($data['meta'])) {
             foreach ($data['meta'] as $key => $value) {
                 $this->db->add(
@@ -185,6 +186,7 @@ class Tag extends Mvc\Model
             }
         }
 
+        // URL alias
         $this->load->model('setting/site');
         $sites = $this->model_setting_site->getSites();
 
