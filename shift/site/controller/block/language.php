@@ -20,11 +20,12 @@ class Language extends Mvc\Controller
             $data['languages'] = [];
 
             $languages = $this->model_extension_language->getLanguages();
-            foreach ($languages as $result) {
+            foreach ($languages as $language) {
                 $data['languages'][] = [
-                    'name'     => $result['name'],
-                    'codename' => $result['codename'],
-                    'flag'     => $result['setting']['flag'],
+                    'language_id' => $language['extension_id'],
+                    'name'        => $language['name'],
+                    'codename'    => $language['codename'],
+                    'flag'        => $language['setting']['flag'],
                 ];
             }
 
@@ -33,6 +34,7 @@ class Language extends Mvc\Controller
                 $url_data = $this->request->get('query');
                 $route = $url_data['route'];
                 unset($url_data['route']);
+                unset($url_data['_route_']);
 
                 $args = '';
                 if ($url_data) {
