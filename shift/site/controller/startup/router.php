@@ -23,21 +23,16 @@ class Router extends Mvc\Controller
         if ($this->request->has('query._route_')) {
             $routeAlias = $this->request->getString('query._route_');
             $parts = array_filter(explode('/', $routeAlias));
+            $lastPartKey = array_key_last($parts);
 
-            foreach ($parts as $part) {
-                $query = $this->db->get(
+            foreach ($parts as $key => $part) {
+                $alias = $this->db->get(
                     "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `alias` = ?s",
                     [$this->config->getInt('env.site_id'), $part]
-                );
+                )->row;
 
-                if (!$query->num_rows) {
-                    $alias = [];
+                if (!$alias) {
                     break;
-                }
-
-                $alias = $query->row;
-                if (false !== $index = array_search($this->config->get('env.language_id'), array_column($query->rows, 'language_id'))) {
-                    $alias = $query->rows[$index];
                 }
 
                 $this->request->set('query.route', $alias['route']);
@@ -47,7 +42,7 @@ class Router extends Mvc\Controller
                 }
 
                 // Change language per $alias language_id
-                if ($alias['language_id'] !== $this->config->get('env.language_id')) {
+                if ($key == $lastPartKey && $alias['language_id'] !== $this->config->get('env.language_id')) {
                     $this->load->model('extension/language');
                     $languages = $this->model_extension_language->getLanguages();
 
