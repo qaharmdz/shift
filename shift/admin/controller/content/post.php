@@ -171,7 +171,7 @@ class Post extends Mvc\Controller
         }
 
         if (!$post_id) {
-            $data['new_id'] = $this->model_content_post->addPost($post);
+            $post_id = $data['new_id'] = $this->model_content_post->addPost($post);
         } else {
             $this->model_content_post->editPost($post_id, $post);
         }
@@ -185,6 +185,9 @@ class Post extends Mvc\Controller
         }
         if (isset($data['new_id']) && empty($data['redirect'])) {
             $data['redirect'] = $this->router->url('content/post/form', 'post_id=' . $data['new_id']);
+        }
+        if (empty($data['redirect'])  && $this->session->pull('post_redirect')) {
+            $data['redirect'] = $this->router->url('content/post/form', 'post_id=' . $post_id);
         }
 
         $this->response->setOutputJson($data);
@@ -202,6 +205,8 @@ class Post extends Mvc\Controller
 
         foreach ($post['alias'] as $language_id => &$alias) {
             if (!$alias = trim($alias)) {
+                // Note: If empty, the model/content/post::insertData() automatically generate URL alias from title
+                $this->session->set('post_redirect', true);
                 continue;
             }
 

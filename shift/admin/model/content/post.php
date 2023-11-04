@@ -238,6 +238,7 @@ class Post extends Mvc\Model
                 )->row['total'];
 
                 if ($_aliasCount) {
+                    // TODO: change suffix to language code
                     $alias = $alias . '-' . $language_id;
                 }
 
