@@ -72,7 +72,7 @@ class Post extends Mvc\Model
             $sql .= "   AND (p.publish IS NULL OR p.publish <= NOW()) AND (p.unpublish IS NULL OR p.unpublish >= NOW())";
             $sql .= "   AND sr.site_id = " . $this->config->getInt('env.site_id');
             $sql .= " GROUP BY p.post_id";
-            $sql .= " ORDER BY p.sort_order ASC, p.updated DESC"; // TODO: post order
+            $sql .= " ORDER BY p.sort_order ASC, p.publish DESC"; // TODO: post order
             $sql .= " LIMIT " . (int)$filters['start'] . ", " . (int)$filters['limit'];
 
             $data = $this->db->get($sql)->rows;

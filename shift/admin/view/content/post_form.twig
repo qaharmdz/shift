@@ -143,7 +143,7 @@
                                 </div>
                             </div>
 
-                            {{ forms.input({'label':'publish_utc', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
+                            {{ forms.input({'label':'publish_utc', 'name':'publish', 'value':setting.publish, 'attribute':'data-datepicker=\'{"time":true}\'', 'htmlAfter':'<input type="hidden" name="_publish" value="' ~ setting.publish ~ '">'}) }}
                             {{ forms.input({'label':'unpublish_utc', 'name':'unpublish', 'value':setting.unpublish, 'attribute':'data-datepicker=\'{"time":true}\''}) }}
                         </fieldset>
                     </div>

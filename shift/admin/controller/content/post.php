@@ -170,6 +170,11 @@ class Post extends Mvc\Controller
             return $this->response->setOutputJson($errors, 422);
         }
 
+        if ($post['status'] == 'publish' && empty($post['publish'])) {
+            $post['publish'] = $post['_publish'] ?: date('Y-m-d H:i:s');
+            $this->session->set('reload_post_form', true);
+        }
+
         if (!$post_id) {
             $post_id = $data['new_id'] = $this->model_content_post->addPost($post);
         } else {
@@ -186,7 +191,7 @@ class Post extends Mvc\Controller
         if (isset($data['new_id']) && empty($data['redirect'])) {
             $data['redirect'] = $this->router->url('content/post/form', 'post_id=' . $data['new_id']);
         }
-        if (empty($data['redirect'])  && $this->session->pull('post_redirect')) {
+        if (empty($data['redirect'])  && $this->session->pull('reload_post_form')) {
             $data['redirect'] = $this->router->url('content/post/form', 'post_id=' . $post_id);
         }
 
@@ -206,7 +211,7 @@ class Post extends Mvc\Controller
         foreach ($post['alias'] as $language_id => &$alias) {
             if (!$alias = trim($alias)) {
                 // Note: If empty, the model/content/post::insertData() automatically generate URL alias from title
-                $this->session->set('post_redirect', true);
+                $this->session->set('reload_post_form', true);
                 continue;
             }
 
