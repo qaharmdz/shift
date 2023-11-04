@@ -77,8 +77,8 @@ class Router extends Mvc\Controller
 
         // Base route no args
         $query = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `route` = ?s AND `param` = ''",
-            [$language_id, $route]
+            "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `language_id` = ?i AND `route` = ?s AND `param` = ''",
+            [$this->config->getInt('env.site_id'), $language_id, $route]
         );
 
         if (!empty($query->row['alias'])) {
@@ -94,8 +94,8 @@ class Router extends Mvc\Controller
         foreach ($urlParams as $param => $value) {
             if (in_array($param, $paramList['distinct'])) {
                 $query = $this->db->get(
-                    "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `param` = ?s AND `value` = ?s",
-                    [$language_id, $param, $value]
+                    "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `language_id` = ?i AND `param` = ?s AND `value` = ?s",
+                    [$this->config->getInt('env.site_id'), $language_id, $param, $value]
                 );
 
                 if (!empty($query->row['alias'])) {
@@ -107,8 +107,8 @@ class Router extends Mvc\Controller
 
                 foreach ($ids as $id) {
                     $query = $this->db->get(
-                        "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `language_id` = ?i AND `param` = ?s AND `value` = ?s",
-                        [$language_id, $param, $id]
+                        "SELECT * FROM `" . DB_PREFIX . "route_alias` WHERE `site_id` = ?i AND `language_id` = ?i AND `param` = ?s AND `value` = ?s",
+                        [$this->config->getInt('env.site_id'), $language_id, $param, $id]
                     );
 
                     if (!empty($query->row['alias'])) {
