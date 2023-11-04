@@ -15,7 +15,7 @@ class NotFound extends Mvc\Controller
         if ($this->request->is('ajax')) {
             return $this->response->setOutputJson([
                 'title'   => $params['title'] ?? $this->language->get('page_title'),
-                'message' => $params['message'] ?? '',
+                'message' => $params['message'] ?? $this->language->get('not_found'),
             ], 404);
         }
 

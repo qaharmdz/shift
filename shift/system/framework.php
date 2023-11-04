@@ -220,7 +220,7 @@ class Framework
 
             $route  = $request->get('query.route');
             $params = [[
-                'message' => $e->getMessage() . '.',
+                'message' => $e->getMessage(),
             ]];
             $output = null;
 
