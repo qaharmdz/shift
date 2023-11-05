@@ -11,7 +11,7 @@
                 <div class="uk-inline">
                     <button type="button" class="uk-button uk-button-default ukt-px-2 ukt-pl-3">
                         {{ fileinfo.file }} <div class="uk-label uk-label-{{ fileinfo.label }} uk-label-small ukt-ml-3">{{ fileinfo.size }}</div>
-                        <span class="dropdown-caret"></span>
+                        <span uk-drop-parent-icon></span>
                     </button>
                     <div class="uk-width-{{ partition.width }}" style="max-width:none" uk-dropdown="pos:bottom-right;">
                         <div class="uk-dropdown-grid uk-grid-small uk-child-width-1-{{ partition.column }}@m" uk-grid>
