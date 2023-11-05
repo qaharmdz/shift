@@ -28,7 +28,6 @@
     {% block document_head_asset %}{% endblock %}
 
     <script src="{{ app.config.get('env.url_app') }}asset/script/jquery/jquery-3.6.0.min.js"></script>
-    <script>(function($) { $.fn.shift = {}; })(jQuery);</script>
     <script src="{{ app.config.get('env.url_app') }}asset/script/uikit/uikit.min.js"></script>
     <script src="{{ app.config.get('env.url_app') }}asset/script/uikit/uikit-icons.min.js"></script>
 {% for script in app.document.getScripts('header') %}

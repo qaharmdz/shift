@@ -13,6 +13,7 @@ const shift = {
 {% endblock %}
 
 {% block document_head_omega %}
+<script>(function($) { $.fn.shift = {}; })(jQuery);</script>
 <script src="{{ app.config.get('env.url_app') }}asset/script/shift.js"></script>
 {% endblock %}
 
