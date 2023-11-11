@@ -170,6 +170,7 @@ body {
 }
 .main-navigation .panel-left .uk-dropdown-nav {
     width: 140px;
+    width: 160px;
 }
 .main-navigation .panel-left .uk-nav a {
     font-size: .9rem;

@@ -75,6 +75,9 @@ html,
 [class*=uk-navbar-center] {
     gap: 0;
 }
+.uk-navbar-nav {
+    gap: 10px;
+}
 
 /* UK-alert
 ==================================== */
@@ -306,8 +309,10 @@ th.uk-text-break {
 .uk-dropdown-nav {
     white-space: normal;
 }
+.uk-navbar-dropdown-nav > li > a,
 .uk-dropdown-nav > li > a {
     line-height: 1.4;
+    color: #444;
     margin: 0 -5px;
     padding: 4px 8px 6px!important;
 }

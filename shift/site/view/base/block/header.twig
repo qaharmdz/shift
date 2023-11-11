@@ -1,6 +1,6 @@
 <nav class="section-navbar-top">
     <div class="uk-container">
-        <nav class="uk-navbar-container uk-navbar-transparent uk-light" uk-navbar="mode: click">
+        <nav class="uk-navbar-container uk-navbar-transparent uk-light" uk-navbar>
             <div class="uk-navbar-left">
                 <div class="uk-navbar-item">
                     {{ search|raw }}
@@ -32,8 +32,8 @@
 </nav>
 
 <header class="section-header">
-    <div class="uk-container nav-boundary">
-        <div class="uk-grid uk-flex-middle" uk-grid>
+    <div class="uk-container">
+        <div class="uk-grid uk-flex-middle nav-boundary" uk-grid>
             <div class="uk-width-225 uk-visible@m">
                 {% if logo %}
                     <a href="{{ app.router.url('page/home') }}">
@@ -44,14 +44,14 @@
                 {% endif %}
             </div>
             <div class="uk-width-expand">
-                <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-desktop uk-visible@m" uk-navbar="mode: click">
+                <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-desktop uk-visible@m" uk-navbar>
                     <div class="uk-navbar-right">
                         <ul class="uk-navbar-nav">
                             {% for nav in navigations %}
                                 {% if nav.children is defined and nav.children %}
                                     <li>
-                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-{{ nav.column }}" uk-dropdown="offset:10; boundary: !.nav-boundary;">
                                         <a>{{ nav.name }} <span uk-drop-parent-icon></span></a>
+                                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-{{ nav.column }}" uk-dropdown="boundary:!.nav-boundary;">
                                             <div class="uk-navbar-dropdown-grid uk-grid uk-child-width-1-{{ nav.column }}" uk-grid>
                                                 {% for children in nav.children|batch(nav.children|length / nav.column|round(1, 'ceil')) %}
                                                 <div>
