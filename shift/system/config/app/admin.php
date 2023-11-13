@@ -6,6 +6,7 @@ $_['app_startup'] = [
     'startup/configuration',
     'startup/router',
     'startup/authentication',
+    // 'startup/startup', // TODO: DB table startup
     'startup/asset',
 ];
 
