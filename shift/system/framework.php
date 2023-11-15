@@ -246,7 +246,7 @@ class Framework
             exit('The site temporarily unavailable!');
         }
 
-        if ($logger->getConfig('hasErrorDisplay')) {
+        if ($logger->getConfig('hasErrorToDisplay')) {
             $config->set('system.setting.compression', 0);
         }
 
