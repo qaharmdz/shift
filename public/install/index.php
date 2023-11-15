@@ -23,12 +23,21 @@ if (
 
 define('HTTP_SHIFT', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
-$rootConfig = [];
-if (is_file(PATH_SHIFT . 'config.php')) {
-    $rootConfig = require_once PATH_SHIFT . 'config.php';
-} else {
-    define('URL_APP', $protocol . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
-}
+$rootConfig = [
+    'url_host'     => $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME'], 2), '/.\\') . '/',
+    'database'     => [
+        'config' => [
+            'host'     => 'localhost',
+            'username' => 'root',
+            'password' => '',
+            'database' => '',
+            'port'     => 3306,
+        ],
+        'table' => [
+            'prefix'   => 'sf_',
+        ],
+    ]
+];
 
 require_once PATH_SHIFT . 'system/startup.php';
 

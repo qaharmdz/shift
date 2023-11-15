@@ -8,7 +8,7 @@ define('APP_FOLDER', 'admin');
 define('APP_URL_PATH', 'admin/');
 
 if (!is_file(PATH_SHIFT . 'config.php')) {
-    header('Location: install/');
+    header('Location: ../install/');
     exit;
 }
 

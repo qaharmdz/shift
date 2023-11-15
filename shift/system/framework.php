@@ -45,7 +45,7 @@ class Framework
         return $this;
     }
 
-    public function init(string $appFolder, array $rootConfig = []): Framework
+    protected function init(string $appFolder, array $rootConfig = []): Framework
     {
         //=== Root Config
         $config = new Core\Config();
@@ -66,29 +66,40 @@ class Framework
         $this->set('log', $logger);
 
         //=== Database
-        $db = new Core\Database(...$config->get('root.database.config'));
-        $db->raw('
-            SET time_zone="+00:00",
-                session group_concat_max_len = 102400,
-                SESSION sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
-        ');
-        $this->set('db', $db);
-        define('DB_PREFIX', $config->get('root.database.table.prefix', 'sf_'));
+        $db = null;
+        if ($config->get('root.database.config.database')) {
+            $db = new Core\Database(...$config->get('root.database.config'));
+            $db->raw('
+                SET time_zone="+00:00",
+                    session group_concat_max_len = 102400,
+                    SESSION sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+            ');
+            $this->set('db', $db);
+            define('DB_PREFIX', $config->get('root.database.table.prefix', 'sf_'));
+        }
 
         //=== Session
         $this->set('session', new Core\Session($config->get('root.session')));
 
         //=== Environment Config
-        $hostname = str_replace('www.', '', $_SERVER['HTTP_HOST'])
-                    . rtrim(dirname($_SERVER['PHP_SELF'], (APP_URL_PATH ? 2 : 1)), '/') . '/';
-        $site = $db->get(
-            "SELECT * FROM `" . DB_PREFIX . "site` WHERE REPLACE(`url_host`, 'www.', '') LIKE ?s",
-            ['%' . $hostname]
-        )->row;
+        $site = [
+            'site_id'  => 0,
+            'name'     => 'Shift',
+            'url_host' => $_SERVER['PROTOCOL'] . $config->get('root.url_host'),
+        ];
 
-        if (!$site) {
-            header('Location: ' . $_SERVER['PROTOCOL'] . $config->get('root.url_host'), true, 302);
-            exit('╮ (. ❛ ᴗ ❛.) ╭');
+        if ($db) {
+            $hostname = str_replace('www.', '', $_SERVER['HTTP_HOST'])
+                        . rtrim(dirname($_SERVER['PHP_SELF'], (APP_URL_PATH ? 2 : 1)), '/') . '/';
+            $site = $db->get(
+                "SELECT * FROM `" . DB_PREFIX . "site` WHERE REPLACE(`url_host`, 'www.', '') LIKE ?s",
+                ['%' . $hostname]
+            )->row;
+
+            if (!$site) {
+                header('Location: ' . $_SERVER['PROTOCOL'] . $config->get('root.url_host'), true, 302);
+                exit('╮ (. ❛ ᴗ ❛.) ╭');
+            }
         }
 
         define('URL_SITE', $site['url_host']);
@@ -101,6 +112,8 @@ class Framework
         $config->set('env.url_site', URL_SITE);
         $config->set('env.url_asset', URL_SITE . 'asset/');
         $config->set('env.url_media', URL_SITE . 'media/');
+
+        $config->set('system.site.site_id', $site['site_id']);
         $config->set('system.site.name', $site['name']);
         $config->set('system.site.url_host', $site['url_host']);
 
@@ -147,15 +160,8 @@ class Framework
         // Secure
         $this->set('secure', new Library\Secure());
 
-        // User
-        $this->set('user', new Library\User($this->registry));
-
         // Language
-        $language = new Library\Language();
-        $this->set('language', $language);
-
-        // Validaion assert
-        $this->set('assert', new Library\Assert());
+        $this->set('language', new Library\Language());
 
         // Document
         $this->set('document', new Library\Document());
@@ -169,6 +175,9 @@ class Framework
         // Mail
         $this->set('mail', new Library\Mail(true));
 
+        // Assert Validation
+        $this->set('assert', new Library\Assert());
+
         // Image
         $this->set('image', new Library\Image([
             'quality'       => 100,
@@ -176,6 +185,11 @@ class Framework
             'path_cache'    => PATH_MEDIA . 'cache/',
             'url'           => $config->get('env.url_media'),
         ]));
+
+        // User
+        if ($this->registry->has('db')) {
+            $this->set('user', new Library\User($this->registry));
+        }
 
         return $this;
     }
