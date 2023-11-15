@@ -69,7 +69,7 @@ class Logger
     {
         $level = $this->errorLevel($errno);
 
-        $this->write($errstr . ' in ' . $errfile . ' on line ' . $errline, $level, $this->config['context'], $this->config['logfile']);
+        $this->write(trim($errstr, '.') . ' in ' . $errfile . ' on line ' . $errline, $level, $this->config['context'], $this->config['logfile']);
 
         if ($this->config['display'] && !$this->isAjax()) {
             $this->setConfig(['hasErrorToDisplay' => true]);

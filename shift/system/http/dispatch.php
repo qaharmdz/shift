@@ -115,7 +115,9 @@ class Dispatch
         if ($this->class && class_exists($this->class)) {
             $controller = new $this->class();
         } else {
-            throw new \InvalidArgumentException(sprintf('Unable to locate class for route "%s".', $this->route));
+            $trace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+
+            throw new \InvalidArgumentException(sprintf('Unable to locate class for route "%s" in %s line %s.', $this->route, $trace[1]['file'], $trace[1]['line']));
         }
 
         if (!is_callable([$controller, $this->method])) {
