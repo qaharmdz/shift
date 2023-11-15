@@ -39,7 +39,8 @@
     </IfModule>
 </FilesMatch>
 
-
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#response_directives
+# Max age 6 month
 <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|svg|js|css|swf|woff|woff2)$">
     Header set Cache-Control "max-age=15768000, public"
 </filesMatch>
