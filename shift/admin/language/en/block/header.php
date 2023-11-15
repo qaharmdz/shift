@@ -1,9 +1,9 @@
 <?php
 
 $_['dashboard']      = 'Dashboard';
-$_['account']        = 'Account';
 $_['my_account']     = 'My Account';
 $_['logout']         = 'Logout';
+$_['recent_visit']   = 'Recent Visit';
 
 $_['contents']       = 'Contents';
 $_['pages']          = 'Pages';

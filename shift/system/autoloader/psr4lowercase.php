@@ -15,7 +15,7 @@ class Psr4Lowercase
      */
     public static function classMap()
     {
-        $basedir   = str_replace('\\', '/', realpath(dirname(dirname(dirname(realpath(__DIR__) . DIRECTORY_SEPARATOR)))));
+        $basedir   = str_replace('\\', '/', realpath(dirname(dirname(dirname(realpath(__DIR__) . DIRECTORY_SEPARATOR)))));  // TODO: Dirname level
         $classMap  = require 'shift/vendor/composer/autoload_classmap.php';
         $psr4Lower = [];
 
