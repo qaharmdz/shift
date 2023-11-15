@@ -11,6 +11,11 @@ class Router extends Mvc\Controller
     public function index()
     {
         $this->router->addUrlGenerator($this);
+
+        // Not supporting URL alias, trigger 404 not found
+        if ($this->request->has('query._route_')) {
+            $this->request->set('query.route', $this->request->get('query._route_'));
+        }
     }
 
     public function generateAlias(string $route, string $args = ''): string
