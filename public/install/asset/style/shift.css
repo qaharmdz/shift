@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+:root {
+    --uk-font-size: 15px;
+}
+
+html {
+    background: #f9fbfc;
+}
+body {
+    min-width: 640px;
+    min-height: 100vh;
+}
+
+.page-header {}
+
+.page-body {
+    z-index: 1;
+}
+
+.main-content .container-content-wrapper{
+    padding-top: 20px;
+}
+.content-header {
+    margin-bottom: 20px;
+}
+
+.content-body {}
+
+.page-footer {
+    color: #666;
+    font-size: 12.6px;
+    text-align: center;
+    padding: 40px 0 75px;
+}

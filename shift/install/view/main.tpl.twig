@@ -1,0 +1,34 @@
+{% extends 'document.tpl.twig' %}
+
+{% block document_head_asset %}
+<script>
+const shift = {
+    version     : "{{ app.config.get('root.version') }}",
+    version_id  : {{ app.config.getInt('root.version_id') }},
+    env         : {{ app.config.get('env')|json_encode() }},
+    i18n        : {{ app.language.all()|json_encode() }},
+    formChanged : false,
+};
+</script>
+{% endblock %}
+
+{% block document_body %}
+<div class="uk-container uk-container-small container-content-wrapper">
+
+<header class="page-header"></header>
+
+<div class="page-body">
+    <main class="main-content">
+        {% block content %}No content available!{% endblock %}
+    </main>
+</div>
+
+<footer class="page-footer">
+    <div class="uk-container">
+        {{ app.language.get('copyright')|raw }} <br>
+        {{ app.language.get('version')|format(app.config.get('root.version')) }}
+    </div>
+</footer>
+
+</div>
+{% endblock %}

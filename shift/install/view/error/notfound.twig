@@ -1,0 +1,10 @@
+{% extends 'main.tpl.twig' %}
+
+{% block content %}
+<div class="content-header">
+    <h1>{{ app.language.get('page_title') }}</h1>
+</div>
+<div class="content-body uk-card-panel uk-card-body">
+    <p>{{ app.language.get('content') }}</p>
+</div>
+{% endblock %}
