@@ -22,11 +22,12 @@ class Header extends Mvc\Controller
                 continue;
             }
 
-            if (in_array($key, ['_route_', 'route'])) {
-                $class_body[] = str_replace(['/', '\\', '_'], '-', $value);
-            } else {
-                $class_body[] = str_replace(['/', '\\', '_'], '-', $key . '-' . $value);
+            $prefix = 'sfp-' . $key;
+            if ($key == 'route') {
+                $prefix = 'sfr';
             }
+
+            $class_body[] = str_replace(['/', '\\', '_'], '-', $prefix . '-' . $value);
         }
         $class_body = array_unique(array_merge($class_body, $this->document->getNode('class_body', [])));
         $this->document->setNode('class_body', $class_body);

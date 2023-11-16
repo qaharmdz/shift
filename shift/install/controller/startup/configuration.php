@@ -29,6 +29,19 @@ class Configuration extends Mvc\Controller
             $this->request->set('query.route', $this->request->get('query._route_'));
         }
 
+        // Route based body class
+        $class_body = [];
+        foreach ($this->request->get('query', ['route' => $this->config->get('root.route_default')]) as $key => $value) {
+            $prefix = 'sfp-' . $key;
+            if ($key == 'route') {
+                $prefix = 'sfr';
+            }
+
+            $class_body[] = str_replace(['/', '\\', '_'], '-', $prefix . '-' . $value);
+        }
+        $class_body = array_unique(array_merge($class_body, $this->document->getNode('class_body', [])));
+        $this->document->setNode('class_body', $class_body);
+
         $this->view->setGlobal('config', $this->config);
         $this->view->setGlobal('router', $this->router);
         $this->view->setGlobal('document', $this->document);

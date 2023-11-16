@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
 :root {
-    --uk-font-size: 15px;
+    --uk-font-size: 14.5px;
 }
 
 html {
-    background: #f9fbfc;
+    background: #f2f3f4;
 }
 body {
     min-width: 640px;
@@ -13,6 +13,16 @@ body {
 }
 
 .page-header {}
+.logo {
+    color: #333;
+    font-size: 28px;
+    font-weight: 400;
+    font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 28px;
+    margin-left: 10px;
+    cursor: default;
+    text-shadow: 0 1px 1px rgb(0 0 0 / 30%);
+}
 
 .page-body {
     z-index: 1;
@@ -26,6 +36,14 @@ body {
 }
 
 .content-body {}
+
+.sfr-page-license .uk-panel-scrollable {
+    border: 0;
+    font-size: 13px;
+    height: 500px;
+    max-height: 500px;
+    padding: 10px 20px;
+}
 
 .page-footer {
     color: #666;
