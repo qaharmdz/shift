@@ -128,7 +128,7 @@ class Framework
         $this->set('request', new Http\Request());
 
         // Router
-        $this->set('router', new Http\Router(URL_APP));
+        $this->set('router', new Http\Router());
 
         // Response
         $response = new Http\Response();
@@ -136,7 +136,7 @@ class Framework
         $this->set('response', $response);
 
         // Event
-        $event = new Core\Event($this->registry);
+        $event = new Core\Event();
 
         foreach ($config->get('root.app_event') as $eventEmitter => $listenerRoute) {
             $event->addListener($eventEmitter, new Http\Dispatch($listenerRoute));
@@ -173,7 +173,7 @@ class Framework
         ]));
 
         // Mail
-        $this->set('mail', new Library\Mail(true));
+        $this->set('mail', new Library\Mail());
 
         // Assert Validation
         $this->set('assert', new Library\Assert());
