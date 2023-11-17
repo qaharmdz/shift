@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+$_SERVER['SERVER_PROTOCOL'] = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1';
+
 if (!is_array($rootConfig)) {
     header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
     header('Content-Type: text/html; charset=utf-8');
