@@ -137,12 +137,12 @@ class Framework
 
         // Event
         $event = new Core\Event($this->registry);
-        $this->set('event', $event);
 
-        // Event Register
         foreach ($config->get('root.app_event') as $eventEmitter => $listenerRoute) {
             $event->addListener($eventEmitter, new Http\Dispatch($listenerRoute));
         }
+
+        $this->set('event', $event);
 
         // Loader
         $this->set('load', new Core\Loader($this->registry));
