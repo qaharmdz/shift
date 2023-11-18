@@ -68,7 +68,7 @@ class View
             $this->config['path_view'] . ($this->config['theme_active'] ? $this->config['theme_active'] . DS : ''),
             $this->config['path_view'] . ($this->config['theme_default'] ? $this->config['theme_default'] . DS : ''),
             $this->config['path_view'],
-            PATH_EXTENSIONS,
+            PATH_SHIFT,
         ]);
     }
 
@@ -143,7 +143,7 @@ class View
             }
             $extFile = implode('/', array_slice($parts, 3));
 
-            $template = strtr(':type/:codename/:app_folder/view/:file', [
+            $template = strtr('extensions/:type/:codename/:app_folder/view/:file', [
                 ':type'       => $extType,
                 ':codename'   => $extCodename,
                 ':app_folder' => APP_FOLDER,
