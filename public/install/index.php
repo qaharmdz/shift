@@ -24,19 +24,7 @@ if (
 define('HTTP_SHIFT', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 $rootConfig = [
-    'url_host'     => $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME'], 2), '/.\\') . '/',
-    'database'     => [
-        'config' => [
-            'host'     => 'localhost',
-            'username' => 'root',
-            'password' => '',
-            'database' => '',
-            'port'     => 3306,
-        ],
-        'table' => [
-            'prefix'   => 'sf_',
-        ],
-    ]
+    'url_host' => $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME'], 2), '/.\\') . '/',
 ];
 
 require_once PATH_SHIFT . 'system/startup.php';
