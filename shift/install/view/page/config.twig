@@ -1,0 +1,47 @@
+{% extends 'main.tpl.twig' %}
+{% import 'admin/view/_embed/macro/forms.tpl.twig' as forms %}
+
+{% block content %}
+<div class="content-header">
+    <h1 class="ukt-m-0">
+        Shift<span class="uk-sub-title">{{ app.language.get('configuration') }}</span>
+    </h1>
+</div>
+<div class="content-body uk-card-panel uk-card-body uk-form-horizontal">
+    {% if error %}
+        <div class="uk-alert uk-alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form id="form-post" class="uk-form-margin-hover" action="{{ app.router.url('page/config') }}" method="post" data-form-monitor>
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">{{ app.language.get('database_connection') }}</legend>
+
+            {{ forms.input({'label':'hostname', 'name':'host', 'value': setting.host, 'class':'uk-width-250@m', 'required':true}) }}
+            {{ forms.input({'label':'username', 'name':'username', 'value': setting.username, 'class':'uk-width-200@m', 'required':true}) }}
+            {{ forms.input({'type':'password', 'label':'password', 'name':'password', 'value': setting.password, 'class':'uk-width-200@m'}) }}
+            {{ forms.input({'type':'number', 'label':'port', 'name':'port', 'value': setting.port, 'class':'uk-width-100@m', 'required':true}) }}
+            {{ forms.input({'label':'database', 'name':'database', 'value': setting.database, 'class':'uk-width-250@m', 'required':true}) }}
+            {{ forms.input({'label':'db_prefix', 'name':'prefix', 'value':setting.prefix, 'class':'uk-width-100@m'}) }}
+        </fieldset>
+
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">{{ app.language.get('initial_setup') }}</legend>
+
+            {{ forms.input({'label':'sitename', 'name':'sitename', 'value': setting.sitename, 'class':'uk-width-300@m'}) }}
+            {{ forms.input({'type':'email', 'label':'email', 'name':'email', 'value': setting.email, 'class':'uk-width-300@m', 'required':true}) }}
+            {{ forms.input({'label':'username', 'name':'account_username', 'value': setting.account_username, 'class':'uk-width-200@m', 'required':true}) }}
+            {{ forms.input({'type':'password', 'label':'password', 'name':'account_password', 'value': setting.account_password, 'class':'uk-width-200@m', 'required':true}) }}
+
+        </fieldset>
+
+        <div class="uk-flex uk-flex-between ukt-mt-5">
+            <div>
+                <a href="{{ app.router.url('page/license') }}" class="uk-button uk-button-secondary">{{ app.language.get('back') }}</a>
+            </div>
+            <div>
+                <button type="submit" class="uk-button uk-button-primary">{{ app.language.get('submit') }}</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

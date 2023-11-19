@@ -23,14 +23,14 @@ $_['database'] = [
         'host'      => 'localhost',
         'username'  => 'root',
         'password'  => '',
-        'database'  => 'shift',
+        'database'  => '',
         'port'      => 3306,
         'socket'    => null,
         'charset'   => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_520_ci',
     ],
     'table' => [
-        'prefix'   => 'sf_',
+        'prefix' => 'sf_',
     ],
 ];
 

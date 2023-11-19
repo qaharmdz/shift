@@ -12,7 +12,8 @@ use Webmozart\Assert\Assert as WebmozartAssert;
  * Omit the `$value` from Webmozart Assert method, and move them no new method `check()`.
  * Example: `$this->assert->alnum()->lengthBetween(5, 20)->startsWithLetter()->check('foo123')`.
  *
- * TODO: list all of the assertion on the @link
+ * TODO: list all of the assertion on the link
+ *
  * @method $this notEmpty()  Check that a value is not empty()
  *
  * @method $this minLength(int $min)  Check that a string has at least a certain number of characters
