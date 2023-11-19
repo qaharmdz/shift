@@ -160,6 +160,14 @@ class Framework
         // Secure
         $this->set('secure', new Library\Secure());
 
+        // Assert Validation
+        $this->set('assert', new Library\Assert());
+
+        // User
+        if ($this->registry->has('db')) {
+            $this->set('user', new Library\User($this->registry));
+        }
+
         // Language
         $this->set('language', new Library\Language());
 
@@ -175,9 +183,6 @@ class Framework
         // Mail
         $this->set('mail', new Library\Mail());
 
-        // Assert Validation
-        $this->set('assert', new Library\Assert());
-
         // Image
         $this->set('image', new Library\Image([
             'quality'       => 100,
@@ -185,11 +190,6 @@ class Framework
             'path_cache'    => PATH_MEDIA . 'cache/',
             'url'           => $config->get('env.url_media'),
         ]));
-
-        // User
-        if ($this->registry->has('db')) {
-            $this->set('user', new Library\User($this->registry));
-        }
 
         return $this;
     }
