@@ -14,8 +14,6 @@ class License extends Mvc\Controller
 
         $data = [];
 
-
-
         $this->response->setOutput($this->load->view('page/license', $data));
     }
 }
