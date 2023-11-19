@@ -16,7 +16,7 @@ class Login extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('page_title'));
 
-        if ($this->request->is('POST') && $this->validate($this->request->getArray('post'))) {
+        if ($this->request->is('post') && $this->validate($this->request->getArray('post'))) {
             $route = $this->session->pull('flash.auth.after_login', $this->config->get('root.route_default'));
 
             $this->session->delete('flash.auth');
