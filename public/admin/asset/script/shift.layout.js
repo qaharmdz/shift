@@ -3,6 +3,9 @@
 
 'use strict';
 
+/**
+ * Depend on https://github.com/SortableJS/Sortable
+ */
 (function($) {
     $.fn.shift.layout = {};
 

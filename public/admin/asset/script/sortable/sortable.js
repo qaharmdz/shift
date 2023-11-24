@@ -1,7 +1,9 @@
 /**!
  * Sortable 1.15.0
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
+ *
+ * @link    https://github.com/SortableJS/Sortable
+ * @author  RubaXa   <trash@rubaxa.org>
+ * @author  owenm    <owen23355@gmail.com>
  * @license MIT
  */
 (function (global, factory) {
