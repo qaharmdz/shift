@@ -1,0 +1,23 @@
+{% extends 'main.tpl.twig' %}
+{% import 'admin/view/_embed/macro/forms.tpl.twig' as forms %}
+
+{% block content %}
+<div class="content-header">
+    <h1 class="ukt-m-0">
+        Shift<span class="uk-sub-title">{{ app.language.get('manual_configuration') }}</span>
+    </h1>
+</div>
+<div class="content-body uk-card-panel uk-card-body uk-form-horizontal">
+    <p>{{ app.language.get('write_config_unable')|raw }}</p>
+    <p>{{ app.language.get('write_config_create')|format(config_filepath)|raw }}</p>
+    <pre><code>{{ config_content }}</code></pre>
+    <p>{{ app.language.get('write_config_ready') }}</p>
+
+    <div class="uk-flex uk-flex-between ukt-mt-5">
+        <div></div>
+        <div>
+            <a href="{{ app.router.url('page/install') }}" class="uk-button uk-button-primary">{{ app.language.get('run_installation') }}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

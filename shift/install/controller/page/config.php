@@ -8,6 +8,8 @@ use Shift\System\Mvc;
 
 class Config extends Mvc\Controller
 {
+    private $configFilepath = PATH_SHIFT . '_config.php';
+
     public function index()
     {
         $this->document->setTitle($this->language->get('configuration'));
@@ -20,10 +22,9 @@ class Config extends Mvc\Controller
             $this->config->getArray('root.database.config'),
             $this->config->getArray('root.database.table'),
             [
-                'sitename'         => 'Shift',
-                'email'            => '',
-                'account_username' => 'admin',
-                'account_password' => '',
+                'sitename'      => 'Shift',
+                'email'         => '',
+                'user_password' => '',
             ],
             $post,
         );
@@ -35,8 +36,7 @@ class Config extends Mvc\Controller
                 || !$this->assert->digits()->check($post['port'])
                 || !$this->assert->notEmpty()->check($post['database'])
                 || !$this->assert->email()->check($post['email'])
-                || !$this->assert->minLength(3)->check($post['account_username'])
-                || !$this->assert->minLength(3)->check($post['account_password'])
+                || !$this->assert->minLength(3)->check($post['user_password'])
             ) {
                 $data['error'] = $this->language->get('error_form');
             }
@@ -51,15 +51,16 @@ class Config extends Mvc\Controller
                         (int)$post['port'],
                     );
 
-                    $configFile = PATH_SHIFT . '_config.php';
                     if (is_writable(PATH_SHIFT)) {
                         $configdata = $this->getConfigData($post);
+                        $this->session->set('install.config', $post);
 
-                        if (file_put_contents($configFile, '<?php') !== false) {
-                            file_put_contents($configFile, $configdata);
+                        if (file_put_contents($this->configFilepath, '<?php') !== false) {
+                            file_put_contents($this->configFilepath, $configdata);
+                            $this->response->redirect($this->router->url('page/install'));
                         } else {
-                            $this->session->set('flash.config.content', $configdata);
-                            // $this->session->pull('flash.auth.after_login', $this->config->get('root.route_default'));
+                            $this->session->set('install.config_content', $configdata);
+                            $this->response->redirect($this->router->url('page/config/manual'));
                         }
                     }
                 } catch (\Throwable $t) {
@@ -69,6 +70,21 @@ class Config extends Mvc\Controller
         }
 
         $this->response->setOutput($this->load->view('page/config', $data));
+    }
+
+    public function manual()
+    {
+        if (!$this->session->has('install.config_content')) {
+            $this->response->redirect($this->router->url('page/config'));
+        }
+
+        $this->document->setTitle($this->language->get('configuration'));
+
+        $data = [];
+        $data['config_filepath'] = $this->configFilepath;
+        $data['config_content']  = $this->session->get('install.config_content');
+
+        $this->response->setOutput($this->load->view('page/config_manual', $data));
     }
 
     private function getConfigData(array $data)
@@ -88,7 +104,7 @@ class Config extends Mvc\Controller
         $config .= '            \'port\'     => ' . $data['port'] . ',' . "\n";
         $config .= '        ],' . "\n";
         $config .= '        \'table\' => [' . "\n";
-        $config .= '            \'prefix\' => \'sf_\',' . "\n";
+        $config .= '            \'prefix\' => \'' . $data['prefix'] . '\',' . "\n";
         $config .= '        ],' . "\n";
         $config .= '    ]' . "\n";
         $config .= '];' . "\n";
