@@ -14,10 +14,10 @@
     "require": {
         "php": "^8.2",
         "ext-json": "*",
-        "twig/twig": "^3.4",
+        "twig/twig": "^3.7",
         "adbario/php-dot-notation": "^3.3",
         "phpfastcache/phpfastcache": "^9.1",
-        "phpmailer/phpmailer": "^6.6",
+        "phpmailer/phpmailer": "^6.8",
         "webmozart/assert": "^1.11",
         "claviska/simpleimage": "^4.0"
     },
