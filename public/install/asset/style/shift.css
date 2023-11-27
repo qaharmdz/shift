@@ -12,7 +12,11 @@ body {
     min-height: 100vh;
 }
 
-.page-header {}
+.uk-container-small {
+    max-width: 840px;
+}
+
+/* .page-header {} */
 .logo {
     color: #333;
     font-size: 28px;
@@ -35,7 +39,7 @@ body {
     margin-bottom: 20px;
 }
 
-.content-body {}
+/* .content-body {} */
 
 .sfr-page-license .uk-panel-scrollable {
     border: 0;
