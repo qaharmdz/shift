@@ -23,6 +23,10 @@ class Router
             }
         }
 
+        if (!$route) {
+            return URL_APP . ($args ? '&' . trim($args, '&') : '');
+        }
+
         return URL_APP . 'r/' . $route . ($args ? '&' . trim($args, '&') : '');
     }
 }
