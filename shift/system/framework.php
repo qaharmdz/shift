@@ -71,11 +71,11 @@ class Framework
             $db = new Core\Database(...$config->get('root.database.config'));
             $db->raw('
                 SET time_zone="+00:00",
-                    session group_concat_max_len = 102400,
-                    SESSION sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+                    session group_concat_max_len = ' . $config->getInt('root.database.group_concat_max_len') . ',
+                    SESSION sql_mode="' . implode(',', $config->getArray('root.database.modes')) . '";
             ');
             $this->set('db', $db);
-            define('DB_PREFIX', $config->get('root.database.table.prefix', 'sf_'));
+            define('DB_PREFIX', $config->get('root.database.prefix', 'sf_'));
         }
 
         //=== Session

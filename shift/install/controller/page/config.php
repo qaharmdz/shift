@@ -20,8 +20,8 @@ class Config extends Mvc\Controller
         $data['error'] = '';
         $data['setting'] = array_replace_recursive(
             $this->config->getArray('root.database.config'),
-            $this->config->getArray('root.database.table'),
             [
+                'prefix'        => $this->config->get('root.database.prefix'),
                 'sitename'      => 'Shift',
                 'email'         => '',
                 'user_password' => '',
@@ -103,9 +103,7 @@ class Config extends Mvc\Controller
         $config .= '            \'database\' => \'' . $data['database'] . '\',' . "\n";
         $config .= '            \'port\'     => ' . $data['port'] . ',' . "\n";
         $config .= '        ],' . "\n";
-        $config .= '        \'table\' => [' . "\n";
-        $config .= '            \'prefix\' => \'' . $data['prefix'] . '\',' . "\n";
-        $config .= '        ],' . "\n";
+        $config .= '        \'prefix\' => \'' . $data['prefix'] . '\',' . "\n";
         $config .= '    ]' . "\n";
         $config .= '];' . "\n";
         $config .= '';

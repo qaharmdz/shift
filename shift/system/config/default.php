@@ -29,8 +29,14 @@ $_['database'] = [
         'charset'   => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_520_ci',
     ],
-    'table' => [
-        'prefix' => 'sf_',
+    'prefix' => 'sf_',
+    'group_concat_max_len' => 1024 * 5,
+    'modes' => [
+        'STRICT_TRANS_TABLES',
+        'NO_ZERO_IN_DATE',
+        'NO_ZERO_DATE',
+        'ERROR_FOR_DIVISION_BY_ZERO',
+        'NO_ENGINE_SUBSTITUTION',
     ],
 ];
 
