@@ -10,7 +10,7 @@ $_['agree_continue']       = 'Agree and Continue';
 $_['submit']               = 'Submit';
 
 $_['license_agreement']    = 'License Agreement';
-$_['read_agreement']       = 'Please read the following license agreement               : ';
+$_['read_agreement']       = 'Please read the following license agreement: ';
 $_['detail_agreement']     = 'The details of the GNU General Public License v3 agreement: ';
 
 $_['configuration']        = 'Configuration';
@@ -31,7 +31,9 @@ $_['write_config_create']  = 'You can create the <code>%s</code> file manually a
 $_['write_config_ready']   = 'After you\'ve done that, click "Run the Installation".';
 $_['run_installation']     = 'Run the Installation';
 
-$_['copyright']            = '<a href="https: //github.com/qaharmdz/shift" target="_blank" rel = "noopener noreferrer">Shift CMS</a> &copy; ' . date('Y') . ' All Rights Reserved.';
+$_['installation']         = 'Installation';
+
+$_['copyright']            = '<a href="https: //github.com/qaharmdz/shift" target="_blank" rel="noopener noreferrer">Shift CMS</a> &copy; ' . date('Y') . ' All Rights Reserved.';
 $_['version']              = 'Version %s';
 
 $_['error_form']           = 'Please check the required inputs.';

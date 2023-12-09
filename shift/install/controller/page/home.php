@@ -19,7 +19,7 @@ class Home extends Mvc\Controller
         ];
         $data['mysql'] = [
             'version' => $vMySQL = $this->getMySQLVersion(),
-            'valid' => version_compare($vMySQL, '5.7.8', '>='),
+            'valid' => version_compare($vMySQL, '8.0.20', '>='),
         ];
         $data['php_exts'] = [
             'MySQLi'   => extension_loaded('mysqli'),
