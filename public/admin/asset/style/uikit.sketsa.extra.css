@@ -225,7 +225,7 @@ html,
 
 /* Table
 ==================================== */
-.uk-table-striped tbody tr:nth-of-type(odd),
+/*.uk-table-striped tbody tr:nth-of-type(odd),
 .uk-table-striped>tr:nth-of-type(odd) {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
@@ -235,7 +235,7 @@ td.uk-text-break,
 th.uk-text-break {
     word-break: break-word;
 }
-
+*/
 /* Button
 ==================================== */
 .uk-button:not(.uk-button-large):not(.uk-button-small):not(.uk-button-mini) {
@@ -302,6 +302,7 @@ th.uk-text-break {
 
 /* Dropdown
 ==================================== */
+/*
 .uk-dropdown {
     padding: 5px;
     text-align: start;
@@ -328,6 +329,7 @@ th.uk-text-break {
     padding: 3.5px 8px 4.5px!important;
     text-transform: none;
 }
+*/
 
 /* Modal
 ==================================== */

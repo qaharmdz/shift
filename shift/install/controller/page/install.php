@@ -19,21 +19,36 @@ class Install extends Mvc\Controller
 
         $this->document->setTitle($this->language->get('installation'));
 
+        $config = $this->session->get('install.config');
+
         try {
             $this->dbConnect();
             $this->dbInstall();
         } catch (\Exception $e) {
-            d($e);
+            exit($e->getMessage());
         }
 
-        $data = [];
-
-        // d($data);
         // d($this->router->url(''));
         d($this->config->all());
         d($this->session->all());
 
-        $this->response->setOutput($this->load->view('page/install', $data));
+        // $results = $this->db->get("
+        //     SELECT * FROM `" . $config['prefix'] . "setting`
+        //     WHERE site_id = 0 AND `group` = 'setting AND `group` = 'setting'
+        // ");
+        // d($results);
+
+        $this->db->set(
+            $config['prefix'] . 'site',
+            [
+                'name'     => $config['name'],
+                'url_host' => $config['url_host'],
+            ],
+            ['site_id' => 1]
+        );
+
+
+        // $this->response->redirect($this->router->url('page/complete'));
     }
 
     private function dbConnect()
@@ -57,8 +72,11 @@ class Install extends Mvc\Controller
         ');
 
         $this->db = $db;
+
+        // $this->session->delete('install');
     }
 
+    // TODO: Update the schema.sql with actual initial installation
     private function dbInstall()
     {
         $sql = '';

@@ -50,6 +50,7 @@ body {
     color: var(--uk-gray-light);
     padding: 0;
     background: #3d3f42;
+    background: #2a2b2c;
 }
 .block-navbar .uk-navbar-item,
 .block-navbar .uk-navbar-nav>li>a,
@@ -73,6 +74,7 @@ body {
     padding: 0 11px !important;
     color: rgba(255, 255, 255, .85);
     background: #555;
+    background: #107fef;
     border-radius: 0 !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 }
@@ -82,6 +84,7 @@ body {
 }
 .navbar-main-menu[aria-expanded="true"]{
     background: #1e87f0;
+    background: #1168bf;
 }
 
 .block-navbar .logo {
@@ -168,6 +171,7 @@ body {
 }
 .main-navigation .panel-left {
     background: #3d3f42;
+    background: #2a2b2c;
     padding-left: 2px;
     padding-right: 2px;
 }

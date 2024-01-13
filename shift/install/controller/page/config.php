@@ -8,7 +8,7 @@ use Shift\System\Mvc;
 
 class Config extends Mvc\Controller
 {
-    private $configFilepath = PATH_SHIFT . '_config.php';
+    private $configFilepath = PATH_SHIFT . 'config_test.php';
 
     public function index()
     {
@@ -52,8 +52,10 @@ class Config extends Mvc\Controller
                     );
 
                     if (is_writable(PATH_SHIFT)) {
-                        $configdata = $this->getConfigData($post);
+                        $post['url_host'] = $this->config->get('root.url_host');
+
                         $this->session->set('install.config', $post);
+                        $configdata = $this->getConfigData($post);
 
                         if (file_put_contents($this->configFilepath, '<?php') !== false) {
                             file_put_contents($this->configFilepath, $configdata);
@@ -94,7 +96,7 @@ class Config extends Mvc\Controller
         $config .= 'declare(strict_types=1);' . "\n";
         $config .= "\n";
         $config .= 'return [' . "\n";
-        $config .= '    \'url_host\' => \'' . str_replace($_SERVER['PROTOCOL'], '', $this->config->get('root.url_host')) . '\',' . "\n";
+        $config .= '    \'url_host\' => \'' . str_replace($_SERVER['PROTOCOL'], '', $data['url_host']) . '\',' . "\n";
         $config .= '    \'database\' => [' . "\n";
         $config .= '        \'config\' => [' . "\n";
         $config .= '            \'host\'     => \'' . $data['host'] . '\',' . "\n";
