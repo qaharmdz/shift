@@ -78,8 +78,9 @@ body {
     border-radius: 0 !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 }
-.navbar-main-menu .bi {
+.navbar-main-menu.uk-button .bi {
     font-size: 24px;
+    line-height: 1.1em;
     color: #fbfbfb;
 }
 .navbar-main-menu[aria-expanded="true"]{
@@ -88,6 +89,8 @@ body {
 }
 
 .block-navbar .logo {
+    opacity: 0;
+    display: none;
     color: #f3f4f5;
     font-size: 28px;
     font-size: 26px;
