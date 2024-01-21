@@ -1,22 +1,5 @@
--- --------------------------------------------------------
--- Host:                         localhost
--- Server version:               8.0.30 - MySQL Community Server - GPL
--- Server OS:                    Win64
--- HeidiSQL Version:             12.6.0.6765
--- --------------------------------------------------------
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
--- Dumping structure for table shift.sf_event
 DROP TABLE IF EXISTS `{DB_PREFIX}event`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}event` (
+CREATE TABLE `{DB_PREFIX}event` (
   `event_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `codename` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -27,14 +10,12 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}event` (
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_event: ~2 rows (approximately)
 INSERT INTO `{DB_PREFIX}event` (`event_id`, `codename`, `description`, `emitter`, `listener`, `priority`, `status`) VALUES
     (1, 'codex', '', 'admin/page/dashboard::before', 'extension/module/method', 0, 0),
     (2, 'codex', '', 'admin/page/dashboard::after', 'extension/module/myMethod', 2, 0);
 
--- Dumping structure for table shift.sf_extension
 DROP TABLE IF EXISTS `{DB_PREFIX}extension`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension` (
+CREATE TABLE `{DB_PREFIX}extension` (
   `extension_id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'plugin_id, theme_id, language_id',
   `codename` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -52,17 +33,15 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension` (
   UNIQUE KEY `codename_type` (`codename`,`type`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_extension: ~5 rows (approximately)
 INSERT INTO `{DB_PREFIX}extension` (`extension_id`, `codename`, `type`, `name`, `version`, `description`, `author`, `url`, `setting`, `status`, `install`, `created`, `updated`) VALUES
-    (32, 'base', 'theme', 'Theme Base', '1.0.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ', 'Shift CMS', 'https://example.com', '[]', 1, 1, '2023-06-03 08:03:33', '2023-08-13 00:06:30'),
-    (33, 'architect', 'plugin', 'Architect', '1.1.0', '', 'Shift CMS', 'https://github.com/qaharmdz/shift', '[]', 1, 1, '2023-06-03 08:03:33', '2023-08-18 14:03:57'),
-    (35, 'en', 'language', 'English', '1.0.0', '', 'Shift CMS', 'https://github.com/qaharmdz/shift', '{"locale":"en-US,en_US.UTF-8,en_US,en-gb,english","flag":"en.png"}', 1, 1, '2023-08-18 23:20:18', '2023-08-18 23:20:18'),
-    (36, 'id', 'language', 'Indonesia', '1.0.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quos a, quia rerum voluptates atque nulla nam accusantium nobis debitis. Voluptatibus natus et. Temporibus veniam, ea aspernatur iste enim, aperiam.\r\n', 'Shift CMS', 'https://github.com/qaharmdz/shift', '{"locale":"ID, en-ID,en_ID.UTF-8,indonesia","flag":"id.png"}', 1, 1, '2023-06-03 08:03:33', '2023-08-18 07:45:41'),
-    (37, 'codex', 'module', 'Codex - HTML, Twig and Script', '1.0.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quos a, quia rerum voluptates atque nulla nam accusantium nobis debitis. ', 'Shift CMS', 'https://github.com/qaharmdz/shift', '[]', 1, 1, '2023-06-03 08:03:33', '2023-06-11 17:00:57');
+    (32, 'base', 'theme', 'Theme Base', '1.0.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ', 'Shift CMS', 'https://example.com', '[]', 1, 1, NOW(), NOW()),
+    (33, 'architect', 'plugin', 'Architect', '1.1.0', '', 'Shift CMS', 'https://github.com/qaharmdz/shift', '[]', 1, 1, NOW(), NOW()),
+    (35, 'en', 'language', 'English', '1.0.0', '', 'Shift CMS', 'https://github.com/qaharmdz/shift', '{"locale":"en-US,en_US.UTF-8,en_US,en-gb,english","flag":"en.png"}', 1, 1, NOW(), NOW()),
+    (36, 'id', 'language', 'Indonesia', '1.0.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quos a, quia rerum voluptates atque nulla nam accusantium nobis debitis. Voluptatibus natus et. Temporibus veniam, ea aspernatur iste enim, aperiam.\r\n', 'Shift CMS', 'https://github.com/qaharmdz/shift', '{"locale":"ID, en-ID,en_ID.UTF-8,indonesia","flag":"id.png"}', 1, 1, NOW(), NOW()),
+    (37, 'codex', 'module', 'Codex - HTML, Twig and Script', '1.0.0', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quos a, quia rerum voluptates atque nulla nam accusantium nobis debitis. ', 'Shift CMS', 'https://github.com/qaharmdz/shift', '[]', 1, 1, NOW(), NOW());
 
--- Dumping structure for table shift.sf_extension_meta
 DROP TABLE IF EXISTS `{DB_PREFIX}extension_meta`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_meta` (
+CREATE TABLE `{DB_PREFIX}extension_meta` (
   `extension_meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `extension_id` bigint unsigned NOT NULL DEFAULT '0',
   `extension_module_id` bigint unsigned NOT NULL DEFAULT '0',
@@ -73,11 +52,8 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_meta` (
   KEY `extension` (`extension_id`,`extension_module_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_extension_meta: ~0 rows (approximately)
-
--- Dumping structure for table shift.sf_extension_module
 DROP TABLE IF EXISTS `{DB_PREFIX}extension_module`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_module` (
+CREATE TABLE `{DB_PREFIX}extension_module` (
   `extension_module_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `extension_id` bigint unsigned NOT NULL DEFAULT '0',
   `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -93,15 +69,13 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}extension_module` (
   KEY `extension_id` (`extension_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_extension_module: ~3 rows (approximately)
 INSERT INTO `{DB_PREFIX}extension_module` (`extension_module_id`, `extension_id`, `type`, `name`, `setting`, `visibility`, `status`, `created`, `updated`, `publish`, `unpublish`) VALUES
-    (1, 37, 'code', 'Test', '{"editor":"{# {{ app.document.addStyle(app.config.get(&#039;env.url_site&#039;) ~ &#039;codex_id_1.css&#039;) }} #}\\r\\n\\r\\n{% set setting = {\\r\\n    &#039;name&#039;  : codex.getUser(&#039;fullname&#039;),\\r\\n    &#039;link&#039; : {\\r\\n        &#039;url&#039;  : app.router.url(&#039;common\\/home&#039;),\\r\\n        &#039;text&#039; : app.language.get(&#039;home&#039;),\\r\\n    },\\r\\n} \\r\\n%}\\r\\n\\r\\nHello {{ setting.name }},\\r\\n&lt;a href=&quot;{{ setting.link.url }}&quot;&gt;{{ setting.link.text }}&lt;\\/a&gt;","description":"desc","visibility":"public","visibility_usergroups":[]}', 'public', 1, '2023-06-10 09:51:33', '2023-11-17 22:57:22', NULL, NULL),
-    (2, 37, 'code', 'Slideshow', '{"editor":"&lt;div class=&quot;uk-position-relative uk-visible-toggle uk-light&quot; \\r\\n     tabindex=&quot;-1&quot; \\r\\n     uk-slideshow=&#039;{&quot;autoplay&quot;:true, &quot;max-height&quot;:500, &quot;animation&quot;: &quot;push&quot;}&#039;\\r\\n&gt;\\r\\n  &lt;ul class=&quot;uk-slideshow-items&quot;&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/minimalist-dark-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;x: 100,-100&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;x: 200,-200&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;scale: 1.2,1.2,1&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/art-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;opacity: 0,0,0.2; backgroundColor: #000,#000&quot;&gt;&lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-medium uk-text-center&quot;&gt;\\r\\n        &lt;div uk-slideshow-parallax=&quot;scale: 1,1,0.8&quot;&gt;\\r\\n          &lt;h2 uk-slideshow-parallax=&quot;x: 200,0,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n          &lt;p uk-slideshow-parallax=&quot;x: 400,0,0;&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n        &lt;\\/div&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-top&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/wood-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;y: -50,0,0; opacity: 1,1,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;y: 50,0,0; opacity: 1,1,0&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n  &lt;\\/ul&gt;\\r\\n\\r\\n  &lt;a class=&quot;uk-position-center-left uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-previous uk-slideshow-item=&quot;previous&quot;&gt;&lt;\\/a&gt;\\r\\n  &lt;a class=&quot;uk-position-center-right uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-next uk-slideshow-item=&quot;next&quot;&gt;&lt;\\/a&gt;\\r\\n&lt;\\/div&gt;","description":"test","visibility":"usergroup","visibility_usergroups":["2","1"]}', 'public', 1, '2023-06-10 09:18:01', '2023-06-11 15:27:20', NULL, NULL),
-    (3, 37, 'wysiwyg', 'Slideshow wysiwyg', '{"editor":"&lt;div class=&quot;uk-position-relative uk-visible-toggle uk-light&quot; \\r\\n     tabindex=&quot;-1&quot; \\r\\n     uk-slideshow=&#039;{&quot;autoplay&quot;:true, &quot;max-height&quot;:500, &quot;animation&quot;: &quot;push&quot;}&#039;\\r\\n&gt;\\r\\n  &lt;ul class=&quot;uk-slideshow-items&quot;&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/minimalist-dark-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;x: 100,-100&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;x: 200,-200&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;scale: 1.2,1.2,1&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/art-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;opacity: 0,0,0.2; backgroundColor: #000,#000&quot;&gt;&lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-medium uk-text-center&quot;&gt;\\r\\n        &lt;div uk-slideshow-parallax=&quot;scale: 1,1,0.8&quot;&gt;\\r\\n          &lt;h2 uk-slideshow-parallax=&quot;x: 200,0,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n          &lt;p uk-slideshow-parallax=&quot;x: 400,0,0;&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n        &lt;\\/div&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-top&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/wood-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;y: -50,0,0; opacity: 1,1,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;y: 50,0,0; opacity: 1,1,0&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n  &lt;\\/ul&gt;\\r\\n\\r\\n  &lt;a class=&quot;uk-position-center-left uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-previous uk-slideshow-item=&quot;previous&quot;&gt;&lt;\\/a&gt;\\r\\n  &lt;a class=&quot;uk-position-center-right uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-next uk-slideshow-item=&quot;next&quot;&gt;&lt;\\/a&gt;\\r\\n&lt;\\/div&gt;","description":"test","visibility":"usergroup","visibility_usergroups":["2","1"]}', 'public', 1, '2023-06-10 09:18:01', '2023-07-16 07:25:59', NULL, NULL);
+    (1, 37, 'code', 'Test', '{"editor":"{# {{ app.document.addStyle(app.config.get(&#039;env.url_site&#039;) ~ &#039;codex_id_1.css&#039;) }} #}\\r\\n\\r\\n{% set setting = {\\r\\n    &#039;name&#039;  : codex.getUser(&#039;fullname&#039;),\\r\\n    &#039;link&#039; : {\\r\\n        &#039;url&#039;  : app.router.url(&#039;common\\/home&#039;),\\r\\n        &#039;text&#039; : app.language.get(&#039;home&#039;),\\r\\n    },\\r\\n} \\r\\n%}\\r\\n\\r\\nHello {{ setting.name }},\\r\\n&lt;a href=&quot;{{ setting.link.url }}&quot;&gt;{{ setting.link.text }}&lt;\\/a&gt;","description":"desc","visibility":"public","visibility_usergroups":[]}', 'public', 1, NOW(), NOW(), NULL, NULL),
+    (2, 37, 'code', 'Slideshow', '{"editor":"&lt;div class=&quot;uk-position-relative uk-visible-toggle uk-light&quot; \\r\\n     tabindex=&quot;-1&quot; \\r\\n     uk-slideshow=&#039;{&quot;autoplay&quot;:true, &quot;max-height&quot;:500, &quot;animation&quot;: &quot;push&quot;}&#039;\\r\\n&gt;\\r\\n  &lt;ul class=&quot;uk-slideshow-items&quot;&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/minimalist-dark-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;x: 100,-100&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;x: 200,-200&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;scale: 1.2,1.2,1&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/art-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;opacity: 0,0,0.2; backgroundColor: #000,#000&quot;&gt;&lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-medium uk-text-center&quot;&gt;\\r\\n        &lt;div uk-slideshow-parallax=&quot;scale: 1,1,0.8&quot;&gt;\\r\\n          &lt;h2 uk-slideshow-parallax=&quot;x: 200,0,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n          &lt;p uk-slideshow-parallax=&quot;x: 400,0,0;&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n        &lt;\\/div&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-top&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/wood-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;y: -50,0,0; opacity: 1,1,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;y: 50,0,0; opacity: 1,1,0&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n  &lt;\\/ul&gt;\\r\\n\\r\\n  &lt;a class=&quot;uk-position-center-left uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-previous uk-slideshow-item=&quot;previous&quot;&gt;&lt;\\/a&gt;\\r\\n  &lt;a class=&quot;uk-position-center-right uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-next uk-slideshow-item=&quot;next&quot;&gt;&lt;\\/a&gt;\\r\\n&lt;\\/div&gt;","description":"test","visibility":"usergroup","visibility_usergroups":["2","1"]}', 'public', 1, NOW(), NOW(), NULL, NULL),
+    (3, 37, 'wysiwyg', 'Slideshow wysiwyg', '{"editor":"&lt;div class=&quot;uk-position-relative uk-visible-toggle uk-light&quot; \\r\\n     tabindex=&quot;-1&quot; \\r\\n     uk-slideshow=&#039;{&quot;autoplay&quot;:true, &quot;max-height&quot;:500, &quot;animation&quot;: &quot;push&quot;}&#039;\\r\\n&gt;\\r\\n  &lt;ul class=&quot;uk-slideshow-items&quot;&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/minimalist-dark-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;x: 100,-100&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;x: 200,-200&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;scale: 1.2,1.2,1&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/art-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-cover&quot; uk-slideshow-parallax=&quot;opacity: 0,0,0.2; backgroundColor: #000,#000&quot;&gt;&lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-medium uk-text-center&quot;&gt;\\r\\n        &lt;div uk-slideshow-parallax=&quot;scale: 1,1,0.8&quot;&gt;\\r\\n          &lt;h2 uk-slideshow-parallax=&quot;x: 200,0,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n          &lt;p uk-slideshow-parallax=&quot;x: 400,0,0;&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n        &lt;\\/div&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n    &lt;li&gt;\\r\\n      &lt;div class=&quot;uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-top&quot;&gt;\\r\\n        &lt;img src=&quot;media\\/image\\/demo\\/wood-table.jpg&quot; alt=&quot;&quot; uk-cover&gt;\\r\\n      &lt;\\/div&gt;\\r\\n      &lt;div class=&quot;uk-position-center uk-position-small uk-text-center&quot;&gt;\\r\\n        &lt;h2 uk-slideshow-parallax=&quot;y: -50,0,0; opacity: 1,1,0&quot;&gt;Heading&lt;\\/h2&gt;\\r\\n        &lt;p uk-slideshow-parallax=&quot;y: 50,0,0; opacity: 1,1,0&quot;&gt;Lorem ipsum dolor sit amet.&lt;\\/p&gt;\\r\\n      &lt;\\/div&gt;\\r\\n    &lt;\\/li&gt;\\r\\n  &lt;\\/ul&gt;\\r\\n\\r\\n  &lt;a class=&quot;uk-position-center-left uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-previous uk-slideshow-item=&quot;previous&quot;&gt;&lt;\\/a&gt;\\r\\n  &lt;a class=&quot;uk-position-center-right uk-position-small uk-hidden-hover&quot; href=&quot;#&quot; uk-slidenav-next uk-slideshow-item=&quot;next&quot;&gt;&lt;\\/a&gt;\\r\\n&lt;\\/div&gt;","description":"test","visibility":"usergroup","visibility_usergroups":["2","1"]}', 'public', 1, NOW(), NOW(), NULL, NULL);
 
--- Dumping structure for table shift.sf_layout
 DROP TABLE IF EXISTS `{DB_PREFIX}layout`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout` (
+CREATE TABLE `{DB_PREFIX}layout` (
   `layout_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `placements` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -110,7 +84,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout` (
   PRIMARY KEY (`layout_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_layout: ~7 rows (approximately)
 INSERT INTO `{DB_PREFIX}layout` (`layout_id`, `name`, `placements`, `custom_code`, `status`) VALUES
     (1, 'Default', '{"alpha":[],"topbar":[],"top":[],"sidebar_left":{"setting":{"node_child":"module"}},"content_top":[],"content_left":{"setting":{"node_child":"module"}},"content_right":{"setting":{"node_child":"module"}},"content_bottom":[],"sidebar_right":{"setting":{"node_child":"module"}},"bottom":[],"bottombar":[],"footer":[],"omega":[]}', '', 1),
     (2, 'Home', '{"alpha":[],"topbar":[],"top":{"setting":{"node_child":"row"},"rows":{"1":{"setting":{"container":"0"},"columns":{"col-hrpm7sa7svgd":{"setting":{"width":"uk-width-1-2"},"modules":{"mod-6rs64urr0hsn":{"module_id":2,"codename":"codex","name":"Slideshow"}}}}}}},"sidebar_left":{"setting":{"node_child":"module"}},"content_top":{"setting":{"node_child":"row"},"rows":{"row-nhnbo13qlmoq":{"setting":[],"columns":{"col-e1fsqh8gr88h":{"setting":{"width":"uk-width-1-2"},"modules":{"mod-gqtlj81jjaf3":{"module_id":1,"codename":"codex","name":"Test"}}}}}}},"content_left":{"setting":{"node_child":"module"}},"content_right":{"setting":{"node_child":"module"}},"content_bottom":[],"sidebar_right":{"setting":{"node_child":"module"}},"bottom":[],"bottombar":[],"footer":[],"omega":[]}', '&lt;style&gt;\r\n  .element {\r\n    background: #d00;\r\n  }\r\n&lt;/style&gt;\r\n&lt;script&gt;console.log(&#039;cool&#039;)&lt;/script&gt;', 1),
@@ -120,9 +93,8 @@ INSERT INTO `{DB_PREFIX}layout` (`layout_id`, `name`, `placements`, `custom_code
     (11, 'Information', '{"alpha":[],"topbar":[],"top":[],"sidebar_left":{"setting":{"node_child":"module"}},"content_top":[],"content_left":{"setting":{"node_child":"module"}},"content_right":{"setting":{"node_child":"module"}},"content_bottom":[],"sidebar_right":{"setting":{"node_child":"module"}},"bottom":[],"bottombar":[],"footer":[],"omega":[]}', '', 1),
     (12, 'Info About', '', '', 0);
 
--- Dumping structure for table shift.sf_layout_module
 DROP TABLE IF EXISTS `{DB_PREFIX}layout_module`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_module` (
+CREATE TABLE `{DB_PREFIX}layout_module` (
   `layout_module_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `layout_id` bigint unsigned NOT NULL DEFAULT '0',
   `extension_module_id` bigint unsigned NOT NULL DEFAULT '0',
@@ -131,14 +103,12 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_module` (
   PRIMARY KEY (`layout_module_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='TODO: remove';
 
--- Dumping data for table shift.sf_layout_module: ~2 rows (approximately)
 INSERT INTO `{DB_PREFIX}layout_module` (`layout_module_id`, `layout_id`, `extension_module_id`, `position`, `sort_order`) VALUES
     (66, 2, 1, 'content_top', 1),
     (67, 2, 2, 'top', 1);
 
--- Dumping structure for table shift.sf_layout_route
 DROP TABLE IF EXISTS `{DB_PREFIX}layout_route`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_route` (
+CREATE TABLE `{DB_PREFIX}layout_route` (
   `layout_route_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `layout_id` bigint unsigned NOT NULL DEFAULT '0',
   `site_id` bigint unsigned NOT NULL DEFAULT '0',
@@ -149,7 +119,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}layout_route` (
   PRIMARY KEY (`layout_route_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=545 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_layout_route: ~20 rows (approximately)
 INSERT INTO `{DB_PREFIX}layout_route` (`layout_route_id`, `layout_id`, `site_id`, `route`, `url_params`, `exclude`, `priority`) VALUES
     (32, 9, 0, 'information/sitemap', '', 0, 0),
     (59, 9, 1, 'information/sitemap', '', 0, 0),
@@ -172,9 +141,8 @@ INSERT INTO `{DB_PREFIX}layout_route` (`layout_route_id`, `layout_id`, `site_id`
     (543, 6, 0, 'account/edit', 'user_id=1', 1, 1),
     (544, 6, 0, 'account/*', '', 0, 0);
 
--- Dumping structure for table shift.sf_post
 DROP TABLE IF EXISTS `{DB_PREFIX}post`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post` (
+CREATE TABLE `{DB_PREFIX}post` (
   `post_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` bigint unsigned NOT NULL DEFAULT '0',
   `taxonomy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'post',
@@ -191,22 +159,20 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post` (
   KEY `taxonomy_status_publish` (`taxonomy`,`status`,`publish`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_post: ~10 rows (approximately)
 INSERT INTO `{DB_PREFIX}post` (`post_id`, `parent_id`, `taxonomy`, `user_id`, `term_id`, `visibility`, `sort_order`, `status`, `created`, `updated`, `publish`, `unpublish`) VALUES
-    (1, 0, 'content_post', 1, 17, 'usergroup', 0, 'publish', '2023-01-11 16:27:20', '2023-09-09 07:37:53', NULL, NULL),
-    (2, 0, 'content_post', 1, 17, 'public', 0, 'publish', '2023-09-09 20:52:19', '2023-11-02 17:29:46', '2023-09-23 00:05:00', '2024-09-12 10:00:00'),
-    (3, 0, 'content_post', 1, 18, 'public', 0, 'publish', '2023-09-09 20:53:14', '2023-10-29 16:30:35', NULL, NULL),
-    (4, 0, 'content_post', 1, 17, 'public', 0, 'publish', '2023-09-09 23:50:17', '2023-09-10 09:09:52', NULL, NULL),
-    (5, 0, 'content_post', 1, 1, 'public', 0, 'publish', '2023-09-10 10:24:54', '2023-10-29 16:31:18', NULL, NULL),
-    (6, 0, 'content_post', 1, 18, 'public', 0, 'publish', '2023-09-10 10:32:25', '2023-10-29 16:31:02', '2023-10-13 12:00:00', NULL),
-    (7, 0, 'content_post', 1, 1, 'public', 0, 'publish', '2023-09-10 10:35:30', '2023-10-29 13:09:17', NULL, NULL),
-    (8, 0, 'content_post', 1, 17, 'public', 0, 'draft', '2023-09-10 11:26:31', '2023-09-10 11:32:14', NULL, NULL),
-    (9, 0, 'content_post', 1, 0, 'public', 0, 'draft', '2023-09-10 11:33:05', '2023-09-10 11:33:05', NULL, NULL),
-    (10, 0, 'content_post', 1, 1, 'public', 0, 'publish', '2023-11-04 01:07:52', '2023-11-04 09:51:26', '2023-11-04 09:48:52', NULL);
+    (1, 0, 'content_post', 1, 17, 'usergroup', 0, 'publish', NOW(), NOW(), NULL, NULL),
+    (2, 0, 'content_post', 1, 17, 'public', 0, 'publish', NOW(), NOW(), DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_ADD(NOW(), INTERVAL 30 DAY)),
+    (3, 0, 'content_post', 1, 18, 'public', 0, 'publish', NOW(), NOW(), NULL, NULL),
+    (4, 0, 'content_post', 1, 17, 'public', 0, 'publish', NOW(), NOW(), NULL, NULL),
+    (5, 0, 'content_post', 1, 1, 'public', 0, 'publish', NOW(), NOW(), NULL, NULL),
+    (6, 0, 'content_post', 1, 18, 'public', 0, 'publish', NOW(), NOW(), DATE_SUB(NOW(), INTERVAL 3 DAY), NULL),
+    (7, 0, 'content_post', 1, 1, 'public', 0, 'publish', NOW(), NOW(), NULL, NULL),
+    (8, 0, 'content_post', 1, 17, 'public', 0, 'draft', NOW(), NOW(), NULL, NULL),
+    (9, 0, 'content_post', 1, 0, 'public', 0, 'draft', NOW(), NOW(), NULL, NULL),
+    (10, 0, 'content_post', 1, 1, 'public', 0, 'publish', NOW(), NOW(), DATE_SUB(NOW(), INTERVAL 7 DAY), NULL);
 
--- Dumping structure for table shift.sf_post_content
 DROP TABLE IF EXISTS `{DB_PREFIX}post_content`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_content` (
+CREATE TABLE `{DB_PREFIX}post_content` (
   `post_id` bigint unsigned NOT NULL,
   `language_id` bigint unsigned NOT NULL COMMENT 'extension.extension_id',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -218,7 +184,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_content` (
   PRIMARY KEY (`post_id`,`language_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_post_content: ~20 rows (approximately)
 INSERT INTO `{DB_PREFIX}post_content` (`post_id`, `language_id`, `title`, `excerpt`, `content`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
     (1, 35, 'Cinema Display VESA Mount Adapter kit', '&lt;p&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&#039;s no limit to what you can achieve.&lt;/p&gt;', '&lt;p&gt;The 30-inch&amp;nbsp;&lt;span style=&quot;background-color:hsl(0,75%,60%);color:hsl(0,0%,100%);&quot;&gt; Apple Cinema HD Display&amp;nbsp;&lt;/span&gt; delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there&#039;s no limit to what you can achieve.&amp;nbsp;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display.&amp;nbsp;&lt;/p&gt;&lt;/blockquote&gt;&lt;figure class=&quot;image image_resized&quot; style=&quot;width:55.32%;&quot;&gt;&lt;img src=&quot;https://localhost/mdzGit/shift/public/media/image/demo/banners/iphone68.jpg&quot; alt=&quot;iphone68.jpg&quot;&gt;&lt;/figure&gt;&lt;p&gt;Unlike other flat panels, it&#039;s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;figure class=&quot;image image_resized&quot; style=&quot;width:37.16%;&quot;&gt;&lt;img src=&quot;https://localhost/mdzGit/shift/public/media/image/demo/minimalist-dark-table.jpg&quot; alt=&quot;minimalist-dark-table.jpg&quot;&gt;&lt;/figure&gt;&lt;p&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple&#039;s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers, and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment.&amp;nbsp;&lt;/p&gt;&lt;p&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;/p&gt;&lt;p&gt;Features:&lt;/p&gt;&lt;p&gt;Unrivaled display performance&lt;/p&gt;&lt;ul&gt;&lt;li&gt;30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;&lt;li&gt;Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;&lt;li&gt;Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;&lt;li&gt;Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;&lt;li&gt;Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;&lt;li&gt;Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;&lt;li&gt;Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Simple setup and operation&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;&lt;li&gt;Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;&lt;li&gt;Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;&lt;/ul&gt;', '', '', ''),
     (1, 36, 'Cinema Display VESA Mount Adapter kit ID', '', '', '', '', ''),
@@ -241,9 +206,8 @@ INSERT INTO `{DB_PREFIX}post_content` (`post_id`, `language_id`, `title`, `excer
     (10, 35, 'About Us', '', '&lt;p&gt;About us - content EN&lt;/p&gt;', '', '', ''),
     (10, 36, 'About Us', '', '&lt;p&gt;About us - content ID&lt;/p&gt;', '', '', '');
 
--- Dumping structure for table shift.sf_post_meta
 DROP TABLE IF EXISTS `{DB_PREFIX}post_meta`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_meta` (
+CREATE TABLE `{DB_PREFIX}post_meta` (
   `post_meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `post_id` bigint unsigned NOT NULL,
   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -254,7 +218,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}post_meta` (
   KEY `key` (`key`(191)) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1132 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_post_meta: ~60 rows (approximately)
 INSERT INTO `{DB_PREFIX}post_meta` (`post_meta_id`, `post_id`, `key`, `value`, `encoded`) VALUES
     (610, 1, 'visibility_usergroups', '["1"]', 1),
     (611, 1, 'visibility_password', 'coolpass', 0),
@@ -317,9 +280,8 @@ INSERT INTO `{DB_PREFIX}post_meta` (`post_meta_id`, `post_id`, `key`, `value`, `
     (1130, 10, 'comment', '', 0),
     (1131, 10, 'custom_code', '', 0);
 
--- Dumping structure for table shift.sf_route_alias
 DROP TABLE IF EXISTS `{DB_PREFIX}route_alias`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}route_alias` (
+CREATE TABLE `{DB_PREFIX}route_alias` (
   `route_alias_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `site_id` bigint unsigned NOT NULL DEFAULT '0',
   `language_id` bigint unsigned NOT NULL DEFAULT '1' COMMENT 'extension.extension_id',
@@ -332,7 +294,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}route_alias` (
   KEY `route_param_value` (`route`,`param`,`value`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_route_alias: ~118 rows (approximately)
 INSERT INTO `{DB_PREFIX}route_alias` (`route_alias_id`, `site_id`, `language_id`, `route`, `param`, `value`, `alias`) VALUES
     (6, 0, 35, 'page/contact', '', '', 'contact-us'),
     (7, 0, 35, 'page/home', '', '', '/'),
@@ -453,9 +414,8 @@ INSERT INTO `{DB_PREFIX}route_alias` (`route_alias_id`, `site_id`, `language_id`
     (1168, 0, 35, 'content/post', 'post_id', '10', 'about-us'),
     (1169, 0, 36, 'content/post', 'post_id', '10', 'about-us-36');
 
--- Dumping structure for table shift.sf_setting
 DROP TABLE IF EXISTS `{DB_PREFIX}setting`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
+CREATE TABLE `{DB_PREFIX}setting` (
   `setting_id` bigint NOT NULL AUTO_INCREMENT,
   `site_id` bigint NOT NULL DEFAULT '0',
   `group` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -467,7 +427,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}setting` (
   KEY `group` (`site_id`,`group`,`code`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4019 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_setting: ~62 rows (approximately)
 INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key`, `value`, `encoded`) VALUES
     (1296, 0, 'system', 'alias_distinct', 'information/information', 'information_id', 0),
     (1297, 0, 'system', 'alias_distinct', 'content/post', 'post_id', 0),
@@ -532,24 +491,18 @@ INSERT INTO `{DB_PREFIX}setting` (`setting_id`, `site_id`, `group`, `code`, `key
     (4017, 0, 'plugin', 'content', 'category_post_order', 'p.publish~desc', 0),
     (4018, 0, 'plugin', 'content', 'category_custom_code', '', 0);
 
--- Dumping structure for table shift.sf_site
 DROP TABLE IF EXISTS `{DB_PREFIX}site`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}site` (
+CREATE TABLE `{DB_PREFIX}site` (
   `site_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `url_host` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`site_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_site: ~3 rows (approximately)
-INSERT INTO `{DB_PREFIX}site` (`site_id`, `name`, `url_host`) VALUES
-    (0, 'Shift Site', 'https://localhost/shift/public/'),
-    (1, '2nd Site', 'https://shift.test/'),
-    (3, '3rd site cool', 'https://example.com/');
+INSERT INTO `{DB_PREFIX}site` (`site_id`, `name`, `url_host`) VALUES (0, 'Default', 'https://localhost/');
 
--- Dumping structure for table shift.sf_site_relation
 DROP TABLE IF EXISTS `{DB_PREFIX}site_relation`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}site_relation` (
+CREATE TABLE `{DB_PREFIX}site_relation` (
   `site_relation_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `site_id` bigint unsigned NOT NULL DEFAULT '0',
   `taxonomy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -558,7 +511,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}site_relation` (
   UNIQUE KEY `site_taxonomy_id` (`site_id`,`taxonomy`,`taxonomy_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_site_relation: ~14 rows (approximately)
 INSERT INTO `{DB_PREFIX}site_relation` (`site_relation_id`, `site_id`, `taxonomy`, `taxonomy_id`) VALUES
     (170, 0, 'content_category', 1),
     (137, 0, 'content_category', 16),
@@ -575,9 +527,8 @@ INSERT INTO `{DB_PREFIX}site_relation` (`site_relation_id`, `site_id`, `taxonomy
     (174, 0, 'content_post', 10),
     (72, 1, 'content_post', 1);
 
--- Dumping structure for table shift.sf_term
 DROP TABLE IF EXISTS `{DB_PREFIX}term`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term` (
+CREATE TABLE `{DB_PREFIX}term` (
   `term_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` bigint unsigned NOT NULL DEFAULT '0',
   `taxonomy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -589,25 +540,23 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term` (
   KEY `taxonomy` (`taxonomy`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_term: ~13 rows (approximately)
 INSERT INTO `{DB_PREFIX}term` (`term_id`, `parent_id`, `taxonomy`, `sort_order`, `status`, `created`, `updated`) VALUES
-    (1, 0, 'content_category', 99, 1, '2022-12-29 10:51:06', '2023-11-04 02:53:27'),
-    (15, 0, 'content_tag', 0, 1, '2023-02-05 18:25:29', '2023-05-16 16:07:09'),
-    (16, 0, 'content_category', 0, 1, '2023-02-21 18:01:09', '2023-10-14 14:12:10'),
-    (17, 16, 'content_category', 0, 1, '2023-02-21 18:01:33', '2023-10-31 22:19:15'),
-    (18, 16, 'content_category', 0, 1, '2023-02-21 18:01:48', '2023-11-01 16:18:19'),
-    (20, 0, 'content_tag', 0, 1, '2023-02-26 07:30:25', '2023-02-26 07:30:25'),
-    (21, 0, 'content_tag', 0, 1, '2023-02-26 07:30:26', '2023-05-16 16:19:33'),
-    (22, 0, 'content_tag', 0, 1, '2023-02-26 07:30:26', '2023-02-26 07:30:26'),
-    (23, 0, 'content_tag', 0, 1, '2023-02-26 07:59:45', '2023-05-16 16:19:33'),
-    (24, 0, 'content_tag', 0, 1, '2023-02-26 07:59:45', '2023-05-16 16:16:50'),
-    (25, 0, 'content_tag', 0, 1, '2023-02-26 08:04:38', '2023-05-16 16:07:09'),
-    (26, 0, 'content_tag', 0, 1, '2023-02-26 08:05:55', '2023-02-26 08:05:55'),
-    (27, 0, 'content_tag', 0, 1, '2023-06-15 09:15:14', '2023-06-15 09:15:14');
+    (1, 0, 'content_category', 99, 1, NOW(), NOW()),
+    (15, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (16, 0, 'content_category', 0, 1, NOW(), NOW()),
+    (17, 16, 'content_category', 0, 1, NOW(), NOW()),
+    (18, 16, 'content_category', 0, 1, NOW(), NOW()),
+    (20, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (21, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (22, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (23, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (24, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (25, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (26, 0, 'content_tag', 0, 1, NOW(), NOW()),
+    (27, 0, 'content_tag', 0, 1, NOW(), NOW());
 
--- Dumping structure for table shift.sf_term_content
 DROP TABLE IF EXISTS `{DB_PREFIX}term_content`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_content` (
+CREATE TABLE `{DB_PREFIX}term_content` (
   `term_id` bigint unsigned NOT NULL,
   `language_id` bigint unsigned NOT NULL COMMENT 'extension.extension_id',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -618,7 +567,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_content` (
   PRIMARY KEY (`term_id`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_term_content: ~26 rows (approximately)
 INSERT INTO `{DB_PREFIX}term_content` (`term_id`, `language_id`, `title`, `content`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
     (1, 35, 'Page', '&lt;p&gt;test&lt;/p&gt;', '', '', ''),
     (1, 36, 'Page', '', '', '', ''),
@@ -647,9 +595,8 @@ INSERT INTO `{DB_PREFIX}term_content` (`term_id`, `language_id`, `title`, `conte
     (27, 35, 'abcd', '', '', '', ''),
     (27, 36, 'abcd', '', '', '', '');
 
--- Dumping structure for table shift.sf_term_meta
 DROP TABLE IF EXISTS `{DB_PREFIX}term_meta`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_meta` (
+CREATE TABLE `{DB_PREFIX}term_meta` (
   `term_meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `term_id` bigint unsigned NOT NULL DEFAULT '0',
   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -660,7 +607,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_meta` (
   KEY `key` (`key`(191)) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=401 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_term_meta: ~32 rows (approximately)
 INSERT INTO `{DB_PREFIX}term_meta` (`term_meta_id`, `term_id`, `key`, `value`, `encoded`) VALUES
     (305, 16, 'robots', '', 0),
     (306, 16, 'post_per_page', '10', 0),
@@ -695,9 +641,8 @@ INSERT INTO `{DB_PREFIX}term_meta` (`term_meta_id`, `term_id`, `key`, `value`, `
     (399, 1, 'post_order', '', 0),
     (400, 1, 'custom_code', '', 0);
 
--- Dumping structure for table shift.sf_term_relation
 DROP TABLE IF EXISTS `{DB_PREFIX}term_relation`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_relation` (
+CREATE TABLE `{DB_PREFIX}term_relation` (
   `term_relation_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `term_id` bigint unsigned NOT NULL DEFAULT '0',
   `taxonomy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -706,7 +651,6 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}term_relation` (
   UNIQUE KEY `term_taxonomy_id` (`term_id`,`taxonomy`,`taxonomy_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=575 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_term_relation: ~13 rows (approximately)
 INSERT INTO `{DB_PREFIX}term_relation` (`term_relation_id`, `term_id`, `taxonomy`, `taxonomy_id`) VALUES
     (512, 15, 'content_post', 1),
     (507, 16, 'content_post', 1),
@@ -722,9 +666,8 @@ INSERT INTO `{DB_PREFIX}term_relation` (`term_relation_id`, `term_id`, `taxonomy
     (511, 26, 'content_post', 1),
     (508, 27, 'content_post', 1);
 
--- Dumping structure for table shift.sf_user
 DROP TABLE IF EXISTS `{DB_PREFIX}user`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
+CREATE TABLE `{DB_PREFIX}user` (
   `user_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_group_id` bigint unsigned NOT NULL DEFAULT '0',
   `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
@@ -737,19 +680,11 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user` (
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_user: ~3 rows (approximately)
-INSERT INTO `{DB_PREFIX}user` (`user_id`, `user_group_id`, `email`, `password`, `username`, `firstname`, `lastname`, `status`, `last_login`, `created`, `updated`) VALUES
-    (1, 1, 'admin@example.com', '$2y$10$.5Lg7dyFUIS3e6OnNL.yhufdmDzsYnK2Gy3LUw9MYC29JivbXR3Wq', 'admin', 'Johnn', 'Doe', 1, '2023-12-04 15:49:16', '2022-01-30 16:17:31', '2023-11-02 17:19:28'),
-    (3, 2, 'james@example.com', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'james', 'James', 'Doe', 0, '2022-11-15 11:57:27', '2022-01-30 16:17:31', '2023-08-27 13:39:08'),
-    (4, 2, 'jane@example.com', '$2y$10$NeYYCLxL.tttyffQzKmliOazCa9vCnJx5EkSerZwvEXtCaCrtqRaC', 'janedoe', 'Jane', 'Doe', 0, '2022-10-07 20:57:27', '2022-01-30 16:17:31', '2023-05-15 18:21:36');
-
--- Dumping structure for table shift.sf_user_group
 DROP TABLE IF EXISTS `{DB_PREFIX}user_group`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_group` (
+CREATE TABLE `{DB_PREFIX}user_group` (
   `user_group_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
   `backend` tinyint unsigned NOT NULL DEFAULT '0',
@@ -760,15 +695,12 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_group` (
   PRIMARY KEY (`user_group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
--- Dumping data for table shift.sf_user_group: ~3 rows (approximately)
 INSERT INTO `{DB_PREFIX}user_group` (`user_group_id`, `name`, `backend`, `permission`, `status`, `created`, `updated`) VALUES
-    (1, 'Super Admin', 1, '{"access":["account\\/user","account\\/usergroup","content\\/category","extensions\\/module\\/slideshow","extensions\\/module\\/codex","extensions\\/plugin\\/architect"],"modify":["extensions\\/module\\/slideshow","extensions\\/module\\/codex","extensions\\/plugin\\/architect"]}', 1, '2022-10-29 14:37:53', '2023-05-17 16:41:01'),
-    (2, 'Register', 0, '{"access":["content\\/category","content\\/post","content\\/setting","content\\/tag","extension\\/dashboard\\/online","extension\\/event","extension\\/installer","extension\\/language","extension\\/manage","extension\\/module","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/site","extension\\/module\\/slideshow","extension\\/plugin","extension\\/theme","extension\\/theme\\/base","setting\\/setting","setting\\/site","tool\\/cache","tool\\/layout","tool\\/log"],"modify":["content\\/category","content\\/post","content\\/setting","content\\/tag","extension\\/dashboard\\/online","extension\\/event","extension\\/installer","extension\\/language","extension\\/manage","extension\\/module","extension\\/module\\/account","extension\\/module\\/banner","extension\\/module\\/carousel","extension\\/module\\/html","extension\\/module\\/information","extension\\/module\\/site","extension\\/module\\/slideshow","extension\\/plugin","extension\\/theme","extension\\/theme\\/base","setting\\/setting","setting\\/site","tool\\/cache","tool\\/layout","tool\\/log"]}', 0, '2022-10-21 14:37:53', '2023-08-27 13:39:59'),
-    (3, 'test', 0, '{"access":[],"modify":[]}', 0, '2023-05-17 16:36:15', '2023-05-17 16:36:15');
+    (1, 'Super Admin', 1, '{"access":[],"modify":[]}', 1, NOW(), NOW()),
+    (2, 'Register', 0, '{"access":[],"modify":[]}', 0, NOW(), NOW());
 
--- Dumping structure for table shift.sf_user_meta
 DROP TABLE IF EXISTS `{DB_PREFIX}user_meta`;
-CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_meta` (
+CREATE TABLE `{DB_PREFIX}user_meta` (
   `user_meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL DEFAULT '0',
   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
@@ -778,15 +710,3 @@ CREATE TABLE IF NOT EXISTS `{DB_PREFIX}user_meta` (
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `key` (`key`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
-
--- Dumping data for table shift.sf_user_meta: ~3 rows (approximately)
-INSERT INTO `{DB_PREFIX}user_meta` (`user_meta_id`, `user_id`, `key`, `value`, `encoded`) VALUES
-    (9, 4, 'bio', '', 0),
-    (19, 3, 'bio', 'Awesome', 0),
-    (25, 1, 'bio', 'Test', 0);
-
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

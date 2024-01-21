@@ -8,7 +8,7 @@ use Shift\System\Mvc;
 
 class Config extends Mvc\Controller
 {
-    private $configFilepath = PATH_SHIFT . 'config_test.php';
+    private $configFilepath = PATH_SHIFT . 'config.php';
 
     public function index()
     {

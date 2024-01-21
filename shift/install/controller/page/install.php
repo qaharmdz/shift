@@ -17,8 +17,6 @@ class Install extends Mvc\Controller
             $this->response->redirect($this->router->url(''));
         }
 
-        $this->document->setTitle($this->language->get('installation'));
-
         $config = $this->session->get('install.config');
 
         try {
@@ -28,27 +26,33 @@ class Install extends Mvc\Controller
             exit($e->getMessage());
         }
 
-        // d($this->router->url(''));
-        d($this->config->all());
-        d($this->session->all());
-
-        // $results = $this->db->get("
-        //     SELECT * FROM `" . $config['prefix'] . "setting`
-        //     WHERE site_id = 0 AND `group` = 'setting AND `group` = 'setting'
-        // ");
-        // d($results);
-
         $this->db->set(
             $config['prefix'] . 'site',
             [
-                'name'     => $config['name'],
+                'name'     => $config['sitename'],
                 'url_host' => $config['url_host'],
             ],
-            ['site_id' => 1]
+            ['site_id' => 0]
         );
 
+        $this->db->add(
+            $config['prefix'] . 'user',
+            [
+                'user_group_id' => 1,
+                'email'         => $config['email'],
+                'password'      => $this->secure->passwordHash($config['user_password']),
+                'username'      => 'admin',
+                'firstname'     => 'Super',
+                'lastname'      => 'Admin',
+                'status'        => 1,
+                'created'       => date('Y-m-d H:i:s'),
+                'updated'       => date('Y-m-d H:i:s'),
+            ]
+        );
 
-        // $this->response->redirect($this->router->url('page/complete'));
+        $this->session->delete('install');
+
+        $this->response->redirect($this->router->url('page/complete'));
     }
 
     private function dbConnect()
@@ -72,8 +76,6 @@ class Install extends Mvc\Controller
         ');
 
         $this->db = $db;
-
-        // $this->session->delete('install');
     }
 
     // TODO: Update the schema.sql with actual initial installation
@@ -99,7 +101,7 @@ class Install extends Mvc\Controller
             $sql .= $query . "\n";
         }
 
-        $sql = str_replace('{DB_PREFIX}', $this->session->get('install.config.prefix', 'sf_'), $sql);
+        $sql = str_replace('{DB_PREFIX}', $this->session->get('install.config.prefix', 'xyz_'), $sql);
 
         $this->db->multiQuery($sql);
     }

@@ -71,7 +71,7 @@ class Framework
             $db = new Core\Database(...$config->get('root.database.config'));
             $db->raw('
                 SET time_zone="+00:00",
-                    session group_concat_max_len = ' . $config->getInt('root.database.group_concat_max_len') . ',
+                    SESSION group_concat_max_len = ' . $config->getInt('root.database.group_concat_max_len') . ',
                     SESSION sql_mode="' . implode(',', $config->getArray('root.database.modes')) . '";
             ');
             $this->set('db', $db);
