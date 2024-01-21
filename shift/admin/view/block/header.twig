@@ -2,7 +2,7 @@
     <nav class="uk-navbar-container" uk-navbar>
         <div class="uk-navbar-left">
             <div class="uk-inline">
-                <button class="uk-button uk-button-link navbar-main-menu" type="button"><i class="bi bi-command bi-2x"></i></button>
+                <button class="uk-button uk-button-link navbar-main-menu" type="button"><i class="bi bi-command"></i></button>
                 <div class="uk-width-large main-navigation" uk-dropdown="offset:3;">
                     <div class="uk-dropdown-grid uk-grid-collapse" uk-grid>
                         <div class="uk-width-auto panel-left">
@@ -67,11 +67,11 @@
                 <li>
                     {% if sites|length == 1 %}
                         <a class="uk-navbar-toggle uk-visible@s" href="{{ app.config.get('env.url_site') }}" target="_blank" title="{{ app.config.get('system.site.name') }}">
-                            <i class="bi bi-display bi-2x"></i>
+                            <i class="bi bi-globe2 bi-2x"></i>
                         </a>
                     {% else %}
                         <a class="uk-navbar-toggle" title="{{ app.language.get('visit_site') }}">
-                            <i class="bi bi-display bi-2x"></i>
+                            <i class="bi bi-globe2 bi-2x"></i>
                             <span uk-drop-parent-icon></span>
                         </a>
                         <div class="uk-navbar-dropdown" uk-dropdown="offset:0; pos:bottom-right;">
