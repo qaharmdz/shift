@@ -1,6 +1,6 @@
 Shift - Pragmatic Content Management
 
-Copyright (c) 2023, Mudzakkir <https://github.com/qaharmdz>
+Copyright (c) Mudzakkir <https://github.com/qaharmdz>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,19 +15,28 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+
 This program incorporates work covered by the following copyright and
 permission notices:
 
-  OpenCart - A free shopping cart system
-  Copyright 2005 - 2017, OpenCart, Ltd.
-  OpenCart is released under the GPL-3.0
+  OpenCart v2.3.0.2 - A free shopping cart system
+  Copyright (c) 2005 - 2017, OpenCart, Ltd.
+  Released under the GPL-3.0 or (at your option) any later version.
+
+and
+
+  WordPress - Web publishing software
+  Copyright (c) 2011-2021 by the contributors.
+  Released under the GPL-2.0 or (at your option) any later version.
 
 and
 
   Wherever third party code has been used, credit has been given
   in the code's comments.
 
+
 ================================================================================
+
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

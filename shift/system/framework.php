@@ -3,7 +3,7 @@
 /**
  * This file is part of Shift CMS.
  *
- * Copyright (c) 2023, Mudzakkir <https://github.com/qaharmdz>
+ * Copyright (c) Mudzakkir <https://github.com/qaharmdz>
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
