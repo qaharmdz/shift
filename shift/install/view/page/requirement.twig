@@ -1,0 +1,95 @@
+{% extends 'main.tpl.twig' %}
+
+
+{% block content %}
+    <div class="content-header">
+        <h1 class="ukt-m-0">
+            Shift<span class="uk-sub-title">{{ app.language.get('requirements') }}</span>
+        </h1>
+    </div>
+    <div class="content-body uk-card-panel uk-card-body">
+        <p>Before getting started with installation, make sure to check the following server requirements and prepare the Database information.</p>
+
+        <div class="uk-grid" uk-grid>
+            <div class="uk-width-2-3">
+                <h3 class="ukt-mt-2">Server Requirement</h3>
+
+                <table class="uk-table uk-table-striped uk-table-hover uk-table-small">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="uk-text-center uk-width-100">Requirement</th>
+                            <th class="uk-text-center uk-width-100">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PHP</td>
+                            <td class="uk-text-center">8.2.0+</td>
+                            <td class="uk-text-center">
+                                <span class="{{ not php.valid ? 'uk-text-bold uk-text-danger' }}">
+                                    {{ php.version }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>MySQL</td>
+                            <td class="uk-text-center">8.0.20+</td>
+                            <td class="uk-text-center">
+                                <span class="{{ not mysql.valid ? 'uk-text-bold uk-text-danger' }}">
+                                    {{ mysql.version ? mysql.version : 'n/a' }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="uk-table uk-table-striped uk-table-hover uk-table-small">
+                    <thead>
+                        <tr>
+                            <th>PHP Extensions</th>
+                            <th class="uk-text-center uk-width-100">Requirement</th>
+                            <th class="uk-text-center uk-width-100">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for name, status in php_exts %}
+                            <tr>
+                                <td>{{ name }}</td>
+                                <td class="uk-text-center">On</td>
+                                <td class="uk-text-center">
+                                    <span class="{{ not status ? 'uk-text-bold uk-text-danger' }}">
+                                        {{ status ? 'On' : 'Off' }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <h3 class="ukt-mt-2">Prepare Database Info</h3>
+                <ul class="uk-list uk-list-disc">
+                    <li>Database host</li>
+                    <li class="ukt-mt-1">Database name</li>
+                    <li class="ukt-mt-1">Database username</li>
+                    <li class="ukt-mt-1">Database password</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="uk-flex uk-flex-between ukt-mt-5">
+            <div>
+                <a href="{{ app.router.url('page/license') }}" class="uk-button uk-button-secondary">{{ app.language.get('back') }}</a>
+            </div>
+            <div>
+                {% if validRequirement %}
+                    <a href="{{ app.router.url('page/config') }}" class="uk-button uk-button-primary">{{ app.language.get('lets_go') }}</a>
+                {% else %}
+                    <a class="uk-button uk-button-gray uk-disabled">{{ app.language.get('lets_go') }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

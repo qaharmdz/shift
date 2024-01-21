@@ -6,11 +6,11 @@ namespace Shift\Install\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Home extends Mvc\Controller
+class Requirement extends Mvc\Controller
 {
     public function index()
     {
-        $this->document->setTitle($this->language->get('welcome'));
+        $this->document->setTitle($this->language->get('requirements'));
 
         $data = [];
         $data['php'] = [
@@ -30,7 +30,7 @@ class Home extends Mvc\Controller
         ];
         $data['validRequirement'] = ($data['php']['valid'] && $data['mysql']['valid'] && !in_array(false, $data['php_exts']));
 
-        $this->response->setOutput($this->load->view('page/home', $data));
+        $this->response->setOutput($this->load->view('page/requirement', $data));
     }
 
     private function getMySQLVersion()
