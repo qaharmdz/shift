@@ -6,4 +6,4 @@ $_['app_startup'] = [
     'startup/configuration',
 ];
 
-$_['route_default'] = 'page/home';
+$_['route_default'] = 'page/license';

@@ -11,7 +11,7 @@ $_['submit']               = 'Submit';
 
 $_['license_agreement']    = 'License Agreement';
 $_['read_agreement']       = 'Please read the following license agreement: ';
-$_['detail_agreement']     = 'The details of the GNU General Public License v3 agreement: ';
+$_['detail_agreement']     = 'For the details of the GNU General Public License v3 agreement, visit <a href="https://www.gnu.org/licenses/gpl-3.0.txt" target="_blank" rel="nofollow">https://www.gnu.org/licenses/gpl-3.0.txt</a>';
 
 $_['configuration']        = 'Configuration';
 $_['manual_configuration'] = 'Manual Configuration';
