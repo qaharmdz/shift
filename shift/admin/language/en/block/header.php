@@ -36,3 +36,5 @@ $_['maintenance']    = 'Maintenance';
 $_['backup_restore'] = 'DB Backup / Restore';
 $_['cache']          = 'Cache Manager';
 $_['log']            = 'Logs Viewer';
+
+$_['visit_site']     = 'Visit Site';
