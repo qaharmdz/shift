@@ -17,7 +17,7 @@ $_['requirements']         = 'Requirements';
 $_['configuration']        = 'Configuration';
 $_['manual_configuration'] = 'Manual Configuration';
 $_['database_connection']  = 'Database Connection';
-$_['initial_setup']        = 'Initial Setup And Account';
+$_['initial_setup']        = 'Site and Account';
 $_['hostname']             = 'Hostname';
 $_['database']             = 'Database';
 $_['username']             = 'Username';
@@ -32,7 +32,8 @@ $_['write_config_create']  = 'You can create the <code>%s</code> file manually a
 $_['write_config_ready']   = 'After you\'ve done that, click "Run the Installation".';
 $_['run_installation']     = 'Run the Installation';
 
-$_['installation']         = 'Installation';
+$_['install_complete']     = 'Installation Complete';
+$_['complete']             = 'Complete';
 
 $_['copyright']            = '<a href="https: //github.com/qaharmdz/shift" target="_blank" rel="noopener noreferrer">Shift CMS</a> &copy; ' . date('Y') . ' All Rights Reserved.';
 $_['version']              = 'Version %s';

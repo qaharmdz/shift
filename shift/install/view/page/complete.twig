@@ -1,12 +1,25 @@
 {% extends 'main.tpl.twig' %}
 
 {% block content %}
-<div class="content-header">
-    <h1 class="ukt-m-0">
-        Shift<span class="uk-sub-title">{{ app.language.get('installation') }}</span>
-    </h1>
-</div>
-<div class="content-body uk-card-panel uk-card-body uk-form-horizontal">
-    <p>...</p>
-</div>
+    <div class="uk-flex uk-flex-center">
+        <div class="uk-width-xlarge">
+            <div class="content-header">
+                <h1 class="ukt-m-0">
+                    Shift<span class="uk-sub-title">{{ app.language.get('install_complete') }}</span>
+                </h1>
+            </div>
+            <div class="content-body uk-card-panel uk-card-body uk-form-horizontal">
+                <p>Shift has been installed. Thank you, and enjoy!</p>
+
+                <h3 class="ukt-mt-2">Installation Details</h3>
+
+                <ul class="uk-list">
+                    <li>Website: <a href="{{ url_site }}">{{ url_site }}</a></li>
+                    <li>Admin URL: <a href="{{ url_admin }}">{{ url_admin }}</a></li>
+                    <li>User Email: {{ user_email }}</li>
+                    <li>User Password: {{ user_password }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}

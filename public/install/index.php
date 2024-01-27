@@ -7,6 +7,10 @@ require_once realpath(dirname(__DIR__)) . '/path.php';
 define('APP_FOLDER', 'install');
 define('APP_URL_PATH', 'install/');
 
+if (is_file(PATH_SHIFT . 'config.php')) {
+    exit(':)');
+}
+
 //=== Protocols
 $protocol = 'http://';
 if (
@@ -20,8 +24,6 @@ if (
 ) {
     $protocol = 'https://';
 }
-
-define('HTTP_SHIFT', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 $rootConfig = [
     'url_host' => $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME'], 2), '/.\\') . '/',

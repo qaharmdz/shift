@@ -50,8 +50,6 @@ class Install extends Mvc\Controller
             ]
         );
 
-        $this->session->delete('install');
-
         $this->response->redirect($this->router->url('page/complete'));
     }
 

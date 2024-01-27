@@ -55,13 +55,13 @@ class Config extends Mvc\Controller
                         $post['url_host'] = $this->config->get('root.url_host');
 
                         $this->session->set('install.config', $post);
-                        $configdata = $this->getConfigData($post);
+                        $configData = $this->getConfigData($post);
 
                         if (file_put_contents($this->configFilepath, '<?php') !== false) {
-                            file_put_contents($this->configFilepath, $configdata);
+                            file_put_contents($this->configFilepath, $configData);
                             $this->response->redirect($this->router->url('page/install'));
                         } else {
-                            $this->session->set('install.config_content', $configdata);
+                            $this->session->set('install.config_content', $configData);
                             $this->response->redirect($this->router->url('page/config/manual'));
                         }
                     }
