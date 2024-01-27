@@ -256,29 +256,29 @@ body {
 
 /* --uk-breakpoint-l */
 @media (min-width: 1200px) {
-    .uk-width-content-sidebar\@l {
+    .width-content-sidebar {
         width: 300px;
     }
-    .uk-width-content-sidebar\@l .uk-card-body {
-        padding: 20px;
+    .width-content-sidebar .uk-card-body {
+        padding: 15px;
     }
-     .uk-form-margin-hover .uk-width-content-sidebar\@l .uk-fieldset .uk-margin {
-        padding: 8px 20px;
-        margin: 0 -20px !important;
+     .uk-form-margin-hover .width-content-sidebar .uk-fieldset .uk-margin {
+        padding: 8px 15px;
+        margin: 0 -15px !important;
     }
-    .uk-width-content-sidebar\@l .uk-panel-scrollable {
+    .width-content-sidebar .uk-panel-scrollable {
         padding: 5px;
     }
-    .uk-width-content-sidebar\@l .uk-list-striped > * {
+    .width-content-sidebar .uk-list-striped > * {
         padding-left: 5px;
         padding-right: 5px;
     }
-    .uk-width-content-sidebar\@l .uk-list-striped .uk-checkbox,
-    .uk-width-content-sidebar\@l .uk-list-striped .uk-radio {
+    .width-content-sidebar .uk-list-striped .uk-checkbox,
+    .width-content-sidebar .uk-list-striped .uk-radio {
         height: 13px;
         width: 13px;
     }
-    .uk-width-content-sidebar\@l .uk-list-striped .uk-input-text {
+    .width-content-sidebar .uk-list-striped .uk-input-text {
         font-size: .92rem;
     }
 }
