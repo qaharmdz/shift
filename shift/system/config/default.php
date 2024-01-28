@@ -41,7 +41,7 @@ $_['database'] = [
 ];
 
 $_['session'] = [
-    'session_name'  => 'SHIFTID',
+    'session_name'  => 'ShiftSessionId',
     'use_cookies'   => '1',
     'use_trans_sid' => '0',
     'sid_length'    => rand(48, 64),
