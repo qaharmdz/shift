@@ -74,12 +74,12 @@ class Secure
     }
 
     /**
-     * Random crypt
+     * Crypt
      *
-     * @param  int|integer $length
+     * @param  int $length
      * @return string
      */
-    public function random(int $length = 0): string
+    public function crypt(int $length = 0): string
     {
         $length = $length ?: rand(32, 64);
         $length = (int)ceil($length / 2);
@@ -94,6 +94,18 @@ class Secure
 
         return bin2hex($bytes);
     }
+
+    /**
+     * Random
+     *
+     * @param int $length
+     * @return string
+     */
+    public function random(int $length = 0): string
+    {
+        return $this->crypt($length);
+    }
+
 
     /**
      * Generate token code.
@@ -125,7 +137,7 @@ class Secure
                 break;
 
             case 'crypt':
-                $result = $this->random($length);
+                $result = $this->crypt($length);
                 break;
 
             case 'hash':
