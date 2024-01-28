@@ -4,7 +4,7 @@
 {% block content %}
     <div class="content-header">
         <h1 class="ukt-m-0">
-            Shift<span class="uk-sub-title">{{ app.language.get('requirements') }}</span>
+            Shift<span class="uk-sub-title">{{ shift.lib.language.get('requirements') }}</span>
         </h1>
     </div>
     <div class="content-body uk-card-panel uk-card-body">
@@ -81,13 +81,13 @@
 
         <div class="uk-flex uk-flex-between ukt-mt-5">
             <div>
-                <a href="{{ app.router.url('page/license') }}" class="uk-button uk-button-secondary">{{ app.language.get('back') }}</a>
+                <a href="{{ shift.lib.router.url('page/license') }}" class="uk-button uk-button-secondary">{{ shift.lib.language.get('back') }}</a>
             </div>
             <div>
                 {% if validRequirement %}
-                    <a href="{{ app.router.url('page/config') }}" class="uk-button uk-button-primary">{{ app.language.get('lets_go') }}</a>
+                    <a href="{{ shift.lib.router.url('page/config') }}" class="uk-button uk-button-primary">{{ shift.lib.language.get('lets_go') }}</a>
                 {% else %}
-                    <a class="uk-button uk-button-gray uk-disabled">{{ app.language.get('lets_go') }}</a>
+                    <a class="uk-button uk-button-gray uk-disabled">{{ shift.lib.language.get('lets_go') }}</a>
                 {% endif %}
             </div>
         </div>

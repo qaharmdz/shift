@@ -66,11 +66,11 @@
             <ul class="uk-navbar-nav">
                 <li>
                     {% if sites|length == 1 %}
-                        <a class="uk-navbar-toggle uk-visible@s" href="{{ app.config.get('env.url_site') }}" target="_blank" title="{{ app.config.get('system.site.name') }}">
+                        <a class="uk-navbar-toggle uk-visible@s" href="{{ shift.lib.config.get('env.url_site') }}" target="_blank" title="{{ shift.lib.config.get('system.site.name') }}">
                             <i class="bi bi-globe2 bi-2x"></i>
                         </a>
                     {% else %}
-                        <a class="uk-navbar-toggle" title="{{ app.language.get('visit_site') }}">
+                        <a class="uk-navbar-toggle" title="{{ shift.lib.language.get('visit_site') }}">
                             <i class="bi bi-globe2 bi-2x"></i>
                             <span uk-drop-parent-icon></span>
                         </a>

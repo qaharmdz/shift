@@ -5,10 +5,10 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <a href="{{ app.router.url('content/tag/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add_new') }}</a>
+                <a href="{{ shift.lib.router.url('content/tag/form') }}" class="uk-button uk-button-primary">{{ shift.lib.language.get('add_new') }}</a>
             </div>
         </div>
     </div>
@@ -21,18 +21,18 @@
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-dtAction='{"type":"enabled"}'>{{ app.language.get('enabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"disabled"}'>{{ app.language.get('disabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                                <li><a data-dtAction='{"type":"enabled"}'>{{ shift.lib.language.get('enabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"disabled"}'>{{ shift.lib.language.get('disabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"delete"}'>{{ shift.lib.language.get('delete') }}</a></li>
                             </ul>
                         </div>
                     </th>
-                    <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="min-width:200px">{{ app.language.get('title') }}</th>
-                    <th style="width:200px;">{{ app.language.get('created') }}</th>
-                    <th style="width:200px;">{{ app.language.get('updated') }}</th>
-                    <th style="width:120px">{{ app.language.get('status') }}</th>
-                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                    <th style="width:60px;">{{ shift.lib.language.get('id') }}</th>
+                    <th style="min-width:200px">{{ shift.lib.language.get('title') }}</th>
+                    <th style="width:200px;">{{ shift.lib.language.get('created') }}</th>
+                    <th style="width:200px;">{{ shift.lib.language.get('updated') }}</th>
+                    <th style="width:120px">{{ shift.lib.language.get('status') }}</th>
+                    <th style="width:80px;">{{ shift.lib.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
                     <td class="ukt-pt-1">
@@ -57,18 +57,18 @@
                     <td data-dtinputfilter='{"type":"number"}'>
                         <select data-index="5" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('enabled') }}</option>
-                            <option value="0">{{ app.language.get('disabled') }}</option>
+                            <option value="1">{{ shift.lib.language.get('enabled') }}</option>
+                            <option value="0">{{ shift.lib.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td class="uk-text-center">
-                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ shift.lib.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="7" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                    <td colspan="7" class="dataTables_empty"><i>{{ shift.lib.language.get('loading') }}</i></td>
                 </tr>
             </tbody>
         </table>
@@ -81,7 +81,7 @@ let tableEl     = '#contentTag-list',
     columnsHide = [3], // created
     dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
-            url  : "{{ app.router.url('content/tag/list')|raw }}",
+            url  : "{{ shift.lib.router.url('content/tag/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
                 d.timezone = getVisitorTimezone();
@@ -129,17 +129,17 @@ let tableEl     = '#contentTag-list',
             { data : 'tag_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ app.language.get("edit") }}"><i class="bi bi-pencil"></i></a>';
+                    output  = '<a href="' + full.url_edit + '" uk-tooltip title="{{ shift.lib.language.get("edit") }}"><i class="bi bi-pencil"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
                     if (full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.tag_id + '"}\'>{{ shift.lib.language.get("disabled") }}</a></li>';
                     } else {
-                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.tag_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.tag_id + '"}\'>{{ shift.lib.language.get("enabled") }}</a></li>';
                     }
-                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.tag_id + '"}\'> {{ app.language.get("delete") }}</a></li>';
+                    output += '           <li><a data-dtAction=\'{"type":"delete", "item":"' + full.tag_id + '"}\'> {{ shift.lib.language.get("delete") }}</a></li>';
                     output += '        </ul>';
                     output += '    </div>';
                     output += '</div>';
@@ -157,7 +157,7 @@ let tableEl     = '#contentTag-list',
         let data = $(this).data('dtaction');
 
         $.fn.shift.dtAction({
-            url  : "{{ app.router.url('content/tag/dtaction')|raw }}",
+            url  : "{{ shift.lib.router.url('content/tag/dtaction')|raw }}",
             data : data,
             validate : function(dtActionProceed) {
                 if (data.type === 'delete') {

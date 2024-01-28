@@ -5,10 +5,10 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <a href="{{ app.router.url('account/usergroup/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add_new') }}</a>
+                <a href="{{ shift.lib.router.url('account/usergroup/form') }}" class="uk-button uk-button-primary">{{ shift.lib.language.get('add_new') }}</a>
             </div>
         </div>
     </div>
@@ -21,17 +21,17 @@
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-dtAction='{"type":"enabled"}'>{{ app.language.get('enabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"disabled"}'>{{ app.language.get('disabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                                <li><a data-dtAction='{"type":"enabled"}'>{{ shift.lib.language.get('enabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"disabled"}'>{{ shift.lib.language.get('disabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"delete"}'>{{ shift.lib.language.get('delete') }}</a></li>
                             </ul>
                         </div>
                     </th>
-                    <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
-                    <th style="width:140px">{{ app.language.get('backend') }}</th>
-                    <th style="width:140px">{{ app.language.get('status') }}</th>
-                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                    <th style="width:60px;">{{ shift.lib.language.get('id') }}</th>
+                    <th style="min-width:200px">{{ shift.lib.language.get('name') }}</th>
+                    <th style="width:140px">{{ shift.lib.language.get('backend') }}</th>
+                    <th style="width:140px">{{ shift.lib.language.get('status') }}</th>
+                    <th style="width:80px;">{{ shift.lib.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
                     <td class="ukt-pt-1">
@@ -46,25 +46,25 @@
                     <td data-dtinputfilter='{"type":"number", "mode":"match"}'>
                         <select data-index="3" class="uk-select">
                             <option value=""></option>
-                            <option value="0">{{ app.language.get('no') }}</option>
-                            <option value="1">{{ app.language.get('yes') }}</option>
+                            <option value="0">{{ shift.lib.language.get('no') }}</option>
+                            <option value="1">{{ shift.lib.language.get('yes') }}</option>
                         </select>
                     </td>
                     <td data-dtinputfilter='{"type":"number", "mode":"match"}'>
                         <select data-index="4" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('enabled') }}</option>
-                            <option value="0">{{ app.language.get('disabled') }}</option>
+                            <option value="1">{{ shift.lib.language.get('enabled') }}</option>
+                            <option value="0">{{ shift.lib.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td class="uk-text-center">
-                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ shift.lib.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="6" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                    <td colspan="6" class="dataTables_empty"><i>{{ shift.lib.language.get('loading') }}</i></td>
                 </tr>
             </tbody>
         </table>
@@ -77,7 +77,7 @@ let tableEl    = '#accountUserGroup-list',
     columnsHide = [],
     dtTable    = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
-            url  : "{{ app.router.url('account/usergroup/list')|raw }}",
+            url  : "{{ shift.lib.router.url('account/usergroup/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
                 d.timezone = getVisitorTimezone();
@@ -152,7 +152,7 @@ let tableEl    = '#accountUserGroup-list',
         let data = $(this).data('dtaction');
 
         $.fn.shift.dtAction({
-            url  : "{{ app.router.url('account/usergroup/dtaction')|raw }}",
+            url  : "{{ shift.lib.router.url('account/usergroup/dtaction')|raw }}",
             data : data,
             validate : function(dtActionProceed) {
                 if (data.type === 'delete') {

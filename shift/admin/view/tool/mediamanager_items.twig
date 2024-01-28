@@ -8,15 +8,15 @@
                     <img src="{{ file.thumbnail }}" uk-cover>
                     <div class="button-wrapper">
                         {% if inModal %}
-                            <button class="uk-button uk-button-primary button-action" uk-tooltip title="{{ app.language.get('select_image') }}" data-mm-select='{{ file|json_encode() }}'>
+                            <button class="uk-button uk-button-primary button-action" uk-tooltip title="{{ shift.lib.language.get('select_image') }}" data-mm-select='{{ file|json_encode() }}'>
                                 <i class="bi bi-check2-square"></i>
                             </button>
                         {% endif %}
                         {% if not inModal %}
-                            <button class="uk-button uk-button-gray button-action" uk-tooltip title="{{ app.language.get('rename') }}" data-mm-action='{"action":"rename", "folder":"{{ file.folder }}", "basename":"{{ file.basename }}", "ext":"{{ file.extension }}"}'>
+                            <button class="uk-button uk-button-gray button-action" uk-tooltip title="{{ shift.lib.language.get('rename') }}" data-mm-action='{"action":"rename", "folder":"{{ file.folder }}", "basename":"{{ file.basename }}", "ext":"{{ file.extension }}"}'>
                                 <i class="bi bi-pencil uk-text-primary"></i>
                             </button>
-                            <button class="uk-button uk-button-gray button-action" uk-tooltip title="{{ app.language.get('delete') }}" data-mm-action='{"action":"delete", "folder":"{{ file.folder }}", "filename":"{{ file.filename }}"}'>
+                            <button class="uk-button uk-button-gray button-action" uk-tooltip title="{{ shift.lib.language.get('delete') }}" data-mm-action='{"action":"delete", "folder":"{{ file.folder }}", "filename":"{{ file.filename }}"}'>
                                 <i class="bi bi-trash uk-text-danger"></i>
                             </button>
                         {% endif %}
@@ -33,5 +33,5 @@
     </div>
 
 {% else %}
-    <p class="uk-text-small">{{ app.language.get('empty_folder') }}</p>
+    <p class="uk-text-small">{{ shift.lib.language.get('empty_folder') }}</p>
 {% endif %}

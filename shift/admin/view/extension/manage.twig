@@ -5,10 +5,10 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <button type="button" id="ext-upload-button" class="uk-button uk-button-primary"><i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('upload') }}</button>
+                <button type="button" id="ext-upload-button" class="uk-button uk-button-primary"><i class="bi bi-upload ukt-mr-1"></i> {{ shift.lib.language.get('upload') }}</button>
             </div>
         </div>
     </div>
@@ -21,21 +21,21 @@
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-dtAction='{"type":"enabled"}'>{{ app.language.get('enabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"disabled"}'>{{ app.language.get('disabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"delete"}'>{{ app.language.get('delete') }}</a></li>
+                                <li><a data-dtAction='{"type":"enabled"}'>{{ shift.lib.language.get('enabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"disabled"}'>{{ shift.lib.language.get('disabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"delete"}'>{{ shift.lib.language.get('delete') }}</a></li>
                             </ul>
                         </div>
                     </th>
-                    <th style="width:60px;">{{ app.language.get('id') }}</th>
-                    <th style="width:100px">{{ app.language.get('type') }}</th>
-                    <th style="width:140px">{{ app.language.get('codename') }}</th>
-                    <th style="min-width:200px">{{ app.language.get('name') }}</th>
-                    <th style="width:140px">{{ app.language.get('author') }}</th>
-                    <th style="width:85px">{{ app.language.get('version') }}</th>
-                    <th style="width:110px">{{ app.language.get('installed') }}</th>
-                    <th style="width:90px">{{ app.language.get('status') }}</th>
-                    <th style="width:80px;">{{ app.language.get('action') }}</th>
+                    <th style="width:60px;">{{ shift.lib.language.get('id') }}</th>
+                    <th style="width:100px">{{ shift.lib.language.get('type') }}</th>
+                    <th style="width:140px">{{ shift.lib.language.get('codename') }}</th>
+                    <th style="min-width:200px">{{ shift.lib.language.get('name') }}</th>
+                    <th style="width:140px">{{ shift.lib.language.get('author') }}</th>
+                    <th style="width:85px">{{ shift.lib.language.get('version') }}</th>
+                    <th style="width:110px">{{ shift.lib.language.get('installed') }}</th>
+                    <th style="width:90px">{{ shift.lib.language.get('status') }}</th>
+                    <th style="width:80px;">{{ shift.lib.language.get('action') }}</th>
                 </tr>
                 <tr data-dtColumnFilter>
                     <td class="ukt-pt-1">
@@ -47,10 +47,10 @@
                     <td data-dtinputfilter='{"type":"text"}'>
                         <select data-index="2" class="uk-select">
                             <option value=""></option>
-                            <option value="plugin">{{ app.language.get('plugin') }}</option>
-                            <option value="module">{{ app.language.get('module') }}</option>
-                            <option value="theme">{{ app.language.get('theme') }}</option>
-                            <option value="language">{{ app.language.get('language') }}</option>
+                            <option value="plugin">{{ shift.lib.language.get('plugin') }}</option>
+                            <option value="module">{{ shift.lib.language.get('module') }}</option>
+                            <option value="theme">{{ shift.lib.language.get('theme') }}</option>
+                            <option value="language">{{ shift.lib.language.get('language') }}</option>
                         </select>
                     </td>
                     <td data-dtinputfilter='{"type":"string"}'>
@@ -68,25 +68,25 @@
                     <td data-dtinputfilter='{"type":"number"}'>
                         <select data-index="7" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('installed') }}</option>
-                            <option value="0">{{ app.language.get('installed_not') }}</option>
+                            <option value="1">{{ shift.lib.language.get('installed') }}</option>
+                            <option value="0">{{ shift.lib.language.get('installed_not') }}</option>
                         </select>
                     </td>
                     <td data-dtinputfilter='{"type":"number"}'>
                         <select data-index="8" class="uk-select">
                             <option value=""></option>
-                            <option value="1">{{ app.language.get('enabled') }}</option>
-                            <option value="0">{{ app.language.get('disabled') }}</option>
+                            <option value="1">{{ shift.lib.language.get('enabled') }}</option>
+                            <option value="0">{{ shift.lib.language.get('disabled') }}</option>
                         </select>
                     </td>
                     <td class="uk-text-center">
-                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ app.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
+                        <a class="uk-button uk-text-warning" data-dtClearSearch uk-tooltip title="{{ shift.lib.language.get('search_clear') }}"><i class="bi bi-x-square-fill"></i></a>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="10" class="dataTables_empty"><i>{{ app.language.get('loading') }}</i></td>
+                    <td colspan="10" class="dataTables_empty"><i>{{ shift.lib.language.get('loading') }}</i></td>
                 </tr>
             </tbody>
         </table>
@@ -100,7 +100,7 @@
 
     <div id="ext-upload-progress" uk-modal='{"esc-close":false, bg-close:false}'>
         <div class="uk-modal-dialog uk-modal-body">
-            <h2 class="uk-modal-title">{{ app.language.get('upload') }}</h2>
+            <h2 class="uk-modal-title">{{ shift.lib.language.get('upload') }}</h2>
 
             <progress class="uk-progress" value="0" max="100"></progress>
             <div class="ext-upload-message ukt-mb-4"></div>
@@ -117,7 +117,7 @@
         <div class="uk-modal-dialog uk-modal-body uk-width-750">
             <button class="uk-modal-close-outside" type="button" uk-close></button>
             <div id="ext-info-content">
-                {{ app.language.get('processing') }}
+                {{ shift.lib.language.get('processing') }}
             </div>
         </div>
     </div>
@@ -126,18 +126,18 @@
 <script>
 $(document).ready(function() {
 $.extend(shift.i18n, {
-    uploading : '{{ app.language.get("uploading")|raw }}',
-    install_0 : '{{ app.language.get("install_0") }}',
-    install_1 : '{{ app.language.get("install_1") }}',
-    confirm_delete : '{{ app.language.get("confirm_delete")|raw }}',
-    confirm_uninstall : '{{ app.language.get("confirm_uninstall")|raw }}',
+    uploading : '{{ shift.lib.language.get("uploading")|raw }}',
+    install_0 : '{{ shift.lib.language.get("install_0") }}',
+    install_1 : '{{ shift.lib.language.get("install_1") }}',
+    confirm_delete : '{{ shift.lib.language.get("confirm_delete")|raw }}',
+    confirm_uninstall : '{{ shift.lib.language.get("confirm_uninstall")|raw }}',
 });
 
 let tableEl     = '#extensionManage-list',
     columnsHide = [],
     dtTable     = $(tableEl).DataTable({
         ajax : $.fn.dataTable.pipeline({
-            url  : "{{ app.router.url('extension/manage/list')|raw }}",
+            url  : "{{ shift.lib.router.url('extension/manage/list')|raw }}",
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
                 d.timezone = getVisitorTimezone();
@@ -177,8 +177,8 @@ let tableEl     = '#extensionManage-list',
                 render : function(data, type, full) {
                     output = data;
                     if (full.version_meta && full.version != full.version_meta) {
-                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ app.language.get("information") }}">';
-                        output += '<b>*</b> {{ app.language.get("new") }} v' + full.version_meta;
+                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
+                        output += '<b>*</b> {{ shift.lib.language.get("new") }} v' + full.version_meta;
                         output += '</a>';
                     }
                     return output;
@@ -211,27 +211,27 @@ let tableEl     = '#extensionManage-list',
             { data : 'extension_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output = '<a data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ app.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
+                    output = '<a data-dtAction=\'{"type":"info", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
                     if (full.status) {
-                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\'>{{ app.language.get("disabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("disabled") }}</a></li>';
                     } else {
                         if (full.install) {
-                            output += '   <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\'>{{ app.language.get("enabled") }}</a></li>';
+                            output += '   <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("enabled") }}</a></li>';
                         } else {
-                            output += '   <li><a class="uk-link-muted">{{ app.language.get("enabled") }}</a></li>';
+                            output += '   <li><a class="uk-link-muted">{{ shift.lib.language.get("enabled") }}</a></li>';
                         }
                     }
                     output += '           <li class="uk-nav-divider"></li>';
                     if (full.install) {
-                        output += '       <li><a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\'>{{ app.language.get("uninstall") }}</a></li>';
-                        output += '       <li><a class="uk-link-muted">{{ app.language.get("delete") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("uninstall") }}</a></li>';
+                        output += '       <li><a class="uk-link-muted">{{ shift.lib.language.get("delete") }}</a></li>';
                     } else {
-                        output += '       <li><a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\'>{{ app.language.get("install") }}</a></li>';
-                        output += '       <li><a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\'>{{ app.language.get("delete") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("install") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("delete") }}</a></li>';
                     }
                     output += '        </ul>';
                     output += '    </div>';
@@ -253,7 +253,7 @@ $('.main-content').on('click', '[data-dtAction]', function(e) {
         extensionInfo(data);
     } else {
         $.fn.shift.dtAction({
-            url  : "{{ app.router.url('extension/manage/dtaction')|raw }}",
+            url  : "{{ shift.lib.router.url('extension/manage/dtaction')|raw }}",
             data : data,
             validate : function(dtActionProceed) {
                 if (data.type === 'uninstall') {
@@ -285,7 +285,7 @@ $('#ext-upload-button').on('click', function(e) {
             elProgress = $('#ext-upload-progress .uk-progress');
 
         $.ajax({
-            url  : "{{ app.router.url('extension/manage/upload')|raw }}",
+            url  : "{{ shift.lib.router.url('extension/manage/upload')|raw }}",
             type : 'POST',
             data : new FormData($('#ext-upload-form')[0]),
             dataType : 'json',
@@ -320,7 +320,7 @@ $('#ext-upload-button').on('click', function(e) {
                     if (data.success) {
                         elProgress.attr('value', 100);
 
-                        $.get("{{ app.router.url('extension/manage/syncExtensions')|raw }}", function(data) {
+                        $.get("{{ shift.lib.router.url('extension/manage/syncExtensions')|raw }}", function(data) {
                             $('.main-content').find('[data-dtreload]').first().trigger('click');
                         });
                     }
@@ -337,13 +337,13 @@ $('#ext-upload-button').on('click', function(e) {
 });
 
 function extensionInfo(params) {
-    $.get("{{ app.router.url('extension/manage/info')|raw }}", params, function(data) {
+    $.get("{{ shift.lib.router.url('extension/manage/info')|raw }}", params, function(data) {
         $('#ext-info-content').html(data);
         UIkit.modal('#ext-information').show();
     });
 
     UIkit.util.on('#ext-information', 'hidden', function() {
-        $('#ext-info-content').html("{{ app.language.get('processing') }}");
+        $('#ext-info-content').html("{{ shift.lib.language.get('processing') }}");
     });
 }
 </script>

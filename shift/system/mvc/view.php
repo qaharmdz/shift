@@ -89,7 +89,7 @@ class View
             'cache'            => $this->config['debug'] ? false : $this->config['path_cache'],
         ]);
 
-        $twig->addGlobal('app', $this->global);
+        $twig->addGlobal('shift', $this->global);
         $twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone($this->config['timezone']);
 
         $twig->addFunction(new TwigFunction('combine', 'array_combine'));

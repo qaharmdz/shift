@@ -7,10 +7,10 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <button class="uk-button uk-button-danger" data-cache-clear="all"><i class="bi bi-trash ukt-mr-1"></i> {{ app.language.get('purge') }}</button>
+                <button class="uk-button uk-button-danger" data-cache-clear="all"><i class="bi bi-trash ukt-mr-1"></i> {{ shift.lib.language.get('purge') }}</button>
             </div>
         </div>
     </div>
@@ -20,26 +20,26 @@
             <div>
                 <div class="uk-card-panel uk-card-body">
                     <fieldset class="uk-fieldset">
-                        <legend class="uk-legend">{{ app.language.get('general') }}</legend>
+                        <legend class="uk-legend">{{ shift.lib.language.get('general') }}</legend>
 
                         <p>
-                            {{ app.language.get('driver') }}: {{ cache_general.driver }}<br>
-                            {{ app.language.get('default_ttl') }}: {{ cache_general.default_ttl }}<br>
-                            {{ app.language.get('total_size') }}: <span class="cache_general_size">{{ cache_general.size }}</span>
+                            {{ shift.lib.language.get('driver') }}: {{ cache_general.driver }}<br>
+                            {{ shift.lib.language.get('default_ttl') }}: {{ cache_general.default_ttl }}<br>
+                            {{ shift.lib.language.get('total_size') }}: <span class="cache_general_size">{{ cache_general.size }}</span>
                         </p>
                         <p><span class="cache_general_info">{{ cache_general.info }}</span></p>
 
-                        <button class="uk-button uk-button-secondary" data-cache-clear="general">{{ app.language.get('clear') }}</button>
+                        <button class="uk-button uk-button-secondary" data-cache-clear="general">{{ shift.lib.language.get('clear') }}</button>
                     </fieldset>
                 </div>
             </div>
             <div>
                 <div class="uk-card-panel uk-card-body">
                     <fieldset class="uk-fieldset">
-                        <legend class="uk-legend">{{ app.language.get('template') }}</legend>
+                        <legend class="uk-legend">{{ shift.lib.language.get('template') }}</legend>
 
-                        <p>{{ app.language.get('template_info') }}</p>
-                        <button class="uk-button uk-button-secondary" data-cache-clear="template">{{ app.language.get('clear') }}</button>
+                        <p>{{ shift.lib.language.get('template_info') }}</p>
+                        <button class="uk-button uk-button-secondary" data-cache-clear="template">{{ shift.lib.language.get('clear') }}</button>
                     </fieldset>
                 </div>
             </div>
@@ -47,10 +47,10 @@
             <div>
                 <div class="uk-card-panel uk-card-body">
                     <fieldset class="uk-fieldset">
-                        <legend class="uk-legend">{{ app.language.get('image') }}</legend>
+                        <legend class="uk-legend">{{ shift.lib.language.get('image') }}</legend>
 
-                        <p>{{ app.language.get('image_info') }}</p>
-                        <button class="uk-button uk-button-secondary" data-cache-clear="image">{{ app.language.get('clear') }}</button>
+                        <p>{{ shift.lib.language.get('image_info') }}</p>
+                        <button class="uk-button uk-button-secondary" data-cache-clear="image">{{ shift.lib.language.get('clear') }}</button>
                     </fieldset>
                 </div>
             </div>
@@ -66,10 +66,10 @@ $(document).ready(function() {
 
         $.fn.shift.confirm({
             title     : shift.i18n.are_you_sure,
-            message   : '{{ app.language.get("confirm_clear")|raw }}',
+            message   : '{{ shift.lib.language.get("confirm_clear")|raw }}',
             onConfirm : function() {
                 $.ajax({
-                    url     : '{{ app.router.url("tool/cache/clear")|raw }}',
+                    url     : '{{ shift.lib.router.url("tool/cache/clear")|raw }}',
                     type    : 'POST',
                     data    : {'clear' : target},
                     dataType: 'json',

@@ -2,7 +2,7 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto"></div>
         </div>
@@ -15,9 +15,9 @@
             <div>
                 <div class="mediamanager-sidebar" uk-overflow-auto>
                     <div class="panel-tree-root jstree-default">
-                        <a data-tree-addroot class="ukt-ml-1" uk-tooltip title="{{ app.language.get('root_folder_add') }}"><i class="bi bi-plus-square-fill"></i></a>
-                        {{ app.language.get('media_folder') }}
-                        <a data-tree-reload class="ukt-ml-2" uk-tooltip title="{{ app.language.get('root_folder_reload') }}"><i class="bi bi-arrow-repeat"></i></a>
+                        <a data-tree-addroot class="ukt-ml-1" uk-tooltip title="{{ shift.lib.language.get('root_folder_add') }}"><i class="bi bi-plus-square-fill"></i></a>
+                        {{ shift.lib.language.get('media_folder') }}
+                        <a data-tree-reload class="ukt-ml-2" uk-tooltip title="{{ shift.lib.language.get('root_folder_reload') }}"><i class="bi bi-arrow-repeat"></i></a>
                     </div>
                     <div class="panel-tree"></div>
                 </div>
@@ -34,10 +34,10 @@
 <script>
 $(document).ready(function() {
     $.extend(shift.i18n, {
-        rename     : '{{ app.language.get("rename") }}',
-        new_folder : '{{ app.language.get("new_folder") }}',
-        confirm_delete_file : '{{ app.language.get("confirm_delete_file")|raw }}',
-        confirm_delete_folder : '{{ app.language.get("confirm_delete_folder")|raw }}',
+        rename     : '{{ shift.lib.language.get("rename") }}',
+        new_folder : '{{ shift.lib.language.get("new_folder") }}',
+        confirm_delete_file : '{{ shift.lib.language.get("confirm_delete_file")|raw }}',
+        confirm_delete_folder : '{{ shift.lib.language.get("confirm_delete_folder")|raw }}',
     });
 
     let treeLastNode = '',
@@ -47,7 +47,7 @@ $(document).ready(function() {
         'core' : {
             'data' : {
                 'type'  : 'POST',
-                'url'   : "{{ app.router.url('tool/mediamanager/getFolders')|raw }}",
+                'url'   : "{{ shift.lib.router.url('tool/mediamanager/getFolders')|raw }}",
                 'data'  : function(node) {
                     return { 'folder':node.id };
                 }
@@ -120,7 +120,7 @@ $(document).ready(function() {
     })
     // jsTree context action
     .on('create_node.jstree', function(e, data) {
-        $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'create_node', 'parent':data.node.parent, 'text':data.node.text })
+        $.post("{{ shift.lib.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'create_node', 'parent':data.node.parent, 'text':data.node.text })
             .done(function(d) {
                 data.instance.set_id(data.node, d.id);
             })
@@ -129,7 +129,7 @@ $(document).ready(function() {
             });
     })
     .on('rename_node.jstree', function(e, data) {
-        $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'rename_node', 'parent':data.node.parent, 'folder':data.node.id, 'text':data.text })
+        $.post("{{ shift.lib.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'rename_node', 'parent':data.node.parent, 'folder':data.node.id, 'text':data.text })
             .done(function(d) {
                 if (d.length) {
                     data.instance.set_id(data.node, d.id);
@@ -150,7 +150,7 @@ $(document).ready(function() {
             title       : shift.i18n.are_you_sure,
             message   : shift.i18n.confirm_delete_folder,
             onConfirm : function() {
-                $.post("{{ app.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'delete_node', 'parent':data.node.parent, 'folder':data.node.id })
+                $.post("{{ shift.lib.router.url('tool/mediamanager/folderAction')|raw }}", { 'action':'delete_node', 'parent':data.node.parent, 'folder':data.node.id })
                     .done(function(d) {
                         treeLastNode = data.node.parent;
                         data.instance.refresh();
@@ -188,7 +188,7 @@ $(document).ready(function() {
                 onAction : function(value) {
                     if ($.trim(value) && data.basename != $.trim(value)) {
                         data.rename = value;
-                        $.post("{{ app.router.url('tool/mediamanager/itemAction')|raw }}", data)
+                        $.post("{{ shift.lib.router.url('tool/mediamanager/itemAction')|raw }}", data)
                             .done(function(d) {
                                 if (d.status) {
                                     loadFolderItems(treeNodeId);
@@ -204,7 +204,7 @@ $(document).ready(function() {
                 title       : shift.i18n.are_you_sure,
                 message     : shift.i18n.confirm_delete_file,
                 onConfirm   : function() {
-                    $.post("{{ app.router.url('tool/mediamanager/itemAction')|raw }}", data)
+                    $.post("{{ shift.lib.router.url('tool/mediamanager/itemAction')|raw }}", data)
                         .done(function(d) {
                             if (d.status) {
                                 loadFolderItems(treeNodeId);
@@ -244,6 +244,6 @@ $(document).ready(function() {
 
 function loadFolderItems(nodeId) {
     $('.mediamanager-id-{{ identifier }} .mediamanager-content').html('<div class="ukt-mr-2" uk-spinner="ratio:.5"></div><i>' + shift.i18n.loading + '</i>');
-    $('.mediamanager-id-{{ identifier }} .mediamanager-content').load("{{ app.router.url('tool/mediamanager/getItems')|raw }}", { folder: nodeId, inModal: {{ inModal ? 1 : 0 }} });
+    $('.mediamanager-id-{{ identifier }} .mediamanager-content').load("{{ shift.lib.router.url('tool/mediamanager/getItems')|raw }}", { folder: nodeId, inModal: {{ inModal ? 1 : 0 }} });
 }
 </script>

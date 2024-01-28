@@ -4,12 +4,12 @@
 {% block content %}
 <div class="content-header">
     <h1 class="ukt-m-0">
-        Shift<span class="uk-sub-title">{{ app.language.get('license_agreement') }}</span>
+        Shift<span class="uk-sub-title">{{ shift.lib.language.get('license_agreement') }}</span>
     </h1>
 </div>
 <div class="content-body uk-card-panel uk-card-body">
 
-    {# <p>{{ app.language.get('read_agreement') }}</p> #}
+    {# <p>{{ shift.lib.language.get('read_agreement') }}</p> #}
 
 <pre><code>Shift - Pragmatic Content Management
 Copyright (c) Mudzakkir &lt;https://github.com/qaharmdz>
@@ -26,11 +26,11 @@ You should have received a copy of the GNU General Public License along with thi
 If not, see &lt;https://www.gnu.org/licenses/>.
 </code></pre>
 
-    <p class="ukt-mt-5">{{ app.language.get('detail_agreement')|raw }}</p>
+    <p class="ukt-mt-5">{{ shift.lib.language.get('detail_agreement')|raw }}</p>
 
     <div class="uk-flex uk-flex-center ukt-mt-5">
         <div>
-            <a href="{{ app.router.url('page/requirement') }}" class="uk-button uk-button-primary">{{ app.language.get('agree_continue') }}</a>
+            <a href="{{ shift.lib.router.url('page/requirement') }}" class="uk-button uk-button-primary">{{ shift.lib.language.get('agree_continue') }}</a>
         </div>
     </div>
 </div>

@@ -1,14 +1,14 @@
 {% extends 'main.tpl.twig' %}
 
 {% block main_content %}
-<div class="uk-container container-content-wrapper">
+<div class="uk-container container-content-wrapper {{ sites|length == 1 ? 'uk-container-small' }}">
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <a href="{{ app.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ app.language.get('add_new') }}</a>
+                <a href="{{ shift.lib.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ shift.lib.language.get('add_new') }}</a>
             </div>
         </div>
     </div>

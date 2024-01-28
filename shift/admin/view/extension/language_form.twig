@@ -7,27 +7,27 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-language", "extension_id":"{{ extension_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-language", "extension_id":"{{ extension_id }}"}'>{{ shift.lib.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-language", "action":"close", "extension_id":"{{ extension_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-language", "action":"close", "extension_id":"{{ extension_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ shift.lib.language.get('save_close') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('extension/language') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get('close') }}</a>
+                <a href="{{ shift.lib.router.url('extension/language') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ shift.lib.language.get('close') }}</a>
             </div>
         </div>
     </div>
 
     <div class="content-body uk-card-panel uk-card-body">
-        <form id="form-language" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('extension/language/save') }}" method="post" data-form-monitor>
+        <form id="form-language" class="uk-form-horizontal uk-form-margin-hover" action="{{ shift.lib.router.url('extension/language/save') }}" method="post" data-form-monitor>
             {{ forms.text({'label':'name','text':setting.name}) }}
             {{ forms.text({'label':'codename','text':'<code>' ~ setting.codename ~ '</code>'}) }}
             {{ forms.input({'type':'text', 'label':'locale', 'name':'setting[locale]', 'value':setting.setting.locale, 'class':'uk-width-2-3', 'required': true}) }}

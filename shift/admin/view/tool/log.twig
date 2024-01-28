@@ -5,7 +5,7 @@
     <div class="content-header uk-text-center uk-text-left@m">
         <div class="uk-grid" uk-grid>
             <div class="uk-width-expand@m">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto@m">
                 <div class="uk-inline">
@@ -28,9 +28,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="uk-button uk-button-default ukt-px-3 ukt-ml-1" data-log-clear><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ app.language.get('clear') }}</button>
-                <button type="submit" class="uk-button uk-button-secondary ukt-px-3 ukt-ml-3" form="form-log"><i class="bi bi-download ukt-mr-1"></i> {{ app.language.get('download') }}</button>
-                <button type="submit" class="uk-button uk-button-danger ukt-px-3 ukt-ml-1" data-log-delete><i class="bi bi-trash ukt-mr-1"></i> {{ app.language.get('delete') }}</button>
+                <button type="submit" class="uk-button uk-button-default ukt-px-3 ukt-ml-1" data-log-clear><i class="bi bi-eraser-fill ukt-mr-1"></i> {{ shift.lib.language.get('clear') }}</button>
+                <button type="submit" class="uk-button uk-button-secondary ukt-px-3 ukt-ml-3" form="form-log"><i class="bi bi-download ukt-mr-1"></i> {{ shift.lib.language.get('download') }}</button>
+                <button type="submit" class="uk-button uk-button-danger ukt-px-3 ukt-ml-1" data-log-delete><i class="bi bi-trash ukt-mr-1"></i> {{ shift.lib.language.get('delete') }}</button>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
         {% endif %}
 
         <div class="uk-hidden">
-            <form id="form-log" action="{{ app.router.url('tool/log/action', 'submit=download') }}" method="post">
+            <form id="form-log" action="{{ shift.lib.router.url('tool/log/action', 'submit=download') }}" method="post">
                 <input type="text" name="file" value="{{ fileinfo.file }}">
             </form>
         </div>
@@ -61,9 +61,9 @@ $(document).ready(function() {
         e.preventDefault();
         $.fn.shift.confirm({
             title     : shift.i18n.are_you_sure,
-            message   : '{{ app.language.get("confirm_clear")|raw }}',
+            message   : '{{ shift.lib.language.get("confirm_clear")|raw }}',
             onConfirm : function() {
-                $('#form-log').attr('action', "{{ app.router.url('tool/log/action', 'submit=clear')|raw }}").submit();
+                $('#form-log').attr('action', "{{ shift.lib.router.url('tool/log/action', 'submit=clear')|raw }}").submit();
             }
         });
     });
@@ -72,9 +72,9 @@ $(document).ready(function() {
         e.preventDefault();
         $.fn.shift.confirm({
             title     : shift.i18n.are_you_sure,
-            message   : '{{ app.language.get("confirm_delete")|raw }}',
+            message   : '{{ shift.lib.language.get("confirm_delete")|raw }}',
             onConfirm : function() {
-                $('#form-log').attr('action', "{{ app.router.url('tool/log/action', 'submit=delete')|raw }}").submit();
+                $('#form-log').attr('action', "{{ shift.lib.router.url('tool/log/action', 'submit=delete')|raw }}").submit();
             }
         });
     });
@@ -110,10 +110,10 @@ $(document).ready(function() {
                 html += '<b title="' + _logDate + '">' + formatDate(_logDate) + '</b>';
                 html += ' - <span class="uk-label ' + label + '">' + _logType + '</span>';
                 if (_logMessage) {
-                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ app.language.get("message") }}</b>: ' + _logMessage.trim() + '</div>';
+                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ shift.lib.language.get("message") }}</b>: ' + _logMessage.trim() + '</div>';
                 }
                 if ('uri' in _logContextObj) {
-                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ app.language.get("context") }}</b>: ' + JSON.stringify(_logContextObj, null, 4) + '</div>';
+                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ shift.lib.language.get("context") }}</b>: ' + JSON.stringify(_logContextObj, null, 4) + '</div>';
                 }
                 html += '</div>';
 

@@ -12,15 +12,15 @@
                         {{ language|raw }}
                     </li>
                     <li>
-                        <a>{{ app.language.get('blockHeader.account') }} <span uk-drop-parent-icon></span></a>
+                        <a>{{ shift.lib.language.get('blockHeader.account') }} <span uk-drop-parent-icon></span></a>
                         <div class="uk-navbar-dropdown uk-width-small" uk-dropdown="offset:0; pos:bottom-right;">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 {% if logged %}
-                                    <li><a href="{{ app.router.url('account/account') }}">{{ app.language.get('blockHeader.account') }}</a></li>
-                                    <li><a href="{{ app.router.url('account/logout') }}">{{ app.language.get('blockHeader.logout') }}</a></li>
+                                    <li><a href="{{ shift.lib.router.url('account/account') }}">{{ shift.lib.language.get('blockHeader.account') }}</a></li>
+                                    <li><a href="{{ shift.lib.router.url('account/logout') }}">{{ shift.lib.language.get('blockHeader.logout') }}</a></li>
                                 {% else %}
-                                    <li><a href="{{ app.router.url('account/register') }}">{{ app.language.get('blockHeader.register') }}</a></li>
-                                    <li><a href="{{ app.router.url('account/login') }}">{{ app.language.get('blockHeader.login') }}</a></li>
+                                    <li><a href="{{ shift.lib.router.url('account/register') }}">{{ shift.lib.language.get('blockHeader.register') }}</a></li>
+                                    <li><a href="{{ shift.lib.router.url('account/login') }}">{{ shift.lib.language.get('blockHeader.login') }}</a></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -36,11 +36,11 @@
         <div class="uk-grid uk-flex-middle nav-boundary" uk-grid>
             <div class="uk-width-225 uk-visible@m">
                 {% if logo %}
-                    <a href="{{ app.router.url('page/home') }}">
-                        <img src="{{ logo }}" title="{{ app.config.get('system.site.name') }}" alt="{{ app.config.get('system.site.name') }}">
+                    <a href="{{ shift.lib.router.url('page/home') }}">
+                        <img src="{{ logo }}" title="{{ shift.lib.config.get('system.site.name') }}" alt="{{ shift.lib.config.get('system.site.name') }}">
                     </a>
                 {% else %}
-                    <h1><a href="{{ app.router.url('page/home') }}">{{ app.config.get('system.site.name') }}s</a></h1>
+                    <h1><a href="{{ shift.lib.router.url('page/home') }}">{{ shift.lib.config.get('system.site.name') }}s</a></h1>
                 {% endif %}
             </div>
             <div class="uk-width-expand">
@@ -75,11 +75,11 @@
 
                 <nav class="uk-navbar-container uk-navbar-transparent navbar-main navbar-main-mobile uk-hidden@m" uk-navbar>
                     <div class="uk-navbar-left">
-                        <a class="uk-navbar-item uk-logo uk-width-100 uk-padding-remove" href="{{ app.router.url('page/home') }}">
+                        <a class="uk-navbar-item uk-logo uk-width-100 uk-padding-remove" href="{{ shift.lib.router.url('page/home') }}">
                             {% if logo %}
-                                <img src="{{ logo }}" title="{{ app.config.get('system.site.name') }}" alt="{{ app.config.get('system.site.name') }}">
+                                <img src="{{ logo }}" title="{{ shift.lib.config.get('system.site.name') }}" alt="{{ shift.lib.config.get('system.site.name') }}">
                             {% else %}
-                                {{ app.config.get('system.site.name') }}
+                                {{ shift.lib.config.get('system.site.name') }}
                             {% endif %}
                         </a>
                     </div>

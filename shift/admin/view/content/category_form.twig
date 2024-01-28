@@ -7,28 +7,28 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-category", "category_id":"{{ category_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-category", "category_id":"{{ category_id }}"}'>{{ shift.lib.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-category", "action":"close", "category_id":"{{ category_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
-                                <li><a data-form-submit='{"form":"#form-category", "action":"new", "category_id":"{{ category_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-category", "action":"close", "category_id":"{{ category_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ shift.lib.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-category", "action":"new", "category_id":"{{ category_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ shift.lib.language.get('save_new') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('content/category') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(category_id ? 'close' : 'cancel') }}</a>
+                <a href="{{ shift.lib.router.url('content/category') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ shift.lib.language.get(category_id ? 'close' : 'cancel') }}</a>
             </div>
         </div>
     </div>
 
     <div class="content-body">
-        <form id="form-category" class="uk-form-margin-hover" action="{{ app.router.url('content/category/save') }}" method="post" data-form-monitor>
+        <form id="form-category" class="uk-form-margin-hover" action="{{ shift.lib.router.url('content/category/save') }}" method="post" data-form-monitor>
             <div uk-grid>
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">
@@ -37,7 +37,7 @@
                                 {% for language in languages %}
                                     <li class="{{ loop.first ? 'uk-active' : '' }}">
                                         <a href="#tab-lang-{{ language.extension_id }}">
-                                            <img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.codename }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.codename }}">
+                                            <img src="{{ shift.lib.config.get('env.url_site') }}media/flags/{{ language.codename }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.codename }}">
                                             {{ language.name }}
                                         </a>
                                     </li>
@@ -57,7 +57,7 @@
                                     </fieldset>
 
                                     <fieldset class="uk-fieldset">
-                                        <legend class="uk-legend">{{ app.language.get('metadata') }}</legend>
+                                        <legend class="uk-legend">{{ shift.lib.language.get('metadata') }}</legend>
 
                                         {{ forms.input({'label':'meta_title', 'name':'content[' ~ language.extension_id ~ '][meta_title]', 'value':setting.content[language.extension_id]['meta_title']}) }}
                                         {{ forms.textarea({'label':'meta_description', 'name':'content[' ~ language.extension_id ~ '][meta_description]', 'value':setting.content[language.extension_id]['meta_description']}) }}
@@ -70,7 +70,7 @@
 
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('taxonomy') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('taxonomy') }}</legend>
 
                             {% if sites|length > 1 %}
                                 {{ forms.checkboxPanel({'label':'sites', 'name':'sites[]', lists:sites, checked:setting.sites, 'list_text':'title', 'list_value':'site_id'}) }}
@@ -78,35 +78,35 @@
                                 {{ forms.hidden({'name':'sites[]', 'value':'0'}) }}
                             {% endif %}
                             {{ forms.select({'label':'parent', 'name':'parent_id', 'selected':setting.parent_id, 'class':'uk-width-2-3@m', 'opt_text':'title_level', 'opt_value':'category_id', 'attribute':'data-select-s2', 'options':[
-                                {'title_level': app.language.get('-none-'), 'category_id': 0}
+                                {'title_level': shift.lib.language.get('-none-'), 'category_id': 0}
                             ]|merge(categories)}) }}
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('posts') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('posts') }}</legend>
 
                             {{ forms.input({'type':'number', 'label':'post_per_page', 'name':'meta[post_per_page]', 'value':setting.meta.post_per_page, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
                             {{ forms.input({'type':'number', 'label':'post_lead', 'name':'meta[post_lead]', 'value':setting.meta.post_lead, 'class':'uk-width-75@m', 'attribute':'min="0"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'meta[post_lead_excerpt]', 'value':setting.meta.post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('characters') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'meta[post_lead_excerpt]', 'value':setting.meta.post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ shift.lib.language.get('characters') ~ '</span>'}) }}
                             {{ forms.input({'type':'number', 'label':'post_column', 'name':'meta[post_column]', 'value':setting.meta.post_column, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'meta[post_column_excerpt]', 'value':setting.meta.post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('characters') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'meta[post_column_excerpt]', 'value':setting.meta.post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ shift.lib.language.get('characters') ~ '</span>'}) }}
                             {{ forms.select({'label':'post_order', 'name':'meta[post_order]', 'selected':setting.meta.post_order, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('global'),'value': ''},
-                                {'text': app.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
-                                {'text': app.language.get('pc.title~desc'), 'value': 'pc.title~desc'},
-                                {'text': app.language.get('p.publish~asc'),'value': 'p.publish~asc'},
-                                {'text': app.language.get('p.publish~desc'), 'value': 'p.publish~desc'},
-                                {'text': app.language.get('p.updated~asc'),'value': 'p.updated~asc'},
-                                {'text': app.language.get('p.updated~desc'), 'value': 'p.updated~desc'},
-                                {'text': app.language.get('p.sort_order~asc'),'value': 'p.sort_order~asc'},
-                                {'text': app.language.get('p.sort_order~asc'), 'value': 'p.sort_order~desc'},
+                                {'text': shift.lib.language.get('global'),'value': ''},
+                                {'text': shift.lib.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
+                                {'text': shift.lib.language.get('pc.title~desc'), 'value': 'pc.title~desc'},
+                                {'text': shift.lib.language.get('p.publish~asc'),'value': 'p.publish~asc'},
+                                {'text': shift.lib.language.get('p.publish~desc'), 'value': 'p.publish~desc'},
+                                {'text': shift.lib.language.get('p.updated~asc'),'value': 'p.updated~asc'},
+                                {'text': shift.lib.language.get('p.updated~desc'), 'value': 'p.updated~desc'},
+                                {'text': shift.lib.language.get('p.sort_order~asc'),'value': 'p.sort_order~asc'},
+                                {'text': shift.lib.language.get('p.sort_order~asc'), 'value': 'p.sort_order~desc'},
                             ]}) }}
                         </fieldset>
                     </div>
 
                     <div class="uk-card-panel uk-card-body uk-form-stacked">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('design') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('design') }}</legend>
 
                             {{ forms.textarea({'label':'custom_code', 'name':'meta[custom_code]', 'value':setting.meta.custom_code, 'rows':10}) }}
                         </fieldset>
@@ -116,18 +116,18 @@
                 <div class="width-content-sidebar">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('settings') }}</legend>
 
                             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
-                                {'text': app.language.get('enabled'),  'value': 1},
-                                {'text': app.language.get('disabled'), 'value': 0}
+                                {'text': shift.lib.language.get('enabled'),  'value': 1},
+                                {'text': shift.lib.language.get('disabled'), 'value': 0}
                             ]}) }}
                             {{ forms.select({'label':'robots', 'name':'meta[robots]', 'selected':setting.meta.robots, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('global'),           'value': ''},
-                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
-                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
-                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
-                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+                                {'text': shift.lib.language.get('global'),           'value': ''},
+                                {'text': shift.lib.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': shift.lib.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': shift.lib.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': shift.lib.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
 
                             ]}) }}
                             {{ forms.input({'type':'number', 'label':'sort_order', 'name':'sort_order', 'value':setting.sort_order, 'class':'uk-width-75@m'}) }}
@@ -137,7 +137,7 @@
                     {% if mode == 'edit' %}
                         <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                             <fieldset class="uk-fieldset">
-                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+                                <legend class="uk-legend">{{ shift.lib.language.get('information') }}</legend>
 
                                 {{ forms.textDate({'label':'created','datetime':setting.created}) }}
                                 {{ forms.textDate({'label':'updated','datetime':setting.updated}) }}

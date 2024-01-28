@@ -4,7 +4,7 @@
 {% block content %}
 <div class="content-header">
     <h1 class="ukt-m-0">
-        Shift<span class="uk-sub-title">{{ app.language.get('configuration') }}</span>
+        Shift<span class="uk-sub-title">{{ shift.lib.language.get('configuration') }}</span>
     </h1>
 </div>
 <div class="content-body uk-card-panel uk-card-body uk-form-horizontal">
@@ -12,9 +12,9 @@
         <div class="uk-alert uk-alert-danger">{{ error }}</div>
     {% endif %}
 
-    <form id="form-post" class="uk-form-margin-hover" action="{{ app.router.url('page/config') }}" method="post" data-form-monitor>
+    <form id="form-post" class="uk-form-margin-hover" action="{{ shift.lib.router.url('page/config') }}" method="post" data-form-monitor>
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">{{ app.language.get('database_connection') }}</legend>
+            <legend class="uk-legend">{{ shift.lib.language.get('database_connection') }}</legend>
 
             {{ forms.input({'label':'hostname', 'name':'host', 'value': setting.host, 'class':'uk-width-250@m', 'required':true}) }}
             {{ forms.input({'label':'username', 'name':'username', 'value': setting.username, 'class':'uk-width-200@m', 'required':true}) }}
@@ -25,7 +25,7 @@
         </fieldset>
 
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">{{ app.language.get('initial_setup') }}</legend>
+            <legend class="uk-legend">{{ shift.lib.language.get('initial_setup') }}</legend>
 
             {{ forms.input({'label':'sitename', 'name':'sitename', 'value': setting.sitename, 'class':'uk-width-300@m'}) }}
             {{ forms.input({'type':'email', 'label':'email', 'name':'email', 'value': setting.email, 'class':'uk-width-300@m', 'required':true}) }}
@@ -35,10 +35,10 @@
 
         <div class="uk-flex uk-flex-between ukt-mt-5">
             <div>
-                <a href="{{ app.router.url('page/requirement') }}" class="uk-button uk-button-secondary">{{ app.language.get('back') }}</a>
+                <a href="{{ shift.lib.router.url('page/requirement') }}" class="uk-button uk-button-secondary">{{ shift.lib.language.get('back') }}</a>
             </div>
             <div>
-                <button type="submit" class="uk-button uk-button-primary">{{ app.language.get('submit') }}</button>
+                <button type="submit" class="uk-button uk-button-primary">{{ shift.lib.language.get('submit') }}</button>
             </div>
         </div>
     </form>

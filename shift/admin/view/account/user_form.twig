@@ -7,33 +7,33 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-user", "user_id":"{{ user_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-user", "user_id":"{{ user_id }}"}'>{{ shift.lib.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-user", "action":"close", "user_id":"{{ user_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
-                                <li><a data-form-submit='{"form":"#form-user", "action":"new", "user_id":"{{ user_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-user", "action":"close", "user_id":"{{ user_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ shift.lib.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-user", "action":"new", "user_id":"{{ user_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ shift.lib.language.get('save_new') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('account/user') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(user_id ? 'close' : 'cancel') }}</a>
+                <a href="{{ shift.lib.router.url('account/user') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ shift.lib.language.get(user_id ? 'close' : 'cancel') }}</a>
             </div>
         </div>
     </div>
 
     <div class="content-body">
-        <form id="form-user" class="uk-form-margin-hover" action="{{ app.router.url('account/user/save') }}" method="post" data-form-monitor>
+        <form id="form-user" class="uk-form-margin-hover" action="{{ shift.lib.router.url('account/user/save') }}" method="post" data-form-monitor>
             <div uk-grid>
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('account') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('account') }}</legend>
 
                             {{ forms.input({'label':'username', 'name':'username', 'value':setting.username, 'class':'uk-width-250@m', 'required':true}) }}
                             {{ forms.input({'label':'email', 'name':'email', 'value':setting.email, 'class':'uk-width-250@m', 'required':true}) }}
@@ -42,7 +42,7 @@
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('profile') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('profile') }}</legend>
 
                             {{ forms.input({'label':'firstname', 'name':'firstname', 'value':setting.firstname, 'class':'uk-width-250@m', 'required':true}) }}
                             {{ forms.input({'label':'lastname', 'name':'lastname', 'value':setting.lastname, 'class':'uk-width-250@m', 'required':true}) }}
@@ -54,12 +54,12 @@
                 <div class="width-content-sidebar">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('settings') }}</legend>
 
                             {{ forms.select({'label':'user_groups', 'name':'user_group_id', 'options':user_groups, 'selected':setting.user_group_id, 'class':'uk-width-200@m', 'opt_text': 'name', 'opt_value': 'user_group_id'}) }}
                             {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
-                                {'text': app.language.get('enabled'),  'value': 1},
-                                {'text': app.language.get('disabled'), 'value': 0}
+                                {'text': shift.lib.language.get('enabled'),  'value': 1},
+                                {'text': shift.lib.language.get('disabled'), 'value': 0}
                             ]}) }}
                         </fieldset>
                     </div>
@@ -67,7 +67,7 @@
                     {% if mode == 'edit' %}
                         <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                             <fieldset class="uk-fieldset">
-                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+                                <legend class="uk-legend">{{ shift.lib.language.get('information') }}</legend>
 
                                 {{ forms.textDate({'label':'last_login','datetime':setting.last_login}) }}
                                 {{ forms.textDate({'label':'created','datetime':setting.created}) }}

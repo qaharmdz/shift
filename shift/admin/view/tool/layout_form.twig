@@ -7,56 +7,56 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}<span class="uk-sub-title">{{ layout_id ? app.language.get('id') ~ ' #' ~ layout_id }}</span></h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}<span class="uk-sub-title">{{ layout_id ? shift.lib.language.get('id') ~ ' #' ~ layout_id }}</span></h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-layout", "layout_id":"{{ layout_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-layout", "layout_id":"{{ layout_id }}"}'>{{ shift.lib.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-layout", "action":"close", "layout_id":"{{ layout_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
-                                <li><a data-form-submit='{"form":"#form-layout", "action":"new", "layout_id":"{{ layout_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-layout", "action":"close", "layout_id":"{{ layout_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ shift.lib.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-layout", "action":"new", "layout_id":"{{ layout_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ shift.lib.language.get('save_new') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('tool/layout') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(layout_id ? 'close' : 'cancel') }}</a>
+                <a href="{{ shift.lib.router.url('tool/layout') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ shift.lib.language.get(layout_id ? 'close' : 'cancel') }}</a>
             </div>
         </div>
     </div>
 
     <div class="content-body">
-        <form id="form-layout" class="uk-form-margin-hover" action="{{ app.router.url('tool/layout/save') }}" method="post" data-form-monitor>
+        <form id="form-layout" class="uk-form-margin-hover" action="{{ shift.lib.router.url('tool/layout/save') }}" method="post" data-form-monitor>
             <div class="uk-card-panel uk-card-body uk-form-horizontal">
                 <fieldset class="uk-fieldset">
-                    <legend class="uk-legend">{{ app.language.get('settings') }}</legend>
+                    <legend class="uk-legend">{{ shift.lib.language.get('settings') }}</legend>
 
                     {{ forms.input({'label':'name', 'name':'name', 'value':setting.name, 'class':'uk-width-1-2@m', 'required':true}) }}
                     {{ forms.select({'label':'status', 'name':'status', 'selected':setting.status, 'class':'uk-width-150@m', 'options':[
-                        {'text': app.language.get('enabled'),  'value': 1},
-                        {'text': app.language.get('disabled'), 'value': 0}
+                        {'text': shift.lib.language.get('enabled'),  'value': 1},
+                        {'text': shift.lib.language.get('disabled'), 'value': 0}
                     ]}) }}
 
                     <div id="layout-routes" class="uk-margin">
-                        <label class="uk-form-label" for="status">{{ app.language.get('routes') }}</label>
+                        <label class="uk-form-label" for="status">{{ shift.lib.language.get('routes') }}</label>
                         <div class="uk-form-controls uk-text-right">
                             <button type="button" class="uk-button uk-button-primary uk-button-small ukt-px-3 ukt-mt-2"
                                 data-layout-route='{"action":"add", "target":"#layout-routes-table tbody"}'>
-                                {{ app.language.get('add_route') }}
+                                {{ shift.lib.language.get('add_route') }}
                             </button>
                         </div>
                         <div class="ukt-px-2 ukt-pb-2 ukt-mt-3 ukt-mb-3 uk-background-white">
                             <table id="layout-routes-table" class="uk-table uk-table-striped uk-table-hover ukt-mb-2">
                                 <thead>
                                     <tr>
-                                        <th class="uk-width-225 uk-text-center">{{ app.language.get('site') }}</th>
-                                        <th class="uk-width-50 uk-text-center">{{ app.language.get('exclude') }}</th>
-                                        <th class="uk-width-350 uk-text-center">{{ app.language.get('route') }}</th>
-                                        <th class="uk-text-center">{{ app.language.get('url_param') }}</th>
-                                        <th class="uk-width-75">{{ app.language.get('priority') }}</th>
-                                        <th class="uk-width-50 uk-text-center">{{ app.language.get('action') }}</th>
+                                        <th class="uk-width-225 uk-text-center">{{ shift.lib.language.get('site') }}</th>
+                                        <th class="uk-width-50 uk-text-center">{{ shift.lib.language.get('exclude') }}</th>
+                                        <th class="uk-width-350 uk-text-center">{{ shift.lib.language.get('route') }}</th>
+                                        <th class="uk-text-center">{{ shift.lib.language.get('url_param') }}</th>
+                                        <th class="uk-width-75">{{ shift.lib.language.get('priority') }}</th>
+                                        <th class="uk-width-50 uk-text-center">{{ shift.lib.language.get('action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,7 +71,7 @@
             </div>
 
             <div class="uk-card-panel uk-card-body">
-                <h3 class="uk-legend">{{ app.language.get('module_placement') }}</h3>
+                <h3 class="uk-legend">{{ shift.lib.language.get('module_placement') }}</h3>
                 {# TODO: Select active positions, Layout Sections - Module Placements #}
 
                 {{ _self.layoutPosition('alpha', setting.placements.alpha) }}
@@ -118,7 +118,7 @@
 
             <div class="uk-card-panel uk-card-body uk-form-stacked">
                 <fieldset class="uk-fieldset">
-                    <legend class="uk-legend">{{ app.language.get('design') }}</legend>
+                    <legend class="uk-legend">{{ shift.lib.language.get('design') }}</legend>
 
                     {{ forms.textarea({'label':'custom_code', 'name':'custom_code', 'value':setting.custom_code, 'attribute':'data-codemirror=\'{"type":"basic"}\''}) }}
                 </fieldset>
@@ -130,14 +130,14 @@
     <div id="layout-module-modal" class="layout-select-modules" uk-modal>
         <div class="uk-modal-dialog uk-modal-body uk-width-750">
             <button class="uk-modal-close-default" type="button" uk-close></button>
-            <h2 class="uk-modal-title ukt-mb-3 uk-title">{{ app.language.get('modules') }}<span class="uk-sub-title">{{ app.language.get('select_module') }}</span></h2>
+            <h2 class="uk-modal-title ukt-mb-3 uk-title">{{ shift.lib.language.get('modules') }}<span class="uk-sub-title">{{ shift.lib.language.get('select_module') }}</span></h2>
             <div id="layout-module-content" class="hide-dataTables-top">
                 <table id="layout-module-list" class="uk-table uk-table-striped uk-table-hover">
                     <thead>
                         <tr>
-                            <th class="uk-text-center" style="width:50px">{{ app.language.get('id') }}</th>
-                            <th class="uk-text-center" style="width:150px">{{ app.language.get('codename') }}</th>
-                            <th class="uk-text-center">{{ app.language.get('modules') }}</th>
+                            <th class="uk-text-center" style="width:50px">{{ shift.lib.language.get('id') }}</th>
+                            <th class="uk-text-center" style="width:150px">{{ shift.lib.language.get('codename') }}</th>
+                            <th class="uk-text-center">{{ shift.lib.language.get('modules') }}</th>
                         </tr>
                         <tr class="dt-filters">
                             <td></td>
@@ -200,7 +200,7 @@
         <input type="number" name="routes[{{ i }}][priority]" value="{{ data.priority }}" class="uk-input uk-form-small">
     </td>
     <td class="uk-text-center">
-        <a class="uk-text-danger uk-display-inline-block ukt-mt-1" uk-tooltip title="{{ app.language.get('delete') }}" data-layout-route='{"action":"delete"}'><i class="bi bi-dash-square-fill"></i></a>
+        <a class="uk-text-danger uk-display-inline-block ukt-mt-1" uk-tooltip title="{{ shift.lib.language.get('delete') }}" data-layout-route='{"action":"delete"}'><i class="bi bi-dash-square-fill"></i></a>
     </td>
 </tr>
 {% endmacro %}
@@ -214,18 +214,18 @@
 }|replace_recursive(data) %}
 <div class="position-wrapper position-node-{{ position }}" data-layout-position="{{ position }}" data-layout-setting='{{ data.setting|json_encode()|raw }}'>
     <div class="position-header uk-flex uk-flex-middle" uk-sticky="end:.js-node-{{ position }}-rows">
-        <div class="uk-width-expand ukt-lh-1">{{ app.language.get(position) }}</div>
+        <div class="uk-width-expand ukt-lh-1">{{ shift.lib.language.get(position) }}</div>
         <div class="uk-width-auto ukt-lh-1">
             {% if data.setting.node_child == 'module' %}
                 <button type="button" class="uk-button uk-button-primary uk-button-mini button-layout"
                     data-layout-add='{"type":"module", "target":".js-node-{{ position }}-rows"}'
-                    uk-tooltip title="{{ app.language.get('add_module') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('add_module') }}">
                     <i class="bi bi-plus"></i>
                 </button>
             {% else %}
                 <button type="button" class="uk-button uk-button-primary uk-background-teal uk-button-mini button-layout"
                     data-layout-add='{"type":"row", "target":".js-node-{{ position }}-rows"}'
-                    uk-tooltip title="{{ app.language.get('add_row') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('add_row') }}">
                     <i class="bi bi-plus-circle"></i>
                 </button>
             {% endif %}
@@ -254,22 +254,22 @@
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
                 <div class="layout-handle uk-display-inline-block"><i class="bi bi-grip-vertical"></i></div>
-                <div class="uk-display-inline-block">{{ app.language.get('row') }}</div>
+                <div class="uk-display-inline-block">{{ shift.lib.language.get('row') }}</div>
             </div>
             <div class="uk-width-auto ukt-lh-1 ukt-pr-2">
                 <button type="button" class="uk-button uk-button-primary uk-background-purple uk-button-mini button-layout ukt-mr-2"
                     data-layout-add='{"type":"column", "target":".js-node-{{ node }}"}'
-                    uk-tooltip title="{{ app.language.get('add_column') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('add_column') }}">
                     <i class="bi bi-plus-square"></i>
                 </button>
                 {# TODO: layout row settings #}
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
-                    uk-tooltip title="{{ app.language.get('setting_row') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('setting_row') }}">
                     <i class="bi bi-gear-fill"></i>
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
                     data-layout-delete='{"type":"row"}'
-                    uk-tooltip title="{{ app.language.get('delete_row') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('delete_row') }}">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
@@ -300,17 +300,17 @@
             <div class="uk-width-auto ukt-lh-1 ukt-pr-2">
                 <button type="button" class="uk-button uk-button-primary uk-button-mini button-layout ukt-mr-2"
                     data-layout-add='{"type":"module", "target":".js-node-{{ node }}"}'
-                    uk-tooltip title="{{ app.language.get('add_module') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('add_module') }}">
                     <i class="bi bi-plus"></i>
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
-                    uk-tooltip title="{{ app.language.get('setting_column') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('setting_column') }}">
                     {# TODO: layout column settings #}
                     <i class="bi bi-gear-fill"></i>
                 </button>
                 <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
                     data-layout-delete='{"type":"column"}'
-                    uk-tooltip title="{{ app.language.get('delete_column') }}">
+                    uk-tooltip title="{{ shift.lib.language.get('delete_column') }}">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
@@ -337,7 +337,7 @@
             {% if setting.codename %}
                 <code>{{ setting.codename }}</code> {{ setting.name }}
             {% else %}
-                <div class="uk-text-meta uk-text-italic">{{ app.language.get('select_module') }}</div>
+                <div class="uk-text-meta uk-text-italic">{{ shift.lib.language.get('select_module') }}</div>
             {% endif %}
         </div>
     </div>
@@ -345,7 +345,7 @@
         {# TODO: layout column edit icon - open new tab #}
         <button type="button" class="uk-button uk-button-default uk-button-mini button-layout"
             data-layout-delete='{"type":"module"}'
-            uk-tooltip title="{{ app.language.get('delete_module') }}">
+            uk-tooltip title="{{ shift.lib.language.get('delete_module') }}">
             <i class="bi bi-trash"></i>
         </button>
     </div>

@@ -3,20 +3,20 @@
 {% import '_embed/macro/forms.tpl.twig' as forms %}
 
 {% block main_content %}
-<div class="uk-container {{ sites|length == 1 ? 'uk-container-small' }} container-content-wrapper">
+<div class="uk-container container-content-wrapper {{ sites|length == 1 ? 'uk-container-small' }}">
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting", "site_id":"{{ site_id }}"}'>{{ app.language.get('save') }}</button>
+                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting", "site_id":"{{ site_id }}"}'>{{ shift.lib.language.get('save') }}</button>
             </div>
         </div>
     </div>
 
     <div class="content-body">
-        <form id="form-setting" class="uk-form-margin-hover" action="{{ app.router.url('content/setting/save') }}" method="post" data-form-monitor>
+        <form id="form-setting" class="uk-form-margin-hover" action="{{ shift.lib.router.url('content/setting/save') }}" method="post" data-form-monitor>
             <div uk-grid>
                 {% if sites|length > 1 %}
                 <div class="width-content-sidebar">
@@ -38,45 +38,45 @@
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('posts') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('posts') }}</legend>
 
                             {{ forms.select({'label':'robots', 'name':'post_robots', 'selected':setting.post_robots, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
-                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
-                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
-                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+                                {'text': shift.lib.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': shift.lib.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': shift.lib.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': shift.lib.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
                             ]}) }}
                             {{ forms.select({'label':'comment', 'name':'post_comment', 'selected':setting.post_comment, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('public'),   'value': 'public'},
-                                {'text': app.language.get('register'), 'value': 'register'},
-                                {'text': app.language.get('disabled'), 'value': 'disabled'},
+                                {'text': shift.lib.language.get('public'),   'value': 'public'},
+                                {'text': shift.lib.language.get('register'), 'value': 'register'},
+                                {'text': shift.lib.language.get('disabled'), 'value': 'disabled'},
                             ]}) }}
                             {{ forms.textarea({'label':'custom_code', 'name':'post_custom_code', 'value':setting.post_custom_code, 'rows':6}) }}
                         </fieldset>
 
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('categories') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('categories') }}</legend>
 
                             {{ forms.select({'label':'robots', 'name':'category_robots', 'selected':setting.category_robots, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('index_follow'),     'value': 'index, follow'},
-                                {'text': app.language.get('index_nofollow'),   'value': 'index, nofollow'},
-                                {'text': app.language.get('noindex_follow'),   'value': 'noindex, follow'},
-                                {'text': app.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
+                                {'text': shift.lib.language.get('index_follow'),     'value': 'index, follow'},
+                                {'text': shift.lib.language.get('index_nofollow'),   'value': 'index, nofollow'},
+                                {'text': shift.lib.language.get('noindex_follow'),   'value': 'noindex, follow'},
+                                {'text': shift.lib.language.get('noindex_nofollow'), 'value': 'noindex, nofollow'},
                             ]}) }}
                             {{ forms.input({'type':'number', 'label':'post_per_page', 'name':'category_post_per_page', 'value':setting.category_post_per_page, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
                             {{ forms.input({'type':'number', 'label':'post_lead', 'name':'category_post_lead', 'value':setting.category_post_lead, 'class':'uk-width-75@m', 'attribute':'min="0"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'category_post_lead_excerpt', 'value':setting.category_post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('characters') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_lead_excerpt', 'name':'category_post_lead_excerpt', 'value':setting.category_post_lead_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ shift.lib.language.get('characters') ~ '</span>'}) }}
                             {{ forms.input({'type':'number', 'label':'post_column', 'name':'category_post_column', 'value':setting.category_post_column, 'class':'uk-width-75@m', 'attribute':'min="1"'}) }}
-                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'category_post_column_excerpt', 'value':setting.category_post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ app.language.get('characters') ~ '</span>'}) }}
+                            {{ forms.input({'type':'number', 'label':'post_column_excerpt', 'name':'category_post_column_excerpt', 'value':setting.category_post_column_excerpt, 'class':'uk-width-75@m', 'attribute':'min="1"', 'htmlAfter':'<span class="ukt-ml-2 uk-text-meta">' ~ shift.lib.language.get('characters') ~ '</span>'}) }}
                             {{ forms.select({'label':'post_order', 'name':'category_post_order', 'selected':setting.category_post_order, 'class':'uk-width-175@m', 'options':[
-                                {'text': app.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
-                                {'text': app.language.get('pc.title~desc'), 'value': 'pc.title~desc'},
-                                {'text': app.language.get('p.publish~asc'),'value': 'p.publish~asc'},
-                                {'text': app.language.get('p.publish~desc'), 'value': 'p.publish~desc'},
-                                {'text': app.language.get('p.updated~asc'),'value': 'p.updated~asc'},
-                                {'text': app.language.get('p.updated~desc'), 'value': 'p.updated~desc'},
-                                {'text': app.language.get('p.sort_order~asc'),'value': 'p.sort_order~asc'},
-                                {'text': app.language.get('p.sort_order~desc'), 'value': 'p.sort_order~desc'},
+                                {'text': shift.lib.language.get('pc.title~asc'), 'value': 'pc.title~asc'},
+                                {'text': shift.lib.language.get('pc.title~desc'), 'value': 'pc.title~desc'},
+                                {'text': shift.lib.language.get('p.publish~asc'),'value': 'p.publish~asc'},
+                                {'text': shift.lib.language.get('p.publish~desc'), 'value': 'p.publish~desc'},
+                                {'text': shift.lib.language.get('p.updated~asc'),'value': 'p.updated~asc'},
+                                {'text': shift.lib.language.get('p.updated~desc'), 'value': 'p.updated~desc'},
+                                {'text': shift.lib.language.get('p.sort_order~asc'),'value': 'p.sort_order~asc'},
+                                {'text': shift.lib.language.get('p.sort_order~desc'), 'value': 'p.sort_order~desc'},
                             ]}) }}
                             {{ forms.textarea({'label':'custom_code', 'name':'category_custom_code', 'value':setting.category_custom_code, 'rows':6}) }}
                         </fieldset>

@@ -21,11 +21,11 @@
             by {{ post.author_fullname }}
         </p>
         {{ post.excerpt|raw }}
-        <a href="{{ post.url }}">{{ app.language.get('read_more') }}</a>
+        <a href="{{ post.url }}">{{ shift.lib.language.get('read_more') }}</a>
     </article>
 {% endfor %}
 </div>
 
-{{ app.config.get('plugin.content.custom_code')|raw }}
+{{ shift.lib.config.get('plugin.content.custom_code')|raw }}
 {{ category.meta.custom_code|raw }}
 {% endblock %}

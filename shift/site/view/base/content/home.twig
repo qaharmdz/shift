@@ -4,13 +4,13 @@
 <h1>{{ page_title }}</h1>
 
 {% if categories %}
-<div class="uk-child-width-1-{{ app.config.get('plugin.content.category_post_column') }}@m" uk-grid>
+<div class="uk-child-width-1-{{ shift.lib.config.get('plugin.content.category_post_column') }}@m" uk-grid>
     {% for category in categories %}
         <div>
-            <h2>{{ category.title }} <span class="uk-sub-title"><a href="{{ category.url }}">{{ app.language.get('view_more') }}</a></span></h2>
+            <h2>{{ category.title }} <span class="uk-sub-title"><a href="{{ category.url }}">{{ shift.lib.language.get('view_more') }}</a></span></h2>
             <ul class="uk-list">
             {% for post in category.posts %}
-                {% if loop.index <= app.config.get('plugin.content.category_post_lead') %}
+                {% if loop.index <= shift.lib.config.get('plugin.content.category_post_lead') %}
                     <li class="uk-margin-bottom">
                         <h3 class="ukt-mb-1"><a href="{{ post.url }}">{{ post.title }}</a></h3>
                         <p class="uk-article-meta ukt-my-0">

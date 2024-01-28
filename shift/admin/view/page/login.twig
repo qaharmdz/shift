@@ -3,23 +3,23 @@
 {% block document_body %}
 <div class="uk-background-cover uk-height-viewport uk-panel uk-flex uk-flex-center uk-flex-middle uk-text-center">
     <div class="uk-width-350 uk-margin-xlarge-bottom">
-        <h1 class="uk-margin-bottom">{{ app.language.get('signin')|upper }}</h1>
+        <h1 class="uk-margin-bottom">{{ shift.lib.language.get('signin')|upper }}</h1>
 
         <div class="uk-card uk-card-default uk-card-body uk-box-shadow-small" style="background:#fff;">
             {% include '_embed/partial/alerts.tpl.twig' %}
 
-            <form class="" action="{{ app.router.url('page/login') }}" method="post">
+            <form class="" action="{{ shift.lib.router.url('page/login') }}" method="post">
                 <div class="uk-margin-small-top">
                     <div class="uk-margin">
                         <div class="uk-inline uk-width-1-1">
                             <span class="uk-form-icon" uk-icon="icon: user"></span>
-                            <input class="uk-input uk-form-large" type="email" name="email" value="{{ email }}" placeholder="{{ app.language.get('email') }}">
+                            <input class="uk-input uk-form-large" type="email" name="email" value="{{ email }}" placeholder="{{ shift.lib.language.get('email') }}">
                         </div>
                     </div>
                     <div class="uk-margin">
                         <div class="uk-inline uk-width-1-1">
                             <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                            <input class="uk-input uk-form-large" type="password" name="password" value="{{ password }}" autocomplete="current-password" placeholder="{{ app.language.get('password') }}">
+                            <input class="uk-input uk-form-large" type="password" name="password" value="{{ password }}" autocomplete="current-password" placeholder="{{ shift.lib.language.get('password') }}">
                             <a class="uk-link-text" data-password-toggle style="position:absolute; right:10px; top:10px;">
                                 <i class="bi bi-eye" style="display:none"></i>
                                 <i class="bi bi-eye-slash"></i>
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="uk-margin-medium-top">
-                    <button class="uk-button uk-button-primary uk-button-large uk-width-1-2">{{ app.language.get('button_login') }}</button>
+                    <button class="uk-button uk-button-primary uk-button-large uk-width-1-2">{{ shift.lib.language.get('button_login') }}</button>
                 </div>
             </form>
         </div>

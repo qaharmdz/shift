@@ -1,6 +1,6 @@
 <a>{{ code|upper }} <span uk-navbar-parent-icon></span></a>
 <div class="uk-navbar-dropdown uk-width-small" uk-dropdown="offset:0; pos:bottom-right;">
-    <form id="form-language" method="post" action="{{ app.router.url('block/language/language') }}">
+    <form id="form-language" method="post" action="{{ shift.lib.router.url('block/language/language') }}">
         <ul class="uk-nav uk-navbar-dropdown-nav">
             {% for language in languages %}
                 <li>

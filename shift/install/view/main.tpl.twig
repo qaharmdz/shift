@@ -3,10 +3,10 @@
 {% block document_head_asset %}
 <script>
 const shift = {
-    version     : "{{ app.config.get('root.version') }}",
-    version_id  : {{ app.config.getInt('root.version_id') }},
-    env         : {{ app.config.get('env')|json_encode() }},
-    i18n        : {{ app.language.all()|json_encode() }},
+    version     : "{{ shift.lib.config.get('root.version') }}",
+    version_id  : {{ shift.lib.config.getInt('root.version_id') }},
+    env         : {{ shift.lib.config.get('env')|json_encode() }},
+    i18n        : {{ shift.lib.language.all()|json_encode() }},
     formChanged : false,
 };
 </script>
@@ -25,8 +25,8 @@ const shift = {
 
 <footer class="page-footer">
     <div class="uk-container">
-        {{ app.language.get('copyright')|raw }} <br>
-        {{ app.language.get('version')|format(app.config.get('root.version')) }}
+        {{ shift.lib.language.get('copyright')|raw }} <br>
+        {{ shift.lib.language.get('version')|format(shift.lib.config.get('root.version')) }}
     </div>
 </footer>
 

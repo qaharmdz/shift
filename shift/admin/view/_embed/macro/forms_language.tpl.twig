@@ -14,12 +14,12 @@
     {% set total = param.languages|length %}
 
     <div class="uk-margin {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ shift.lib.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% for language in param.languages %}
                 <div class="uk-inline uk-width-1-1">
                     {% if total > 1 %}
-                        <span class="uk-form-icon uk-form-icon-background"><img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.codename }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.codename }}"></span>
+                        <span class="uk-form-icon uk-form-icon-background"><img src="{{ shift.lib.config.get('env.url_site') }}media/flags/{{ language.codename }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.codename }}"></span>
                     {% endif %}
                     <input type="{{ param.type }}" id="{{ param.label }}" name="{{ param.name }}[{{ language.extension_id }}]" value="{{ param.value[language.extension_id] ?? '' }}" class="uk-input {{ param.class }}" title="{{ '[' ~ language.codename ~ '] ' ~ language.name }}" {{ param.attribute }}>
                 </div>
@@ -51,14 +51,14 @@
     {% set total = param.languages|length %}
 
     <div class="uk-margin {{ param.class_form }} {{ param.errors[param.name] is defined ? 'uk-form-danger' }}">
-        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ app.language.get(param.label) }}</label>
+        <label class="uk-form-label" for="{{ param.label }}">{{ param.required ? '<span class="uk-text-danger">*</span>' }} {{ shift.lib.language.get(param.label) }}</label>
         <div class="uk-form-controls">
             {% if total > 1 %}
                 <ul class="uk-tab ukt-mb-3" uk-tab="connect:#tab-{{ param.label }};">
                 {% for language in param.languages %}
                     <li>
                         <a href="#" title="{{ '[' ~ language.codename ~ '] ' ~ language.name }}">
-                            <img src="{{ app.config.get('env.url_site') }}media/flags/{{ language.codename }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.codename }}">
+                            <img src="{{ shift.lib.config.get('env.url_site') }}media/flags/{{ language.codename }}.png" class="flag {{ not language.status ? 'flag-gray' }}" alt="{{ language.codename }}">
                             {{ language.name }}
                         </a>
                     </li>

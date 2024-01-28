@@ -7,30 +7,30 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting"}'>{{ app.language.get('save') }}</button>
+                <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-setting"}'>{{ shift.lib.language.get('save') }}</button>
             </div>
         </div>
     </div>
 
     <div class="content-body uk-card-panel uk-card-body">
-        <form id="form-setting" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('setting/setting/save') }}" method="post" data-form-monitor>
+        <form id="form-setting" class="uk-form-horizontal uk-form-margin-hover" action="{{ shift.lib.router.url('setting/setting/save') }}" method="post" data-form-monitor>
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('general') }}</legend>
+                <legend class="uk-legend">{{ shift.lib.language.get('general') }}</legend>
 
                 {{ forms.input({'type':'number', 'label':'compression', 'name':'compression', 'value':setting.compression, 'class':'uk-width-75@m', 'attribute':'min="0" max="10"'}) }}
             </fieldset>
 
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('options') }}</legend>
+                <legend class="uk-legend">{{ shift.lib.language.get('options') }}</legend>
 
                 {{ forms.select({'label':'admin_language', 'name':'admin_language', 'options':languages, 'opt_text': 'name', 'opt_value': 'codename', 'selected':setting.admin_language}) }}
             </fieldset>
 
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('mail') }}</legend>
+                <legend class="uk-legend">{{ shift.lib.language.get('mail') }}</legend>
 
                 {{ forms.select({'label':'mail_engine', 'name':'mail_engine', 'options':[{'text':'SMTP', 'value':'smtp'}, {'text':'PHP Mail', 'value':'mail'}, {'text':'Sendmail', 'value':'sendmail'}], 'selected':setting.mail_engine}) }}
                 {{ forms.input({'type':'text', 'label':'mail_smtp_hostname', 'name':'mail_smtp_hostname', 'value':setting.mail_smtp_hostname, 'class':'uk-width-250@m'}) }}
@@ -41,10 +41,10 @@
             </fieldset>
 
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('maintenance') }}</legend>
+                <legend class="uk-legend">{{ shift.lib.language.get('maintenance') }}</legend>
 
                 {{ forms.radioButton({'label':'error_display', 'name':'error_display', 'checked':setting.error_display}) }}
-                {{ forms.radioButton({'label':'development', 'name':'development', 'checked':setting.development, 'info':app.language.get('development_info')}) }}
+                {{ forms.radioButton({'label':'development', 'name':'development', 'checked':setting.development, 'info':shift.lib.language.get('development_info')}) }}
             </fieldset>
         </form>
     </div>

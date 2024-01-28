@@ -7,7 +7,7 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}</h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto"></div>
         </div>
@@ -16,20 +16,20 @@
     {% include '_embed/partial/alerts.tpl.twig' %}
 
     <div class="content-body uk-card-panel uk-card-body">
-        <form id="form-export" class="uk-form-horizontal uk-form-margin-hover" action="{{ app.router.url('tool/backupdb/export') }}" method="post">
+        <form id="form-export" class="uk-form-horizontal uk-form-margin-hover" action="{{ shift.lib.router.url('tool/backupdb/export') }}" method="post">
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('backup') }}</legend>
+                <legend class="uk-legend">{{ shift.lib.language.get('backup') }}</legend>
 
                 {{ forms.checkboxPanel({'label':'db_table', 'name':'export[]', lists:dbTables, checked:dbTables, htmlEnd:'
 <div class="uk-flex uk-flex-top ukt-mt-3">
     <div class="uk-width-expand uk-text-small">
-        <a class="js-select-all">' ~ app.language.get('select_all') ~ '</a>
+        <a class="js-select-all">' ~ shift.lib.language.get('select_all') ~ '</a>
         <span class="ukt-mx-2">|</span>
-        <a class="js-unselect-all">' ~ app.language.get('unselect_all') ~ '</a>
+        <a class="js-unselect-all">' ~ shift.lib.language.get('unselect_all') ~ '</a>
     </div>
     <div class="uk-width-auto">
         <button type="submit" class="uk-button uk-button-secondary uk-button-large" form="form-export">
-            <i class="bi bi-download ukt-mr-1"></i>' ~ app.language.get('export') ~ '
+            <i class="bi bi-download ukt-mr-1"></i>' ~ shift.lib.language.get('export') ~ '
         </button>
     </div>
 </div>
@@ -38,14 +38,14 @@
             </fieldset>
 
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">{{ app.language.get('restore') }}</legend>
+                <legend class="uk-legend">{{ shift.lib.language.get('restore') }}</legend>
 
                 <div id="progress-wrapper" class="ukt-mt-4 uk-hidden">
                     <progress id="js-progress-import" class="uk-progress" value="0" max="100"></progress>
                 </div>
 
                 <button type="button" id="button-import" class="uk-button uk-button-primary uk-button-large uk-align-center">
-                    <i class="bi bi-upload ukt-mr-1"></i> {{ app.language.get('import') }}
+                    <i class="bi bi-upload ukt-mr-1"></i> {{ shift.lib.language.get('import') }}
                 </button>
             </fieldset>
         </form>
@@ -75,7 +75,7 @@ $(document).ready(function() {
                 clearInterval(timer);
 
                 $.ajax({
-                    url: '{{ app.router.url("tool/backupdb/import")|raw }}',
+                    url: '{{ shift.lib.router.url("tool/backupdb/import")|raw }}',
                     type: 'post',
                     dataType: 'json',
                     data: new FormData($('#form-import')[0]),

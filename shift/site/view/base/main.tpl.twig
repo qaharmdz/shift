@@ -12,11 +12,11 @@
 <header class="page-header">
     {{ header }}
 
-    {% if app.document.getNode('breadcrumbs') %}
+    {% if shift.lib.document.getNode('breadcrumbs') %}
         <section class="section-breadcrumb">
             <div class="uk-container">
                 <ul class="uk-breadcrumb">
-                    {% for breadcrumb in app.document.getNode('breadcrumbs') %}
+                    {% for breadcrumb in shift.lib.document.getNode('breadcrumbs') %}
                         {% if breadcrumb.1 is defined %}
                             <li><a href="{{ breadcrumb.1 }}" {{ breadcrumb.2 is defined ? 'title="' ~ breadcrumb.2 ~ '"' : '' }}>{{ breadcrumb.0 }}</a></li>
                         {% else %}

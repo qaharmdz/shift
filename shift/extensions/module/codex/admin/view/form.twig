@@ -7,28 +7,28 @@
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
-                <h1 class="ukt-m-0">{{ app.language.get('page_title') }}<span class="uk-sub-title">{{ module_id ? app.language.get('id') ~ ' #' ~ module_id }}</span></h1>
+                <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}<span class="uk-sub-title">{{ module_id ? shift.lib.language.get('id') ~ ' #' ~ module_id }}</span></h1>
             </div>
             <div class="uk-width-auto">
                 <div class="uk-button-group">
-                    <button class="uk-button uk-button-success js-codemirror-save" data-form-submit='{"form":"#form-post", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'>{{ app.language.get('save') }}</button>
+                    <button class="uk-button uk-button-success js-codemirror-save" data-form-submit='{"form":"#form-post", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'>{{ shift.lib.language.get('save') }}</button>
                     <div class="uk-inline">
                         <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
                         <div uk-dropdown="pos:bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-form-submit='{"form":"#form-post", "action":"close", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ app.language.get('save_close') }}</a></li>
-                                <li><a data-form-submit='{"form":"#form-post", "action":"new", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ app.language.get('save_new') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-post", "action":"close", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ shift.lib.language.get('save_close') }}</a></li>
+                                <li><a data-form-submit='{"form":"#form-post", "action":"new", "extension_id":"{{ extension_id }}", "extension_module_id":"{{ module_id }}"}'><i class="bi bi-file-plus ukt-mr-1"></i> {{ shift.lib.language.get('save_new') }}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <a href="{{ app.router.url('extension/module') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ app.language.get(module_id ? 'close' : 'cancel') }}</a>
+                <a href="{{ shift.lib.router.url('extension/module') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ shift.lib.language.get(module_id ? 'close' : 'cancel') }}</a>
             </div>
         </div>
     </div>
 
     <div class="content-body">
-        <form id="form-post" class="uk-form-margin-hover" action="{{ app.router.url('extensions/module/codex/save') }}" method="post" data-form-monitor>
+        <form id="form-post" class="uk-form-margin-hover" action="{{ shift.lib.router.url('extensions/module/codex/save') }}" method="post" data-form-monitor>
             <div uk-grid>
                 <div class="uk-width-expand">
                     <div class="uk-card-panel uk-form-horizontal">
@@ -40,7 +40,7 @@
                 <div class="width-content-sidebar">
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('setting') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('setting') }}</legend>
 
                             {{ forms.input({'label':'name', 'name':'name', 'value':module.name, 'required':true}) }}
                             {{ forms.textarea({'label':'description', 'name':'setting[description]', 'value':module.setting.description, 'rows':3}) }}
@@ -50,11 +50,11 @@
 
                     <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                         <fieldset class="uk-fieldset">
-                            <legend class="uk-legend">{{ app.language.get('visibility') }}</legend>
+                            <legend class="uk-legend">{{ shift.lib.language.get('visibility') }}</legend>
 
                             {{ forms.select({'label':'visibility', 'name':'setting[visibility]', 'selected':module.setting.visibility, 'class':'uk-width-150@m', 'attribute':'data-select-switcher=\'{"class":"switch-visibility"}\'', 'options':[
-                                {'text': app.language.get('public'),  'value': 'public'},
-                                {'text': app.language.get('usergroup'), 'value': 'usergroup'},
+                                {'text': shift.lib.language.get('public'),  'value': 'public'},
+                                {'text': shift.lib.language.get('usergroup'), 'value': 'usergroup'},
                             ]}) }}
                             <div class="switch-visibility uk-switcher">
                                 <div class="switch-visibility_usergroup">
@@ -70,7 +70,7 @@
                     {% if mode == 'edit' %}
                         <div class="uk-card-panel uk-card-body uk-form-horizontal uk-form-stacked@l">
                             <fieldset class="uk-fieldset">
-                                <legend class="uk-legend">{{ app.language.get('information') }}</legend>
+                                <legend class="uk-legend">{{ shift.lib.language.get('information') }}</legend>
 
                                 {{ forms.textDate({'label':'created','datetime':module.created}) }}
                                 {{ forms.textDate({'label':'updated','datetime':module.updated}) }}

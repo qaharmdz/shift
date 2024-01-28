@@ -118,9 +118,11 @@ class Configuration extends Mvc\Controller
             'debug' => $this->config->getBool('system.setting.development'),
         ]);
 
-        $this->view->setGlobal('config', $this->config);
-        $this->view->setGlobal('router', $this->router);
-        $this->view->setGlobal('document', $this->document);
-        $this->view->setGlobal('language', $this->language);
+        $this->view->setGlobal('lib', [
+            'config'   => $this->config,
+            'router'   => $this->router,
+            'document' => $this->document,
+            'language' => $this->language,
+        ]);
     }
 }
