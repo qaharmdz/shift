@@ -94,9 +94,9 @@ class Manage extends Mvc\Model
     // Manage
     // ================================================
 
-    public function getExtension(string $codename): array
+    public function getExtension(string $type, string $codename): array
     {
-        $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `codename` = ?s", [$codename])->row;
+        $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename])->row;
 
         if (!empty($result['setting'])) {
             $result['setting'] = json_decode($result['setting'], true);

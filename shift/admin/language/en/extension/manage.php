@@ -16,6 +16,7 @@ $_['installed_not']     = 'Not Installed';
 $_['install_0']         = $_['installed_not'];
 $_['install_1']         = $_['installed'];
 
+$_['message_no_info']   = 'The extension meta information is not available!';
 $_['message_update']    = 'The extension meta information indicates there is an update to the version  %s.';
 $_['confirm_uninstall'] = 'This action cannot be undone!<br>The extension will be uninstalled.';
 $_['confirm_delete']    = 'This action cannot be undone!<br>The extensions(s) data and files will be deleted permanently.';

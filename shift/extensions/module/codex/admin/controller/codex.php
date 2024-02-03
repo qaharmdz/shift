@@ -43,7 +43,7 @@ class Codex extends Mvc\Controller
             ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401
         );
 
-        $extension = $this->model_extension_manage->getExtension('codex');
+        $extension = $this->model_extension_manage->getExtension('module', 'codex');
         $data['extension_id'] = $extension['extension_id'];
         $data['user_groups']  = $this->model_account_usergroup->getUserGroups();
 
