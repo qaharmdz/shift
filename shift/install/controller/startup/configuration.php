@@ -21,7 +21,7 @@ class Configuration extends Mvc\Controller
             ],
         ]);
         $this->view->setConfig([
-            'debug' => true,
+            'debug' => false,
         ]);
 
         // Not supporting URL alias, trigger 404 not found
