@@ -22,9 +22,11 @@
 
 :root {
     --uk-font-size: 14px;
+    --uk-font-color: #333;
 }
 
 html {
+    color: var(--uk-font-color);
     background: #f9fbfc;
 }
 body {
@@ -43,7 +45,7 @@ body {
     --navbar-height: 32px;
 }
 
-.page-header {}
+/* .page-header {} */
 
 .block-navbar .uk-navbar {
     height: var(--navbar-height);
@@ -252,7 +254,8 @@ body {
     margin-bottom: 20px;
 }
 
-.content-body {}
+/* .content-body {} */
+
 
 /* --uk-breakpoint-l */
 @media (min-width: 1200px) {
@@ -314,8 +317,10 @@ body {
     border-bottom: 1px solid transparent;
 }
 .logs-pretify-item:hover {
-    color: #b30042;
-    background: #fff;
+    background: #e8eefd;
+}
+.logs-pretify-item:hover .logs-error {
+    color: #b70000;
 }
 
 /* Media Manager
@@ -608,6 +613,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
 .flatpickr-current-month input.cur-year {
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
     box-sizing: border-box;
     color: #444;
     font-size: 12.5px;

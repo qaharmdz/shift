@@ -107,13 +107,13 @@ $(document).ready(function() {
                 }
 
                 html += '<div class="logs-pretify-item">';
-                html += '<b title="' + _logDate + '">' + formatDate(_logDate) + '</b>';
-                html += ' - <span class="uk-label ' + label + '">' + _logType + '</span>';
+                html += '<b class="logs-date" title="' + _logDate + '">' + formatDate(_logDate) + '</b>';
+                html += ' - <span class="uk-label ' + label + ' logs-label">' + _logType + '</span>';
                 if (_logMessage) {
-                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ shift.lib.language.get("message") }}</b>: ' + _logMessage.trim() + '</div>';
+                    html += '<div class="ukt-ml-4 ukt-mt-1"><b class="logs-label-error">{{ shift.lib.language.get("message") }}:</b> <span class="logs-error">' + _logMessage.trim() + '</span></div>';
                 }
                 if ('uri' in _logContextObj) {
-                    html += '<div class="ukt-ml-4 ukt-mt-1"><b>{{ shift.lib.language.get("context") }}</b>: ' + JSON.stringify(_logContextObj, null, 4) + '</div>';
+                    html += '<div class="ukt-ml-4 ukt-mt-1"><b class="logs-label-context">{{ shift.lib.language.get("context") }}:</b> <span class="logs-context">' + JSON.stringify(_logContextObj, null, 4) + '</span></div>';
                 }
                 html += '</div>';
 
