@@ -45,7 +45,7 @@ class Event extends Mvc\Controller
         for ($i = 0; $i < $results->num_rows; $i++) {
             $items[$i] = $results->rows[$i];
 
-            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['extension_id'];
+            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['event_id'];
         }
 
         $data = [
