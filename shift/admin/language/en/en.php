@@ -40,6 +40,7 @@ $_['unpublish']             = 'Unpublish';
 $_['publish_utc']           = 'Publish (UTC)';
 $_['unpublish_utc']         = 'Unpublish (UTC)';
 $_['status']                = 'Status';
+$_['status_global']         = 'Global Status';
 $_['action']                = 'Action';
 
 $_['id']                    = 'ID';
