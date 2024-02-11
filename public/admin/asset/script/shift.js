@@ -733,8 +733,7 @@ function getVisitorTimezone() {
  * Datetime UTC to visitor browser timezone
  *
  * @param   string  datetime  Y-m-d H:i:s UTC
- *
- * @return  string            [return description]
+ * @return  string
  */
 function formatDate(datetime) {
     if (!datetime) { return ''; }

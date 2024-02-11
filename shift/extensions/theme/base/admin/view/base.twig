@@ -1,25 +1,75 @@
 {% extends 'main.tpl.twig' %}
 
+{% import '_embed/macro/forms.tpl.twig' as forms %}
+
 {% block main_content %}
-<div class="uk-container container-content-wrapper {{ sites|length == 1 ? 'uk-container-small' }}">
+<div class="uk-container container-content-wrapper uk-container-small">
     <div class="content-header">
         <div class="uk-flex uk-flex-middle">
             <div class="uk-width-expand">
                 <h1 class="ukt-m-0">{{ shift.lib.language.get('page_title') }}</h1>
             </div>
             <div class="uk-width-auto">
-                <a href="{{ shift.lib.router.url('account/user/form') }}" class="uk-button uk-button-primary">{{ shift.lib.language.get('add_new') }}</a>
+                <div class="uk-button-group">
+                    <button class="uk-button uk-button-success" data-form-submit='{"form":"#form-theme", "extension_id":"{{ extension_id }}", "site_id":"{{ site_id }}"}'>{{ shift.lib.language.get('save') }}</button>
+                    <div class="uk-inline">
+                        <button class="uk-button uk-button-success ukt-px-2"><span uk-icon="icon:chevron-down"></span></button>
+                        <div uk-dropdown="pos:bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a data-form-submit='{"form":"#form-language", "action":"close", "extension_id":"{{ extension_id }}", "site_id":"{{ site_id }}"}'><i class="bi bi-check-circle ukt-mr-1"></i> {{ shift.lib.language.get('save_close') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ shift.lib.router.url('extension/language') }}" class="uk-button uk-button-default ukt-px-3 uk-margin-small-left"><i class="bi bi-x-circle-fill uk-text-danger ukt-mr-1"></i> {{ shift.lib.language.get('close') }}</a>
             </div>
         </div>
     </div>
 
-    <div class="content-body uk-card-panel uk-card-body">
-        ...
+    <div class="content-body">
+        <form id="form-theme" class="uk-form-margin-hover" action="{{ shift.lib.router.url('extensions/theme/base/save') }}" method="post" data-form-monitor>
+            <div uk-grid>
+                <div class="width-content-sidebar">
+                    <div class="uk-card-panel uk-card-body ukt-p-3">
+                        <ul class="uk-nav uk-nav-secondary">
+                            <li class="{{ type == 'setting' ? 'uk-active' }}">
+                                <a href="{{ url_setting }}">
+                                    {{ shift.lib.language.get('settings') }}
+                                </a>
+                            </li>
+
+                            <li class="ukt-mt-3">
+                                <legend class="uk-legend">{{ shift.lib.language.get('sites') }}</legend>
+                            </li>
+                            {% for site in sites %}
+                                <li class="{{ type == 'site' and site.site_id == site_id ? 'uk-active' }}">
+                                    <a href="{{ site.url_setting }}">
+                                        <div>{{ site.name }}
+                                            <div class="uk-nav-subtitle">{{ site.url_host }}</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="uk-width-expand">
+                {% if type == 'setting' %}
+                    <div class="uk-card-panel uk-card-body uk-form-horizontal">
+                        {{ forms.radioButton({'label':'status', 'name':'status', 'checked':setting.status}) }}
+                    </div>
+                {% else %}
+                    <div class="uk-card-panel uk-card-body uk-form-stacked">
+                        {{ forms.textarea({'label':'custom_code', 'name':'site[custom_code]', 'value':setting.site.custom_code, 'rows':10}) }}
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
-$(document).ready(function() {
-});
+    $(document).ready(function () {});
 </script>
 {% endblock %}

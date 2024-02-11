@@ -7,8 +7,7 @@ namespace Shift\Extensions\Theme\Base\Admin\Model;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Base extends Mvc\Model
-{
+class Base extends Mvc\Model {
     // List
     // ================================================
 
