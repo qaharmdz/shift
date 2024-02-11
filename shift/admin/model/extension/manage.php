@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Extension;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Manage extends Mvc\Model
-{
+class Manage extends Mvc\Model {
     // List
     // ================================================
 
@@ -31,7 +30,7 @@ class Manage extends Mvc\Model
             'install'      => 'e.install',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension` e"
@@ -65,19 +64,19 @@ class Manage extends Mvc\Model
 
         if ($type == 'install') {
             foreach ($items as $extension_id) {
-                $this->install((int)$extension_id);
+                $this->install((int) $extension_id);
             }
         }
 
         if ($type == 'uninstall') {
             foreach ($items as $extension_id) {
-                $this->uninstall((int)$extension_id);
+                $this->uninstall((int) $extension_id);
             }
         }
 
         if ($type == 'delete') {
             foreach ($items as $extension_id) {
-                $this->delete((int)$extension_id);
+                $this->delete((int) $extension_id);
             }
         }
 
@@ -88,7 +87,7 @@ class Manage extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension`")->row['total'];
+        return (int) $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "extension`")->row['total'];
     }
 
     // Manage
@@ -103,6 +102,20 @@ class Manage extends Mvc\Model
         }
 
         return $result;
+    }
+
+    public function getById(int $extension_id): array
+    {
+        $language = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i",
+            [$extension_id]
+        )->row;
+
+        if ($language) {
+            $language['setting'] = json_decode($language['setting'], true);
+        }
+
+        return $language;
     }
 
     public function getExtensions(array $filters = ['1 = ?i' => 1], string $rkey = 'extension_id'): array
@@ -132,7 +145,7 @@ class Manage extends Mvc\Model
         )->row;
 
         if ($extension) {
-            $extPath  = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
+            $extPath = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
             $metaInfo = json_decode(
                 file_get_contents(PATH_EXTENSIONS . $extension['type'] . DS . $extension['codename'] . DS . 'meta.json'),
                 true
@@ -174,7 +187,7 @@ class Manage extends Mvc\Model
         )->row;
 
         if ($extension) {
-            $extPath   = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
+            $extPath = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
 
             $this->load->model('account/usergroup');
             $this->model_account_usergroup->removePermission('access', $extPath);

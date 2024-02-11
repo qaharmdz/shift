@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Extension;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Language extends Mvc\Model
-{
+class Language extends Mvc\Model {
     /**
      * DataTables records
      *
@@ -23,12 +22,12 @@ class Language extends Mvc\Model
             'status'       => 'e.status',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension` e"
             . " WHERE e.`type` = 'language' AND e.`install` = 1"
-                . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
+            . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -61,10 +60,10 @@ class Language extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get(
+        return (int) $this->db->get(
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension`
-            WHERE `type` = 'language'  AND `status` = 1 AND `install` = 1"
+            WHERE `type` = 'language' AND `status` = 1 AND `install` = 1"
         )->row['total'];
     }
 
@@ -77,28 +76,14 @@ class Language extends Mvc\Model
             DB_PREFIX . 'extension',
             [
                 'setting' => json_encode($data['setting']),
-                'status'  => (int)$data['status'],
+                'status'  => (int) $data['status'],
                 'updated' => date('Y-m-d H:i:s'),
             ],
             [
                 'extension_id' => $extension_id,
-                'type' => 'language',
+                'type'         => 'language',
             ]
         );
-    }
-
-    public function getLanguage(int $extension_id): array
-    {
-        $language = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i",
-            [$extension_id]
-        )->row;
-
-        if ($language) {
-            $language['setting'] = json_decode($language['setting'], true);
-        }
-
-        return $language;
     }
 
     /**
@@ -111,17 +96,16 @@ class Language extends Mvc\Model
     public function getLanguages(array $filters = ['status = ?i' => 1], string $rkey = 'extension_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('languages.' . $argsHash, []);
+        $data = $this->cache->get('languages.' . $argsHash, []);
 
         if (!$data) {
             $filters = array_merge([
-                'type = ?s' => 'language',
                 'install = ?i' => 1,
             ], $filters);
 
-            $languages  = $this->db->get(
+            $languages = $this->db->get(
                 "SELECT * FROM `" . DB_PREFIX . "extension`
-                WHERE " . implode(' AND ', array_keys($filters)) . "
+                WHERE `type` = 'language' AND " . implode(' AND ', array_keys($filters)) . "
                 ORDER BY `name` ASC",
                 array_values($filters)
             )->rows;

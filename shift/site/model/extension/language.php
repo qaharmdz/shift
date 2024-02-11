@@ -6,12 +6,12 @@ namespace Shift\Site\Model\Extension;
 
 use Shift\System\Mvc;
 
-class Language extends Mvc\Model
-{
+class Language extends Mvc\Model {
+    // TODO: model_extension_manage->getById($extension_id)
     public function getLanguage(int $extension_id): array
     {
         $language = $this->db->get(
-            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE extension_id = ?i",
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = 'language' AND extension_id = ?i",
             [$extension_id]
         )->row;
 
@@ -32,15 +32,15 @@ class Language extends Mvc\Model
     public function getLanguages(array $filters = ['status = ?i' => 1], string $rkey = 'extension_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('languages.' . $argsHash, []);
+        $data = $this->cache->get('languages.' . $argsHash, []);
 
         if (!$data) {
             $filters = array_merge([
-                'type = ?s' => 'language',
+                'type = ?s'    => 'language',
                 'install = ?i' => 1,
             ], $filters);
 
-            $languages  = $this->db->get(
+            $languages = $this->db->get(
                 "SELECT * FROM `" . DB_PREFIX . "extension`
                 WHERE " . implode(' AND ', array_keys($filters)) . "
                 ORDER BY `name` ASC",
@@ -60,7 +60,7 @@ class Language extends Mvc\Model
 
     public function getTotalLanguages(): int
     {
-        return (int)$this->db->get(
+        return (int) $this->db->get(
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension`
             WHERE `type` = 'language'
