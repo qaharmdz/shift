@@ -177,8 +177,8 @@ let tableEl     = '#extensionManage-list',
                 render : function(data, type, full) {
                     output = data;
                     if (full.version_meta && full.version != full.version_meta) {
-                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "type":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
-                        output += '<b>*</b> {{ shift.lib.language.get("new") }} v' + full.version_meta;
+                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "ext":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
+                        output += '<div class="uk-label uk-background-teal">{{ shift.lib.language.get("new")|lower }} v' + full.version_meta + '</div>';
                         output += '</a>';
                     }
                     return output;
@@ -211,7 +211,7 @@ let tableEl     = '#extensionManage-list',
             { data : 'extension_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output = '<a data-dtAction=\'{"type":"info", "type":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
+                    output = '<a data-dtAction=\'{"type":"info", "ext":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
@@ -247,22 +247,22 @@ let tableEl     = '#extensionManage-list',
 $('.main-content').on('click', '[data-dtAction]', function(e) {
     e.preventDefault();
 
-    let data = $(this).data('dtaction');
+    let dataAction = $(this).data('dtaction');
 
-    if (data.action === 'info') {
-        extensionInfo(data);
+    if (dataAction.type === 'info') {
+        extensionInfo(dataAction);
     } else {
         $.fn.shift.dtAction({
             url  : "{{ shift.lib.router.url('extension/manage/dtaction')|raw }}",
-            data : data,
+            data : dataAction,
             validate : function(dtActionProceed) {
-                if (data.action === 'uninstall') {
+                if (dataAction.type === 'uninstall') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_uninstall,
                         onConfirm : function() { dtActionProceed(); }
                     });
-                } else if (data.action === 'delete') {
+                } else if (dataAction.type === 'delete') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_delete,

@@ -191,7 +191,7 @@ class Manage extends Mvc\Controller {
         $this->load->language('extension/manage');
 
         $data = $this->model_extension_manage->getExtension(
-            $this->request->getString('query.type'),
+            $this->request->getString('query.ext'),
             $this->request->getString('query.codename')
         );
 
