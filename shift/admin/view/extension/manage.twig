@@ -247,22 +247,22 @@ let tableEl     = '#extensionManage-list',
 $('.main-content').on('click', '[data-dtAction]', function(e) {
     e.preventDefault();
 
-    let dataAction = $(this).data('dtaction');
+    let dtAction = $(this).data('dtaction');
 
-    if (dataAction.type === 'info') {
-        extensionInfo(dataAction);
+    if (dtAction.type === 'info') {
+        extensionInfo(dtAction);
     } else {
         $.fn.shift.dtAction({
             url  : "{{ shift.lib.router.url('extension/manage/dtaction')|raw }}",
-            data : dataAction,
+            data : dtAction,
             validate : function(dtActionProceed) {
-                if (dataAction.type === 'uninstall') {
+                if (dtAction.type === 'uninstall') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_uninstall,
                         onConfirm : function() { dtActionProceed(); }
                     });
-                } else if (dataAction.type === 'delete') {
+                } else if (dtAction.type === 'delete') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_delete,

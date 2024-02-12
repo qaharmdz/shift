@@ -210,13 +210,13 @@ let tableEl     = '#contentPost-list',
     $('.main-content').on('click', '[data-dtAction]', function(e) {
         e.preventDefault();
 
-        let data = $(this).data('dtaction');
+        let dtAction = $(this).data('dtaction');
 
         $.fn.shift.dtAction({
             url  : "{{ shift.lib.router.url('content/post/dtaction')|raw }}",
-            data : data,
+            data : dtAction,
             validate : function(dtActionProceed) {
-                if (data.type === 'delete') {
+                if (dtAction.type === 'delete') {
                     $.fn.shift.confirm({
                         title   : shift.i18n.are_you_sure,
                         message : shift.i18n.confirm_delete,
