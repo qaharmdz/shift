@@ -90,7 +90,7 @@ class Language extends Mvc\Controller {
 
     public function save()
     {
-        $this->load->model('extension/language');
+        $this->load->model('extension/manage');
 
         if (!$this->user->hasPermission('modify', 'extension/language')) {
             return $this->response->setOutputJson($this->language->get('error_permission'), 403);
@@ -119,7 +119,7 @@ class Language extends Mvc\Controller {
             return $this->response->setOutputJson($errors, 422);
         }
 
-        $this->model_extension_language->edit($extension_id, $post);
+        $this->model_extension_manage->editSetting($extension_id, $post);
 
         // Redirect
         if ($post['action'] === 'close') {

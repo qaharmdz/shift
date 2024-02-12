@@ -333,6 +333,9 @@ body {
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
 }
+.logs-pretify-item .logs-error {
+    font-size: 1.05em;
+}
 .logs-pretify-item:hover {
     background: #e8eefd;
 }

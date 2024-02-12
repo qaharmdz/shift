@@ -70,22 +70,6 @@ class Language extends Mvc\Model {
     // Form CRUD
     // ================================================
 
-    public function edit(int $extension_id, array $data)
-    {
-        $this->db->set(
-            DB_PREFIX . 'extension',
-            [
-                'setting' => json_encode($data['setting']),
-                'status'  => (int) $data['status'],
-                'updated' => date('Y-m-d H:i:s'),
-            ],
-            [
-                'extension_id' => $extension_id,
-                'type'         => 'language',
-            ]
-        );
-    }
-
     /**
      * Get languages
      *

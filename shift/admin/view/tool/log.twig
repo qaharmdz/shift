@@ -110,10 +110,10 @@ $(document).ready(function() {
                 html += '<b class="logs-date" title="' + _logDate + '">' + formatDate(_logDate) + '</b>';
                 html += ' - <span class="uk-label ' + label + ' logs-label">' + _logType + '</span>';
                 if (_logMessage) {
-                    html += '<div class="ukt-ml-4 ukt-mt-1"><b class="logs-label-error">{{ shift.lib.language.get("message") }}:</b> <span class="logs-error">' + _logMessage.trim() + '</span></div>';
+                    html += '<div class="ukt-ml-4 ukt-mt-1 logs-error"><b class="logs-error-label">{{ shift.lib.language.get("message") }}:</b> <span class="logs-error-info">' + _logMessage.trim() + '</span></div>';
                 }
                 if ('uri' in _logContextObj) {
-                    html += '<div class="ukt-ml-4 ukt-mt-1"><b class="logs-label-context">{{ shift.lib.language.get("context") }}:</b> <span class="logs-context">' + JSON.stringify(_logContextObj, null, 4) + '</span></div>';
+                    html += '<div class="ukt-ml-4 ukt-mt-1 logs-context"><b class="logs-context-label">{{ shift.lib.language.get("context") }}:</b> <span class="logs-context-info">' + JSON.stringify(_logContextObj, null, 4) + '</span></div>';
                 }
                 html += '</div>';
 
