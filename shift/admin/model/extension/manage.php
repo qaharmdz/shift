@@ -93,6 +93,21 @@ class Manage extends Mvc\Model {
     // Manage
     // ================================================
 
+    public function editSetting(int $extension_id, array $data)
+    {
+        $this->db->set(
+            DB_PREFIX . 'extension',
+            [
+                'setting' => json_encode($data['setting']),
+                'status'  => (int) $data['status'],
+                'updated' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'extension_id' => $extension_id,
+            ]
+        );
+    }
+
     public function getExtension(string $type, string $codename): array
     {
         $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename])->row;

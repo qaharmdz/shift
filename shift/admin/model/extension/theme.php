@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Extension;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Theme extends Mvc\Model
-{
+class Theme extends Mvc\Model {
     /**
      * DataTables records
      *
@@ -23,12 +22,12 @@ class Theme extends Mvc\Model
             'status'       => 'e.status',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension` e"
             . " WHERE e.`type` = 'theme' AND e.`install` = 1"
-                . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
+            . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -61,7 +60,7 @@ class Theme extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get(
+        return (int) $this->db->get(
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension`
             WHERE `type` = 'theme'  AND `status` = 1 AND `install` = 1"
