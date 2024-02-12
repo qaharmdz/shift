@@ -21,9 +21,9 @@
                         <a class="uk-link-reset uk-text-center uk-display-block uk-width-1-1"><i class="bi bi-three-dots-vertical"></i></a>
                         <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-left;">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <li><a data-dtAction='{"action":"enabled"}'>{{ shift.lib.language.get('enabled') }}</a></li>
-                                <li><a data-dtAction='{"action":"disabled"}'>{{ shift.lib.language.get('disabled') }}</a></li>
-                                <li><a data-dtAction='{"action":"delete"}'>{{ shift.lib.language.get('delete') }}</a></li>
+                                <li><a data-dtAction='{"type":"enabled"}'>{{ shift.lib.language.get('enabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"disabled"}'>{{ shift.lib.language.get('disabled') }}</a></li>
+                                <li><a data-dtAction='{"type":"delete"}'>{{ shift.lib.language.get('delete') }}</a></li>
                             </ul>
                         </div>
                     </th>
@@ -177,7 +177,7 @@ let tableEl     = '#extensionManage-list',
                 render : function(data, type, full) {
                     output = data;
                     if (full.version_meta && full.version != full.version_meta) {
-                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"action":"info", "type":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
+                        output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "type":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
                         output += '<b>*</b> {{ shift.lib.language.get("new") }} v' + full.version_meta;
                         output += '</a>';
                     }
@@ -211,27 +211,27 @@ let tableEl     = '#extensionManage-list',
             { data : 'extension_id',
                 className : 'ukt-p-2',
                 render : function(data, type, full) {
-                    output = '<a data-dtAction=\'{"action":"info", "type":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
+                    output = '<a data-dtAction=\'{"type":"info", "type":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}"><i class="bi bi-info-circle"></i></a>';
                     output += '<div class="uk-inline ukt-ml-2">';
                     output += '    <a class="uk-link-reset" style="display:block;margin-top:-4px;width:20px;"><i class="bi bi-three-dots-vertical"></i></a>';
                     output += '    <div class="uk-dropdown-mini" uk-dropdown="offset:5;pos:bottom-right;">';
                     output += '        <ul class="uk-nav uk-dropdown-nav">';
                     if (full.status) {
-                        output += '       <li><a data-dtAction=\'{"action":"disabled", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("disabled") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"disabled", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("disabled") }}</a></li>';
                     } else {
                         if (full.install) {
-                            output += '   <li><a data-dtAction=\'{"action":"enabled", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("enabled") }}</a></li>';
+                            output += '   <li><a data-dtAction=\'{"type":"enabled", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("enabled") }}</a></li>';
                         } else {
                             output += '   <li><a class="uk-link-muted">{{ shift.lib.language.get("enabled") }}</a></li>';
                         }
                     }
                     output += '           <li class="uk-nav-divider"></li>';
                     if (full.install) {
-                        output += '       <li><a data-dtAction=\'{"action":"uninstall", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("uninstall") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"uninstall", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("uninstall") }}</a></li>';
                         output += '       <li><a class="uk-link-muted">{{ shift.lib.language.get("delete") }}</a></li>';
                     } else {
-                        output += '       <li><a data-dtAction=\'{"action":"install", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("install") }}</a></li>';
-                        output += '       <li><a data-dtAction=\'{"action":"delete", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("delete") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"install", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("install") }}</a></li>';
+                        output += '       <li><a data-dtAction=\'{"type":"delete", "item":"' + full.extension_id + '"}\'>{{ shift.lib.language.get("delete") }}</a></li>';
                     }
                     output += '        </ul>';
                     output += '    </div>';

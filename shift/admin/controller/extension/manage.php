@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Extension;
 
 use Shift\System\Mvc;
 
-class Manage extends Mvc\Controller
-{
+class Manage extends Mvc\Controller {
     public function index()
     {
         $this->load->language('extension/manage');
@@ -27,8 +26,8 @@ class Manage extends Mvc\Controller
         $data['ini_uploadMaxFilesize'] = $this->parseSize(ini_get('upload_max_filesize'));
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('extension/manage', $data));
     }
@@ -41,20 +40,20 @@ class Manage extends Mvc\Controller
 
         $this->load->model('extension/manage');
 
-        $params   = $this->request->get('post');
-        $results  = $this->model_extension_manage->dtRecords($params);
+        $params = $this->request->get('post');
+        $results = $this->model_extension_manage->dtRecords($params);
 
         $items = [];
         for ($i = 0; $i < $results->num_rows; $i++) {
             $items[$i] = $results->rows[$i];
 
             $items[$i]['version_meta'] = $params['extMetas'][$items[$i]['type'] . '_' . $items[$i]['codename']]['version'] ?? '';
-            $items[$i]['DT_RowClass']  = 'dt-row-' . $items[$i]['extension_id'];
+            $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['extension_id'];
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_extension_manage->getTotal(),
         ];
@@ -74,13 +73,13 @@ class Manage extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['enabled', 'disabled', 'install', 'uninstall', 'delete'];
         $items = explode(',', $post['item']);
-        $data  = [
-            'items'     => $items,
-            'message'   => '',
-            'updated'   => [],
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
         ];
 
         if (empty($items) || !in_array($post['type'], $types)) {
@@ -104,7 +103,11 @@ class Manage extends Mvc\Controller
             'dbLists'   => [],
             'metaFiles' => [],
             'new'       => [
-                'total' => 0
+                'total'    => 0,
+                'plugin'   => [],
+                'module'   => [],
+                'theme'    => [],
+                'language' => [],
             ],
         ];
 
@@ -116,7 +119,6 @@ class Manage extends Mvc\Controller
 
         foreach (glob(PATH_EXTENSIONS . '*', GLOB_ONLYDIR) as $ext) {
             $extType = basename($ext);
-            $data['new'][$extType] = [];
 
             foreach (glob($ext . DS . '*', GLOB_ONLYDIR | GLOB_NOESCAPE) as $node) {
                 if (is_file($node . DS . 'meta.json')) {
@@ -159,7 +161,7 @@ class Manage extends Mvc\Controller
                             $this->db->add(DB_PREFIX . 'extension', $extData);
 
                             if (!empty($metaInfo['meta'])) {
-                                $extension_id = (int)$this->db->insertId();
+                                $extension_id = (int) $this->db->insertId();
 
                                 $params = [];
                                 foreach ($metaInfo['meta'] as $key => $value) {
@@ -213,7 +215,7 @@ class Manage extends Mvc\Controller
     {
         $this->load->language('extension/manage');
 
-        $data  = [
+        $data = [
             'success' => 0,
             'message' => '',
         ];
