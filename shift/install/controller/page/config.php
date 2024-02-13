@@ -6,8 +6,7 @@ namespace Shift\Install\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Config extends Mvc\Controller
-{
+class Config extends Mvc\Controller {
     private $configFilepath = PATH_SHIFT . 'config.php';
 
     public function index()
@@ -48,7 +47,7 @@ class Config extends Mvc\Controller
                         $post['username'],
                         $post['password'],
                         $post['database'],
-                        (int)$post['port'],
+                        (int) $post['port'],
                     );
 
                     if (is_writable(PATH_SHIFT)) {
@@ -84,7 +83,7 @@ class Config extends Mvc\Controller
 
         $data = [];
         $data['config_filepath'] = $this->configFilepath;
-        $data['config_content']  = $this->session->get('install.config_content');
+        $data['config_content'] = $this->session->get('install.config_content');
 
         $this->response->setOutput($this->load->view('page/config_manual', $data));
     }

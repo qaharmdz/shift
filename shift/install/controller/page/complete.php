@@ -6,8 +6,7 @@ namespace Shift\Install\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Complete extends Mvc\Controller
-{
+class Complete extends Mvc\Controller {
     public function index()
     {
         $this->document->setTitle($this->language->get('complete'));
