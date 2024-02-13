@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
-class Session extends Bags
-{
+class Session extends Bags {
     public function __construct(array $config = [])
     {
         if ($this->getId() !== '') {
@@ -16,19 +15,19 @@ class Session extends Bags
             'session_name'  => 'SESSID',
             'use_cookies'   => '1',
             'use_trans_sid' => '0',
-            'sid_length'    => 48
+            'sid_length'    => 48,
         ], $config);
 
         ini_set(
             'session.cookie_domain',
-            substr($_SERVER['SERVER_NAME'], (int)strpos($_SERVER['SERVER_NAME'], '.'))
+            substr($_SERVER['SERVER_NAME'], (int) strpos($_SERVER['SERVER_NAME'], '.'))
         );
         ini_set('session.cookie_httponly', '1');
         ini_set('session.use_only_cookies', '1');
         ini_set('session.use_strict_mode', '1');
-        ini_set('session.use_cookies', (string)$config['use_cookies']);
-        ini_set('session.use_trans_sid', (string)$config['use_trans_sid']);
-        ini_set('session.sid_length', (string)$config['sid_length']);
+        ini_set('session.use_cookies', (string) $config['use_cookies']);
+        ini_set('session.use_trans_sid', (string) $config['use_trans_sid']);
+        ini_set('session.sid_length', (string) $config['sid_length']);
 
         if ($_SERVER['SECURE']) {
             ini_set('session.cookie_secure', '1');

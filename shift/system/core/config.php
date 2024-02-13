@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
-class Config extends Bags
-{
+class Config extends Bags {
     public function load(string $filename, string $group = '')
     {
         $file = PATH_SYSTEM . 'config' . DS . $filename . '.php';

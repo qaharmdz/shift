@@ -17,8 +17,7 @@ declare(strict_types=1);
 
 namespace Shift\System;
 
-class Framework
-{
+class Framework {
     private $registry;
 
     public function __construct()
@@ -90,7 +89,7 @@ class Framework
 
         if ($db) {
             $hostname = str_replace('www.', '', $_SERVER['HTTP_HOST'])
-                        . rtrim(dirname($_SERVER['PHP_SELF'], (APP_URL_PATH ? 2 : 1)), '/') . '/';
+                . rtrim(dirname($_SERVER['PHP_SELF'], (APP_URL_PATH ? 2 : 1)), '/') . '/';
             $site = $db->get(
                 "SELECT * FROM `" . DB_PREFIX . "site` WHERE REPLACE(`url_host`, 'www.', '') LIKE ?s",
                 ['%' . $hostname]
@@ -185,10 +184,10 @@ class Framework
 
         // Image
         $this->set('image', new Library\Image([
-            'quality'       => 100,
-            'path_image'    => PATH_MEDIA,
-            'path_cache'    => PATH_MEDIA . 'cache/',
-            'url'           => $config->get('env.url_media'),
+            'quality'    => 100,
+            'path_image' => PATH_MEDIA,
+            'path_cache' => PATH_MEDIA . 'cache/',
+            'url'        => $config->get('env.url_media'),
         ]));
 
         return $this;
@@ -196,15 +195,18 @@ class Framework
 
     public function run()
     {
-        $logger   = $this->get('log');
-        $config   = $this->get('config');
-        $request  = $this->get('request');
+        $logger = $this->get('log');
+        $config = $this->get('config');
+        $request = $this->get('request');
         $response = $this->get('response');
 
-        $request->set('query.route', $request->getString(
+        $request->set(
             'query.route',
-            $config->get('root.route_default')
-        ));
+            $request->getString(
+                'query.route',
+                $config->get('root.route_default')
+            )
+        );
 
         try {
             if (str_starts_with($request->get('query.route'), 'startup/')) {
@@ -225,17 +227,19 @@ class Framework
 
             $pageRoute->execute();
 
-        // 404 Not Found
+            // 404 Not Found
         } catch (Exception\NotFoundHttpException | \LogicException $e) {
             $logger->exceptionHandler($e);
 
             $request->set('query.route', $config->get('root.app_error'));
             $event = $this->get('event');
 
-            $route  = $request->get('query.route');
-            $params = [[
-                'message' => $e->getMessage(),
-            ]];
+            $route = $request->get('query.route');
+            $params = [
+                [
+                    'message' => $e->getMessage(),
+                ],
+            ];
             $output = null;
 
             $event->emit($eventName = 'shift/error/notfound::before', [$eventName, &$params, &$output]);
@@ -251,7 +255,7 @@ class Framework
             $event->emit($eventName = 'controller/' . $route . '::after', [$eventName, &$params, &$output]);
             $event->emit($eventName = 'shift/error/notfound::after', [$eventName, &$params, &$output]);
 
-        // Fallback
+            // Fallback
         } catch (\Exception $e) {
             $logger->exceptionHandler($e);
 

@@ -23,8 +23,7 @@ use Webmozart\Assert\Assert as WebmozartAssert;
  *
  * @link  https://github.com/webmozarts/assert
  */
-class Assert
-{
+class Assert {
     protected $rules = [];
 
     public function __call($method, $params = [])

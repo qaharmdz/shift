@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
-class Database
-{
+class Database {
     private array $config = [];
     protected \mysqli $mysqli;
 
@@ -33,7 +32,7 @@ class Database
     {
         $this->config = array_replace_recursive(
             [
-                'raw_query' => true
+                'raw_query' => true,
             ],
             $this->config,
             $configuration
@@ -285,7 +284,7 @@ class Database
             );
         }
 
-        $types  = '';
+        $types = '';
         $parameters = [];
         $placeholders = [];
 
@@ -310,7 +309,7 @@ class Database
 
                 $types .= str_repeat($_type, $_count);
                 $parameters = array_merge($parameters, $_paramsVal);
-                $placeholders[$tokens[$i]] =  '?' . str_repeat(',?', $_count - 1);
+                $placeholders[$tokens[$i]] = '?' . str_repeat(',?', $_count - 1);
             } else {
                 $types .= $_type;
                 $placeholders[$tokens[$i]] = '?';
@@ -334,7 +333,7 @@ class Database
 
         // Variable
         preg_match_all('/{\w+}/', $query, $matches);
-        $vars  = array_intersect_key($params, array_flip($matches[0]));
+        $vars = array_intersect_key($params, array_flip($matches[0]));
         $query = strtr($query, $vars);
 
         return [$query, $parameters, $types];
@@ -366,7 +365,7 @@ class Database
      */
     public function insertId(): int
     {
-        return (int)$this->mysqli->insert_id;
+        return (int) $this->mysqli->insert_id;
     }
 
     /**
@@ -376,7 +375,7 @@ class Database
      */
     public function affectedRows(): int
     {
-        return (int)$this->mysqli->affected_rows;
+        return (int) $this->mysqli->affected_rows;
     }
 
     /**
@@ -411,9 +410,9 @@ class Database
         }
 
         $result = new \stdClass();
-        $result->num_rows = (int)$stmt_result->num_rows;
-        $result->rows     = $stmt_result->fetch_all(\MYSQLI_ASSOC);
-        $result->row      = $result->rows[0] ?? [];
+        $result->num_rows = (int) $stmt_result->num_rows;
+        $result->rows = $stmt_result->fetch_all(\MYSQLI_ASSOC);
+        $result->row = $result->rows[0] ?? [];
 
         $stmt_result->close();
 
@@ -431,12 +430,12 @@ class Database
      */
     public function add(string $table, array $data): \mysqli_stmt|bool
     {
-        $sets   = [];
+        $sets = [];
         $params = [];
-        $types  = str_repeat('s', count($data));
+        $types = str_repeat('s', count($data));
 
         foreach ($data as $key => $value) {
-            $sets[]   = "`" . $key . "` = ?";
+            $sets[] = "`" . $key . "` = ?";
             $params[] = is_array($value) ? json_encode($value) : $value;
         }
 
@@ -459,25 +458,25 @@ class Database
      */
     public function set(string $table, array $data, array $where): \mysqli_stmt|bool
     {
-        $sets   = [];
+        $sets = [];
         $wheres = [];
         $params = [];
-        $types  = str_repeat('s', count($data));
+        $types = str_repeat('s', count($data));
 
         foreach ($data as $key => $value) {
-            $sets[]   = "`" . $key . "` = ?";
+            $sets[] = "`" . $key . "` = ?";
             $params[] = is_array($value) ? json_encode($value) : $value;
         }
 
         foreach ($where as $key => $value) {
             if (is_array($value)) {
                 $wheres[] = "`" . $key . "` IN (" . '?' . str_repeat(',?', count($value) - 1) . ")";
-                $params   = array_merge($params, $value);
-                $types   .= str_repeat('s', count($value));
+                $params = array_merge($params, $value);
+                $types .= str_repeat('s', count($value));
             } else {
                 $wheres[] = "`" . $key . "` = ?";
                 $params[] = $value;
-                $types   .= 's';
+                $types .= 's';
             }
         }
 
@@ -499,17 +498,17 @@ class Database
     {
         $wheres = [];
         $params = [];
-        $types  = '';
+        $types = '';
 
         foreach ($where as $key => $value) {
             if (is_array($value)) {
                 $wheres[] = "`" . $key . "` IN (" . '?' . str_repeat(',?', count($value) - 1) . ")";
-                $params   = array_merge($params, $value);
-                $types   .= str_repeat('s', count($value));
+                $params = array_merge($params, $value);
+                $types .= str_repeat('s', count($value));
             } else {
                 $wheres[] = "`" . $key . "` = ?";
                 $params[] = $value;
-                $types   .= 's';
+                $types .= 's';
             }
         }
 

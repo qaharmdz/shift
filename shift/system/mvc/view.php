@@ -7,8 +7,7 @@ namespace Shift\System\Mvc;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class View
-{
+class View {
     private array $config = [];
     protected $global;
     protected $twig;
@@ -79,8 +78,8 @@ class View
      */
     public function init()
     {
-        $loader   = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
-        $twig     = new \Twig\Environment($loader, [
+        $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatePath());
+        $twig = new \Twig\Environment($loader, [
             'charset'          => 'UTF-8',
             'autoescape'       => [$this, 'escapeByFileExtension'],
             'debug'            => $this->config['debug'],

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Library;
 
-class Secure
-{
+class Secure {
 
     protected $algo;
 
@@ -82,7 +81,7 @@ class Secure
     public function crypt(int $length = 0): string
     {
         $length = $length ?: rand(32, 64);
-        $length = (int)ceil($length / 2);
+        $length = (int) ceil($length / 2);
 
         if (function_exists('openssl_random_pseudo_bytes')) {
             $bytes = openssl_random_pseudo_bytes($length);
@@ -118,22 +117,22 @@ class Secure
     {
         switch ($type) {
             case 'basic':
-                $result = (string)mt_rand();
+                $result = (string) mt_rand();
                 break;
 
             case 'numeric':
                 $pool = '0123456789';
-                $result = str_shuffle(str_repeat($pool, (int)ceil($length / strlen($pool))));
+                $result = str_shuffle(str_repeat($pool, (int) ceil($length / strlen($pool))));
                 break;
 
             case 'alpha':
                 $pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $result = str_shuffle(str_repeat($pool, (int)ceil($length / strlen($pool))));
+                $result = str_shuffle(str_repeat($pool, (int) ceil($length / strlen($pool))));
                 break;
 
             case 'alnum':
                 $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $result = str_shuffle(str_repeat($pool, (int)ceil($length / strlen($pool))));
+                $result = str_shuffle(str_repeat($pool, (int) ceil($length / strlen($pool))));
                 break;
 
             case 'crypt':
@@ -142,7 +141,7 @@ class Secure
 
             case 'hash':
             default:
-                $result = $this->hash((string)mt_rand());
+                $result = $this->hash((string) mt_rand());
                 break;
         }
 

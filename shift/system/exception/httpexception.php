@@ -4,6 +4,5 @@ declare(strict_types=1);
 
 namespace Shift\System\Exception;
 
-class HttpException extends \RuntimeException
-{
+class HttpException extends \RuntimeException {
 }

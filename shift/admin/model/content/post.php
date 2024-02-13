@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Content;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Post extends Mvc\Model
-{
+class Post extends Mvc\Model {
     // List
     // ================================================
 
@@ -31,10 +30,10 @@ class Post extends Mvc\Model
             'unpublish' => 'p.unpublish',
         ];
         $filterMap = $columnMap;
-        $filterMap['author']   = 'CONCAT(u.firstname, " ", u.lastname)';
+        $filterMap['author'] = 'CONCAT(u.firstname, " ", u.lastname)';
         $filterMap['category'] = 'tc.title';
 
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "post` p
@@ -42,7 +41,7 @@ class Post extends Mvc\Model
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = p.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")
                 LEFT JOIN `" . DB_PREFIX . "user` u ON (u.user_id = p.user_id)"
             . " WHERE p.`taxonomy` = 'content_post'"
-                 . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
+            . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -90,8 +89,8 @@ class Post extends Mvc\Model
             [
                 'parent_id'  => 0,
                 'taxonomy'   => 'content_post',
-                'user_id'    => (int)$data['user_id'],
-                'term_id'    => (int)$data['category_id'],
+                'user_id'    => (int) $data['user_id'],
+                'term_id'    => (int) $data['category_id'],
                 'visibility' => $data['visibility'],
                 'sort_order' => $data['sort_order'],
                 'status'     => $data['status'],
@@ -102,7 +101,7 @@ class Post extends Mvc\Model
             ]
         );
 
-        $post_id = (int)$this->db->insertId();
+        $post_id = (int) $this->db->insertId();
 
         $this->insertData($post_id, $data);
 
@@ -116,8 +115,8 @@ class Post extends Mvc\Model
             [
                 'parent_id'  => 0,
                 'taxonomy'   => 'content_post',
-                'user_id'    => (int)$data['user_id'],
-                'term_id'    => (int)$data['category_id'],
+                'user_id'    => (int) $data['user_id'],
+                'term_id'    => (int) $data['category_id'],
                 'visibility' => $data['visibility'],
                 'sort_order' => $data['sort_order'],
                 'status'     => $data['status'],
@@ -158,7 +157,7 @@ class Post extends Mvc\Model
                 DB_PREFIX . 'post_content',
                 [
                     'post_id'          => $post_id,
-                    'language_id'      => (int)$language_id,
+                    'language_id'      => (int) $language_id,
                     'title'            => $content['title'],
                     'excerpt'          => $content['excerpt'],
                     'content'          => $content['content'],
@@ -207,7 +206,7 @@ class Post extends Mvc\Model
 
         $this->load->model('content/tag');
         foreach ($data['term']['tags'] as $term_id) {
-            if (!(int)$term_id) {
+            if (!(int) $term_id) {
                 $term_id = $this->model_content_tag->addTagByTitle(title: $term_id);
             }
 
@@ -242,8 +241,8 @@ class Post extends Mvc\Model
                 $this->db->add(
                     DB_PREFIX . 'route_alias',
                     [
-                        'site_id'     => (int)$site_id,
-                        'language_id' => (int)$language_id,
+                        'site_id'     => (int) $site_id,
+                        'language_id' => (int) $language_id,
                         'route'       => 'content/post',
                         'param'       => 'post_id',
                         'value'       => $post_id,
@@ -259,13 +258,13 @@ class Post extends Mvc\Model
         $this->load->config('content/post');
         $this->load->model('extension/language');
 
-        $default   = $this->config->getArray('content.post.form');
+        $default = $this->config->getArray('content.post.form');
         $default['user_id'] = $this->user->get('user_id');
 
         $languages = $this->model_extension_language->getLanguages();
         foreach ($languages as $language) {
             $default['content'][$language['extension_id']] = $default['content'][0];
-            $default['alias'][$language['extension_id']]   = '';
+            $default['alias'][$language['extension_id']] = '';
         }
 
         $data = $this->db->get(
@@ -315,7 +314,7 @@ class Post extends Mvc\Model
             // Terms
             $data['term'] = [
                 'categories' => [],
-                'tags' => [],
+                'tags'       => [],
             ];
 
             $categories = $this->db->get(

@@ -5,19 +5,23 @@ declare(strict_types=1);
 if (extension_loaded('mbstring')) {
     mb_internal_encoding('UTF-8');
 
-    function utf8_strlen($string) {
+    function utf8_strlen($string)
+    {
         return mb_strlen($string);
     }
 
-    function utf8_strpos($string, $needle, $offset = 0) {
+    function utf8_strpos($string, $needle, $offset = 0)
+    {
         return mb_strpos($string, $needle, $offset);
     }
 
-    function utf8_strrpos($string, $needle, $offset = 0) {
+    function utf8_strrpos($string, $needle, $offset = 0)
+    {
         return mb_strrpos($string, $needle, $offset);
     }
 
-    function utf8_substr($string, $offset, $length = null) {
+    function utf8_substr($string, $offset, $length = null)
+    {
         if ($length === null) {
             return mb_substr($string, $offset, utf8_strlen($string));
         } else {
@@ -25,27 +29,33 @@ if (extension_loaded('mbstring')) {
         }
     }
 
-    function utf8_strtoupper($string) {
+    function utf8_strtoupper($string)
+    {
         return mb_strtoupper($string);
     }
 
-    function utf8_strtolower($string) {
+    function utf8_strtolower($string)
+    {
         return mb_strtolower($string);
     }
 } elseif (function_exists('iconv')) {
-    function utf8_strlen($string) {
+    function utf8_strlen($string)
+    {
         return iconv_strlen($string, 'UTF-8');
     }
 
-    function utf8_strpos($string, $needle, $offset = 0) {
+    function utf8_strpos($string, $needle, $offset = 0)
+    {
         return iconv_strpos($string, $needle, $offset, 'UTF-8');
     }
 
-    function utf8_strrpos($string, $needle) {
+    function utf8_strrpos($string, $needle)
+    {
         return iconv_strrpos($string, $needle, 'UTF-8');
     }
 
-    function utf8_substr($string, $offset, $length = null) {
+    function utf8_substr($string, $offset, $length = null)
+    {
         if ($length === null) {
             return iconv_substr($string, $offset, utf8_strlen($string), 'UTF-8');
         } else {
@@ -53,7 +63,8 @@ if (extension_loaded('mbstring')) {
         }
     }
 
-    function utf8_strtolower($string) {
+    function utf8_strtolower($string)
+    {
         static $upper_to_lower;
 
         if ($upper_to_lower == null) {
@@ -270,7 +281,7 @@ if (extension_loaded('mbstring')) {
                 0x00C9 => 0x00E9,
                 0x00D0 => 0x00F0,
                 0x0407 => 0x0457,
-                0x0122 => 0x0123
+                0x0122 => 0x0123,
             );
         }
 
@@ -289,7 +300,8 @@ if (extension_loaded('mbstring')) {
         return unicode_to_utf8($unicode);
     }
 
-    function utf8_strtoupper($string) {
+    function utf8_strtoupper($string)
+    {
         static $lower_to_upper;
 
         if ($lower_to_upper == null) {
@@ -506,7 +518,7 @@ if (extension_loaded('mbstring')) {
                 0x00E9 => 0x00C9,
                 0x00F0 => 0x00D0,
                 0x0457 => 0x0407,
-                0x0123 => 0x0122
+                0x0123 => 0x0122,
             );
         }
 
@@ -525,7 +537,8 @@ if (extension_loaded('mbstring')) {
         return unicode_to_utf8($unicode);
     }
 
-    function utf8_to_unicode($string) {
+    function utf8_to_unicode($string)
+    {
         $unicode = array();
 
         for ($i = 0; $i < strlen($string); $i++) {
@@ -559,7 +572,8 @@ if (extension_loaded('mbstring')) {
         return $unicode;
     }
 
-    function unicode_to_utf8($unicode) {
+    function unicode_to_utf8($unicode)
+    {
         $string = '';
 
         for ($i = 0; $i < count($unicode); $i++) {
@@ -580,7 +594,7 @@ if (extension_loaded('mbstring')) {
             }
 
             if ($unicode[$i] >= 2097152 && $unicode[$i] <= 67108863) {
-                $string  .= chr(($unicode[$i] / 16777216) + 248) . chr((($unicode[$i] / 262144) % 64) + 128) . chr((($unicode[$i] / 4096) % 64) + 128) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
+                $string .= chr(($unicode[$i] / 16777216) + 248) . chr((($unicode[$i] / 262144) % 64) + 128) . chr((($unicode[$i] / 4096) % 64) + 128) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
             }
 
             if ($unicode[$i] >= 67108864 && $unicode[$i] <= 2147483647) {

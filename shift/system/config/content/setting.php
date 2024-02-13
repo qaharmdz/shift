@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 // Default setting
 $_['form'] = [
-    'post_robots'      => 'index, follow',
-    'post_comment'     => 'register',
-    'post_custom_code' => '',
+    'post_robots'                  => 'index, follow',
+    'post_comment'                 => 'register',
+    'post_custom_code'             => '',
 
     'category_robots'              => 'index, follow',
     'category_post_per_page'       => 10,

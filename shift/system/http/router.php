@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Http;
 
-class Router
-{
+class Router {
     protected $urlGenerators = [];
 
     public function addUrlGenerator(object $urlGenerator)

@@ -9,8 +9,7 @@ use Shift\System\Exception;
 /**
  * Represents a HTTP response.
  */
-class Response
-{
+class Response {
     protected array $headers = [];
     protected string $output = '';
     protected int $compression = 0;
@@ -120,7 +119,7 @@ class Response
      * Set a response header by name.
      *
      * @param  string $name
-     * @param  strint|int $value
+     * @param  string|int $value
      */
     public function setHeader(string $name, string|int $value)
     {
@@ -133,7 +132,7 @@ class Response
      * @param  string $name
      * @return $this
      */
-    public function removeHeader(string $name)
+    public function removeHeader(string $name): void
     {
         unset($this->headers[$name]);
         header_remove($name);
@@ -174,7 +173,7 @@ class Response
             'Content-Type'  => 'application/json',
             'Cache-Control' => 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0, max-age=0, private',
             'Pragma'        => 'no-cache',
-            'Expires'       => gmdate('D, d M Y H:i:s T', time() - 3600)
+            'Expires'       => gmdate('D, d M Y H:i:s T', time() - 3600),
         ]);
 
         if (!is_array($content)) {
@@ -243,7 +242,7 @@ class Response
 
         $this->setHeader('Content-Encoding', $encoding);
 
-        return gzencode($data, (int)$level);
+        return gzencode($data, (int) $level);
     }
 
     /**
@@ -255,7 +254,7 @@ class Response
     {
         if ($output = $this->getOutput()) {
             if ($this->compression) {
-                $output =  $this->compress($output, $this->compression);
+                $output = $this->compress($output, $this->compression);
             }
 
             if (!headers_sent()) {

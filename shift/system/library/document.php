@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Library;
 
-class Document
-{
+class Document {
     protected $data = [];
 
     public function all()
@@ -32,7 +31,7 @@ class Document
         $this->data['meta'][$attribute . '-' . $value] = [
             'attribute' => $attribute,
             'value'     => $value,
-            'content'   => $content
+            'content'   => $content,
         ];
     }
 
@@ -47,11 +46,11 @@ class Document
     public function addLink(string $rel, string $href, string $hreflang = '', string $type = '', string $media = '')
     {
         $this->data['link'][$href] = [
-            'rel'       => $rel,
-            'href'      => $href,
-            'hreflang'  => $hreflang,
-            'type'      => $type,
-            'media'     => $media
+            'rel'      => $rel,
+            'href'     => $href,
+            'hreflang' => $hreflang,
+            'type'     => $type,
+            'media'    => $media,
         ];
     }
 
@@ -65,7 +64,7 @@ class Document
         $this->data['style'][$href] = [
             'href'  => $href,
             'rel'   => $rel,
-            'media' => $media
+            'media' => $media,
         ];
     }
 
@@ -130,7 +129,7 @@ class Document
         $node = $this->data['nodes'][$name] ?? $type;
 
         if (is_array($node)) {
-            $this->setNode($name, array_unique(array_merge($node, (array)$value), SORT_REGULAR));
+            $this->setNode($name, array_unique(array_merge($node, (array) $value), SORT_REGULAR));
         } else {
             $this->setNode($name, $value);
         }

@@ -11,8 +11,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  *
  * @link https://github.com/PHPMailer/PHPMailer
  */
-class Mail
-{
+class Mail {
     private array $config = [];
 
     public function setConfig(array $configuration = [])
@@ -49,9 +48,9 @@ class Mail
             case 'smtp':
                 $mail->isSMTP();
 
-                $mail->Host    = $this->getConfig('smtp_host');
-                $mail->Port    = (int)$this->getConfig('smtp_port');
-                $mail->Timeout = (int)$this->getConfig('smtp_timeout');
+                $mail->Host = $this->getConfig('smtp_host');
+                $mail->Port = (int) $this->getConfig('smtp_port');
+                $mail->Timeout = (int) $this->getConfig('smtp_timeout');
 
                 if ($this->getConfig('smtp_username') && $this->getConfig('smtp_password')) {
                     $mail->SMTPAuth = true;

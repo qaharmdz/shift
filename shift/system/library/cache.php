@@ -27,8 +27,7 @@ use Phpfastcache\Exceptions\PhpfastcacheSimpleCacheException;
  *
  * @link https://github.com/PHPSocialNetwork/phpfastcache/blob/master/lib/Phpfastcache/Helper/Psr16Adapter.php
  */
-class Cache extends Psr16Adapter
-{
+class Cache extends Psr16Adapter {
     public function __construct(string|ExtendedCacheItemPoolInterface $driver, array|ConfigurationOptionInterface $config = null)
     {
         $this->setup($driver, $config);
@@ -77,7 +76,7 @@ class Cache extends Psr16Adapter
      *
      * @param string $key
      * @param mixed $value
-     * @param null|int|DateInterval $ttl
+     * @param null|int|\DateInterval $ttl
      * @param array $tags
      * @return bool
      * @throws PhpfastcacheSimpleCacheException
@@ -113,7 +112,7 @@ class Cache extends Psr16Adapter
      */
     public function deleteByTags(array|string $tagName): bool
     {
-        return $this->internalCacheInstance->deleteItemsByTags((array)$tagName);
+        return $this->internalCacheInstance->deleteItemsByTags((array) $tagName);
     }
 
     public function getHash(string|int|float|bool|null|array $args): string
@@ -122,6 +121,6 @@ class Cache extends Psr16Adapter
             $args = json_encode($args);
         }
 
-        return md5((string)$args);
+        return md5((string) $args);
     }
 }

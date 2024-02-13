@@ -17,9 +17,9 @@ $_['form'] = [
     'publish'     => null,
     'unpublish'   => null,
 
-    'sites'      => [0],
-    'alias'      => [],
-    'content'    => [
+    'sites'       => [0],
+    'alias'       => [],
+    'content'     => [
         0 => [
             'title'            => '',
             'excerpt'          => '',
@@ -32,13 +32,13 @@ $_['form'] = [
     'meta'        => [
         'visibility_usergroups' => [],
         'visibility_password'   => '',
-        'image'       => 'image/no-image.png',
-        'robots'      => '',
-        'comment'     => '',
-        'custom_code' => '', // js, css
+        'image'                 => 'image/no-image.png',
+        'robots'                => '',
+        'comment'               => '',
+        'custom_code'           => '', // js, css
     ],
     'term'        => [
-        'categories'  => [],
-        'tags'        => [],
-    ]
+        'categories' => [],
+        'tags'       => [],
+    ],
 ];
