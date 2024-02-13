@@ -6,8 +6,7 @@ namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Home extends Mvc\Controller
-{
+class Home extends Mvc\Controller {
     public function index()
     {
         $this->document->addMeta('name', 'description', $this->config->get('system.site.meta_description.' . $this->config->get('env.language_id', 0)));
@@ -16,8 +15,8 @@ class Home extends Mvc\Controller
         $this->document->addLink($this->router->url('page/home'), 'canonical');
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/home', $data));
     }

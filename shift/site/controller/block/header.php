@@ -6,8 +6,7 @@ namespace Shift\Site\Controller\Block;
 
 use Shift\System\Mvc;
 
-class Header extends Mvc\Controller
-{
+class Header extends Mvc\Controller {
     public function index()
     {
         $this->load->language('block/header', 'blockHeader');
@@ -39,41 +38,41 @@ class Header extends Mvc\Controller
             $data['logo'] = $this->config->get('env.url_media') . $this->config->get('system.site.logo');
         }
 
-        $data['logged']   = $this->user->isLogged();
+        $data['logged'] = $this->user->isLogged();
         $data['language'] = $this->load->controller('block/language');
-        $data['search']   = $this->load->controller('block/search');
+        $data['search'] = $this->load->controller('block/search');
 
         $data['navigations'] = [];
         $data['navigations'][] = [
-            'name'     => $this->language->get('blockHeader.home'),
-            'href'     => $this->router->url('page/home'),
+            'name' => $this->language->get('blockHeader.home'),
+            'href' => $this->router->url('page/home'),
         ];
         $data['navigations'][] = [
-            'name'     => $this->language->get('blockHeader.about', 'About'),
-            'href'     => $this->router->url('content/post', 'category_id=1&post_id=10'),
+            'name' => $this->language->get('blockHeader.about', 'About'),
+            'href' => $this->router->url('content/post', 'category_id=1&post_id=10'),
         ];
         $data['navigations'][] = [
-            'name'     => $this->language->get('blockHeader.content', 'Content'),
-            'href'     => $this->router->url('content/category/home'),
+            'name' => $this->language->get('blockHeader.content', 'Content'),
+            'href' => $this->router->url('content/category/home'),
         ];
 
         $dropdownItems = [];
         for ($i = 0; $i < 12; $i++) {
             $dropdownItems[] = [
-                'name'  => 'Item ' . $i,
-                'href'  => $this->router->url('page/home'),
+                'name' => 'Item ' . $i,
+                'href' => $this->router->url('page/home'),
             ];
         }
         $data['navigations'][] = [
             'name'     => 'Dropdown',
             'column'   => 2,
             'children' => $dropdownItems,
-            'href'     => $this->router->url('information/information', 'information_id=6')
+            'href'     => $this->router->url('information/information', 'information_id=6'),
         ];
 
         $data['navigations'][] = [
-            'name'     => $this->language->get('blockHeader.contact'),
-            'href'     => $this->router->url('page/contact')
+            'name' => $this->language->get('blockHeader.contact'),
+            'href' => $this->router->url('page/contact'),
         ];
 
         return $this->load->view('block/header', $data);

@@ -6,8 +6,7 @@ namespace Shift\Site\Model\Content;
 
 use Shift\System\Mvc;
 
-class Tag extends Mvc\Model
-{
+class Tag extends Mvc\Model {
     public function getTag(int $tag_id): array
     {
         //

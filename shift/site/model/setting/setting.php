@@ -6,8 +6,7 @@ namespace Shift\Site\Model\Setting;
 
 use Shift\System\Mvc;
 
-class Setting extends Mvc\Model
-{
+class Setting extends Mvc\Model {
     public function getSetting(string $group, string $code = null, int $site_id = 0)
     {
         $data = [];

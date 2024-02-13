@@ -7,8 +7,7 @@ namespace Shift\Site\Controller\Startup;
 use Shift\System\Mvc;
 use Shift\System\Exception;
 
-class Router extends Mvc\Controller
-{
+class Router extends Mvc\Controller {
     public function index()
     {
         $this->router->addUrlGenerator($this);
@@ -50,9 +49,9 @@ class Router extends Mvc\Controller
                         $langCode = $languages[$alias['language_id']]['codename'];
 
                         $this->session->set('language', $langCode);
-                        setcookie('language', $langCode, time() + 60 * 60 * 24 * 30, '/', ini_get('session.cookie_domain'), (bool)ini_get('session.cookie_secure'));
+                        setcookie('language', $langCode, time() + 60 * 60 * 24 * 30, '/', ini_get('session.cookie_domain'), (bool) ini_get('session.cookie_secure'));
 
-                        $this->config->set('env.language_id', (int)$alias['language_id']);
+                        $this->config->set('env.language_id', (int) $alias['language_id']);
                         $this->config->set('env.language_code', $langCode);
 
                         $this->language->set('_param.active', $langCode);
@@ -123,7 +122,7 @@ class Router extends Mvc\Controller
 
             if ($urlParams) {
                 foreach ($urlParams as $param => $value) {
-                    $query .= '&' . rawurlencode((string)$param) . '=' . rawurlencode((string)$value);
+                    $query .= '&' . rawurlencode((string) $param) . '=' . rawurlencode((string) $value);
                 }
 
                 if ($query) {

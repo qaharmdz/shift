@@ -6,8 +6,7 @@ namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Maintenance extends Mvc\Controller
-{
+class Maintenance extends Mvc\Controller {
     public function index()
     {
         $this->load->language('page/maintenance');

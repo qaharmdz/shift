@@ -6,8 +6,7 @@ namespace Shift\Site\Controller\block;
 
 use Shift\System\Mvc;
 
-class Language extends Mvc\Controller
-{
+class Language extends Mvc\Controller {
     public function index()
     {
         $this->load->model('extension/language');
@@ -55,10 +54,12 @@ class Language extends Mvc\Controller
 
         $this->session->set('language', $this->request->get('post.code'));
 
-        $this->response->redirect($this->router->url(
-            $this->request->get('post.redirect_route'),
-            $this->request->get('post.redirect_args'),
-            (int)$languages[$this->request->get('post.code')]['language_id'],
-        ));
+        $this->response->redirect(
+            $this->router->url(
+                $this->request->get('post.redirect_route'),
+                $this->request->get('post.redirect_args'),
+                (int) $languages[$this->request->get('post.code')]['language_id'],
+            )
+        );
     }
 }
