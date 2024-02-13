@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Error;
 
 use Shift\System\Mvc;
 
-class Permission extends Mvc\Controller
-{
+class Permission extends Mvc\Controller {
     public function index()
     {
         $this->load->language('error/permission');
@@ -26,8 +25,8 @@ class Permission extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('error/permission', $data), 403);
     }

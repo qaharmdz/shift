@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Extension;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Module extends Mvc\Model
-{
+class Module extends Mvc\Model {
     // List
     // ================================================
 
@@ -31,13 +30,13 @@ class Module extends Mvc\Model
         $filterMap['module_id'] = 'em.extension_module_id';
         $filterMap['codename'] = 'CONCAT(e.codename, " ", em.type)';
 
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "extension_module` em
                 LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)"
             . " WHERE e.`type` = 'module' AND e.`status` = 1 AND e.`install` = 1"
-                 . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
+            . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -74,7 +73,7 @@ class Module extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get(
+        return (int) $this->db->get(
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension_module` em
                 LEFT JOIN `" . DB_PREFIX . "extension` e ON (em.extension_id = e.extension_id)
@@ -90,27 +89,27 @@ class Module extends Mvc\Model
         $this->db->add(
             DB_PREFIX . 'extension_module',
             [
-                'extension_id' => (int)$data['extension_id'],
+                'extension_id' => (int) $data['extension_id'],
                 'name'         => $data['name'],
                 'setting'      => json_encode($data['setting'] ?? []),
-                'status'       => (int)$data['status'],
+                'status'       => (int) $data['status'],
                 'created'      => date('Y-m-d H:i:s'),
                 'updated'      => date('Y-m-d H:i:s'),
             ]
         );
 
-        $module_id = (int)$this->db->insertId();
+        $module_id = (int) $this->db->insertId();
 
         if (!empty($data['meta'])) {
             foreach ($data['meta'] as $key => $value) {
                 $this->db->add(
                     DB_PREFIX . 'extension_meta',
                     [
-                        'extension_id' => (int)$data['extension_id'],
+                        'extension_id'        => (int) $data['extension_id'],
                         'extension_module_id' => $module_id,
-                        'key'     => $key,
-                        'value'   => (is_array($value) ? json_encode($value) : $value),
-                        'encoded' => (is_array($value) ? 1 : 0),
+                        'key'                 => $key,
+                        'value'               => (is_array($value) ? json_encode($value) : $value),
+                        'encoded'             => (is_array($value) ? 1 : 0),
                     ]
                 );
             }
@@ -124,10 +123,10 @@ class Module extends Mvc\Model
         $updated = $this->db->set(
             DB_PREFIX . 'extension_module',
             [
-                'extension_id' => (int)$data['extension_id'],
+                'extension_id' => (int) $data['extension_id'],
                 'name'         => $data['name'],
                 'setting'      => json_encode($data['setting'] ?? []),
-                'status'       => (int)$data['status'],
+                'status'       => (int) $data['status'],
                 'updated'      => date('Y-m-d H:i:s'),
             ],
             ['extension_module_id' => $module_id]
@@ -135,7 +134,7 @@ class Module extends Mvc\Model
 
         if ($updated->affected_rows != -1) {
             $this->db->delete(DB_PREFIX . 'extension_meta', [
-                'extension_id' => (int)$data['extension_id'],
+                'extension_id'        => (int) $data['extension_id'],
                 'extension_module_id' => $module_id,
             ]);
 
@@ -144,11 +143,11 @@ class Module extends Mvc\Model
                     $this->db->add(
                         DB_PREFIX . 'extension_meta',
                         [
-                            'extension_id' => (int)$data['extension_id'],
+                            'extension_id'        => (int) $data['extension_id'],
                             'extension_module_id' => $module_id,
-                            'key'     => $key,
-                            'value'   => (is_array($value) ? json_encode($value) : $value),
-                            'encoded' => (is_array($value) ? 1 : 0),
+                            'key'                 => $key,
+                            'value'               => (is_array($value) ? json_encode($value) : $value),
+                            'encoded'             => (is_array($value) ? 1 : 0),
                         ]
                     );
                 }
@@ -202,7 +201,7 @@ class Module extends Mvc\Model
     public function getModules(array $filters = ['em.status = ?i' => 1], string $rkey = 'extension_module_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('modules.' . $argsHash, []);
+        $data = $this->cache->get('modules.' . $argsHash, []);
 
         if (!$data) {
             $modules = $this->db->get(

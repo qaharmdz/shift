@@ -1,3 +1,3 @@
 <?php
 
-$_['page_title']        = 'Modules';
+$_['page_title'] = 'Modules';

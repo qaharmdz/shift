@@ -1,6 +1,6 @@
 <?php
 
-$_['page_title']    = 'Languages';
+$_['page_title'] = 'Languages';
 
-$_['locale']        = 'Locale';
-$_['flag']          = 'Flag';
+$_['locale'] = 'Locale';
+$_['flag'] = 'Flag';

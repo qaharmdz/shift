@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Extension;
 
 use Shift\System\Mvc;
 
-class Event extends Mvc\Controller
-{
+class Event extends Mvc\Controller {
     public function index()
     {
         $this->load->language('extension/event');
@@ -24,8 +23,8 @@ class Event extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('extension/event', $data));
     }
@@ -38,7 +37,7 @@ class Event extends Mvc\Controller
 
         $this->load->model('extension/event');
 
-        $params  = $this->request->get('post');
+        $params = $this->request->get('post');
         $results = $this->model_extension_event->dtRecords($params);
 
         $items = [];
@@ -49,8 +48,8 @@ class Event extends Mvc\Controller
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_extension_event->getTotal(),
         ];

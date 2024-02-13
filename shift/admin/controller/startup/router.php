@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Startup;
 
 use Shift\System\Mvc;
 
-class Router extends Mvc\Controller
-{
+class Router extends Mvc\Controller {
     public function index()
     {
         $this->router->addUrlGenerator($this);

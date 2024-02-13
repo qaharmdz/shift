@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Account;
 
 use Shift\System\Mvc;
 
-class UserGroup extends Mvc\Controller
-{
+class UserGroup extends Mvc\Controller {
     public function index()
     {
         $this->load->language('account/usergroup');
@@ -24,8 +23,8 @@ class UserGroup extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('account/usergroup_list', $data));
     }
@@ -38,7 +37,7 @@ class UserGroup extends Mvc\Controller
 
         $this->load->model('account/usergroup');
 
-        $params  = $this->request->get('post');
+        $params = $this->request->get('post');
         $results = $this->model_account_usergroup->dtRecords($params);
 
         $items = [];
@@ -46,12 +45,12 @@ class UserGroup extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['user_group_id'];
-            $items[$i]['url_edit']    = $this->router->url('account/usergroup/form', 'user_group_id=' . $items[$i]['user_group_id']);
+            $items[$i]['url_edit'] = $this->router->url('account/usergroup/form', 'user_group_id=' . $items[$i]['user_group_id']);
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_account_usergroup->getTotal(),
         ];
@@ -71,13 +70,13 @@ class UserGroup extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['enabled', 'disabled', 'delete'];
         $items = explode(',', $post['item']);
-        $data  = [
-            'items'     => $items,
-            'message'   => '',
-            'updated'   => [],
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
         ];
 
         if (empty($items) || !in_array($post['type'], $types) || in_array(1, $items)) {
@@ -111,14 +110,14 @@ class UserGroup extends Mvc\Controller
 
         $data = [];
 
-        $data['mode']          = $mode;
+        $data['mode'] = $mode;
         $data['user_group_id'] = $user_group_id;
-        $data['permissions']   = $this->permissionList();
-        $data['setting']       = $this->model_account_usergroup->getUserGroup($user_group_id);
+        $data['permissions'] = $this->permissionList();
+        $data['setting'] = $this->model_account_usergroup->getUserGroup($user_group_id);
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('account/usergroup_form', $data));
     }
@@ -193,7 +192,7 @@ class UserGroup extends Mvc\Controller
             $this->config->getArray('account.usergroup.form'),
             $this->request->get('post', [])
         );
-        $user_group_id = (int)$post['user_group_id'];
+        $user_group_id = (int) $post['user_group_id'];
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);

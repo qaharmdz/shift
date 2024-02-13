@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Extension;
 
 use Shift\System\Mvc;
 
-class Module extends Mvc\Controller
-{
+class Module extends Mvc\Controller {
     public function index()
     {
         $this->load->language('extension/module');
@@ -24,8 +23,8 @@ class Module extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('extension/module', $data));
     }
@@ -38,7 +37,7 @@ class Module extends Mvc\Controller
 
         $this->load->model('extension/module');
 
-        $params  = $this->request->get('post');
+        $params = $this->request->get('post');
         $results = $this->model_extension_module->dtRecords($params);
 
         $items = [];
@@ -46,12 +45,12 @@ class Module extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['module_id'];
-            $items[$i]['url_edit']    = $this->router->url('extensions/module/' . $items[$i]['codename'], 'module_id=' . $items[$i]['module_id']);
+            $items[$i]['url_edit'] = $this->router->url('extensions/module/' . $items[$i]['codename'], 'module_id=' . $items[$i]['module_id']);
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_extension_module->getTotal(),
         ];
@@ -86,13 +85,13 @@ class Module extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['enabled', 'disabled', 'delete'];
         $items = explode(',', $post['item']);
-        $data  = [
-            'items'     => $items,
-            'message'   => '',
-            'updated'   => [],
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
         ];
 
         if (empty($items) || !in_array($post['type'], $types)) {

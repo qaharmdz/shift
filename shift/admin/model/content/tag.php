@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Content;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Tag extends Mvc\Model
-{
+class Tag extends Mvc\Model {
     // List
     // ================================================
 
@@ -25,18 +24,18 @@ class Tag extends Mvc\Model
             'order'   => 't.sort_order AS `order`',
             'status'  => 't.status',
             'created' => 't.created',
-            'updated' => 't.updated'
+            'updated' => 't.updated',
         ];
         $filterMap = $columnMap;
         $filterMap['tag_id'] = 't.term_id';
 
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")"
             . " WHERE t.`taxonomy` = 'content_tag'"
-                 . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
+            . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -82,14 +81,14 @@ class Tag extends Mvc\Model
         $this->db->add(
             DB_PREFIX . 'term',
             [
-                'taxonomy'   => 'content_tag',
-                'status'     => (int)$data['status'],
-                'created'    => date('Y-m-d H:i:s'),
-                'updated'    => date('Y-m-d H:i:s'),
+                'taxonomy' => 'content_tag',
+                'status'   => (int) $data['status'],
+                'created'  => date('Y-m-d H:i:s'),
+                'updated'  => date('Y-m-d H:i:s'),
             ]
         );
 
-        $term_id = (int)$this->db->insertId();
+        $term_id = (int) $this->db->insertId();
 
         $this->insertData($term_id, $data);
 
@@ -135,9 +134,9 @@ class Tag extends Mvc\Model
         $updated = $this->db->set(
             DB_PREFIX . 'term',
             [
-                'taxonomy'   => 'content_tag',
-                'status'     => (int)$data['status'],
-                'updated'    => date('Y-m-d H:i:s'),
+                'taxonomy' => 'content_tag',
+                'status'   => (int) $data['status'],
+                'updated'  => date('Y-m-d H:i:s'),
             ],
             ['term_id' => $tag_id]
         );
@@ -148,7 +147,7 @@ class Tag extends Mvc\Model
             $this->db->delete(DB_PREFIX . 'route_alias', [
                 'route' => 'content/tag',
                 'param' => 'tag_id',
-                'value' => $tag_id
+                'value' => $tag_id,
             ]);
 
             $this->insertData($tag_id, $data);
@@ -164,7 +163,7 @@ class Tag extends Mvc\Model
                 DB_PREFIX . 'term_content',
                 [
                     'term_id'     => $tag_id,
-                    'language_id' => (int)$language_id,
+                    'language_id' => (int) $language_id,
                     'title'       => $content['title'],
                     'content'     => $content['content'],
                 ]
@@ -209,8 +208,8 @@ class Tag extends Mvc\Model
                 $this->db->add(
                     DB_PREFIX . 'route_alias',
                     [
-                        'site_id'     => (int)$site['site_id'],
-                        'language_id' => (int)$language_id,
+                        'site_id'     => (int) $site['site_id'],
+                        'language_id' => (int) $language_id,
                         'route'       => 'content/tag',
                         'param'       => 'tag_id',
                         'value'       => $tag_id,
@@ -226,12 +225,12 @@ class Tag extends Mvc\Model
         $this->load->config('content/tag');
         $this->load->model('extension/language');
 
-        $default   = $this->config->getArray('content.tag.form');
+        $default = $this->config->getArray('content.tag.form');
         $languages = $this->model_extension_language->getLanguages();
 
         foreach ($languages as $language) {
             $default['content'][$language['extension_id']] = $default['content'][0];
-            $default['alias'][$language['extension_id']]   = '';
+            $default['alias'][$language['extension_id']] = '';
         }
 
         $data = $this->db->get(

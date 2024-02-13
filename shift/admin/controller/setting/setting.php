@@ -7,8 +7,7 @@ namespace Shift\Admin\Controller\Setting;
 use Shift\System\Mvc;
 use Shift\System\Helper\Arr;
 
-class Setting extends Mvc\Controller
-{
+class Setting extends Mvc\Controller {
     public function index()
     {
         $this->load->config('setting/setting');
@@ -34,8 +33,8 @@ class Setting extends Mvc\Controller
         $data['languages'] = $this->model_extension_language->getLanguages();
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('setting/setting', $data));
     }

@@ -1,3 +1,3 @@
 <?php
 
-$_['page_title']        = 'Plugins';
+$_['page_title'] = 'Plugins';

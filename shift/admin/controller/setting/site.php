@@ -7,8 +7,7 @@ namespace Shift\Admin\Controller\Setting;
 use Shift\System\Mvc;
 use Shift\System\Helper\Arr;
 
-class Site extends Mvc\Controller
-{
+class Site extends Mvc\Controller {
     public function index()
     {
         $this->load->language('setting/site');
@@ -25,8 +24,8 @@ class Site extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('setting/site_list', $data));
     }
@@ -39,7 +38,7 @@ class Site extends Mvc\Controller
 
         $this->load->model('setting/site');
 
-        $params  = $this->request->get('post');
+        $params = $this->request->get('post');
         $results = $this->model_setting_site->dtRecords($params);
 
         $items = [];
@@ -47,12 +46,12 @@ class Site extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['site_id'];
-            $items[$i]['url_edit']    = $this->router->url('setting/site/form', 'site_id=' . $items[$i]['site_id']);
+            $items[$i]['url_edit'] = $this->router->url('setting/site/form', 'site_id=' . $items[$i]['site_id']);
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_setting_site->getTotal(),
         ];
@@ -72,13 +71,13 @@ class Site extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['delete'];
         $items = explode(',', $post['item']);
-        $data  = [
-            'items'     => $items,
-            'message'   => '',
-            'updated'   => [],
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
         ];
 
         if (empty($items) || !in_array($post['type'], $types) || in_array(0, $items)) {
@@ -97,7 +96,7 @@ class Site extends Mvc\Controller
     public function form()
     {
         $site_id = $this->request->getInt('query.site_id', -1);
-        $mode    = $site_id == -1 ? 'add_new' : 'edit';
+        $mode = $site_id == -1 ? 'add_new' : 'edit';
 
         $this->load->config('setting/site');
         $this->load->model('setting/setting');
@@ -126,8 +125,8 @@ class Site extends Mvc\Controller
 
         $this->load->model('extension/manage');
         $data['themes'] = $this->model_extension_manage->getExtensions([
-            'type = ?s' => 'theme',
-            'status = ?i' => 1,
+            'type = ?s'    => 'theme',
+            'status = ?i'  => 1,
             'install = ?i' => 1,
         ]);
 
@@ -135,8 +134,8 @@ class Site extends Mvc\Controller
         $data['layoutList'] = $this->model_tool_layout->getLayouts();
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('setting/site_form', $data));
     }
@@ -163,8 +162,8 @@ class Site extends Mvc\Controller
             $this->config->getArray('setting.site.form'),
             $this->request->get('post', [])
         );
-        $site_id = (int)$post['site_id'];
-        $action  = $post['action'];
+        $site_id = (int) $post['site_id'];
+        $action = $post['action'];
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);

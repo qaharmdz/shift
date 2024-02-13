@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Extension;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Event extends Mvc\Model
-{
+class Event extends Mvc\Model {
     /**
      * DataTables records
      *
@@ -26,7 +25,7 @@ class Event extends Mvc\Model
             'status'      => 'e.status',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "event` e"
@@ -47,7 +46,7 @@ class Event extends Mvc\Model
             $this->db->set(
                 DB_PREFIX . 'event',
                 [
-                    'status'  => $status,
+                    'status' => $status,
                 ],
                 ['event_id' => $items]
             );
@@ -62,6 +61,6 @@ class Event extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "event`")->row['total'];
+        return (int) $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "event`")->row['total'];
     }
 }

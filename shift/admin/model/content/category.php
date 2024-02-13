@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Content;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Category extends Mvc\Model
-{
+class Category extends Mvc\Model {
     // List
     // ================================================
 
@@ -26,18 +25,18 @@ class Category extends Mvc\Model
             'order'       => 't.sort_order AS `order`',
             'status'      => 't.status',
             'created'     => 't.created',
-            'updated'     => 't.updated'
+            'updated'     => 't.updated',
         ];
         $filterMap = $columnMap;
         $filterMap['category_id'] = 't.term_id';
 
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "term` t
                 LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (tc.term_id = t.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")"
             . " WHERE t.`taxonomy` = 'content_category'"
-                 . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
+            . ($dtResult['query']['where'] ? " AND " . $dtResult['query']['where'] : "")
             . " ORDER BY " . $dtResult['query']['order']
             . " LIMIT " . $dtResult['query']['limit'];
 
@@ -83,16 +82,16 @@ class Category extends Mvc\Model
         $this->db->add(
             DB_PREFIX . 'term',
             [
-                'parent_id'  => (int)$data['parent_id'],
+                'parent_id'  => (int) $data['parent_id'],
                 'taxonomy'   => 'content_category',
-                'sort_order' => (int)$data['sort_order'],
-                'status'     => (int)$data['status'],
+                'sort_order' => (int) $data['sort_order'],
+                'status'     => (int) $data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
             ]
         );
 
-        $term_id = (int)$this->db->insertId();
+        $term_id = (int) $this->db->insertId();
 
         $this->insertData($term_id, $data);
 
@@ -104,10 +103,10 @@ class Category extends Mvc\Model
         $updated = $this->db->set(
             DB_PREFIX . 'term',
             [
-                'parent_id'  => (int)$data['parent_id'],
+                'parent_id'  => (int) $data['parent_id'],
                 'taxonomy'   => 'content_category',
-                'sort_order' => (int)$data['sort_order'],
-                'status'     => (int)$data['status'],
+                'sort_order' => (int) $data['sort_order'],
+                'status'     => (int) $data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
             ],
             ['term_id' => $category_id]
@@ -139,7 +138,7 @@ class Category extends Mvc\Model
                 DB_PREFIX . 'term_content',
                 [
                     'term_id'          => $category_id,
-                    'language_id'      => (int)$language_id,
+                    'language_id'      => (int) $language_id,
                     'title'            => $content['title'],
                     'content'          => $content['content'],
                     'meta_title'       => $content['meta_title'],
@@ -195,8 +194,8 @@ class Category extends Mvc\Model
                 $this->db->add(
                     DB_PREFIX . 'route_alias',
                     [
-                        'site_id'     => (int)$site_id,
-                        'language_id' => (int)$language_id,
+                        'site_id'     => (int) $site_id,
+                        'language_id' => (int) $language_id,
                         'route'       => 'content/category',
                         'param'       => 'category_id',
                         'value'       => $category_id,
@@ -212,12 +211,12 @@ class Category extends Mvc\Model
         $this->load->config('content/category');
         $this->load->model('extension/language');
 
-        $default   = $this->config->getArray('content.category.form');
+        $default = $this->config->getArray('content.category.form');
         $languages = $this->model_extension_language->getLanguages();
 
         foreach ($languages as $language) {
             $default['content'][$language['extension_id']] = $default['content'][0];
-            $default['alias'][$language['extension_id']]   = '';
+            $default['alias'][$language['extension_id']] = '';
         }
 
         $data = $this->db->get(
@@ -270,7 +269,7 @@ class Category extends Mvc\Model
         $this->db->delete(DB_PREFIX . 'route_alias', [
             'route' => 'content/category',
             'param' => 'category_id',
-            'value' => $categories
+            'value' => $categories,
         ]);
 
         $this->cache->deleteByTags('content.categories');
@@ -307,8 +306,8 @@ class Category extends Mvc\Model
                 }
 
                 $data[] = [
-                    'category_id' => (int)$category['term_id'],
-                    'parent_id'   => (int)$category['parent_id'],
+                    'category_id' => (int) $category['term_id'],
+                    'parent_id'   => (int) $category['parent_id'],
                     'title'       => $category['title'],
                     'title_level' => str_repeat($indent . ' ', $level) . $category['title'],
                     'status'      => $category['status'],

@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Block;
 
 use Shift\System\Mvc;
 
-class Footer extends Mvc\Controller
-{
+class Footer extends Mvc\Controller {
     public function index()
     {
         $this->load->language('block/footer', 'blockFooter');

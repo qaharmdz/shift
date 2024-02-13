@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Account;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class User extends Mvc\Model
-{
+class User extends Mvc\Model {
     // List
     // ================================================
 
@@ -35,7 +34,7 @@ class User extends Mvc\Model
             'last_login'    => 'u.last_login',
         ];
         $filterMap = $columnMap;
-        $filterMap['fullname']   = 'CONCAT_WS(" ", u.firstname, u.lastname, u.username)';
+        $filterMap['fullname'] = 'CONCAT_WS(" ", u.firstname, u.lastname, u.username)';
         $filterMap['user_group'] = 'u.user_group_id';
 
         $dtResult = Helper\DataTables::parse($params, $filterMap, ['last_login']);
@@ -92,13 +91,13 @@ class User extends Mvc\Model
                 'username'      => $data['username'],
                 'firstname'     => $data['firstname'],
                 'lastname'      => $data['lastname'],
-                'status'        => (int)$data['status'],
+                'status'        => (int) $data['status'],
                 'created'       => date('Y-m-d H:i:s'),
                 'updated'       => date('Y-m-d H:i:s'),
             ]
         );
 
-        $user_id = (int)$this->db->insertId();
+        $user_id = (int) $this->db->insertId();
 
         // User meta
         $params = [];
@@ -122,7 +121,7 @@ class User extends Mvc\Model
             'username'      => $data['username'],
             'firstname'     => $data['firstname'],
             'lastname'      => $data['lastname'],
-            'status'        => (int)$data['status'],
+            'status'        => (int) $data['status'],
             'updated'       => date('Y-m-d H:i:s'),
         ];
 

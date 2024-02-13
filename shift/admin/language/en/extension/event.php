@@ -1,6 +1,6 @@
 <?php
 
-$_['page_title']        = 'Events';
+$_['page_title'] = 'Events';
 
-$_['emitter']           = 'Emitter';
-$_['listener']          = 'Listener';
+$_['emitter'] = 'Emitter';
+$_['listener'] = 'Listener';

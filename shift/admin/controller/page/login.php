@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Login extends Mvc\Controller
-{
+class Login extends Mvc\Controller {
     private $error = array();
 
     public function index()
@@ -43,9 +42,9 @@ class Login extends Mvc\Controller
 
         $data = [];
 
-        $data['alerts']      = $this->session->pull('flash.alert');
-        $data['email']       = $this->request->get('post.email');
-        $data['password']    = $this->request->get('post.password');
+        $data['alerts'] = $this->session->pull('flash.alert');
+        $data['email'] = $this->request->get('post.email');
+        $data['password'] = $this->request->get('post.password');
 
         $this->response->setOutput($this->load->view('page/login', $data));
     }

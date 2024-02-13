@@ -1,3 +1,3 @@
 <?php
 
-$_['page_title']        = 'Tags';
+$_['page_title'] = 'Tags';
