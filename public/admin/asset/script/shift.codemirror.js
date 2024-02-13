@@ -1,12 +1,11 @@
 /* jshint -W097, -W117 */
 /* globals $, document, shift */
 
-'use strict';
+"use strict";
 
 shift.codemirror = { instances: {} };
 
-$(document).ready(function()
-{
+$(document).ready(function () {
     /**
      * IIDE CodeMirror
      *
@@ -14,69 +13,75 @@ $(document).ready(function()
      * - <textarea id="editor" data-codemirror='{"mode":"html"}'></textarea>
      * - <div data-codemirror='{"id":"editor", "mode":"php"}'><textarea id="editor"></textarea></div>
      */
-    $('[data-codemirror]').each(function(e) {
+    $("[data-codemirror]").each(function (e) {
         let el = this,
-            opt = $.extend({
-                id     : $(this).attr('id'),
-                mode   : 'html',
-                type   : '',
-                saveEl : '.js-codemirror-save',
-            }, $(el).data('codemirror'));
+            opt = $.extend(
+                {
+                    id: $(this).attr("id"),
+                    mode: "html",
+                    type: "",
+                    saveEl: ".js-codemirror-save",
+                },
+                $(el).data("codemirror")
+            );
 
         if (opt.id === undefined || !opt.id) {
-            opt.id = euid('codemirror-xxxxxx');
-            $(this).attr('id', opt.id);
+            opt.id = euid("codemirror-xxxxxx");
+            $(this).attr("id", opt.id);
         }
 
         switch (opt.mode) {
-            case 'css':
-                opt.mode = 'text/x-scss';
+            case "css":
+                opt.mode = "text/x-scss";
                 break;
-            case 'javascript':
-                opt.mode = 'text/javascript';
+            case "javascript":
+                opt.mode = "text/javascript";
                 break;
-            case 'php':
-                opt.mode = 'application/x-httpd-php';
+            case "php":
+                opt.mode = "application/x-httpd-php";
                 break;
-            case 'xml':
-                opt.mode = 'application/xml';
+            case "xml":
+                opt.mode = "application/xml";
                 break;
-            case 'html':
+            case "html":
             default:
-                opt.mode = 'text/html';
+                opt.mode = "text/html";
                 break;
         }
 
-        shift.codemirror.instances[opt.id] = CodeMirror.fromTextArea(document.getElementById(opt.id), {
-            mode            : opt.mode,
-            theme           : 'default ' + opt.type,
-            indentUnit      : 2,
-            lineNumbers     : true,
-            lineWrapping    : true,
-            styleActiveLine : {nonEmpty: true},
-            foldGutter      : true,
-            gutters         : ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-            matchBrackets   : true,
-            matchClosing    : true,
-            extraKeys       : {
-                'Tab'    : cmSpaceTab,
-                'Ctrl-S' : function(instance) {
-                    setTimeout(function() {
-                        $(opt.saveEl).trigger('click');
-                    }, 200);
-                },
-                'Cmd-S'  : function(instance) {
-                    setTimeout(function() {
-                        $(opt.saveEl).trigger('click');
-                    }, 200);
+        shift.codemirror.instances[opt.id] = CodeMirror.fromTextArea(
+            document.getElementById(opt.id),
+            {
+                mode: opt.mode,
+                theme: "default " + opt.type,
+                indentUnit: 2,
+                lineNumbers: true,
+                lineWrapping: true,
+                styleActiveLine: { nonEmpty: true },
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                matchBrackets: true,
+                matchClosing: true,
+                extraKeys: {
+                    Tab: cmSpaceTab,
+                    "Ctrl-S": function (instance) {
+                        setTimeout(function () {
+                            $(opt.saveEl).trigger("click");
+                        }, 200);
+                    },
+                    "Cmd-S": function (instance) {
+                        setTimeout(function () {
+                            $(opt.saveEl).trigger("click");
+                        }, 200);
+                    },
                 },
             }
-        });
+        );
     });
 });
-$(document).on('IIDE.form_submit.before', function() {
+$(document).on("IIDE.form_submit.before", function () {
     $.each(shift.codemirror.instances, function (elid, instance) {
-        $('#' + elid).val(instance.getDoc().getValue());
+        $("#" + elid).val(instance.getDoc().getValue());
     });
 });
 
@@ -85,9 +90,14 @@ $(document).on('IIDE.form_submit.before', function() {
  */
 function cmSpaceTab(editor) {
     if (editor.somethingSelected()) {
-        editor.indentSelection('add');
+        editor.indentSelection("add");
     } else {
-        editor.replaceSelection(editor.getOption('indentWithTabs')? '\t':
-            Array(editor.getOption('indentUnit') + 1).join(' '), 'end', '+input');
+        editor.replaceSelection(
+            editor.getOption("indentWithTabs")
+                ? "\t"
+                : Array(editor.getOption("indentUnit") + 1).join(" "),
+            "end",
+            "+input"
+        );
     }
 }

@@ -6,11 +6,10 @@
     --id-navbar-main-height: 38px;
 }
 
-
 /* UIkit Sketsa extra
 ============================== */
 
-.uk-navbar-dropdown-nav>li>a {
+.uk-navbar-dropdown-nav > li > a {
     color: #444;
 }
 .uk-navbar-nav > li > a {
@@ -18,15 +17,15 @@
 }
 
 .uk-list-collapse > * > ul,
-.uk-list-collapse > :nth-child(n+2) {
+.uk-list-collapse > :nth-child(n + 2) {
     margin-top: 3px;
 }
-
 
 /* Header
 ============================== */
 
-.page-header {}
+.page-header {
+}
 
 .section-navbar-top {
     background: var(--uk-gray-deep);
@@ -83,7 +82,7 @@
     min-height: 40vh;
 }
 
-
 /* Footer
 ============================== */
-.page-footer {}
+.page-footer {
+}
