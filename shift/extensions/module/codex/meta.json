@@ -1,10 +1,10 @@
 {
-    "type"        : "module",
-    "codename"    : "codex",
+    "type": "module",
+    "codename": "codex",
 
-    "name"        : "Codex - HTML, Twig and Script",
-    "version"     : "1.0.0",
-    "description" : "",
-    "author"      : "Shift CMS",
-    "url"         : "https://github.com/qaharmdz/shift"
+    "name": "Codex - HTML, Twig and Script",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Shift CMS",
+    "url": "https://github.com/qaharmdz/shift"
 }

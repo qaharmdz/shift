@@ -1,16 +1,16 @@
 {
-    "type"        : "language",
-    "codename"    : "en",
+    "type": "language",
+    "codename": "en",
 
-    "name"        : "English",
-    "version"     : "1.0.0",
-    "description" : "",
-    "author"      : "Shift CMS",
-    "url"         : "https://github.com/qaharmdz/shift",
+    "name": "English",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Shift CMS",
+    "url": "https://github.com/qaharmdz/shift",
 
-    "setting"     : {
-        "locale" : "en-US,en_US.UTF-8,en_US,en-gb,english",
-        "flag"   : "en.png"
+    "setting": {
+        "locale": "en-US,en_US.UTF-8,en_US,en-gb,english",
+        "flag": "en.png"
     },
-    "meta"        : []
+    "meta": []
 }

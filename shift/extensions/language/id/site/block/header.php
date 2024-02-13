@@ -1,4 +1,4 @@
 <?php
 
-$_['home']     = 'Beranda';
-$_['contact']  = 'Kontak';
+$_['home'] = 'Beranda';
+$_['contact'] = 'Kontak';

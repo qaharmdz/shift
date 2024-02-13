@@ -7,8 +7,7 @@ namespace Shift\Extensions\Plugin\Architect\Admin\Model;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Architect extends Mvc\Model
-{
+class Architect extends Mvc\Model {
     // List
     // ================================================
 

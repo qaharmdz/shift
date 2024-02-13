@@ -12,8 +12,7 @@ use Shift\System\Mvc;
  * Copyright (c) 2019 iSenseLabs <https://github.com/iSenseLabs/architect>
  * Released under the GPL-3.0 or (at your option) any later version.
  */
-class Architect extends Mvc\Controller
-{
+class Architect extends Mvc\Controller {
     public function index()
     {
         d(__METHOD__);
@@ -31,8 +30,8 @@ class Architect extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('extensions/plugin/architect/architect_list', $data));
     }

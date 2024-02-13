@@ -6,8 +6,7 @@ namespace Shift\Extensions\Module\Codex\Admin\Controller;
 
 use Shift\System\Mvc;
 
-class Codex extends Mvc\Controller
-{
+class Codex extends Mvc\Controller {
     public function index()
     {
         $module_id = $this->request->getInt('query.module_id', 0);
@@ -32,9 +31,9 @@ class Codex extends Mvc\Controller
 
         $data = [];
 
-        $data['mode']      = $mode;
+        $data['mode'] = $mode;
         $data['module_id'] = $module_id;
-        $data['module']    = array_replace_recursive(
+        $data['module'] = array_replace_recursive(
             $this->config->getArray('extensions.module.codex.form'),
             $this->model_extension_module->getModule($module_id),
         );
@@ -45,11 +44,11 @@ class Codex extends Mvc\Controller
 
         $extension = $this->model_extension_manage->getExtension('module', 'codex');
         $data['extension_id'] = $extension['extension_id'];
-        $data['user_groups']  = $this->model_account_usergroup->getUserGroups();
+        $data['user_groups'] = $this->model_account_usergroup->getUserGroups();
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('extensions/module/codex/form', $data));
     }
@@ -75,7 +74,7 @@ class Codex extends Mvc\Controller
             $this->config->getArray('extensions.module.codex.form'),
             $this->request->getArray('post')
         );
-        $module_id = (int)$post['extension_module_id'];
+        $module_id = (int) $post['extension_module_id'];
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);
