@@ -4,6 +4,5 @@ declare(strict_types=1);
 
 namespace Shift\System\Exception;
 
-class FileNotFoundException extends \RuntimeException
-{
+class FileNotFoundException extends \RuntimeException {
 }

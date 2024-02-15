@@ -6,8 +6,7 @@ namespace Shift\Site\Model\Content;
 
 use Shift\System\Mvc;
 
-class Category extends Mvc\Model
-{
+class Category extends Mvc\Model {
     public function getCategory(int $category_id): array
     {
         $data = $this->db->get(
@@ -45,7 +44,7 @@ class Category extends Mvc\Model
     public function getCategories(array $filters = []): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('content.categories' . $argsHash, []);
+        $data = $this->cache->get('content.categories' . $argsHash, []);
 
         if (!$data) {
             $filters = array_merge([
@@ -56,12 +55,12 @@ class Category extends Mvc\Model
 
             $sql = "SELECT t.*, tc.*";
             $sql .= " FROM `" . DB_PREFIX . "term` t";
-            $sql .= "   LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (t.term_id = tc.term_id AND tc.language_id = "  . $this->config->getInt('env.language_id') . ")";
+            $sql .= "   LEFT JOIN `" . DB_PREFIX . "term_content` tc ON (t.term_id = tc.term_id AND tc.language_id = " . $this->config->getInt('env.language_id') . ")";
             $sql .= " WHERE t.taxonomy = 'content_category'";
             $sql .= "   AND t.status = 1";
             $sql .= " GROUP BY t.term_id";
             $sql .= " ORDER BY " . ($filters['order_by'] ?: 't.sort_order ASC, tc.title ASC');
-            $sql .= " LIMIT 0, " . (int)$filters['limit'];
+            $sql .= " LIMIT 0, " . (int) $filters['limit'];
 
             $data = $this->db->get($sql)->rows;
 

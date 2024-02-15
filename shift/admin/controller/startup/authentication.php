@@ -7,15 +7,14 @@ namespace Shift\Admin\Controller\Startup;
 use Shift\System\Mvc;
 use Shift\System\Http;
 
-class Authentication extends Mvc\Controller
-{
+class Authentication extends Mvc\Controller {
     public function index()
     {
         $whitelist = [
             'page/login',
             'page/logout',
             'error/notfound',
-            'error/permission'
+            'error/permission',
         ];
 
         // Prevent loop
@@ -27,7 +26,8 @@ class Authentication extends Mvc\Controller
 
         if ($result = $this->verifyPermission()) {
             return $result;
-        };
+        }
+        ;
     }
 
     protected function verifyAccess()
@@ -37,13 +37,13 @@ class Authentication extends Mvc\Controller
         }
 
         switch (true) {
-            case (!$this->user->isLogged() || !$this->request->has('query.access_token')):
+            case(!$this->user->isLogged() || !$this->request->has('query.access_token')):
                 $this->session->set('flash.auth.require_login', true);
                 $this->toLogin();
                 break;
 
             // Validate token
-            case ($this->session->getString('access_token', $this->secure->random()) !== $this->request->getString('query.access_token', 'o_O')):
+            case($this->session->getString('access_token', $this->secure->random()) !== $this->request->getString('query.access_token', 'o_O')):
                 $this->session->set('flash.auth.invalid_token', true);
                 $this->toLogin();
                 break;
@@ -56,7 +56,7 @@ class Authentication extends Mvc\Controller
                 break;
 
             // Force logout if last activity more than 'x' minute, default 240 minute.
-            case (time() - $this->session->getInt('user_activity')) > (60 * $this->config->getInt('system.setting.login_session', (60 * 4))):
+            case(time() - $this->session->getInt('user_activity')) > (60 * $this->config->getInt('system.setting.login_session', (60 * 4))):
                 $this->session->set('flash.auth.inactive', true);
                 $this->user->logout();
                 $this->toLogin();
@@ -85,7 +85,7 @@ class Authentication extends Mvc\Controller
     protected function verifyPermission()
     {
         $route = '';
-        $parts  = explode('/', $this->request->getString('query.route'));
+        $parts = explode('/', $this->request->getString('query.route'));
 
         if (isset($parts[0])) {
             $route .= $parts[0];

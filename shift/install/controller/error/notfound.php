@@ -6,8 +6,7 @@ namespace Shift\Install\Controller\Error;
 
 use Shift\System\Mvc;
 
-class NotFound extends Mvc\Controller
-{
+class NotFound extends Mvc\Controller {
     public function index()
     {
         $this->load->language('error/notfound');

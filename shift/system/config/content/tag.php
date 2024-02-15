@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 // Default setting
 $_['form'] = [
-    'tag_id'     => 0,
-    'taxonomy'   => 'content_tag',
-    'status'     => 0,
-    'created'    => null,
-    'updated'    => null,
+    'tag_id'   => 0,
+    'taxonomy' => 'content_tag',
+    'status'   => 0,
+    'created'  => null,
+    'updated'  => null,
 
-    'alias'      => [],
-    'content'    => [
+    'alias'    => [],
+    'content'  => [
         0 => [
             'title'   => '',
             'content' => '',

@@ -1,3 +1,3 @@
 <?php
 
-$_['page_title']        = 'Themes';
+$_['page_title'] = 'Themes';

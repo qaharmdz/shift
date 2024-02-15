@@ -1,3 +1,3 @@
 <?php
 
-$_['page_title']        = 'Architect';
+$_['page_title'] = 'Architect';

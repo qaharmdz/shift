@@ -60,8 +60,8 @@
 
 .row-wrapper {
     min-height: 64px;
-    background: rgba(255,255,255,.4);
-    border: 1px dashed rgba(0,0,0,.15);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px dashed rgba(0, 0, 0, 0.15);
 }
 .row-wrapper:hover {
     background: #eef3ff;
@@ -76,7 +76,7 @@
     height: 32px;
     margin: -1px;
     margin-bottom: 0;
-    background: rgba(0,0,0,.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 .row-columns {
     padding: 8px;
@@ -97,7 +97,7 @@
 }
 .column-header {
     height: 32px;
-    background: rgba(0,0,0,.06);
+    background: rgba(0, 0, 0, 0.06);
 }
 .column-modules {
     padding: 8px;
@@ -130,8 +130,8 @@
     padding: 4px 2px;
     margin-right: 5px;
     display: inline-block;
-    background: rgba(0,0,0,.1);
-    background: rgba(0,0,0,.15);
+    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.15);
 }
 .layout-handle .bi {
     font-size: 20px;
@@ -162,10 +162,10 @@
 }
 
 .wider-on-hover {
-    -webkit-transition: width .3s;
-    -moz-transition: width .3s;
-    -o-transition: width .3s;
-    transition: width .3s;
+    -webkit-transition: width 0.3s;
+    -moz-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    transition: width 0.3s;
 }
 .wider-on-hover:hover {
     width: 350px;

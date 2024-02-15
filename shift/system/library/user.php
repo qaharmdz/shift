@@ -6,8 +6,7 @@ namespace Shift\System\Library;
 
 use Shift\System\Core;
 
-class User
-{
+class User {
     protected $db;
     protected $session;
     protected $secure;
@@ -15,10 +14,10 @@ class User
 
     public function __construct($registry)
     {
-        $this->db      = $registry->get('db');
+        $this->db = $registry->get('db');
         $this->session = $registry->get('session');
-        $this->secure  = $registry->get('secure');
-        $this->bags    = new Core\Bags();
+        $this->secure = $registry->get('secure');
+        $this->bags = new Core\Bags();
 
         if ($email = $this->session->getString('user_email')) {
             $user = $this->dbGetUserByMail($email);
@@ -100,7 +99,7 @@ class User
      */
     public function checkSuperAdmins(array $users): bool
     {
-        return (bool)$this->db->get(
+        return (bool) $this->db->get(
             "SELECT * FROM `" . DB_PREFIX . "user` WHERE user_group_id = 1 AND user_id IN (:users?i)",
             ['users' => $users]
         )->num_rows;
@@ -136,11 +135,11 @@ class User
         )->row;
 
         if ($user) {
-            $user['fullname']   = $user['firstname'] . ' ' . $user['lastname'];
+            $user['fullname'] = $user['firstname'] . ' ' . $user['lastname'];
             $user['permission'] = json_decode($user['permission'], true);
 
             $userMeta = [];
-            $results  = $this->db->get('SELECT * FROM ' . DB_PREFIX . 'user_meta WHERE user_id = ?i', [$user['user_id']]);
+            $results = $this->db->get('SELECT * FROM ' . DB_PREFIX . 'user_meta WHERE user_id = ?i', [$user['user_id']]);
 
             foreach ($results->rows as $result) {
                 $userMeta[$result['key']] = $result['encoded'] ? json_decode($result['value'], true) : $result['value'];

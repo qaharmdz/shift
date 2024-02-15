@@ -7,8 +7,7 @@ namespace Shift\System\Http;
 /**
  * Determine and dispatch resource from given path.
  */
-class Dispatch
-{
+class Dispatch {
     protected string $route;
     protected string $routeMap;
     protected string $basePath;
@@ -20,14 +19,14 @@ class Dispatch
 
     public function __construct(string $route)
     {
-        $parts  = $this->routeMap($route);
+        $parts = $this->routeMap($route);
         $method = $this->method;
 
         while ($parts) {
             $file = $this->basePath . implode('/', $parts) . '.php';
 
             if (is_file($file)) {
-                $this->file  = $file;
+                $this->file = $file;
                 $this->class = strtolower($this->namespace . implode('\\', $parts));
                 break;
             }
@@ -46,13 +45,13 @@ class Dispatch
         $parts = $extParts = array_map('strtolower', array_filter(explode('/', $route)));
 
         $routeMap = strtr('controller/:folder/:file', [
-            ':file'     => array_pop($parts),
-            ':folder'   => implode('/', $parts),
+            ':file'   => array_pop($parts),
+            ':folder' => implode('/', $parts),
         ]);
 
-        $this->route     = $route;
-        $this->routeMap  = $routeMap;
-        $this->basePath  = PATH_APP;
+        $this->route = $route;
+        $this->routeMap = $routeMap;
+        $this->basePath = PATH_APP;
         $this->namespace = 'Shift\\' . APP_FOLDER . '\\';
 
         if ($extParts[0] === 'extensions') {
@@ -77,10 +76,10 @@ class Dispatch
                 ':class_method' => $extClassMethod,
             ]);
 
-            $this->routeMap  = $routeMap;
-            $this->basePath  = PATH_SHIFT;
+            $this->routeMap = $routeMap;
+            $this->basePath = PATH_SHIFT;
             $this->namespace = 'Shift\\';
-            $this->meta      = [
+            $this->meta = [
                 'type'         => $extType,
                 'codename'     => $extCodename,
                 'app_folder'   => APP_FOLDER,

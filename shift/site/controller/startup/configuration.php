@@ -7,8 +7,7 @@ namespace Shift\Site\Controller\Startup;
 use Shift\System\Mvc;
 use Shift\System\Http\Dispatch;
 
-class Configuration extends Mvc\Controller
-{
+class Configuration extends Mvc\Controller {
     public function index()
     {
         //=== Settings
@@ -30,10 +29,12 @@ class Configuration extends Mvc\Controller
             }
         }
 
-        $this->config->set(array_merge_recursive(
-            ['system' => $this->config->get('system', [])],
-            $settings
-        ));
+        $this->config->set(
+            array_merge_recursive(
+                ['system' => $this->config->get('system', [])],
+                $settings
+            )
+        );
         $this->config->set('env.limit', 24);
         $this->config->set('env.development', $this->config->getInt('system.setting.development', 0));
         $this->config->set('env.datetime_format', 'Y-m-d H:i:s');
@@ -42,8 +43,8 @@ class Configuration extends Mvc\Controller
         $logContext = [];
         if ($this->user->get('user_id')) {
             $logContext = [
-                'user_id'    => $this->user->get('user_id'),
-                'name'       => $this->user->get('firstname') . ' ' . $this->user->get('lastname'),
+                'user_id' => $this->user->get('user_id'),
+                'name'    => $this->user->get('firstname') . ' ' . $this->user->get('lastname'),
             ];
         }
 
@@ -71,7 +72,7 @@ class Configuration extends Mvc\Controller
         )->rows;
 
         foreach ($events as $event) {
-            $this->event->addListener($event['emitter'], new Dispatch($event['listener']), (int)$event['priority']);
+            $this->event->addListener($event['emitter'], new Dispatch($event['listener']), (int) $event['priority']);
         }
 
         //=== Language
@@ -92,11 +93,11 @@ class Configuration extends Mvc\Controller
             }
 
             if (!$this->request->has('cookie.language') || $this->request->get('cookie.language') != $code) {
-                setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', ini_get('session.cookie_domain'), (bool)ini_get('session.cookie_secure'));
+                setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', ini_get('session.cookie_domain'), (bool) ini_get('session.cookie_secure'));
             }
         }
 
-        $this->config->set('env.language_id', (int)$languages[$code]['extension_id']);
+        $this->config->set('env.language_id', (int) $languages[$code]['extension_id']);
         $this->config->set('env.language_code', $code);
 
         $this->language->set('_param.active', $code);

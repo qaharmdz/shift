@@ -6,8 +6,7 @@ namespace Shift\Install\Controller\Startup;
 
 use Shift\System\Mvc;
 
-class Configuration extends Mvc\Controller
-{
+class Configuration extends Mvc\Controller {
     public function index()
     {
         $this->language->load('en');

@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Account;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class UserGroup extends Mvc\Model
-{
+class UserGroup extends Mvc\Model {
     // List
     // ================================================
 
@@ -26,7 +25,7 @@ class UserGroup extends Mvc\Model
             'status'        => 'ug.status',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "user_group` ug"
@@ -76,7 +75,7 @@ class UserGroup extends Mvc\Model
                 'name'       => $data['name'],
                 'backend'    => $data['backend'],
                 'permission' => json_encode($data['permission']),
-                'status'     => (int)$data['status'],
+                'status'     => (int) $data['status'],
                 'created'    => date('Y-m-d H:i:s'),
                 'updated'    => date('Y-m-d H:i:s'),
             ]
@@ -84,7 +83,7 @@ class UserGroup extends Mvc\Model
 
         $this->cache->deleteByTags('usergroups');
 
-        return (int)$this->db->insertId();
+        return (int) $this->db->insertId();
     }
 
     public function editUserGroup(int $user_group_id, array $data)
@@ -95,7 +94,7 @@ class UserGroup extends Mvc\Model
                 'name'       => $data['name'],
                 'backend'    => $data['backend'],
                 'permission' => json_encode($data['permission']),
-                'status'     => (int)$data['status'],
+                'status'     => (int) $data['status'],
                 'updated'    => date('Y-m-d H:i:s'),
             ],
             ['user_group_id' => $user_group_id]
@@ -132,7 +131,7 @@ class UserGroup extends Mvc\Model
     public function getUserGroups(array $filters = ['1 = ?i' => 1], string $rkey = 'user_group_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('usergroups.' . $argsHash, []);
+        $data = $this->cache->get('usergroups.' . $argsHash, []);
 
         if (!$data) {
             $userGroups = $this->db->get(

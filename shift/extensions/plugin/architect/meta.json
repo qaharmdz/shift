@@ -1,10 +1,10 @@
 {
-    "type"        : "plugin",
-    "codename"    : "architect",
+    "type": "plugin",
+    "codename": "architect",
 
-    "name"        : "Architect",
-    "version"     : "1.1.0",
-    "description" : "",
-    "author"      : "Shift CMS",
-    "url"         : "https://github.com/qaharmdz/shift"
+    "name": "Architect",
+    "version": "1.1.0",
+    "description": "",
+    "author": "Shift CMS",
+    "url": "https://github.com/qaharmdz/shift"
 }

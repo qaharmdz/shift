@@ -6,8 +6,7 @@ namespace Shift\Site\Model\Content;
 
 use Shift\System\Mvc;
 
-class Post extends Mvc\Model
-{
+class Post extends Mvc\Model {
     public function getPost(int $post_id): array
     {
         $data = $this->db->get(
@@ -42,7 +41,7 @@ class Post extends Mvc\Model
     public function getPosts(array $filters = []): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('content.posts' . $argsHash, []);
+        $data = $this->cache->get('content.posts' . $argsHash, []);
 
         if (!$data) {
             $filters = array_merge([
@@ -54,7 +53,7 @@ class Post extends Mvc\Model
 
             $sql = "SELECT p.*, u.username AS author, CONCAT(u.firstname, ' ', u.lastname) AS author_fullname, sr.site_id, pc.*";
             $sql .= " FROM `" . DB_PREFIX . "post` p";
-            $sql .= "   LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (p.post_id = pc.post_id AND pc.language_id = "  . $this->config->getInt('env.language_id') . ")";
+            $sql .= "   LEFT JOIN `" . DB_PREFIX . "post_content` pc ON (p.post_id = pc.post_id AND pc.language_id = " . $this->config->getInt('env.language_id') . ")";
             $sql .= "   LEFT JOIN `" . DB_PREFIX . "user` u ON (p.user_id = u.user_id)";
             $sql .= "   LEFT JOIN `" . DB_PREFIX . "site_relation` sr ON (p.post_id = sr.taxonomy_id AND sr.taxonomy = 'content_post')";
             if ($filters['term_id']) {
@@ -63,8 +62,8 @@ class Post extends Mvc\Model
             $sql .= " WHERE p.taxonomy = 'content_post'";
             if ($filters['term_id']) {
                 $sql .= "   AND (
-                    p.term_id = " . (int)$filters['term_id'] . "
-                    OR (tr.term_id = " . (int)$filters['term_id'] . " AND tr.taxonomy = 'content_post')
+                    p.term_id = " . (int) $filters['term_id'] . "
+                    OR (tr.term_id = " . (int) $filters['term_id'] . " AND tr.taxonomy = 'content_post')
                 )";
             }
             $sql .= "   AND p.visibility = 'public'"; // TODO: check visibility usergroup, password
@@ -73,7 +72,7 @@ class Post extends Mvc\Model
             $sql .= "   AND sr.site_id = " . $this->config->getInt('env.site_id');
             $sql .= " GROUP BY p.post_id";
             $sql .= " ORDER BY p.sort_order ASC, p.publish DESC"; // TODO: post order
-            $sql .= " LIMIT " . (int)$filters['start'] . ", " . (int)$filters['limit'];
+            $sql .= " LIMIT " . (int) $filters['start'] . ", " . (int) $filters['limit'];
 
             $data = $this->db->get($sql)->rows;
 
@@ -113,7 +112,7 @@ class Post extends Mvc\Model
         // Terms
         $data['term'] = [
             'categories' => [],
-            'tags' => [],
+            'tags'       => [],
         ];
 
         $categories = $this->db->get(

@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Setting;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Site extends Mvc\Model
-{
+class Site extends Mvc\Model {
     // List
     // ================================================
 
@@ -25,7 +24,7 @@ class Site extends Mvc\Model
             'url_host' => 's.url_host',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "site` s"
@@ -60,7 +59,7 @@ class Site extends Mvc\Model
             ]
         );
 
-        $site_id = (int)$this->db->insertId();
+        $site_id = (int) $this->db->insertId();
 
         // Layout Route
         $query = $this->db->get("SELECT * FROM `" . DB_PREFIX . "layout_route` WHERE site_id = 0");
@@ -113,7 +112,7 @@ class Site extends Mvc\Model
     public function getSites(array $filters = ['1 = ?i' => 1], string $rkey = 'site_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('sites.' . $argsHash, []);
+        $data = $this->cache->get('sites.' . $argsHash, []);
 
         if (!$data) {
             $sites = $this->db->get(

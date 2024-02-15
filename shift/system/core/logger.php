@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Core;
 
-class Logger
-{
+class Logger {
     private array $config = [];
 
     public function __construct(array $config = [])
@@ -22,10 +21,10 @@ class Logger
     {
         $this->config = array_replace_recursive(
             [
-                'path'    => PATH_TEMP . 'logs/',
-                'logfile' => date('Y-m') . '_error.log',
-                'context' => [],
-                'display' => false,
+                'path'              => PATH_TEMP . 'logs/',
+                'logfile'           => date('Y-m') . '_error.log',
+                'context'           => [],
+                'display'           => false,
                 'hasErrorToDisplay' => false,
             ],
             $this->config,
@@ -45,7 +44,7 @@ class Logger
     public function write($message, string $level = 'Debug', array $context = [], string $logfile = '')
     {
         $context = array_merge($this->config['context'], $context);
-        $output  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
+        $output = $this->config['path'] . ($logfile ?: $this->config['logfile']);
         $message = sprintf(
             '# %s | %s | %s | %s',
             date('Y-m-d H:i:s e'),
@@ -61,7 +60,7 @@ class Logger
 
     public function clear(string $logfile = '')
     {
-        $logfile  = $this->config['path'] . ($logfile ?: $this->config['logfile']);
+        $logfile = $this->config['path'] . ($logfile ?: $this->config['logfile']);
         file_put_contents($logfile, PHP_EOL);
     }
 
@@ -79,7 +78,7 @@ class Logger
                 . '<p style="margin:0;"><b style="width:80px; display:inline-block;">Message</b> : ' . $errstr . '</p>'
                 . '<p style="margin:0;"><b style="width:80px; display:inline-block;">File</b> : ' . $errfile . '</p>'
                 . '<p style="margin:0;"><b style="width:80px; display:inline-block;">Line</b> : ' . $errline . '</p>'
-            . '</div>';
+                . '</div>';
         }
     }
 

@@ -7,8 +7,7 @@ namespace Shift\System\Core;
 /**
  * Sites instance of objects
  */
-class Registry
-{
+class Registry {
     protected array $storage = [];
     protected static $instance = null;
 

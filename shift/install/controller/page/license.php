@@ -6,8 +6,7 @@ namespace Shift\Install\Controller\Page;
 
 use Shift\System\Mvc;
 
-class License extends Mvc\Controller
-{
+class License extends Mvc\Controller {
     public function index()
     {
         $this->document->setTitle($this->language->get('license_agreement'));

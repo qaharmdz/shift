@@ -1,10 +1,10 @@
 {
-    "type"        : "theme",
-    "codename"    : "base",
+    "type": "theme",
+    "codename": "base",
 
-    "name"        : "Base Theme",
-    "version"     : "1.0.0",
-    "description" : "",
-    "author"      : "Shift CMS",
-    "url"         : "https://github.com/qaharmdz/shift"
+    "name": "Base Theme",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Shift CMS",
+    "url": "https://github.com/qaharmdz/shift"
 }

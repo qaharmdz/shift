@@ -7,8 +7,7 @@ namespace Shift\System\Autoloader;
 /**
  * @ref  \Composer\Autoload\ClassLoader
  */
-class ClassLoader
-{
+class ClassLoader {
     private $includeFile;
     protected $classMap = [];
 

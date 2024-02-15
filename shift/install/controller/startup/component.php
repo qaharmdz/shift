@@ -8,11 +8,10 @@ use Shift\System\Mvc;
 use Shift\System\Http;
 use Shift\System\Exception;
 
-class Component extends Mvc\Controller
-{
+class Component extends Mvc\Controller {
     public function index()
     {
-        $route  = $this->request->get('query.route');
+        $route = $this->request->get('query.route');
         $params = [];
         $output = null;
 

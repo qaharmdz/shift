@@ -1,16 +1,16 @@
 {
-    "type"        : "language",
-    "codename"    : "id",
+    "type": "language",
+    "codename": "id",
 
-    "name"        : "Indonesia",
-    "version"     : "1.0.0",
-    "description" : "",
-    "author"      : "Shift CMS",
-    "url"         : "https://github.com/qaharmdz/shift",
+    "name": "Indonesia",
+    "version": "1.0.0",
+    "description": "",
+    "author": "Shift CMS",
+    "url": "https://github.com/qaharmdz/shift",
 
-    "setting"     : {
-        "locale" : "ID,en-ID,en_ID.UTF-8,indonesia",
-        "flag"   : "id.png"
+    "setting": {
+        "locale": "ID,en-ID,en_ID.UTF-8,indonesia",
+        "flag": "id.png"
     },
-    "meta"        : []
+    "meta": []
 }

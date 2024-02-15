@@ -6,8 +6,7 @@ namespace Shift\Extensions\Module\Codex\Site\Model;
 
 use Shift\System\Mvc;
 
-class Codex extends Mvc\Model
-{
+class Codex extends Mvc\Model {
     public function getUser(string $key, $default = null)
     {
         return $this->user->get($key, $default);

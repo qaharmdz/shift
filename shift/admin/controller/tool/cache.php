@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Tool;
 
 use Shift\System\Mvc;
 
-class Cache extends Mvc\Controller
-{
+class Cache extends Mvc\Controller {
     public function index()
     {
         $this->load->language('tool/cache');
@@ -30,8 +29,8 @@ class Cache extends Mvc\Controller
         ];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('tool/cache', $data));
     }

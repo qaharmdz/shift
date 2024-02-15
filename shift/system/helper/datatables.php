@@ -7,8 +7,7 @@ namespace Shift\System\Helper;
 /**
  * DataTables query builder.
  */
-class DataTables
-{
+class DataTables {
     protected $data = [];
     protected $charNot = '~';
     protected $charSeparator = '~';
@@ -25,10 +24,12 @@ class DataTables
     {
         self::$instance = new self();
 
-        $dateColumns = array_unique(array_merge(
-            ['created', 'updated', 'publish', 'unpublish'],
-            $dateColumns
-        ));
+        $dateColumns = array_unique(
+            array_merge(
+                ['created', 'updated', 'publish', 'unpublish'],
+                $dateColumns
+            )
+        );
 
         return self::$instance->request($params)->query($filterMap, $dateColumns)->data;
     }
@@ -46,7 +47,7 @@ class DataTables
             'columns' => [],
             'search'  => [
                 'all'     => '',
-                'columns' => []
+                'columns' => [],
             ],
             'order'   => [],
             'limit'   => [],
@@ -64,7 +65,7 @@ class DataTables
                     'keyword' => trim($column['search']['value']),
                     'type'    => 'string',
                     'mode'    => null,
-                    'negate'  => false
+                    'negate'  => false,
                 ];
 
                 if (in_array($columnSearch['keyword'], ['', $this->charNot, $this->charSeparator])) {
@@ -112,7 +113,7 @@ class DataTables
 
                 if (!is_array($columnSearch['keyword']) && str_starts_with($columnSearch['keyword'], $this->charNot)) {
                     $columnSearch['keyword'] = trim(substr($columnSearch['keyword'], 1));
-                    $columnSearch['negate']  = true;
+                    $columnSearch['negate'] = true;
                 }
 
                 $data['search']['columns'][$column['data']] = $columnSearch;
@@ -120,12 +121,12 @@ class DataTables
         }
 
         foreach ($params['order'] as $order) {
-            $data['order'][$data['columns'][(int)$order['column']]] = $order['dir'] == 'asc' ? 'ASC' : 'DESC';
+            $data['order'][$data['columns'][(int) $order['column']]] = $order['dir'] == 'asc' ? 'ASC' : 'DESC';
         }
 
         $data['limit'] = [
-            'offset' => (int)$params['start'],
-            'length' => (int)$params['length'],
+            'offset' => (int) $params['start'],
+            'length' => (int) $params['length'],
         ];
 
         $this->data['params'] = $data;
@@ -147,9 +148,9 @@ class DataTables
             $this->data,
             [
                 'query' => [
-                    'where' => '',
-                    'order' => '',
-                    'limit' => ',',
+                    'where'  => '',
+                    'order'  => '',
+                    'limit'  => ',',
                     'params' => [],
                 ],
             ]
@@ -185,16 +186,16 @@ class DataTables
                             if ($filter['type'] == 'number') {
                                 if (!is_null($filter['keyword']['min']) && is_null($filter['keyword']['max'])) {
                                     $search[] = $filterMap[$key] . ' >= :' . $key . '?i';
-                                    $params[$key] = (int)$filter['keyword']['min'];
+                                    $params[$key] = (int) $filter['keyword']['min'];
                                 }
                                 if (is_null($filter['keyword']['min']) && !is_null($filter['keyword']['max'])) {
                                     $search[] = $filterMap[$key] . ' <= :' . $key . '?i';
-                                    $params[$key] = (int)$filter['keyword']['max'];
+                                    $params[$key] = (int) $filter['keyword']['max'];
                                 }
                                 if (!is_null($filter['keyword']['min']) && !is_null($filter['keyword']['max'])) {
                                     $search[] = '(' . $filterMap[$key] . ' BETWEEN :' . $key . '_min?i AND :' . $key . '_max?i)';
-                                    $params[$key . '_min'] = (int)$filter['keyword']['min'];
-                                    $params[$key . '_max'] = (int)$filter['keyword']['max'];
+                                    $params[$key . '_min'] = (int) $filter['keyword']['min'];
+                                    $params[$key . '_max'] = (int) $filter['keyword']['max'];
                                 }
                             }
 
@@ -246,8 +247,8 @@ class DataTables
 
         // Limit
         $data['query']['limit'] = ':_offset?i, :_limit?i';
-        $data['query']['params']['_offset'] = (int)$data['params']['limit']['offset'];
-        $data['query']['params']['_limit']  = (int)$data['params']['limit']['length'];
+        $data['query']['params']['_offset'] = (int) $data['params']['limit']['offset'];
+        $data['query']['params']['_limit'] = (int) $data['params']['limit']['length'];
 
         $this->data = $data;
 

@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Tool;
 
 use Shift\System\Mvc;
 
-class BackupDb extends Mvc\Controller
-{
+class BackupDb extends Mvc\Controller {
     public function index()
     {
         $this->load->model('tool/backupdb');
@@ -23,7 +22,7 @@ class BackupDb extends Mvc\Controller
 
         $data = [];
 
-        $data['alerts']   = $this->session->pull('flash.alert');
+        $data['alerts'] = $this->session->pull('flash.alert');
 
         $data['dbTables'] = [];
         foreach ($this->model_tool_backupdb->getTables() as $table) {
@@ -34,8 +33,8 @@ class BackupDb extends Mvc\Controller
         }
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('tool/backupdb', $data));
     }
@@ -91,7 +90,7 @@ class BackupDb extends Mvc\Controller
         $skipTruncate = [
             'TRUNCATE TABLE `{db_prefix}user`',
             'TRUNCATE TABLE `{db_prefix}user_group`',
-            'TRUNCATE TABLE `{db_prefix}user_meta`'
+            'TRUNCATE TABLE `{db_prefix}user_meta`',
         ];
 
         $i = 0;
@@ -100,7 +99,7 @@ class BackupDb extends Mvc\Controller
 
         while (!feof($handle) && ($i < 100)) {
             $position = ftell($handle);
-            $line = trim((string)fgets($handle, 1000000));
+            $line = trim((string) fgets($handle, 1000000));
 
             if ($line) {
                 if (in_array($line, $skipTruncate)) {
@@ -116,10 +115,10 @@ class BackupDb extends Mvc\Controller
             $i++;
         }
 
-        $size     = filesize($filename);
+        $size = filesize($filename);
         $position = ftell($handle);
 
-        $data  = [];
+        $data = [];
         $data['total'] = round(($position / $size) * 100);
 
         if ($position && !feof($handle)) {

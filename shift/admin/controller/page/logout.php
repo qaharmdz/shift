@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Logout extends Mvc\Controller
-{
+class Logout extends Mvc\Controller {
     public function index()
     {
         $this->user->logout();

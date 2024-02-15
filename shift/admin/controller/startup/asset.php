@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Startup;
 
 use Shift\System\Mvc;
 
-class Asset extends Mvc\Controller
-{
+class Asset extends Mvc\Controller {
     public function index()
     {
         $this->regAssets();
@@ -20,11 +19,11 @@ class Asset extends Mvc\Controller
         $this->document->addAsset('form', [
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/form/jquery.form.min.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('datatables', [
-            'style' => [
+            'style'  => [
                 $this->config->get('env.url_app') . 'asset/style/shift.datatables.css',
                 $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
             ],
@@ -34,45 +33,45 @@ class Asset extends Mvc\Controller
                 // Extra
                 $this->config->get('env.url_app') . 'asset/script/typewatch/typewatch.min.js',
                 $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('flatpickr', [
-            'style' => [
+            'style'  => [
                 $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.css',
             ],
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/flatpickr/flatpickr.min.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('ckeditor', [
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/ckeditor/build/ckeditor.js',
                 $this->config->get('env.url_app') . 'asset/script/shift.ckeditor.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('select2', [
-            'style' => [
+            'style'  => [
                 $this->config->get('env.url_app') . 'asset/script/select2/select2.min.css',
             ],
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/select2/select2.min.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('jstree', [
-            'style' => [
+            'style'  => [
                 $this->config->get('env.url_app') . 'asset/script/jstree/themes/style.min.css',
             ],
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/jstree/jstree.min.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('codemirror', [
-            'style' => [
+            'style'  => [
                 $this->config->get('env.url_app') . 'asset/script/codemirror/codemirror.css',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/addon/fold/foldgutter.css',
             ],
@@ -95,22 +94,22 @@ class Asset extends Mvc\Controller
                 $this->config->get('env.url_app') . 'asset/script/codemirror/mode/twig/twig.js',
                 $this->config->get('env.url_app') . 'asset/script/codemirror/mode/php/php.js',
                 $this->config->get('env.url_app') . 'asset/script/shift.codemirror.js',
-            ]
+            ],
         ]);
 
         $this->document->addAsset('sortable', [
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/sortable/sortable.min.js',
-            ]
+            ],
         ]);
         $this->document->addAsset('sortable.layout', [
-            'style' => [
+            'style'  => [
                 $this->config->get('env.url_app') . 'asset/style/shift.layout.css',
             ],
             'script' => [
                 $this->config->get('env.url_app') . 'asset/script/sortable/sortable.min.js',
                 $this->config->get('env.url_app') . 'asset/script/shift.layout.js',
-            ]
+            ],
         ]);
     }
 }

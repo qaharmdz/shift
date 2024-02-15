@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Account;
 
 use Shift\System\Mvc;
 
-class User extends Mvc\Controller
-{
+class User extends Mvc\Controller {
     public function index()
     {
         $this->load->language('account/user');
@@ -27,8 +26,8 @@ class User extends Mvc\Controller
         $data['user_groups'] = $this->model_account_usergroup->getUserGroups();
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('account/user_list', $data));
     }
@@ -41,7 +40,7 @@ class User extends Mvc\Controller
 
         $this->load->model('account/user');
 
-        $params  = $this->request->get('post');
+        $params = $this->request->get('post');
         $results = $this->model_account_user->dtRecords($params);
 
         $items = [];
@@ -49,12 +48,12 @@ class User extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['user_id'];
-            $items[$i]['url_edit']    = $this->router->url('account/user/form', 'user_id=' . $items[$i]['user_id']);
+            $items[$i]['url_edit'] = $this->router->url('account/user/form', 'user_id=' . $items[$i]['user_id']);
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_account_user->getTotal(),
         ];
@@ -74,13 +73,13 @@ class User extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['enabled', 'disabled', 'delete'];
         $items = explode(',', $post['item']);
-        $data  = [
-            'items'     => $items,
-            'message'   => '',
-            'updated'   => [],
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
         ];
 
         if (
@@ -118,7 +117,7 @@ class User extends Mvc\Controller
 
         $data = [];
 
-        $data['mode']    = $mode;
+        $data['mode'] = $mode;
         $data['user_id'] = $user_id;
         $data['setting'] = $this->model_account_user->getUser($user_id);
 
@@ -126,8 +125,8 @@ class User extends Mvc\Controller
         $data['user_groups'] = $this->model_account_usergroup->getUserGroups();
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('account/user_form', $data));
     }
@@ -153,7 +152,7 @@ class User extends Mvc\Controller
             $this->config->getArray('account.user.form'),
             $this->request->get('post', [])
         );
-        $user_id = (int)$post['user_id'];
+        $user_id = (int) $post['user_id'];
 
         if (!$this->user->isSuperAdmin() && $this->user->checkSuperAdmins([$user_id])) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);

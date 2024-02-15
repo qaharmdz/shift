@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Dashboard extends Mvc\Controller
-{
+class Dashboard extends Mvc\Controller {
     public function index()
     {
         $this->load->language('page/dashboard');
@@ -17,8 +16,8 @@ class Dashboard extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/dashboard', $data));
     }

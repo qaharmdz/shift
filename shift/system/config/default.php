@@ -3,23 +3,23 @@
 declare(strict_types=1);
 
 // Site
-$_['url_host']          = '';
-$_['locale']            = 'en';
+$_['url_host'] = '';
+$_['locale'] = 'en';
 
 // Application
-$_['app_component']     = 'startup/component';
-$_['app_startup']       = [];
-$_['app_error']         = 'error/notfound';
-$_['app_event']         = [];
+$_['app_component'] = 'startup/component';
+$_['app_startup'] = [];
+$_['app_error'] = 'error/notfound';
+$_['app_event'] = [];
 
-$_['route_default']     = 'page/home';
+$_['route_default'] = 'page/home';
 
-$_['cache_driver']      = 'Files';
-$_['cache_ttl']         = 1800; // in seconds
+$_['cache_driver'] = 'Files';
+$_['cache_ttl'] = 1800; // in seconds
 
 // Configuration
 $_['database'] = [
-    'config' => [
+    'config'               => [
         'host'      => 'localhost',
         'username'  => 'root',
         'password'  => '',
@@ -29,9 +29,9 @@ $_['database'] = [
         'charset'   => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_520_ci',
     ],
-    'prefix' => 'sf_',
+    'prefix'               => 'sf_',
     'group_concat_max_len' => 1024 * 5,
-    'modes' => [
+    'modes'                => [
         'STRICT_TRANS_TABLES',
         'NO_ZERO_IN_DATE',
         'NO_ZERO_DATE',

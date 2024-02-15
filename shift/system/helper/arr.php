@@ -11,8 +11,7 @@ namespace Shift\System\Helper;
  * @link https://github.com/laravel/framework/blob/7.x/src/Illuminate/Support/Arr.php
  * @link https://github.com/bayfrontmedia/php-array-helpers/blob/master/src/Arr.php
  */
-class Arr
-{
+class Arr {
     /**
      * Checks if the given key exists in the provided array.
      *
@@ -112,7 +111,7 @@ class Arr
      */
     public static function has(array $array, $keys): bool
     {
-        $keys = (array)$keys;
+        $keys = (array) $keys;
 
         if (!$array || $keys === []) {
             return false;
@@ -152,7 +151,7 @@ class Arr
 
         for ($px = 0; $px < $part; $px++) {
             $incr = ($px < $partrem) ? $partlen + 1 : $partlen;
-            $partition[$px] = array_slice($list, (int)$mark, (int)$incr);
+            $partition[$px] = array_slice($list, (int) $mark, (int) $incr);
             $mark += $incr;
         }
 

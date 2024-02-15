@@ -16,15 +16,14 @@ use Shift\System\Core;
  *   - Filename: en_us, en_sg
  *   - Language code: en-US, en-SG
  */
-class Language extends Core\Bags
-{
+class Language extends Core\Bags {
     /**
      * Default language code always 'en' as a fallback.
      */
     public function __construct()
     {
         $this->set([
-            '_param'     => [
+            '_param' => [
                 'default' => 'en',
                 'active'  => 'en',
                 'loaded'  => [],

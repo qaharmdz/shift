@@ -7,8 +7,7 @@ namespace Shift\Admin\Model\Tool;
 use Shift\System\Mvc;
 use Shift\System\Helper;
 
-class Layout extends Mvc\Model
-{
+class Layout extends Mvc\Model {
     // List
     // ================================================
 
@@ -25,7 +24,7 @@ class Layout extends Mvc\Model
             'status'    => 'l.status',
         ];
         $filterMap = $columnMap;
-        $dtResult  = Helper\DataTables::parse($params, $filterMap);
+        $dtResult = Helper\DataTables::parse($params, $filterMap);
 
         $query = "SELECT " . implode(', ', $columnMap)
             . " FROM `" . DB_PREFIX . "layout` l"
@@ -46,7 +45,7 @@ class Layout extends Mvc\Model
             $this->db->set(
                 DB_PREFIX . 'layout',
                 [
-                    'status'  => $status,
+                    'status' => $status,
                 ],
                 ['layout_id' => $items]
             );
@@ -74,11 +73,11 @@ class Layout extends Mvc\Model
                 'name'        => $data['name'],
                 'placements'  => $data['placements'],
                 'custom_code' => $data['custom_code'],
-                'status'      => (int)$data['status'],
+                'status'      => (int) $data['status'],
             ],
         );
 
-        $layout_id = (int)$this->db->insertId();
+        $layout_id = (int) $this->db->insertId();
 
         $this->insertData($layout_id, $data);
 
@@ -93,7 +92,7 @@ class Layout extends Mvc\Model
                 'name'        => $data['name'],
                 'placements'  => $data['placements'],
                 'custom_code' => $data['custom_code'],
-                'status'      => (int)$data['status'],
+                'status'      => (int) $data['status'],
             ],
             ['layout_id' => $layout_id]
         );
@@ -115,11 +114,11 @@ class Layout extends Mvc\Model
                 DB_PREFIX . 'layout_route',
                 [
                     'layout_id'  => $layout_id,
-                    'site_id'    => (int)$route['site_id'],
+                    'site_id'    => (int) $route['site_id'],
                     'route'      => $route['route'],
                     'url_params' => $route['url_params'],
-                    'exclude'    => (int)($route['exclude'] ?? 0),
-                    'priority'   => (int)$route['priority'],
+                    'exclude'    => (int) ($route['exclude'] ?? 0),
+                    'priority'   => (int) $route['priority'],
                 ]
             );
         }
@@ -137,7 +136,7 @@ class Layout extends Mvc\Model
         )->row;
 
         if (!empty($data['layout_id'])) {
-            $data['placements'] = json_decode((string)$data['placements'], true);
+            $data['placements'] = json_decode((string) $data['placements'], true);
             if (!$data['placements']) {
                 unset($data['placements']);
             }
@@ -177,7 +176,7 @@ class Layout extends Mvc\Model
 
     public function getTotal(): int
     {
-        return (int)$this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "layout`")->row['total'];
+        return (int) $this->db->get("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "layout`")->row['total'];
     }
 
     public function deleteLayouts(array $layout_ids): void

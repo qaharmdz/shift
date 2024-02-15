@@ -6,8 +6,7 @@ namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Sitemap extends Mvc\Controller
-{
+class Sitemap extends Mvc\Controller {
     public function index()
     {
         $this->load->language('page/sitemap');
@@ -29,17 +28,20 @@ class Sitemap extends Mvc\Controller
             ],
             'omega' => [
                 [$this->language->get('home'), $this->router->url('page/home')],
-                [$this->language->get('information'), [
-                    [$this->language->get('home'), $this->router->url('page/home')],
-                    [$this->language->get('n/a'), '#'],
-                    [$this->language->get('contact'), $this->router->url('page/contact')],
-                ]],
+                [
+                    $this->language->get('information'),
+                    [
+                        [$this->language->get('home'), $this->router->url('page/home')],
+                        [$this->language->get('n/a'), '#'],
+                        [$this->language->get('contact'), $this->router->url('page/contact')],
+                    ],
+                ],
             ],
         ];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/sitemap', $data));
     }

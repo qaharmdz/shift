@@ -7,8 +7,7 @@ namespace Shift\Site\Controller\Startup;
 use Shift\System\Mvc;
 use Shift\System\Http;
 
-class Maintenance extends Mvc\Controller
-{
+class Maintenance extends Mvc\Controller {
     public function index()
     {
         if (

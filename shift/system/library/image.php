@@ -6,8 +6,7 @@ namespace Shift\System\Library;
 
 use claviska\SimpleImage;
 
-class Image extends SimpleImage
-{
+class Image extends SimpleImage {
     private array $config = [];
     protected array $flags = [];
     protected $imageFile;

@@ -6,8 +6,7 @@ namespace Shift\System\Core;
 
 use Shift\System\Http;
 
-class Loader
-{
+class Loader {
     protected Event $event;
 
     public function __construct(protected Registry $registry)
@@ -17,7 +16,7 @@ class Loader
 
     public function controller(string $route, ...$params)
     {
-        $route  = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
+        $route = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $route);
         $output = null;
 
         $this->event->emit($eventName = 'controller/' . $route . '::before', [$eventName, &$params, &$output]);
@@ -57,7 +56,7 @@ class Loader
             }
 
             if (class_exists($class)) {
-                $proxy  = new Proxy();
+                $proxy = new Proxy();
                 $object = new $class();
                 $proxy->{'class'} = $class;
 
@@ -130,9 +129,9 @@ class Loader
 
     public function config(string $path, string $group = '')
     {
-        $path  = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
+        $path = preg_replace(['#[^a-zA-Z0-9/]#', '#/+#'], ['', '/'], $path);
         $group = $group ?: str_replace('/', '.', $path);
-        $data  = [];
+        $data = [];
 
         $this->event->emit($eventName = 'config/' . $path . '::before', [$eventName, &$data, &$group]);
 

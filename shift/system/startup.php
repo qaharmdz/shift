@@ -17,12 +17,14 @@ define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 if (!(PHP_VERSION_ID >= 80200)) {
     header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
     header('Content-Type: text/html; charset=utf-8');
-    exit(sprintf(
-        'Your server is running PHP version %s but Shift v%s requires at least %s.',
-        PHP_VERSION,
-        VERSION,
-        '8.2.0',
-    ));
+    exit(
+        sprintf(
+            'Your server is running PHP version %s but Shift v%s requires at least %s.',
+            PHP_VERSION,
+            VERSION,
+            '8.2.0',
+        )
+    );
 }
 
 mb_internal_encoding('UTF-8');
@@ -44,12 +46,12 @@ if (
     $secure = true;
 }
 
-$_SERVER['SECURE']         = $secure;
-$_SERVER['HTTPS']          = $secure ? 'on' : 'off';
-$_SERVER['PROTOCOL']       = $secure ? 'https://' : 'http://';
-$_SERVER['REMOTE_ADDR']    = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+$_SERVER['SECURE'] = $secure;
+$_SERVER['HTTPS'] = $secure ? 'on' : 'off';
+$_SERVER['PROTOCOL'] = $secure ? 'https://' : 'http://';
+$_SERVER['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 $_SERVER['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'] ?? null;
-$_SERVER['DOCUMENT_ROOT']  = PATH_PUBLIC;
+$_SERVER['DOCUMENT_ROOT'] = PATH_PUBLIC;
 
 //=== Define
 define('PATH_APP', PATH_SHIFT . APP_FOLDER . DS);

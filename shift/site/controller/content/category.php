@@ -7,8 +7,7 @@ namespace Shift\Site\Controller\Content;
 use Shift\System\Mvc;
 use Shift\System\Helper\Str;
 
-class Category extends Mvc\Controller
-{
+class Category extends Mvc\Controller {
     public function index()
     {
         if (!$this->request->has('query.category_id')) {
@@ -49,7 +48,7 @@ class Category extends Mvc\Controller
             $data['categories'][$key]['url'] = $this->router->url('content/category', 'category_id=' . $category['term_id']);
 
             $posts = $this->model_content_post->getPosts([
-                'term_id' => (int)$category['term_id'],
+                'term_id' => (int) $category['term_id'],
             ]);
 
             foreach ($posts as $kPost => $post) {
@@ -65,8 +64,8 @@ class Category extends Mvc\Controller
         }
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/home', $data));
     }
@@ -96,7 +95,7 @@ class Category extends Mvc\Controller
         $data['category']['content'] = Str::htmlDecode($category['content']);
 
         $posts = $this->model_content_post->getPosts([
-            'term_id' => (int)$category['term_id'],
+            'term_id' => (int) $category['term_id'],
         ]);
 
         $data['posts'] = [];
@@ -113,8 +112,8 @@ class Category extends Mvc\Controller
         }
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/category', $data));
     }

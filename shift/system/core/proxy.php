@@ -7,8 +7,7 @@ namespace Shift\System\Core;
 /**
  * A substitute for a real service object.
  */
-class Proxy
-{
+class Proxy {
     protected array $storage = [];
 
     /**

@@ -7,8 +7,7 @@ namespace Shift\Install\Controller\Page;
 use Shift\System\Core;
 use Shift\System\Mvc;
 
-class Install extends Mvc\Controller
-{
+class Install extends Mvc\Controller {
     private $db;
 
     public function index()
@@ -55,7 +54,7 @@ class Install extends Mvc\Controller
 
     private function dbConnect()
     {
-        $dbConfig  = array_merge(
+        $dbConfig = array_merge(
             $this->config->get('root.database.config'),
             [
                 'host'     => $this->session->get('install.config.host', 'localhost'),

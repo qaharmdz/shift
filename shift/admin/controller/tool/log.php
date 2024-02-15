@@ -7,8 +7,7 @@ namespace Shift\Admin\Controller\Tool;
 use Shift\System\Mvc;
 use Shift\System\Helper\Arr;
 
-class Log extends Mvc\Controller
-{
+class Log extends Mvc\Controller {
     public function index()
     {
         $this->load->language('tool/log');
@@ -52,7 +51,7 @@ class Log extends Mvc\Controller
         ];
 
         // Current log file
-        $file     = $this->request->get('query.file', $this->log->getConfig('logfile', date('Y-m') . '_error.log'));
+        $file = $this->request->get('query.file', $this->log->getConfig('logfile', date('Y-m') . '_error.log'));
         $fileinfo = $data['logFiles'][$file] ?? $this->fileinfo($file);
 
         $data['fileinfo'] = $fileinfo;
@@ -67,8 +66,8 @@ class Log extends Mvc\Controller
         }
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('tool/log', $data));
     }
@@ -87,7 +86,7 @@ class Log extends Mvc\Controller
         }
 
         if ($this->session->isEmpty('flash.alert')) {
-            $submit   = $this->request->get('query.submit', 'download');
+            $submit = $this->request->get('query.submit', 'download');
             $filename = $this->request->get('post.file', $this->log->getConfig('logfile', date('Y-m') . '_error.log'));
             $filepath = PATH_TEMP . 'logs/' . $filename;
 
@@ -118,7 +117,7 @@ class Log extends Mvc\Controller
     protected function fileinfo($file)
     {
         $filepath = PATH_TEMP . 'logs/' . $file;
-        $data     = [
+        $data = [
             'exist'    => false,
             'file'     => $file,
             'filepath' => $filepath,
@@ -130,8 +129,8 @@ class Log extends Mvc\Controller
 
         if (is_file($filepath)) {
             $data['exist'] = true;
-            $data['bytes'] = $bytes = (int)filesize($filepath);
-            $data['size']  = $this->bytesToHuman($bytes);
+            $data['bytes'] = $bytes = (int) filesize($filepath);
+            $data['size'] = $this->bytesToHuman($bytes);
 
             /**
              * State:

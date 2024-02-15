@@ -10,4 +10,4 @@ $_['app_startup'] = [
 ];
 
 $_['template']['theme_default'] = 'base';
-$_['template']['theme_active']  = 'base';
+$_['template']['theme_active'] = 'base';

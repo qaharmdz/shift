@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shift\System\Helper;
 
-class Date
-{
+class Date {
     public static function now($zone = 'UTC', $format = 'Y-m-d H:i:s')
     {
         return (new \DateTime('now', new \DateTimeZone($zone)))->format($format);

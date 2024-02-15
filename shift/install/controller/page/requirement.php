@@ -6,8 +6,7 @@ namespace Shift\Install\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Requirement extends Mvc\Controller
-{
+class Requirement extends Mvc\Controller {
     public function index()
     {
         $this->document->setTitle($this->language->get('requirements'));
@@ -15,11 +14,11 @@ class Requirement extends Mvc\Controller
         $data = [];
         $data['php'] = [
             'version' => $vPHP = phpversion(),
-            'valid' => version_compare($vPHP, '8.2.0', '>='),
+            'valid'   => version_compare($vPHP, '8.2.0', '>='),
         ];
         $data['mysql'] = [
             'version' => $vMySQL = $this->getMySQLVersion(),
-            'valid' => version_compare($vMySQL, '8.0.20', '>='),
+            'valid'   => version_compare($vMySQL, '8.0.20', '>='),
         ];
         $data['php_exts'] = [
             'MySQLi'   => extension_loaded('mysqli'),

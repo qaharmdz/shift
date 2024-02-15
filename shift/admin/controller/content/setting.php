@@ -7,8 +7,7 @@ namespace Shift\Admin\Controller\Content;
 use Shift\System\Mvc;
 use Shift\System\Helper\Arr;
 
-class Setting extends Mvc\Controller
-{
+class Setting extends Mvc\Controller {
     public function index()
     {
         $this->load->config('content/setting');
@@ -39,8 +38,8 @@ class Setting extends Mvc\Controller
         }
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/setting', $data));
     }
@@ -66,7 +65,7 @@ class Setting extends Mvc\Controller
             $this->config->getArray('content.setting.form'),
             $this->request->get('post', [])
         );
-        $site_id = (int)$post['site_id'];
+        $site_id = (int) $post['site_id'];
 
         if ($errors = $this->validate($post)) {
             return $this->response->setOutputJson($errors, 422);

@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Content;
 
 use Shift\System\Mvc;
 
-class Post extends Mvc\Controller
-{
+class Post extends Mvc\Controller {
     public function index()
     {
         $this->load->language('content/general');
@@ -25,8 +24,8 @@ class Post extends Mvc\Controller
         $data = [];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/post_list', $data));
     }
@@ -39,7 +38,7 @@ class Post extends Mvc\Controller
 
         $this->load->model('content/post');
 
-        $params  = $this->request->get('post');
+        $params = $this->request->get('post');
         $results = $this->model_content_post->dtRecords($params);
 
         $items = [];
@@ -47,12 +46,12 @@ class Post extends Mvc\Controller
             $items[$i] = $results->rows[$i];
 
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['post_id'];
-            $items[$i]['url_edit']    = $this->router->url('content/post/form', 'post_id=' . $items[$i]['post_id']);
+            $items[$i]['url_edit'] = $this->router->url('content/post/form', 'post_id=' . $items[$i]['post_id']);
         }
 
         $data = [
-            'draw' => (int)$params['draw'] ?? 1,
-            'data' => $items,
+            'draw'            => (int) $params['draw'] ?? 1,
+            'data'            => $items,
             'recordsFiltered' => $results->num_rows,
             'recordsTotal'    => $this->model_content_post->getTotal(),
         ];
@@ -72,13 +71,13 @@ class Post extends Mvc\Controller
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
-        $post  = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
         $types = ['publish', 'pending', 'draft', 'disabled', 'delete'];
         $items = explode(',', $post['item']);
-        $data  = [
-            'items'     => $items,
-            'message'   => '',
-            'updated'   => [],
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
         ];
 
         if (empty($items) || !in_array($post['type'], $types)) {
@@ -124,19 +123,19 @@ class Post extends Mvc\Controller
 
         $data = [];
 
-        $data['mode']        = $mode;
-        $data['post_id']     = $post_id;
-        $data['languages']   = $this->model_extension_language->getLanguages();
-        $data['users']       = $this->model_account_user->getUsers();
+        $data['mode'] = $mode;
+        $data['post_id'] = $post_id;
+        $data['languages'] = $this->model_extension_language->getLanguages();
+        $data['users'] = $this->model_account_user->getUsers();
         $data['user_groups'] = $this->model_account_usergroup->getUserGroups();
-        $data['sites']       = $this->model_setting_site->getSites();
-        $data['categories']  = $this->model_content_category->getCategoryTree();
-        $data['tags']        = $this->model_content_tag->getTags();
-        $data['setting']     = $this->model_content_post->getPost($post_id);
+        $data['sites'] = $this->model_setting_site->getSites();
+        $data['categories'] = $this->model_content_category->getCategoryTree();
+        $data['tags'] = $this->model_content_tag->getTags();
+        $data['setting'] = $this->model_content_post->getPost($post_id);
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/post_form', $data));
     }
@@ -162,7 +161,7 @@ class Post extends Mvc\Controller
             $this->config->getArray('content.post.form'),
             $this->request->get('post', [])
         );
-        $post_id = (int)$post['post_id'];
+        $post_id = (int) $post['post_id'];
 
         unset($post['content'][0]);
 
@@ -191,7 +190,7 @@ class Post extends Mvc\Controller
         if (isset($data['new_id']) && empty($data['redirect'])) {
             $data['redirect'] = $this->router->url('content/post/form', 'post_id=' . $data['new_id']);
         }
-        if (empty($data['redirect'])  && $this->session->pull('reload_post_form')) {
+        if (empty($data['redirect']) && $this->session->pull('reload_post_form')) {
             $data['redirect'] = $this->router->url('content/post/form', 'post_id=' . $post_id);
         }
 

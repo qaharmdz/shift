@@ -2,7 +2,9 @@
     "name": "mdz/shift",
     "type": "project",
     "description": "Shift - Pragmatic PHP CMS",
-    "keywords": ["php-cms"],
+    "keywords": [
+        "php-cms"
+    ],
     "homepage": "https://github.com/qaharmdz/shift",
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -25,7 +27,10 @@
         "kint-php/kint": "^5.0"
     },
     "autoload": {
-        "classmap": ["shift/", "tests/"],
+        "classmap": [
+            "shift/",
+            "tests/"
+        ],
         "files": [
             "shift/system/helper/autoloaded.php"
         ]

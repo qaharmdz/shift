@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Block;
 
 use Shift\System\Mvc;
 
-class Header extends Mvc\Controller
-{
+class Header extends Mvc\Controller {
     public function index()
     {
         $this->load->language('block/header', 'blockHeader');
@@ -282,11 +281,11 @@ class Header extends Mvc\Controller
     protected function nav(array $params): array
     {
         return [
-            'id'   => $params['id']   ?? '',
+            'id'   => $params['id'] ?? '',
             'type' => $params['type'] ?? 'link', // Option: header, divider, link
             'icon' => $params['icon'] ?? '',
             'name' => $params['name'] ?? '',
-            'url'  => $params['url']  ?? '',
+            'url'  => $params['url'] ?? '',
             'subs' => $params['subs'] ?? [],
         ];
     }

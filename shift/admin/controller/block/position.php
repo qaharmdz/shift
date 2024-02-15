@@ -6,8 +6,7 @@ namespace Shift\Admin\Controller\Block;
 
 use Shift\System\Mvc;
 
-class Position extends Mvc\Controller
-{
+class Position extends Mvc\Controller {
     /**
      * Get all layout modules
      *
@@ -17,8 +16,8 @@ class Position extends Mvc\Controller
     {
         $this->event->emit($eventName = 'controller/block/position::blocks', [$eventName, &$blocks]);
 
-        $terms   = ['alpha', 'topbar', 'sidebarleft', 'sidebarright', 'footer', 'omega'];
-        $blocks  = array_unique(array_merge($terms, $blocks));
+        $terms = ['alpha', 'topbar', 'sidebarleft', 'sidebarright', 'footer', 'omega'];
+        $blocks = array_unique(array_merge($terms, $blocks));
         $modules = []; // TODO: getLayoutModules();
 
         $this->event->emit($eventName = 'controller/block/position::modules', [$eventName, &$modules]);

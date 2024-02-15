@@ -6,8 +6,7 @@ namespace Shift\Site\Model\Setting;
 
 use Shift\System\Mvc;
 
-class Site extends Mvc\Model
-{
+class Site extends Mvc\Model {
     /**
      * Get sites
      *
@@ -18,7 +17,7 @@ class Site extends Mvc\Model
     public function getSites(array $filters = ['1 = ?i' => 1], string $rkey = 'site_id'): array
     {
         $argsHash = $this->cache->getHash(func_get_args());
-        $data     = $this->cache->get('sites.' . $argsHash, []);
+        $data = $this->cache->get('sites.' . $argsHash, []);
 
         if (!$data) {
             $sites = $this->db->get(

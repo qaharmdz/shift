@@ -9,18 +9,17 @@ use Shift\System\Core;
 /**
  * Represents a HTTP request.
  */
-class Request extends Core\Bags
-{
+class Request extends Core\Bags {
     public function __construct()
     {
         $_SERVER['REMOTE_ADDR'] = $this->getIp();
 
         $this->set([
-            'query'   => $_GET     = $this->clean($_GET),
-            'post'    => $_POST    = $this->clean($_POST),
-            'cookie'  => $_COOKIE  = $this->clean($_COOKIE),
-            'files'   => $_FILES   = $this->clean($_FILES),
-            'server'  => $_SERVER  = $this->clean($_SERVER),
+            'query'   => $_GET = $this->clean($_GET),
+            'post'    => $_POST = $this->clean($_POST),
+            'cookie'  => $_COOKIE = $this->clean($_COOKIE),
+            'files'   => $_FILES = $this->clean($_FILES),
+            'server'  => $_SERVER = $this->clean($_SERVER),
             'request' => $_REQUEST = $this->clean($_REQUEST)
         ]);
     }
@@ -110,14 +109,14 @@ class Request extends Core\Bags
             'HTTP_FORWARDED_FOR',
             'HTTP_FORWARDED',
             'HTTP_CF_CONNECTING_IP', // Cloudflare
-            'REMOTE_ADDR'
+            'REMOTE_ADDR',
         );
 
         foreach ($keys as $key) {
             if (array_key_exists($key, $_SERVER)) {
                 foreach (explode(',', $_SERVER[$key]) as $ip) {
                     $ip = trim($ip);
-                    if ((bool)filter_var($ip, FILTER_VALIDATE_IP)) {
+                    if ((bool) filter_var($ip, FILTER_VALIDATE_IP)) {
                         return $ip;
                     }
                 }

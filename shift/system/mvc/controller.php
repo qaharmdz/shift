@@ -27,8 +27,7 @@ use Shift\System\Core;
  * @property \Shift\System\Library\Image        $image
  * @property \Shift\System\Library\User         $user
  */
-abstract class Controller
-{
+abstract class Controller {
     protected Core\Registry $registry;
 
     public function __construct()

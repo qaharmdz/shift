@@ -6,8 +6,7 @@ namespace Shift\Site\Model\Extension;
 
 use Shift\System\Mvc;
 
-class Module extends Mvc\Model
-{
+class Module extends Mvc\Model {
     public function getModule(int $module_id): array
     {
         $result = $this->db->get(

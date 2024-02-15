@@ -6,8 +6,7 @@ namespace Shift\System\Core;
 
 use Shift\System\Http\Dispatch;
 
-class Event
-{
+class Event {
     protected $events = [];
     protected $propagation = true;
 
@@ -94,8 +93,10 @@ class Event
         }
 
         array_multisort(
-            array_column($this->events[$eventName], 'priority'), SORT_DESC,
-            array_column($this->events[$eventName], 'route'), SORT_ASC,
+            array_column($this->events[$eventName], 'priority'),
+            SORT_DESC,
+            array_column($this->events[$eventName], 'route'),
+            SORT_ASC,
             $this->events[$eventName]
         );
 

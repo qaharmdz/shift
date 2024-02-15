@@ -1,5 +1,5 @@
 <?php
 
-$_['page_title']        = 'Site Map';
+$_['page_title'] = 'Site Map';
 
-$_['contact']           = 'Contact Us';
+$_['contact'] = 'Contact Us';

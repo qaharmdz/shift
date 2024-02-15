@@ -8,8 +8,7 @@ use Shift\System\Mvc;
 use Shift\System\Exception;
 use Shift\System\Helper\Str;
 
-class Post extends Mvc\Controller
-{
+class Post extends Mvc\Controller {
     public function index()
     {
         $this->load->model('content/post');
@@ -49,8 +48,8 @@ class Post extends Mvc\Controller
         $data['post']['content'] = Str::htmlDecode($post['content']);
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('content/post', $data));
     }

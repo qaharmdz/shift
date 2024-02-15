@@ -6,8 +6,7 @@ namespace Shift\Site\Controller\Page;
 
 use Shift\System\Mvc;
 
-class Contact extends Mvc\Controller
-{
+class Contact extends Mvc\Controller {
     public function index()
     {
         $this->load->language('page/contact');
@@ -21,7 +20,7 @@ class Contact extends Mvc\Controller
             $mail->addReplyTo($this->request->get('post.email'), $this->request->get('post.name'));
 
             $mail->Subject = html_entity_decode(sprintf($this->language->get('email_subject'), $this->request->get('post.name')), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            $mail->Body    = html_entity_decode($this->request->get('post.enquiry'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $mail->Body = html_entity_decode($this->request->get('post.enquiry'), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
             $mail->isHTML(false);
             $mail->send();
@@ -49,8 +48,8 @@ class Contact extends Mvc\Controller
         ];
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/contact', $data));
     }
@@ -91,11 +90,11 @@ class Contact extends Mvc\Controller
         ]);
 
         $data['page_title'] = $this->language->get('page_title');
-        $data['content']    = $this->language->get('text_success');
+        $data['content'] = $this->language->get('text_success');
 
         $data['layouts'] = $this->load->controller('block/position');
-        $data['footer']  = $this->load->controller('block/footer');
-        $data['header']  = $this->load->controller('block/header');
+        $data['footer'] = $this->load->controller('block/footer');
+        $data['header'] = $this->load->controller('block/header');
 
         $this->response->setOutput($this->load->view('page/success', $data));
     }

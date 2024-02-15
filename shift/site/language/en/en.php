@@ -1,11 +1,11 @@
 <?php
 
 // Locale
-$_['lang_code']             = 'en';
-$_['lang_dir']              = 'ltr';
+$_['lang_code'] = 'en';
+$_['lang_dir'] = 'ltr';
 
 // Text
-$_['home']                  = 'Home';
+$_['home'] = 'Home';
 
 /*
 $_['text_home']             = 'Home';

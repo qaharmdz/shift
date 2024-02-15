@@ -30,8 +30,7 @@ namespace Shift\System\Core;
  *   - toJson($key = null, $options = 0)
  * .
  */
-class Bags extends \Adbar\Dot
-{
+class Bags extends \Adbar\Dot {
     /**
      * Recursively replace a given array or a Dot object.
      *
@@ -61,7 +60,7 @@ class Bags extends \Adbar\Dot
      */
     public function getInt($key, $default = 0): int
     {
-        return (int)$this->get($key, $default);
+        return (int) $this->get($key, $default);
     }
 
     /**
@@ -73,7 +72,7 @@ class Bags extends \Adbar\Dot
      */
     public function getString($key, $default = ''): string
     {
-        return (string)$this->get($key, $default);
+        return (string) $this->get($key, $default);
     }
 
     /**
@@ -85,7 +84,7 @@ class Bags extends \Adbar\Dot
      */
     public function getArray($key, $default = []): array
     {
-        return (array)$this->get($key, $default);
+        return (array) $this->get($key, $default);
     }
 
     /**
@@ -98,7 +97,7 @@ class Bags extends \Adbar\Dot
     public function getBool($key, $default = false): bool
     {
         $trueVal = ['enable', 'active'];
-        $input   = $this->get($key, $default);
+        $input = $this->get($key, $default);
 
         if (is_string($input) && in_array(strtolower($input), $trueVal)) {
             $input = true;
