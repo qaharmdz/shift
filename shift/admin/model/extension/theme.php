@@ -63,7 +63,7 @@ class Theme extends Mvc\Model {
         return (int) $this->db->get(
             "SELECT COUNT(*) AS total
             FROM `" . DB_PREFIX . "extension`
-            WHERE `type` = 'theme'  AND `status` = 1 AND `install` = 1"
+            WHERE `type` = 'theme' AND `install` = 1"
         )->row['total'];
     }
 }
