@@ -126,7 +126,7 @@ class UserGroup extends Mvc\Controller {
     {
         $permissions = [];
         $ignore = array_merge(
-            $this->config->getArray('root.app_component'),
+            $this->config->getArray('root.app_contoller'),
             $this->config->getArray('root.app_startup'),
             [
                 'page/login',

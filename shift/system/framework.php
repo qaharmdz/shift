@@ -213,19 +213,19 @@ class Framework {
                 throw new \Exception('Oops!');
             }
 
-            $pageRoute = new Http\Dispatch($config->get('root.app_component'));
+            $controller = new Http\Dispatch($config->get('root.app_controller'));
 
             foreach ($config->get('root.app_startup') as $route) {
                 $dispatch = new Http\Dispatch($route);
                 $result = $dispatch->execute();
 
                 if ($result instanceof Http\Dispatch) {
-                    $pageRoute = $result;
+                    $controller = $result;
                     break;
                 }
             }
 
-            $pageRoute->execute();
+            $controller->execute();
 
             // 404 Not Found
         } catch (Exception\NotFoundHttpException | \LogicException $e) {

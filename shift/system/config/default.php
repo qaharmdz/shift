@@ -7,7 +7,7 @@ $_['url_host'] = '';
 $_['locale'] = 'en';
 
 // Application
-$_['app_component'] = 'startup/component';
+$_['app_controller'] = 'startup/app';
 $_['app_startup'] = [];
 $_['app_error'] = 'error/notfound';
 $_['app_event'] = [];
