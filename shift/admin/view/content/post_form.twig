@@ -47,7 +47,7 @@
 
                         <div class="uk-switcher">
                             {% for language in languages %}
-                                <div id="tab-lang-{{ language.extension_id }}">
+                                <div id="tab-lang-{{ language.extension_id }}" class="{{ languages|length == 1 ? 'uk-active' }}">
                                     <fieldset class="uk-fieldset">
                                         {{ forms.input({'id':'title-' ~ language.extension_id, 'label':'title', 'name':'content[' ~ language.extension_id ~ '][title]', 'value':setting.content[language.extension_id]['title'], 'required':true}) }}
                                         {{ forms.input({'id':'url-alias-' ~ language.extension_id, 'label':'url_alias', 'name':'alias[' ~ language.extension_id ~ ']', 'value':setting.alias[language.extension_id] ?? '', 'class':'uk-form-blank uk-text-italic'}) }}
