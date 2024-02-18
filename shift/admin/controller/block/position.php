@@ -16,8 +16,9 @@ class Position extends Mvc\Controller {
     {
         $this->event->emit($eventName = 'controller/block/position::blocks', [$eventName, &$blocks]);
 
-        $terms = ['alpha', 'topbar', 'sidebarleft', 'sidebarright', 'footer', 'omega'];
-        $blocks = array_unique(array_merge($terms, $blocks));
+        // BUG: not all positions available on the template
+        $positions = ['alpha', 'topbar', 'sidebarleft', 'sidebarright', 'footer', 'omega'];
+        $blocks = array_unique(array_merge($positions, $blocks));
         $modules = []; // TODO: getLayoutModules();
 
         $this->event->emit($eventName = 'controller/block/position::modules', [$eventName, &$modules]);
