@@ -96,8 +96,8 @@ class Language extends Mvc\Controller {
     {
         $extension_id = $this->request->getInt('query.extension_id', 0);
 
+        $this->load->config('extension/language');
         $this->load->model('extension/manage');
-        // $this->load->config('extension/language'); // TODO: extension language config
         $this->load->language('extension/language');
 
         $this->document->setTitle($this->language->get('page_title'));
@@ -110,7 +110,10 @@ class Language extends Mvc\Controller {
         $data = [];
 
         $data['extension_id'] = $extension_id;
-        $data['setting'] = $this->model_extension_manage->getById($extension_id);
+        $data['setting'] = array_replace_recursive(
+            $this->config->getArray('extension.language.form'),
+            $this->model_extension_manage->getById($extension_id)
+        );
 
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer'] = $this->load->controller('block/footer');
@@ -121,6 +124,7 @@ class Language extends Mvc\Controller {
 
     public function save()
     {
+        $this->load->config('extension/language');
         $this->load->model('extension/manage');
 
         if (!$this->user->hasPermission('modify', 'extension/language')) {
@@ -135,13 +139,7 @@ class Language extends Mvc\Controller {
 
         $data = [];
         $post = array_replace_recursive(
-            [
-                'setting' => [
-                    'locale' => '',
-                    'flag'   => '',
-                ],
-                'status'  => 0,
-            ],
+            $this->config->getArray('extension.language.form'),
             $this->request->get('post', [])
         );
         $extension_id = (int) $post['extension_id'];
