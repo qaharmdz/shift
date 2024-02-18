@@ -28,6 +28,7 @@
 html {
     color: var(--uk-font-color);
     background: #f9fbfc;
+    background: #f3f5f6;
 }
 body {
     min-width: 640px;
@@ -68,6 +69,9 @@ body {
     color: #fff;
     background: #777;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+.block-navbar .uk-sticky.uk-active {
+    z-index: 999;
 }
 
 .navbar-main-menu {
@@ -253,6 +257,14 @@ body {
 }
 .content-header {
     margin-bottom: 20px;
+}
+.sticky-active-background.uk-sticky.uk-active {
+    padding: 5px;
+    background: #eee;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.sticky-active-background.uk-sticky.uk-active h1 {
+    font-size: 2rem;
 }
 
 /* .content-body {} */

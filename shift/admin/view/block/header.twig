@@ -1,89 +1,91 @@
 <div class="block-navbar">
-    <nav class="uk-navbar-container" uk-navbar>
-        <div class="uk-navbar-left">
-            <div class="uk-inline">
-                <button class="uk-button uk-button-link navbar-main-menu" type="button"><i class="bi bi-command"></i></button>
-                <div class="uk-width-large main-navigation" uk-dropdown="offset:3;">
-                    <div class="uk-dropdown-grid uk-grid-collapse" uk-grid>
-                        <div class="uk-width-auto panel-left">
-                            {% if navigation.links %}
-                            <ul class="uk-nav uk-dropdown-nav" uk-nav>
-                                {% for link in navigation.links %}
-                                    {% if link.type == 'header' %}
-                                        <li class="uk-nav-header">{{ link.name }}</li>
-                                    {% elseif link.type == 'divider' %}
-                                        <li class="uk-nav-divider"></li>
-                                    {% else %}
-                                        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </div>
-                        <div class="uk-width-expand panel-right">
-                            <ul class="uk-nav uk-dropdown-nav" uk-nav>
-                                {% for menu in navigation.menus %}
-                                    {% if not menu.subs %}
-                                        <li><a href="{{ menu.url }}">{{ menu.name }}</a></li>
-                                    {% else %}
-                                        <li class="uk-parent">
-                                            <a href="{{ menu.url }}">{{ menu.name }} <span uk-nav-parent-icon></span></a>
-                                            <ul class="uk-nav-sub">
-                                                {% for item in menu.subs %}
-                                                    {% if item.subs %}
-                                                        <li class="uk-parent">
-                                                            <a href="{{ item.url }}">{{ item.name }} <span uk-nav-parent-icon></span></a>
-                                                            <ul class="uk-nav-sub">
-                                                                {% for subitem in item.subs %}
-                                                                    <li><a href="{{ subitem.url }}">{{ subitem.name }}</a></li>
-                                                                {% endfor %}
-                                                            </ul>
-                                                        </li>
-                                                    {% else %}
-                                                        {% if item.type == 'header' %}
-                                                            <li class="uk-nav-header">{{ item.name }}</li>
-                                                        {% elseif item.type == 'divider' %}
-                                                            <li class="uk-nav-divider"></li>
+    <div uk-sticky="sel-target:.uk-navbar-container; cls-active:uk-navbar-sticky; show-on-up:true; animation:uk-animation-slide-top;">
+        <nav class="uk-navbar-container" uk-navbar>
+            <div class="uk-navbar-left">
+                <div class="uk-inline">
+                    <button class="uk-button uk-button-link navbar-main-menu" type="button"><i class="bi bi-command"></i></button>
+                    <div class="uk-width-large main-navigation" uk-dropdown="offset:3;">
+                        <div class="uk-dropdown-grid uk-grid-collapse" uk-grid>
+                            <div class="uk-width-auto panel-left">
+                                {% if navigation.links %}
+                                <ul class="uk-nav uk-dropdown-nav" uk-nav>
+                                    {% for link in navigation.links %}
+                                        {% if link.type == 'header' %}
+                                            <li class="uk-nav-header">{{ link.name }}</li>
+                                        {% elseif link.type == 'divider' %}
+                                            <li class="uk-nav-divider"></li>
+                                        {% else %}
+                                            <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div class="uk-width-expand panel-right">
+                                <ul class="uk-nav uk-dropdown-nav" uk-nav>
+                                    {% for menu in navigation.menus %}
+                                        {% if not menu.subs %}
+                                            <li><a href="{{ menu.url }}">{{ menu.name }}</a></li>
+                                        {% else %}
+                                            <li class="uk-parent">
+                                                <a href="{{ menu.url }}">{{ menu.name }} <span uk-nav-parent-icon></span></a>
+                                                <ul class="uk-nav-sub">
+                                                    {% for item in menu.subs %}
+                                                        {% if item.subs %}
+                                                            <li class="uk-parent">
+                                                                <a href="{{ item.url }}">{{ item.name }} <span uk-nav-parent-icon></span></a>
+                                                                <ul class="uk-nav-sub">
+                                                                    {% for subitem in item.subs %}
+                                                                        <li><a href="{{ subitem.url }}">{{ subitem.name }}</a></li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </li>
                                                         {% else %}
-                                                            <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                                            {% if item.type == 'header' %}
+                                                                <li class="uk-nav-header">{{ item.name }}</li>
+                                                            {% elseif item.type == 'divider' %}
+                                                                <li class="uk-nav-divider"></li>
+                                                            {% else %}
+                                                                <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="logo">Shift</div>
-        </div>{# .uk-navbar-left #}
+                <div class="logo">Shift</div>
+            </div>{# .uk-navbar-left #}
 
-        <div class="uk-navbar-right">
-            <ul class="uk-navbar-nav">
-                <li>
-                    {% if sites|length == 1 %}
-                        <a class="uk-navbar-toggle uk-visible@s" href="{{ shift.lib.config.get('env.url_site') }}" target="_blank" title="{{ shift.lib.config.get('system.site.name') }}">
-                            <i class="bi bi-globe2 bi-2x"></i>
-                        </a>
-                    {% else %}
-                        <a class="uk-navbar-toggle" title="{{ shift.lib.language.get('visit_site') }}">
-                            <i class="bi bi-globe2 bi-2x"></i>
-                            <span uk-drop-parent-icon></span>
-                        </a>
-                        <div class="uk-navbar-dropdown" uk-dropdown="offset:0; pos:bottom-right;">
-                            <ul class="uk-nav uk-navbar-dropdown-nav">
-                                {% for site in sites %}
-                                    <li><a href="{{ site.url }}" target="_blank">{{ site.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                </li>
-            </ul>
-        </div>{# .uk-navbar-right #}
-    </nav>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        {% if sites|length == 1 %}
+                            <a class="uk-navbar-toggle uk-visible@s" href="{{ shift.lib.config.get('env.url_site') }}" target="_blank" title="{{ shift.lib.config.get('system.site.name') }}">
+                                <i class="bi bi-globe2 bi-2x"></i>
+                            </a>
+                        {% else %}
+                            <a class="uk-navbar-toggle" title="{{ shift.lib.language.get('visit_site') }}">
+                                <i class="bi bi-globe2 bi-2x"></i>
+                                <span uk-drop-parent-icon></span>
+                            </a>
+                            <div class="uk-navbar-dropdown" uk-dropdown="offset:0; pos:bottom-right;">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    {% for site in sites %}
+                                        <li><a href="{{ site.url }}" target="_blank">{{ site.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>{# .uk-navbar-right #}
+        </nav>
+    </div>
 </div>{# .block-navabr #}
