@@ -21,7 +21,6 @@
                             <ul class="uk-nav uk-dropdown-nav">
                                 <li><a data-dtAction='{"type":"enabled"}'>{{ shift.lib.language.get('enabled') }}</a></li>
                                 <li><a data-dtAction='{"type":"disabled"}'>{{ shift.lib.language.get('disabled') }}</a></li>
-                                <li><a data-dtAction='{"type":"delete"}'>{{ shift.lib.language.get('delete') }}</a></li>
                             </ul>
                         </div>
                     </th>
@@ -144,15 +143,7 @@ let tableEl     = '#extensionLanguage-list',
             url  : "{{ shift.lib.router.url('extension/language/dtaction')|raw }}",
             data : dtAction,
             validate : function(dtActionProceed) {
-                if (dtAction.type === 'delete') {
-                    $.fn.shift.confirm({
-                        title   : shift.i18n.are_you_sure,
-                        message : shift.i18n.confirm_delete,
-                        onConfirm : function() { dtActionProceed(); }
-                    });
-                } else {
-                    dtActionProceed();
-                }
+                dtActionProceed();
             },
             onSuccess : function() {
                 dtTable.clearPipeline().draw();
