@@ -56,4 +56,35 @@ class Event extends Mvc\Controller {
 
         $this->response->setOutputJson($data);
     }
+
+    public function dtaction()
+    {
+        $this->load->model('extension/event');
+        $this->load->language('extension/event');
+
+        if (!$this->user->hasPermission('modify', 'extension/language')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+
+        $post = array_replace(['type' => '', 'item' => ''], $this->request->get('post'));
+        $types = ['enabled', 'disabled'];
+        $items = explode(',', $post['item']);
+        $data = [
+            'items'   => $items,
+            'message' => '',
+            'updated' => [],
+        ];
+
+        if (empty($items) || !in_array($post['type'], $types)) {
+            return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
+        }
+
+        $data['updated'] = $this->model_extension_event->dtAction($post['type'], $items);
+        $data['message'] = $post['message'] ?? $this->language->get('success_' . $post['type']);
+
+        $this->response->setOutputJson($data);
+    }
 }
