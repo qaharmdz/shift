@@ -17,7 +17,7 @@ use Phpfastcache\Exceptions\PhpfastcacheSimpleCacheException;
  *
  * Psr16Adapter public methods:
  * - get(string $key, mixed $default = null): mixed
- * - public function set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
+ * - set(string $key, mixed $value, null|int|\DateInterval $ttl = null): bool
  * - delete(string $key): bool
  * - clear(): bool
  * - getMultiple(iterable $keys, mixed $default = null): iterable
