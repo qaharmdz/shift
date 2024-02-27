@@ -6,15 +6,12 @@
 
     <title>{{ (shift.lib.document.getTitle() ? shift.lib.document.getTitle() ~ ' - ') ~ shift.lib.config.get('system.site.name') }}</title>
     <base href="{{ shift.lib.config.get('env.url_app') }}">
-
 {% for meta in shift.lib.document.getMetas() %}
     <meta {{ meta.attribute }}="{{ meta.value }}" content="{{ meta.content }}">
 {% endfor %}
-
 {% for link in shift.lib.document.getLinks() %}
     <link rel="{{ link.rel }}" href="{{ link.href }}" {{ link.hreflang ? 'hreflang="' ~ link.hreflang ~ '"' }} {{ link.type ? 'type="' ~ link.type ~ '"' }} {{ link.media ? 'type="' ~ link.media ~ '"' }}>
 {% endfor %}
-
     {% block document_head_meta %}{% endblock %}
 
     <link rel="stylesheet" href="{{ shift.lib.config.get('env.url_app') }}asset/script/uikit/uikit.sketsa.min.css" />
@@ -24,12 +21,12 @@
     <link rel="stylesheet" href="{{ style.href }}" media="{{ style.media }}">
 {% endfor %}
     <link rel="stylesheet" href="{{ shift.lib.config.get('env.url_app') }}asset/style/shift.css" />
-
-    {% block document_head_asset %}{% endblock %}
+    {% block document_head_asset_css %}{% endblock %}
 
     <script src="{{ shift.lib.config.get('env.url_app') }}asset/script/jquery/jquery-3.6.0.min.js"></script>
     <script src="{{ shift.lib.config.get('env.url_app') }}asset/script/uikit/uikit.min.js"></script>
     <script src="{{ shift.lib.config.get('env.url_app') }}asset/script/uikit/uikit-icons.min.js"></script>
+    {% block document_head_asset_script %}{% endblock %}
 {% for script in shift.lib.document.getScripts('header') %}
     <script src="{{ script }}"></script>
 {% endfor %}
