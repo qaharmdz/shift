@@ -9,6 +9,8 @@ use Shift\System\Mvc;
 class Codex extends Mvc\Controller {
     public function index(array $config = [])
     {
+        // Prevent route access
+        // https://example.com/index.php?route=extensions/module/codex
         if (!$config) {
             return null;
         }

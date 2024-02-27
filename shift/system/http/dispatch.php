@@ -58,12 +58,7 @@ class Dispatch {
             list($ext, $extType, $extCodename) = $extParts;
             $countExtPart = count($extParts);
 
-            if ($countExtPart === 3) {
-                $extParts[] = 'index';
-            }
-
             if ($countExtPart > 4) {
-                // Remove codename as the class name
                 $extClassMethod = implode('/', array_slice($extParts, 3));
             } else {
                 $extClassMethod = implode('/', array_slice($extParts, 2));
