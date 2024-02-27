@@ -187,12 +187,6 @@ html,
 .uk-form-controls .uk-button {
     font-size: 0.94rem;
 }
-.uk-button-group.uk-button-radio input:first-child + .uk-button {
-    border-radius: 3px 0 0 3px;
-}
-.uk-button-group.uk-button-radio .uk-button:last-child {
-    border-radius: 0 3px 3px 0;
-}
 
 .uk-form-small:not(textarea):not([multiple]):not([size]) {
     line-height: 28px;
@@ -269,8 +263,18 @@ th.uk-text-break {
     padding-top: 4px;
 }
 .uk-button-group.uk-button-radio .uk-button {
-    line-height: 26px;
-    padding: 0 14px;
+    line-height: 28px !important;
+    padding: 0 14px !important;
+    transition: 0.05s ease-in-out;
+    z-index: 2 !important;
+}
+.uk-button-group.uk-button-radio input:first-child + .uk-button {
+    border-radius: 3px 0 0 3px;
+    border-right: 0 !important;
+}
+.uk-button-group.uk-button-radio .uk-button:last-child {
+    border-radius: 0 3px 3px 0;
+    border-left: 0 !important;
 }
 
 .uk-button-secondary {
