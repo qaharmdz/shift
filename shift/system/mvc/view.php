@@ -123,7 +123,7 @@ class View {
             $this->twig = $this->init();
         }
 
-        if (!empty($data['_stringTemplate'])) {
+        if (!empty($data['_strTwig'])) {
             if (!$this->twig->hasExtension('\Twig\Extension\StringLoaderExtension')) {
                 $this->twig->addExtension(new \Twig\Extension\StringLoaderExtension());
             }

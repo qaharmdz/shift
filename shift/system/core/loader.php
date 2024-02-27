@@ -98,7 +98,7 @@ class Loader {
     {
         $output = null;
 
-        if (empty($vars['_stringTemplate'])) {
+        if (empty($vars['_strTwig'])) {
             $template = preg_replace(['#[^a-zA-Z0-9._/]#', '#/+#'], ['', '/'], $template);
         }
 

@@ -31,8 +31,8 @@ class Codex extends Mvc\Controller {
         */
 
         $data = [
-            '_stringTemplate' => true,
-            'codex'           => $this->model_extensions_module_codex,
+            '_strTwig' => true,
+            'codex'    => $this->model_extensions_module_codex,
         ];
 
         return $this->load->view($template, $data);
