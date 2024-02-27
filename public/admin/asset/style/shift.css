@@ -486,17 +486,8 @@ body {
     padding: 12px;
     background-color: #f4f4f4;
 }
-#ext-module-content .uk-card-badge {
-    display: none;
-    top: -4px;
-    right: -4px;
-    height: auto;
-}
 #ext-module-content a:hover .card-trove {
     background-color: #eee;
-}
-#ext-module-content a:hover .uk-card-badge {
-    display: flex;
 }
 #ext-module-content h4 {
     font-size: 1.4rem;
