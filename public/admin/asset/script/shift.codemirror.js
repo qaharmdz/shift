@@ -19,7 +19,7 @@ $(document).ready(function () {
                 {
                     id: $(this).attr("id"),
                     mode: "html",
-                    type: "",
+                    class: "", // Extra theme class .cm-s-{class}
                     saveEl: ".js-codemirror-save",
                 },
                 $(el).data("codemirror")
@@ -53,7 +53,7 @@ $(document).ready(function () {
             document.getElementById(opt.id),
             {
                 mode: opt.mode,
-                theme: "default " + opt.type,
+                theme: "default " + opt.class,
                 indentUnit: 2,
                 lineNumbers: true,
                 lineWrapping: true,
