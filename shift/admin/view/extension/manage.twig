@@ -141,7 +141,6 @@ let tableEl     = '#extensionManage-list',
             data : function(d, s) {
                 d = dtShiftColumnFilter(d);
                 d.timezone = getVisitorTimezone();
-                d.extMetas = {{ extensions.metaFiles|json_encode()|raw }};
             }
         }),
         initComplete: function() {
@@ -176,9 +175,9 @@ let tableEl     = '#extensionManage-list',
             { data : 'name',
                 render : function(data, type, full) {
                     output = data;
-                    if (full.version_meta && full.version != full.version_meta) {
+                    if (full.meta_version && full.version != full.meta_version) {
                         output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "ext":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
-                        output += '<div class="uk-label uk-background-teal">{{ shift.lib.language.get("new")|lower }} v' + full.version_meta + '</div>';
+                        output += '<div class="uk-label uk-background-teal">{{ shift.lib.language.get("new")|lower }} v' + full.meta_version + '</div>';
                         output += '</a>';
                     }
                     return output;
@@ -186,7 +185,7 @@ let tableEl     = '#extensionManage-list',
             },
             { data : 'author',
                 render : function(data, type, full) {
-                    return '<a href="'+ full.url + '" target="_blank">' + data + '</a>';
+                    return '<a href="'+ full.url + '" target="_blank" rel="nofollow">' + data + '</a>';
                 }
             },
             { data : 'version' },
@@ -320,9 +319,7 @@ $('#ext-upload-button').on('click', function(e) {
                     if (data.success) {
                         elProgress.attr('value', 100);
 
-                        $.get("{{ shift.lib.router.url('extension/manage/syncExtensions')|raw }}", function(data) {
-                            $('.main-content').find('[data-dtreload]').first().trigger('click');
-                        });
+                        $('.main-content').find('[data-dtreload]').first().trigger('click');
                     }
                 }, 500);
             },

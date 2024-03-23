@@ -22,9 +22,6 @@ class Manage extends Mvc\Controller {
 
         $data = [];
 
-        $data['extensions'] = $this->syncExtensions(); // TODO: notification new extensions
-        $data['ini_uploadMaxFilesize'] = $this->parseSize(ini_get('upload_max_filesize'));
-
         $data['layouts'] = $this->load->controller('block/position');
         $data['footer'] = $this->load->controller('block/footer');
         $data['header'] = $this->load->controller('block/header');
@@ -42,12 +39,13 @@ class Manage extends Mvc\Controller {
 
         $params = $this->request->get('post');
         $results = $this->model_extension_manage->dtRecords($params);
+        $extMetas = $this->syncExtensions();
 
         $items = [];
         for ($i = 0; $i < $results->num_rows; $i++) {
             $items[$i] = $results->rows[$i];
 
-            $items[$i]['version_meta'] = $params['extMetas'][$items[$i]['type'] . '_' . $items[$i]['codename']]['version'] ?? '';
+            $items[$i]['meta_version'] = $extMetas[$items[$i]['type'] . '_' . $items[$i]['codename']]['version'] ?? '';
             $items[$i]['DT_RowClass'] = 'dt-row-' . $items[$i]['extension_id'];
         }
 
@@ -82,7 +80,7 @@ class Manage extends Mvc\Controller {
             'updated' => [],
         ];
 
-        if (empty($items) || !in_array($post['type'], $types)) {
+        if (empty ($items) || !in_array($post['type'], $types)) {
             return $this->response->setOutputJson($this->language->get('error_precondition'), 412);
         }
 
@@ -97,25 +95,15 @@ class Manage extends Mvc\Controller {
      *
      * @return array
      */
-    public function syncExtensions(): array
+    protected function syncExtensions(): array
     {
-        $data = [
-            'dbLists'   => [],
-            'metaFiles' => [],
-            'new'       => [
-                'total'    => 0,
-                'plugin'   => [],
-                'module'   => [],
-                'theme'    => [],
-                'language' => [],
-            ],
-        ];
+        $data = [];
 
         if (!$this->user->hasPermission('modify', 'extension/manage')) {
             return $data;
         }
 
-        $data['dbLists'] = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension`")->rows;
+        $extDbLists = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension`")->rows;
 
         foreach (glob(PATH_EXTENSIONS . '*', GLOB_ONLYDIR) as $ext) {
             $extType = basename($ext);
@@ -135,14 +123,14 @@ class Manage extends Mvc\Controller {
                     }
 
                     if ($metaInfo && $metaInfo['codename'] === $codename) {
-                        $data['metaFiles'][$metaInfo['type'] . '_' . $metaInfo['codename']] = $metaInfo;
+                        $data[$metaInfo['type'] . '_' . $metaInfo['codename']] = $metaInfo;
 
-                        $isExtInDb = array_filter($data['dbLists'], function ($v) use ($codename, $metaInfo) {
+                        $isExtInDb = array_filter($extDbLists, function ($v) use ($codename, $metaInfo) {
                             return ($v['type'] === $metaInfo['type'] && $v['codename'] === $codename);
                         });
 
                         // Add new extensions to database
-                        if (empty($isExtInDb)) {
+                        if (empty ($isExtInDb)) {
                             $extData = [
                                 'codename'    => $metaInfo['codename'],
                                 'type'        => $metaInfo['type'],
@@ -160,7 +148,8 @@ class Manage extends Mvc\Controller {
 
                             $this->db->add(DB_PREFIX . 'extension', $extData);
 
-                            if (!empty($metaInfo['meta'])) {
+                            // Optional extensions meta
+                            if (!empty ($metaInfo['meta'])) {
                                 $extension_id = (int) $this->db->insertId();
 
                                 $params = [];
@@ -173,9 +162,6 @@ class Manage extends Mvc\Controller {
                                     $params
                                 );
                             }
-
-                            $data['new'][$extType][] = $extData;
-                            $data['new']['total']++;
                         }
                     }
                 }
@@ -230,8 +216,8 @@ class Manage extends Mvc\Controller {
 
         $fileUpload = $this->request->getArray('files.file');
 
-        if (isset($fileUpload['name'])) {
-            if (substr($fileUpload['name'], -4) != '.zip') {
+        if (isset ($fileUpload['name'])) {
+            if (substr($fileUpload['name'], -10) != '.shift.zip') {
                 $data['message'] = $this->language->get('error_package_type');
             } else {
                 $package = PATH_TEMP . 'storage' . DS . $fileUpload['name'];
@@ -250,7 +236,7 @@ class Manage extends Mvc\Controller {
                     } else {
                         $extMeta = json_decode($extZip->getFromName('meta.json'), true);
 
-                        if (empty($extMeta['type']) || empty($extMeta['codename']) || empty($extMeta['name'])) {
+                        if (empty ($extMeta['type']) || empty ($extMeta['codename']) || empty ($extMeta['name'])) {
                             $data['message'] = $this->language->get('error_package_meta');
                         } else {
                             $extPath = PATH_EXTENSIONS . $extMeta['type'] . DS;
