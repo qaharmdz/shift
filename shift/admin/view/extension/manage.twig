@@ -293,6 +293,7 @@ $('#ext-upload-button').on('click', function(e) {
             processData: false,
             beforeSend: function () {
                 elButton.prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-process-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
+                elProgress.attr('value', 0);
                 UIkit.modal('#ext-upload-progress').show();
             },
             xhr: function() {
@@ -327,6 +328,7 @@ $('#ext-upload-button').on('click', function(e) {
                 elButton.prop('disabled', false);
                 $('.js-process-spinner').remove();
                 $('#ext-upload-input').val(null);
+                $('#ext-upload-input').off('change');
             }
         });
     });
