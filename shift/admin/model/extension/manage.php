@@ -112,7 +112,7 @@ class Manage extends Mvc\Model {
     {
         $result = $this->db->get("SELECT * FROM `" . DB_PREFIX . "extension` WHERE `type` = ?s AND `codename` = ?s", [$type, $codename])->row;
 
-        if (!empty($result['setting'])) {
+        if (!empty ($result['setting'])) {
             $result['setting'] = json_decode($result['setting'], true);
         }
 
@@ -167,12 +167,6 @@ class Manage extends Mvc\Model {
             );
 
             if ($metaInfo) {
-                $this->load->model('account/usergroup');
-                $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'access', $extPath);
-                $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'modify', $extPath);
-
-                $this->load->controller($extPath . '/install');
-
                 $this->db->set(
                     DB_PREFIX . 'extension',
                     [
@@ -186,8 +180,82 @@ class Manage extends Mvc\Model {
                         'install'     => 1,
                         'updated'     => date('Y-m-d H:i:s'),
                     ],
-                    ['extension_id' => $extension['extension_id']]
+                    ['extension_id' => $extension_id]
                 );
+
+                // Optional extension_meta
+                if (!empty ($metaInfo['meta'])) {
+                    $params = [];
+                    foreach ($metaInfo['meta'] as $key => $value) {
+                        $params[] = [$extension_id, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
+                    }
+
+                    $this->db->transaction(
+                        "INSERT INTO `" . DB_PREFIX . "extension_meta` (`extension_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
+                        $params
+                    );
+                }
+
+                $this->load->model('account/usergroup');
+                $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'access', $extPath);
+                $this->model_account_usergroup->addPermission($this->user->get('user_group_id'), 'modify', $extPath);
+
+                // Trigger extension method install()
+                $this->load->controller($extPath . '/install');
+
+                $this->cache->deleteByTags('extensions');
+            }
+        }
+    }
+
+    public function update(int $extension_id): void
+    {
+        $extension = $this->db->get(
+            "SELECT * FROM `" . DB_PREFIX . "extension` WHERE `extension_id` = ?i AND `install` = ?i",
+            [$extension_id, 1]
+        )->row;
+
+        if ($extension) {
+            $extPath = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
+            $metaInfo = json_decode(
+                file_get_contents(PATH_EXTENSIONS . $extension['type'] . DS . $extension['codename'] . DS . 'meta.json'),
+                true
+            );
+
+            if ($metaInfo) {
+                $this->db->set(
+                    DB_PREFIX . 'extension',
+                    [
+                        'name'        => $metaInfo['name'],
+                        'version'     => $metaInfo['version'],
+                        'description' => $metaInfo['description'],
+                        'author'      => $metaInfo['author'],
+                        'url'         => $metaInfo['url'],
+                        'updated'     => date('Y-m-d H:i:s'),
+                    ],
+                    ['extension_id' => $extension_id]
+                );
+
+                // Optional extension_meta
+                if (!empty ($metaInfo['meta'])) {
+                    $params = [];
+                    foreach ($metaInfo['meta'] as $key => $value) {
+                        $this->db->delete(DB_PREFIX . 'extension_meta', [
+                            'extension_id' => $extension_id,
+                            'key'          => $key,
+                        ]);
+
+                        $params[] = [$extension_id, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
+                    }
+
+                    $this->db->transaction(
+                        "INSERT INTO `" . DB_PREFIX . "extension_meta` (`extension_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
+                        $params
+                    );
+                }
+
+                // Trigger extension method update()
+                $this->load->controller($extPath . '/update');
 
                 $this->cache->deleteByTags('extensions');
             }
@@ -204,12 +272,6 @@ class Manage extends Mvc\Model {
         if ($extension) {
             $extPath = 'extensions/' . $extension['type'] . '/' . $extension['codename'];
 
-            $this->load->model('account/usergroup');
-            $this->model_account_usergroup->removePermission('access', $extPath);
-            $this->model_account_usergroup->removePermission('modify', $extPath);
-
-            $this->load->controller($extPath . '/uninstall');
-
             $this->db->set(
                 DB_PREFIX . 'extension',
                 [
@@ -218,12 +280,20 @@ class Manage extends Mvc\Model {
                     'install' => 0,
                     'updated' => date('Y-m-d H:i:s'),
                 ],
-                ['extension_id' => $extension['extension_id']]
+                ['extension_id' => $extension_id]
             );
 
-            $this->db->delete(DB_PREFIX . 'extension_meta', ['extension_id' => $extension['extension_id']]);
-            $this->db->delete(DB_PREFIX . 'extension_module', ['extension_id' => $extension['extension_id']]);
+            $this->db->delete(DB_PREFIX . 'extension_meta', ['extension_id' => $extension_id]);
+            $this->db->delete(DB_PREFIX . 'extension_module', ['extension_id' => $extension_id]);
             $this->db->delete(DB_PREFIX . 'setting', ['group' => $extension['type'], 'code' => $extension['codename']]);
+
+            $this->load->model('account/usergroup');
+            $this->model_account_usergroup->removePermission('access', $extPath);
+            $this->model_account_usergroup->removePermission('modify', $extPath);
+
+            // Trigger extension method uninstall()
+            $this->load->controller($extPath . '/uninstall');
+
             $this->cache->deleteByTags('extensions');
         }
     }

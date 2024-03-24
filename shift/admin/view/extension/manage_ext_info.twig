@@ -3,20 +3,27 @@
 {% else %}
     <h2 class="uk-modal-title">{{ name }}<span class="uk-sub-title">v{{ version }}</span></h2>
 
-    {% if hasUpdate %}
-    <div class="uk-alert-primary uk-alert-small" uk-alert>
-        <p>
-            {{ shift.lib.language.get('message_update')|format(_meta.version) }}
-            <a class="uk-button uk-button-primary uk-button-small ukt-ml-4">{{ shift.lib.language.get('update') }}</a>
-        </p>
-    </div>
-    {% endif %}
-
     <table class="uk-table uk-table-divider">
         <tbody>
             <tr>
                 <td class="uk-width-125">{{ shift.lib.language.get('codename') }}</td>
                 <td><code>{{ codename }}</code></td>
+            </tr>
+            <tr>
+                <td class="uk-width-125">{{ shift.lib.language.get('name') }}</td>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <td class="uk-width-125">{{ shift.lib.language.get('version') }}</td>
+                <td>
+                    {{ version }}
+                    {% if diffVersion %}
+                    <div class="uk-alert-warning uk-alert-small ukt-mt-2" uk-alert>
+                        {{ shift.lib.language.get('message_diff_version')|format(_meta.version) }}
+                        <a class="uk-button uk-button-primary uk-button-small ukt-ml-4" data-extUpdate="{{ extension_id }}">{{ shift.lib.language.get('update') }}</a>
+                    </div>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <td>{{ shift.lib.language.get('author') }}</td>

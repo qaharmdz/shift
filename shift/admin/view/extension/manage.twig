@@ -177,7 +177,7 @@ let tableEl     = '#extensionManage-list',
                     output = data;
                     if (full.meta_version && full.version != full.meta_version) {
                         output += '<a class="ukt-ml-2 uk-text-warning" data-dtAction=\'{"type":"info", "ext":"' + full.type + '", "codename":"' + full.codename + '"}\' uk-tooltip title="{{ shift.lib.language.get("information") }}">';
-                        output += '<div class="uk-label uk-background-teal">{{ shift.lib.language.get("new")|lower }} v' + full.meta_version + '</div>';
+                        output += '<div class="uk-label uk-background-teal">v' + full.meta_version + '</div>';
                         output += '</a>';
                     }
                     return output;
@@ -249,7 +249,14 @@ $('.main-content').on('click', '[data-dtAction]', function(e) {
     let dtAction = $(this).data('dtaction');
 
     if (dtAction.type === 'info') {
-        extensionInfo(dtAction);
+        $.get("{{ shift.lib.router.url('extension/manage/info')|raw }}", dtAction, function(data) {
+            $('#ext-info-content').html(data);
+            UIkit.modal('#ext-information').show();
+        });
+
+        UIkit.util.on('#ext-information', 'hidden', function() {
+            $('#ext-info-content').html("{{ shift.lib.language.get('processing') }}");
+        });
     } else {
         $.fn.shift.dtAction({
             url  : "{{ shift.lib.router.url('extension/manage/dtaction')|raw }}",
@@ -284,11 +291,11 @@ $('#ext-upload-button').on('click', function(e) {
             elProgress = $('#ext-upload-progress .uk-progress');
 
         $.ajax({
-            url  : "{{ shift.lib.router.url('extension/manage/upload')|raw }}",
-            type : 'POST',
-            data : new FormData($('#ext-upload-form')[0]),
-            dataType : 'json',
-            cache : false,
+            url: "{{ shift.lib.router.url('extension/manage/upload')|raw }}",
+            type: 'POST',
+            data: new FormData($('#ext-upload-form')[0]),
+            dataType: 'json',
+            cache: false,
             contentType: false,
             processData: false,
             beforeSend: function () {
@@ -333,17 +340,30 @@ $('#ext-upload-button').on('click', function(e) {
         });
     });
 });
+
+$('#ext-information').on('click', '[data-extUpdate]', function(e) {
+    e.preventDefault();
+
+    let elButton =  $(this);
+
+    $.ajax({
+        url: "{{ shift.lib.router.url('extension/manage/update')|raw }}",
+        type: 'POST',
+        data: { 'extId' : $(this).data('extupdate')},
+        dataType: 'json',
+        cache: false,
+        beforeSend: function () {
+            elButton.prop('disabled', true).prepend('<span uk-spinner="ratio:0.6" class="js-process-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
+        },
+        success: function(data) {
+            dtTable.clearPipeline().draw();
+
+            setTimeout(function() {
+                $('#ext-information .uk-close').trigger('click');
+            }, 500);
+        },
+    })
 });
-
-function extensionInfo(params) {
-    $.get("{{ shift.lib.router.url('extension/manage/info')|raw }}", params, function(data) {
-        $('#ext-info-content').html(data);
-        UIkit.modal('#ext-information').show();
-    });
-
-    UIkit.util.on('#ext-information', 'hidden', function() {
-        $('#ext-info-content').html("{{ shift.lib.language.get('processing') }}");
-    });
-}
+});
 </script>
 {% endblock %}

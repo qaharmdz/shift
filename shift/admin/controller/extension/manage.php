@@ -147,21 +147,6 @@ class Manage extends Mvc\Controller {
                             ];
 
                             $this->db->add(DB_PREFIX . 'extension', $extData);
-
-                            // Optional extensions meta
-                            if (!empty ($metaInfo['meta'])) {
-                                $extension_id = (int) $this->db->insertId();
-
-                                $params = [];
-                                foreach ($metaInfo['meta'] as $key => $value) {
-                                    $params[] = [$extension_id, $key, (is_array($value) ? json_encode($value) : $value), (is_array($value) ? 1 : 0)];
-                                }
-
-                                $this->db->transaction(
-                                    "INSERT INTO `" . DB_PREFIX . "extension_meta` (`extension_id`, `key`, `value`, `encoded`) VALUES (?i, ?s, ?s, ?i)",
-                                    $params
-                                );
-                            }
                         }
                     }
                 }
@@ -169,32 +154,6 @@ class Manage extends Mvc\Controller {
         }
 
         return $data;
-    }
-
-    public function info()
-    {
-        $this->load->model('extension/manage');
-        $this->load->language('extension/manage');
-
-        $data = $this->model_extension_manage->getExtension(
-            $this->request->getString('query.ext'),
-            $this->request->getString('query.codename')
-        );
-
-        $extMetaPath = PATH_EXTENSIONS . $data['type'] . DS . $data['codename'] . DS . 'meta.json';
-
-        $data['_meta'] = [];
-        $data['hasUpdate'] = false;
-
-        if (is_file($extMetaPath)) {
-            $data['_meta'] = json_decode(
-                file_get_contents(PATH_EXTENSIONS . $data['type'] . DS . $data['codename'] . DS . 'meta.json'),
-                true
-            );
-            $data['hasUpdate'] = $data['version'] !== $data['_meta']['version'];
-        }
-
-        $this->response->setOutput($this->load->view('extension/manage_ext_info', $data));
     }
 
     public function upload()
@@ -266,15 +225,48 @@ class Manage extends Mvc\Controller {
         $this->response->setOutputJson($data);
     }
 
-    private function parseSize($size): float
+    public function info()
     {
-        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size);
-        $size = preg_replace('/[^0-9\.]/', '', $size);
+        $this->load->model('extension/manage');
+        $this->load->language('extension/manage');
 
-        if ($unit) {
-            $size = $size * pow(1024, stripos('bkmgtpezy', $unit[0]));
+        $data = $this->model_extension_manage->getExtension(
+            $this->request->getString('query.ext'),
+            $this->request->getString('query.codename')
+        );
+
+        $extMetaPath = PATH_EXTENSIONS . $data['type'] . DS . $data['codename'] . DS . 'meta.json';
+
+        $data['_meta'] = [];
+        $data['diffVersion'] = false;
+
+        if (is_file($extMetaPath)) {
+            $data['_meta'] = json_decode(
+                file_get_contents(PATH_EXTENSIONS . $data['type'] . DS . $data['codename'] . DS . 'meta.json'),
+                true
+            );
+            $data['diffVersion'] = $data['version'] !== $data['_meta']['version'];
         }
 
-        return round($size);
+        $this->response->setOutput($this->load->view('extension/manage_ext_info', $data));
+    }
+
+    public function update()
+    {
+        $this->load->model('extension/manage');
+        $this->load->language('extension/manage');
+
+        if (!$this->user->hasPermission('modify', 'extension/manage')) {
+            return $this->response->setOutputJson($this->language->get('error_permission'), 403);
+        }
+        if (!$this->request->is(['post', 'ajax'])) {
+            return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
+        }
+
+        $post = array_replace(['extId' => 0], $this->request->get('post'));
+
+        $this->model_extension_manage->update((int) $post['extId']);
+
+        $this->response->setOutputJson(['success' => true]);
     }
 }

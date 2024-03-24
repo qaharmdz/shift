@@ -180,7 +180,7 @@ class Database {
      */
     public function transaction(string $query, array $params, string $types = '')
     {
-        if (!isset($params[0]) || !is_array($params[0])) {
+        if (!isset ($params[0]) || !is_array($params[0])) {
             return false;
         }
 
