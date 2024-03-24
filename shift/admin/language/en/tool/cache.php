@@ -16,4 +16,4 @@ $_['image'] = 'Images';
 $_['image_info'] = 'Generated thumbnails cache.';
 
 $_['confirm_clear'] = 'This action cannot be undone!<br>The cache will be cleared.';
-$_['error_permission'] = 'You not have permission to modify Cache Manager!';
+$_['error_permission'] = 'You do not have permission to modify Cache Manager!';

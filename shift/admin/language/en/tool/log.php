@@ -14,5 +14,5 @@ $_['confirm_delete'] = 'This action cannot be undone!<br>The file will be delete
 $_['success_clear'] = 'Successfully clear log file %s!';
 $_['success_delete'] = 'Successfully delete log file %s!';
 
-$_['error_permission'] = 'You not have permission to modify Tool Log!';
+$_['error_permission'] = 'You do not have permission to modify Tool Log!';
 $_['error_filesize'] = 'Warning: The log file "%s" filesize is %s!';

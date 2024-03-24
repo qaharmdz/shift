@@ -112,7 +112,7 @@ $_['success_draft'] = 'Successfully set as draft!';
 $_['success_delete'] = 'Successfully deleted!';
 
 $_['error_general'] = 'Error occured, try again later!';
-$_['error_permission'] = 'You not have permission to proceed!';
+$_['error_permission'] = 'You do not have permission to proceed!';
 $_['error_request_method'] = 'Requet method not allowed!';
 
 $_['error_form'] = 'Please check the required or invalid inputs.';
@@ -125,6 +125,6 @@ $_['error_value_between'] = 'The value must be between %s - %s.';
 $_['error_value_minimum'] = 'The minimum value allowed is %s.';
 $_['error_value_maximum'] = 'The maximum value allowed is %s.';
 
-$_['error_forbidden'] = 'Forbidden, you not have permission to proceed!'; // 403
+$_['error_forbidden'] = 'Forbidden, You do not have permission to proceed!'; // 403
 $_['error_precondition'] = 'Precondition failed, please check your request!'; // 412
 $_['error_unprocessable'] = 'Unprocessable entity, try again later.'; // 422

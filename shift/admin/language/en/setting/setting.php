@@ -21,4 +21,4 @@ $_['error_display'] = 'Error Display';
 $_['development'] = 'Development';
 $_['development_info'] = '<b>Enabled</b>: Display error, disable all cache, and strict template variables.';
 
-$_['error_permission'] = 'You not have permission to modify System Setting';
+$_['error_permission'] = 'You do not have permission to modify System Setting';

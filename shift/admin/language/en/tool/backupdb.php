@@ -13,7 +13,7 @@ $_['unselect_all'] = 'Unselect All';
 $_['restore'] = 'Restore';
 $_['import'] = 'Import';
 
-$_['error_permission'] = 'You not have permission to modify Database Backup & Restore!';
+$_['error_permission'] = 'You do not have permission to modify Database Backup & Restore!';
 $_['error_export'] = 'You must select at least one table to export!';
 $_['error_file'] = 'Failed to upload or uploaded file could not be found!';
 
