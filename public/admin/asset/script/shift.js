@@ -69,24 +69,14 @@ $(document).ajaxComplete(function (event, jqxhr, options) {
     }
 });
 $(document).ajaxError(function (event, jqxhr, settings, exception) {
-    let data = jqxhr.responseJSON
-        ? jqxhr.responseJSON
-        : JSON.parse(jqxhr.responseText);
+    let data = jqxhr.responseJSON ? jqxhr.responseJSON : JSON.parse(jqxhr.responseText);
 
     if (shift.env.development === 1) {
-        console.error(
-            "# Shift CMS error\n",
-            jqxhr.status + " " + exception + "\n",
-            jqxhr
-        );
+        console.error("# Shift CMS error\n", jqxhr.status + " " + exception + "\n", jqxhr);
     }
 
     // Close all modal
-    $(document)
-        .find(
-            ".uk-modal-close,.uk-modal-close-default,.uk-modal-close-outside,.uk-modal-close-full"
-        )
-        .trigger("click");
+    $(document).find(".uk-modal-close,.uk-modal-close-default,.uk-modal-close-outside,.uk-modal-close-full").trigger("click");
 
     if ("redirect" in data) {
         window.location.replace(data.redirect);
@@ -94,16 +84,10 @@ $(document).ajaxError(function (event, jqxhr, settings, exception) {
         let output = "<div>" + data.title + "</div>";
 
         if (data.message) {
-            output +=
-                '<div class="uk-text-base-color uk-text-break uk-margin-small-top">' +
-                data.message +
-                "</div>";
+            output += '<div class="uk-text-base-color uk-text-break uk-margin-small-top">' + data.message + "</div>";
         }
         if (shift.env.development === 1) {
-            output +=
-                '<div class="uk-text-meta uk-text-break uk-margin-small-top">' +
-                settings.url.split(/[?#]/)[0] +
-                "</div>";
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + "</div>";
         }
 
         $.fn.shift.goNotify("danger", output);
@@ -111,21 +95,14 @@ $(document).ajaxError(function (event, jqxhr, settings, exception) {
         let output = "<div>" + data.response + "</div>";
 
         if (shift.env.development === 1) {
-            output +=
-                '<div class="uk-text-meta uk-text-break uk-margin-small-top">' +
-                settings.url.split(/[?#]/)[0] +
-                "</div>";
+            output += '<div class="uk-text-meta uk-text-break uk-margin-small-top">' + settings.url.split(/[?#]/)[0] + "</div>";
         }
 
         $.fn.shift.goNotify("danger", output);
     } else {
         $.fn.shift.goNotify(
             "danger",
-            '<span style="font-size:20px;line-height:1em;margin: 0 5px;display:block;">' +
-                jqxhr.status +
-                " " +
-                exception +
-                "</span>"
+            '<span style="font-size:20px;line-height:1em;margin: 0 5px;display:block;">' + jqxhr.status + " " + exception + "</span>"
         );
     }
 });
@@ -215,10 +192,7 @@ if (jQuery().select2) {
         switch (mode) {
             case "success":
                 $.fn.shift.notify({
-                    message:
-                        message !== undefined
-                            ? message
-                            : shift.i18n.success_save,
+                    message: message !== undefined ? message : shift.i18n.success_save,
                     icon: '<span uk-icon="icon:check;ratio:1.5"></span>',
                     status: mode,
                     clear: true,
@@ -226,8 +200,7 @@ if (jQuery().select2) {
                 break;
             case "warning":
                 $.fn.shift.notify({
-                    message:
-                        message !== undefined ? message : shift.i18n.error_form,
+                    message: message !== undefined ? message : shift.i18n.error_form,
                     icon: '<span uk-icon="icon:warning;ratio:1.5"></span>',
                     status: mode,
                     timeout: 15000,
@@ -236,10 +209,7 @@ if (jQuery().select2) {
                 break;
             case "danger":
                 $.fn.shift.notify({
-                    message:
-                        message !== undefined
-                            ? message
-                            : shift.i18n.error_general,
+                    message: message !== undefined ? message : shift.i18n.error_general,
                     icon: '<span uk-icon="icon:close;ratio:1.5"></span>',
                     status: mode,
                     timeout: 15000,
@@ -248,10 +218,7 @@ if (jQuery().select2) {
                 break;
             case "redirect":
                 $.fn.shift.notify({
-                    message:
-                        message !== undefined
-                            ? message
-                            : shift.i18n.redirecting,
+                    message: message !== undefined ? message : shift.i18n.redirecting,
                     icon: '<span uk-icon="icon:link;ratio:1.5"></span>',
                     status: "primary",
                     timeout: 15000,
@@ -260,8 +227,7 @@ if (jQuery().select2) {
                 break;
             case "process":
             default:
-                message =
-                    message !== undefined ? message : shift.i18n.processing;
+                message = message !== undefined ? message : shift.i18n.processing;
                 $.fn.shift.notify({
                     message: message,
                     icon: "<span uk-spinner></span>",
@@ -294,9 +260,7 @@ if (jQuery().select2) {
         let opt = $.extend({}, $.fn.shift.confirm.defaults, options),
             content =
                 '<div class="uk-text-center shift-modal-confirm">' +
-                (opt.title
-                    ? '<h2 class="uk-modal-title">' + opt.title + "</h2>"
-                    : "") +
+                (opt.title ? '<h2 class="uk-modal-title">' + opt.title + "</h2>" : "") +
                 "<div>" +
                 opt.message +
                 "</div></div>";
@@ -397,9 +361,7 @@ if (jQuery().select2) {
             return;
         }
         if (!opt.data.item) {
-            opt.data.item = $(
-                'input:checkbox[name="' + opt.target + '"]:checked'
-            )
+            opt.data.item = $('input:checkbox[name="' + opt.target + '"]:checked')
                 .map(function () {
                     if ($(this).is(":checked")) {
                         return $(this).val();
@@ -427,10 +389,7 @@ if (jQuery().select2) {
                     $.fn.shift.goNotify("process", opt.msgBefore);
                 },
                 success: function (data) {
-                    $.fn.shift.goNotify(
-                        "success",
-                        data.message ? data.message : opt.msgSuccess
-                    );
+                    $.fn.shift.goNotify("success", data.message ? data.message : opt.msgSuccess);
 
                     opt.onSuccess(this, data);
                 },
@@ -525,9 +484,7 @@ $(document).on("IIDE.init IIDE.form_submit", function (event) {
             $(document).trigger("IIDE.form_submit.before");
             $(el)
                 .prop("disabled", true)
-                .prepend(
-                    '<span uk-spinner="ratio:0.6" class="js-form-submit-spinner" style="margin-left:-5px;margin-right:8px;"></span>'
-                );
+                .prepend('<span uk-spinner="ratio:0.6" class="js-form-submit-spinner" style="margin-left:-5px;margin-right:8px;"></span>');
 
             $(form).ajaxSubmit({
                 dataType: "json",
@@ -559,25 +516,13 @@ $(document).on("IIDE.init IIDE.form_submit", function (event) {
 
                     if (data !== undefined) {
                         $.each(data.items, function (name, errorMsg) {
-                            $(form[0][name])
-                                .closest(".uk-margin")
-                                .addClass("uk-form-danger");
-                            $(
-                                'a[href="#' +
-                                    $(form[0][name])
-                                        .closest(".uk-switcher div[id]")
-                                        .attr("id") +
-                                    '"]'
-                            ).addClass("uk-form-danger");
+                            $(form[0][name]).closest(".uk-margin").addClass("uk-form-danger");
+                            $('a[href="#' + $(form[0][name]).closest(".uk-switcher div[id]").attr("id") + '"]').addClass("uk-form-danger");
 
                             if (errorMsg) {
                                 $(form[0][name])
                                     .closest(".uk-form-controls")
-                                    .append(
-                                        '<div class="uk-text-meta uk-text-danger">' +
-                                            errorMsg +
-                                            "</div>"
-                                    );
+                                    .append('<div class="uk-text-meta uk-text-danger">' + errorMsg + "</div>");
                             }
                         });
                     }
@@ -641,54 +586,26 @@ $(document).on("IIDE.init IIDE.editor", function (event) {
                     .addClass("ckeditor-mode-" + opt.mode);
 
                 let wordCount = editor.plugins.get("WordCount");
-                $("." + opt.wrapper).append(
-                    '<div class="ckeditor-wordcount"></div>'
-                );
-                $("." + opt.wrapper + " .ckeditor-wordcount").html(
-                    wordCount.wordCountContainer
-                );
+                $("." + opt.wrapper).append('<div class="ckeditor-wordcount"></div>');
+                $("." + opt.wrapper + " .ckeditor-wordcount").html(wordCount.wordCountContainer);
 
-                if (
-                    $.inArray(
-                        "shiftMediaManager",
-                        editor.config._config.toolbar.items
-                    ) > 0
-                ) {
-                    let htmlModal =
-                        '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
-                    htmlModal +=
-                        '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
-                    htmlModal +=
-                        '    <div class="mediamanager-modal-wrapper"></div>';
-                    htmlModal +=
-                        '    <input type="hidden" class="mediamanager-image-source" value="">';
-                    htmlModal +=
-                        '    <input type="hidden" class="mediamanager-image-alt" value="">';
+                if ($.inArray("shiftMediaManager", editor.config._config.toolbar.items) > 0) {
+                    let htmlModal = '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
+                    htmlModal += '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
+                    htmlModal += '    <div class="mediamanager-modal-wrapper"></div>';
+                    htmlModal += '    <input type="hidden" class="mediamanager-image-source" value="">';
+                    htmlModal += '    <input type="hidden" class="mediamanager-image-alt" value="">';
                     htmlModal += "</div>";
 
                     $("." + opt.wrapper).append(
-                        '<div id="mediamanager-' +
-                            elid +
-                            '" class="ckeditor-mediamanager uk-modal uk-modal-container" uk-modal>' +
-                            htmlModal +
-                            "</div>"
+                        '<div id="mediamanager-' + elid + '" class="ckeditor-mediamanager uk-modal uk-modal-container" uk-modal>' + htmlModal + "</div>"
                     );
 
-                    UIkit.util.on(
-                        "#mediamanager-" + elid,
-                        "beforeshow",
-                        function () {
-                            $(
-                                "#mediamanager-" +
-                                    elid +
-                                    " .mediamanager-modal-wrapper"
-                            ).load(
-                                shift.env.url_app +
-                                    "r/tool/mediamanager&modal=1&access_token=" +
-                                    shift.env.access_token
-                            );
-                        }
-                    );
+                    UIkit.util.on("#mediamanager-" + elid, "beforeshow", function () {
+                        $("#mediamanager-" + elid + " .mediamanager-modal-wrapper").load(
+                            shift.env.url_app + "r/tool/mediamanager&modal=1&access_token=" + shift.env.access_token
+                        );
+                    });
                 }
             })
             .catch(function (error) {
@@ -718,22 +635,13 @@ $(document).on("IIDE.init IIDE.mediamanager", function (event) {
         $(el).hide().attr("id", elid).parent().addClass(opt.wrapper);
 
         // Button
-        let htmlThumb =
-            '<div class="uk-card uk-card-default card-thumbnail uk-width-150">';
-        htmlThumb +=
-            '    <div class="card-media uk-card-media-top uk-cover-container"><img src="' +
-            shift.env.url_media +
-            $(el).val() +
-            '" uk-cover style="cursor:pointer;"></div>';
+        let htmlThumb = '<div class="uk-card uk-card-default card-thumbnail uk-width-150">';
+        htmlThumb += '    <div class="card-media uk-card-media-top uk-cover-container">';
+        htmlThumb += '        <img src="' + shift.env.url_media + $(el).val() + '" uk-cover style="cursor:pointer;">';
+        htmlThumb += "    </div>";
         htmlThumb += '    <div class="uk-card-body uk-text-center">';
-        htmlThumb +=
-            '        <a class="uk-button uk-button-primary uk-button-small" data-mm-show>' +
-            shift.i18n.select +
-            "</a>";
-        htmlThumb +=
-            '        <a class="uk-button uk-button-secondary uk-button-small" data-mm-clear>' +
-            shift.i18n.clear +
-            "</a>";
+        htmlThumb += '        <a class="uk-button uk-button-primary uk-button-small" data-mm-show>' + shift.i18n.select + "</a>";
+        htmlThumb += '        <a class="uk-button uk-button-secondary uk-button-small" data-mm-clear>' + shift.i18n.clear + "</a>";
         htmlThumb += "    </div>";
         htmlThumb += "</div>";
         $("." + opt.wrapper).prepend(htmlThumb);
@@ -748,59 +656,38 @@ $(document).on("IIDE.init IIDE.mediamanager", function (event) {
             .parent()
             .on("click", "[data-mm-clear]", function () {
                 $("#" + elid).val(opt.noImage);
-                $("." + opt.wrapper + " .card-media img").attr(
-                    "src",
-                    shift.env.url_media + opt.noImage
-                );
+                $("." + opt.wrapper + " .card-media img").attr("src", shift.env.url_media + opt.noImage);
             });
 
         // Media Manager modal
-        let htmlModal =
-            '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
-        htmlModal +=
-            '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
+        let htmlModal = '<div class="uk-modal-dialog uk-modal-body mediamanager-modal">';
+        htmlModal += '    <button class="uk-modal-close-outside" type="button" uk-close></button>';
         htmlModal += '    <div class="mediamanager-modal-wrapper"></div>';
-        htmlModal +=
-            '    <input type="hidden" class="mediamanager-image-source" value="">';
+        htmlModal += '    <input type="hidden" class="mediamanager-image-source" value="">';
         htmlModal += "</div>";
 
         $("." + opt.wrapper).append(
-            '<div id="mediamanager-' +
-                elid +
-                '" class="input-mediamanager uk-modal uk-modal-container" uk-modal>' +
-                htmlModal +
-                "</div>"
+            '<div id="mediamanager-' + elid + '" class="input-mediamanager uk-modal uk-modal-container" uk-modal>' + htmlModal + "</div>"
         );
 
         UIkit.util.on("#mediamanager-" + elid, "beforeshow", function () {
             $("#mediamanager-" + elid + " .mediamanager-modal-wrapper").load(
-                shift.env.url_app +
-                    "r/tool/mediamanager&modal=1&access_token=" +
-                    shift.env.access_token
+                shift.env.url_app + "r/tool/mediamanager&modal=1&access_token=" + shift.env.access_token
             );
         });
 
         // Apply selected image
         UIkit.util.on("#mediamanager-" + elid, "beforehide", function () {
-            imageSrc = $(
-                "#mediamanager-" + elid + " input.mediamanager-image-source"
-            ).val();
+            imageSrc = $("#mediamanager-" + elid + " input.mediamanager-image-source").val();
 
             if (imageSrc) {
                 $("#" + elid).val(imageSrc);
-                $("." + opt.wrapper + " .card-media img").attr(
-                    "src",
-                    shift.env.url_media + imageSrc
-                );
+                $("." + opt.wrapper + " .card-media img").attr("src", shift.env.url_media + imageSrc);
             }
 
             setTimeout(function () {
-                $(
-                    "#mediamanager-" + elid + " input.mediamanager-image-source"
-                ).val("");
-                $(
-                    "#mediamanager-" + elid + " .mediamanager-modal-wrapper"
-                ).html("");
+                $("#mediamanager-" + elid + " input.mediamanager-image-source").val("");
+                $("#mediamanager-" + elid + " .mediamanager-modal-wrapper").html("");
             }, 100);
         });
     });
@@ -823,9 +710,7 @@ $(document).on("IIDE.init IIDE.datepicker", function (event) {
                 $(el).data("datepicker")
             );
 
-        $(el)
-            .wrap('<div class="uk-inline"></div>')
-            .before('<i class="uk-form-icon bi bi-calendar3"></i>');
+        $(el).wrap('<div class="uk-inline"></div>').before('<i class="uk-form-icon bi bi-calendar3"></i>');
 
         flatpickr(el, {
             allowInput: true,
@@ -903,9 +788,7 @@ $(document).on("IIDE.init IIDE.format_date", function (event) {
             date = $(el).data("formatDate"),
             chunk = "";
 
-        chunk = date
-            ? '<span title="' + date + ' UTC">' + formatDate(date) + "</span>"
-            : "<i>n/a</i>";
+        chunk = date ? '<span title="' + date + ' UTC">' + formatDate(date) + "</span>" : "<i>n/a</i>";
         $(el).html(chunk);
     });
 });
@@ -951,10 +834,7 @@ function formatDate(datetime) {
  */
 function euid(format, type) {
     let euid = format ? format : "xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx",
-        chars =
-            type == "number"
-                ? "1234567890"
-                : "0123456789abcdefghijklmnopqrstuvwxyz",
+        chars = type == "number" ? "1234567890" : "0123456789abcdefghijklmnopqrstuvwxyz",
         length = type == "number" ? 10 : 32;
 
     return euid.replace(new RegExp("x", "g"), function () {
