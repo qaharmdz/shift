@@ -358,30 +358,40 @@ body {
 /* Media Manager
 ==================================== */
 .mediamanager {
-    height: 80vh;
     position: relative;
     overflow: hidden;
 }
-.mediamanager-sidebar,
-.mediamanager-content {
-    padding: 15px;
+.mediamanager-layout {
+    height: 80vh;
+    justify-content: stretch;
 }
 
 .mediamanager-sidebar {
+    height: 100%;
     font-size: 13px;
     padding: 10px;
     min-width: 200px;
     max-width: 260px;
-    height: 80vh;
+    /* height: 80vh; */
     border-right: 1px solid #e4e4e4;
+    position: relative;
 }
-.mediamanager-content-wrapper {
+.mediamanager-sidebar .panel-action {
+    /* position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; */
+}
+
+.mediamanager-main {
+    height: 100%;
     padding-bottom: 10px;
     margin-left: -1px;
     border-left: 1px solid #e4e4e4;
 }
 .mediamanager-content {
-    height: calc(80vh);
+    height: 100%;
+    padding: 10px;
 }
 .mediamanager-content .card-thumbnail .card-media {
     height: 130px;
@@ -408,13 +418,6 @@ body {
 .mediamanager-modal .uk-container {
     padding: 0;
 }
-.mediamanager-inmodal .mediamanager,
-.mediamanager-inmodal .mediamanager-sidebar {
-    height: 75vh;
-}
-.mediamanager-inmodal .mediamanager-content {
-    height: calc(75vh);
-}
 .mediamanager-inmodal .content-header {
     display: none;
 }
@@ -422,7 +425,7 @@ body {
     box-shadow: none;
 }
 
-/* Media Manager input thumbnail */
+/* Media Manager form input thumbnail - image selection */
 .card-thumbnail {
     box-shadow: 0 1px 3px rgb(0, 0, 0, 0.25);
     border-top: 1px solid #eee;
@@ -456,9 +459,7 @@ body {
     background: transparent;
 }
 .card-thumbnail .button-wrapper .button-action {
-    font-size: 12px;
-    line-height: 1.4;
-    padding: 2px 4px 1px;
+    padding: 2px 4px;
     border-radius: 3px;
 }
 .card-thumbnail .button-wrapper .button-action + .button-action {

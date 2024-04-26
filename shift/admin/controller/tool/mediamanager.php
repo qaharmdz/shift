@@ -38,7 +38,7 @@ class MediaManager extends Mvc\Controller {
 
     public function getFolders()
     {
-        if (!$this->request->is('ajax', 'post')) {
+        if (!$this->request->is(['post', 'ajax'])) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
@@ -89,7 +89,7 @@ class MediaManager extends Mvc\Controller {
 
     public function folderAction()
     {
-        if (!$this->request->is('ajax', 'post')) {
+        if (!$this->request->is(['post', 'ajax'])) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
         if (!$this->user->hasPermission('modify', 'tool/mediamanager')) {
@@ -152,7 +152,7 @@ class MediaManager extends Mvc\Controller {
     {
         $folder = $this->cleanPath($folder);
 
-        if (empty($folder) || !file_exists($folder)) {
+        if (empty ($folder) || !file_exists($folder)) {
             return true;
         } elseif (is_file($folder) || is_link($folder)) {
             return @unlink($folder);
@@ -172,7 +172,7 @@ class MediaManager extends Mvc\Controller {
 
     public function getItems()
     {
-        if (!$this->request->is('ajax', 'post')) {
+        if (!$this->request->is(['post', 'ajax'])) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
 
@@ -208,7 +208,7 @@ class MediaManager extends Mvc\Controller {
 
     public function itemAction()
     {
-        if (!$this->request->is('ajax', 'post')) {
+        if (!$this->request->is(['post', 'ajax'])) {
             return $this->response->setOutputJson($this->language->get('error_request_method'), 405);
         }
         if (!$this->user->hasPermission('modify', 'tool/mediamanager')) {
