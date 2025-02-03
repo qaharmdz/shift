@@ -12,6 +12,8 @@ $_['rename'] = 'Rename';
 $_['select'] = 'Select';
 $_['select_image'] = 'Select Image';
 
+$_['upload'] = 'Upload';
+
 $_['empty_folder'] = 'Folder is empty';
 $_['confirm_delete_file'] = 'This action cannot be undone!<br>The file will be deleted permanently.';
 $_['confirm_delete_folder'] = 'This action cannot be undone!<br>Folder and Files will be deleted recursively.';
