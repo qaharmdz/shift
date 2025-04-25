@@ -27,7 +27,9 @@ html,
 
 /* Container & Grid
 ==================================== */
-
+.uk-container {
+    max-width: 1400px;
+}
 .uk-container-small {
     max-width: 940px;
 }

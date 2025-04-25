@@ -96,7 +96,7 @@ class Framework {
             )->row;
 
             if (!$site) {
-                header('Location: ' . $_SERVER['PROTOCOL'] . $config->get('root.url_host'), true, 302);
+                // header('Location: ' . $_SERVER['PROTOCOL'] . $config->get('root.url_host'), true, 302);
                 exit('╮ (. ❛ ᴗ ❛.) ╭');
             }
         }

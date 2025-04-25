@@ -27,7 +27,9 @@ class Session extends Bags {
         ini_set('session.use_strict_mode', '1');
         ini_set('session.use_cookies', (string) $config['use_cookies']);
         ini_set('session.use_trans_sid', (string) $config['use_trans_sid']);
-        ini_set('session.sid_length', (string) $config['sid_length']);
+        if (PHP_VERSION_ID < 80400) {
+            ini_set('session.sid_length', (string) $config['sid_length']);
+        }
 
         if ($_SERVER['SECURE']) {
             ini_set('session.cookie_secure', '1');
