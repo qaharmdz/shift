@@ -24,6 +24,7 @@ return [
         'shift\\admin\\controller\\extension\\module' => $baseDir . '/shift/admin/controller/extension/module.php',
         'shift\\admin\\controller\\extension\\plugin' => $baseDir . '/shift/admin/controller/extension/plugin.php',
         'shift\\admin\\controller\\extension\\theme' => $baseDir . '/shift/admin/controller/extension/theme.php',
+        'shift\\admin\\controller\\helper\\mainnav' => $baseDir . '/shift/admin/controller/helper/mainnav.php',
         'shift\\admin\\controller\\page\\dashboard' => $baseDir . '/shift/admin/controller/page/dashboard.php',
         'shift\\admin\\controller\\page\\login' => $baseDir . '/shift/admin/controller/page/login.php',
         'shift\\admin\\controller\\page\\logout' => $baseDir . '/shift/admin/controller/page/logout.php',
