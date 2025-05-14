@@ -8,6 +8,7 @@ $_['app_startup'] = [
     'startup/authentication',
     // 'startup/startup', // TODO: DB table startup
     'startup/asset',
+    'startup/helper',
 ];
 
 $_['route_default'] = 'page/dashboard';

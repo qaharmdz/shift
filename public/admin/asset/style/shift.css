@@ -95,17 +95,13 @@ body {
 }
 
 .block-navbar .logo {
-    opacity: 0;
-    display: none;
     color: #f3f4f5;
     font-size: 28px;
     font-size: 26px;
     font-weight: 400;
-    font-family: "Roboto Condensed", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Roboto Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: var(--navbar-height);
     margin-left: 10px;
-    cursor: default;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
@@ -554,11 +550,7 @@ body {
 .ck.ck-toolbar > .ck-toolbar__items {
     font-size: 11px !important;
 }
-.ck.ck-toolbar
-    > .ck-toolbar__items
-    > :not(.ck-toolbar__line-break):not(.ck-toolbar__separator):not(
-        .ck-source-editing-button
-    ):not(.cks-icon),
+.ck.ck-toolbar > .ck-toolbar__items > :not(.ck-toolbar__line-break):not(.ck-toolbar__separator):not(.ck-source-editing-button):not(.cks-icon),
 .ck.ck-toolbar > .ck.ck-toolbar__grouped-dropdown {
     margin-bottom: 2px !important;
     margin-top: 2px !important;
@@ -742,9 +734,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
     padding: 0 10px;
     line-height: 34px;
 }
-.select2-container--default
-    .select2-selection--single
-    .select2-selection__arrow {
+.select2-container--default .select2-selection--single .select2-selection__arrow {
     padding-right: 20px;
     background-image: url(data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23444%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22%23444%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A);
     background-repeat: no-repeat;
@@ -752,10 +742,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
     right: 5px;
     width: 20px;
 }
-.select2-container--default
-    .select2-selection--single
-    .select2-selection__arrow
-    b {
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
     display: none;
 }
 
@@ -770,9 +757,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
     border: 1px solid #ccc;
     border-radius: 3px;
 }
-.select2-container--default
-    .select2-search--dropdown
-    .select2-search__field:focus {
+.select2-container--default .select2-search--dropdown .select2-search__field:focus {
     background-color: rgba(231, 233, 253, 0.4);
 }
 .select2-results__option {
@@ -791,18 +776,13 @@ a.ck.ck-button:not(.ck-disabled):hover {
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
     border-radius: 3px;
 }
-.select2-container--default.select2-container--focus
-    .select2-selection--multiple {
+.select2-container--default.select2-container--focus .select2-selection--multiple {
     border: 1px solid #ccc;
     background-color: rgba(231, 233, 253, 0.4);
 }
 .select2-container .select2-search--inline .select2-search__field,
-.select2-container--default
-    .select2-selection--multiple
-    .select2-selection__choice,
-.select2-container--default
-    .select2-selection--multiple
-    .select2-selection__choice__remove {
+.select2-container--default .select2-selection--multiple .select2-selection__choice,
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     margin-top: -1px;
     height: 22px;
     line-height: 20px;
@@ -812,26 +792,18 @@ a.ck.ck-button:not(.ck-disabled):hover {
 .select2-container .select2-search--inline .select2-search__field {
     background-color: transparent;
 }
-.select2-container--default
-    .select2-selection--multiple
-    .select2-selection__choice {
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #fafffc;
     border: 1px solid #ccc;
 }
-.select2-container--default
-    .select2-selection--multiple
-    .select2-selection__choice__remove {
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     padding: 0 3px;
     font-size: 18px;
     background-color: #eee;
     border-right: 1px solid #ccc;
 }
-.select2-container--default
-    .select2-selection--multiple
-    .select2-selection__choice__remove:hover,
-.select2-container--default
-    .select2-selection--multiple
-    .select2-selection__choice__remove:focus {
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover,
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {
     background-color: #e4e4e4;
 }
 
@@ -845,13 +817,11 @@ a.ck.ck-button:not(.ck-disabled):hover {
 .select2-container--default .select2-results__option--selected {
     background-color: #ddd !important;
 }
-.select2-container--default
-    .select2-results__option--highlighted.select2-results__option--selectable {
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
     background-color: transparent;
     color: #444;
 }
-.select2-container--default
-    .select2-results__option--highlighted.select2-results__option--selectable:hover {
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable:hover {
     background-color: #5897fb !important;
     color: white;
 }
@@ -905,8 +875,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
     margin-left: 20px;
     background: #fff;
     border: 0;
-    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 12%), 0 2px 2px 0 rgb(0 0 0 / 14%),
-        0 1px 5px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 12%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     z-index: 1100;
 }
 .vakata-context li:focus {
@@ -967,8 +936,7 @@ a.ck.ck-button:not(.ck-disabled):hover {
 }
 .CodeMirror-foldmarker {
     color: #1919ca;
-    text-shadow: #dfceff 1px 1px 2px, #dfceff -1px -1px 2px,
-        #dfceff 1px -1px 2px, #dfceff -1px 1px 2px;
+    text-shadow: #dfceff 1px 1px 2px, #dfceff -1px -1px 2px, #dfceff 1px -1px 2px, #dfceff -1px 1px 2px;
 }
 
 /* Use codemirror theme to set height */

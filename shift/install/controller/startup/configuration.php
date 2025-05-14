@@ -39,7 +39,7 @@ class Configuration extends Mvc\Controller {
             $class_body[] = str_replace(['/', '\\', '_'], '-', $prefix . '-' . $value);
         }
         $class_body = array_unique(array_merge($class_body, $this->document->getNode('class_body', [])));
-        $this->document->setNode('class_body', $class_body);
+        $this->document->addNode('class_body', $class_body);
 
         $this->view->setGlobal('lib', [
             'config'   => $this->config,
