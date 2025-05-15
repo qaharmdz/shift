@@ -30,6 +30,7 @@ class Helper extends Mvc\Controller {
         $main_nav['position'] = 'sidebar-left'; // opt: header, sidebar-left
         $this->document->addNode('main_nav', $main_nav);
 
+        // d($this->config->all());
         // d($this->document->all());
     }
 }

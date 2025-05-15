@@ -10,7 +10,7 @@ if (!is_array($rootConfig)) {
     exit('(╯°□°）╯︵ ┻━┻');
 }
 
-define('VERSION', '0.4.0-a.1'); // Staging: a.*, b.*, rc.*
+define('VERSION', '0.5.0-a.1'); // Staging: a.*, b.*, rc.*
 list($major, $minor, $patch) = array_map('intval', explode('.', VERSION));
 define('VERSION_ID', (($major * 10000) + ($minor * 100) + $patch));
 

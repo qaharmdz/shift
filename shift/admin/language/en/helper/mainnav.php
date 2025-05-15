@@ -21,8 +21,8 @@ $_['languages'] = 'Languages';
 $_['events'] = 'Events';
 
 $_['tools'] = 'Tools';
+$_['module_layout'] = 'Module Layouts';
 $_['media_manager'] = 'Media Manager';
-$_['module_layout'] = 'Layouts Builder';
 
 $_['accounts'] = 'Accounts';
 $_['users'] = 'Users';

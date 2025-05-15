@@ -258,7 +258,7 @@ class Database {
      *     '{sort_order}' => 'DESC'
      * ];
      *
-     * $this->db->run($sql, $params);
+     * $this->db->query($sql, $params);
      * ```
      *
      * @param  string $sql
