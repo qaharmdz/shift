@@ -27,8 +27,6 @@ class Header extends Mvc\Controller {
             ];
         }
 
-        d($this->document->all());
-
         return $this->load->view('block/header', $data);
     }
 }

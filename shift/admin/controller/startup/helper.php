@@ -26,7 +26,10 @@ class Helper extends Mvc\Controller {
         $class_body = array_unique(array_merge($class_body, $this->document->getNode('class_body', [])));
         $this->document->addNode('class_body', $class_body);
 
-        $this->document->addNode('mainnav_position', 'header'); // sidebar-left
-        $this->document->addNode('mainnav', $this->load->controller('helper/mainnav')); // sidebar-left
+        $main_nav = $this->load->controller('helper/mainnav');
+        $main_nav['position'] = 'sidebar-left'; // opt: header, sidebar-left
+        $this->document->addNode('main_nav', $main_nav);
+
+        // d($this->document->all());
     }
 }

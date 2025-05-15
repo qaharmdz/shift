@@ -19,6 +19,7 @@
     <header class="page-header">
         {{ header }}
 
+        <!--
         {% set breadcrumbs = shift.lib.document.getNode('breadcrumbs') %}
         {% if breadcrumbs %}
             <section class="section-breadcrumb">
@@ -36,19 +37,58 @@
                 </div>
             </section>
         {% endif %}
+         -->
     </header>
 {% endif %}
 
 <div class="page-body">
     <div class="section-middle uk-grid-collapse" uk-grid>
         <section class="block-sidebar block-sidebar-left">
-            Test
+            {% set main_nav = shift.lib.document.getNode('main_nav') %}
+            {% if main_nav.position == 'sidebar-left' %}
+                <div class="main-navigation-sidebar">
+                    <ul class="uk-nav uk-dropdown-nav" uk-nav>
+                        {% for menu in main_nav.menus %}
+                            {% if not menu.subs %}
+                                <li><a href="{{ menu.url }}">{{ menu.name }}</a></li>
+                            {% else %}
+                                <li class="uk-parent">
+                                    <a href="{{ menu.url }}">{{ menu.name }} <span uk-nav-parent-icon></span></a>
+                                    <ul class="uk-nav-sub">
+                                        {% for item in menu.subs %}
+                                            {% if item.subs %}
+                                                <li class="uk-parent">
+                                                    <a href="{{ item.url }}">{{ item.name }} <span uk-nav-parent-icon></span></a>
+                                                    <ul class="uk-nav-sub">
+                                                        {% for subitem in item.subs %}
+                                                            <li><a href="{{ subitem.url }}">{{ subitem.name }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% else %}
+                                                {% if item.type == 'header' %}
+                                                    <li class="uk-nav-header">{{ item.name }}</li>
+                                                {% elseif item.type == 'divider' %}
+                                                    <li class="uk-nav-divider"></li>
+                                                {% else %}
+                                                    <li><a href="{{ item.url }}">{{ item.name }}</a></li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if layouts.sidebarleft is defined and layouts.sidebarleft %}
+                <div>
+                    {{ layouts.sidebarleft }}
+                </div>
+            {% endif %}
         </section>
-        {% if layouts.sidebarleft is defined and layouts.sidebarleft %}
-            <section class="block-sidebar block-sidebar-left">
-                {{ layouts.sidebarleft }}
-            </section>
-        {% endif %}
 
         <div class="region-content uk-width-expand">
             <main class="main-content">

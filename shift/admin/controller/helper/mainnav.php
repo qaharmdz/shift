@@ -9,28 +9,28 @@ use Shift\System\Mvc;
 class MainNav extends Mvc\Controller {
     public function index()
     {
-        $this->load->language('helper/mainnav', 'helperMainnav');
+        $this->load->language('helper/mainnav', 'mainNav');
         $data = [];
 
         //=== Left panel
         $data['links'] = [];
         $data['links'][101] = $this->nav([
-            'name' => $this->language->get('helperMainnav.my_account'),
+            'name' => $this->language->get('mainNav.my_account'),
             'url'  => $this->router->url('account/user/form', 'user_id=' . $this->user->get('user_id')),
         ]);
         $data['links'][102] = $this->nav([
-            'name' => $this->language->get('helperMainnav.logout'),
+            'name' => $this->language->get('mainNav.logout'),
             'url'  => $this->router->url('page/logout'),
         ]);
         $data['links'][201] = $this->nav([
-            'name' => $this->language->get('helperMainnav.recent_visit'),
+            'name' => $this->language->get('mainNav.recent_visit'),
             'type' => 'header',
         ]);
 
         //=== Right panel
         $data['menus'] = [];
         $data['menus'][0] = $this->nav([
-            'name' => $this->language->get('helperMainnav.dashboard'),
+            'name' => $this->language->get('mainNav.dashboard'),
             'url'  => $this->router->url('page/dashboard'),
         ]);
 
@@ -39,19 +39,19 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'content/post')) {
             $content[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.posts'),
+                'name' => $this->language->get('mainNav.posts'),
                 'url'  => $this->router->url('content/post'),
             ]);
         }
         if ($this->user->hasPermission('access', 'content/category')) {
             $content[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.categories'),
+                'name' => $this->language->get('mainNav.categories'),
                 'url'  => $this->router->url('content/category'),
             ]);
         }
         if ($this->user->hasPermission('access', 'content/tag')) {
             $content[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.tags'),
+                'name' => $this->language->get('mainNav.tags'),
                 'url'  => $this->router->url('content/tag'),
             ]);
         }
@@ -60,7 +60,7 @@ class MainNav extends Mvc\Controller {
                 'type' => 'divider',
             ]);
             $content[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.settings'),
+                'name' => $this->language->get('mainNav.settings'),
                 'url'  => $this->router->url('content/setting'),
             ]);
         }
@@ -68,7 +68,7 @@ class MainNav extends Mvc\Controller {
         if ($content) {
             $data['menus'][100] = $this->nav([
                 'id'   => 'menu-content',
-                'name' => $this->language->get('helperMainnav.contents'),
+                'name' => $this->language->get('mainNav.contents'),
                 'subs' => $content,
             ]);
         }
@@ -78,7 +78,7 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'extension/manage')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.manage'),
+                'name' => $this->language->get('mainNav.manage'),
                 'url'  => $this->router->url('extension/manage'),
             ]);
             $extension[] = $this->nav([
@@ -88,25 +88,25 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'extension/plugin')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.plugins'),
+                'name' => $this->language->get('mainNav.plugins'),
                 'url'  => $this->router->url('extension/plugin'),
             ]);
         }
         if ($this->user->hasPermission('access', 'extension/module')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.modules'),
+                'name' => $this->language->get('mainNav.modules'),
                 'url'  => $this->router->url('extension/module'),
             ]);
         }
         if ($this->user->hasPermission('access', 'extension/theme')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.themes'),
+                'name' => $this->language->get('mainNav.themes'),
                 'url'  => $this->router->url('extension/theme'),
             ]);
         }
         if ($this->user->hasPermission('access', 'extension/language')) {
             $extension[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.languages'),
+                'name' => $this->language->get('mainNav.languages'),
                 'url'  => $this->router->url('extension/language'),
             ]);
         }
@@ -115,7 +115,7 @@ class MainNav extends Mvc\Controller {
                 'type' => 'divider',
             ]);
             $extension[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.events'),
+                'name' => $this->language->get('mainNav.events'),
                 'url'  => $this->router->url('extension/event'),
             ]);
         }
@@ -123,7 +123,7 @@ class MainNav extends Mvc\Controller {
         if ($extension) {
             $data['menus'][200] = $this->nav([
                 'id'   => 'menu-extension',
-                'name' => $this->language->get('helperMainnav.extensions'),
+                'name' => $this->language->get('mainNav.extensions'),
                 'subs' => $extension,
             ]);
         }
@@ -133,13 +133,13 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'tool/layout')) {
             $tool[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.module_layout'),
+                'name' => $this->language->get('mainNav.module_layout'),
                 'url'  => $this->router->url('tool/layout'),
             ]);
         }
         if ($this->user->hasPermission('access', 'tool/mediamanager')) {
             $tool[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.media_manager'),
+                'name' => $this->language->get('mainNav.media_manager'),
                 'url'  => $this->router->url('tool/mediamanager'),
             ]);
         }
@@ -147,7 +147,7 @@ class MainNav extends Mvc\Controller {
         if ($tool) {
             $data['menus'][300] = $this->nav([
                 'id'   => 'menu-tool',
-                'name' => $this->language->get('helperMainnav.tools'),
+                'name' => $this->language->get('mainNav.tools'),
                 'subs' => $tool,
             ]);
         }
@@ -157,13 +157,13 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'account/user')) {
             $user[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.users'),
+                'name' => $this->language->get('mainNav.users'),
                 'url'  => $this->router->url('account/user'),
             ]);
         }
         if ($this->user->hasPermission('access', 'account/usergroup')) {
             $user[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.user_groups'),
+                'name' => $this->language->get('mainNav.user_groups'),
                 'url'  => $this->router->url('account/usergroup'),
             ]);
         }
@@ -171,7 +171,7 @@ class MainNav extends Mvc\Controller {
         if ($user) {
             $data['menus'][400] = $this->nav([
                 'id'   => 'menu-design',
-                'name' => $this->language->get('helperMainnav.accounts'),
+                'name' => $this->language->get('mainNav.accounts'),
                 'subs' => $user,
             ]);
         }
@@ -181,13 +181,13 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'setting/setting')) {
             $system[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.settings'),
+                'name' => $this->language->get('mainNav.settings'),
                 'url'  => $this->router->url('setting/setting'),
             ]);
         }
         if ($this->user->hasPermission('access', 'setting/site')) {
             $system[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.sites'),
+                'name' => $this->language->get('mainNav.sites'),
                 'url'  => $this->router->url('setting/site'),
             ]);
         }
@@ -195,7 +195,7 @@ class MainNav extends Mvc\Controller {
         if ($system) {
             $data['menus'][900] = $this->nav([
                 'id'   => 'menu-system',
-                'name' => $this->language->get('helperMainnav.system'),
+                'name' => $this->language->get('mainNav.system'),
                 'subs' => $system,
             ]);
         }
@@ -205,19 +205,19 @@ class MainNav extends Mvc\Controller {
 
         if ($this->user->hasPermission('access', 'tool/backupdb')) {
             $maintenance[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.backup_restore'),
+                'name' => $this->language->get('mainNav.backup_restore'),
                 'url'  => $this->router->url('tool/backupdb'),
             ]);
         }
         if ($this->user->hasPermission('access', 'tool/cache')) {
             $maintenance[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.cache'),
+                'name' => $this->language->get('mainNav.cache'),
                 'url'  => $this->router->url('tool/cache'),
             ]);
         }
         if ($this->user->hasPermission('access', 'tool/log')) {
             $maintenance[] = $this->nav([
-                'name' => $this->language->get('helperMainnav.log'),
+                'name' => $this->language->get('mainNav.log'),
                 'url'  => $this->router->url('tool/log'),
             ]);
         }
@@ -225,7 +225,7 @@ class MainNav extends Mvc\Controller {
         if ($maintenance) {
             $data['menus'][1000] = $this->nav([
                 'id'   => 'menu-system',
-                'name' => $this->language->get('helperMainnav.maintenance'),
+                'name' => $this->language->get('mainNav.maintenance'),
                 'subs' => $maintenance,
             ]);
         }
