@@ -117,6 +117,7 @@ body {
     border-top-color: currentcolor;
 }
 
+/* Main Navigation Header */
 .main-navigation {
     padding: 0;
     width: 380px;
@@ -197,6 +198,8 @@ body {
 .main-navigation .panel-left .uk-nav-divider {
     border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
+
+/* Main Navigation Sidebar */
 
 /* Layout Sidebar
 ==================================== */
