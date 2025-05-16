@@ -21,14 +21,25 @@
  * ======================================================================== */
 
 :root {
-    --uk-font-size: 14px;
+    --uk-font-size: 16px;
     --uk-font-color: #333;
+
+    /* Header navbar */
+    --navbar-height: 38px;
+
+    /* Layout Sidebar */
+    --sidebar-width: 240px;
+}
+@media screen and (max-width: 960px) {
+    :root {
+        --sidebar-width: 220px;
+    }
 }
 
 html {
     color: var(--uk-font-color);
     background: #f9fbfc;
-    background: #f3f5f6;
+    background: #f2f3f4;
 }
 body {
     min-width: 640px;
@@ -41,10 +52,6 @@ body {
 
 /* Header Navbar
 ==================================== */
-:root {
-    --navbar-height: 38px;
-    --navbar-height: 32px;
-}
 
 /* .page-header {} */
 
@@ -96,8 +103,8 @@ body {
 
 .block-navbar .logo {
     color: #f3f4f5;
-    font-size: 28px;
     font-size: 26px;
+    font-size: 24px;
     font-weight: 400;
     font-family: "Roboto Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: var(--navbar-height);
@@ -200,34 +207,37 @@ body {
 }
 
 /* Main Navigation Sidebar */
+.main-navigation-sidebar {
+    width: auto;
+    padding: 0.5rem 1rem;
+}
+.main-navigation-sidebar .uk-nav a {
+    font-size: 1rem;
+    margin: 0 -1rem;
+}
+.main-navigation-sidebar .uk-nav .uk-nav-sub a {
+    font-size: 0.95rem;
+}
 
 /* Layout Sidebar
 ==================================== */
-:root {
-    --sidebar-width: 180px;
-}
-@media screen and (max-width: 960px) {
-    :root {
-        --sidebar-width: 160px;
-    }
-}
-
 .page-body {
     z-index: 1;
 }
 
 .block-sidebar {
     width: var(--sidebar-width);
-    background: #fff;
+    /* background: #fff; */
+    background: #ebebeb;
     overflow-x: hidden;
     transition: width 0.25s ease-out;
     position: relative;
 }
 .block-sidebar-left {
-    border-right: 1px solid rgba(0, 0, 0, 0.07);
+    border-right: 1px solid rgba(0, 0, 0, 0.02);
 }
 .block-sidebar-right {
-    border-left: 1px solid rgba(0, 0, 0, 0.07);
+    border-left: 1px solid rgba(0, 0, 0, 0.02);
 }
 .hide-sidebar .block-sidebar-left,
 .hide-sidebar .block-sidebar-right,

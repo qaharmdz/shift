@@ -46,7 +46,7 @@
         <section class="block-sidebar block-sidebar-left">
             {% set main_nav = shift.lib.document.getNode('main_nav') %}
             {% if main_nav.position == 'sidebar-left' %}
-                <div class="main-navigation-sidebar">
+                <div class="main-navigation main-navigation-sidebar">
                     <ul class="uk-nav uk-dropdown-nav" uk-nav>
                         {% for menu in main_nav.menus %}
                             {% if not menu.subs %}
